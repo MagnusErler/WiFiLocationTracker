@@ -30,7 +30,7 @@ def get_device_location(api_key):
         if response.status_code == 200:
             result = response.json()
             location = result.get('location')
-            accuracy = result.get('accuracy')
+            accuracy = round(result.get('accuracy'), 3) # take only 3 decimals
             return location['lat'], location['lng'], accuracy
         else:
             print(f"Error: {response.status_code}, {response.text}")
@@ -38,10 +38,7 @@ def get_device_location(api_key):
     except Exception as e:
         print(f"An error occurred: {e}")
 
-if __name__ == "__main__":
-    lat, log, acc = get_device_location(api_key)
-    print("Latitude:", lat, "Longitude:", log, "Accuracy:", acc, "meters")
-
+def showLocationOnMap(lat, log, acc):
     # open a html file in browser to see the location on map
     with open('location.html', 'w') as f:
         f.write(f"<h1>Latitude: {lat}</h1>")
@@ -58,5 +55,11 @@ if __name__ == "__main__":
         os.system('xdg-open location.html')
     else:
         print("Unsupported operating system")
+
+if __name__ == "__main__":
+    lat, log, acc = get_device_location(api_key)
+    print("Latitude:", lat, "Longitude:", log, "Accuracy:", acc, "meters")
+
+    showLocationOnMap(lat, log, acc)
 
 
