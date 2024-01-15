@@ -1,12 +1,9 @@
 import requests
 import json
 import os
-from dotenv import load_dotenv
-
 import platform
 
-load_dotenv()  # Load variables from .env file
-api_key = os.environ.get('GOOGLE_API_KEY')
+from secret import *
 
 def get_device_location(api_key):
     url = f'https://www.googleapis.com/geolocation/v1/geolocate?key={api_key}'
@@ -56,7 +53,7 @@ def showLocationOnMap(lat, log, acc):
         print("Unsupported operating system")
 
 if __name__ == "__main__":
-    lat, log, acc = get_device_location(api_key)
+    lat, log, acc = get_device_location(GOOGLE_API_KEY)
     print("Latitude:", lat, "Longitude:", log, "Accuracy:", acc, "meters")
 
     showLocationOnMap(lat, log, acc)
