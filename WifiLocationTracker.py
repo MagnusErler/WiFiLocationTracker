@@ -9,24 +9,24 @@ load_dotenv()  # Load variables from .env file
 api_key = os.environ.get('GOOGLE_API_KEY')
 
 def get_device_location(api_key):
-    # Google Geolocation API endpoint
     url = f'https://www.googleapis.com/geolocation/v1/geolocate?key={api_key}'
 
-    # Payload with the "considerIp" parameter
     payload = {
-        "considerIp": "true"
+        #"homeMobileCountryCode":238,        # https://mcc-mnc.com/
+        #"homeMobileNetworkCode":299,        # https://mcc-mnc.com/
+        #"radioType":"gsm",
+        #"carrier":"Vodafone",
+        "considerIp": "true"    # consider IP address for location
     }
 
-    # Headers
     headers = {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json"      # the content being sent is in JSON format
     }
 
     try:
         # Make a POST request to the Geolocation API
-        response = requests.post(url, data=json.dumps(payload), headers=headers)
+        response = requests.post(url, data=json.dumps(payload), headers=headers)        
 
-        # Check if the request was successful (status code 200)
         if response.status_code == 200:
             result = response.json()
             location = result.get('location')
@@ -39,7 +39,6 @@ def get_device_location(api_key):
         print(f"An error occurred: {e}")
 
 def showLocationOnMap(lat, log, acc):
-    # open a html file in browser to see the location on map
     with open('location.html', 'w') as f:
         f.write(f"<h1>Latitude: {lat}</h1>")
         f.write(f"<h1>Longitude: {log}</h1>")
