@@ -6,6 +6,9 @@ Generate your Google API key to use the application by following [here](https://
 
 Create `.env` and add `GOOGLE_API_KEY=<YOUR_API_KEY>`
 
+Run `export GOOGLE_API_KEY=<YOUR_API_KEY>`
+
+Run `pip install -r requirements.txt`
 
 ## Usage
 
