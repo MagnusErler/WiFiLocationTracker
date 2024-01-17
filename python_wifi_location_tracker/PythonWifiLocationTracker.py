@@ -3,6 +3,8 @@ import json
 import os
 import platform
 
+import sys
+sys.path.append("..")
 from secret import *
 
 def get_device_location(api_key):
