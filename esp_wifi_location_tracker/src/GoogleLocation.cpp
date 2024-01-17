@@ -10,11 +10,9 @@
 
 #include <WifiLocation.h>
 
-const char* googleApiKey = "YOUR_GOOGLE_API_KEY";
-const char* ssid = "YOUR_SSID";
-const char* passwd = "YOUR_SSID_PASSWORD";
+#include "secret.h"
 
-WifiLocation location(googleApiKey);
+WifiLocation location(GOOGLE_API_KEY);
 
 void setup() {
     Serial.begin(115200);
@@ -26,10 +24,10 @@ void setup() {
 #ifdef ARDUINO_ARCH_ESP8266
     WiFi.mode(WIFI_STA);
 #endif
-    WiFi.begin(ssid, passwd);
+    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
     while (WiFi.status() != WL_CONNECTED) {
         Serial.print("Attempting to connect to WPA SSID: ");
-        Serial.println(ssid);
+        Serial.println(WIFI_SSID);
         // wait 5 seconds for connection:
         Serial.print("Status = ");
         Serial.println(WiFi.status());
@@ -42,8 +40,6 @@ void setup() {
     Serial.println("Latitude: " + String(loc.lat, 7));
     Serial.println("Longitude: " + String(loc.lon, 7));
     Serial.println("Accuracy: " + String(loc.accuracy));
-
-
 }
 
 void loop() {
