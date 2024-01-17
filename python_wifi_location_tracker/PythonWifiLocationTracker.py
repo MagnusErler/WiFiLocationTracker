@@ -3,9 +3,13 @@ import json
 import os
 import platform
 
-import sys
-sys.path.append("..")
-from secret import *
+secrets = {}
+with open("../secret.txt") as f:
+    for line in f:
+        key, value = line.strip().split(' = ')
+        secrets[key] = value
+
+GOOGLE_API_KEY = secrets['GOOGLE_API_KEY']
 
 def get_device_location(api_key):
     url = f'https://www.googleapis.com/geolocation/v1/geolocate?key={api_key}'
