@@ -17,4 +17,9 @@ Then, you can copy file content and overwrite line 11-42 of `WifiLocation1.cpp`.
 
 ## Usage
 
-Upload `GoogleLocation.cpp` to ESP board and monitor
+Upload `GoogleLocation.cpp` to ESP board and monitor the serial prints
+
+
+## Credit
+
+[WifiLocation](https://github.com/gmag11/WifiLocation) by gmag11
