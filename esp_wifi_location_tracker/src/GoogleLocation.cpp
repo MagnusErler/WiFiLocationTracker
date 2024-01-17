@@ -8,7 +8,7 @@
 #error Wrong platform
 #endif 
 
-#include <WifiLocation1.h>
+#include <WifiLocation.h>
 
 const char* googleApiKey = "YOUR_GOOGLE_API_KEY";
 const char* ssid = "YOUR_SSID";

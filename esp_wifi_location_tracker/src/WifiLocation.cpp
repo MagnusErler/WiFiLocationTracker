@@ -2,7 +2,7 @@
 //
 //
 
-#include "WifiLocation1.h"
+#include "WifiLocation.h"
 
 const char* googleApisHost = "www.googleapis.com";
 const char* googleApiUrl = "/geolocation/v1/geolocate";
