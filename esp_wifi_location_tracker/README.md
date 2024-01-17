@@ -15,10 +15,27 @@ openssl s_client -servername www.googleapis.com -showcerts \
 
 Then, you can copy file content and overwrite line 11-42 of `WifiLocation1.cpp`.
 
+---
+
+Generate your Google API key to use the applications by following [here](https://developers.google.com/maps/documentation/geolocation/get-api-key).
+
+Create `secret.h` inside `src` and add
+
+```
+// secret.h
+#ifndef SECRET_H
+#define SECRET_H
+
+const char* GOOGLE_API_KEY = "YOUR_GOOGLE_API_KEY";
+const char* WIFI_SSID = "YOUR_SSID";
+const char* WIFI_PASSWORD = "YOUR_SSID_PASSWORD";
+
+#endif  // SECRET_H
+```
+
 ## Usage
 
 Upload `GoogleLocation.cpp` to ESP board and monitor the serial prints
-
 
 ## Credit
 
