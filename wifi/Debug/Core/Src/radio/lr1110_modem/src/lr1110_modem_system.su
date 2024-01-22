@@ -1,0 +1,8 @@
+../Core/Src/radio/lr1110_modem/src/lr1110_modem_system.c:129:30:lr1110_modem_system_write_regmem32	312	static
+../Core/Src/radio/lr1110_modem/src/lr1110_modem_system.c:157:30:lr1110_modem_system_read_regmem32	48	static
+../Core/Src/radio/lr1110_modem/src/lr1110_modem_system.c:187:30:lr1110_modem_system_calibrate	32	static
+../Core/Src/radio/lr1110_modem/src/lr1110_modem_system.c:200:30:lr1110_modem_system_set_reg_mode	32	static
+../Core/Src/radio/lr1110_modem/src/lr1110_modem_system.c:214:30:lr1110_modem_system_set_dio_as_rf_switch	40	static
+../Core/Src/radio/lr1110_modem/src/lr1110_modem_system.c:235:30:lr1110_modem_system_cfg_lfclk	32	static
+../Core/Src/radio/lr1110_modem/src/lr1110_modem_system.c:251:30:lr1110_modem_system_set_tcxo_mode	40	static
+../Core/Src/radio/lr1110_modem/src/lr1110_modem_system.c:270:30:lr1110_modem_system_reboot	32	static
