@@ -240,10 +240,10 @@ void hal_mcu_init( void )
     lr1110_modem_board_init_io( &lr1110 );
 
     /* Initialize RTC */
-    hal_rtc_init( );
+    //magnus hal_rtc_init( );
 
     /* Initialize I2C */
-    hal_i2c_init( HAL_I2C_ID, I2C_SDA, I2C_SCL );
+    //magnus hal_i2c_init( HAL_I2C_ID, I2C_SDA, I2C_SCL );
 }
 
 void hal_mcu_disable_irq( void ) { __disable_irq( ); }
@@ -588,7 +588,7 @@ static void hal_mcu_deinit( void )
     hal_spi_deinit( HAL_RADIO_SPI_ID );
     lr1110_modem_board_deinit_io( &lr1110 );
     /* Disable I2C */
-    hal_i2c_deinit( HAL_I2C_ID );
+    //magnus hal_i2c_deinit( HAL_I2C_ID );
     /* Disable UART */
 #if( HAL_USE_PRINTF_UART == HAL_FEATURE_ON )
     hal_uart_deinit( HAL_PRINTF_UART_ID );
@@ -708,12 +708,12 @@ static void on_soft_watchdog_event( void* context )
  * @brief This function handles Hard fault interrupt.
  */
 //magnus void HardFault_Handler( void )
-//magnus {
-//magnus     HAL_DBG_TRACE_ERROR( "HardFault_Handler\n\r" );
+// {
+//     HAL_DBG_TRACE_ERROR( "HardFault_Handler\n\r" );
 
-    /* reset the board*/
-//magnus     hal_mcu_reset( );
-//magnus }
+//     /* reset the board*/
+//     hal_mcu_reset( );
+// }
 
 /*!
  * @brief  This function handles PVD interrupt request.

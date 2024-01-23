@@ -1,3 +1,0 @@
-/home/magnus/repo/WiFiLocationTracker/stm32/VSC_test/build/debug/build/CMakeFiles/rebuild_cache.dir
-/home/magnus/repo/WiFiLocationTracker/stm32/VSC_test/build/debug/build/CMakeFiles/edit_cache.dir
-/home/magnus/repo/WiFiLocationTracker/stm32/VSC_test/build/debug/build/CMakeFiles/VSC_test.dir

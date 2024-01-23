@@ -6,6 +6,16 @@
   "cortex-debug.openocdPath": "/usr/bin/openocd",
   "files.associations": {
     "smtc_hal_gpio_pin_names.h": "c",
-    "smtc_hal.h": "c"
+    "smtc_hal.h": "c",
+    "smtc_hal_uart.h": "c",
+    "lr1110_modem_hal.h": "c",
+    "lr1110_hal.h": "c",
+    "stm32l4xx_ll_gpio.h": "c",
+    "system_gpio.h": "c",
+    "stm32l476xx.h": "c",
+    "stm32l4xx_ll_bus.h": "c",
+    "system_spi.h": "c",
+    "system_time.h": "c",
+    "main.h": "c"
   }
 }

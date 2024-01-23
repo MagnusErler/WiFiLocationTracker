@@ -23,6 +23,9 @@
 /* USER CODE BEGIN Includes */
 
 #include "smtc_hal.h"
+#include "lr1110_modem_board.h"
+#include "lr1110_bootloader.h"
+#include "lr1110_hal.h"
 
 /* USER CODE END Includes */
 
@@ -97,6 +100,9 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   uint8_t msg[] = "Hello world\r\n";
+  int a = 0;
+
+  hal_uart_init(2, PA_2, PA_3);
 
   /* USER CODE END 2 */
 
@@ -105,14 +111,30 @@ int main(void)
   while (1)
   {
     //HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-    HAL_GPIO_TogglePin(Sniffing_LED_GPIO_Port, Sniffing_LED_Pin);
+    //HAL_GPIO_TogglePin(Sniffing_LED_GPIO_Port, Sniffing_LED_Pin);
 
     lr1110_modem_board_led_set( (1 << RX_LED_Pin), 1 );		//or HAL_GPIO_TogglePin(GPIOC, RX_LED_Pin);
 
     HAL_GPIO_TogglePin(TX_LED_GPIO_Port, TX_LED_Pin);
 
-
+    HAL_DBG_TRACE_WARNING("Testing\r\n");
     HAL_UART_Transmit(&huart2, msg, sizeof(msg), 10);
+    
+    //Transmit the int value of a
+    char buffer[10];
+    sprintf(buffer, "%d\r\n", a);
+    HAL_UART_Transmit(&huart2, buffer, sizeof(buffer), 10);
+    a++;
+
+
+    const void* lr1110_context = NULL;
+    lr1110_bootloader_version_t version;
+    //lr1110_status_t status = lr1110_bootloader_get_version(lr1110_context, &version);
+
+    // char buffer2[10];
+    // sprintf(buffer2, "%d\r\n", status);
+    // HAL_UART_Transmit(&huart2, buffer2, sizeof(buffer2), 10);
+    
 
 
     HAL_Delay(1000);
@@ -267,28 +289,12 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOC, RX_LED_Pin|TX_LED_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(Sniffing_LED_GPIO_Port, Sniffing_LED_Pin, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin : B1_Pin */
-  GPIO_InitStruct.Pin = B1_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
-
   /*Configure GPIO pins : RX_LED_Pin TX_LED_Pin */
   GPIO_InitStruct.Pin = RX_LED_Pin|TX_LED_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : Sniffing_LED_Pin */
-  GPIO_InitStruct.Pin = Sniffing_LED_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(Sniffing_LED_GPIO_Port, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */

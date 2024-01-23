@@ -131,7 +131,7 @@ void hal_uart_init( const uint32_t id, const hal_gpio_pin_names_t uart_tx, const
     uint32_t local_id = id - 1;
 
     hal_uart[local_id].handle.Instance                    = hal_uart[local_id].interface;
-    hal_uart[local_id].handle.Init.BaudRate               = 921600;
+    hal_uart[local_id].handle.Init.BaudRate               = 115200;  //magnus 921600;
     hal_uart[local_id].handle.Init.WordLength             = UART_WORDLENGTH_8B;
     hal_uart[local_id].handle.Init.StopBits               = UART_STOPBITS_1;
     hal_uart[local_id].handle.Init.Parity                 = UART_PARITY_NONE;
@@ -164,10 +164,12 @@ void hal_uart_tx( const uint32_t id, uint8_t* buff, uint16_t len )
     assert_param( ( id > 0 ) && ( ( id - 1 ) < sizeof( hal_uart ) ) );
     uint32_t local_id = id - 1;
 
-    //magnus uint8_t msg[] = "usdsds\r\n";
-    //magnus HAL_UART_Transmit(&huart2, msg, sizeof(msg), 10);
-
     HAL_UART_Transmit( &hal_uart[local_id].handle, ( uint8_t* ) buff, len, 0xffffff );
+    //HAL_UART_Transmit( &huart2, ( uint8_t* ) buff, len, 0xffffff );
+}
+
+void setupUART() {
+    
 }
 
 void hal_uart_rx( const uint32_t id, uint8_t* rx_buffer, uint8_t len )
