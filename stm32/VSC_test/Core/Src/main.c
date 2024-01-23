@@ -89,12 +89,14 @@ int main(void)
   /* USER CODE BEGIN SysInit */
 
   /* USER CODE END SysInit */
-
+ 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
+
+  uint8_t msg[] = "Hello world\r\n";
 
   /* USER CODE END 2 */
 
@@ -108,6 +110,11 @@ int main(void)
     lr1110_modem_board_led_set( (1 << RX_LED_Pin), 1 );		//or HAL_GPIO_TogglePin(GPIOC, RX_LED_Pin);
 
     HAL_GPIO_TogglePin(TX_LED_GPIO_Port, TX_LED_Pin);
+
+
+    HAL_UART_Transmit(&huart2, msg, sizeof(msg), 10);
+
+
     HAL_Delay(1000);
     /* USER CODE END WHILE */
 
