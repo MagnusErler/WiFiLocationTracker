@@ -43,13 +43,13 @@
 			{
 				"command" : 1,
 				"file" : 1,
-				"line" : 60,
+				"line" : 74,
 				"parent" : 2
 			},
 			{
 				"command" : 3,
 				"file" : 1,
-				"line" : 30,
+				"line" : 44,
 				"parent" : 2
 			},
 			{
@@ -67,7 +67,7 @@
 			{
 				"command" : 6,
 				"file" : 1,
-				"line" : 73,
+				"line" : 87,
 				"parent" : 2
 			}
 		]
@@ -120,11 +120,35 @@
 				},
 				{
 					"backtrace" : 6,
+					"path" : "/home/magnus/repo/WiFiLocationTracker/stm32/VSC_test/Core/Inc/boards"
+				},
+				{
+					"backtrace" : 6,
+					"path" : "/home/magnus/repo/WiFiLocationTracker/stm32/VSC_test/Core/Inc/smtc_hal"
+				},
+				{
+					"backtrace" : 6,
+					"path" : "/home/magnus/repo/WiFiLocationTracker/stm32/VSC_test/Core/Src/radio"
+				},
+				{
+					"backtrace" : 6,
+					"path" : "/home/magnus/repo/WiFiLocationTracker/stm32/VSC_test/Core/Src/radio/lr1110_modem/src"
+				},
+				{
+					"backtrace" : 6,
+					"path" : "/home/magnus/repo/WiFiLocationTracker/stm32/VSC_test/Drivers/BSP/Components/Leds"
+				},
+				{
+					"backtrace" : 6,
 					"path" : "/home/magnus/repo/WiFiLocationTracker/stm32/VSC_test/Drivers/STM32L4xx_HAL_Driver/Inc"
 				},
 				{
 					"backtrace" : 6,
 					"path" : "/home/magnus/repo/WiFiLocationTracker/stm32/VSC_test/Drivers/STM32L4xx_HAL_Driver/Inc/Legacy"
+				},
+				{
+					"backtrace" : 6,
+					"path" : "/home/magnus/repo/WiFiLocationTracker/stm32/VSC_test/Drivers/STM32L4xx_HAL_Driver/Src"
 				},
 				{
 					"backtrace" : 6,
@@ -144,6 +168,7 @@
 				3,
 				4,
 				5,
+				6,
 				7,
 				8,
 				9,
@@ -154,7 +179,6 @@
 				14,
 				15,
 				16,
-				17,
 				18,
 				19,
 				20,
@@ -162,7 +186,21 @@
 				22,
 				23,
 				24,
-				25
+				25,
+				26,
+				27,
+				28,
+				29,
+				30,
+				31,
+				32,
+				33,
+				34,
+				35,
+				36,
+				37,
+				38,
+				39
 			]
 		},
 		{
@@ -198,7 +236,7 @@
 			"language" : "ASM",
 			"sourceIndexes" : 
 			[
-				6
+				17
 			]
 		}
 	],
@@ -262,6 +300,7 @@
 				3,
 				4,
 				5,
+				6,
 				7,
 				8,
 				9,
@@ -272,7 +311,6 @@
 				14,
 				15,
 				16,
-				17,
 				18,
 				19,
 				20,
@@ -280,14 +318,28 @@
 				22,
 				23,
 				24,
-				25
+				25,
+				26,
+				27,
+				28,
+				29,
+				30,
+				31,
+				32,
+				33,
+				34,
+				35,
+				36,
+				37,
+				38,
+				39
 			]
 		},
 		{
 			"name" : "",
 			"sourceIndexes" : 
 			[
-				6
+				17
 			]
 		}
 	],
@@ -296,7 +348,73 @@
 		{
 			"backtrace" : 7,
 			"compileGroupIndex" : 0,
+			"path" : "Core/Src/boards/lr1110_modem_board.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 7,
+			"compileGroupIndex" : 0,
 			"path" : "Core/Src/main.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 7,
+			"compileGroupIndex" : 0,
+			"path" : "Core/Src/radio/lr1110_modem/src/lr1110_bootloader.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 7,
+			"compileGroupIndex" : 0,
+			"path" : "Core/Src/radio/lr1110_modem/src/lr1110_modem_helper.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 7,
+			"compileGroupIndex" : 0,
+			"path" : "Core/Src/radio/lr1110_modem/src/lr1110_modem_lorawan.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 7,
+			"compileGroupIndex" : 0,
+			"path" : "Core/Src/radio/lr1110_modem/src/lr1110_modem_system.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 7,
+			"compileGroupIndex" : 0,
+			"path" : "Core/Src/radio/lr1110.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 7,
+			"compileGroupIndex" : 0,
+			"path" : "Core/Src/smtc_hal/smtc_hal_flash.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 7,
+			"compileGroupIndex" : 0,
+			"path" : "Core/Src/smtc_hal/smtc_hal_gpio.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 7,
+			"compileGroupIndex" : 0,
+			"path" : "Core/Src/smtc_hal/smtc_hal_mcu.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 7,
+			"compileGroupIndex" : 0,
+			"path" : "Core/Src/smtc_hal/smtc_hal_uart.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 7,
+			"compileGroupIndex" : 0,
+			"path" : "Core/Src/smtc_hal/smtc_utilities.c",
 			"sourceGroupIndex" : 0
 		},
 		{
@@ -334,6 +452,12 @@
 			"compileGroupIndex" : 1,
 			"path" : "Core/Startup/startup_stm32l476rgtx.s",
 			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 7,
+			"compileGroupIndex" : 0,
+			"path" : "Drivers/BSP/Components/Leds/leds.c",
+			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 7,
@@ -417,6 +541,18 @@
 			"backtrace" : 7,
 			"compileGroupIndex" : 0,
 			"path" : "Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 7,
+			"compileGroupIndex" : 0,
+			"path" : "Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_spi_ex.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 7,
+			"compileGroupIndex" : 0,
+			"path" : "Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_spi.c",
 			"sourceGroupIndex" : 0
 		},
 		{

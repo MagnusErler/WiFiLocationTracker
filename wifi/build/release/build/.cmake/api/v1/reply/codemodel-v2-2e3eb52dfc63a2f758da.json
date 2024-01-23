@@ -6,6 +6,7 @@
 			[
 				{
 					"build" : ".",
+					"jsonFile" : "directory-.-Release-f5ebdc15457944623624.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.20"
@@ -18,7 +19,7 @@
 					]
 				}
 			],
-			"name" : "Debug",
+			"name" : "Release",
 			"projects" : 
 			[
 				{
@@ -26,7 +27,7 @@
 					[
 						0
 					],
-					"name" : "VSC_test",
+					"name" : "wifi",
 					"targetIndexes" : 
 					[
 						0
@@ -37,9 +38,9 @@
 			[
 				{
 					"directoryIndex" : 0,
-					"id" : "VSC_test::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-VSC_test-Debug-ca34106b594bba184c73.json",
-					"name" : "VSC_test",
+					"id" : "wifi::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-wifi-Release-d4bc0fd6cb5a66f44052.json",
+					"name" : "wifi",
 					"projectIndex" : 0
 				}
 			]
@@ -48,12 +49,12 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/home/magnus/repo/WiFiLocationTracker/stm32/VSC_test/build/debug/build",
-		"source" : "/home/magnus/repo/WiFiLocationTracker/stm32/VSC_test"
+		"build" : "/home/magnus/repo/WiFiLocationTracker/wifi/build/release/build",
+		"source" : "/home/magnus/repo/WiFiLocationTracker/wifi"
 	},
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 2
+		"minor" : 6
 	}
 }

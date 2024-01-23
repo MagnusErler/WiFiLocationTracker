@@ -3,5 +3,9 @@
   "cmake.configureOnOpen": true,
   "idf.port": "/dev/ttyACM0",
   "cortex-debug.armToolchainPath": "/opt/st/stm32cubeclt/GNU-tools-for-STM32/bin",
-  "cortex-debug.openocdPath": "/usr/bin/openocd"
+  "cortex-debug.openocdPath": "/usr/bin/openocd",
+  "files.associations": {
+    "smtc_hal_gpio_pin_names.h": "c",
+    "smtc_hal.h": "c"
+  }
 }

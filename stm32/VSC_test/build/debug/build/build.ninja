@@ -67,19 +67,107 @@ build edit_cache: phony CMakeFiles/edit_cache.util
 
 build cmake_object_order_depends_target_VSC_test: phony || CMakeFiles/VSC_test.dir
 
+build CMakeFiles/VSC_test.dir/Core/Src/boards/lr1110_modem_board.c.obj: C_COMPILER__VSC_test_Debug ../../../Core/Src/boards/lr1110_modem_board.c || cmake_object_order_depends_target_VSC_test
+  DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
+  DEP_FILE = CMakeFiles/VSC_test.dir/Core/Src/boards/lr1110_modem_board.c.obj.d
+  FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  OBJECT_DIR = CMakeFiles/VSC_test.dir
+  OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Core/Src/boards
+
 build CMakeFiles/VSC_test.dir/Core/Src/main.c.obj: C_COMPILER__VSC_test_Debug ../../../Core/Src/main.c || cmake_object_order_depends_target_VSC_test
   DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles/VSC_test.dir/Core/Src/main.c.obj.d
   FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
-  INCLUDES = -I../../../Core/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
   OBJECT_DIR = CMakeFiles/VSC_test.dir
   OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Core/Src
+
+build CMakeFiles/VSC_test.dir/Core/Src/radio/lr1110_modem/src/lr1110_bootloader.c.obj: C_COMPILER__VSC_test_Debug ../../../Core/Src/radio/lr1110_modem/src/lr1110_bootloader.c || cmake_object_order_depends_target_VSC_test
+  DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
+  DEP_FILE = CMakeFiles/VSC_test.dir/Core/Src/radio/lr1110_modem/src/lr1110_bootloader.c.obj.d
+  FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  OBJECT_DIR = CMakeFiles/VSC_test.dir
+  OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Core/Src/radio/lr1110_modem/src
+
+build CMakeFiles/VSC_test.dir/Core/Src/radio/lr1110_modem/src/lr1110_modem_helper.c.obj: C_COMPILER__VSC_test_Debug ../../../Core/Src/radio/lr1110_modem/src/lr1110_modem_helper.c || cmake_object_order_depends_target_VSC_test
+  DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
+  DEP_FILE = CMakeFiles/VSC_test.dir/Core/Src/radio/lr1110_modem/src/lr1110_modem_helper.c.obj.d
+  FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  OBJECT_DIR = CMakeFiles/VSC_test.dir
+  OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Core/Src/radio/lr1110_modem/src
+
+build CMakeFiles/VSC_test.dir/Core/Src/radio/lr1110_modem/src/lr1110_modem_lorawan.c.obj: C_COMPILER__VSC_test_Debug ../../../Core/Src/radio/lr1110_modem/src/lr1110_modem_lorawan.c || cmake_object_order_depends_target_VSC_test
+  DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
+  DEP_FILE = CMakeFiles/VSC_test.dir/Core/Src/radio/lr1110_modem/src/lr1110_modem_lorawan.c.obj.d
+  FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  OBJECT_DIR = CMakeFiles/VSC_test.dir
+  OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Core/Src/radio/lr1110_modem/src
+
+build CMakeFiles/VSC_test.dir/Core/Src/radio/lr1110_modem/src/lr1110_modem_system.c.obj: C_COMPILER__VSC_test_Debug ../../../Core/Src/radio/lr1110_modem/src/lr1110_modem_system.c || cmake_object_order_depends_target_VSC_test
+  DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
+  DEP_FILE = CMakeFiles/VSC_test.dir/Core/Src/radio/lr1110_modem/src/lr1110_modem_system.c.obj.d
+  FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  OBJECT_DIR = CMakeFiles/VSC_test.dir
+  OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Core/Src/radio/lr1110_modem/src
+
+build CMakeFiles/VSC_test.dir/Core/Src/radio/lr1110.c.obj: C_COMPILER__VSC_test_Debug ../../../Core/Src/radio/lr1110.c || cmake_object_order_depends_target_VSC_test
+  DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
+  DEP_FILE = CMakeFiles/VSC_test.dir/Core/Src/radio/lr1110.c.obj.d
+  FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  OBJECT_DIR = CMakeFiles/VSC_test.dir
+  OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Core/Src/radio
+
+build CMakeFiles/VSC_test.dir/Core/Src/smtc_hal/smtc_hal_flash.c.obj: C_COMPILER__VSC_test_Debug ../../../Core/Src/smtc_hal/smtc_hal_flash.c || cmake_object_order_depends_target_VSC_test
+  DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
+  DEP_FILE = CMakeFiles/VSC_test.dir/Core/Src/smtc_hal/smtc_hal_flash.c.obj.d
+  FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  OBJECT_DIR = CMakeFiles/VSC_test.dir
+  OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Core/Src/smtc_hal
+
+build CMakeFiles/VSC_test.dir/Core/Src/smtc_hal/smtc_hal_gpio.c.obj: C_COMPILER__VSC_test_Debug ../../../Core/Src/smtc_hal/smtc_hal_gpio.c || cmake_object_order_depends_target_VSC_test
+  DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
+  DEP_FILE = CMakeFiles/VSC_test.dir/Core/Src/smtc_hal/smtc_hal_gpio.c.obj.d
+  FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  OBJECT_DIR = CMakeFiles/VSC_test.dir
+  OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Core/Src/smtc_hal
+
+build CMakeFiles/VSC_test.dir/Core/Src/smtc_hal/smtc_hal_mcu.c.obj: C_COMPILER__VSC_test_Debug ../../../Core/Src/smtc_hal/smtc_hal_mcu.c || cmake_object_order_depends_target_VSC_test
+  DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
+  DEP_FILE = CMakeFiles/VSC_test.dir/Core/Src/smtc_hal/smtc_hal_mcu.c.obj.d
+  FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  OBJECT_DIR = CMakeFiles/VSC_test.dir
+  OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Core/Src/smtc_hal
+
+build CMakeFiles/VSC_test.dir/Core/Src/smtc_hal/smtc_hal_uart.c.obj: C_COMPILER__VSC_test_Debug ../../../Core/Src/smtc_hal/smtc_hal_uart.c || cmake_object_order_depends_target_VSC_test
+  DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
+  DEP_FILE = CMakeFiles/VSC_test.dir/Core/Src/smtc_hal/smtc_hal_uart.c.obj.d
+  FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  OBJECT_DIR = CMakeFiles/VSC_test.dir
+  OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Core/Src/smtc_hal
+
+build CMakeFiles/VSC_test.dir/Core/Src/smtc_hal/smtc_utilities.c.obj: C_COMPILER__VSC_test_Debug ../../../Core/Src/smtc_hal/smtc_utilities.c || cmake_object_order_depends_target_VSC_test
+  DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
+  DEP_FILE = CMakeFiles/VSC_test.dir/Core/Src/smtc_hal/smtc_utilities.c.obj.d
+  FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  OBJECT_DIR = CMakeFiles/VSC_test.dir
+  OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Core/Src/smtc_hal
 
 build CMakeFiles/VSC_test.dir/Core/Src/stm32l4xx_hal_msp.c.obj: C_COMPILER__VSC_test_Debug ../../../Core/Src/stm32l4xx_hal_msp.c || cmake_object_order_depends_target_VSC_test
   DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles/VSC_test.dir/Core/Src/stm32l4xx_hal_msp.c.obj.d
   FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
-  INCLUDES = -I../../../Core/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
   OBJECT_DIR = CMakeFiles/VSC_test.dir
   OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Core/Src
 
@@ -87,7 +175,7 @@ build CMakeFiles/VSC_test.dir/Core/Src/stm32l4xx_it.c.obj: C_COMPILER__VSC_test_
   DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles/VSC_test.dir/Core/Src/stm32l4xx_it.c.obj.d
   FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
-  INCLUDES = -I../../../Core/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
   OBJECT_DIR = CMakeFiles/VSC_test.dir
   OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Core/Src
 
@@ -95,7 +183,7 @@ build CMakeFiles/VSC_test.dir/Core/Src/syscalls.c.obj: C_COMPILER__VSC_test_Debu
   DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles/VSC_test.dir/Core/Src/syscalls.c.obj.d
   FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
-  INCLUDES = -I../../../Core/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
   OBJECT_DIR = CMakeFiles/VSC_test.dir
   OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Core/Src
 
@@ -103,7 +191,7 @@ build CMakeFiles/VSC_test.dir/Core/Src/sysmem.c.obj: C_COMPILER__VSC_test_Debug 
   DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles/VSC_test.dir/Core/Src/sysmem.c.obj.d
   FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
-  INCLUDES = -I../../../Core/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
   OBJECT_DIR = CMakeFiles/VSC_test.dir
   OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Core/Src
 
@@ -111,7 +199,7 @@ build CMakeFiles/VSC_test.dir/Core/Src/system_stm32l4xx.c.obj: C_COMPILER__VSC_t
   DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles/VSC_test.dir/Core/Src/system_stm32l4xx.c.obj.d
   FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
-  INCLUDES = -I../../../Core/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
   OBJECT_DIR = CMakeFiles/VSC_test.dir
   OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Core/Src
 
@@ -122,11 +210,19 @@ build CMakeFiles/VSC_test.dir/Core/Startup/startup_stm32l476rgtx.s.obj: ASM_COMP
   OBJECT_DIR = CMakeFiles/VSC_test.dir
   OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Core/Startup
 
+build CMakeFiles/VSC_test.dir/Drivers/BSP/Components/Leds/leds.c.obj: C_COMPILER__VSC_test_Debug ../../../Drivers/BSP/Components/Leds/leds.c || cmake_object_order_depends_target_VSC_test
+  DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
+  DEP_FILE = CMakeFiles/VSC_test.dir/Drivers/BSP/Components/Leds/leds.c.obj.d
+  FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  OBJECT_DIR = CMakeFiles/VSC_test.dir
+  OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Drivers/BSP/Components/Leds
+
 build CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c.obj: C_COMPILER__VSC_test_Debug ../../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c || cmake_object_order_depends_target_VSC_test
   DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c.obj.d
   FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
-  INCLUDES = -I../../../Core/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
   OBJECT_DIR = CMakeFiles/VSC_test.dir
   OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src
 
@@ -134,7 +230,7 @@ build CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_dma
   DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_dma_ex.c.obj.d
   FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
-  INCLUDES = -I../../../Core/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
   OBJECT_DIR = CMakeFiles/VSC_test.dir
   OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src
 
@@ -142,7 +238,7 @@ build CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_dma
   DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_dma.c.obj.d
   FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
-  INCLUDES = -I../../../Core/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
   OBJECT_DIR = CMakeFiles/VSC_test.dir
   OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src
 
@@ -150,7 +246,7 @@ build CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_ext
   DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_exti.c.obj.d
   FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
-  INCLUDES = -I../../../Core/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
   OBJECT_DIR = CMakeFiles/VSC_test.dir
   OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src
 
@@ -158,7 +254,7 @@ build CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_fla
   DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_flash_ex.c.obj.d
   FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
-  INCLUDES = -I../../../Core/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
   OBJECT_DIR = CMakeFiles/VSC_test.dir
   OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src
 
@@ -166,7 +262,7 @@ build CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_fla
   DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_flash_ramfunc.c.obj.d
   FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
-  INCLUDES = -I../../../Core/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
   OBJECT_DIR = CMakeFiles/VSC_test.dir
   OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src
 
@@ -174,7 +270,7 @@ build CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_fla
   DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_flash.c.obj.d
   FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
-  INCLUDES = -I../../../Core/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
   OBJECT_DIR = CMakeFiles/VSC_test.dir
   OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src
 
@@ -182,7 +278,7 @@ build CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_gpi
   DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_gpio.c.obj.d
   FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
-  INCLUDES = -I../../../Core/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
   OBJECT_DIR = CMakeFiles/VSC_test.dir
   OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src
 
@@ -190,7 +286,7 @@ build CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c
   DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c_ex.c.obj.d
   FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
-  INCLUDES = -I../../../Core/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
   OBJECT_DIR = CMakeFiles/VSC_test.dir
   OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src
 
@@ -198,7 +294,7 @@ build CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c
   DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c.obj.d
   FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
-  INCLUDES = -I../../../Core/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
   OBJECT_DIR = CMakeFiles/VSC_test.dir
   OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src
 
@@ -206,7 +302,7 @@ build CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr
   DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr_ex.c.obj.d
   FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
-  INCLUDES = -I../../../Core/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
   OBJECT_DIR = CMakeFiles/VSC_test.dir
   OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src
 
@@ -214,7 +310,7 @@ build CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr
   DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr.c.obj.d
   FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
-  INCLUDES = -I../../../Core/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
   OBJECT_DIR = CMakeFiles/VSC_test.dir
   OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src
 
@@ -222,7 +318,7 @@ build CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc
   DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc_ex.c.obj.d
   FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
-  INCLUDES = -I../../../Core/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
   OBJECT_DIR = CMakeFiles/VSC_test.dir
   OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src
 
@@ -230,7 +326,23 @@ build CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc
   DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c.obj.d
   FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
-  INCLUDES = -I../../../Core/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  OBJECT_DIR = CMakeFiles/VSC_test.dir
+  OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src
+
+build CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_spi_ex.c.obj: C_COMPILER__VSC_test_Debug ../../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_spi_ex.c || cmake_object_order_depends_target_VSC_test
+  DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
+  DEP_FILE = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_spi_ex.c.obj.d
+  FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  OBJECT_DIR = CMakeFiles/VSC_test.dir
+  OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src
+
+build CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_spi.c.obj: C_COMPILER__VSC_test_Debug ../../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_spi.c || cmake_object_order_depends_target_VSC_test
+  DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
+  DEP_FILE = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_spi.c.obj.d
+  FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
   OBJECT_DIR = CMakeFiles/VSC_test.dir
   OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src
 
@@ -238,7 +350,7 @@ build CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim
   DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c.obj.d
   FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
-  INCLUDES = -I../../../Core/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
   OBJECT_DIR = CMakeFiles/VSC_test.dir
   OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src
 
@@ -246,7 +358,7 @@ build CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim
   DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj.d
   FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
-  INCLUDES = -I../../../Core/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
   OBJECT_DIR = CMakeFiles/VSC_test.dir
   OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src
 
@@ -254,7 +366,7 @@ build CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uar
   DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart_ex.c.obj.d
   FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
-  INCLUDES = -I../../../Core/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
   OBJECT_DIR = CMakeFiles/VSC_test.dir
   OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src
 
@@ -262,7 +374,7 @@ build CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uar
   DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c.obj.d
   FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
-  INCLUDES = -I../../../Core/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
   OBJECT_DIR = CMakeFiles/VSC_test.dir
   OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src
 
@@ -270,7 +382,7 @@ build CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c.o
   DEFINES = -DDEBUG -DSTM32L476xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c.obj.d
   FLAGS = -g -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
-  INCLUDES = -I../../../Core/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
+  INCLUDES = -I../../../Core/Inc -I../../../Core/Inc/boards -I../../../Core/Inc/smtc_hal -I../../../Core/Src/radio -I../../../Core/Src/radio/lr1110_modem/src -I../../../Drivers/BSP/Components/Leds -I../../../Drivers/STM32L4xx_HAL_Driver/Inc -I../../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../../../Drivers/STM32L4xx_HAL_Driver/Src -I../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../../../Drivers/CMSIS/Include
   OBJECT_DIR = CMakeFiles/VSC_test.dir
   OBJECT_FILE_DIR = CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src
 
@@ -282,7 +394,7 @@ build CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c.o
 #############################################
 # Link the executable VSC_test.elf
 
-build VSC_test.elf: C_EXECUTABLE_LINKER__VSC_test_Debug CMakeFiles/VSC_test.dir/Core/Src/main.c.obj CMakeFiles/VSC_test.dir/Core/Src/stm32l4xx_hal_msp.c.obj CMakeFiles/VSC_test.dir/Core/Src/stm32l4xx_it.c.obj CMakeFiles/VSC_test.dir/Core/Src/syscalls.c.obj CMakeFiles/VSC_test.dir/Core/Src/sysmem.c.obj CMakeFiles/VSC_test.dir/Core/Src/system_stm32l4xx.c.obj CMakeFiles/VSC_test.dir/Core/Startup/startup_stm32l476rgtx.s.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_dma_ex.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_dma.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_exti.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_flash_ex.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_flash_ramfunc.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_flash.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_gpio.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c_ex.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr_ex.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc_ex.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart_ex.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c.obj
+build VSC_test.elf: C_EXECUTABLE_LINKER__VSC_test_Debug CMakeFiles/VSC_test.dir/Core/Src/boards/lr1110_modem_board.c.obj CMakeFiles/VSC_test.dir/Core/Src/main.c.obj CMakeFiles/VSC_test.dir/Core/Src/radio/lr1110_modem/src/lr1110_bootloader.c.obj CMakeFiles/VSC_test.dir/Core/Src/radio/lr1110_modem/src/lr1110_modem_helper.c.obj CMakeFiles/VSC_test.dir/Core/Src/radio/lr1110_modem/src/lr1110_modem_lorawan.c.obj CMakeFiles/VSC_test.dir/Core/Src/radio/lr1110_modem/src/lr1110_modem_system.c.obj CMakeFiles/VSC_test.dir/Core/Src/radio/lr1110.c.obj CMakeFiles/VSC_test.dir/Core/Src/smtc_hal/smtc_hal_flash.c.obj CMakeFiles/VSC_test.dir/Core/Src/smtc_hal/smtc_hal_gpio.c.obj CMakeFiles/VSC_test.dir/Core/Src/smtc_hal/smtc_hal_mcu.c.obj CMakeFiles/VSC_test.dir/Core/Src/smtc_hal/smtc_hal_uart.c.obj CMakeFiles/VSC_test.dir/Core/Src/smtc_hal/smtc_utilities.c.obj CMakeFiles/VSC_test.dir/Core/Src/stm32l4xx_hal_msp.c.obj CMakeFiles/VSC_test.dir/Core/Src/stm32l4xx_it.c.obj CMakeFiles/VSC_test.dir/Core/Src/syscalls.c.obj CMakeFiles/VSC_test.dir/Core/Src/sysmem.c.obj CMakeFiles/VSC_test.dir/Core/Src/system_stm32l4xx.c.obj CMakeFiles/VSC_test.dir/Core/Startup/startup_stm32l476rgtx.s.obj CMakeFiles/VSC_test.dir/Drivers/BSP/Components/Leds/leds.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_dma_ex.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_dma.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_exti.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_flash_ex.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_flash_ramfunc.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_flash.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_gpio.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c_ex.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr_ex.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc_ex.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_spi_ex.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_spi.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart_ex.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c.obj CMakeFiles/VSC_test.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c.obj
   FLAGS = -g
   LINK_FLAGS = -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -T /home/magnus/repo/WiFiLocationTracker/stm32/VSC_test/STM32L476RGTX_FLASH.ld
   OBJECT_DIR = CMakeFiles/VSC_test.dir
