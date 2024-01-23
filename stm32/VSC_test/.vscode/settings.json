@@ -1,0 +1,7 @@
+{
+  "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+  "cmake.configureOnOpen": true,
+  "idf.port": "/dev/ttyACM0",
+  "cortex-debug.armToolchainPath": "/opt/st/stm32cubeclt/GNU-tools-for-STM32/bin",
+  "cortex-debug.openocdPath": "/usr/bin/openocd"
+}

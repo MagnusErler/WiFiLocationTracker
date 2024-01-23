@@ -1,0 +1,10 @@
+../Core/Src/smtc_hal/smtc_hal_uart.c:128:6:hal_uart_init	24	static
+../Core/Src/smtc_hal/smtc_hal_uart.c:154:6:hal_uart_deinit	24	static
+../Core/Src/smtc_hal/smtc_hal_uart.c:162:6:hal_uart_tx	32	static
+../Core/Src/smtc_hal/smtc_hal_uart.c:173:6:hal_uart_rx	32	static
+../Core/Src/smtc_hal/smtc_hal_uart.c:186:6:HAL_UART_MspInit	104	static
+../Core/Src/smtc_hal/smtc_hal_uart.c:254:6:HAL_UART_MspDeInit	32	static
+../Core/Src/smtc_hal/smtc_hal_uart.c:289:6:USART1_IRQHandler	8	static
+../Core/Src/smtc_hal/smtc_hal_uart.c:294:6:USART2_IRQHandler	8	static
+../Core/Src/smtc_hal/smtc_hal_uart.c:302:6:USART3_IRQHandler	8	static
+../Core/Src/smtc_hal/smtc_hal_uart.c:314:6:HAL_UART_RxCpltCallback	16	static

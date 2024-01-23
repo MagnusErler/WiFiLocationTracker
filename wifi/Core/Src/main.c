@@ -22,6 +22,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
+#include "smtc_hal.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -94,6 +96,8 @@ int main(void)
   MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
 
+  uint8_t msg[] = "Hello world\r\n";
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -105,13 +109,19 @@ int main(void)
 	//HAL_UART_Transmit(&huart2, msg, sizeof(msg), 10);
 
 	//lr1110_modem_board_led_set( (1 << RX_LED_Pin), 1 );		//or HAL_GPIO_TogglePin(GPIOC, RX_LED_Pin);
+	//HAL_Delay(1000);
+	//lr1110_modem_board_led_set( (1 << RX_LED_Pin), 0 );
 	HAL_GPIO_TogglePin(GPIOC, RX_LED_Pin);
 
-	//HAL_GPIO_TogglePin(GPIOC, RX_LED_Pin);
 	HAL_GPIO_TogglePin(GPIOC, TX_LED_Pin);
 	//HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
 	HAL_GPIO_TogglePin(Sniffing_LED_GPIO_Port, Sniffing_LED_Pin);
 	HAL_Delay(1000);
+
+
+	//HAL_DBG_TRACE_MSG("Testing");
+	HAL_UART_Transmit(&huart2, msg, sizeof(msg), 10);
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

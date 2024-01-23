@@ -26,7 +26,19 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_spi.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_spi_ex.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h \
- ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h
+ ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h \
+ ../Core/Inc/smtc_hal/smtc_hal.h ../Core/Inc/smtc_hal/smtc_hal_options.h \
+ ../Core/Inc/smtc_hal/smtc_hal_dbg_trace.h \
+ ../Core/Inc/smtc_hal/smtc_hal_mcu.h ../Core/Inc/smtc_hal/smtc_hal_gpio.h \
+ ../Core/Inc/smtc_hal/smtc_hal_gpio_pin_names.h \
+ ../Core/Inc/smtc_hal/smtc_hal_tmr.h \
+ ../Core/Inc/smtc_hal/smtc_hal_tmr_list.h \
+ ../Core/Inc/smtc_hal/smtc_hal_watchdog.h \
+ ../Core/Inc/smtc_hal/smtc_hal_rng.h ../Core/Inc/smtc_hal/smtc_hal_spi.h \
+ ../Core/Inc/smtc_hal/smtc_hal_uart.h \
+ ../Core/Inc/smtc_hal/smtc_utilities.h \
+ ../Core/Inc/smtc_hal/smtc_hal_flash.h ../Core/Inc/boards/board-config.h \
+ ../Drivers/BSP/Components/Leds/leds.h
 ../Core/Inc/main.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
 ../Core/Inc/stm32l4xx_hal_conf.h:
@@ -56,3 +68,19 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_spi_ex.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h:
+../Core/Inc/smtc_hal/smtc_hal.h:
+../Core/Inc/smtc_hal/smtc_hal_options.h:
+../Core/Inc/smtc_hal/smtc_hal_dbg_trace.h:
+../Core/Inc/smtc_hal/smtc_hal_mcu.h:
+../Core/Inc/smtc_hal/smtc_hal_gpio.h:
+../Core/Inc/smtc_hal/smtc_hal_gpio_pin_names.h:
+../Core/Inc/smtc_hal/smtc_hal_tmr.h:
+../Core/Inc/smtc_hal/smtc_hal_tmr_list.h:
+../Core/Inc/smtc_hal/smtc_hal_watchdog.h:
+../Core/Inc/smtc_hal/smtc_hal_rng.h:
+../Core/Inc/smtc_hal/smtc_hal_spi.h:
+../Core/Inc/smtc_hal/smtc_hal_uart.h:
+../Core/Inc/smtc_hal/smtc_utilities.h:
+../Core/Inc/smtc_hal/smtc_hal_flash.h:
+../Core/Inc/boards/board-config.h:
+../Drivers/BSP/Components/Leds/leds.h:

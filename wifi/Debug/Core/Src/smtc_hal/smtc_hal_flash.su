@@ -1,0 +1,8 @@
+../Core/Src/smtc_hal/smtc_hal_flash.c:91:10:flash_init	176	static
+../Core/Src/smtc_hal/smtc_hal_flash.c:122:9:flash_erase_page	56	static
+../Core/Src/smtc_hal/smtc_hal_flash.c:201:9:flash_force_erase_page	48	static
+../Core/Src/smtc_hal/smtc_hal_flash.c:263:10:flash_write_buffer	88	static
+../Core/Src/smtc_hal/smtc_hal_flash.c:340:6:flash_read_buffer	32	static
+../Core/Src/smtc_hal/smtc_hal_flash.c:355:10:flash_get_user_start_addr	4	static
+../Core/Src/smtc_hal/smtc_hal_flash.c:357:6:flash_set_user_start_addr	16	static
+../Core/Src/smtc_hal/smtc_hal_flash.c:359:17:get_page	16	static

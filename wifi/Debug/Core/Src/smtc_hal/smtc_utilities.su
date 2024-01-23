@@ -1,0 +1,7 @@
+../Core/Src/smtc_hal/smtc_utilities.c:45:9:rand1	4	static
+../Core/Src/smtc_hal/smtc_utilities.c:47:6:srand1	16	static
+../Core/Src/smtc_hal/smtc_utilities.c:50:9:randr	16	static
+../Core/Src/smtc_hal/smtc_utilities.c:52:6:memcpy1	24	static
+../Core/Src/smtc_hal/smtc_utilities.c:60:6:memcpyr	24	static
+../Core/Src/smtc_hal/smtc_utilities.c:69:6:memset1	16	static
+../Core/Src/smtc_hal/smtc_utilities.c:77:8:Nibble2HexChar	16	static

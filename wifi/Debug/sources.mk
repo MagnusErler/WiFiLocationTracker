@@ -26,6 +26,7 @@ Core/Src/boards \
 Core/Src \
 Core/Src/radio \
 Core/Src/radio/lr1110_modem/src \
+Core/Src/smtc_hal \
 Core/Startup \
 Drivers/BSP/Components/Leds \
 Drivers/STM32L4xx_HAL_Driver/Src \

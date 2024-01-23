@@ -12,6 +12,7 @@ RM := rm -rf
 -include Drivers/STM32L4xx_HAL_Driver/Src/subdir.mk
 -include Drivers/BSP/Components/Leds/subdir.mk
 -include Core/Startup/subdir.mk
+-include Core/Src/smtc_hal/subdir.mk
 -include Core/Src/radio/lr1110_modem/src/subdir.mk
 -include Core/Src/radio/subdir.mk
 -include Core/Src/boards/subdir.mk

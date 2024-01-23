@@ -13,7 +13,7 @@
 ../Core/Src/boards/lr1110_modem_board.c:275:6:lr1110_modem_board_is_ready	4	static
 ../Core/Src/boards/lr1110_modem_board.c:277:6:lr1110_modem_board_set_ready	16	static
 ../Core/Src/boards/lr1110_modem_board.c:279:30:lr1110_modem_board_measure_battery_drop	40	static
-../Core/Src/boards/lr1110_modem_board.c:349:6:lr1110_modem_board_led_set	24	static
+../Core/Src/boards/lr1110_modem_board.c:349:6:lr1110_modem_board_led_set	16	static
 ../Core/Src/boards/lr1110_modem_board.c:375:6:lr1110_modem_board_led_pulse	32	static
 ../Core/Src/boards/lr1110_modem_board.c:414:37:lr1110_modem_board_init_tcxo_io	16	static
 ../Core/Src/boards/lr1110_modem_board.c:420:6:on_led_timer_event	24	static
