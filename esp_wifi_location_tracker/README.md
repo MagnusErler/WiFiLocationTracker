@@ -21,7 +21,7 @@ Generate your Google API key to use the applications by following [here](https:/
 
 Create `secret.h` inside `src` and add
 
-```
+```c
 // secret.h
 #ifndef SECRET_H
 #define SECRET_H
