@@ -6,6 +6,8 @@ Three differnet **wifi location tracker** are implemented; [esp](esp_wifi_locati
 
 **python_wifi_location_tracker** can be run in a python environment and approximate the lcoation of the device. It uses a `GOOGLE_API_KEY` (described in **Setup**).
 
+**stm32** is still in progress and is not currently working (View [README](stm32/README.md) for more info).
+
 ## Setup
 
 Generate your Google API key to use the applications by following [here](https://developers.google.com/maps/documentation/geolocation/get-api-key).
