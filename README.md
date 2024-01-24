@@ -13,3 +13,5 @@ Three differnet **wifi location tracker** are implemented; [esp](esp_wifi_locati
 Generate your Google API key to use the applications by following [here](https://developers.google.com/maps/documentation/geolocation/get-api-key).
 
 Create `secret.txt` and add `GOOGLE_API_KEY = YOUR_API_KEY`
+
+Choose either **esp_wifi_location_tracker** or **python_wifi_location_tracker** and read the respectively README.md
