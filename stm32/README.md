@@ -14,7 +14,7 @@ Still in progress of implementation
 
 Install [STM32CubeMX](https://www.st.com/resource/en/user_manual/dm00104712-stm32cubemx-for-stm32-configuration-and-initialization-c-code-generation-stmicroelectronics.pdf) and [STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html)
 
-Currently using a [NUCLEO-L476RG](https://www.st.com/en/evaluation-tools/nucleo-l476rg.html) as the stm32-chip and [LR1110](https://www.semtech.com/products/wireless-rf/lora-edge/lr1110) for scanning WiFI AP's and satellite
+Currently using a [NUCLEO-L476RG](https://www.st.com/en/evaluation-tools/nucleo-l476rg.html) as the STM32-chip and [LR1110](https://www.semtech.com/products/wireless-rf/lora-edge/lr1110) for scanning WiFI AP's and satellite
 
 **LR1110**
 
