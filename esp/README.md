@@ -4,7 +4,7 @@
 
 Google requires using secure TLS connection in order to use GeoLocation API. `WifiLocation1.cpp` includes GoogleCA certificate to check server chain. This certificate may expire.
 
-You may get current certificate using this command (if you are using Linux)
+You may get current certificate using the follwoing command (if you are using Linux)
 
 ```bash
 openssl s_client -servername www.googleapis.com -showcerts \
