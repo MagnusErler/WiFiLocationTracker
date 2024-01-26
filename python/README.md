@@ -1,4 +1,4 @@
-# PythonWiFiLocationTracker
+# Python WiFiLocationTracker
 
 ## Setup
 

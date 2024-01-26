@@ -1,4 +1,4 @@
-# ESPWiFiLocationTracker
+# ESP WiFiLocationTracker
 
 ## Setup
 

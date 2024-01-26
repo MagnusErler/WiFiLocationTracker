@@ -1,4 +1,4 @@
-# STM32WiFiLocationTracker
+# STM32 WiFiLocationTracker
 
 Still in progress of implementation
 
