@@ -41,7 +41,7 @@ extern "C" {
  */
 
 #include "stm32l4xx_hal.h"
-#include "stm32l4xx_hal_spi.h" //magnus #include "stm32l4xx_ll_spi.h"
+#include "stm32l4xx_ll_spi.h"
 #include "smtc_hal_gpio_pin_names.h"
 
 /*

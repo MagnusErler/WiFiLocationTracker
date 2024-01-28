@@ -123,55 +123,57 @@ lr1110_modem_response_code_t lr1110_modem_helper_gnss_get_almanac_date_by_index(
 
     if( rc == LR1110_MODEM_RESPONSE_CODE_OK )
     {
-    	//magnus lr1110_modem_gnss_almanac_constellation_id_t sv_constellation_id =
-    	//magnus     ( lr1110_modem_gnss_almanac_constellation_id_t )
-    	//magnus         rbuffer[LR1110_MODEM_HELPER_GNSS_ALMANAC_SV_CONSTELLATION_ID_BUFFER_LOCATION];
+    	//magnus
+        /*lr1110_modem_gnss_almanac_constellation_id_t sv_constellation_id =
+    	    ( lr1110_modem_gnss_almanac_constellation_id_t )
+    	        rbuffer[LR1110_MODEM_HELPER_GNSS_ALMANAC_SV_CONSTELLATION_ID_BUFFER_LOCATION];
 
-    	//magnus if( ( sv_constellation_id != LR1110_MODEM_GNSS_ALMANAC_CONSTELLATION_UNDEFINED ) &&
-    	//magnus     ( gnss_week_number_rollover != 0 ) )
-    	//magnus {
-    	//magnus     *date = ( ( ( uint32_t ) rbuffer[2] << 8 ) + ( uint32_t ) rbuffer[1] );
-    	//magnus     // date =  Initial GPS date (6 jan 1980) + 24h * 3600s * ( 1024 weeks * gnss_week_number_rollover
-    	//magnus     // * 7 days + almanac_date )
-    	//magnus     *date = ( LR1110_MODEM_HELPER_INITAL_GNSS_DATE_SECONDS +
-    	//magnus               LR1110_MODEM_HELPER_NB_HOUR_PER_DAY * LR1110_MODEM_HELPER_NB_SEC_PER_HOUR *
-    	//magnus                   ( gnss_week_number_rollover * LR1110_MODEM_HELPER_NB_WEEK_PER_WRAP *
-    	//magnus                         LR1110_MODEM_HELPER_NB_DAY_PER_WEEK +
-    	//magnus                     *date ) );
-    	//magnus }
+    	if( ( sv_constellation_id != LR1110_MODEM_GNSS_ALMANAC_CONSTELLATION_UNDEFINED ) &&
+    	    ( gnss_week_number_rollover != 0 ) )
+    	{
+    	    *date = ( ( ( uint32_t ) rbuffer[2] << 8 ) + ( uint32_t ) rbuffer[1] );
+    	    // date =  Initial GPS date (6 jan 1980) + 24h * 3600s * ( 1024 weeks * gnss_week_number_rollover
+    	    // * 7 days + almanac_date )
+    	    *date = ( LR1110_MODEM_HELPER_INITAL_GNSS_DATE_SECONDS +
+    	              LR1110_MODEM_HELPER_NB_HOUR_PER_DAY * LR1110_MODEM_HELPER_NB_SEC_PER_HOUR *
+    	                  ( gnss_week_number_rollover * LR1110_MODEM_HELPER_NB_WEEK_PER_WRAP *
+    	                        LR1110_MODEM_HELPER_NB_DAY_PER_WEEK +
+    	                    *date ) );
+    	}*/
     }
 
     return rc;
 }
 
-//magnus lr1110_modem_helper_status_t lr1110_modem_helper_gnss_get_result_destination(
-//magnus     const uint8_t* result_buffer, const uint16_t result_buffer_size, lr1110_modem_gnss_destination_t* destination )
-//magnus {
-//magnus     lr1110_modem_helper_status_t status = LR1110_MODEM_HELPER_STATUS_ERROR;
 //magnus
-//magnus     if( result_buffer_size != 0 )
-//magnus     {
-//magnus         switch( result_buffer[LR1110_MODEM_GNSS_SCAN_RESULT_DESTINATION_INDEX] )
-//magnus         {
-//magnus         case LR1110_MODEM_GNSS_DESTINATION_HOST:
-//magnus         {
-//magnus             status       = LR1110_MODEM_HELPER_STATUS_OK;
-//magnus             *destination = LR1110_MODEM_GNSS_DESTINATION_HOST;
-//magnus
-//magnus             break;
-//magnus         }
-//magnus         case LR1110_MODEM_GNSS_DESTINATION_SOLVER:
-//magnus         {
-//magnus             status       = LR1110_MODEM_HELPER_STATUS_OK;
-//magnus             *destination = LR1110_MODEM_GNSS_DESTINATION_SOLVER;
-//magnus
-//magnus             break;
-//magnus         }
-//magnus         }
-//magnus     }
-//magnus
-//magnus     return status;
-//magnus }
+/*lr1110_modem_helper_status_t lr1110_modem_helper_gnss_get_result_destination(
+    const uint8_t* result_buffer, const uint16_t result_buffer_size, lr1110_modem_gnss_destination_t* destination )
+{
+    lr1110_modem_helper_status_t status = LR1110_MODEM_HELPER_STATUS_ERROR;
+
+    if( result_buffer_size != 0 )
+    {
+        switch( result_buffer[LR1110_MODEM_GNSS_SCAN_RESULT_DESTINATION_INDEX] )
+        {
+        case LR1110_MODEM_GNSS_DESTINATION_HOST:
+        {
+           status       = LR1110_MODEM_HELPER_STATUS_OK;
+           *destination = LR1110_MODEM_GNSS_DESTINATION_HOST;
+
+           break;
+        }
+        case LR1110_MODEM_GNSS_DESTINATION_SOLVER:
+        {
+           status       = LR1110_MODEM_HELPER_STATUS_OK;
+           *destination = LR1110_MODEM_GNSS_DESTINATION_SOLVER;
+
+           break;
+        }
+        }
+    }
+
+    return status;
+}*/
 
 //magnus
 /*lr1110_modem_helper_status_t lr1110_modem_helper_gnss_get_event_type( const uint8_t* result_buffer,
@@ -229,8 +231,7 @@ lr1110_modem_response_code_t lr1110_modem_helper_gnss_get_almanac_date_by_index(
     return status;
 }*/
 
-//magnus
-/*lr1110_modem_helper_status_t lr1110_modem_helper_get_event_data( const void*           context,
+lr1110_modem_helper_status_t lr1110_modem_helper_get_event_data( const void*           context,
                                                                  lr1110_modem_event_t* modem_event )
 {
     lr1110_modem_helper_status_t status              = LR1110_MODEM_HELPER_STATUS_ERROR;
@@ -297,7 +298,7 @@ lr1110_modem_response_code_t lr1110_modem_helper_gnss_get_almanac_date_by_index(
     }
 
     return status;
-}*/
+}
 
 /*
  * -----------------------------------------------------------------------------

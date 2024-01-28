@@ -31,7 +31,7 @@
 
 #include "system_spi.h"
 
-//magnus void system_spi_init( void )
+// void system_spi_init( void )
 // {
 //     LL_SPI_InitTypeDef  SPI_InitStruct  = { 0 };
 //     LL_GPIO_InitTypeDef GPIO_InitStruct = { 0 };
@@ -79,7 +79,7 @@
 void system_spi_write( SPI_TypeDef* spi, const uint8_t* buffer, uint16_t length )
 {
     for( uint16_t i = 0; i < length; i++ )
-    {
+    {   
         while( LL_SPI_IsActiveFlag_TXE( spi ) == 0 )
         {
         };

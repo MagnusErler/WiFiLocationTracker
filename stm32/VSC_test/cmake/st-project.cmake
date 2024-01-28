@@ -104,6 +104,7 @@ target_sources(
     "Core/Src/smtc_hal/smtc_hal_flash.c"
     "Core/Src/smtc_hal/smtc_hal_gpio.c"
     "Core/Src/smtc_hal/smtc_hal_mcu.c"
+    "Core/Src/smtc_hal/smtc_hal_spi.c"
     "Core/Src/smtc_hal/smtc_hal_uart.c"
     "Core/Src/smtc_hal/smtc_utilities.c"
     "Core/Src/stm32l4xx_hal_msp.c"

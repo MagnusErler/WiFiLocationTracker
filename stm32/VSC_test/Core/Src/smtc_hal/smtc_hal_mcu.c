@@ -220,7 +220,7 @@ void hal_mcu_init( void )
     hal_mcu_gpio_init( );
 
     /* Initialize low power timer */
-    hal_tmr_init( );
+    //magnus hal_tmr_init( );
 
     /* Initialize the user flash */
     flash_init( );

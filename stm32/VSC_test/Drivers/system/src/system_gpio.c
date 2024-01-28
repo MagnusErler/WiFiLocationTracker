@@ -39,7 +39,7 @@
 
 // static void system_gpio_init_input( GPIO_TypeDef* port, uint32_t pin, system_gpio_interrupt_t interrupt )
 // {
-//     GPIO_InitTypeDef GPIO_InitStruct = { 0 }; //magnus LL_GPIO_InitTypeDef GPIO_InitStruct = { 0 };
+//     LL_GPIO_InitTypeDef GPIO_InitStruct = { 0 };
 
 //     if( port == GPIOA )
 //     {

@@ -165,11 +165,6 @@ void hal_uart_tx( const uint32_t id, uint8_t* buff, uint16_t len )
     uint32_t local_id = id - 1;
 
     HAL_UART_Transmit( &hal_uart[local_id].handle, ( uint8_t* ) buff, len, 0xffffff );
-    //HAL_UART_Transmit( &huart2, ( uint8_t* ) buff, len, 0xffffff );
-}
-
-void setupUART() {
-    
 }
 
 void hal_uart_rx( const uint32_t id, uint8_t* rx_buffer, uint8_t len )

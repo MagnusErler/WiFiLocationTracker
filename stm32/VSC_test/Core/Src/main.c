@@ -26,6 +26,10 @@
 #include "lr1110_modem_board.h"
 #include "lr1110_bootloader.h"
 #include "lr1110_hal.h"
+#include "system.h"
+
+//#include "smtc_hal_mcu.h"
+#include "smtc_hal_spi.h"
 
 /* USER CODE END Includes */
 
@@ -92,22 +96,25 @@ int main(void)
   /* USER CODE BEGIN SysInit */
 
   /* USER CODE END SysInit */
- 
+
   /* Initialize all configured peripherals */
-  MX_GPIO_Init();
+  MX_GPIO_Init();   // For LEDS
   MX_USART2_UART_Init();
-  MX_SPI1_Init();
+  //MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
 
   uint8_t msg[] = "Hello world\r\n";
   int a = 0;
 
-  hal_uart_init(2, PA_2, PA_3);
+  //hal_uart_init(2, PA_2, PA_3);
+  hal_mcu_init( );
+  //hal_spi_init(1, PA_5, PA_6, PA_7);
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  HAL_DBG_TRACE_INFO("Starting while loop...\r\n");
   while (1)
   {
     //HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
@@ -118,26 +125,48 @@ int main(void)
     HAL_GPIO_TogglePin(TX_LED_GPIO_Port, TX_LED_Pin);
 
     HAL_DBG_TRACE_WARNING("Testing\r\n");
-    HAL_UART_Transmit(&huart2, msg, sizeof(msg), 10);
-    
-    //Transmit the int value of a
-    char buffer[10];
-    sprintf(buffer, "%d\r\n", a);
-    HAL_UART_Transmit(&huart2, buffer, sizeof(buffer), 10);
+    HAL_DBG_TRACE_PRINTF("a = %d\r\n", a);
     a++;
 
+    const void* lr1110_context = (void*) malloc(sizeof(radio_t));
+    ((radio_t*)lr1110_context)->spi = SPI1;
+    ((radio_t*)lr1110_context)->nss.port = GPIOA;
+    ((radio_t*)lr1110_context)->nss.pin = RADIO_NSS;
+    ((radio_t*)lr1110_context)->reset.port = GPIOA;
+    ((radio_t*)lr1110_context)->reset.pin = RADIO_RESET;
+    //((radio_t*)lr1110_context)->irq.port = GPIOB;
+    //((radio_t*)lr1110_context)->irq.pin = LL_GPIO_PIN_4;
+    ((radio_t*)lr1110_context)->busy.port = GPIOB;
+    ((radio_t*)lr1110_context)->busy.pin = RADIO_BUSY;
 
-    const void* lr1110_context = NULL;
     lr1110_bootloader_version_t version;
-    //lr1110_status_t status = lr1110_bootloader_get_version(lr1110_context, &version);
 
-    // char buffer2[10];
-    // sprintf(buffer2, "%d\r\n", status);
-    // HAL_UART_Transmit(&huart2, buffer2, sizeof(buffer2), 10);
+    if (lr1110_bootloader_get_version(lr1110_context, &version) == LR1110_STATUS_OK) {
+        HAL_DBG_TRACE_PRINTF("LR1110 bootloader version: %d.%d.%d\r\n", version.hw, version.type, version.fw);
+    } else {
+        HAL_DBG_TRACE_ERROR("Failed to get LR1110 bootloader version\r\n");
+    }
+
+    lr1110_bootloader_hash_t hash;
+    if (lr1110_bootloader_get_hash(lr1110_context, &hash) == LR1110_STATUS_OK) {
+        HAL_DBG_TRACE_PRINTF("LR1110 bootloader hash: %02x%02x%02x%02x%02x%02x%02x%02x\r\n", hash[0], hash[1], hash[2], hash[3], hash[4], hash[5], hash[6], hash[7]);
+    } else {
+        HAL_DBG_TRACE_ERROR("Failed to get LR1110 bootloader hash\r\n");
+    }
+
+    //lr1110_modem_version_t version;
+    //lr1110_modem_get_version( NULL, &version );
+    // HAL_DBG_TRACE_MSG("LR1110 version: ");
+    // HAL_DBG_TRACE_PRINTF("%d\r\n", version);
+
+
+    //char buffer2[10];
+    //sprintf(buffer2, "%d\r\n", status);
+    //HAL_UART_Transmit(&huart2, buffer2, sizeof(buffer2), 10);
     
 
 
-    HAL_Delay(1000);
+    HAL_Delay(500);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -213,11 +242,11 @@ static void MX_SPI1_Init(void)
   hspi1.Instance = SPI1;
   hspi1.Init.Mode = SPI_MODE_MASTER;
   hspi1.Init.Direction = SPI_DIRECTION_2LINES;
-  hspi1.Init.DataSize = SPI_DATASIZE_4BIT;
+  hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
   hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi1.Init.NSS = SPI_NSS_SOFT;
-  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
+  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_8;
   hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
