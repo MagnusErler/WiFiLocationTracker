@@ -28,6 +28,10 @@
 #include "lr1110_hal.h"
 #include "system.h"
 
+#include <stdlib.h>
+
+#include "wifi_scan.h"
+
 //#include "smtc_hal_mcu.h"
 #include "smtc_hal_spi.h"
 
@@ -40,6 +44,13 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+
+/*!
+ * @brief Reset event callback
+ *
+ * @param [in] reset_count reset counter from the modem
+ */
+static void lr1110_modem_reset_event( uint16_t reset_count );
 
 /* USER CODE END PD */
 
@@ -54,6 +65,11 @@ SPI_HandleTypeDef hspi1;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
+
+/*!
+ * @brief Radio hardware and global parameters
+ */
+extern lr1110_t lr1110;
 
 /* USER CODE END PV */
 
@@ -88,6 +104,11 @@ int main(void)
 
   /* USER CODE BEGIN Init */
 
+  lr1110_modem_event_callback_t lr1110_modem_event_callback = { NULL };
+  lr1110_modem_version_t        modem;
+  lr1110_bootloader_version_t   bootloader_version;
+
+
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -98,17 +119,27 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
-  MX_GPIO_Init();   // For LEDS
+  //MX_GPIO_Init();
   MX_USART2_UART_Init();
   //MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
 
-  uint8_t msg[] = "Hello world\r\n";
-  int a = 0;
-
+  /* Init board */
   //hal_uart_init(2, PA_2, PA_3);
   hal_mcu_init( );
+  hal_mcu_init_periph( );
   //hal_spi_init(1, PA_5, PA_6, PA_7);
+
+  /* Board is initialized */
+  leds_blink( LED_ALL_MASK, 100, 5, true );
+
+  /* Init LR1110 modem-e event */
+  lr1110_modem_event_callback.wifi_scan_done = lr1110_modem_wifi_scan_done;
+  lr1110_modem_event_callback.reset          = lr1110_modem_reset_event;
+  //lr1110_modem_board_init( &lr1110, &lr1110_modem_event_callback );
+
+  uint8_t msg[] = "Hello world\r\n";
+  int a = 0;
 
   /* USER CODE END 2 */
 
@@ -139,10 +170,8 @@ int main(void)
     ((radio_t*)lr1110_context)->busy.port = GPIOB;
     ((radio_t*)lr1110_context)->busy.pin = RADIO_BUSY;
 
-    lr1110_bootloader_version_t version;
-
-    if (lr1110_bootloader_get_version(lr1110_context, &version) == LR1110_STATUS_OK) {
-        HAL_DBG_TRACE_PRINTF("LR1110 bootloader version: %d.%d.%d\r\n", version.hw, version.type, version.fw);
+    if (lr1110_bootloader_get_version(lr1110_context, &bootloader_version) == LR1110_STATUS_OK) {
+        HAL_DBG_TRACE_PRINTF("LR1110 bootloader version: %d.%d.%d\r\n", bootloader_version.hw, bootloader_version.type, bootloader_version.fw);
     } else {
         HAL_DBG_TRACE_ERROR("Failed to get LR1110 bootloader version\r\n");
     }
@@ -158,6 +187,20 @@ int main(void)
     //lr1110_modem_get_version( NULL, &version );
     // HAL_DBG_TRACE_MSG("LR1110 version: ");
     // HAL_DBG_TRACE_PRINTF("%d\r\n", version);
+
+    /* LR1110 modem-e version */
+    // if (lr1110_modem_get_version( &lr1110, &modem ) == LR1110_STATUS_OK)
+    // {
+    //     HAL_DBG_TRACE_PRINTF( "LR1110 MODEM-E VERSION\r\n" );
+    //     HAL_DBG_TRACE_PRINTF( "=====================\r\n\r\n" );
+    //     HAL_DBG_TRACE_PRINTF( "LORAWAN     : %#04X\r\n", modem.lorawan );
+    //     HAL_DBG_TRACE_PRINTF( "FIRMWARE    : %#02X\r\n", modem.firmware );
+    //     HAL_DBG_TRACE_PRINTF( "BOOTLOADER  : %#02X\r\n\r\n", modem.bootloader );
+    // }
+    // else
+    // {
+    //     HAL_DBG_TRACE_ERROR( "Failed to get LR1110 modem-e version\r\n" );
+    // }
 
 
     //char buffer2[10];
@@ -330,6 +373,21 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+static void lr1110_modem_reset_event( uint16_t reset_count )
+{
+    HAL_DBG_TRACE_INFO( "###### ===== LR1110 MODEM-E RESET %lu ==== ######\r\n\r\n", reset_count );
+
+    if( lr1110_modem_board_is_ready( ) == true )
+    {
+        /* System reset */
+        hal_mcu_reset( );
+    }
+    else
+    {
+        lr1110_modem_board_set_ready( true );
+    }
+}
 
 /* USER CODE END 4 */
 
