@@ -12,7 +12,11 @@ Still in progress of implementation
 
 ## Setup
 
-Install [STM32CubeMX](https://www.st.com/resource/en/user_manual/dm00104712-stm32cubemx-for-stm32-configuration-and-initialization-c-code-generation-stmicroelectronics.pdf) and [STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html)
+Install list:
+
+* [STM32CubeMX](https://www.st.com/resource/en/user_manual/dm00104712-stm32cubemx-for-stm32-configuration-and-initialization-c-code-generation-stmicroelectronics.pdf)
+* [STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html)
+* [Visual Studio Code](https://code.visualstudio.com/download)
 
 Currently using a [NUCLEO-L476RG](https://www.st.com/en/evaluation-tools/nucleo-l476rg.html) as the STM32-chip and [LR1110](https://www.semtech.com/products/wireless-rf/lora-edge/lr1110) for scanning WiFI AP's and satellite
 
@@ -32,3 +36,13 @@ Currently using a [NUCLEO-L476RG](https://www.st.com/en/evaluation-tools/nucleo-
 * Semtech provide a Cloud API (fees apply)
 
 ## Usage
+
+1. Open the stm32-folder in VSC
+2. Click on **Run and Debug** and click on **Launch**
+3. Another window pops up, click continue in the debug-menu (You can close the ned window now)
+
+Terminal Serial Console (Linux)
+
+Check which Serial port the STM32 is conencted to with `ls /dev/tty*` (mine is `/dev/ttyACM0`).
+
+View serial ouput: `cu -l /dev/ttyACM0 -s 115200`
