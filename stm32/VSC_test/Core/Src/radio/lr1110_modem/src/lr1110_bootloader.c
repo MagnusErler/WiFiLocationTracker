@@ -219,7 +219,7 @@ lr1110_status_t lr1110_bootloader_get_version( const void* context, lr1110_bootl
     return status;
 }
 
-lr1110_status_t lr1110_bootloader_get_temperature( const void* context, double* temperature )
+lr1110_status_t lr1110_bootloader_get_temperature( const void* context, uint16_t* temperature )
 {
     uint8_t         cbuffer[LR1110_BL_VERSION_CMD_LENGTH];
     uint8_t         rbuffer[3] = { 0x00 };
@@ -236,8 +236,8 @@ lr1110_status_t lr1110_bootloader_get_temperature( const void* context, double* 
         // rbuffer[0] is Temp(15:8)
         // rbuffer[1] is Temp(7:0)
         // finding Temp(10:0)
-        uint8_t temp_10_0 = ( rbuffer[0] << 2 ) + ( rbuffer[1] >> 6 );
-        double temperature = 25 + 1000/-1.7 * (temp_10_0/2047 * 1.35 - 0.7295);
+        uint16_t temp_10_0 = ( rbuffer[0] << 2 ) + ( rbuffer[1] >> 6 );
+        *temperature = 25 + (1000/(-1.7)) * ((temp_10_0/2047) * 1.35 - 0.7295);
     }
 
     return status;

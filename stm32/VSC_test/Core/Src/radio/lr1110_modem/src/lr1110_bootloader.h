@@ -82,7 +82,7 @@ lr1110_status_t lr1110_bootloader_get_version( const void* context, lr1110_bootl
  *
  * @returns Operation status
  */
-lr1110_status_t lr1110_bootloader_get_temperature( const void* context, double* temperature );
+lr1110_status_t lr1110_bootloader_get_temperature( const void* context, uint16_t* temperature );
 
 /*!
  * @brief Erase the whole flash memory of the chip

@@ -93,6 +93,13 @@ static void lr1110_modem_reset_event( uint16_t reset_count );
  */
 static void getLR1110_Version( const void* context);
 
+/*!
+ * @brief Get LR1110 temperature
+ *
+ * @param [in] context Radio abstraction
+ */
+static void getLR1110_Temperature( const void* context);
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -121,7 +128,6 @@ int main(void)
   lr1110_modem_version_t        modem;
   lr1110_bootloader_chip_eui_t  chip_eui;
   wifi_settings_t               wifi_settings;
-  double temperature;
   static wifi_scan_all_results_t capture_result;
 
 
@@ -198,33 +204,21 @@ int main(void)
     lr1110_modem_board_led_set( (1 << RX_LED_Pin), 1 );
     HAL_GPIO_TogglePin(TX_LED_GPIO_Port, TX_LED_Pin);
 
-    HAL_DBG_TRACE_PRINTF("a = %d\r\n", a);
-    a++;
+    HAL_DBG_TRACE_PRINTF("a = %d\r\n", a++);
 
-    if (lr1110_bootloader_get_temperature(lr1110_context, &temperature) == LR1110_STATUS_OK) {
-        HAL_DBG_TRACE_INFO("LR1110 temperature: %d\r\n", temperature);
-    } else {
-        HAL_DBG_TRACE_ERROR("Failed to get LR1110 temperature\r\n");
-    }
+    getLR1110_Temperature(lr1110_context);
 
 
-
-    // if( wifi_execute_scan( lr1110_context, &wifi_settings, &capture_result ) == WIFI_SCAN_SUCCESS )
-    // {
+    // if( wifi_execute_scan( lr1110_context, &wifi_settings, &capture_result ) == WIFI_SCAN_SUCCESS ) {
     //   HAL_DBG_TRACE_ERROR("SUCCESS\r\n");
-    //   //lr1110_modem_display_wifi_scan_results( &capture_result );
-    // }
-    // else
-    // {
+    // } else {
     //   HAL_DBG_TRACE_MSG( "Wi-Fi Scan error\n\r" );
     // }
 
-
-
-    HAL_Delay(1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    HAL_Delay(1000);
   }
   /* USER CODE END 3 */
 }
@@ -515,16 +509,20 @@ void getLR1110_Version( const void* context) {
 
   if (lr1110_bootloader_get_version(context, &bootloader_version) == LR1110_STATUS_OK) {
     HAL_DBG_TRACE_INFO("LR1110 bootloader hardware version: %d\r\n", bootloader_version.hw);
-    if (bootloader_version.type = 1) {
-      HAL_DBG_TRACE_INFO("LR1110 bootloader type: Transceiver\r\n");
-    } else if (bootloader_version.type = 2) {
-      HAL_DBG_TRACE_INFO("LR1110 bootloader type: Modem\r\n");
-    } else {
-      HAL_DBG_TRACE_INFO("LR1110 bootloader type: Unknown\r\n");
-    }
+    HAL_DBG_TRACE_INFO("LR1110 bootloader type: %d\r\n", bootloader_version.type);
     HAL_DBG_TRACE_INFO("LR1110 bootloader firmware version: %d.%d\r\n", bootloader_version.fw_major, bootloader_version.fw_minor);
   } else {
     HAL_DBG_TRACE_ERROR("Failed to get LR1110 bootloader version\r\n");
+  }
+}
+
+void getLR1110_Temperature( const void* context) {
+  uint16_t temperature;
+
+  if (lr1110_bootloader_get_temperature(context, &temperature) == LR1110_STATUS_OK) {
+    HAL_DBG_TRACE_INFO("LR1110 temperature: %d\r\n", temperature);
+  } else {
+    HAL_DBG_TRACE_ERROR("Failed to get LR1110 temperature\r\n");
   }
 }
 
