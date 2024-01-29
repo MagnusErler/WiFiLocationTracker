@@ -131,7 +131,7 @@ void hal_uart_init( const uint32_t id, const hal_gpio_pin_names_t uart_tx, const
     uint32_t local_id = id - 1;
 
     hal_uart[local_id].handle.Instance                    = hal_uart[local_id].interface;
-    hal_uart[local_id].handle.Init.BaudRate               = 115200;  //magnus 921600;
+    hal_uart[local_id].handle.Init.BaudRate               = 115200;
     hal_uart[local_id].handle.Init.WordLength             = UART_WORDLENGTH_8B;
     hal_uart[local_id].handle.Init.StopBits               = UART_STOPBITS_1;
     hal_uart[local_id].handle.Init.Parity                 = UART_PARITY_NONE;

@@ -350,7 +350,7 @@ void lr1110_modem_board_led_set( uint32_t led_mask, bool turn_on )
 {
     /* If a pulse timer is running on one of the requested LEDs, it
      *  must be stopped to avoid conflicting with the requested LED state. */
-	/*//magnus lr1110_evk_led_t led = LR1110_EVK_LED_TX;
+	lr1110_evk_led_t led = LR1110_EVK_LED_TX;
     for( led = LR1110_EVK_LED_TX; led < LR1110_EVK_LED_COUNT; led++ )
     {
         if( led_mask & ( 1 << led ) )
@@ -361,7 +361,7 @@ void lr1110_modem_board_led_set( uint32_t led_mask, bool turn_on )
                 timer_stop( &lr1110_modem_board_leds[led].led_timer );
             }
         }
-    }*/
+    }
     if( turn_on )
     {
         leds_on( led_mask );

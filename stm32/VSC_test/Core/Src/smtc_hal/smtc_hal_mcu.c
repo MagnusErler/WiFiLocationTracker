@@ -497,7 +497,7 @@ static void hal_mcu_gpio_deinit( void )
 #endif
 
 
-// magnus void HAL_MspInit( void )
+//magnus void HAL_MspInit( void )
 // {
 //     __HAL_RCC_SYSCFG_CLK_ENABLE( );
 //     __HAL_RCC_PWR_CLK_ENABLE( );

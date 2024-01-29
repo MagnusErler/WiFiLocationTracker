@@ -125,17 +125,19 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
-  //MX_GPIO_Init();
+  MX_GPIO_Init();
   MX_USART2_UART_Init();
-  //MX_SPI1_Init();
+  MX_SPI1_Init();
   //MX_RTC_Init();
-  //MX_LPTIM1_Init();
+  MX_LPTIM1_Init();
   /* USER CODE BEGIN 2 */
 
   /* Init board */
   //hal_uart_init(2, PA_2, PA_3);
   hal_mcu_init( );
-  hal_mcu_init_periph( );
+  HAL_DBG_TRACE_INFO("Starting initlizing LEDs... ");
+  hal_mcu_init_periph( );   // for LEDS
+  HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
   //hal_spi_init(1, PA_5, PA_6, PA_7);
 
   //system_init( );
@@ -148,8 +150,19 @@ int main(void)
   lr1110_modem_event_callback.reset          = lr1110_modem_reset_event;
   //lr1110_modem_board_init( &lr1110, &lr1110_modem_event_callback );
 
-  uint8_t msg[] = "Hello world\r\n";
   int a = 0;
+
+  const void* lr1110_context = (void*) malloc(sizeof(radio_t));
+  ((radio_t*)lr1110_context)->spi = SPI1;
+  ((radio_t*)lr1110_context)->nss.port = GPIOA;
+  ((radio_t*)lr1110_context)->nss.pin = RADIO_NSS;
+  ((radio_t*)lr1110_context)->reset.port = GPIOA;
+  ((radio_t*)lr1110_context)->reset.pin = RADIO_RESET;
+  //((radio_t*)lr1110_context)->irq.port = GPIOB;
+  //((radio_t*)lr1110_context)->irq.pin = LL_GPIO_PIN_4;
+  ((radio_t*)lr1110_context)->busy.port = GPIOB;
+  ((radio_t*)lr1110_context)->busy.pin = RADIO_BUSY;
+
 
   /* USER CODE END 2 */
 
@@ -166,22 +179,18 @@ int main(void)
     HAL_DBG_TRACE_PRINTF("a = %d\r\n", a);
     a++;
 
-    const void* lr1110_context = (void*) malloc(sizeof(radio_t));
-    ((radio_t*)lr1110_context)->spi = SPI1;
-    ((radio_t*)lr1110_context)->nss.port = GPIOA;
-    ((radio_t*)lr1110_context)->nss.pin = RADIO_NSS;
-    ((radio_t*)lr1110_context)->reset.port = GPIOA;
-    ((radio_t*)lr1110_context)->reset.pin = RADIO_RESET;
-    //((radio_t*)lr1110_context)->irq.port = GPIOB;
-    //((radio_t*)lr1110_context)->irq.pin = LL_GPIO_PIN_4;
-    ((radio_t*)lr1110_context)->busy.port = GPIOB;
-    ((radio_t*)lr1110_context)->busy.pin = RADIO_BUSY;
-
     if (lr1110_bootloader_get_version(lr1110_context, &bootloader_version) == LR1110_STATUS_OK) {
-        HAL_DBG_TRACE_INFO("LR1110 bootloader version: %d.%d.%d\r\n", bootloader_version.hw, bootloader_version.type, bootloader_version.fw);
+      HAL_DBG_TRACE_INFO("LR1110 bootloader version: %d.%d.%d\r\n", bootloader_version.hw, bootloader_version.type, bootloader_version.fw);
     } else {
         HAL_DBG_TRACE_ERROR("Failed to get LR1110 bootloader version\r\n");
     }
+
+    // lr1110_bootloader_chip_eui_t chip_eui;
+    // if (lr1110_bootloader_read_chip_eui(&lr1110_context, chip_eui) == LR1110_STATUS_OK) {
+    //     HAL_DBG_TRACE_INFO("LR1110 chip EUI: %02X%02X%02X%02X%02X%02X%02X%02X\r\n", chip_eui[0], chip_eui[1], chip_eui[2], chip_eui[3], chip_eui[4], chip_eui[5], chip_eui[6], chip_eui[7]);
+    // } else {
+    //     HAL_DBG_TRACE_ERROR("Failed to get LR1110 chip EUI\r\n");
+    // }
 
     // lr1110_modem_version_t modem;
     // if (lr1110_modem_get_version(lr1110_context, &modem) == LR1110_STATUS_OK) {
@@ -337,7 +346,7 @@ static void MX_SPI1_Init(void)
   hspi1.Instance = SPI1;
   hspi1.Init.Mode = SPI_MODE_MASTER;
   hspi1.Init.Direction = SPI_DIRECTION_2LINES;
-  hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
+  hspi1.Init.DataSize = SPI_DATASIZE_16BIT;
   hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi1.Init.NSS = SPI_NSS_SOFT;
