@@ -45,13 +45,6 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 
-/*!
- * @brief Reset event callback
- *
- * @param [in] reset_count reset counter from the modem
- */
-static void lr1110_modem_reset_event( uint16_t reset_count );
-
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -113,6 +106,8 @@ int main(void)
   lr1110_modem_event_callback_t lr1110_modem_event_callback = { NULL };
   lr1110_modem_version_t        modem;
   lr1110_bootloader_version_t   bootloader_version;
+  lr1110_bootloader_chip_eui_t  chip_eui;
+  double temperature;
 
 
   /* USER CODE END Init */
@@ -121,6 +116,8 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
+
+  // commend out MX_RTC_Init();
 
   /* USER CODE END SysInit */
 
@@ -134,35 +131,42 @@ int main(void)
 
   /* Init board */
   //hal_uart_init(2, PA_2, PA_3);
-  hal_mcu_init( );
-  HAL_DBG_TRACE_INFO("Starting initlizing LEDs... ");
+  hal_mcu_init( );  // for HAL_DBG_TRACE
+  HAL_DBG_TRACE_MSG("-----------------------------\r\n\r\n");
+
+  HAL_DBG_TRACE_INFO("Initializing LEDs... ");
   hal_mcu_init_periph( );   // for LEDS
   HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
   //hal_spi_init(1, PA_5, PA_6, PA_7);
 
-  //system_init( );
-
-  /* Board is initialized */
   leds_blink( LED_ALL_MASK, 100, 5, true );
-
-  /* Init LR1110 modem-e event */
-  lr1110_modem_event_callback.wifi_scan_done = lr1110_modem_wifi_scan_done;
-  lr1110_modem_event_callback.reset          = lr1110_modem_reset_event;
-  //lr1110_modem_board_init( &lr1110, &lr1110_modem_event_callback );
 
   int a = 0;
 
   const void* lr1110_context = (void*) malloc(sizeof(radio_t));
   ((radio_t*)lr1110_context)->spi = SPI1;
   ((radio_t*)lr1110_context)->nss.port = GPIOA;
-  ((radio_t*)lr1110_context)->nss.pin = RADIO_NSS;
+  ((radio_t*)lr1110_context)->nss.pin = NSS_Pin;
   ((radio_t*)lr1110_context)->reset.port = GPIOA;
   ((radio_t*)lr1110_context)->reset.pin = RADIO_RESET;
   //((radio_t*)lr1110_context)->irq.port = GPIOB;
   //((radio_t*)lr1110_context)->irq.pin = LL_GPIO_PIN_4;
   ((radio_t*)lr1110_context)->busy.port = GPIOB;
-  ((radio_t*)lr1110_context)->busy.pin = RADIO_BUSY;
+  ((radio_t*)lr1110_context)->busy.pin = BUSY_Pin;
 
+  if (lr1110_bootloader_get_version(lr1110_context, &bootloader_version) == LR1110_STATUS_OK) {
+    HAL_DBG_TRACE_INFO("LR1110 bootloader hardware version: %d\r\n", bootloader_version.hw);
+    HAL_DBG_TRACE_INFO("LR1110 bootloader type: %d\r\n", bootloader_version.type);
+    HAL_DBG_TRACE_INFO("LR1110 bootloader firmware version: %d.%d\r\n", bootloader_version.fw_major, bootloader_version.fw_minor);
+  } else {
+    HAL_DBG_TRACE_ERROR("Failed to get LR1110 bootloader version\r\n");
+  }
+
+  if (lr1110_bootloader_read_chip_eui(lr1110_context, chip_eui) == LR1110_STATUS_OK) {
+      HAL_DBG_TRACE_INFO("LR1110 chip EUI: %02X%02X%02X%02X%02X%02X%02X%02X\r\n", chip_eui[0], chip_eui[1], chip_eui[2], chip_eui[3], chip_eui[4], chip_eui[5], chip_eui[6], chip_eui[7]);
+  } else {
+      HAL_DBG_TRACE_ERROR("Failed to get LR1110 chip EUI\r\n");
+  }
 
   /* USER CODE END 2 */
 
@@ -179,27 +183,14 @@ int main(void)
     HAL_DBG_TRACE_PRINTF("a = %d\r\n", a);
     a++;
 
-    if (lr1110_bootloader_get_version(lr1110_context, &bootloader_version) == LR1110_STATUS_OK) {
-      HAL_DBG_TRACE_INFO("LR1110 bootloader version: %d.%d.%d\r\n", bootloader_version.hw, bootloader_version.type, bootloader_version.fw);
+    if (lr1110_bootloader_get_temperature(lr1110_context, &temperature) == LR1110_STATUS_OK) {
+        HAL_DBG_TRACE_INFO("LR1110 temperature: %d\r\n", temperature);
     } else {
-        HAL_DBG_TRACE_ERROR("Failed to get LR1110 bootloader version\r\n");
+        HAL_DBG_TRACE_ERROR("Failed to get LR1110 temperature\r\n");
     }
 
-    // lr1110_bootloader_chip_eui_t chip_eui;
-    // if (lr1110_bootloader_read_chip_eui(&lr1110_context, chip_eui) == LR1110_STATUS_OK) {
-    //     HAL_DBG_TRACE_INFO("LR1110 chip EUI: %02X%02X%02X%02X%02X%02X%02X%02X\r\n", chip_eui[0], chip_eui[1], chip_eui[2], chip_eui[3], chip_eui[4], chip_eui[5], chip_eui[6], chip_eui[7]);
-    // } else {
-    //     HAL_DBG_TRACE_ERROR("Failed to get LR1110 chip EUI\r\n");
-    // }
 
-    // lr1110_modem_version_t modem;
-    // if (lr1110_modem_get_version(lr1110_context, &modem) == LR1110_STATUS_OK) {
-    //     HAL_DBG_TRACE_INFO("LR1110 modem version:");
-    // } else {
-    //     HAL_DBG_TRACE_ERROR("Failed to get LR1110 modem version\r\n");
-    // }
-
-    HAL_Delay(500);
+    HAL_Delay(1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -422,6 +413,9 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOC, RX_LED_Pin|TX_LED_Pin, GPIO_PIN_RESET);
 
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(NSS_GPIO_Port, NSS_Pin, GPIO_PIN_RESET);
+
   /*Configure GPIO pins : RX_LED_Pin TX_LED_Pin */
   GPIO_InitStruct.Pin = RX_LED_Pin|TX_LED_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
@@ -429,26 +423,24 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
+  /*Configure GPIO pin : NSS_Pin */
+  GPIO_InitStruct.Pin = NSS_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(NSS_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : BUSY_Pin */
+  GPIO_InitStruct.Pin = BUSY_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(BUSY_GPIO_Port, &GPIO_InitStruct);
+
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
-
-static void lr1110_modem_reset_event( uint16_t reset_count )
-{
-    HAL_DBG_TRACE_INFO( "###### ===== LR1110 MODEM-E RESET %lu ==== ######\r\n\r\n", reset_count );
-
-    if( lr1110_modem_board_is_ready( ) == true )
-    {
-        /* System reset */
-        hal_mcu_reset( );
-    }
-    else
-    {
-        lr1110_modem_board_set_ready( true );
-    }
-}
 
 /* USER CODE END 4 */
 

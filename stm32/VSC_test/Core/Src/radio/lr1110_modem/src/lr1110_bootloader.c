@@ -125,9 +125,10 @@ enum
     LR1110_BL_WRITE_FLASH_OC           = 0x8002,  //!< Operation code for write flash command
     LR1110_BL_WRITE_FLASH_ENCRYPTED_OC = 0x8003,  //!< Operation code for encrypted flash write command
     LR1110_BL_GET_HASH_OC              = 0x8004,  //!< Operation code for hash getter command
-    LR1110_BL_REBOOT_OC                = 0x8005,  //!< Operation code for  reboot command
+    LR1110_BL_REBOOT_OC                = 0x8005,  //!< Operation code for reboot command
     LR1110_BL_GET_PIN_OC               = 0x800B,  //!< Operation code for PIN read command
     LR1110_BL_GET_CHIP_EUI_OC          = 0x800C,  //!< Operation code for EUI read command
+    LR1110_BL_GET_TEMPERATURE          = 0x011A,  //!< Operation code for temperature read command
 };
 
 /*
@@ -209,9 +210,34 @@ lr1110_status_t lr1110_bootloader_get_version( const void* context, lr1110_bootl
 
     if( status == LR1110_STATUS_OK )
     {
-        version->hw   = rbuffer[0];
-        version->type = rbuffer[1];
-        version->fw   = ( ( uint16_t ) rbuffer[2] << 8 ) + ( uint16_t ) rbuffer[3];
+        version->hw         = rbuffer[0];
+        version->type       = rbuffer[1];
+        version->fw_major   = rbuffer[2];
+        version->fw_minor   = rbuffer[3];
+    }
+
+    return status;
+}
+
+lr1110_status_t lr1110_bootloader_get_temperature( const void* context, double* temperature )
+{
+    uint8_t         cbuffer[LR1110_BL_VERSION_CMD_LENGTH];
+    uint8_t         rbuffer[3] = { 0x00 };
+    lr1110_status_t status                            = LR1110_STATUS_ERROR;
+
+    cbuffer[0] = ( uint8_t )( LR1110_BL_GET_TEMPERATURE >> 8 );
+    cbuffer[1] = ( uint8_t )( LR1110_BL_GET_TEMPERATURE >> 0 );
+
+    status = ( lr1110_status_t ) lr1110_hal_read( context, cbuffer, LR1110_BL_VERSION_CMD_LENGTH, rbuffer,
+                                                  LR1110_BL_VERSION_LENGTH );
+
+    if( status == LR1110_STATUS_OK )
+    {
+        // rbuffer[0] is Temp(15:8)
+        // rbuffer[1] is Temp(7:0)
+        // finding Temp(10:0)
+        uint8_t temp_10_0 = ( rbuffer[0] << 2 ) + ( rbuffer[1] >> 6 );
+        double temperature = 25 + 1000/-1.7 * (temp_10_0/2047 * 1.35 - 0.7295);
     }
 
     return status;

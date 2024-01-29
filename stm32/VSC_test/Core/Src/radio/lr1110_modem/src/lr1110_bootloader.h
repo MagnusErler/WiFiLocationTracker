@@ -75,6 +75,16 @@ extern "C" {
 lr1110_status_t lr1110_bootloader_get_version( const void* context, lr1110_bootloader_version_t* version );
 
 /*!
+ * @brief Return the temperature
+ *
+ * @param [in] context Chip implementation context
+ * @param [out] temperature Pointer to the structure holding the temperature
+ *
+ * @returns Operation status
+ */
+lr1110_status_t lr1110_bootloader_get_temperature( const void* context, double* temperature );
+
+/*!
  * @brief Erase the whole flash memory of the chip
  *
  * This function shall be called before any attempt to write a new firmware in flash memory

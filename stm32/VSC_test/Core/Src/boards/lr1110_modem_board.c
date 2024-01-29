@@ -176,26 +176,26 @@ lr1110_modem_response_code_t lr1110_modem_board_init( const void* context, lr111
     /* Initialize TCXO control */
     modem_response_code |= lr1110_modem_board_init_tcxo_io( context );
 
-    /* Initialize RF switch control */
-    lr1110_modem_system_rf_switch_cfg_t rf_switch_cfg;
-    rf_switch_cfg.enable = LR1110_MODEM_SYSTEM_RFSW0_HIGH | LR1110_MODEM_SYSTEM_RFSW1_HIGH |
-                           LR1110_MODEM_SYSTEM_RFSW2_HIGH | LR1110_MODEM_SYSTEM_RFSW3_HIGH;
-    rf_switch_cfg.standby = 0;
-    /* LoRa SPDT */
-    rf_switch_cfg.rx = LR1110_MODEM_SYSTEM_RFSW0_HIGH | LR1110_MODEM_SYSTEM_RFSW3_HIGH;
-    rf_switch_cfg.tx = LR1110_MODEM_SYSTEM_RFSW0_HIGH | LR1110_MODEM_SYSTEM_RFSW1_HIGH | LR1110_MODEM_SYSTEM_RFSW3_HIGH;
-    rf_switch_cfg.tx_hp = LR1110_MODEM_SYSTEM_RFSW1_HIGH | LR1110_MODEM_SYSTEM_RFSW3_HIGH;
-    /* GNSS LNA ON */
-    rf_switch_cfg.gnss = LR1110_MODEM_SYSTEM_RFSW2_HIGH;
+    // /* Initialize RF switch control */
+    // lr1110_modem_system_rf_switch_cfg_t rf_switch_cfg;
+    // rf_switch_cfg.enable = LR1110_MODEM_SYSTEM_RFSW0_HIGH | LR1110_MODEM_SYSTEM_RFSW1_HIGH |
+    //                        LR1110_MODEM_SYSTEM_RFSW2_HIGH | LR1110_MODEM_SYSTEM_RFSW3_HIGH;
+    // rf_switch_cfg.standby = 0;
+    // /* LoRa SPDT */
+    // rf_switch_cfg.rx = LR1110_MODEM_SYSTEM_RFSW0_HIGH | LR1110_MODEM_SYSTEM_RFSW3_HIGH;
+    // rf_switch_cfg.tx = LR1110_MODEM_SYSTEM_RFSW0_HIGH | LR1110_MODEM_SYSTEM_RFSW1_HIGH | LR1110_MODEM_SYSTEM_RFSW3_HIGH;
+    // rf_switch_cfg.tx_hp = LR1110_MODEM_SYSTEM_RFSW1_HIGH | LR1110_MODEM_SYSTEM_RFSW3_HIGH;
+    // /* GNSS LNA ON */
+    // rf_switch_cfg.gnss = LR1110_MODEM_SYSTEM_RFSW2_HIGH;
 
-    modem_response_code |= lr1110_modem_system_set_dio_as_rf_switch( context, &rf_switch_cfg );
+    // modem_response_code |= lr1110_modem_system_set_dio_as_rf_switch( context, &rf_switch_cfg );
 
-    /* Set Pa Config */
-    modem_response_code |= lr1110_modem_set_rf_output( context, LR1110_MODEM_RADIO_PA_SEL_LP_HP_LF );
+    // /* Set Pa Config */
+    // modem_response_code |= lr1110_modem_set_rf_output( context, LR1110_MODEM_RADIO_PA_SEL_LP_HP_LF );
 
-    modem_response_code |= lr1110_modem_system_set_reg_mode( context, LR1110_MODEM_SYSTEM_REG_MODE_LDO );
+    // modem_response_code |= lr1110_modem_system_set_reg_mode( context, LR1110_MODEM_SYSTEM_REG_MODE_LDO );
 
-    return modem_response_code;
+    // return modem_response_code;
 }
 
 uint32_t lr1110_modem_board_get_systime_from_gps( const void* context )

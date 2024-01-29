@@ -83,7 +83,7 @@ void HAL_MspInit(void)
 * @param hlptim: LPTIM handle pointer
 * @retval None
 */
-//magnus void HAL_LPTIM_MspInit(LPTIM_HandleTypeDef* hlptim)
+// void HAL_LPTIM_MspInit(LPTIM_HandleTypeDef* hlptim)
 // {
 //   RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 //   if(hlptim->Instance==LPTIM1)
@@ -116,7 +116,7 @@ void HAL_MspInit(void)
 * @param hlptim: LPTIM handle pointer
 * @retval None
 */
-//magnus void HAL_LPTIM_MspDeInit(LPTIM_HandleTypeDef* hlptim)
+// void HAL_LPTIM_MspDeInit(LPTIM_HandleTypeDef* hlptim)
 // {
 //   if(hlptim->Instance==LPTIM1)
 //   {
@@ -138,7 +138,7 @@ void HAL_MspInit(void)
 * @param hrtc: RTC handle pointer
 * @retval None
 */
-//magnus void HAL_RTC_MspInit(RTC_HandleTypeDef* hrtc)
+// void HAL_RTC_MspInit(RTC_HandleTypeDef* hrtc)
 // {
 //   RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 //   if(hrtc->Instance==RTC)
@@ -171,7 +171,7 @@ void HAL_MspInit(void)
 * @param hrtc: RTC handle pointer
 * @retval None
 */
-//magnus void HAL_RTC_MspDeInit(RTC_HandleTypeDef* hrtc)
+// void HAL_RTC_MspDeInit(RTC_HandleTypeDef* hrtc)
 // {
 //   if(hrtc->Instance==RTC)
 //   {

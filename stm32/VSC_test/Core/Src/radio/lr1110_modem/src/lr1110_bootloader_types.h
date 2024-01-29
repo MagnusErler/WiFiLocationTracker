@@ -99,9 +99,10 @@ typedef uint8_t lr1110_bootloader_chip_eui_t[LR1110_BL_CHIP_EUI_LENGTH];
  */
 typedef struct lr1110_bootloader_version_s
 {
-    uint8_t  hw;    //<! Hardware verion
-    uint8_t  type;  //!< Type version
-    uint16_t fw;    //!< Firmware version
+    uint8_t hw;         //<! Hardware verion
+    uint8_t type;       //!< Type version
+    uint8_t fw_major;   //!< Firmware major version
+    uint8_t fw_minor;   //!< Firmware minor version
 } lr1110_bootloader_version_t;
 
 /*

@@ -41,9 +41,9 @@ lr1110_modem_hal_status_t lr1110_modem_hal_reset( const void* radio )
     radio_t* radio_local = ( radio_t* ) radio;
 
     system_gpio_set_pin_state( radio_local->reset, SYSTEM_GPIO_PIN_STATE_LOW );
-    system_time_wait_ms( 1 );
+    HAL_Delay(1);    //magnus system_time_wait_ms( 1 );
     system_gpio_set_pin_state( radio_local->reset, SYSTEM_GPIO_PIN_STATE_HIGH );
-    system_time_wait_ms( 100 );
+    HAL_Delay(100);    //magnus system_time_wait_ms( 100 );
     return LR1110_MODEM_HAL_STATUS_OK;
 }
 
@@ -51,12 +51,17 @@ lr1110_modem_hal_status_t lr1110_modem_hal_wakeup( const void* radio )
 {
     radio_t* radio_local = ( radio_t* ) radio;
 
-    if( lr1110_modem_hal_wait_on_busy( radio_local, 1000 ) == LR1110_MODEM_HAL_STATUS_OK )
-    {
-        // Wakeup radio
-        system_gpio_set_pin_state( radio_local->nss, 0 );
-        system_gpio_set_pin_state( radio_local->nss, 1 );
-    }
+    //magnus if( lr1110_modem_hal_wait_on_busy( radio_local, 1000 ) == LR1110_MODEM_HAL_STATUS_OK )
+    // {
+    //     // Wakeup radio
+    //     system_gpio_set_pin_state( radio_local->nss, 0 );
+    //     system_gpio_set_pin_state( radio_local->nss, 1 );
+    // }
+
+    system_gpio_wait_for_state( radio_local->busy, SYSTEM_GPIO_PIN_STATE_LOW );
+    // Wakeup radio
+    system_gpio_set_pin_state( radio_local->nss, 0 );
+    system_gpio_set_pin_state( radio_local->nss, 1 );
 
     // Wait on busy pin for 100 ms
     return lr1110_modem_hal_wait_on_unbusy( radio_local, 1000 );

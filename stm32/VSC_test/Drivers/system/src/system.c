@@ -36,8 +36,8 @@ void system_init( void )
     system_clock_init( );
     system_gpio_init( );
     system_spi_init( );
-    system_i2c_init( );
+    //magnus system_i2c_init( );
     system_time_init( );
-    system_uart_init( );
-    system_lptim_init( );
+    //magnus system_uart_init( );
+    //magnus system_lptim_init( );
 }

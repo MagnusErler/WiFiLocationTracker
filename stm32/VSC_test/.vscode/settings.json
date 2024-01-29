@@ -29,6 +29,9 @@
     "stm32l4xx_ll_rtc.h": "c",
     "lr1110_modem_lorawan.h": "c",
     "smtc_hal_tmr_list.h": "c",
-    "smtc_hal_options.h": "c"
+    "smtc_hal_options.h": "c",
+    "cmath": "c",
+    "limits": "c",
+    "type_traits": "c"
   }
 }
