@@ -60,6 +60,10 @@ static void lr1110_modem_reset_event( uint16_t reset_count );
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
+LPTIM_HandleTypeDef hlptim1;
+
+RTC_HandleTypeDef hrtc;
+
 SPI_HandleTypeDef hspi1;
 
 UART_HandleTypeDef huart2;
@@ -78,6 +82,8 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_SPI1_Init(void);
+static void MX_RTC_Init(void);
+static void MX_LPTIM1_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -122,6 +128,8 @@ int main(void)
   //MX_GPIO_Init();
   MX_USART2_UART_Init();
   //MX_SPI1_Init();
+  //MX_RTC_Init();
+  //MX_LPTIM1_Init();
   /* USER CODE BEGIN 2 */
 
   /* Init board */
@@ -129,6 +137,8 @@ int main(void)
   hal_mcu_init( );
   hal_mcu_init_periph( );
   //hal_spi_init(1, PA_5, PA_6, PA_7);
+
+  //system_init( );
 
   /* Board is initialized */
   leds_blink( LED_ALL_MASK, 100, 5, true );
@@ -146,16 +156,13 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   HAL_DBG_TRACE_INFO("Starting while loop...\r\n");
-  while (1)
-  {
+  while (1) {
     //HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
     //HAL_GPIO_TogglePin(Sniffing_LED_GPIO_Port, Sniffing_LED_Pin);
 
-    lr1110_modem_board_led_set( (1 << RX_LED_Pin), 1 );		//or HAL_GPIO_TogglePin(GPIOC, RX_LED_Pin);
-
+    lr1110_modem_board_led_set( (1 << RX_LED_Pin), 1 );
     HAL_GPIO_TogglePin(TX_LED_GPIO_Port, TX_LED_Pin);
 
-    HAL_DBG_TRACE_WARNING("Testing\r\n");
     HAL_DBG_TRACE_PRINTF("a = %d\r\n", a);
     a++;
 
@@ -171,43 +178,17 @@ int main(void)
     ((radio_t*)lr1110_context)->busy.pin = RADIO_BUSY;
 
     if (lr1110_bootloader_get_version(lr1110_context, &bootloader_version) == LR1110_STATUS_OK) {
-        HAL_DBG_TRACE_PRINTF("LR1110 bootloader version: %d.%d.%d\r\n", bootloader_version.hw, bootloader_version.type, bootloader_version.fw);
+        HAL_DBG_TRACE_INFO("LR1110 bootloader version: %d.%d.%d\r\n", bootloader_version.hw, bootloader_version.type, bootloader_version.fw);
     } else {
         HAL_DBG_TRACE_ERROR("Failed to get LR1110 bootloader version\r\n");
     }
 
-    lr1110_bootloader_hash_t hash;
-    if (lr1110_bootloader_get_hash(lr1110_context, &hash) == LR1110_STATUS_OK) {
-        HAL_DBG_TRACE_PRINTF("LR1110 bootloader hash: %02x%02x%02x%02x%02x%02x%02x%02x\r\n", hash[0], hash[1], hash[2], hash[3], hash[4], hash[5], hash[6], hash[7]);
-    } else {
-        HAL_DBG_TRACE_ERROR("Failed to get LR1110 bootloader hash\r\n");
-    }
-
-    //lr1110_modem_version_t version;
-    //lr1110_modem_get_version( NULL, &version );
-    // HAL_DBG_TRACE_MSG("LR1110 version: ");
-    // HAL_DBG_TRACE_PRINTF("%d\r\n", version);
-
-    /* LR1110 modem-e version */
-    // if (lr1110_modem_get_version( &lr1110, &modem ) == LR1110_STATUS_OK)
-    // {
-    //     HAL_DBG_TRACE_PRINTF( "LR1110 MODEM-E VERSION\r\n" );
-    //     HAL_DBG_TRACE_PRINTF( "=====================\r\n\r\n" );
-    //     HAL_DBG_TRACE_PRINTF( "LORAWAN     : %#04X\r\n", modem.lorawan );
-    //     HAL_DBG_TRACE_PRINTF( "FIRMWARE    : %#02X\r\n", modem.firmware );
-    //     HAL_DBG_TRACE_PRINTF( "BOOTLOADER  : %#02X\r\n\r\n", modem.bootloader );
+    // lr1110_modem_version_t modem;
+    // if (lr1110_modem_get_version(lr1110_context, &modem) == LR1110_STATUS_OK) {
+    //     HAL_DBG_TRACE_INFO("LR1110 modem version:");
+    // } else {
+    //     HAL_DBG_TRACE_ERROR("Failed to get LR1110 modem version\r\n");
     // }
-    // else
-    // {
-    //     HAL_DBG_TRACE_ERROR( "Failed to get LR1110 modem-e version\r\n" );
-    // }
-
-
-    //char buffer2[10];
-    //sprintf(buffer2, "%d\r\n", status);
-    //HAL_UART_Transmit(&huart2, buffer2, sizeof(buffer2), 10);
-    
-
 
     HAL_Delay(500);
     /* USER CODE END WHILE */
@@ -236,9 +217,10 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_LSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
   RCC_OscInitStruct.PLL.PLLM = 1;
@@ -264,6 +246,76 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+}
+
+/**
+  * @brief LPTIM1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_LPTIM1_Init(void)
+{
+
+  /* USER CODE BEGIN LPTIM1_Init 0 */
+
+  /* USER CODE END LPTIM1_Init 0 */
+
+  /* USER CODE BEGIN LPTIM1_Init 1 */
+
+  /* USER CODE END LPTIM1_Init 1 */
+  hlptim1.Instance = LPTIM1;
+  hlptim1.Init.Clock.Source = LPTIM_CLOCKSOURCE_APBCLOCK_LPOSC;
+  hlptim1.Init.Clock.Prescaler = LPTIM_PRESCALER_DIV1;
+  hlptim1.Init.Trigger.Source = LPTIM_TRIGSOURCE_SOFTWARE;
+  hlptim1.Init.OutputPolarity = LPTIM_OUTPUTPOLARITY_HIGH;
+  hlptim1.Init.UpdateMode = LPTIM_UPDATE_IMMEDIATE;
+  hlptim1.Init.CounterSource = LPTIM_COUNTERSOURCE_INTERNAL;
+  hlptim1.Init.Input1Source = LPTIM_INPUT1SOURCE_GPIO;
+  hlptim1.Init.Input2Source = LPTIM_INPUT2SOURCE_GPIO;
+  if (HAL_LPTIM_Init(&hlptim1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN LPTIM1_Init 2 */
+
+  /* USER CODE END LPTIM1_Init 2 */
+
+}
+
+/**
+  * @brief RTC Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_RTC_Init(void)
+{
+
+  /* USER CODE BEGIN RTC_Init 0 */
+
+  /* USER CODE END RTC_Init 0 */
+
+  /* USER CODE BEGIN RTC_Init 1 */
+
+  /* USER CODE END RTC_Init 1 */
+
+  /** Initialize RTC Only
+  */
+  hrtc.Instance = RTC;
+  hrtc.Init.HourFormat = RTC_HOURFORMAT_24;
+  hrtc.Init.AsynchPrediv = 127;
+  hrtc.Init.SynchPrediv = 255;
+  hrtc.Init.OutPut = RTC_OUTPUT_DISABLE;
+  hrtc.Init.OutPutRemap = RTC_OUTPUT_REMAP_NONE;
+  hrtc.Init.OutPutPolarity = RTC_OUTPUT_POLARITY_HIGH;
+  hrtc.Init.OutPutType = RTC_OUTPUT_TYPE_OPENDRAIN;
+  if (HAL_RTC_Init(&hrtc) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN RTC_Init 2 */
+
+  /* USER CODE END RTC_Init 2 */
+
 }
 
 /**

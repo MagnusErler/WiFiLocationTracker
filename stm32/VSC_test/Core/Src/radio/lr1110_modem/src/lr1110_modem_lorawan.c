@@ -335,7 +335,7 @@ lr1110_modem_response_code_t lr1110_modem_get_version( const void* context, lr11
     cbuffer[1] = LR1110_MODEM_GET_VERSION_CMD;
 
     rc = ( lr1110_modem_response_code_t ) lr1110_modem_hal_read( context, cbuffer, LR1110_MODEM_GET_VERSION_CMD_LENGTH,
-                                                                 rbuffer, LR1110_MODEM_GET_VERSION_RBUFFER_LENGTH );
+                                                                rbuffer, LR1110_MODEM_GET_VERSION_RBUFFER_LENGTH );
 
     version->bootloader = ( ( uint32_t ) rbuffer[0] << 24 ) + ( ( uint32_t ) rbuffer[1] << 16 ) +
                           ( ( uint32_t ) rbuffer[2] << 8 ) + ( ( uint32_t ) rbuffer[3] );

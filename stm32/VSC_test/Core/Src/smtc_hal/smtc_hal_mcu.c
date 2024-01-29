@@ -330,11 +330,11 @@ void hal_mcu_disable_once_low_power_wait( void )
     hal_lp_current_mode = LOW_POWER_DISABLE_ONCE;
 }
 
-//magnus void SysTick_Handler( void )
-//magnus {
-//magnus     HAL_IncTick( );
-//magnus     HAL_SYSTICK_IRQHandler( );
-//magnus }
+/* magnus void SysTick_Handler( void )
+{
+    HAL_IncTick( );
+    HAL_SYSTICK_IRQHandler( );
+}*/
 
 void hal_mcu_trace_print( const char* fmt, ... )
 {
@@ -497,29 +497,29 @@ static void hal_mcu_gpio_deinit( void )
 #endif
 
 
-//magnus void HAL_MspInit( void )
-//magnus {
-//magnus     __HAL_RCC_SYSCFG_CLK_ENABLE( );
-//magnus     __HAL_RCC_PWR_CLK_ENABLE( );
-//magnus
-//magnus     HAL_NVIC_SetPriorityGrouping( NVIC_PRIORITYGROUP_4 );
-//magnus
-//magnus     /* System interrupt init*/
-//magnus     /* MemoryManagement_IRQn interrupt configuration */
-//magnus     HAL_NVIC_SetPriority( MemoryManagement_IRQn, 0, 0 );
-//magnus     /* BusFault_IRQn interrupt configuration */
-//magnus     HAL_NVIC_SetPriority( BusFault_IRQn, 0, 0 );
-//magnus     /* UsageFault_IRQn interrupt configuration */
-//magnus     HAL_NVIC_SetPriority( UsageFault_IRQn, 0, 0 );
-//magnus     /* SVCall_IRQn interrupt configuration */
-//magnus     HAL_NVIC_SetPriority( SVCall_IRQn, 0, 0 );
-//magnus     /* DebugMonitor_IRQn interrupt configuration */
-//magnus     HAL_NVIC_SetPriority( DebugMonitor_IRQn, 0, 0 );
-//magnus     /* PendSV_IRQn interrupt configuration */
-//magnus     HAL_NVIC_SetPriority( PendSV_IRQn, 0, 0 );
-//magnus     /* SysTick_IRQn interrupt configuration */
-//magnus     HAL_NVIC_SetPriority( SysTick_IRQn, 0, 0 );
-//magnus }
+// magnus void HAL_MspInit( void )
+// {
+//     __HAL_RCC_SYSCFG_CLK_ENABLE( );
+//     __HAL_RCC_PWR_CLK_ENABLE( );
+
+//     HAL_NVIC_SetPriorityGrouping( NVIC_PRIORITYGROUP_4 );
+
+//     /* System interrupt init*/
+//     /* MemoryManagement_IRQn interrupt configuration */
+//     HAL_NVIC_SetPriority( MemoryManagement_IRQn, 0, 0 );
+//     /* BusFault_IRQn interrupt configuration */
+//     HAL_NVIC_SetPriority( BusFault_IRQn, 0, 0 );
+//     /* UsageFault_IRQn interrupt configuration */
+//     HAL_NVIC_SetPriority( UsageFault_IRQn, 0, 0 );
+//     /* SVCall_IRQn interrupt configuration */
+//     HAL_NVIC_SetPriority( SVCall_IRQn, 0, 0 );
+//     /* DebugMonitor_IRQn interrupt configuration */
+//     HAL_NVIC_SetPriority( DebugMonitor_IRQn, 0, 0 );
+//     /* PendSV_IRQn interrupt configuration */
+//     HAL_NVIC_SetPriority( PendSV_IRQn, 0, 0 );
+//     /* SysTick_IRQn interrupt configuration */
+//     HAL_NVIC_SetPriority( SysTick_IRQn, 0, 0 );
+// }
 
 /**
  * @brief Enters Low Power Stop Mode
@@ -601,7 +601,7 @@ static void hal_mcu_reinit( void )
     hal_mcu_system_clock_re_config_after_stop( );
 
     /* Initialize I2C */
-    hal_i2c_init( HAL_I2C_ID, I2C_SDA, I2C_SCL );
+    //magnus hal_i2c_init( HAL_I2C_ID, I2C_SDA, I2C_SCL );
 
     /* Initialize UART */
 #if( HAL_USE_PRINTF_UART == HAL_FEATURE_ON )
