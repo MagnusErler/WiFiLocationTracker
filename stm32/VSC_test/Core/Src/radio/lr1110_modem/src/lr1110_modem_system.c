@@ -209,7 +209,9 @@ lr1110_modem_response_code_t lr1110_modem_system_set_reg_mode( const void*      
 
     cbuffer[2] = ( uint8_t ) reg_mode;
 
-    return ( lr1110_modem_response_code_t ) lr1110_modem_hal_write( context, cbuffer,
+    //magnus return ( lr1110_modem_response_code_t ) lr1110_modem_hal_write( context, cbuffer,
+    //                                                                 LR1110_MODEM_SYSTEM_SET_REGMODE_CMD_LENGTH, 0, 0 );
+    return ( lr1110_modem_response_code_t ) lr1110_hal_write( context, cbuffer,
                                                                     LR1110_MODEM_SYSTEM_SET_REGMODE_CMD_LENGTH, 0, 0 );
 }
 
@@ -230,7 +232,9 @@ lr1110_modem_response_code_t lr1110_modem_system_set_dio_as_rf_switch(
     cbuffer[8] = rf_switch_cfg->gnss;
     cbuffer[9] = rf_switch_cfg->wifi;
 
-    return ( lr1110_modem_response_code_t ) lr1110_modem_hal_write(
+    //magnus return ( lr1110_modem_response_code_t ) lr1110_modem_hal_write(
+    //     context, cbuffer, LR1110_MODEM_SYSTEM_SET_DIO_AS_RF_SWITCH_CMD_LENGTH, 0, 0 );
+    return ( lr1110_modem_response_code_t ) lr1110_hal_write(
         context, cbuffer, LR1110_MODEM_SYSTEM_SET_DIO_AS_RF_SWITCH_CMD_LENGTH, 0, 0 );
 }
 
@@ -265,7 +269,9 @@ lr1110_modem_response_code_t lr1110_modem_system_set_tcxo_mode( const void*     
     cbuffer[4] = ( uint8_t )( timeout >> 8 );
     cbuffer[5] = ( uint8_t )( timeout >> 0 );
 
-    return ( lr1110_modem_response_code_t ) lr1110_modem_hal_write(
+    //magnus return ( lr1110_modem_response_code_t ) lr1110_modem_hal_write(
+    //     context, cbuffer, LR1110_MODEM_SYSTEM_SET_TCXO_MODE_CMD_LENGTH, 0, 0 );
+    return ( lr1110_modem_response_code_t ) lr1110_hal_write(
         context, cbuffer, LR1110_MODEM_SYSTEM_SET_TCXO_MODE_CMD_LENGTH, 0, 0 );
 }
 

@@ -36,6 +36,8 @@
 #include "lr1110_modem_lorawan.h"
 #include "lr1110_modem_hal.h"
 
+#include "lr1110.h" //magnus
+
 /*
  * -----------------------------------------------------------------------------
  * --- PRIVATE MACROS-----------------------------------------------------------
@@ -309,7 +311,9 @@ lr1110_modem_response_code_t lr1110_modem_get_event( const void* context, lr1110
         cbuffer[0] = LR1110_MODEM_GROUP_ID_MODEM;
         cbuffer[1] = LR1110_MODEM_GET_EVENT_CMD;
 
-        rc = ( lr1110_modem_response_code_t ) lr1110_modem_hal_read(
+        //magnus rc = ( lr1110_modem_response_code_t ) lr1110_modem_hal_read(
+        //     context, cbuffer, LR1110_MODEM_GET_EVENT_CMD_LENGTH, event_fields->buffer, event_size );
+        rc = ( lr1110_modem_response_code_t ) lr1110_hal_read(
             context, cbuffer, LR1110_MODEM_GET_EVENT_CMD_LENGTH, event_fields->buffer, event_size );
 
         event_fields->event_type          = ( lr1110_modem_lorawan_event_type_t ) event_fields->buffer[0];
@@ -1298,7 +1302,9 @@ lr1110_modem_response_code_t lr1110_modem_get_event_size( const void* context, u
     cbuffer[0] = LR1110_MODEM_GROUP_ID_MODEM;
     cbuffer[1] = LR1110_MODEM_GET_EVENT_SIZE_CMD;
 
-    rc = ( lr1110_modem_response_code_t ) lr1110_modem_hal_read( context, cbuffer,
+    //magnus rc = ( lr1110_modem_response_code_t ) lr1110_modem_hal_read( context, cbuffer,
+    //                                                              LR1110_MODEM_GET_EVENT_SIZE_CMD_LENGTH, rbuffer, 2 );
+    rc = ( lr1110_modem_response_code_t ) lr1110_hal_read( context, cbuffer,
                                                                  LR1110_MODEM_GET_EVENT_SIZE_CMD_LENGTH, rbuffer, 2 );
 
     *event_size = ( ( uint16_t ) rbuffer[0] << 8 ) + ( uint16_t ) rbuffer[1];
@@ -1327,7 +1333,9 @@ lr1110_modem_response_code_t lr1110_modem_set_rf_output( const void*            
 
     cbuffer[2] = ( uint8_t ) output;
 
-    return ( lr1110_modem_response_code_t ) lr1110_modem_hal_write( context, cbuffer,
+    //magnus return ( lr1110_modem_response_code_t ) lr1110_modem_hal_write( context, cbuffer,
+    //                                                                 LR1110_MODEM_MANAGE_RF_OUTPUT_CMD_LENGTH, 0, 0 );
+    return ( lr1110_modem_response_code_t ) lr1110_hal_write( context, cbuffer,
                                                                     LR1110_MODEM_MANAGE_RF_OUTPUT_CMD_LENGTH, 0, 0 );
 }
 

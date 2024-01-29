@@ -79,6 +79,20 @@ static void MX_RTC_Init(void);
 static void MX_LPTIM1_Init(void);
 /* USER CODE BEGIN PFP */
 
+/*!
+ * @brief Reset event callback
+ *
+ * @param [in] reset_count reset counter from the modem
+ */
+static void lr1110_modem_reset_event( uint16_t reset_count );
+
+/*!
+ * @brief Get LR1110 version
+ *
+ * @param [in] context Radio abstraction
+ */
+static void getLR1110_Version( const void* context);
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -105,9 +119,10 @@ int main(void)
 
   lr1110_modem_event_callback_t lr1110_modem_event_callback = { NULL };
   lr1110_modem_version_t        modem;
-  lr1110_bootloader_version_t   bootloader_version;
   lr1110_bootloader_chip_eui_t  chip_eui;
+  wifi_settings_t               wifi_settings;
   double temperature;
+  static wifi_scan_all_results_t capture_result;
 
 
   /* USER CODE END Init */
@@ -154,19 +169,22 @@ int main(void)
   ((radio_t*)lr1110_context)->busy.port = GPIOB;
   ((radio_t*)lr1110_context)->busy.pin = BUSY_Pin;
 
-  if (lr1110_bootloader_get_version(lr1110_context, &bootloader_version) == LR1110_STATUS_OK) {
-    HAL_DBG_TRACE_INFO("LR1110 bootloader hardware version: %d\r\n", bootloader_version.hw);
-    HAL_DBG_TRACE_INFO("LR1110 bootloader type: %d\r\n", bootloader_version.type);
-    HAL_DBG_TRACE_INFO("LR1110 bootloader firmware version: %d.%d\r\n", bootloader_version.fw_major, bootloader_version.fw_minor);
-  } else {
-    HAL_DBG_TRACE_ERROR("Failed to get LR1110 bootloader version\r\n");
-  }
+  /* Init LR1110 modem-e event */
+  lr1110_modem_event_callback.wifi_scan_done = lr1110_modem_wifi_scan_done;
+  lr1110_modem_event_callback.reset          = lr1110_modem_reset_event;
+  //lr1110_modem_board_init( lr1110_context, &lr1110_modem_event_callback );
 
-  if (lr1110_bootloader_read_chip_eui(lr1110_context, chip_eui) == LR1110_STATUS_OK) {
-      HAL_DBG_TRACE_INFO("LR1110 chip EUI: %02X%02X%02X%02X%02X%02X%02X%02X\r\n", chip_eui[0], chip_eui[1], chip_eui[2], chip_eui[3], chip_eui[4], chip_eui[5], chip_eui[6], chip_eui[7]);
-  } else {
-      HAL_DBG_TRACE_ERROR("Failed to get LR1110 chip EUI\r\n");
-  }
+  getLR1110_Version(lr1110_context);
+
+  /* Wi-Fi Parameters */
+  wifi_settings.enabled       = true;
+  wifi_settings.channels      = 0x3FFF;  // by default enable all channels
+  wifi_settings.types         = 0x01;
+  wifi_settings.scan_mode     = 2;
+  wifi_settings.nbr_retrials  = 5;
+  wifi_settings.max_results   = 5;
+  wifi_settings.timeout       = 90;
+  wifi_settings.result_format = LR1110_MODEM_WIFI_RESULT_FORMAT_BASIC_MAC_TYPE_CHANNEL;
 
   /* USER CODE END 2 */
 
@@ -188,6 +206,19 @@ int main(void)
     } else {
         HAL_DBG_TRACE_ERROR("Failed to get LR1110 temperature\r\n");
     }
+
+
+
+    // if( wifi_execute_scan( lr1110_context, &wifi_settings, &capture_result ) == WIFI_SCAN_SUCCESS )
+    // {
+    //   HAL_DBG_TRACE_ERROR("SUCCESS\r\n");
+    //   //lr1110_modem_display_wifi_scan_results( &capture_result );
+    // }
+    // else
+    // {
+    //   HAL_DBG_TRACE_MSG( "Wi-Fi Scan error\n\r" );
+    // }
+
 
 
     HAL_Delay(1000);
@@ -442,6 +473,26 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
+/*
+ * -----------------------------------------------------------------------------
+ * --- PRIVATE FUNCTIONS DEFINITION --------------------------------------------
+ */
+
+static void lr1110_modem_reset_event( uint16_t reset_count )
+{
+    HAL_DBG_TRACE_INFO( "###### ===== LR1110 MODEM-E RESET %lu ==== ######\r\n\r\n", reset_count );
+
+    if( lr1110_modem_board_is_ready( ) == true )
+    {
+        /* System reset */
+        hal_mcu_reset( );
+    }
+    else
+    {
+        lr1110_modem_board_set_ready( true );
+    }
+}
+
 /* USER CODE END 4 */
 
 /**
@@ -457,6 +508,24 @@ void Error_Handler(void)
   {
   }
   /* USER CODE END Error_Handler_Debug */
+}
+
+void getLR1110_Version( const void* context) {
+  lr1110_bootloader_version_t   bootloader_version;
+
+  if (lr1110_bootloader_get_version(context, &bootloader_version) == LR1110_STATUS_OK) {
+    HAL_DBG_TRACE_INFO("LR1110 bootloader hardware version: %d\r\n", bootloader_version.hw);
+    if (bootloader_version.type = 1) {
+      HAL_DBG_TRACE_INFO("LR1110 bootloader type: Transceiver\r\n");
+    } else if (bootloader_version.type = 2) {
+      HAL_DBG_TRACE_INFO("LR1110 bootloader type: Modem\r\n");
+    } else {
+      HAL_DBG_TRACE_INFO("LR1110 bootloader type: Unknown\r\n");
+    }
+    HAL_DBG_TRACE_INFO("LR1110 bootloader firmware version: %d.%d\r\n", bootloader_version.fw_major, bootloader_version.fw_minor);
+  } else {
+    HAL_DBG_TRACE_ERROR("Failed to get LR1110 bootloader version\r\n");
+  }
 }
 
 #ifdef  USE_FULL_ASSERT

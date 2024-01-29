@@ -202,8 +202,8 @@ lr1110_status_t lr1110_bootloader_get_version( const void* context, lr1110_bootl
     uint8_t         rbuffer[LR1110_BL_VERSION_LENGTH] = { 0x00 };
     lr1110_status_t status                            = LR1110_STATUS_ERROR;
 
-    cbuffer[0] = ( uint8_t )( LR1110_BL_GET_VERSION_OC >> 8 );
-    cbuffer[1] = ( uint8_t )( LR1110_BL_GET_VERSION_OC >> 0 );
+    cbuffer[0] = ( uint8_t )( LR1110_BL_GET_VERSION_OC >> 8 );  // 0x0101
+    cbuffer[1] = ( uint8_t )( LR1110_BL_GET_VERSION_OC >> 0 );  // 0x0101
 
     status = ( lr1110_status_t ) lr1110_hal_read( context, cbuffer, LR1110_BL_VERSION_CMD_LENGTH, rbuffer,
                                                   LR1110_BL_VERSION_LENGTH );

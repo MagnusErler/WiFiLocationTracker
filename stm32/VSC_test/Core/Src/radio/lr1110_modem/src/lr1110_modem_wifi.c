@@ -139,7 +139,9 @@ lr1110_modem_response_code_t lr1110_modem_wifi_reset_cumulative_timing( const vo
     cbuffer[0] = LR1110_MODEM_GROUP_ID_WIFI;
     cbuffer[1] = LR1110_MODEM_WIFI_RESET_CUMUL_TIMING_PHASE_CMD;
 
-    return ( lr1110_modem_response_code_t ) lr1110_modem_hal_write( context, cbuffer,
+    //magnus return ( lr1110_modem_response_code_t ) lr1110_modem_hal_write( context, cbuffer,
+    //                                                                LR1110_WIFI_RESET_CUMUL_TIMING_CMD_LENGTH, 0, 0 );
+    return ( lr1110_modem_response_code_t ) lr1110_hal_write( context, cbuffer,
                                                                     LR1110_WIFI_RESET_CUMUL_TIMING_CMD_LENGTH, 0, 0 );
 }
 
@@ -225,7 +227,9 @@ lr1110_modem_response_code_t lr1110_modem_wifi_passive_scan(
         ( uint8_t ) result_format,
     };
 
-    return ( lr1110_modem_response_code_t ) lr1110_modem_hal_write( context, cbuffer,
+    //magnus return ( lr1110_modem_response_code_t ) lr1110_modem_hal_write( context, cbuffer,
+    //                                                                LR1110_WIFI_PASSIVE_SCAN_CMD_LENGTH, 0, 0 );
+    return ( lr1110_modem_response_code_t ) lr1110_hal_write( context, cbuffer,
                                                                     LR1110_WIFI_PASSIVE_SCAN_CMD_LENGTH, 0, 0 );
 }
 

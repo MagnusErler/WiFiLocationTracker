@@ -51,12 +51,12 @@ lr1110_modem_hal_status_t lr1110_modem_hal_wakeup( const void* radio )
 {
     radio_t* radio_local = ( radio_t* ) radio;
 
-    //magnus if( lr1110_modem_hal_wait_on_busy( radio_local, 1000 ) == LR1110_MODEM_HAL_STATUS_OK )
-    // {
-    //     // Wakeup radio
-    //     system_gpio_set_pin_state( radio_local->nss, 0 );
-    //     system_gpio_set_pin_state( radio_local->nss, 1 );
-    // }
+    if( lr1110_modem_hal_wait_on_busy( radio_local, 1000 ) == LR1110_MODEM_HAL_STATUS_OK )
+    {
+        // Wakeup radio
+        system_gpio_set_pin_state( radio_local->nss, 0 );
+        system_gpio_set_pin_state( radio_local->nss, 1 );
+    }
 
     system_gpio_wait_for_state( radio_local->busy, SYSTEM_GPIO_PIN_STATE_LOW );
     // Wakeup radio
