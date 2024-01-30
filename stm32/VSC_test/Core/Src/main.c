@@ -124,6 +124,7 @@ int main(void)
 
   /* USER CODE BEGIN Init */
 
+  lr1110_modem_response_code_t  modem_response_code         = LR1110_MODEM_RESPONSE_CODE_OK;
   lr1110_modem_event_callback_t lr1110_modem_event_callback = { NULL };
   lr1110_modem_version_t        modem;
   lr1110_bootloader_chip_eui_t  chip_eui;
@@ -178,17 +179,21 @@ int main(void)
   /* Init LR1110 modem-e event */
   lr1110_modem_event_callback.wifi_scan_done = lr1110_modem_wifi_scan_done;
   lr1110_modem_event_callback.reset          = lr1110_modem_reset_event;
-  //lr1110_modem_board_init( lr1110_context, &lr1110_modem_event_callback );
+  modem_response_code                        = lr1110_modem_board_init( lr1110_context, &lr1110_modem_event_callback );
+  if( modem_response_code != LR1110_MODEM_RESPONSE_CODE_OK )
+  {
+      HAL_DBG_TRACE_ERROR( "lr1110_modem_board_init failed (%d)\r\n", modem_response_code );
+  }
 
   getLR1110_Version(lr1110_context);
 
   /* Wi-Fi Parameters */
   wifi_settings.enabled       = true;
   wifi_settings.channels      = 0x3FFF;  // by default enable all channels
-  wifi_settings.types         = 0x01;
+  wifi_settings.types         = 0x04;
   wifi_settings.scan_mode     = 2;
   wifi_settings.nbr_retrials  = 5;
-  wifi_settings.max_results   = 5;
+  wifi_settings.max_results   = 1;
   wifi_settings.timeout       = 90;
   wifi_settings.result_format = LR1110_MODEM_WIFI_RESULT_FORMAT_BASIC_MAC_TYPE_CHANNEL;
 
@@ -207,12 +212,13 @@ int main(void)
     HAL_DBG_TRACE_PRINTF("a = %d\r\n", a++);
 
     getLR1110_Temperature(lr1110_context);
+    
 
 
     // if( wifi_execute_scan( lr1110_context, &wifi_settings, &capture_result ) == WIFI_SCAN_SUCCESS ) {
-    //   HAL_DBG_TRACE_ERROR("SUCCESS\r\n");
+    //     HAL_DBG_TRACE_MSG( "Success\n\r" );
     // } else {
-    //   HAL_DBG_TRACE_MSG( "Wi-Fi Scan error\n\r" );
+    //     HAL_DBG_TRACE_MSG( "Wi-Fi Scan error\n\r" );
     // }
 
     /* USER CODE END WHILE */
@@ -505,7 +511,7 @@ void Error_Handler(void)
 }
 
 void getLR1110_Version( const void* context) {
-  lr1110_bootloader_version_t   bootloader_version;
+  lr1110_bootloader_version_t bootloader_version;
 
   if (lr1110_bootloader_get_version(context, &bootloader_version) == LR1110_STATUS_OK) {
     HAL_DBG_TRACE_INFO("LR1110 bootloader hardware version: %d\r\n", bootloader_version.hw);

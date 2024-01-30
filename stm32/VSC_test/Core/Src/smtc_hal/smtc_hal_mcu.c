@@ -182,7 +182,7 @@ void hal_mcu_init_periph( void )
     leds_init( );
 
     /* External supplies */
-    //magnus external_supply_init( LNA_SUPPLY_MASK );
+    external_supply_init( LNA_SUPPLY_MASK );
 
     /* LIS2DE12 accelerometer */
     //magnus accelerometer_init( INT_1 );
@@ -193,7 +193,7 @@ static void hal_mcu_reinit_periph( void )
     leds_init( );
 
     /* External supplies */
-    //magnus external_supply_init( LNA_SUPPLY_MASK );
+    external_supply_init( LNA_SUPPLY_MASK );
 }
 
 void hal_mcu_deinit_periph( void )
@@ -201,7 +201,7 @@ void hal_mcu_deinit_periph( void )
     leds_deinit( );
 
     // Disable external supply
-    //magnus external_supply_deinit( LNA_SUPPLY_MASK );
+    external_supply_deinit( LNA_SUPPLY_MASK );
     
 #ifdef HAL_MCU_GPIO_DEINIT
     hal_mcu_gpio_deinit( );
@@ -220,7 +220,7 @@ void hal_mcu_init( void )
     hal_mcu_gpio_init( );
 
     /* Initialize low power timer */
-    //magnus hal_tmr_init( );
+    hal_tmr_init( );
 
     /* Initialize the user flash */
     flash_init( );
@@ -329,12 +329,6 @@ void hal_mcu_disable_once_low_power_wait( void )
     hal_exit_wait       = true;
     hal_lp_current_mode = LOW_POWER_DISABLE_ONCE;
 }
-
-/* magnus void SysTick_Handler( void )
-{
-    HAL_IncTick( );
-    HAL_SYSTICK_IRQHandler( );
-}*/
 
 void hal_mcu_trace_print( const char* fmt, ... )
 {
@@ -703,17 +697,6 @@ static void on_soft_watchdog_event( void* context )
     /* System reset */
     hal_mcu_reset( );
 }
-
-/**
- * @brief This function handles Hard fault interrupt.
- */
-//magnus void HardFault_Handler( void )
-// {
-//     HAL_DBG_TRACE_ERROR( "HardFault_Handler\n\r" );
-
-//     /* reset the board*/
-//     hal_mcu_reset( );
-// }
 
 /*!
  * @brief  This function handles PVD interrupt request.

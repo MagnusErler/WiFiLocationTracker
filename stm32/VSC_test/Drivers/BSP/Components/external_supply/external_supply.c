@@ -1,7 +1,7 @@
 /*!
- * @file      smtc_hal.h
+ * @file      external_supply.c
  *
- * @brief     Board specific package API definition.
+ * @brief     External supply driver implementation.
  *
  * Revised BSD License
  * Copyright Semtech Corporation 2020. All rights reserved.
@@ -29,65 +29,66 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef SMTC_HAL_H
-#define SMTC_HAL_H
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /*
  * -----------------------------------------------------------------------------
  * --- DEPENDENCIES ------------------------------------------------------------
  */
 
-#include "smtc_hal_options.h"
-#include "smtc_hal_dbg_trace.h"
-#include "smtc_hal_gpio.h"
-#include "smtc_hal_gpio_pin_names.h"
-#include "smtc_hal_mcu.h"
-//magnus #include "smtc_hal_rtc.h"
-#include "smtc_hal_tmr.h"
-#include "smtc_hal_tmr_list.h"
-#include "smtc_hal_watchdog.h"
-#include "smtc_hal_rng.h"
-#include "smtc_hal_gpio.h"
-#include "smtc_hal_spi.h"
-#include "smtc_hal_uart.h"
-#include "smtc_hal_flash.h"
-//magnus #include "smtc_hal_i2c.h"
-
-#include "board-config.h"
-
-/* user peripheral */
-//magnus #include "lis2de12.h"
-#include "leds.h"
-#include "external_supply.h"
+#include "smtc_hal.h"
 
 /*
  * -----------------------------------------------------------------------------
- * --- PUBLIC MACROS -----------------------------------------------------------
+ * --- PRIVATE MACROS-----------------------------------------------------------
  */
 
 /*
  * -----------------------------------------------------------------------------
- * --- PUBLIC CONSTANTS --------------------------------------------------------
+ * --- PRIVATE CONSTANTS -------------------------------------------------------
  */
 
 /*
  * -----------------------------------------------------------------------------
- * --- PUBLIC TYPES ------------------------------------------------------------
+ * --- PRIVATE TYPES -----------------------------------------------------------
  */
 
 /*
  * -----------------------------------------------------------------------------
- * --- PUBLIC FUNCTIONS PROTOTYPES ---------------------------------------------
+ * --- PRIVATE VARIABLES -------------------------------------------------------
  */
 
-#ifdef __cplusplus
+/*
+ * -----------------------------------------------------------------------------
+ * --- PRIVATE FUNCTIONS DECLARATION -------------------------------------------
+ */
+
+/*
+ * -----------------------------------------------------------------------------
+ * --- PUBLIC FUNCTIONS DEFINITION ---------------------------------------------
+ */
+
+void external_supply_init( uint8_t vcc_mask )
+{
+    if( vcc_mask & LNA_SUPPLY_MASK )
+    {
+        hal_gpio_init_out( LNA_PON, 0 );
+    }
 }
-#endif
 
-#endif  // SMTC_HAL_H
+void external_supply_deinit( uint8_t vcc_mask )
+{
+    if( vcc_mask & LNA_SUPPLY_MASK )
+    {
+        hal_gpio_deinit( LNA_PON );
+    }
+}
+
+void lna_on( void ) { hal_gpio_set_value( LNA_PON, 1 ); }
+
+void lna_off( void ) { hal_gpio_set_value( LNA_PON, 0 ); }
+
+/*
+ * -----------------------------------------------------------------------------
+ * --- PRIVATE FUNCTIONS DEFINITION --------------------------------------------
+ */
 
 /* --- EOF ------------------------------------------------------------------ */

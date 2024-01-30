@@ -45,7 +45,7 @@ extern "C" {
 #include <stdint.h>
 #include "lr1110_modem_common.h"
 #include "lr1110_modem_lorawan.h"
-//magnus #include "lr1110_modem_gnss.h"
+#include "lr1110_modem_gnss.h"
 
 /*
  * -----------------------------------------------------------------------------
@@ -225,8 +225,8 @@ lr1110_modem_response_code_t lr1110_modem_helper_gnss_get_almanac_date_by_index(
  *
  * @returns  Operation status
  */
-//magnus lr1110_modem_helper_status_t lr1110_modem_helper_gnss_get_result_destination(
-//magnus     const uint8_t* result_buffer, const uint16_t result_buffer_size, lr1110_modem_gnss_destination_t* destination );
+lr1110_modem_helper_status_t lr1110_modem_helper_gnss_get_result_destination(
+    const uint8_t* result_buffer, const uint16_t result_buffer_size, lr1110_modem_gnss_destination_t* destination );
 
 /**
  * @brief Extract the event type from the result returned by a GNSS scan, \note a event type exists only if the
@@ -238,9 +238,9 @@ lr1110_modem_response_code_t lr1110_modem_helper_gnss_get_almanac_date_by_index(
  *
  * @returns  Operation status
  */
-//magnus lr1110_modem_helper_status_t lr1110_modem_helper_gnss_get_event_type( const uint8_t* result_buffer,
-//magnus                                                                       const uint16_t result_buffer_size,
-//magnus                                                                       lr1110_modem_gnss_scan_done_event_t* event_type );
+lr1110_modem_helper_status_t lr1110_modem_helper_gnss_get_event_type( const uint8_t* result_buffer,
+                                                                      const uint16_t result_buffer_size,
+                                                                      lr1110_modem_gnss_scan_done_event_t* event_type );
 
 /**
  * @brief Extract the event data contained in the event field buffer

@@ -113,18 +113,18 @@ lr1110_modem_response_code_t lr1110_modem_helper_gnss_get_almanac_date_by_index(
                                                                                  uint32_t* date,
                                                                                  uint8_t   gnss_week_number_rollover )
 {
-	//magnus uint8_t                      rbuffer[LR1110_MODEM_GNSS_SINGLE_ALMANAC_READ_SIZE] = { 0 };
+	uint8_t                      rbuffer[LR1110_MODEM_GNSS_SINGLE_ALMANAC_READ_SIZE] = { 0 };
     lr1110_modem_response_code_t rc;
 
     *date = 0;
 
-    //magnus rc = lr1110_modem_gnss_almanac_read_by_index( context, sv_id, 1, rbuffer,
-    //magnus                                               LR1110_MODEM_GNSS_SINGLE_ALMANAC_READ_SIZE );
+    rc = lr1110_modem_gnss_almanac_read_by_index( context, sv_id, 1, rbuffer,
+                                                  LR1110_MODEM_GNSS_SINGLE_ALMANAC_READ_SIZE );
 
     if( rc == LR1110_MODEM_RESPONSE_CODE_OK )
     {
-    	//magnus
-        /*lr1110_modem_gnss_almanac_constellation_id_t sv_constellation_id =
+    	
+        lr1110_modem_gnss_almanac_constellation_id_t sv_constellation_id =
     	    ( lr1110_modem_gnss_almanac_constellation_id_t )
     	        rbuffer[LR1110_MODEM_HELPER_GNSS_ALMANAC_SV_CONSTELLATION_ID_BUFFER_LOCATION];
 
@@ -139,14 +139,13 @@ lr1110_modem_response_code_t lr1110_modem_helper_gnss_get_almanac_date_by_index(
     	                  ( gnss_week_number_rollover * LR1110_MODEM_HELPER_NB_WEEK_PER_WRAP *
     	                        LR1110_MODEM_HELPER_NB_DAY_PER_WEEK +
     	                    *date ) );
-    	}*/
+    	}
     }
 
     return rc;
 }
 
-//magnus
-/*lr1110_modem_helper_status_t lr1110_modem_helper_gnss_get_result_destination(
+lr1110_modem_helper_status_t lr1110_modem_helper_gnss_get_result_destination(
     const uint8_t* result_buffer, const uint16_t result_buffer_size, lr1110_modem_gnss_destination_t* destination )
 {
     lr1110_modem_helper_status_t status = LR1110_MODEM_HELPER_STATUS_ERROR;
@@ -173,10 +172,9 @@ lr1110_modem_response_code_t lr1110_modem_helper_gnss_get_almanac_date_by_index(
     }
 
     return status;
-}*/
+}
 
-//magnus
-/*lr1110_modem_helper_status_t lr1110_modem_helper_gnss_get_event_type( const uint8_t* result_buffer,
+lr1110_modem_helper_status_t lr1110_modem_helper_gnss_get_event_type( const uint8_t* result_buffer,
                                                                       const uint16_t result_buffer_size,
                                                                       lr1110_modem_gnss_scan_done_event_t* event_type )
 {
@@ -229,7 +227,7 @@ lr1110_modem_response_code_t lr1110_modem_helper_gnss_get_almanac_date_by_index(
     }
 
     return status;
-}*/
+}
 
 lr1110_modem_helper_status_t lr1110_modem_helper_get_event_data( const void*           context,
                                                                  lr1110_modem_event_t* modem_event )

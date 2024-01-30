@@ -22,6 +22,7 @@
 #include "stm32l4xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "smtc_hal_dbg_trace.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -84,6 +85,11 @@ void NMI_Handler(void)
 void HardFault_Handler(void)
 {
   /* USER CODE BEGIN HardFault_IRQn 0 */
+
+  HAL_DBG_TRACE_ERROR( "HardFault_Handler\n\r" );
+
+  /* reset the board*/
+  hal_mcu_reset( );
 
   /* USER CODE END HardFault_IRQn 0 */
   while (1)
@@ -187,6 +193,8 @@ void SysTick_Handler(void)
   /* USER CODE END SysTick_IRQn 0 */
   HAL_IncTick();
   /* USER CODE BEGIN SysTick_IRQn 1 */
+
+  HAL_SYSTICK_IRQHandler( );
 
   /* USER CODE END SysTick_IRQn 1 */
 }

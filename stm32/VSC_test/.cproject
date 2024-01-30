@@ -23,7 +23,7 @@
 							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.fpu.1652909343" name="Floating-point unit" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.fpu" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.fpu.value.fpv4-sp-d16" valueType="enumerated"/>
 							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.floatabi.1065801256" name="Floating-point ABI" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.floatabi" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.floatabi.value.hard" valueType="enumerated"/>
 							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_board.321220155" name="Board" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_board" value="NUCLEO-L476RG" valueType="string"/>
-							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.defaults.211098539" name="Defaults" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.defaults" value="com.st.stm32cube.ide.common.services.build.inputs.revA.1.0.6 || Debug || true || Executable || com.st.stm32cube.ide.mcu.gnu.managedbuild.option.toolchain.value.workspace || NUCLEO-L476RG || 0 || 0 || arm-none-eabi- || ${gnu_tools_for_stm32_compiler_path} || ../Core/Inc | ../Core/Inc/boards | ../Core/Inc/smtc_hal | ../Core/Src/smtc_hal | ../Core/Src/radio | ../Core/Src/radio/wifi | ../Core/Src/radio/lr1110_modem/src | ../Drivers/application/inc | ../Drivers/application/src | ../Drivers/system/inc | ../Drivers/system/src | ../Drivers/BSP/Components/Leds | ../Drivers/STM32L4xx_HAL_Driver/Inc | ../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy | ../Drivers/STM32L4xx_HAL_Driver/Src | ../Drivers/CMSIS/Device/ST/STM32L4xx/Include | ../Drivers/CMSIS/Include ||  ||  || USE_HAL_DRIVER | STM32L476xx ||  || Drivers | Core/Startup | Core ||  ||  || ${workspace_loc:/${ProjName}/STM32L476RGTX_FLASH.ld} || true || NonSecure ||  || secure_nsclib.o ||  || None ||  ||  || " valueType="string"/>
+							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.defaults.211098539" name="Defaults" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.defaults" value="com.st.stm32cube.ide.common.services.build.inputs.revA.1.0.6 || Debug || true || Executable || com.st.stm32cube.ide.mcu.gnu.managedbuild.option.toolchain.value.workspace || NUCLEO-L476RG || 0 || 0 || arm-none-eabi- || ${gnu_tools_for_stm32_compiler_path} || ../Core/Inc | ../Core/Inc/boards | ../Core/Inc/smtc_hal | ../Core/Src/smtc_hal | ../Core/Src/radio | ../Core/Src/radio/wifi | ../Core/Src/radio/gnss | ../Core/Src/radio/lr1110_modem/src | ../Drivers/application/inc | ../Drivers/application/src | ../Drivers/system/inc | ../Drivers/system/src | ../Drivers/BSP/Components/Leds | ../Drivers/BSP/Components/external_supply | ../Drivers/BSP/Components/lis2de12 | ../Drivers/STM32L4xx_HAL_Driver/Inc | ../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy | ../Drivers/STM32L4xx_HAL_Driver/Src | ../Drivers/CMSIS/Device/ST/STM32L4xx/Include | ../Drivers/CMSIS/Include ||  ||  || USE_HAL_DRIVER | STM32L476xx ||  || Drivers | Core/Startup | Core ||  ||  || ${workspace_loc:/${ProjName}/STM32L476RGTX_FLASH.ld} || true || NonSecure ||  || secure_nsclib.o ||  || None ||  ||  || " valueType="string"/>
 							<option id="com.st.stm32cube.ide.mcu.debug.option.cpuclock.1279055772" superClass="com.st.stm32cube.ide.mcu.debug.option.cpuclock" value="80" valueType="string"/>
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.targetplatform.11408062" isAbstract="false" osList="all" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.targetplatform"/>
 							<builder buildPath="${workspace_loc:/VSC_test}/Debug" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.builder.34689191" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" parallelBuildOn="true" parallelizationNumber="optimal" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.builder"/>
@@ -49,12 +49,15 @@
 									<listOptionValue builtIn="false" value="../Core/Src/smtc_hal"/>
 									<listOptionValue builtIn="false" value="../Core/Src/radio"/>
 									<listOptionValue builtIn="false" value="../Core/Src/radio/wifi"/>
+									<listOptionValue builtIn="false" value="../Core/Src/radio/gnss"/>
 									<listOptionValue builtIn="false" value="../Core/Src/radio/lr1110_modem/src"/>
 									<listOptionValue builtIn="false" value="../Drivers/application/inc"/>
 									<listOptionValue builtIn="false" value="../Drivers/application/src"/>
 									<listOptionValue builtIn="false" value="../Drivers/system/inc"/>
 									<listOptionValue builtIn="false" value="../Drivers/system/src"/>
 									<listOptionValue builtIn="false" value="../Drivers/BSP/Components/Leds"/>
+									<listOptionValue builtIn="false" value="../Drivers/BSP/Components/external_supply"/>
+									<listOptionValue builtIn="false" value="../Drivers/BSP/Components/lis2de12"/>
 									<listOptionValue builtIn="false" value="../Drivers/STM32L4xx_HAL_Driver/Inc"/>
 									<listOptionValue builtIn="false" value="../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy"/>
 									<listOptionValue builtIn="false" value="../Drivers/STM32L4xx_HAL_Driver/Src"/>
@@ -115,7 +118,7 @@
 							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.fpu.1416587793" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.fpu" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.fpu.value.fpv4-sp-d16" valueType="enumerated"/>
 							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.floatabi.982972061" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.floatabi" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.floatabi.value.hard" valueType="enumerated"/>
 							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_board.842230232" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_board" value="NUCLEO-L476RG" valueType="string"/>
-							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.defaults.1573060177" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.defaults" value="com.st.stm32cube.ide.common.services.build.inputs.revA.1.0.6 || Release || false || Executable || com.st.stm32cube.ide.mcu.gnu.managedbuild.option.toolchain.value.workspace || NUCLEO-L476RG || 0 || 0 || arm-none-eabi- || ${gnu_tools_for_stm32_compiler_path} || ../Core/Inc | ../Core/Inc/boards | ../Core/Inc/smtc_hal | ../Core/Src/smtc_hal | ../Core/Src/radio | ../Core/Src/radio/wifi | ../Core/Src/radio/lr1110_modem/src | ../Drivers/application/inc | ../Drivers/application/src | ../Drivers/system/inc | ../Drivers/system/src | ../Drivers/BSP/Components/Leds |  ../Drivers/STM32L4xx_HAL_Driver/Inc | ../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy | ../Drivers/STM32L4xx_HAL_Driver/Src | ../Drivers/CMSIS/Device/ST/STM32L4xx/Include | ../Drivers/CMSIS/Include | ../Drivers/STM32L4xx_HAL_Driver/Inc ||  ||  || USE_HAL_DRIVER | STM32L476xx ||  || Drivers | Core/Startup | Core ||  ||  || ${workspace_loc:/${ProjName}/STM32L476RGTX_FLASH.ld} || true || NonSecure ||  || secure_nsclib.o ||  || None ||  ||  || " valueType="string"/>
+							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.defaults.1573060177" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.defaults" value="com.st.stm32cube.ide.common.services.build.inputs.revA.1.0.6 || Release || false || Executable || com.st.stm32cube.ide.mcu.gnu.managedbuild.option.toolchain.value.workspace || NUCLEO-L476RG || 0 || 0 || arm-none-eabi- || ${gnu_tools_for_stm32_compiler_path} || ../Core/Inc | ../Core/Inc/boards | ../Core/Inc/smtc_hal | ../Core/Src/smtc_hal | ../Core/Src/radio | ../Core/Src/radio/wifi | ../Core/Src/radio/gnss | ../Core/Src/radio/lr1110_modem/src | ../Drivers/application/inc | ../Drivers/application/src | ../Drivers/system/inc | ../Drivers/system/src | ../Drivers/BSP/Components/Leds | ../Drivers/BSP/Components/external_supply | ../Drivers/BSP/Components/lis2de12 | ../Drivers/STM32L4xx_HAL_Driver/Inc | ../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy | ../Drivers/STM32L4xx_HAL_Driver/Src | ../Drivers/CMSIS/Device/ST/STM32L4xx/Include | ../Drivers/CMSIS/Include | ../Drivers/STM32L4xx_HAL_Driver/Inc ||  ||  || USE_HAL_DRIVER | STM32L476xx ||  || Drivers | Core/Startup | Core ||  ||  || ${workspace_loc:/${ProjName}/STM32L476RGTX_FLASH.ld} || true || NonSecure ||  || secure_nsclib.o ||  || None ||  ||  || " valueType="string"/>
 							<option id="com.st.stm32cube.ide.mcu.debug.option.cpuclock.2006054186" superClass="com.st.stm32cube.ide.mcu.debug.option.cpuclock" value="80" valueType="string"/>
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.targetplatform.531231480" isAbstract="false" osList="all" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.targetplatform"/>
 							<builder buildPath="${workspace_loc:/VSC_test}/Release" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.builder.856544496" managedBuildOn="true" name="Gnu Make Builder.Release" parallelBuildOn="true" parallelizationNumber="optimal" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.builder"/>
@@ -137,19 +140,20 @@
 									<listOptionValue builtIn="false" value="../Core/Src/smtc_hal"/>
 									<listOptionValue builtIn="false" value="../Core/Src/radio"/>
 									<listOptionValue builtIn="false" value="../Core/Src/radio/wifi"/>
+									<listOptionValue builtIn="false" value="../Core/Src/radio/gnss"/>
 									<listOptionValue builtIn="false" value="../Core/Src/radio/lr1110_modem/src"/>
 									<listOptionValue builtIn="false" value="../Drivers/application/inc"/>
 									<listOptionValue builtIn="false" value="../Drivers/application/src"/>
 									<listOptionValue builtIn="false" value="../Drivers/system/inc"/>
 									<listOptionValue builtIn="false" value="../Drivers/system/src"/>
 									<listOptionValue builtIn="false" value="../Drivers/BSP/Components/Leds"/>
+									<listOptionValue builtIn="false" value="../Drivers/BSP/Components/external_supply"/>
+									<listOptionValue builtIn="false" value="../Drivers/BSP/Components/lis2de12"/>
 									<listOptionValue builtIn="false" value="../Drivers/STM32L4xx_HAL_Driver/Inc"/>
 									<listOptionValue builtIn="false" value="../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy"/>
 									<listOptionValue builtIn="false" value="../Drivers/STM32L4xx_HAL_Driver/Src"/>
 									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Device/ST/STM32L4xx/Include"/>
 									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Include"/>
-									<listOptionValue builtIn="false" value=" ../Drivers/BSP/Components/Leds"/>
-									<listOptionValue builtIn="false" value=" ../Drivers/STM32L4xx_HAL_Driver/Inc"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.606123575" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>

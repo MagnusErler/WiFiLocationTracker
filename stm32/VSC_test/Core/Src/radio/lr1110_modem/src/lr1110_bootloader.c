@@ -68,6 +68,16 @@
 #define LR1110_BL_VERSION_CMD_LENGTH LR1110_BL_CMD_NO_PARAM_LENGTH
 
 /*!
+ * @brief Length of command buffer for bootloader get temperature command
+ */
+#define LR1110_BL_TEMPERATURE_CMD_LENGTH LR1110_BL_CMD_NO_PARAM_LENGTH
+
+/*!
+ * @brief Length of command buffer for bootloader get status command
+ */
+#define LR1110_BL_STATUS_CMD_LENGTH ( LR1110_BL_CMD_NO_PARAM_LENGTH + 4 )
+
+/*!
  * @brief Length of command buffer for flash erase command
  */
 #define LR1110_BL_ERASE_FLASH_CMD_LENGTH LR1110_BL_CMD_NO_PARAM_LENGTH
@@ -221,26 +231,43 @@ lr1110_status_t lr1110_bootloader_get_version( const void* context, lr1110_bootl
 
 lr1110_status_t lr1110_bootloader_get_temperature( const void* context, uint16_t* temperature )
 {
-    uint8_t         cbuffer[LR1110_BL_VERSION_CMD_LENGTH];
-    uint8_t         rbuffer[3] = { 0x00 };
-    lr1110_status_t status                            = LR1110_STATUS_ERROR;
+    uint8_t         cbuffer[LR1110_BL_TEMPERATURE_CMD_LENGTH];
+    uint8_t         rbuffer[LR1110_BL_TEMPERATURE_LENGTH] = { 0x00 };
+    lr1110_status_t status                                = LR1110_STATUS_ERROR;
 
     cbuffer[0] = ( uint8_t )( LR1110_BL_GET_TEMPERATURE >> 8 );
     cbuffer[1] = ( uint8_t )( LR1110_BL_GET_TEMPERATURE >> 0 );
 
-    status = ( lr1110_status_t ) lr1110_hal_read( context, cbuffer, LR1110_BL_VERSION_CMD_LENGTH, rbuffer,
-                                                  LR1110_BL_VERSION_LENGTH );
+    status = ( lr1110_status_t ) lr1110_hal_read( context, cbuffer, LR1110_BL_TEMPERATURE_CMD_LENGTH, rbuffer,
+                                                  LR1110_BL_TEMPERATURE_LENGTH );
 
     if( status == LR1110_STATUS_OK )
     {
         // rbuffer[0] is Temp(15:8)
         // rbuffer[1] is Temp(7:0)
         // finding Temp(10:0)
-        uint16_t temp_10_0 = ( rbuffer[0] << 2 ) + ( rbuffer[1] >> 6 );
+        uint16_t temp_10_0 = ((rbuffer[0] & 0x03) << 8) | rbuffer[1];
         *temperature = 25 + (1000/(-1.7)) * ((temp_10_0/2047) * 1.35 - 0.7295);
     }
 
     return status;
+}
+
+lr1110_status_t lr1110_bootloader_get_status( const void* context, uint16_t* status )
+{
+    uint8_t         cbuffer[LR1110_BL_STATUS_CMD_LENGTH];
+    uint8_t         rbuffer[LR1110_BL_STATUS_LENGTH] = { 0x00 };
+    lr1110_status_t status_                           = LR1110_STATUS_ERROR;
+
+    cbuffer[0] = ( uint8_t )( LR1110_BL_GET_STATUS_OC >> 8 );
+    cbuffer[1] = ( uint8_t )( LR1110_BL_GET_STATUS_OC >> 0 );
+
+    status_ = ( lr1110_status_t ) lr1110_hal_read( context, cbuffer, LR1110_BL_STATUS_CMD_LENGTH, rbuffer,
+                                                  LR1110_BL_STATUS_LENGTH );
+
+    // TODO
+
+    return status_;
 }
 
 lr1110_status_t lr1110_bootloader_erase_flash( const void* context )
