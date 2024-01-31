@@ -56,7 +56,7 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-
+extern LPTIM_HandleTypeDef hlptim1;
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -205,6 +205,27 @@ void SysTick_Handler(void)
 /* For the available peripheral interrupt handler names,                      */
 /* please refer to the startup file (startup_stm32l4xx.s).                    */
 /******************************************************************************/
+
+/**
+  * @brief This function handles LPTIM1 global interrupt.
+  */
+void LPTIM1_IRQHandler(void)
+{
+  /* USER CODE BEGIN LPTIM1_IRQn 0 */
+
+  /* USER CODE END LPTIM1_IRQn 0 */
+  HAL_LPTIM_IRQHandler(&hlptim1);
+  /* USER CODE BEGIN LPTIM1_IRQn 1 */
+
+  HAL_LPTIM_TimeOut_Stop( &hlptim1 );
+
+  // if( lptim_tmr_irq.callback != NULL )
+  // {
+  //     lptim_tmr_irq.callback( lptim_tmr_irq.context );
+  // }
+
+  /* USER CODE END LPTIM1_IRQn 1 */
+}
 
 /* USER CODE BEGIN 1 */
 

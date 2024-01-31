@@ -46,7 +46,7 @@ extern "C" {
 #include "smtc_hal_gpio.h"
 #include "smtc_hal_gpio_pin_names.h"
 #include "smtc_hal_mcu.h"
-//magnus #include "smtc_hal_rtc.h"
+#include "smtc_hal_rtc.h"
 #include "smtc_hal_tmr.h"
 #include "smtc_hal_tmr_list.h"
 #include "smtc_hal_watchdog.h"

@@ -321,11 +321,11 @@ wifi_scan_result_t wifi_execute_scan( const void* context, const wifi_settings_t
         case WIFI_WAIT_FOR_SCAN:
         {
             /* go in low power */
-            if( lr1110_modem_board_read_event_line( context ) == false )
-            {
-                hal_mcu_low_power_handler( );
-            }
-            break;
+            // if( lr1110_modem_board_read_event_line( context ) == false )
+            // {
+            //     hal_mcu_low_power_handler( );
+            // }
+            // break;
         }
         }
     }
