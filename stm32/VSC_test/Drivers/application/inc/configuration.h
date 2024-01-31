@@ -75,19 +75,28 @@
 #define BUTTON_BLUE_PORT ( GPIOC )
 #define BUTTON_BLUE_PIN ( LL_GPIO_PIN_13 )
 
+#include "smtc_hal_gpio.h"
+
 typedef struct configuration
 {
     GPIO_TypeDef* port;
     uint32_t      pin;
 } gpio_t;
 
+typedef struct hal_gpio_irq_s1
+{
+    gpio_t irq1;
+    void*                context;
+    void ( *callback )( void* context );
+} hal_gpio_irq_t1;
+
 typedef struct
 {
-    SPI_TypeDef* spi;
-    gpio_t       nss;
-    gpio_t       reset;
-    gpio_t       irq;
-    gpio_t       busy;
+    SPI_TypeDef*    spi;
+    gpio_t          nss;
+    gpio_t          reset;
+    hal_gpio_irq_t  irq;
+    gpio_t          busy;
 } radio_t;
 
 #endif

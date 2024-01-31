@@ -94,7 +94,7 @@ void hal_mcu_critical_section_end( uint32_t* mask );
 /*!
  * @brief Initializes HAL used MCU
  */
-void hal_mcu_init( void );
+void hal_mcu_init( const void* context );
 
 /*!
  * @brief Initializes HAL used Peripherals

@@ -42,6 +42,9 @@
 #include "lr1110_modem_board.h"
 #include "smtc_hal.h"
 
+#include "main.h"
+#include "configuration.h"
+
 #if( HAL_DBG_TRACE == HAL_FEATURE_ON )
 #include <stdarg.h>
 #include <string.h>
@@ -208,39 +211,38 @@ void hal_mcu_deinit_periph( void )
 #endif
 }
 
-void hal_mcu_init( void )
+void hal_mcu_init( const void* context )
 {
     /* Initialize MCU HAL library */
-    HAL_Init( );
+    // HAL_Init( );
 
-    /* Initialize clocks */
-    hal_mcu_system_clock_config( );
+    // /* Initialize clocks */
+    // hal_mcu_system_clock_config( );
 
-    /* Initialize GPIOs */
-    hal_mcu_gpio_init( );
+    // /* Initialize GPIOs */
+    // hal_mcu_gpio_init( );
 
-    /* Initialize low power timer */
-    hal_tmr_init( );
+    // /* Initialize low power timer */
+    // hal_tmr_init( );
 
-    /* Initialize the user flash */
-    flash_init( );
+    // /* Initialize the user flash */
+    // flash_init( );
 
-    /* Init power voltage voltage detector */
-    hal_mcu_pvd_config( );
+    // /* Init power voltage voltage detector */
+    // hal_mcu_pvd_config( );
 
     /* Initialize UART */
-#if( HAL_USE_PRINTF_UART == HAL_FEATURE_ON )
-    hal_uart_init( HAL_PRINTF_UART_ID, UART_TX, UART_RX );
-#endif
-
+// #if( HAL_USE_PRINTF_UART == HAL_FEATURE_ON )
+//     hal_uart_init( HAL_PRINTF_UART_ID, UART_TX, UART_RX );
+// #endif
     /* Initialize SPI */
-    hal_spi_init( HAL_RADIO_SPI_ID, RADIO_MOSI, RADIO_MISO, RADIO_SCLK );
-    lr1110_modem_board_init_io_context( &lr1110 );
+    // hal_spi_init( HAL_RADIO_SPI_ID, RADIO_MOSI, RADIO_MISO, RADIO_SCLK );
+    lr1110_modem_board_init_io_context( &lr1110);
     /* Init LR1110 IO */
     lr1110_modem_board_init_io( &lr1110 );
 
     /* Initialize RTC */
-    //magnus hal_rtc_init( );
+    //hal_rtc_init( );
 
     /* Initialize I2C */
     //magnus hal_i2c_init( HAL_I2C_ID, I2C_SDA, I2C_SCL );
@@ -489,31 +491,6 @@ static void hal_mcu_gpio_deinit( void )
     __HAL_RCC_GPIOH_CLK_DISABLE( );
 }
 #endif
-
-
-//magnus void HAL_MspInit( void )
-// {
-//     __HAL_RCC_SYSCFG_CLK_ENABLE( );
-//     __HAL_RCC_PWR_CLK_ENABLE( );
-
-//     HAL_NVIC_SetPriorityGrouping( NVIC_PRIORITYGROUP_4 );
-
-//     /* System interrupt init*/
-//     /* MemoryManagement_IRQn interrupt configuration */
-//     HAL_NVIC_SetPriority( MemoryManagement_IRQn, 0, 0 );
-//     /* BusFault_IRQn interrupt configuration */
-//     HAL_NVIC_SetPriority( BusFault_IRQn, 0, 0 );
-//     /* UsageFault_IRQn interrupt configuration */
-//     HAL_NVIC_SetPriority( UsageFault_IRQn, 0, 0 );
-//     /* SVCall_IRQn interrupt configuration */
-//     HAL_NVIC_SetPriority( SVCall_IRQn, 0, 0 );
-//     /* DebugMonitor_IRQn interrupt configuration */
-//     HAL_NVIC_SetPriority( DebugMonitor_IRQn, 0, 0 );
-//     /* PendSV_IRQn interrupt configuration */
-//     HAL_NVIC_SetPriority( PendSV_IRQn, 0, 0 );
-//     /* SysTick_IRQn interrupt configuration */
-//     HAL_NVIC_SetPriority( SysTick_IRQn, 0, 0 );
-// }
 
 /**
  * @brief Enters Low Power Stop Mode

@@ -545,7 +545,9 @@ lr1110_modem_response_code_t lr1110_modem_gnss_get_nb_detected_satellites( const
     cbuffer[0] = LR1110_MODEM_GROUP_ID_GNSS;
     cbuffer[1] = LR1110_MODEM_GNSS_GET_NB_SV_DETECTED_CMD;
 
-    return ( lr1110_modem_response_code_t ) lr1110_modem_hal_read(
+    //magnus return ( lr1110_modem_response_code_t ) lr1110_modem_hal_read(
+    //     context, cbuffer, LR1110_MODEM_GNSS_GET_NB_SV_SATELLITES_CMD_LENGTH, nb_detected_satellites, 1 );
+    return ( lr1110_modem_response_code_t ) lr1110_hal_read(
         context, cbuffer, LR1110_MODEM_GNSS_GET_NB_SV_SATELLITES_CMD_LENGTH, nb_detected_satellites, 1 );
 }
 
@@ -565,7 +567,9 @@ lr1110_modem_response_code_t lr1110_modem_gnss_get_detected_satellites(
     cbuffer[0] = LR1110_MODEM_GROUP_ID_GNSS;
     cbuffer[1] = LR1110_MODEM_GNSS_GET_SV_DETECTED_CMD;
 
-    rc = ( lr1110_modem_response_code_t ) lr1110_modem_hal_read(
+    //magnus rc = ( lr1110_modem_response_code_t ) lr1110_modem_hal_read(
+    //     context, cbuffer, LR1110_MODEM_GNSS_GET_SV_SATELLITES_CMD_LENGTH, result_buffer, read_size );
+    rc = ( lr1110_modem_response_code_t ) lr1110_hal_read(
         context, cbuffer, LR1110_MODEM_GNSS_GET_SV_SATELLITES_CMD_LENGTH, result_buffer, read_size );
     for( uint8_t index_satellite = 0; index_satellite < max_satellites_to_fetch; index_satellite++ )
     {

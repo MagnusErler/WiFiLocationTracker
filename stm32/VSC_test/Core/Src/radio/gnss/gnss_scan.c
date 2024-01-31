@@ -37,6 +37,8 @@
 #include "gnss_scan.h"
 #include "lr1110_modem_board.h"
 
+#include "configuration.h"
+
 /*
  * -----------------------------------------------------------------------------
  * --- PRIVATE MACROS-----------------------------------------------------------
@@ -218,7 +220,7 @@ gnss_scan_result_t gnss_scan_execute( const void* context, const gnss_settings_t
     while( ( gnss_scan_done != true ) && ( gnss_scan_timeout != true ) )
     {
         /* Process Event */
-        if( ( ( lr1110_t* ) context )->event.callback != NULL )
+        if( ( ( radio_t* ) context )->irq.callback != NULL )
         {
             lr1110_modem_event_process( context );
         }
@@ -309,7 +311,8 @@ gnss_scan_result_t gnss_scan_execute( const void* context, const gnss_settings_t
     timer_stop( &gnss_scan_timeout_timer );
 
     if( gnss_scan_timeout == true )
-    {
+    {   
+        HAL_DBG_TRACE_ERROR( "Timeout\r\n" );
         scan_result = GNSS_SCAN_FAIL;
     }
 
