@@ -1289,7 +1289,9 @@ lr1110_modem_response_code_t lr1110_modem_set_gps_time( const void* context, con
     cbuffer[4] = ( uint8_t )( gps_time >> 8 );
     cbuffer[5] = ( uint8_t ) gps_time;
 
-    return ( lr1110_modem_response_code_t ) lr1110_modem_hal_write( context, cbuffer,
+    //magnus return ( lr1110_modem_response_code_t ) lr1110_modem_hal_write( context, cbuffer,
+    //                                                                 LR1110_MODEM_SET_GPS_TIME_CMD_LENGTH, 0, 0 );
+    return ( lr1110_modem_response_code_t ) lr1110_hal_write( context, cbuffer,
                                                                     LR1110_MODEM_SET_GPS_TIME_CMD_LENGTH, 0, 0 );
 }
 

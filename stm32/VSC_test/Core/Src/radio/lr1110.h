@@ -47,7 +47,7 @@ extern "C" {
 #include "lr1110_modem_common.h"
 #include "lr1110_modem_hal.h"
 #include "lr1110_hal.h"
-//magnus #include "lr1110_modem_gnss.h"
+#include "lr1110_modem_gnss.h"
 #include "lr1110_modem_lorawan.h"
 #include "lr1110_modem_system.h"
 #include "lr1110_modem_wifi.h"

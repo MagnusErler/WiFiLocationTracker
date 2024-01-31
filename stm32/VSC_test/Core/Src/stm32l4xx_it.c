@@ -22,6 +22,7 @@
 #include "stm32l4xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "smtc_hal_dbg_trace.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -55,7 +56,7 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-
+extern LPTIM_HandleTypeDef hlptim1;
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -84,6 +85,11 @@ void NMI_Handler(void)
 void HardFault_Handler(void)
 {
   /* USER CODE BEGIN HardFault_IRQn 0 */
+
+  HAL_DBG_TRACE_ERROR( "HardFault_Handler\n\r" );
+
+  /* reset the board*/
+  hal_mcu_reset( );
 
   /* USER CODE END HardFault_IRQn 0 */
   while (1)
@@ -188,6 +194,8 @@ void SysTick_Handler(void)
   HAL_IncTick();
   /* USER CODE BEGIN SysTick_IRQn 1 */
 
+  HAL_SYSTICK_IRQHandler( );
+
   /* USER CODE END SysTick_IRQn 1 */
 }
 
@@ -197,6 +205,27 @@ void SysTick_Handler(void)
 /* For the available peripheral interrupt handler names,                      */
 /* please refer to the startup file (startup_stm32l4xx.s).                    */
 /******************************************************************************/
+
+/**
+  * @brief This function handles LPTIM1 global interrupt.
+  */
+void LPTIM1_IRQHandler(void)
+{
+  /* USER CODE BEGIN LPTIM1_IRQn 0 */
+
+  /* USER CODE END LPTIM1_IRQn 0 */
+  HAL_LPTIM_IRQHandler(&hlptim1);
+  /* USER CODE BEGIN LPTIM1_IRQn 1 */
+
+  HAL_LPTIM_TimeOut_Stop( &hlptim1 );
+
+  // if( lptim_tmr_irq.callback != NULL )
+  // {
+  //     lptim_tmr_irq.callback( lptim_tmr_irq.context );
+  // }
+
+  /* USER CODE END LPTIM1_IRQn 1 */
+}
 
 /* USER CODE BEGIN 1 */
 

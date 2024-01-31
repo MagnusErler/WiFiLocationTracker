@@ -83,32 +83,35 @@ void HAL_MspInit(void)
 * @param hlptim: LPTIM handle pointer
 * @retval None
 */
-// void HAL_LPTIM_MspInit(LPTIM_HandleTypeDef* hlptim)
-// {
-//   RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
-//   if(hlptim->Instance==LPTIM1)
-//   {
-//   /* USER CODE BEGIN LPTIM1_MspInit 0 */
+void HAL_LPTIM_MspInit(LPTIM_HandleTypeDef* hlptim)
+{
+  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
+  if(hlptim->Instance==LPTIM1)
+  {
+  /* USER CODE BEGIN LPTIM1_MspInit 0 */
 
-//   /* USER CODE END LPTIM1_MspInit 0 */
+  /* USER CODE END LPTIM1_MspInit 0 */
 
-//   /** Initializes the peripherals clock
-//   */
-//     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_LPTIM1;
-//     PeriphClkInit.Lptim1ClockSelection = RCC_LPTIM1CLKSOURCE_PCLK;
-//     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
-//     {
-//       Error_Handler();
-//     }
+  /** Initializes the peripherals clock
+  */
+    PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_LPTIM1;
+    PeriphClkInit.Lptim1ClockSelection = RCC_LPTIM1CLKSOURCE_PCLK;
+    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
+    {
+      Error_Handler();
+    }
 
-//     /* Peripheral clock enable */
-//     __HAL_RCC_LPTIM1_CLK_ENABLE();
-//   /* USER CODE BEGIN LPTIM1_MspInit 1 */
+    /* Peripheral clock enable */
+    __HAL_RCC_LPTIM1_CLK_ENABLE();
+    /* LPTIM1 interrupt Init */
+    HAL_NVIC_SetPriority(LPTIM1_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(LPTIM1_IRQn);
+  /* USER CODE BEGIN LPTIM1_MspInit 1 */
 
-//   /* USER CODE END LPTIM1_MspInit 1 */
-//   }
+  /* USER CODE END LPTIM1_MspInit 1 */
+  }
 
-// }
+}
 
 /**
 * @brief LPTIM MSP De-Initialization
@@ -116,21 +119,24 @@ void HAL_MspInit(void)
 * @param hlptim: LPTIM handle pointer
 * @retval None
 */
-// void HAL_LPTIM_MspDeInit(LPTIM_HandleTypeDef* hlptim)
-// {
-//   if(hlptim->Instance==LPTIM1)
-//   {
-//   /* USER CODE BEGIN LPTIM1_MspDeInit 0 */
+void HAL_LPTIM_MspDeInit(LPTIM_HandleTypeDef* hlptim)
+{
+  if(hlptim->Instance==LPTIM1)
+  {
+  /* USER CODE BEGIN LPTIM1_MspDeInit 0 */
 
-//   /* USER CODE END LPTIM1_MspDeInit 0 */
-//     /* Peripheral clock disable */
-//     __HAL_RCC_LPTIM1_CLK_DISABLE();
-//   /* USER CODE BEGIN LPTIM1_MspDeInit 1 */
+  /* USER CODE END LPTIM1_MspDeInit 0 */
+    /* Peripheral clock disable */
+    __HAL_RCC_LPTIM1_CLK_DISABLE();
 
-//   /* USER CODE END LPTIM1_MspDeInit 1 */
-//   }
+    /* LPTIM1 interrupt DeInit */
+    HAL_NVIC_DisableIRQ(LPTIM1_IRQn);
+  /* USER CODE BEGIN LPTIM1_MspDeInit 1 */
 
-// }
+  /* USER CODE END LPTIM1_MspDeInit 1 */
+  }
+
+}
 
 /**
 * @brief RTC MSP Initialization
@@ -138,32 +144,35 @@ void HAL_MspInit(void)
 * @param hrtc: RTC handle pointer
 * @retval None
 */
-// void HAL_RTC_MspInit(RTC_HandleTypeDef* hrtc)
-// {
-//   RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
-//   if(hrtc->Instance==RTC)
-//   {
-//   /* USER CODE BEGIN RTC_MspInit 0 */
+void HAL_RTC_MspInit(RTC_HandleTypeDef* hrtc)
+{
+  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
+  if(hrtc->Instance==RTC)
+  {
+  /* USER CODE BEGIN RTC_MspInit 0 */
 
-//   /* USER CODE END RTC_MspInit 0 */
+  /* USER CODE END RTC_MspInit 0 */
 
-//   /** Initializes the peripherals clock
-//   */
-//     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_RTC;
-//     PeriphClkInit.RTCClockSelection = RCC_RTCCLKSOURCE_LSI;
-//     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
-//     {
-//       Error_Handler();
-//     }
+  /** Initializes the peripherals clock
+  */
+    PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_RTC;
+    PeriphClkInit.RTCClockSelection = RCC_RTCCLKSOURCE_LSI;
+    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
+    {
+      Error_Handler();
+    }
 
-//     /* Peripheral clock enable */
-//     __HAL_RCC_RTC_ENABLE();
-//   /* USER CODE BEGIN RTC_MspInit 1 */
+    /* Peripheral clock enable */
+    __HAL_RCC_RTC_ENABLE();
+  /* USER CODE BEGIN RTC_MspInit 1 */
 
-//   /* USER CODE END RTC_MspInit 1 */
-//   }
+  HAL_NVIC_SetPriority( RTC_WKUP_IRQn, 0, 0 );
+  HAL_NVIC_EnableIRQ( RTC_WKUP_IRQn );
 
-// }
+  /* USER CODE END RTC_MspInit 1 */
+  }
+
+}
 
 /**
 * @brief RTC MSP De-Initialization
@@ -171,21 +180,23 @@ void HAL_MspInit(void)
 * @param hrtc: RTC handle pointer
 * @retval None
 */
-// void HAL_RTC_MspDeInit(RTC_HandleTypeDef* hrtc)
-// {
-//   if(hrtc->Instance==RTC)
-//   {
-//   /* USER CODE BEGIN RTC_MspDeInit 0 */
+void HAL_RTC_MspDeInit(RTC_HandleTypeDef* hrtc)
+{
+  if(hrtc->Instance==RTC)
+  {
+  /* USER CODE BEGIN RTC_MspDeInit 0 */
 
-//   /* USER CODE END RTC_MspDeInit 0 */
-//     /* Peripheral clock disable */
-//     __HAL_RCC_RTC_DISABLE();
-//   /* USER CODE BEGIN RTC_MspDeInit 1 */
+  /* USER CODE END RTC_MspDeInit 0 */
+    /* Peripheral clock disable */
+    __HAL_RCC_RTC_DISABLE();
+  /* USER CODE BEGIN RTC_MspDeInit 1 */
 
-//   /* USER CODE END RTC_MspDeInit 1 */
-//   }
+  HAL_NVIC_DisableIRQ( RTC_WKUP_IRQn );
 
-// }
+  /* USER CODE END RTC_MspDeInit 1 */
+  }
+
+}
 
 /**
 * @brief SPI MSP Initialization

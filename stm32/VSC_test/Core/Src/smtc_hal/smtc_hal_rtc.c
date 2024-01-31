@@ -534,18 +534,18 @@ static uint64_t rtc_get_timestamp_in_ticks( RTC_DateTypeDef* date, RTC_TimeTypeD
 
 void RTC_WKUP_IRQHandler( void ) { HAL_RTCEx_WakeUpTimerIRQHandler( &hal_rtc.handle ); }
 
-void HAL_RTC_MspInit( RTC_HandleTypeDef* rtc_handle )
-{
-    __HAL_RCC_RTC_ENABLE( );
-    HAL_NVIC_SetPriority( RTC_WKUP_IRQn, 0, 0 );
-    HAL_NVIC_EnableIRQ( RTC_WKUP_IRQn );
-}
+// void HAL_RTC_MspInit( RTC_HandleTypeDef* rtc_handle )
+// {
+//     __HAL_RCC_RTC_ENABLE( );
+//     HAL_NVIC_SetPriority( RTC_WKUP_IRQn, 0, 0 );
+//     HAL_NVIC_EnableIRQ( RTC_WKUP_IRQn );
+// }
 
-void HAL_RTC_MspDeInit( RTC_HandleTypeDef* rtc_handle )
-{
-    __HAL_RCC_RTC_DISABLE( );
-    HAL_NVIC_DisableIRQ( RTC_WKUP_IRQn );
-}
+// void HAL_RTC_MspDeInit( RTC_HandleTypeDef* rtc_handle )
+// {
+//     __HAL_RCC_RTC_DISABLE( );
+//     HAL_NVIC_DisableIRQ( RTC_WKUP_IRQn );
+// }
 
 uint32_t hal_rtc_get_minimum_timeout( void ) { return ( MIN_ALARM_DELAY_IN_TICKS ); }
 

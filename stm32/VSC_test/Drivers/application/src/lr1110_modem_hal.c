@@ -1,7 +1,7 @@
-/**
+/*!
  * @file      lr1110_modem_hal.c
  *
- * @brief     HAL implementation for LR1110 modem radio chip
+ * @brief     Hardware Abstraction Layer (HAL) implementation for LR1110
  *
  * Revised BSD License
  * Copyright Semtech Corporation 2020. All rights reserved.
@@ -29,235 +29,164 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+/*
+ * -----------------------------------------------------------------------------
+ * --- DEPENDENCIES ------------------------------------------------------------
+ */
+
+#include <stdlib.h>
+#include "lr1110_hal.h"
 #include "lr1110_modem_hal.h"
-#include "configuration.h"
-#include "system.h"
+#include "lr1110_modem_system.h"
+#include "lr1110_modem_board.h"
 
-static lr1110_modem_hal_status_t lr1110_modem_hal_wait_on_busy( const void* radio, uint32_t timeout_ms );
-static lr1110_modem_hal_status_t lr1110_modem_hal_wait_on_unbusy( const void* radio, uint32_t timeout_ms );
+#include "system_spi.h"
 
-lr1110_modem_hal_status_t lr1110_modem_hal_reset( const void* radio )
+/*
+ * -----------------------------------------------------------------------------
+ * --- PRIVATE MACROS-----------------------------------------------------------
+ */
+
+/*
+ * -----------------------------------------------------------------------------
+ * --- PRIVATE CONSTANTS -------------------------------------------------------
+ */
+
+#define LR1110_MODEM_RESET_TIMEOUT 3000
+
+/*
+ * -----------------------------------------------------------------------------
+ * --- PRIVATE TYPES -----------------------------------------------------------
+ */
+
+/*
+ * -----------------------------------------------------------------------------
+ * --- PRIVATE VARIABLES -------------------------------------------------------
+ */
+
+/*!
+ * @brief LR1110 modem-e reset timeout flag
+ */
+static bool lr1110_modem_reset_timeout = false;
+
+/*!
+ * @brief Timer to handle the scan timeout
+ */
+static timer_event_t lr1110_modem_reset_timeout_timer;
+
+/*
+ * -----------------------------------------------------------------------------
+ * --- PRIVATE FUNCTIONS DECLARATION -------------------------------------------
+ */
+
+/*!
+ * @brief Function to wait that the lr1110 transceiver busy line raise to high
+ *
+ * @param [in] context Chip implementation context
+ * @param [in] timeout_ms timeout in millisec before leave the function
+ *
+ * @returns lr1110_hal_status_t
+ */
+static lr1110_hal_status_t lr1110_hal_wait_on_busy( const void* context, uint32_t timeout_ms );
+
+/*!
+ * @brief Function to wait that the lr1110 modem-e busy line fall to low
+ *
+ * @param [in] context Chip implementation context
+ * @param [in] timeout_ms timeout in millisec before leave the function
+ *
+ * @returns lr1110_hal_status_t
+ */
+static lr1110_modem_hal_status_t lr1110_modem_hal_wait_on_busy( const void* context, uint32_t timeout_ms );
+
+/*!
+ * @brief Function to wait the that lr1110 modem-e busy line raise to high
+ *
+ * @param [in] context Chip implementation context
+ * @param [in] timeout_ms timeout in millisec before leave the function
+ *
+ * @returns lr1110_hal_status_t
+ */
+static lr1110_modem_hal_status_t lr1110_modem_hal_wait_on_unbusy( const void* context, uint32_t timeout_ms );
+
+/*!
+ * @brief Function executed on lr1110 modem-e reset timeout event
+ */
+static void on_lr1110_modem_reset_timeout_event( void* context );
+
+/*
+ * -----------------------------------------------------------------------------
+ * --- PUBLIC FUNCTIONS DEFINITION ---------------------------------------------
+ */
+
+/*!
+ * @brief lr1110_modem_hal.h API implementation
+ */
+
+lr1110_modem_hal_status_t lr1110_modem_hal_write( const void* context, const uint8_t* command,
+                                                  const uint16_t command_length, const uint8_t* data,
+                                                  const uint16_t data_length )
 {
-    radio_t* radio_local = ( radio_t* ) radio;
-
-    system_gpio_set_pin_state( radio_local->reset, SYSTEM_GPIO_PIN_STATE_LOW );
-    HAL_Delay(1);    //magnus system_time_wait_ms( 1 );
-    system_gpio_set_pin_state( radio_local->reset, SYSTEM_GPIO_PIN_STATE_HIGH );
-    HAL_Delay(100);    //magnus system_time_wait_ms( 100 );
-    return LR1110_MODEM_HAL_STATUS_OK;
-}
-
-lr1110_modem_hal_status_t lr1110_modem_hal_wakeup( const void* radio )
-{
-    radio_t* radio_local = ( radio_t* ) radio;
-
-    if( lr1110_modem_hal_wait_on_busy( radio_local, 1000 ) == LR1110_MODEM_HAL_STATUS_OK )
-    {
-        // Wakeup radio
-        system_gpio_set_pin_state( radio_local->nss, 0 );
-        system_gpio_set_pin_state( radio_local->nss, 1 );
-    }
-
-    system_gpio_wait_for_state( radio_local->busy, SYSTEM_GPIO_PIN_STATE_LOW );
-    // Wakeup radio
-    system_gpio_set_pin_state( radio_local->nss, 0 );
-    system_gpio_set_pin_state( radio_local->nss, 1 );
-
-    // Wait on busy pin for 100 ms
-    return lr1110_modem_hal_wait_on_unbusy( radio_local, 1000 );
-}
-
-lr1110_modem_hal_status_t lr1110_modem_hal_read( const void* radio, const uint8_t* cbuffer,
-                                                 const uint16_t cbuffer_length, uint8_t* rbuffer,
-                                                 const uint16_t rbuffer_length )
-{
-    radio_t* radio_local = ( radio_t* ) radio;
-
-    if( lr1110_modem_hal_wakeup( radio_local ) == LR1110_MODEM_HAL_STATUS_OK )
-    {
-        uint8_t                   crc          = 0;
-        uint8_t                   crc_received = 0;
-        lr1110_modem_hal_status_t status;
-
-        // NSS low
-        system_gpio_set_pin_state( radio_local->nss, 0 );
-
-        // Send CMD
-        system_spi_write( radio_local->spi, cbuffer, cbuffer_length );
-
-        // Compute and send CRC
-        crc = lr1110_modem_compute_crc( 0xFF, cbuffer, cbuffer_length );
-
-        system_spi_write( radio_local->spi, &crc, 1 );
-
-        // NSS high
-        system_gpio_set_pin_state( radio_local->nss, 1 );
-
-        // Wait on busy pin up to 1000 ms
-        if( lr1110_modem_hal_wait_on_busy( radio_local, 1000 ) != LR1110_MODEM_HAL_STATUS_OK )
-        {
-            return LR1110_MODEM_HAL_STATUS_BUSY_TIMEOUT;
-        }
-
-        // Send dummy byte to retrieve RC & CRC
-
-        // NSS low
-        system_gpio_set_pin_state( radio_local->nss, 0 );
-
-        // read RC
-        system_spi_read( radio_local->spi, &status, 1 );
-        // status = ( lr1110_modem_hal_status_t ) system_spi_write_read( radio_local->spi, 0 );
-
-        system_spi_read( radio_local->spi, rbuffer, rbuffer_length );
-        // for( uint16_t i = 0; i < data_length; i++ )
-        // {
-        //     data[i] = system_spi_write_read( radio_local->spi_id, 0 );
-        // }
-
-        system_spi_read( radio_local->spi, &crc_received, 1 );
-        // crc_received = system_spi_write_read( radio_local->spi_id, 0 );
-
-        // NSS high
-        system_gpio_set_pin_state( radio_local->nss, 1 );
-
-        // Compute response crc
-        crc = lr1110_modem_compute_crc( 0xFF, ( uint8_t* ) &status, 1 );
-        crc = lr1110_modem_compute_crc( crc, rbuffer, rbuffer_length );
-
-        if( crc != crc_received )
-        {
-            // change the response code
-            status = LR1110_MODEM_HAL_STATUS_BAD_FRAME;
-        }
-        // Wait on busy pin up to 1000 ms
-        if( lr1110_modem_hal_wait_on_unbusy( radio_local, 1000 ) != LR1110_MODEM_HAL_STATUS_OK )
-        {
-            return LR1110_MODEM_HAL_STATUS_BUSY_TIMEOUT;
-        }
-
-        // Wait on busy pin up to 1000 ms
-        if( lr1110_modem_hal_wait_on_busy( radio_local, 1000 ) != LR1110_MODEM_HAL_STATUS_OK )
-        {
-            return LR1110_MODEM_HAL_STATUS_BUSY_TIMEOUT;
-        }
-        else
-        {
-            return status;
-        }
-    }
-
-    return LR1110_MODEM_HAL_STATUS_BUSY_TIMEOUT;
-}
-
-lr1110_modem_hal_status_t lr1110_modem_hal_write( const void* radio, const uint8_t* cbuffer,
-                                                  const uint16_t cbuffer_length, const uint8_t* cdata,
-                                                  const uint16_t cdata_length )
-{
-    radio_t* radio_local = ( radio_t* ) radio;
-
-    if( lr1110_modem_hal_wakeup( radio_local ) == LR1110_MODEM_HAL_STATUS_OK )
+    if( lr1110_modem_hal_wakeup( context ) == LR1110_MODEM_HAL_STATUS_OK )
     {
         uint8_t                   crc          = 0;
         uint8_t                   crc_received = 0;
         lr1110_modem_hal_status_t status;
-
-        // NSS low
-        system_gpio_set_pin_state( radio_local->nss, 0 );
-
-        // Send CMD
-        system_spi_write( radio_local->spi, cbuffer, cbuffer_length );
-
-        // Send Data
-        system_spi_write( radio_local->spi, cdata, cdata_length );
-
-        // Compute and send CRC
-        crc = lr1110_modem_compute_crc( 0xFF, cbuffer, cbuffer_length );
-        crc = lr1110_modem_compute_crc( crc, cdata, cdata_length );
-
-        system_spi_write( radio_local->spi, &crc, 1 );
-
-        // NSS high
-        system_gpio_set_pin_state( radio_local->nss, 1 );
-
-        // Wait on busy pin up to 1000 ms
-        if( lr1110_modem_hal_wait_on_busy( radio_local, 1000 ) != LR1110_MODEM_HAL_STATUS_OK )
-        {
-            return LR1110_MODEM_HAL_STATUS_BUSY_TIMEOUT;
-        }
-
-        // Send dummy byte to retrieve RC & CRC
-
-        // NSS low
-        system_gpio_set_pin_state( radio_local->nss, 0 );
-
-        // read RC
-        system_spi_read( radio_local->spi, &status, 1 );
-        system_spi_read( radio_local->spi, &crc_received, 1 );
-
-        // Compute response crc
-        crc = lr1110_modem_compute_crc( 0xFF, ( uint8_t* ) &status, 1 );
-
-        // NSS high
-        system_gpio_set_pin_state( radio_local->nss, 1 );
-
-        if( crc != crc_received )
-        {
-            // change the response code
-            status = LR1110_MODEM_HAL_STATUS_BAD_FRAME;
-        }
-
-        // Don't wait on busy in these following cases
-        // 0x0602 - LR1110_MODEM_GROUP_ID_MODEM / LR1110_MODEM_RESET_CMD
-        // 0x0603 - LR1110_MODEM_GROUP_ID_MODEM / LR1110_MODEM_FACTORY_RESET_CMD
-
-        if( ( ( ( cbuffer[0] << 8 ) | cbuffer[1] ) != 0x0602 ) && ( ( ( cbuffer[0] << 8 ) | cbuffer[1] ) != 0x0603 ) )
-        {
-            // Wait on busy pin up to 1000 ms
-            if( lr1110_modem_hal_wait_on_unbusy( radio_local, 1000 ) != LR1110_MODEM_HAL_STATUS_OK )
-            {
-                return LR1110_MODEM_HAL_STATUS_BUSY_TIMEOUT;
-            }
-            else
-            {
-                return status;
-            }
-        }
-        else
-        {
-            return status;
-        }
-    }
-
-    return LR1110_MODEM_HAL_STATUS_BUSY_TIMEOUT;
-}
-
-lr1110_modem_hal_status_t lr1110_modem_hal_write_without_rc( const void* radio, const uint8_t* cbuffer,
-                                                             const uint16_t cbuffer_length, const uint8_t* cdata,
-                                                             const uint16_t cdata_length )
-{
-    radio_t* radio_local = ( radio_t* ) radio;
-    if( lr1110_modem_hal_wakeup( radio_local ) == LR1110_MODEM_HAL_STATUS_OK )
-    {
-        uint8_t                   crc    = 0;
-        lr1110_modem_hal_status_t status = LR1110_MODEM_HAL_STATUS_OK;
 
         /* NSS low */
-        system_gpio_set_pin_state( radio_local->nss, 0 );
+        hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 0 );
 
         /* Send CMD */
-        system_spi_write( radio_local->spi, cbuffer, cbuffer_length );
-
+        for( uint16_t i = 0; i < command_length; i++ )
+        {
+            hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, command[i] );
+        }
         /* Send Data */
-        system_spi_write( radio_local->spi, cdata, cdata_length );
-
+        for( uint16_t i = 0; i < data_length; i++ )
+        {
+            hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, data[i] );
+        }
         /* Compute and send CRC */
-        crc = lr1110_modem_compute_crc( 0xFF, cbuffer, cbuffer_length );
-        crc = lr1110_modem_compute_crc( crc, cdata, cdata_length );
-
-        system_spi_write( radio_local->spi, &crc, 1 );
+        crc = lr1110_modem_compute_crc( 0xFF, command, command_length );
+        crc = lr1110_modem_compute_crc( crc, data, data_length );
+        /* Send CRC */
+        hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, crc );
 
         /* NSS high */
-        system_gpio_set_pin_state( radio_local->nss, 1 );
+        hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 1 );
+
+        /* Wait on busy pin up to 1000 ms */
+        if( lr1110_modem_hal_wait_on_busy( context, 1000 ) != LR1110_MODEM_HAL_STATUS_OK )
+        {
+            return LR1110_MODEM_HAL_STATUS_BUSY_TIMEOUT;
+        }
+
+        /* Send dummy byte to retrieve RC & CRC */
+
+        /* NSS low */
+        hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 0 );
+
+        /* read RC */
+        status       = ( lr1110_modem_hal_status_t ) hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, 0 );
+        crc_received = hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, 0 );
+
+        /* Compute response crc */
+        crc = lr1110_modem_compute_crc( 0xFF, ( uint8_t* ) &status, 1 );
+
+        /* NSS high */
+        hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 1 );
+
+        if( crc != crc_received )
+        {
+            /* change the response code */
+            status = LR1110_MODEM_HAL_STATUS_BAD_FRAME;
+        }
+
+        /* Wait on busy pin up to 1000 ms */
+        if( lr1110_modem_hal_wait_on_unbusy( context, 1000 ) != LR1110_MODEM_HAL_STATUS_OK )
+        {
+            return LR1110_MODEM_HAL_STATUS_BUSY_TIMEOUT;
+        }
 
         return status;
     }
@@ -265,46 +194,338 @@ lr1110_modem_hal_status_t lr1110_modem_hal_write_without_rc( const void* radio, 
     return LR1110_MODEM_HAL_STATUS_BUSY_TIMEOUT;
 }
 
-lr1110_modem_hal_status_t lr1110_modem_hal_write_read( const void* radio, const uint8_t* cbuffer, uint8_t* rbuffer,
-                                                       const uint16_t length )
+lr1110_modem_hal_status_t lr1110_modem_hal_write_without_rc( const void* context, const uint8_t* command,
+                                                             const uint16_t command_length, const uint8_t* data,
+                                                             const uint16_t data_length )
 {
-    radio_t* radio_local = ( radio_t* ) radio;
+    if( lr1110_modem_hal_wakeup( context ) == LR1110_MODEM_HAL_STATUS_OK )
+    {
+        uint8_t                   crc    = 0;
+        lr1110_modem_hal_status_t status = LR1110_MODEM_HAL_STATUS_OK;
 
-    system_gpio_wait_for_state( radio_local->busy, SYSTEM_GPIO_PIN_STATE_LOW );
+        /* NSS low */
+        hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 0 );
 
-    system_gpio_set_pin_state( radio_local->nss, SYSTEM_GPIO_PIN_STATE_LOW );
-    system_spi_write_read( radio_local->spi, cbuffer, rbuffer, length );
-    system_gpio_set_pin_state( radio_local->nss, SYSTEM_GPIO_PIN_STATE_HIGH );
+        /* Send CMD */
+        for( uint16_t i = 0; i < command_length; i++ )
+        {
+            hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, command[i] );
+        }
+        /* Send Data */
+        for( uint16_t i = 0; i < data_length; i++ )
+        {
+            hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, data[i] );
+        }
+        /* Compute and send CRC */
+        crc = lr1110_modem_compute_crc( 0xFF, command, command_length );
+        crc = lr1110_modem_compute_crc( crc, data, data_length );
+        /* Send CRC */
+        hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, crc );
 
-    return LR1110_MODEM_HAL_STATUS_OK;
+        /* NSS high */
+        hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 1 );
+
+        return status;
+    }
+
+    return LR1110_MODEM_HAL_STATUS_BUSY_TIMEOUT;
 }
 
-lr1110_modem_hal_status_t lr1110_modem_hal_wait_on_busy( const void* radio, uint32_t timeout_ms )
+lr1110_modem_hal_status_t lr1110_modem_hal_read( const void* context, const uint8_t* command,
+                                                 const uint16_t command_length, uint8_t* data,
+                                                 const uint16_t data_length )
 {
-    radio_t*       radio_local = ( radio_t* ) radio;
-    const uint32_t start_time  = system_time_GetTicker( );
-    while( system_gpio_get_pin_state( radio_local->busy ) == 0 )
+    //if( lr1110_modem_hal_wakeup( context ) == LR1110_MODEM_HAL_STATUS_OK )
+    if( lr1110_hal_wakeup( context ) == LR1110_MODEM_HAL_STATUS_OK )
     {
-        const uint32_t actual_time = system_time_GetTicker( );
-        if( ( actual_time - start_time ) > timeout_ms )
+        uint8_t                   crc          = 0;
+        uint8_t                   crc_received = 0;
+        lr1110_modem_hal_status_t status;
+
+        /* NSS low */
+        hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 0 );
+
+        /* Send CMD */
+        // for( uint16_t i = 0; i < command_length; i++ )
+        // {
+        //     system_spi_write( ( ( lr1110_t* ) context )->spi_id, command[i], 1 );
+        //     //hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, command[i] );
+        // }
+        system_spi_write( ( ( lr1110_t* ) context )->spi_id, command, command_length );
+
+        /* Compute and send CRC */
+        crc = lr1110_modem_compute_crc( 0xFF, command, command_length );
+        /* Send CRC */
+        hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, crc );
+
+        /* NSS high */
+        hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 1 );
+
+        /* Wait on busy pin up to 1000 ms */
+        if( lr1110_modem_hal_wait_on_busy( context, 1000 ) != LR1110_MODEM_HAL_STATUS_OK )
         {
             return LR1110_MODEM_HAL_STATUS_BUSY_TIMEOUT;
         }
-    }
-    return LR1110_MODEM_HAL_STATUS_OK;
-}
 
-lr1110_modem_hal_status_t lr1110_modem_hal_wait_on_unbusy( const void* radio, uint32_t timeout_ms )
-{
-    radio_t*       radio_local = ( radio_t* ) radio;
-    const uint32_t start_time  = system_time_GetTicker( );
-    while( system_gpio_get_pin_state( radio_local->busy ) == 1 )
-    {
-        const uint32_t actual_time = system_time_GetTicker( );
-        if( ( actual_time - start_time ) > timeout_ms )
+        /* Send dummy byte to retrieve RC & CRC */
+
+        /* NSS low */
+        hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 0 );
+
+        /* read RC */
+        status = ( lr1110_modem_hal_status_t ) hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, 0 );
+
+        if( status == LR1110_MODEM_HAL_STATUS_OK )
+        {
+            for( uint16_t i = 0; i < data_length; i++ )
+            {
+                data[i] = hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, 0 );
+            }
+        }
+
+        crc_received = hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, 0 );
+
+        /* NSS high */
+        hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 1 );
+
+        /* Compute response crc */
+        crc = lr1110_modem_compute_crc( 0xFF, ( uint8_t* ) &status, 1 );
+        if( status == LR1110_MODEM_HAL_STATUS_OK )
+        {
+            crc = lr1110_modem_compute_crc( crc, data, data_length );
+        }
+
+        if( crc != crc_received )
+        {
+            /* change the response code */
+            status = LR1110_MODEM_HAL_STATUS_BAD_FRAME;
+        }
+
+        /* Wait on busy pin up to 1000 ms */
+        if( lr1110_modem_hal_wait_on_unbusy( context, 1000 ) != LR1110_MODEM_HAL_STATUS_OK )
         {
             return LR1110_MODEM_HAL_STATUS_BUSY_TIMEOUT;
         }
+
+        return status;
     }
+
+    return LR1110_MODEM_HAL_STATUS_BUSY_TIMEOUT;
+}
+
+lr1110_modem_hal_status_t lr1110_modem_hal_reset( const void* context )
+{
+    lr1110_modem_board_set_ready( false );
+
+    /* Start a reset timeout timer */
+    timer_init( &lr1110_modem_reset_timeout_timer, on_lr1110_modem_reset_timeout_event );
+    timer_set_value( &lr1110_modem_reset_timeout_timer, LR1110_MODEM_RESET_TIMEOUT );
+    timer_start( &lr1110_modem_reset_timeout_timer );
+    lr1110_modem_reset_timeout = false;
+
+    hal_gpio_set_value( ( ( lr1110_t* ) context )->reset.pin, 0 );
+    HAL_Delay( 1 );
+    hal_gpio_set_value( ( ( lr1110_t* ) context )->reset.pin, 1 );
+
+    /* wait for reset event */
+    while( ( lr1110_modem_board_is_ready( ) == false ) && ( lr1110_modem_reset_timeout == false ) )
+    {
+        lr1110_modem_event_process( context );
+    }
+
+    if( lr1110_modem_reset_timeout == true )
+    {
+        return LR1110_MODEM_HAL_STATUS_ERROR;
+    }
+    else
+    {
+        return LR1110_MODEM_HAL_STATUS_OK;
+    }
+}
+
+void lr1110_modem_hal_enter_dfu( const void* context )
+{
+    /* Force dio0 to 0 */
+    hal_gpio_init_out( ( ( lr1110_t* ) context )->busy.pin, 0 );
+
+    /* reset the chip */
+    hal_gpio_set_value( ( ( lr1110_t* ) context )->reset.pin, 0 );
+    HAL_Delay( 1 );
+    hal_gpio_set_value( ( ( lr1110_t* ) context )->reset.pin, 1 );
+
+    /* wait 250ms */
+    HAL_Delay( 250 );
+
+    /* reinit dio0 */
+    hal_gpio_init_in( ( ( lr1110_t* ) context )->busy.pin, HAL_GPIO_PULL_MODE_NONE, HAL_GPIO_IRQ_MODE_OFF, NULL );
+}
+
+lr1110_modem_hal_status_t lr1110_modem_hal_wakeup( const void* context )
+{
+    if( lr1110_modem_hal_wait_on_busy( context, 10000 ) == LR1110_MODEM_HAL_STATUS_OK )
+    {
+        /* Wakeup radio */
+        hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 0 );
+        hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 1 );
+    }
+    else
+    {
+        return LR1110_MODEM_HAL_STATUS_BUSY_TIMEOUT;
+    }
+
+    /* Wait on busy pin for 1000 ms */
+    return lr1110_modem_hal_wait_on_unbusy( context, 1000 );
+}
+
+// /*!
+//  * @brief Bootstrap bootloader and SPI bootloader API implementation
+//  */
+
+// lr1110_hal_status_t lr1110_hal_write( const void* context, const uint8_t* command, const uint16_t command_length,
+//                                       const uint8_t* data, const uint16_t data_length )
+// {
+//     if( lr1110_hal_wakeup( context ) == LR1110_HAL_STATUS_OK )
+//     {
+//         hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 0 );
+//         for( uint16_t i = 0; i < command_length; i++ )
+//         {
+//             hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, command[i] );
+//         }
+//         for( uint16_t i = 0; i < data_length; i++ )
+//         {
+//             hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, data[i] );
+//         }
+//         hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 1 );
+
+//         return lr1110_hal_wait_on_busy( context, 5000 );
+//     }
+//     return LR1110_HAL_STATUS_ERROR;
+// }
+
+// lr1110_hal_status_t lr1110_hal_read( const void* context, const uint8_t* command, const uint16_t command_length,
+//                                      uint8_t* data, const uint16_t data_length )
+// {
+//     if( lr1110_hal_wakeup( context ) == LR1110_HAL_STATUS_OK )
+//     {
+//         hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 0 );
+
+//         for( uint16_t i = 0; i < command_length; i++ )
+//         {
+//             hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, command[i] );
+//         }
+
+//         hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 1 );
+
+//         if( lr1110_hal_wait_on_busy( context, 5000 ) != LR1110_HAL_STATUS_OK )
+//         {
+//             return LR1110_HAL_STATUS_ERROR;
+//         }
+
+//         /* Send dummy byte */
+//         hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 0 );
+
+//         hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, 0 );
+
+//         for( uint16_t i = 0; i < data_length; i++ )
+//         {
+//             data[i] = hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, 0 );
+//         }
+
+//         hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 1 );
+
+//         return lr1110_hal_wait_on_busy( context, 5000 );
+//     }
+//     return LR1110_HAL_STATUS_ERROR;
+// }
+
+// lr1110_hal_status_t lr1110_hal_wakeup( const void* context )
+// {
+//     /* Wakeup radio */
+//     hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 0 );
+//     hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 1 );
+
+//     /* Wait on busy pin for 5000 ms */
+//     return lr1110_hal_wait_on_busy( context, 5000 );
+// }
+
+// lr1110_hal_status_t lr1110_hal_reset( const void* context )
+// {
+//     hal_gpio_set_value( ( ( lr1110_t* ) context )->reset.pin, 0 );
+//     HAL_Delay( 1 );
+//     hal_gpio_set_value( ( ( lr1110_t* ) context )->reset.pin, 1 );
+
+//     return LR1110_HAL_STATUS_OK;
+// }
+
+/*
+ * -----------------------------------------------------------------------------
+ * --- PRIVATE FUNCTIONS DEFINITION --------------------------------------------
+ */
+
+static void on_lr1110_modem_reset_timeout_event( void* context ) { lr1110_modem_reset_timeout = true; }
+
+static lr1110_hal_status_t lr1110_hal_wait_on_busy( const void* context, uint32_t timeout_ms )
+{
+#if 0
+    while( hal_gpio_get_value( ( ( lr1110_t* ) context )->busy.pin ) == 1 )
+    {
+        ;
+    }
+#else
+    uint32_t start = hal_rtc_get_time_ms( );
+    while( hal_gpio_get_value( ( ( lr1110_t* ) context )->busy.pin ) == 1 )
+    {
+        if( ( int32_t )( hal_rtc_get_time_ms( ) - start ) > ( int32_t ) timeout_ms )
+        {
+            return LR1110_HAL_STATUS_ERROR;
+        }
+    }
+#endif
+    return LR1110_HAL_STATUS_OK;
+}
+
+static lr1110_modem_hal_status_t lr1110_modem_hal_wait_on_busy( const void* context, uint32_t timeout_ms )
+{
+#if 0
+    while( hal_gpio_get_value( ( ( lr1110_t* ) context )->busy.pin ) == 0 )
+    {
+        ;
+    }
+#else
+    uint32_t start   = hal_rtc_get_time_ms( );
+    uint32_t current = 0;
+    while( hal_gpio_get_value( ( ( lr1110_t* ) context )->busy.pin ) == 0 )
+    {
+        current = hal_rtc_get_time_ms( );
+        if( ( int32_t )( current - start ) > ( int32_t ) timeout_ms )
+        {
+            return LR1110_MODEM_HAL_STATUS_ERROR;
+        }
+    }
+#endif
     return LR1110_MODEM_HAL_STATUS_OK;
 }
+
+static lr1110_modem_hal_status_t lr1110_modem_hal_wait_on_unbusy( const void* context, uint32_t timeout_ms )
+{
+#if 0
+    while( hal_gpio_get_value( ( ( lr1110_t* ) context )->busy.pin ) == 1 )
+    {
+        ;
+    }
+#else
+    uint32_t start   = hal_rtc_get_time_ms( );
+    uint32_t current = 0;
+    while( hal_gpio_get_value( ( ( lr1110_t* ) context )->busy.pin ) == 1 )
+    {
+        current = hal_rtc_get_time_ms( );
+        if( ( int32_t )( current - start ) > ( int32_t ) timeout_ms )
+        {
+            return LR1110_MODEM_HAL_STATUS_ERROR;
+        }
+    }
+#endif
+    return LR1110_MODEM_HAL_STATUS_OK;
+}
+
+/* --- EOF ------------------------------------------------------------------ */

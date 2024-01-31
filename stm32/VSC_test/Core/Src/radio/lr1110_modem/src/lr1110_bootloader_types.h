@@ -60,6 +60,16 @@ extern "C" {
 #define LR1110_BL_VERSION_LENGTH ( 4 )
 
 /*!
+ * @brief Length in byte of the LR1110 temperature blob
+ */
+#define LR1110_BL_TEMPERATURE_LENGTH ( 2 )
+
+/*!
+ * @brief Length in byte of the LR1110 status blob
+ */
+#define LR1110_BL_STATUS_LENGTH ( 4 )
+
+/*!
  * @brief Length in bytes of a hash value
  */
 #define LR1110_BL_HASH_LENGTH 0x10

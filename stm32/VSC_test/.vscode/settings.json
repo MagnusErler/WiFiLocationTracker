@@ -32,6 +32,10 @@
     "smtc_hal_options.h": "c",
     "cmath": "c",
     "limits": "c",
-    "type_traits": "c"
+    "type_traits": "c",
+    "lr1110_modem_helper.h": "c",
+    "gnss_scan.h": "c",
+    "stm32l4xx_ll_cortex.h": "c",
+    "stm32l4xx_ll_utils.h": "c"
   }
 }

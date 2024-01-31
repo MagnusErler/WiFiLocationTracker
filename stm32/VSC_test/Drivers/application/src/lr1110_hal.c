@@ -38,7 +38,8 @@ lr1110_hal_status_t lr1110_hal_reset( const void* radio )
     radio_t* radio_local = ( radio_t* ) radio;
 
     system_gpio_set_pin_state( radio_local->reset, SYSTEM_GPIO_PIN_STATE_LOW );
-    system_time_wait_ms( 1 );
+    //system_time_wait_ms( 1 );
+    HAL_Delay( 1 );
     system_gpio_set_pin_state( radio_local->reset, SYSTEM_GPIO_PIN_STATE_HIGH );
 
     return LR1110_HAL_STATUS_OK;
@@ -49,7 +50,8 @@ lr1110_hal_status_t lr1110_hal_wakeup( const void* radio )
     radio_t* radio_local = ( radio_t* ) radio;
 
     system_gpio_set_pin_state( radio_local->nss, SYSTEM_GPIO_PIN_STATE_LOW );
-    system_time_wait_ms( 1 );
+    //system_time_wait_ms( 1 );
+    HAL_Delay( 1 );
     system_gpio_set_pin_state( radio_local->nss, SYSTEM_GPIO_PIN_STATE_HIGH );
 
     return LR1110_HAL_STATUS_OK;

@@ -118,35 +118,35 @@ void hal_tmr_irq_enable( void ) { HAL_NVIC_EnableIRQ( LPTIM1_IRQn ); }
 
 void hal_tmr_irq_disable( void ) { HAL_NVIC_DisableIRQ( LPTIM1_IRQn ); }
 
-void LPTIM1_IRQHandler( void )
-{
-    HAL_LPTIM_IRQHandler( &lptim_handle );
-    HAL_LPTIM_TimeOut_Stop( &lptim_handle );
+// void LPTIM1_IRQHandler( void )
+// {
+//     HAL_LPTIM_IRQHandler( &lptim_handle );
+//     HAL_LPTIM_TimeOut_Stop( &lptim_handle );
 
-    if( lptim_tmr_irq.callback != NULL )
-    {
-        lptim_tmr_irq.callback( lptim_tmr_irq.context );
-    }
-}
+//     if( lptim_tmr_irq.callback != NULL )
+//     {
+//         lptim_tmr_irq.callback( lptim_tmr_irq.context );
+//     }
+// }
 
-void HAL_LPTIM_MspInit( LPTIM_HandleTypeDef* lptimhandle )
-{
-    if( lptimhandle->Instance == LPTIM1 )
-    {
-        __HAL_RCC_LPTIM1_CLK_ENABLE( );
-        HAL_NVIC_SetPriority( LPTIM1_IRQn, 0, 0 );
-        HAL_NVIC_EnableIRQ( LPTIM1_IRQn );
-    }
-}
+// void HAL_LPTIM_MspInit( LPTIM_HandleTypeDef* lptimhandle )
+// {
+//     if( lptimhandle->Instance == LPTIM1 )
+//     {
+//         __HAL_RCC_LPTIM1_CLK_ENABLE( );
+//         HAL_NVIC_SetPriority( LPTIM1_IRQn, 0, 0 );
+//         HAL_NVIC_EnableIRQ( LPTIM1_IRQn );
+//     }
+// }
 
-void HAL_LPTIM_MspDeInit( LPTIM_HandleTypeDef* lptimhandle )
-{
-    if( lptimhandle->Instance == LPTIM1 )
-    {
-        __HAL_RCC_LPTIM1_CLK_DISABLE( );
-        HAL_NVIC_DisableIRQ( LPTIM1_IRQn );
-    }
-}
+// void HAL_LPTIM_MspDeInit( LPTIM_HandleTypeDef* lptimhandle )
+// {
+//     if( lptimhandle->Instance == LPTIM1 )
+//     {
+//         __HAL_RCC_LPTIM1_CLK_DISABLE( );
+//         HAL_NVIC_DisableIRQ( LPTIM1_IRQn );
+//     }
+// }
 
 /*
  * -----------------------------------------------------------------------------

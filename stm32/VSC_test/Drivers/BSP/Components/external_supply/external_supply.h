@@ -1,7 +1,7 @@
-/*!
- * @file      smtc_hal.h
+/**
+ * @file      external_supply.h
  *
- * @brief     Board specific package API definition.
+ * @brief     External supply driver definition.
  *
  * Revised BSD License
  * Copyright Semtech Corporation 2020. All rights reserved.
@@ -29,8 +29,8 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef SMTC_HAL_H
-#define SMTC_HAL_H
+#ifndef EXTERNAL_SUPPLY_H
+#define EXTERNAL_SUPPLY_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -41,28 +41,8 @@ extern "C" {
  * --- DEPENDENCIES ------------------------------------------------------------
  */
 
-#include "smtc_hal_options.h"
-#include "smtc_hal_dbg_trace.h"
-#include "smtc_hal_gpio.h"
-#include "smtc_hal_gpio_pin_names.h"
-#include "smtc_hal_mcu.h"
-#include "smtc_hal_rtc.h"
-#include "smtc_hal_tmr.h"
-#include "smtc_hal_tmr_list.h"
-#include "smtc_hal_watchdog.h"
-#include "smtc_hal_rng.h"
-#include "smtc_hal_gpio.h"
-#include "smtc_hal_spi.h"
-#include "smtc_hal_uart.h"
-#include "smtc_hal_flash.h"
-//magnus #include "smtc_hal_i2c.h"
-
-#include "board-config.h"
-
-/* user peripheral */
-//magnus #include "lis2de12.h"
-#include "leds.h"
-#include "external_supply.h"
+#include <stdint.h>
+#include <stdbool.h>
 
 /*
  * -----------------------------------------------------------------------------
@@ -74,6 +54,11 @@ extern "C" {
  * --- PUBLIC CONSTANTS --------------------------------------------------------
  */
 
+/*!
+ * @brief LNA SUPPLY MASK
+ */
+#define LNA_SUPPLY_MASK 0x01
+
 /*
  * -----------------------------------------------------------------------------
  * --- PUBLIC TYPES ------------------------------------------------------------
@@ -84,10 +69,30 @@ extern "C" {
  * --- PUBLIC FUNCTIONS PROTOTYPES ---------------------------------------------
  */
 
-#ifdef __cplusplus
-}
-#endif
+/*!
+ * @brief Init External supply
+ *
+ * @param [in] vcc_mask Supply MASK to turn on supply
+ */
+void external_supply_init( uint8_t vcc_mask );
 
-#endif  // SMTC_HAL_H
+/*!
+ * @brief Deinit External supply
+ *
+ * @param [in] vcc_mask Supply MASK to turn off supply
+ */
+void external_supply_deinit( uint8_t vcc_mask );
+
+/*!
+ * @brief Turn ON the LNA
+ */
+void lna_on( void );
+
+/*!
+ * @brief Turn Off the LNA
+ */
+void lna_off( void );
+
+#endif //EXTERNAL_SUPPLY_H
 
 /* --- EOF ------------------------------------------------------------------ */

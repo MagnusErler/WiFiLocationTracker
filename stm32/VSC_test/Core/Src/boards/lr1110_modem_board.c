@@ -44,6 +44,9 @@
 #include "leds.h"
 #include "smtc_hal_tmr_list.h"
 
+#include "configuration.h"
+#include "system_gpio.h"
+
 /*
  * -----------------------------------------------------------------------------
  * --- PRIVATE MACROS-----------------------------------------------------------
@@ -165,7 +168,8 @@ lr1110_modem_response_code_t lr1110_modem_board_init( const void* context, lr111
 
     radio_event_init( event );
 
-    modem_hal_status = lr1110_modem_hal_reset( context );
+    //magnus modem_hal_status = lr1110_modem_hal_reset( context );
+    modem_hal_status = lr1110_hal_reset( context );
 
     if( modem_hal_status != LR1110_MODEM_HAL_STATUS_OK )
     {
@@ -269,7 +273,17 @@ lr1110_modem_response_code_t lr1110_modem_board_event_flush( const void* context
 
 bool lr1110_modem_board_read_event_line( const void* context )
 {
-    return hal_gpio_get_value( ( ( lr1110_t* ) context )->event.pin );
+    radio_t* radio_local = ( radio_t* ) context;
+
+    // //convert hal_gpio_irq_t to gpio_t
+    // gpio_t gpio;
+    // gpio.port = GPIOA;
+    // gpio.pin = RADIO_EVENT;
+
+    // return system_gpio_get_pin_state( gpio );
+    return hal_gpio_get_value( ( ( radio_t* ) context )->irq.pin );
+    //return system_gpio_get_pin_state( radio_local->irq.irq1 );
+    //return hal_gpio_get_value( ( ( lr1110_t* ) context )->event.pin );
 }
 
 bool lr1110_modem_board_is_ready( void ) { return modem_is_ready; }
