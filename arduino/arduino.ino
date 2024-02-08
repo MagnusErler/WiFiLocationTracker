@@ -1,5 +1,3 @@
-#include <SPI.h>
-
 // Define SPI pins and other constants
 #define MOSI 11
 #define MISO 12
@@ -20,21 +18,22 @@ void setup() {
 }
 
 void confSPI() {
-  SPI.begin();
-
-  SPISettings settings(10000, MSBFIRST, SPI_MODE0); // Set baud rate, data order, and SPI mode
-  SPI.beginTransaction(settings);
-}
-
-void confGPIO() {
+  // Set SPI pins as OUTPUT
   pinMode(MOSI, OUTPUT);
   pinMode(SCK, OUTPUT);
   pinMode(SS, OUTPUT);
   pinMode(MISO, INPUT);
+  
+  // Set SPI default states
+  digitalWrite(SS, HIGH); // Ensure SS starts HIGH
+  digitalWrite(MOSI, LOW);
+  digitalWrite(SCK, LOW);
+}
+
+void confGPIO() {
+  // Set GPIO pins as OUTPUT or INPUT
   pinMode(BUSY, INPUT);
   pinMode(RESET, OUTPUT);
-
-  digitalWrite(SS, HIGH); // Ensure SS starts HIGH
 }
 
 void loop() {
@@ -120,7 +119,7 @@ uint8_t* sendSPICommandToSPI(uint8_t commands[], int commandLength, int response
   // Start the command sequence
   digitalWrite(SS, LOW); // Assert SS to indicate the start of communication
   for (int i = 0; i < commandLength; i++) {
-    SPI.transfer(commands[i]);
+    spiTransfer(commands[i]);
   }
   digitalWrite(SS, HIGH); // De-assert SS, end of command sequence
 
@@ -131,12 +130,7 @@ uint8_t* sendSPICommandToSPI(uint8_t commands[], int commandLength, int response
   waitForBusyToGet(HIGH);
 
   for (int i = 0; i < responseLength; i++) {
-    respondSPI[i] = SPI.transfer(0x00);
-
-    // Serial.print("Response at index ");
-    // Serial.print(i);
-    // Serial.print(": 0x");
-    // Serial.println(respondSPI[i], HEX);
+    respondSPI[i] = spiTransfer(0x00);
   }
 
   digitalWrite(SS, HIGH); // End communication
@@ -162,4 +156,15 @@ void resetLR1110() {
   digitalWrite(RESET, LOW);
   delayMicroseconds(200);
   digitalWrite(RESET, HIGH);
+}
+
+uint8_t spiTransfer(uint8_t data) {
+  uint8_t receivedByte = 0;
+  for (int i = 7; i >= 0; i--) {
+    digitalWrite(MOSI, (data >> i) & 0x01); // Send the next bit to MOSI pin
+    digitalWrite(SCK, HIGH); // Set clock to HIGH to read MISO pin
+    receivedByte = (receivedByte << 1) | digitalRead(MISO); // Read MISO pin and append the bit to the received byte
+    digitalWrite(SCK, LOW); // Set clock to LOW for the next bit
+  }
+  return receivedByte;
 }
