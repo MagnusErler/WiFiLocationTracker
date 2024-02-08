@@ -138,8 +138,7 @@ void lr1110_modem_board_init_io( const void* context )
     hal_gpio_init_out( ( ( lr1110_t* ) context )->reset.pin, 1 );
     hal_gpio_init_out( ( ( lr1110_t* ) context )->nss.pin, 1 );
     hal_gpio_init_in( ( ( lr1110_t* ) context )->busy.pin, HAL_GPIO_PULL_MODE_NONE, HAL_GPIO_IRQ_MODE_OFF, NULL );
-    hal_gpio_init_in( ( ( lr1110_t* ) context )->event.pin, HAL_GPIO_PULL_MODE_NONE, HAL_GPIO_IRQ_MODE_RISING,
-                      &( ( lr1110_t* ) context )->event );
+    hal_gpio_init_in( ( ( lr1110_t* ) context )->event.pin, HAL_GPIO_PULL_MODE_NONE, HAL_GPIO_IRQ_MODE_RISING, &( ( radio_t* ) context )->event );
 }
 
 void lr1110_modem_board_deinit_io( const void* context )
@@ -281,11 +280,11 @@ bool lr1110_modem_board_read_event_line( const void* context )
     // gpio.pin = RADIO_EVENT;
 
     // return system_gpio_get_pin_state( gpio );
-    //return hal_gpio_get_value( ( ( radio_t* ) context )->irq.pin );
+    //return hal_gpio_get_value( ( ( radio_t* ) context )->event.pin );
 
-    return LL_GPIO_IsInputPinSet( GPIOB, ( ( radio_t* ) context )->irq.pin );
+    return LL_GPIO_IsInputPinSet( GPIOB, ( ( radio_t* ) context )->event.pin );
 
-    //return system_gpio_get_pin_state( radio_local->irq.irq1 );
+    //return system_gpio_get_pin_state( radio_local->event.irq1 );
     //return hal_gpio_get_value( ( ( lr1110_t* ) context )->event.pin );
 }
 

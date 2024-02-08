@@ -103,6 +103,18 @@ static void getLR1110_Version( const void* context);
  */
 static void getLR1110_Temperature( const void* context);
 
+/*!
+ * @brief Reset LR1110
+ */
+static void resetLR1110();
+
+/*!
+ * @brief Setup TCXO
+ *
+ * @param [in] context Radio abstraction
+ */
+static void setupTCXO( const void* context );
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -149,11 +161,11 @@ int main(void)
   ((radio_t*)lr1110_context)->nss.pin = NSS_Pin;  //used
   ((radio_t*)lr1110_context)->reset.port = GPIOA;
   ((radio_t*)lr1110_context)->reset.pin = RADIO_RESET;
-  // ((radio_t*)lr1110_context)->irq.irq1.port = GPIOB;
-  // ((radio_t*)lr1110_context)->irq.irq1.pin = EVENT_Pin;
-  ((radio_t*)lr1110_context)->irq.pin = EVENT_Pin;
-  ((radio_t*)lr1110_context)->irq.callback = radio_event_callback;
-  ((radio_t*)lr1110_context)->irq.context = ( ( radio_t* ) lr1110_context );
+  // ((radio_t*)lr1110_context)->event.irq1.port = GPIOB;
+  // ((radio_t*)lr1110_context)->event.irq1.pin = EVENT_Pin;
+  ((radio_t*)lr1110_context)->event.pin = EVENT_Pin;
+  ((radio_t*)lr1110_context)->event.callback = radio_event_callback;
+  ((radio_t*)lr1110_context)->event.context = ( ( radio_t* ) lr1110_context );
   ((radio_t*)lr1110_context)->busy.port = GPIOB;    //used
   ((radio_t*)lr1110_context)->busy.pin = BUSY_Pin;  //used
 
@@ -180,8 +192,6 @@ int main(void)
 
   hal_uart_init( HAL_PRINTF_UART_ID, UART_TX, UART_RX );
   hal_spi_init( HAL_RADIO_SPI_ID, RADIO_MOSI, RADIO_MISO, RADIO_SCLK );
-  lr1110_modem_board_init_io_context( &lr1110);
-  lr1110_modem_board_init_io( &lr1110 );
 
   HAL_DBG_TRACE_MSG("-----------------------------\r\n\r\n");
 
@@ -191,10 +201,9 @@ int main(void)
 
   leds_blink( LED_ALL_MASK, 100, 5, true );
 
-  getLR1110_Version(lr1110_context);
+  setupTCXO(lr1110_context);
 
-  lr1110_modem_system_set_tcxo_mode( lr1110_context, LR1110_MODEM_SYSTEM_TCXO_CTRL_1_8V,
-                                              ( lr1110_modem_board_get_tcxo_wakeup_time( ) * 1000 ) / 30.52 );
+  getLR1110_Version(lr1110_context);
 
   // /* Init LR1110 modem-e event for WiFi*/
   // lr1110_modem_event_callback.wifi_scan_done = lr1110_modem_wifi_scan_done;
@@ -604,7 +613,7 @@ static void lr1110_modem_reset_event( uint16_t reset_count )
     }
 }
 
-void getLR1110_Version( const void* context) {
+void getLR1110_Version( const void* context ) {
   HAL_DBG_TRACE_INFO("Getting LR1110 version... ");
 
   lr1110_bootloader_version_t bootloader_version;
@@ -631,7 +640,7 @@ void getLR1110_Version( const void* context) {
   }
 }
 
-void getLR1110_Temperature( const void* context) {
+void getLR1110_Temperature( const void* context ) {
   HAL_DBG_TRACE_INFO("Getting LR1110 temperature... ");
 
   float temperature = 0.0;
@@ -650,6 +659,13 @@ void resetLR1110() {
   HAL_Delay(100);
   HAL_GPIO_WritePin(RESET_GPIO_Port, RESET_Pin, GPIO_PIN_SET);
   HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+}
+
+void setupTCXO( const void* context ) {
+    HAL_DBG_TRACE_INFO( "Setting up TCXO...\r\n" );
+    lr1110_modem_system_set_tcxo_mode( context, LR1110_MODEM_SYSTEM_TCXO_CTRL_1_8V,
+                                              ( lr1110_modem_board_get_tcxo_wakeup_time( ) * 1000 ) / 30.52 );
+    HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
 }
 
 /* USER CODE END 4 */

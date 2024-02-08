@@ -95,7 +95,7 @@ typedef struct
     SPI_TypeDef*    spi;
     gpio_t          nss;
     gpio_t          reset;
-    hal_gpio_irq_t  irq;
+    hal_gpio_irq_t  event;
     gpio_t          busy;
 } radio_t;
 
