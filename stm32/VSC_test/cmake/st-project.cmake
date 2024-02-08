@@ -104,6 +104,7 @@ target_sources(
     ${TARGET_NAME} PRIVATE
     "Core/Src/boards/lr1110_modem_board.c"
     "Core/Src/main.c"
+    "Core/Src/spi.c"
     "Core/Src/radio/gnss/gnss_scan.c"
     "Core/Src/radio/lr1110_modem/src/lr1110_bootloader.c"
     "Core/Src/radio/lr1110_modem/src/lr1110_modem_gnss.c"

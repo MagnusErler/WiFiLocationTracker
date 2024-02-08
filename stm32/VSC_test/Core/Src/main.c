@@ -22,6 +22,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
+#include "spi.h"
+
 #include "lr1110_modem_board.h"
 #include "system.h"
 
@@ -40,6 +42,21 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 
+/*!
+ * @brief Length of command buffer for commands that have no parameter
+ */
+#define LR1110_BL_CMD_NO_PARAM_LENGTH 2
+
+/*!
+ * @brief Length of command buffer for bootloader get version command
+ */
+#define LR1110_BL_VERSION_CMD_LENGTH LR1110_BL_CMD_NO_PARAM_LENGTH
+
+/*!
+ * @brief Length of command buffer for bootloader get temperature command
+ */
+#define LR1110_BL_TEMPERATURE_CMD_LENGTH LR1110_BL_CMD_NO_PARAM_LENGTH
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -57,6 +74,20 @@ SPI_HandleTypeDef hspi1;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
+
+enum {
+    LR1110_BL_GET_STATUS_OC            = 0x0100,  //!< Operation code for get status command
+    LR1110_BL_GET_VERSION_OC           = 0x0101,  //!< Operation code for get version command
+    LR1110_BL_ERASE_FLASH_OC           = 0x8000,  //!< Operation code for flash erase command
+    LR1110_BL_ERASE_PAGE_OC            = 0x8001,  //!< Operation code for flash page erase command
+    LR1110_BL_WRITE_FLASH_OC           = 0x8002,  //!< Operation code for write flash command
+    LR1110_BL_WRITE_FLASH_ENCRYPTED_OC = 0x8003,  //!< Operation code for encrypted flash write command
+    LR1110_BL_GET_HASH_OC              = 0x8004,  //!< Operation code for hash getter command
+    LR1110_BL_REBOOT_OC                = 0x8005,  //!< Operation code for reboot command
+    LR1110_BL_GET_PIN_OC               = 0x800B,  //!< Operation code for PIN read command
+    LR1110_BL_GET_CHIP_EUI_OC          = 0x800C,  //!< Operation code for EUI read command
+    LR1110_BL_GET_TEMPERATURE          = 0x011A,  //!< Operation code for temperature read command
+};
 
 /*!
  * @brief Radio hardware and global parameters
@@ -86,7 +117,7 @@ static void lr1110_modem_reset_event( uint16_t reset_count );
  *
  * @param [in] context Radio abstraction
  */
-static void getLR1110_Version( const void* context);
+static void getLR1110_Version();
 
 /*!
  * @brief Get LR1110 temperature
@@ -152,7 +183,7 @@ int main(void)
   ((radio_t*)lr1110_context)->nss.port        = GPIOA;
   ((radio_t*)lr1110_context)->nss.pin         = NSS_Pin;
   ((radio_t*)lr1110_context)->reset.port      = GPIOA;
-  ((radio_t*)lr1110_context)->reset.pin       = RADIO_RESET;
+  ((radio_t*)lr1110_context)->reset.pin       = RESET_Pin;
   // ((radio_t*)lr1110_context)->event.irq1.port = GPIOB;
   // ((radio_t*)lr1110_context)->event.irq1.pin = EVENT_Pin;
   ((radio_t*)lr1110_context)->event.pin       = EVENT_Pin;
@@ -504,6 +535,7 @@ static void MX_USART2_UART_Init(void)
   /* USER CODE BEGIN USART2_Init 0 */
 
   /* USER CODE END USART2_Init 0 */
+
   /* USER CODE BEGIN USART2_Init 1 */
 
   /* USER CODE END USART2_Init 1 */
@@ -607,10 +639,17 @@ void getLR1110_Version( const void* context ) {
 
   lr1110_bootloader_version_t bootloader_version;
 
-  if (lr1110_bootloader_get_version(context, &bootloader_version) == LR1110_STATUS_OK) {
+  uint8_t         cbuffer[LR1110_BL_VERSION_CMD_LENGTH];
+  uint8_t         rbuffer[LR1110_BL_VERSION_LENGTH] = { 0x00 };
+
+  cbuffer[0] = ( uint8_t )( LR1110_BL_GET_VERSION_OC >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_BL_GET_VERSION_OC >> 0 );
+  
+  if (lr1110_spi_read(context, cbuffer, LR1110_BL_VERSION_CMD_LENGTH, rbuffer, LR1110_BL_VERSION_LENGTH ) == LR1110_STATUS_OK) {
     HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
-    HAL_DBG_TRACE_INFO("LR1110 bootloader hardware version: %d\r\n", bootloader_version.hw);
-    switch (bootloader_version.type) {
+
+    HAL_DBG_TRACE_INFO("LR1110 bootloader hardware version: %d\r\n", rbuffer[0]);
+    switch (rbuffer[1]) {
         case 1:
             HAL_DBG_TRACE_INFO("LR1110 bootloader type: LR1110\r\n");
             break;
@@ -623,7 +662,7 @@ void getLR1110_Version( const void* context ) {
         default:
             break;
     }
-    HAL_DBG_TRACE_INFO("LR1110 bootloader firmware version: %d.%d\r\n", bootloader_version.fw_major, bootloader_version.fw_minor);
+    HAL_DBG_TRACE_INFO("LR1110 bootloader firmware version: %d.%d\r\n", rbuffer[2], rbuffer[3]);
   } else {
     HAL_DBG_TRACE_ERROR("\r\nFailed to get LR1110 bootloader version\r\n");
   }
@@ -632,10 +671,19 @@ void getLR1110_Version( const void* context ) {
 void getLR1110_Temperature( const void* context ) {
   HAL_DBG_TRACE_INFO("Getting LR1110 temperature... ");
 
-  float temperature = 0.0;
+  uint8_t         cbuffer[LR1110_BL_TEMPERATURE_CMD_LENGTH];
+  uint8_t         rbuffer[LR1110_BL_TEMPERATURE_LENGTH] = { 0x00 };
+  lr1110_status_t status                                = LR1110_STATUS_ERROR;
 
-  if (lr1110_bootloader_get_temperature(context, &temperature) == LR1110_STATUS_OK) {
+  cbuffer[0] = ( uint8_t )( LR1110_BL_GET_TEMPERATURE >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_BL_GET_TEMPERATURE >> 0 );
+
+  if (lr1110_spi_read( context, cbuffer, LR1110_BL_TEMPERATURE_CMD_LENGTH, rbuffer, LR1110_BL_TEMPERATURE_LENGTH ) == LR1110_STATUS_OK) {
     HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+
+    uint16_t temp_10_0 = ((rbuffer[0] << 8) | rbuffer[1]) & 0x7FF;
+    float temperature = 25 + (1000/(-1.7)) * ((temp_10_0/2047.0) * 1.35 - 0.7295);
+
     HAL_DBG_TRACE_INFO("LR1110 temperature: %d.%d °C\r\n", (int)temperature, (int)((temperature - (int)temperature) * 100));
   } else {
     HAL_DBG_TRACE_ERROR("\r\nFailed to get LR1110 temperature\r\n");
