@@ -626,10 +626,10 @@ void getLR1110_Version( const void* context) {
 }
 
 void getLR1110_Temperature( const void* context) {
-  uint16_t temperature;
+  float temperature = 0.0;
 
   if (lr1110_bootloader_get_temperature(context, &temperature) == LR1110_STATUS_OK) {
-    HAL_DBG_TRACE_INFO("LR1110 temperature: %d\r\n", temperature);
+    HAL_DBG_TRACE_INFO("LR1110 temperature: %d.%d °C\r\n", (int)temperature, (int)((temperature - (int)temperature) * 100));
   } else {
     HAL_DBG_TRACE_ERROR("Failed to get LR1110 temperature\r\n");
   }
