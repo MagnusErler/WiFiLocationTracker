@@ -6,37 +6,35 @@
 #define SCK  13
 #define SS   7   // Slave select pin
 #define BUSY 3   // BUSY pin to check if the slave is ready
-#define BUTTON 2 // Button pin
 #define RESET A0
 
 void setup() {
-  // Initialize SPI
+  confSPI();
+  confGPIO();
+  
+  Serial.begin(9600);
+
+  resetLR1110();
+  
+  Serial.println("Press enter in the terminal to continue...");
+}
+
+void confSPI() {
   SPI.begin();
 
-  // Configure SPI settings
   SPISettings settings(10000, MSBFIRST, SPI_MODE0); // Set baud rate, data order, and SPI mode
-
-  // Start SPI transaction with defined settings
   SPI.beginTransaction(settings);
-  
-  // Set SPI pins as OUTPUT or INPUT
+}
+
+void confGPIO() {
   pinMode(MOSI, OUTPUT);
   pinMode(SCK, OUTPUT);
   pinMode(SS, OUTPUT);
   pinMode(MISO, INPUT);
   pinMode(BUSY, INPUT);
-  pinMode(BUTTON, INPUT_PULLUP);
   pinMode(RESET, OUTPUT);
-  
-  // Initialize serial communication
-  Serial.begin(9600);
 
-  // Set SS pin high (deasserted) initially
   digitalWrite(SS, HIGH); // Ensure SS starts HIGH
-
-  resetLR1110();
-  
-  Serial.println("Press enter in the terminal to continue...");
 }
 
 void loop() {
@@ -51,9 +49,15 @@ void loop() {
 }
 
 void getVersion() {
+  Serial.println("Getting LR1110 version...");
 
   uint8_t commandSPI[] = {0x01, 0x01};
   uint8_t* respondSPI = sendSPICommandToSPI(commandSPI, sizeof(commandSPI) / sizeof(commandSPI[0]), 5);
+
+  if ((respondSPI[0] & 0b00001110) >> 1 == 0) {
+    Serial.println("ERROR: CMD_FAIL");
+    return;
+  }
 
   Serial.println("LR1110 version:");
   Serial.print("- HW version: ");
@@ -82,12 +86,18 @@ void getVersion() {
 }
 
 void getTemp() {
+  Serial.println("Getting LR1110 temperature...");
 
   //remember to set Tcxo mode before getting temeprature
   SetTcxoMode();
 
   uint8_t commandSPI[] = {0x01, 0x1A};
   uint8_t* respondSPI = sendSPICommandToSPI(commandSPI, sizeof(commandSPI) / sizeof(commandSPI[0]), 3);
+
+  if ((respondSPI[0] & 0b00001110) >> 1 == 0) {
+    Serial.println("ERROR: CMD_FAIL");
+    return;
+  }
 
   // Extracting bits [15:8] and [7:0] and then [10:0]
   int rawTemperature_10_0 = ((respondSPI[1] << 8) | respondSPI[2]) & 0x7FF;
