@@ -133,13 +133,13 @@ int main(void)
   lr1110_bootloader_chip_eui_t  chip_eui;
 
   /* Wi-Fi settings */
-  wifi_settings_t               wifi_settings;
-  //static wifi_scan_all_results_t capture_result;
+  // wifi_settings_t               wifi_settings;
+  // static wifi_scan_all_results_t capture_result;
 
   /* GNSS settings */
-  gnss_settings_t               gnss_settings;
-  uint32_t                      unix_time = 0;
-  gnss_scan_single_result_t     capture_result;
+  // gnss_settings_t               gnss_settings;
+  // uint32_t                      unix_time = 0;
+  // gnss_scan_single_result_t     capture_result;
 
   int a = 0;
 
@@ -176,14 +176,18 @@ int main(void)
 
 
   /* Init board */
-  hal_uart_init(2, PA_2, PA_3);
-  hal_mcu_init(lr1110_context);  // for HAL_DBG_TRACE
+  resetLR1110();
+
+  hal_uart_init( HAL_PRINTF_UART_ID, UART_TX, UART_RX );
+  hal_spi_init( HAL_RADIO_SPI_ID, RADIO_MOSI, RADIO_MISO, RADIO_SCLK );
+  lr1110_modem_board_init_io_context( &lr1110);
+  lr1110_modem_board_init_io( &lr1110 );
+
   HAL_DBG_TRACE_MSG("-----------------------------\r\n\r\n");
 
   HAL_DBG_TRACE_INFO("Initializing LEDs... ");
-  hal_mcu_init_periph( );   // for LEDS
+  leds_init( );
   HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
-  hal_spi_init(1, PA_5, PA_6, PA_7);
 
   leds_blink( LED_ALL_MASK, 100, 5, true );
 
@@ -192,7 +196,7 @@ int main(void)
   lr1110_modem_system_set_tcxo_mode( lr1110_context, LR1110_MODEM_SYSTEM_TCXO_CTRL_1_8V,
                                               ( lr1110_modem_board_get_tcxo_wakeup_time( ) * 1000 ) / 30.52 );
 
-  /* Init LR1110 modem-e event for WiFi*/
+  // /* Init LR1110 modem-e event for WiFi*/
   // lr1110_modem_event_callback.wifi_scan_done = lr1110_modem_wifi_scan_done;
   // lr1110_modem_event_callback.reset          = lr1110_modem_reset_event;
   // modem_response_code                        = lr1110_modem_board_init( lr1110_context, &lr1110_modem_event_callback );
@@ -201,7 +205,7 @@ int main(void)
   //     HAL_DBG_TRACE_ERROR( "lr1110_modem_board_init failed (%d)\r\n", modem_response_code );
   // }
 
-  // /* Init LR1110 modem-e event for GNSS*/
+  /* Init LR1110 modem-e event for GNSS*/
   // memset( &lr1110_modem_event_callback, 0, sizeof( lr1110_modem_event_callback ) );
   // lr1110_modem_event_callback.gnss_scan_done = lr1110_modem_gnss_scan_done;
   // lr1110_modem_event_callback.reset          = lr1110_modem_reset_event;
@@ -221,7 +225,7 @@ int main(void)
   // wifi_settings.timeout       = 90;
   // wifi_settings.result_format = LR1110_MODEM_WIFI_RESULT_FORMAT_BASIC_MAC_TYPE_CHANNEL;
 
-  // /* GNSS Parameters */
+  /* GNSS Parameters */
   // memset( &gnss_settings, 0, sizeof( gnss_settings ) );
   // gnss_settings.enabled              = true;
   // gnss_settings.constellation_to_use = ( LR1110_MODEM_GNSS_GPS_MASK | LR1110_MODEM_GNSS_BEIDOU_MASK );
@@ -267,10 +271,10 @@ int main(void)
     // if( wifi_execute_scan( lr1110_context, &wifi_settings, &capture_result ) == WIFI_SCAN_SUCCESS ) {
     //   HAL_DBG_TRACE_MSG( "Success\n\r" );
     //   HAL_DBG_TRACE_MSG("capture_result = {\n\r");
-    //   HAL_DBG_TRACE_PRINTF("  scan_mode = %d\n\r", capture_result.scan_mode);
-    //   HAL_DBG_TRACE_PRINTF("  result_format = %d\n\r", capture_result.result_format);
-    //   HAL_DBG_TRACE_PRINTF("  nbr_results = %d\n\r", capture_result.nbr_results);
-    //   HAL_DBG_TRACE_PRINTF("  basic_mac_type_channel_results = {\n\r");
+    //   // HAL_DBG_TRACE_MSG("  scan_mode = %d\n\r", capture_result.scan_mode);
+    //   // HAL_DBG_TRACE_MSG("  result_format = %d\n\r", capture_result.result_format);
+    //   // HAL_DBG_TRACE_MSG("  nbr_results = %d\n\r", capture_result.nbr_results);
+    //   HAL_DBG_TRACE_MSG("  basic_mac_type_channel_results = {\n\r");
     //   HAL_DBG_TRACE_PRINTF("    mac_address = %02X:%02X:%02X:%02X:%02X:%02X\n\r", capture_result.basic_mac_type_channel_results[0].mac_address[0], capture_result.basic_mac_type_channel_results[0].mac_address[1], capture_result.basic_mac_type_channel_results[0].mac_address[2], capture_result.basic_mac_type_channel_results[0].mac_address[3], capture_result.basic_mac_type_channel_results[0].mac_address[4], capture_result.basic_mac_type_channel_results[0].mac_address[5]);
     // } else {
     //   HAL_DBG_TRACE_ERROR( "Wi-Fi scan timeout\n\r" );
@@ -502,7 +506,6 @@ static void MX_USART2_UART_Init(void)
   /* USER CODE BEGIN USART2_Init 0 */
 
   /* USER CODE END USART2_Init 0 */
-
   /* USER CODE BEGIN USART2_Init 1 */
 
   /* USER CODE END USART2_Init 1 */
@@ -602,9 +605,12 @@ static void lr1110_modem_reset_event( uint16_t reset_count )
 }
 
 void getLR1110_Version( const void* context) {
+  HAL_DBG_TRACE_INFO("Getting LR1110 version... ");
+
   lr1110_bootloader_version_t bootloader_version;
 
   if (lr1110_bootloader_get_version(context, &bootloader_version) == LR1110_STATUS_OK) {
+    HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
     HAL_DBG_TRACE_INFO("LR1110 bootloader hardware version: %d\r\n", bootloader_version.hw);
     switch (bootloader_version.type) {
         case 1:
@@ -621,18 +627,29 @@ void getLR1110_Version( const void* context) {
     }
     HAL_DBG_TRACE_INFO("LR1110 bootloader firmware version: %d.%d\r\n", bootloader_version.fw_major, bootloader_version.fw_minor);
   } else {
-    HAL_DBG_TRACE_ERROR("Failed to get LR1110 bootloader version\r\n");
+    HAL_DBG_TRACE_ERROR("\r\nFailed to get LR1110 bootloader version\r\n");
   }
 }
 
 void getLR1110_Temperature( const void* context) {
+  HAL_DBG_TRACE_INFO("Getting LR1110 temperature... ");
+
   float temperature = 0.0;
 
   if (lr1110_bootloader_get_temperature(context, &temperature) == LR1110_STATUS_OK) {
+    HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
     HAL_DBG_TRACE_INFO("LR1110 temperature: %d.%d °C\r\n", (int)temperature, (int)((temperature - (int)temperature) * 100));
   } else {
-    HAL_DBG_TRACE_ERROR("Failed to get LR1110 temperature\r\n");
+    HAL_DBG_TRACE_ERROR("\r\nFailed to get LR1110 temperature\r\n");
   }
+}
+
+void resetLR1110() {
+  HAL_DBG_TRACE_INFO("Resetting LR1110... ");
+  HAL_GPIO_WritePin(RESET_GPIO_Port, RESET_Pin, GPIO_PIN_RESET);
+  HAL_Delay(100);
+  HAL_GPIO_WritePin(RESET_GPIO_Port, RESET_Pin, GPIO_PIN_SET);
+  HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
 }
 
 /* USER CODE END 4 */

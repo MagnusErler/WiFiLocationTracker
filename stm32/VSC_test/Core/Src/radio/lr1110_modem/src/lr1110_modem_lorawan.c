@@ -311,8 +311,8 @@ lr1110_modem_response_code_t lr1110_modem_get_event( const void* context, lr1110
         cbuffer[0] = LR1110_MODEM_GROUP_ID_MODEM;
         cbuffer[1] = LR1110_MODEM_GET_EVENT_CMD;
 
-        //magnus rc = ( lr1110_modem_response_code_t ) lr1110_modem_hal_read(
-        //     context, cbuffer, LR1110_MODEM_GET_EVENT_CMD_LENGTH, event_fields->buffer, event_size );
+        // rc = ( lr1110_modem_response_code_t ) lr1110_modem_hal_read(
+        //      context, cbuffer, LR1110_MODEM_GET_EVENT_CMD_LENGTH, event_fields->buffer, event_size );
         rc = ( lr1110_modem_response_code_t ) lr1110_hal_read(
             context, cbuffer, LR1110_MODEM_GET_EVENT_CMD_LENGTH, event_fields->buffer, event_size );
 

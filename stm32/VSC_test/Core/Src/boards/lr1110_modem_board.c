@@ -281,7 +281,10 @@ bool lr1110_modem_board_read_event_line( const void* context )
     // gpio.pin = RADIO_EVENT;
 
     // return system_gpio_get_pin_state( gpio );
-    return hal_gpio_get_value( ( ( radio_t* ) context )->irq.pin );
+    //return hal_gpio_get_value( ( ( radio_t* ) context )->irq.pin );
+
+    return LL_GPIO_IsInputPinSet( GPIOB, ( ( radio_t* ) context )->irq.pin );
+
     //return system_gpio_get_pin_state( radio_local->irq.irq1 );
     //return hal_gpio_get_value( ( ( lr1110_t* ) context )->event.pin );
 }

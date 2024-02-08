@@ -232,11 +232,11 @@ void hal_mcu_init( const void* context )
     // hal_mcu_pvd_config( );
 
     /* Initialize UART */
-// #if( HAL_USE_PRINTF_UART == HAL_FEATURE_ON )
-//     hal_uart_init( HAL_PRINTF_UART_ID, UART_TX, UART_RX );
-// #endif
+#if( HAL_USE_PRINTF_UART == HAL_FEATURE_ON )
+    hal_uart_init( HAL_PRINTF_UART_ID, UART_TX, UART_RX );
+#endif
     /* Initialize SPI */
-    // hal_spi_init( HAL_RADIO_SPI_ID, RADIO_MOSI, RADIO_MISO, RADIO_SCLK );
+    hal_spi_init( HAL_RADIO_SPI_ID, RADIO_MOSI, RADIO_MISO, RADIO_SCLK );
     lr1110_modem_board_init_io_context( &lr1110);
     /* Init LR1110 IO */
     lr1110_modem_board_init_io( &lr1110 );
