@@ -22,21 +22,13 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
-#include "smtc_hal.h"
 #include "lr1110_modem_board.h"
-#include "lr1110_bootloader.h"
-#include "lr1110_hal.h"
 #include "system.h"
 
 #include <stdlib.h>
 
 #include "wifi_scan.h"
 #include "gnss_scan.h"
-
-#include "smtc_hal_dbg_trace.h"
-
-//#include "smtc_hal_mcu.h"
-#include "smtc_hal_spi.h"
 
 /* USER CODE END Includes */
 
