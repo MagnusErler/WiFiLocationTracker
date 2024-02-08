@@ -34,30 +34,57 @@ void setup() {
   // Set SS pin high (deasserted) initially
   digitalWrite(SS, HIGH); // Ensure SS starts HIGH
 
-  //reset LR1110
-  digitalWrite(RESET, LOW);
-  delayMicroseconds(200);
-  digitalWrite(RESET, HIGH);
+  resetLR1110();
+  
 }
 
 void loop() {
   if (Serial.available() > 0) {
     if (Serial.read() == 0xA) {
       Serial.println("Starting...");
-      SetTcxoMode();
-      delay(100);
+      getVersion();
       getTemp();
       Serial.println("Done");
     }
   }
 }
 
-void SetTcxoMode() {
-  uint8_t commandSPI[] = {0x01, 0x17, 0x02, 0x00, 0x00, 0xA3};
-  sendSPICommandToSPI(commandSPI, sizeof(commandSPI) / sizeof(commandSPI[0]), 6);
+void getVersion() {
+
+  uint8_t commandSPI[] = {0x01, 0x01};
+  uint8_t* respondSPI = sendSPICommandToSPI(commandSPI, sizeof(commandSPI) / sizeof(commandSPI[0]), 5);
+
+  Serial.println("LR1110 version:");
+  Serial.print("- HW version: ");
+  Serial.println(respondSPI[1]);
+  switch (respondSPI[2]) {
+    case 1:
+      Serial.println("- Use Case: LR1110");
+      break;
+    case 2:
+      Serial.println("- Use Case: LR1120");
+      break;
+    case 3:
+      Serial.println("- Use Case: LR1121");
+      break;
+    default:
+      Serial.println("ERROR: Can not find use case");
+      break;
+  }
+  Serial.print("- FW major: ");
+  Serial.println(respondSPI[3]);
+  Serial.print("- FW minor: ");
+  Serial.println(respondSPI[4]);
+
+  // Free dynamically allocated memory
+  free(respondSPI);
 }
 
 void getTemp() {
+
+  //remember to set Tcxo mode before getting temeprature
+  SetTcxoMode();
+
   uint8_t commandSPI[] = {0x01, 0x1A};
   uint8_t* respondSPI = sendSPICommandToSPI(commandSPI, sizeof(commandSPI) / sizeof(commandSPI[0]), 3);
 
@@ -66,7 +93,8 @@ void getTemp() {
 
   float temperature = 25 + (1000/(-1.7)) * ((rawTemperature_10_0/2047.0) * 1.35 - 0.7295);
   Serial.print("LR1110 temperature: ");
-  Serial.println(temperature);
+  Serial.print(temperature);
+  Serial.println(" C");
 
   // Free dynamically allocated memory
   free(respondSPI);
@@ -93,6 +121,11 @@ uint8_t* sendSPICommandToSPI(uint8_t commands[], int commandLength, int response
 
   for (int i = 0; i < responseLength; i++) {
     respondSPI[i] = SPI.transfer(0x00);
+
+    // Serial.print("Response at index ");
+    // Serial.print(i);
+    // Serial.print(": 0x");
+    // Serial.println(respondSPI[i], HEX);
   }
 
   digitalWrite(SS, HIGH); // End communication
@@ -106,4 +139,16 @@ void waitForBusyToGet(bool state) {
   while (!digitalRead(BUSY) == state) {
     delay(1);
   }
+}
+
+void SetTcxoMode() {
+  uint8_t commandSPI[] = {0x01, 0x17, 0x02, 0x00, 0x00, 0xA3};
+  sendSPICommandToSPI(commandSPI, sizeof(commandSPI) / sizeof(commandSPI[0]), 6);
+  delay(100);
+}
+
+void resetLR1110() {
+  digitalWrite(RESET, LOW);
+  delayMicroseconds(200);
+  digitalWrite(RESET, HIGH);
 }
