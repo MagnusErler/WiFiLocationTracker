@@ -94,14 +94,14 @@ static void lr1110_modem_reset_event( uint16_t reset_count );
  *
  * @param [in] context Radio abstraction
  */
-static void showLR1110_Version( const void* context);
+static void getLR1110_Version( const void* context);
 
 /*!
  * @brief Get LR1110 temperature
  *
  * @param [in] context Radio abstraction
  */
-static void showLR1110_Temperature( const void* context);
+static void getLR1110_Temperature( const void* context);
 
 /* USER CODE END PFP */
 
@@ -187,7 +187,10 @@ int main(void)
 
   leds_blink( LED_ALL_MASK, 100, 5, true );
 
-  showLR1110_Version(lr1110_context);
+  getLR1110_Version(lr1110_context);
+
+  lr1110_modem_system_set_tcxo_mode( lr1110_context, LR1110_MODEM_SYSTEM_TCXO_CTRL_1_8V,
+                                              ( lr1110_modem_board_get_tcxo_wakeup_time( ) * 1000 ) / 30.52 );
 
   /* Init LR1110 modem-e event for WiFi*/
   // lr1110_modem_event_callback.wifi_scan_done = lr1110_modem_wifi_scan_done;
@@ -259,7 +262,7 @@ int main(void)
 
     HAL_DBG_TRACE_PRINTF("a = %d\r\n", a++);
 
-    showLR1110_Temperature(lr1110_context);
+    getLR1110_Temperature(lr1110_context);
 
     // if( wifi_execute_scan( lr1110_context, &wifi_settings, &capture_result ) == WIFI_SCAN_SUCCESS ) {
     //   HAL_DBG_TRACE_MSG( "Success\n\r" );
@@ -598,19 +601,31 @@ static void lr1110_modem_reset_event( uint16_t reset_count )
     }
 }
 
-void showLR1110_Version( const void* context) {
+void getLR1110_Version( const void* context) {
   lr1110_bootloader_version_t bootloader_version;
 
   if (lr1110_bootloader_get_version(context, &bootloader_version) == LR1110_STATUS_OK) {
     HAL_DBG_TRACE_INFO("LR1110 bootloader hardware version: %d\r\n", bootloader_version.hw);
-    HAL_DBG_TRACE_INFO("LR1110 bootloader type: %d\r\n", bootloader_version.type);
+    switch (bootloader_version.type) {
+        case 1:
+            HAL_DBG_TRACE_INFO("LR1110 bootloader type: LR1110\r\n");
+            break;
+        case 2:
+            HAL_DBG_TRACE_INFO("LR1110 bootloader type: LR1120\r\n");
+            break;
+        case 3:
+            HAL_DBG_TRACE_INFO("LR1110 bootloader type: LR1121\r\n");
+            break;
+        default:
+            break;
+    }
     HAL_DBG_TRACE_INFO("LR1110 bootloader firmware version: %d.%d\r\n", bootloader_version.fw_major, bootloader_version.fw_minor);
   } else {
     HAL_DBG_TRACE_ERROR("Failed to get LR1110 bootloader version\r\n");
   }
 }
 
-void showLR1110_Temperature( const void* context) {
+void getLR1110_Temperature( const void* context) {
   uint16_t temperature;
 
   if (lr1110_bootloader_get_temperature(context, &temperature) == LR1110_STATUS_OK) {
