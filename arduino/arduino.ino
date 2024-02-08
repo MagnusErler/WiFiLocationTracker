@@ -36,6 +36,7 @@ void setup() {
 
   resetLR1110();
   
+  Serial.println("Press enter in the terminal to continue...");
 }
 
 void loop() {
