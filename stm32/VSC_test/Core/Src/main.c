@@ -138,6 +138,52 @@ static void resetLR1110();
  */
 static void setupTCXO( const void* context );
 
+/*!
+ * @brief Turn on LED
+ *
+ * @param [in] LED_GPIO_Port
+ * @param [in] LED_Pin
+ */
+static void turnOnLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin);
+
+/*!
+ * @brief Turn off LED
+ *
+ * @param [in] LED_GPIO_Port
+ * @param [in] LED_Pin
+ */
+static void turnOffLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin);
+
+/*!
+ * @brief Toggle LED
+ *
+ * @param [in] LED_GPIO_Port
+ * @param [in] LED_Pin
+ */
+static void toggleLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin);
+
+/*!
+ * @brief Blink LED
+ *
+ * @param [in] LED_GPIO_Port
+ * @param [in] LED_Pin
+ * @param [in] period
+ * @param [in] count
+ * @param [in] start
+ */
+static void blinkLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin, uint32_t period, uint8_t count, bool start);
+
+/*!
+ * @brief Blink all LED
+ *
+ * @param [in] LED_GPIO_Port
+ * @param [in] LED_Pin
+ * @param [in] period
+ * @param [in] count
+ * @param [in] start
+ */
+static void blinkAllLED(uint32_t period, uint8_t count, bool start);
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -210,16 +256,11 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   hal_uart_init( HAL_PRINTF_UART_ID, UART_TX, UART_RX );
-  //hal_spi_init( HAL_RADIO_SPI_ID, RADIO_MOSI, RADIO_MISO, RADIO_SCLK );
 
   HAL_DBG_TRACE_MSG("-----------------------------\r\n\r\n");
   resetLR1110();
 
-  HAL_DBG_TRACE_INFO("Initializing LEDs... ");
-  leds_init( );
-  HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
-
-  leds_blink( LED_ALL_MASK, 100, 5, true );
+  blinkAllLED( 100, 5, true );
 
   setupTCXO(lr1110_context);
 
@@ -290,8 +331,11 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1) {
 
-    lr1110_modem_board_led_set( (1 << RX_LED_Pin), 1 );
-    HAL_GPIO_TogglePin(TX_LED_GPIO_Port, TX_LED_Pin);
+    //lr1110_modem_board_led_set( (1 << RX_LED_Pin), 1 );
+
+    turnOnLED(RX_LED_GPIO_Port, RX_LED_Pin);
+    toggleLED(TX_LED_GPIO_Port, TX_LED_Pin);
+
 
     HAL_DBG_TRACE_PRINTF("a = %d\r\n", a++);
 
@@ -621,8 +665,9 @@ static void MX_GPIO_Init(void)
  * --- PRIVATE FUNCTIONS DEFINITION --------------------------------------------
  */
 
-static void lr1110_modem_reset_event( uint16_t reset_count )
-{
+
+
+static void lr1110_modem_reset_event( uint16_t reset_count ) {
     HAL_DBG_TRACE_INFO( "###### ===== LR1110 MODEM-E RESET %lu ==== ######\r\n\r\n", reset_count );
 
     if( lr1110_modem_board_is_ready( ) == true )
@@ -634,6 +679,42 @@ static void lr1110_modem_reset_event( uint16_t reset_count )
     {
         lr1110_modem_board_set_ready( true );
     }
+}
+
+static void turnOnLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin) {
+  HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
+}
+
+static void turnOffLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin) {
+  HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET);
+}
+
+static void toggleLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin) {
+  HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+}
+
+static void blinkLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin, uint32_t period, uint8_t count, bool start) {
+  if (start) {
+    for (uint8_t i = 0; i < count; i++) {
+      turnOnLED(LED_GPIO_Port, LED_Pin);
+      HAL_Delay(period);
+      turnOffLED(LED_GPIO_Port, LED_Pin);
+      HAL_Delay(period);
+    }
+  }
+}
+
+static void blinkAllLED(uint32_t period, uint8_t count, bool start) {
+  if (start) {
+    for (uint8_t i = 0; i < count; i++) {
+      turnOnLED(RX_LED_GPIO_Port, RX_LED_Pin);
+      turnOnLED(TX_LED_GPIO_Port, TX_LED_Pin);
+      HAL_Delay(period);
+      turnOffLED(RX_LED_GPIO_Port, RX_LED_Pin);
+      turnOffLED(TX_LED_GPIO_Port, TX_LED_Pin);
+      HAL_Delay(period);
+    }
+  }
 }
 
 void getLR1110_Version( const void* context ) {
