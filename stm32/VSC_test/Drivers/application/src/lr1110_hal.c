@@ -75,7 +75,7 @@ lr1110_hal_status_t lr1110_hal_read( const void* radio, const uint8_t* cbuffer, 
     /* 2nd SPI transaction */
     system_gpio_set_pin_state( radio_local->nss, SYSTEM_GPIO_PIN_STATE_LOW );
     system_spi_write( radio_local->spi, &dummy_byte, 1 );
-    system_spi_read_with_dummy_byte( radio_local->spi, rbuffer, rbuffer_length, LR1110_NOP );
+    system_spi_read_with_dummy_byte( radio_local->spi, rbuffer, rbuffer_length, LR1110_NOP );       //problem here
     system_gpio_set_pin_state( radio_local->nss, SYSTEM_GPIO_PIN_STATE_HIGH );
 
     return LR1110_HAL_STATUS_OK;

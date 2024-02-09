@@ -217,11 +217,9 @@ gnss_scan_result_t gnss_scan_execute( const void* context, const gnss_settings_t
     /* Start the timeout timer */
     timer_start( &gnss_scan_timeout_timer );
 
-    while( ( gnss_scan_done != true ) && ( gnss_scan_timeout != true ) )
-    {
+    while( ( gnss_scan_done != true ) && ( gnss_scan_timeout != true ) ) {
         /* Process Event */
-        if( ( ( radio_t* ) context )->event.callback != NULL )
-        {
+        if( ( ( radio_t* ) context )->event.callback != NULL ) {
             lr1110_modem_event_process( context );
         }
 

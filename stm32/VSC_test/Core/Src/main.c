@@ -27,7 +27,7 @@
 #include "lr1110_modem_board.h"
 #include "system.h"
 
-#include <stdlib.h>
+#include <stdlib.h>   // used for malloc function
 
 #include "wifi_scan.h"
 #include "gnss_scan.h"
@@ -205,9 +205,9 @@ int main(void)
   // static wifi_scan_all_results_t capture_result;
 
   /* GNSS settings */
-  // gnss_settings_t               gnss_settings;
-  // uint32_t                      unix_time = 0;
-  // gnss_scan_single_result_t     capture_result;
+  gnss_settings_t               gnss_settings;
+  uint32_t                      unix_time = 0;
+  gnss_scan_single_result_t     capture_result;
 
   int a = 0;
 
@@ -263,14 +263,13 @@ int main(void)
   // }
 
   /* Init LR1110 modem-e event for GNSS*/
-  // memset( &lr1110_modem_event_callback, 0, sizeof( lr1110_modem_event_callback ) );
-  // lr1110_modem_event_callback.gnss_scan_done = lr1110_modem_gnss_scan_done;
-  // lr1110_modem_event_callback.reset          = lr1110_modem_reset_event;
-  // modem_response_code                        = lr1110_modem_board_init( lr1110_context, &lr1110_modem_event_callback );
-  // if( modem_response_code != LR1110_MODEM_RESPONSE_CODE_OK )
-  // {
-  //     HAL_DBG_TRACE_ERROR( "lr1110_modem_board_init failed (%d)\r\n", modem_response_code );
-  // }
+  memset( &lr1110_modem_event_callback, 0, sizeof( lr1110_modem_event_callback ) );
+  lr1110_modem_event_callback.gnss_scan_done = lr1110_modem_gnss_scan_done;
+  lr1110_modem_event_callback.reset          = lr1110_modem_reset_event;
+  modem_response_code                        = lr1110_modem_board_init( lr1110_context, &lr1110_modem_event_callback );
+  if( modem_response_code != LR1110_MODEM_RESPONSE_CODE_OK ) {
+      HAL_DBG_TRACE_ERROR( "lr1110_modem_board_init failed (%d)\r\n", modem_response_code );
+  }
 
   // /* Wi-Fi Parameters */
   // wifi_settings.enabled       = true;
@@ -283,34 +282,33 @@ int main(void)
   // wifi_settings.result_format = LR1110_MODEM_WIFI_RESULT_FORMAT_BASIC_MAC_TYPE_CHANNEL;
 
   /* GNSS Parameters */
-  // memset( &gnss_settings, 0, sizeof( gnss_settings ) );
-  // gnss_settings.enabled              = true;
-  // gnss_settings.constellation_to_use = ( LR1110_MODEM_GNSS_GPS_MASK | LR1110_MODEM_GNSS_BEIDOU_MASK );
-  // gnss_settings.scan_type            = ASSISTED_MODE;
-  // gnss_settings.search_mode          = LR1110_MODEM_GNSS_OPTION_BEST_EFFORT;
+  memset( &gnss_settings, 0, sizeof( gnss_settings ) );
+  gnss_settings.enabled              = true;
+  gnss_settings.constellation_to_use = ( LR1110_MODEM_GNSS_GPS_MASK | LR1110_MODEM_GNSS_BEIDOU_MASK );
+  gnss_settings.scan_type            = ASSISTED_MODE;
+  gnss_settings.search_mode          = LR1110_MODEM_GNSS_OPTION_BEST_EFFORT;
 
-  // if( gnss_settings.scan_type == ASSISTED_MODE )
-  // {
-  //     /* Set approximate position for assisted mode */
-  //     gnss_settings.assistance_position.latitude  = 55.867;
-  //     gnss_settings.assistance_position.longitude = 12.386;
+  if( gnss_settings.scan_type == ASSISTED_MODE )
+  {
+      /* Set approximate position for assisted mode */
+      gnss_settings.assistance_position.latitude  = 55.867;
+      gnss_settings.assistance_position.longitude = 12.386;
 
-  //     modem_response_code = lr1110_modem_gnss_set_assistance_position( lr1110_context, &gnss_settings.assistance_position );
-  //     if( modem_response_code != LR1110_MODEM_RESPONSE_CODE_OK )
-  //     {
-  //         HAL_DBG_TRACE_ERROR( "lr1110_modem_gnss_set_assistance_position failed (%d)\r\n", modem_response_code );
-  //     }
+      modem_response_code = lr1110_modem_gnss_set_assistance_position( lr1110_context, &gnss_settings.assistance_position );
+      if( modem_response_code != LR1110_MODEM_RESPONSE_CODE_OK )
+      {
+          HAL_DBG_TRACE_ERROR( "lr1110_modem_gnss_set_assistance_position failed (%d)\r\n", modem_response_code );
+      }
 
-  //     /* Get Unix time from user */
-  //     unix_time = 1706706638;
+      /* Get Unix time from user */
+      unix_time = 1707491137;
 
-  //     modem_response_code =
-  //         lr1110_modem_set_gps_time( lr1110_context, unix_time - GNSS_EPOCH_SECONDS + GNSS_LEAP_SECONDS_OFFSET );
-  //     if( modem_response_code != LR1110_MODEM_RESPONSE_CODE_OK )
-  //     {
-  //         HAL_DBG_TRACE_ERROR( "lr1110_modem_set_gps_time failed (%d)\r\n", modem_response_code );
-  //     }
-  // }
+      modem_response_code = lr1110_modem_set_gps_time( lr1110_context, unix_time - GNSS_EPOCH_SECONDS + GNSS_LEAP_SECONDS_OFFSET );
+      if( modem_response_code != LR1110_MODEM_RESPONSE_CODE_OK )
+      {
+          HAL_DBG_TRACE_ERROR( "lr1110_modem_set_gps_time failed (%d)\r\n", modem_response_code );
+      }
+  }
 
   /* USER CODE END 2 */
 

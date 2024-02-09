@@ -168,7 +168,7 @@ lr1110_modem_response_code_t lr1110_modem_board_init( const void* context, lr111
     radio_event_init( event );
 
     //magnus modem_hal_status = lr1110_modem_hal_reset( context );
-    modem_hal_status = lr1110_hal_reset( context );
+    // modem_hal_status = lr1110_hal_reset( context );
 
     if( modem_hal_status != LR1110_MODEM_HAL_STATUS_OK )
     {
@@ -177,7 +177,7 @@ lr1110_modem_response_code_t lr1110_modem_board_init( const void* context, lr111
     }
 
     /* Initialize TCXO control */
-    modem_response_code |= lr1110_modem_board_init_tcxo_io( context );
+    // modem_response_code |= lr1110_modem_board_init_tcxo_io( context );
 
     /* Initialize RF switch control */
     lr1110_modem_system_rf_switch_cfg_t rf_switch_cfg;

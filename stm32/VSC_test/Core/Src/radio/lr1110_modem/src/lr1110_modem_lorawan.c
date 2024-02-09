@@ -37,6 +37,7 @@
 #include "lr1110_modem_hal.h"
 
 #include "lr1110.h" //magnus
+#include "spi.h"
 
 /*
  * -----------------------------------------------------------------------------
@@ -313,8 +314,11 @@ lr1110_modem_response_code_t lr1110_modem_get_event( const void* context, lr1110
 
         // rc = ( lr1110_modem_response_code_t ) lr1110_modem_hal_read(
         //      context, cbuffer, LR1110_MODEM_GET_EVENT_CMD_LENGTH, event_fields->buffer, event_size );
-        rc = ( lr1110_modem_response_code_t ) lr1110_hal_read(
-            context, cbuffer, LR1110_MODEM_GET_EVENT_CMD_LENGTH, event_fields->buffer, event_size );
+        // rc = ( lr1110_modem_response_code_t ) lr1110_hal_read(
+        //     context, cbuffer, LR1110_MODEM_GET_EVENT_CMD_LENGTH, event_fields->buffer, event_size );
+
+        rc = ( lr1110_modem_response_code_t ) lr1110_spi_read(
+            context, cbuffer, LR1110_MODEM_GET_EVENT_CMD_LENGTH, event_fields->buffer, event_size);
 
         event_fields->event_type          = ( lr1110_modem_lorawan_event_type_t ) event_fields->buffer[0];
         event_fields->missed_events_count = event_fields->buffer[1];
