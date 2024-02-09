@@ -199,8 +199,6 @@ int main(void)
 
   lr1110_modem_response_code_t  modem_response_code         = LR1110_MODEM_RESPONSE_CODE_OK;
   lr1110_modem_event_callback_t lr1110_modem_event_callback = { NULL };
-  lr1110_modem_version_t        modem;
-  lr1110_bootloader_chip_eui_t  chip_eui;
 
   /* Wi-Fi settings */
   // wifi_settings_t               wifi_settings;
