@@ -210,7 +210,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   hal_uart_init( HAL_PRINTF_UART_ID, UART_TX, UART_RX );
-  hal_spi_init( HAL_RADIO_SPI_ID, RADIO_MOSI, RADIO_MISO, RADIO_SCLK );
+  //hal_spi_init( HAL_RADIO_SPI_ID, RADIO_MOSI, RADIO_MISO, RADIO_SCLK );
 
   HAL_DBG_TRACE_MSG("-----------------------------\r\n\r\n");
   resetLR1110();
@@ -519,6 +519,8 @@ static void MX_SPI1_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN SPI1_Init 2 */
+
+  __HAL_SPI_ENABLE( &hspi1 );
 
   /* USER CODE END SPI1_Init 2 */
 
