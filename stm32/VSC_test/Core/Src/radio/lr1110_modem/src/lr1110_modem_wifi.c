@@ -37,6 +37,8 @@
 #include "lr1110_modem_wifi.h"
 #include "lr1110_modem_hal.h"
 
+#include "spi.h"
+
 /*
  * -----------------------------------------------------------------------------
  * --- PRIVATE MACROS-----------------------------------------------------------
@@ -274,8 +276,10 @@ lr1110_modem_response_code_t lr1110_modem_wifi_search_country_code(
         ( uint8_t )( abort_on_timeout ? 1 : 0 )
     };
 
-    return ( lr1110_modem_response_code_t ) lr1110_modem_hal_write( context, cbuffer,
-                                                                    LR1110_WIFI_SEARCH_COUNTRY_CODE_CMD_LENGTH, 0, 0 );
+    // return ( lr1110_modem_response_code_t ) lr1110_modem_hal_write( context, cbuffer,
+    //                                                                 LR1110_WIFI_SEARCH_COUNTRY_CODE_CMD_LENGTH, 0, 0 );
+    return ( lr1110_modem_response_code_t ) lr1110_hal_write( context, cbuffer,
+                                                                    LR1110_WIFI_RESET_CUMUL_TIMING_CMD_LENGTH, 0, 0 );
 }
 
 lr1110_modem_response_code_t lr1110_modem_wifi_search_country_code_time_limit(

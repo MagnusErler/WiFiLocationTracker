@@ -293,7 +293,7 @@ gnss_scan_result_t gnss_scan_execute( const void* context, const gnss_settings_t
             /* go in low power */
             if( lr1110_modem_board_read_event_line( context ) == false )
             {
-                hal_mcu_low_power_handler( );
+                //hal_mcu_low_power_handler( );
             }
             break;
         }

@@ -39,6 +39,8 @@
 
 #include "lr1110.h" //magnus
 
+#include "spi.h"
+
 /*
  * -----------------------------------------------------------------------------
  * --- PRIVATE MACROS-----------------------------------------------------------
@@ -359,9 +361,16 @@ lr1110_modem_response_code_t lr1110_modem_gnss_read_firmware_version( const void
 
     uint8_t rbuffer[LR1110_MODEM_GNSS_READ_FIRMWARE_VERSION_RBUFFER_LENGTH] = { 0 };
 
-    rc = ( lr1110_modem_response_code_t ) lr1110_modem_hal_read(
-        context, cbuffer, LR1110_MODEM_GNSS_READ_FW_VERSION_CMD_LENGTH, rbuffer,
+    // rc = ( lr1110_modem_response_code_t ) lr1110_modem_hal_read(
+    //     context, cbuffer, LR1110_MODEM_GNSS_READ_FW_VERSION_CMD_LENGTH, rbuffer,
+    //     LR1110_MODEM_GNSS_READ_FIRMWARE_VERSION_RBUFFER_LENGTH );
+    // rc = ( lr1110_modem_response_code_t ) lr1110_hal_read(
+    //     context, cbuffer, LR1110_MODEM_GNSS_READ_FW_VERSION_CMD_LENGTH, rbuffer, 
+    //     LR1110_MODEM_GNSS_READ_FIRMWARE_VERSION_RBUFFER_LENGTH );
+    rc = ( lr1110_spi_status_t) lr1110_spi_read(
+        context, cbuffer, LR1110_MODEM_GNSS_READ_FW_VERSION_CMD_LENGTH, rbuffer, 
         LR1110_MODEM_GNSS_READ_FIRMWARE_VERSION_RBUFFER_LENGTH );
+        
 
     version->gnss_firmware = rbuffer[0];
     version->gnss_almanac  = rbuffer[1];
@@ -547,7 +556,9 @@ lr1110_modem_response_code_t lr1110_modem_gnss_get_nb_detected_satellites( const
 
     //magnus return ( lr1110_modem_response_code_t ) lr1110_modem_hal_read(
     //     context, cbuffer, LR1110_MODEM_GNSS_GET_NB_SV_SATELLITES_CMD_LENGTH, nb_detected_satellites, 1 );
-    return ( lr1110_modem_response_code_t ) lr1110_hal_read(
+    // return ( lr1110_modem_response_code_t ) lr1110_hal_read(
+    //     context, cbuffer, LR1110_MODEM_GNSS_GET_NB_SV_SATELLITES_CMD_LENGTH, nb_detected_satellites, 1 );
+    return ( lr1110_spi_status_t) lr1110_spi_read(
         context, cbuffer, LR1110_MODEM_GNSS_GET_NB_SV_SATELLITES_CMD_LENGTH, nb_detected_satellites, 1 );
 }
 
@@ -656,8 +667,10 @@ lr1110_modem_response_code_t lr1110_modem_gnss_scan_autonomous( const void*     
     cbuffer[3] = gnss_result_mask;
     cbuffer[4] = nb_sat;
 
-    return ( lr1110_modem_response_code_t ) lr1110_modem_hal_write(
-        context, cbuffer, LR1110_MODEM_GNSS_SCAN_AUTONOMOUS_CMD_LENGTH, 0, 0 );
+    // return ( lr1110_modem_response_code_t ) lr1110_modem_hal_write(
+    //     context, cbuffer, LR1110_MODEM_GNSS_SCAN_AUTONOMOUS_CMD_LENGTH, 0, 0 );
+    return ( lr1110_modem_response_code_t ) lr1110_hal_write( 
+            context, cbuffer, LR1110_MODEM_GNSS_SCAN_AUTONOMOUS_CMD_LENGTH, 0, 0 );
 }
 
 lr1110_modem_response_code_t lr1110_modem_gnss_scan_assisted( const void*                           context,

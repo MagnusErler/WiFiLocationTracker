@@ -42,6 +42,8 @@
 
 #include "system_spi.h"
 
+#include "spi.h"
+
 /*
  * -----------------------------------------------------------------------------
  * --- PRIVATE MACROS-----------------------------------------------------------
@@ -246,23 +248,24 @@ lr1110_modem_hal_status_t lr1110_modem_hal_read( const void* context, const uint
         hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 0 );
 
         /* Send CMD */
-        // for( uint16_t i = 0; i < command_length; i++ )
-        // {
-        //     system_spi_write( ( ( lr1110_t* ) context )->spi_id, command[i], 1 );
-        //     //hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, command[i] );
-        // }
-        system_spi_write( ( ( lr1110_t* ) context )->spi_id, command, command_length );
+        for( uint16_t i = 0; i < command_length; i++ )
+        {
+            //hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, command[i] );
+        }
+        lr1110_spi_write( SPI1, command, 1, 1000 );
 
         /* Compute and send CRC */
         crc = lr1110_modem_compute_crc( 0xFF, command, command_length );
         /* Send CRC */
-        hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, crc );
+        //hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, crc );
+        lr1110_spi_write( SPI1, crc, sizeof(crc), 1000 );
 
         /* NSS high */
         hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 1 );
 
         /* Wait on busy pin up to 1000 ms */
-        if( lr1110_modem_hal_wait_on_busy( context, 1000 ) != LR1110_MODEM_HAL_STATUS_OK )
+        //if( lr1110_modem_hal_wait_on_busy( context, 1000 ) != LR1110_MODEM_HAL_STATUS_OK )
+        if (waitForBusyState( GPIO_PIN_RESET, 1000 ) != LR1110_MODEM_HAL_STATUS_OK)
         {
             return LR1110_MODEM_HAL_STATUS_BUSY_TIMEOUT;
         }
@@ -273,17 +276,20 @@ lr1110_modem_hal_status_t lr1110_modem_hal_read( const void* context, const uint
         hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 0 );
 
         /* read RC */
-        status = ( lr1110_modem_hal_status_t ) hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, 0 );
+        //status = ( lr1110_modem_hal_status_t ) hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, 0 );
+        status = LR1110_MODEM_HAL_STATUS_OK;
 
         if( status == LR1110_MODEM_HAL_STATUS_OK )
         {
-            for( uint16_t i = 0; i < data_length; i++ )
-            {
-                data[i] = hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, 0 );
-            }
+            // for( uint16_t i = 0; i < data_length; i++ )
+            // {
+            //     data[i] = hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, 0 );
+            // }
+            lr1110_spi_read_with_dummy_byte( ( ( radio_t* ) context )->spi, data, data_length, 0x00, 1000 );
         }
 
-        crc_received = hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, 0 );
+        //crc_received = hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, 0 );
+        lr1110_spi_read_with_dummy_byte( ( ( radio_t* ) context )->spi, crc_received, 1, 0x00, 1000 );
 
         /* NSS high */
         hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 1 );

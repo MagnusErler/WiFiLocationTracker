@@ -1308,10 +1308,11 @@ lr1110_modem_response_code_t lr1110_modem_get_event_size( const void* context, u
     cbuffer[0] = LR1110_MODEM_GROUP_ID_MODEM;
     cbuffer[1] = LR1110_MODEM_GET_EVENT_SIZE_CMD;
 
-    //magnus rc = ( lr1110_modem_response_code_t ) lr1110_modem_hal_read( context, cbuffer,
+    // rc = ( lr1110_modem_response_code_t ) lr1110_modem_hal_read( context, cbuffer,
     //                                                              LR1110_MODEM_GET_EVENT_SIZE_CMD_LENGTH, rbuffer, 2 );
-    rc = ( lr1110_modem_response_code_t ) lr1110_hal_read( context, cbuffer,
-                                                                 LR1110_MODEM_GET_EVENT_SIZE_CMD_LENGTH, rbuffer, 2 );
+    // rc = ( lr1110_modem_response_code_t ) lr1110_hal_read( context, cbuffer,
+    //                                                              LR1110_MODEM_GET_EVENT_SIZE_CMD_LENGTH, rbuffer, 2 );
+    rc = ( lr1110_spi_status_t ) lr1110_spi_read(context, cbuffer, LR1110_MODEM_GET_EVENT_SIZE_CMD_LENGTH, rbuffer, 2 );
 
     *event_size = ( ( uint16_t ) rbuffer[0] << 8 ) + ( uint16_t ) rbuffer[1];
 
