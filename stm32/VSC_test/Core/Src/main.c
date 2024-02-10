@@ -90,7 +90,7 @@ static void lr1110_reset_event( uint16_t reset_count );
  *
  * @param [in] context Radio abstraction
  */
-static void getLR1110_Version();
+static void getLR1110_Bootloader_Version();
 
 /*!
  * @brief Get LR1110 temperature
@@ -241,7 +241,8 @@ int main(void)
 
   setupTCXO(lr1110_context);
 
-  getLR1110_Version(lr1110_context);
+  getLR1110_Bootloader_Version(lr1110_context);
+  getLR1110_WiFi_Version(lr1110_context);
 
   // /* Init LR1110 modem-e event for WiFi*/
   // lr1110_modem_event_callback.wifi_scan_done = lr1110_modem_wifi_scan_done;
@@ -316,8 +317,6 @@ int main(void)
     getLR1110_Temperature(lr1110_context);
 
     //getLR1110_GNSS_Version(lr1110_context);
-
-    getLR1110_WiFi_Version(lr1110_context);
 
     // if( wifi_execute_scan( lr1110_context, &wifi_settings, &capture_result ) == WIFI_SCAN_SUCCESS ) {
     //   HAL_DBG_TRACE_MSG( "Success\n\r" );
@@ -681,7 +680,7 @@ void blinkLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin, uint32_t period, ui
   }
 }
 
-void getLR1110_Version( const void* context ) {
+void getLR1110_Bootloader_Version( const void* context ) {
   HAL_DBG_TRACE_INFO("Getting LR1110 version... ");
 
   lr1110_bootloader_version_t bootloader_version;
