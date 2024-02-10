@@ -32,6 +32,8 @@
 #include "wifi_scan.h"
 #include "gnss_scan.h"
 
+#include "constants.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -41,21 +43,6 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
-/*!
- * @brief Length of command buffer for commands that have no parameter
- */
-#define LR1110_BL_CMD_NO_PARAM_LENGTH 2
-
-/*!
- * @brief Length of command buffer for bootloader get version command
- */
-#define LR1110_BL_VERSION_CMD_LENGTH LR1110_BL_CMD_NO_PARAM_LENGTH
-
-/*!
- * @brief Length of command buffer for bootloader get temperature command
- */
-#define LR1110_BL_TEMPERATURE_CMD_LENGTH LR1110_BL_CMD_NO_PARAM_LENGTH
 
 /* USER CODE END PD */
 
@@ -74,20 +61,6 @@ SPI_HandleTypeDef hspi1;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-
-enum {
-    LR1110_BL_GET_STATUS_OC            = 0x0100,  //!< Operation code for get status command
-    LR1110_BL_GET_VERSION_OC           = 0x0101,  //!< Operation code for get version command
-    LR1110_BL_ERASE_FLASH_OC           = 0x8000,  //!< Operation code for flash erase command
-    LR1110_BL_ERASE_PAGE_OC            = 0x8001,  //!< Operation code for flash page erase command
-    LR1110_BL_WRITE_FLASH_OC           = 0x8002,  //!< Operation code for write flash command
-    LR1110_BL_WRITE_FLASH_ENCRYPTED_OC = 0x8003,  //!< Operation code for encrypted flash write command
-    LR1110_BL_GET_HASH_OC              = 0x8004,  //!< Operation code for hash getter command
-    LR1110_BL_REBOOT_OC                = 0x8005,  //!< Operation code for reboot command
-    LR1110_BL_GET_PIN_OC               = 0x800B,  //!< Operation code for PIN read command
-    LR1110_BL_GET_CHIP_EUI_OC          = 0x800C,  //!< Operation code for EUI read command
-    LR1110_BL_GET_TEMPERATURE          = 0x011A,  //!< Operation code for temperature read command
-};
 
 /*!
  * @brief Radio hardware and global parameters
@@ -110,7 +83,7 @@ static void MX_USART2_UART_Init(void);
  *
  * @param [in] reset_count reset counter from the modem
  */
-static void lr1110_modem_reset_event( uint16_t reset_count );
+static void lr1110_reset_event( uint16_t reset_count );
 
 /*!
  * @brief Get LR1110 version
@@ -125,6 +98,13 @@ static void getLR1110_Version();
  * @param [in] context Radio abstraction
  */
 static void getLR1110_Temperature( const void* context);
+
+/*!
+ * @brief Get LR1110 GNSS version
+ *
+ * @param [in] context Radio abstraction
+ */
+static void getLR1110_GNSS_Version( const void* context);
 
 /*!
  * @brief Reset LR1110
@@ -208,10 +188,11 @@ int main(void)
   gnss_settings_t               gnss_settings;
   uint32_t                      unix_time = 0;
   gnss_scan_single_result_t     capture_result;
+  
 
   int a = 0;
 
-  const void* lr1110_context = (void*) malloc(sizeof(radio_t));
+  void* lr1110_context = (void*) malloc(sizeof(radio_t));
   ((radio_t*)lr1110_context)->spi             = SPI1;
   ((radio_t*)lr1110_context)->nss.port        = GPIOA;
   ((radio_t*)lr1110_context)->nss.pin         = NSS_Pin;
@@ -242,6 +223,8 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 
+  hal_mcu_init();
+
   hal_uart_init( HAL_PRINTF_UART_ID, UART_TX, UART_RX );
 
   HAL_DBG_TRACE_MSG("-----------------------------\r\n\r\n");
@@ -265,7 +248,7 @@ int main(void)
   /* Init LR1110 modem-e event for GNSS*/
   memset( &lr1110_modem_event_callback, 0, sizeof( lr1110_modem_event_callback ) );
   lr1110_modem_event_callback.gnss_scan_done = lr1110_modem_gnss_scan_done;
-  lr1110_modem_event_callback.reset          = lr1110_modem_reset_event;
+  lr1110_modem_event_callback.reset          = lr1110_reset_event;
   modem_response_code                        = lr1110_modem_board_init( lr1110_context, &lr1110_modem_event_callback );
   if( modem_response_code != LR1110_MODEM_RESPONSE_CODE_OK ) {
       HAL_DBG_TRACE_ERROR( "lr1110_modem_board_init failed (%d)\r\n", modem_response_code );
@@ -285,7 +268,7 @@ int main(void)
   memset( &gnss_settings, 0, sizeof( gnss_settings ) );
   gnss_settings.enabled              = true;
   gnss_settings.constellation_to_use = ( LR1110_MODEM_GNSS_GPS_MASK | LR1110_MODEM_GNSS_BEIDOU_MASK );
-  gnss_settings.scan_type            = ASSISTED_MODE;
+  gnss_settings.scan_type            = AUTONOMOUS_MODE;
   gnss_settings.search_mode          = LR1110_MODEM_GNSS_OPTION_BEST_EFFORT;
 
   if( gnss_settings.scan_type == ASSISTED_MODE )
@@ -325,6 +308,8 @@ int main(void)
 
     getLR1110_Temperature(lr1110_context);
 
+    getLR1110_GNSS_Version(lr1110_context);
+
     // if( wifi_execute_scan( lr1110_context, &wifi_settings, &capture_result ) == WIFI_SCAN_SUCCESS ) {
     //   HAL_DBG_TRACE_MSG( "Success\n\r" );
     //   HAL_DBG_TRACE_MSG("capture_result = {\n\r");
@@ -353,7 +338,6 @@ int main(void)
     // } else if (scan_result == GNSS_SCAN_FAIL) {
     //   HAL_DBG_TRACE_ERROR( "gnss_scan_execute failed (%d)\r\n", scan_result );
     // }
-
     
 
     /* USER CODE END WHILE */
@@ -651,7 +635,7 @@ static void MX_GPIO_Init(void)
 
 
 
-static void lr1110_modem_reset_event( uint16_t reset_count ) {
+static void lr1110_reset_event( uint16_t reset_count ) {
     HAL_DBG_TRACE_INFO( "###### ===== LR1110 MODEM-E RESET %lu ==== ######\r\n\r\n", reset_count );
 
     if( lr1110_modem_board_is_ready( ) == true )
@@ -693,8 +677,8 @@ void getLR1110_Version( const void* context ) {
 
   lr1110_bootloader_version_t bootloader_version;
 
-  uint8_t         cbuffer[LR1110_BL_VERSION_CMD_LENGTH];
-  uint8_t         rbuffer[LR1110_BL_VERSION_LENGTH] = { 0x00 };
+  uint8_t cbuffer[LR1110_BL_VERSION_CMD_LENGTH];
+  uint8_t rbuffer[LR1110_BL_VERSION_LENGTH] = { 0x00 };
 
   cbuffer[0] = ( uint8_t )( LR1110_BL_GET_VERSION_OC >> 8 );
   cbuffer[1] = ( uint8_t )( LR1110_BL_GET_VERSION_OC >> 0 );
@@ -725,9 +709,8 @@ void getLR1110_Version( const void* context ) {
 void getLR1110_Temperature( const void* context ) {
   HAL_DBG_TRACE_INFO("Getting LR1110 temperature... ");
 
-  uint8_t         cbuffer[LR1110_BL_TEMPERATURE_CMD_LENGTH];
-  uint8_t         rbuffer[LR1110_BL_TEMPERATURE_LENGTH] = { 0x00 };
-  lr1110_status_t status                                = LR1110_STATUS_ERROR;
+  uint8_t cbuffer[LR1110_BL_TEMPERATURE_CMD_LENGTH];
+  uint8_t rbuffer[LR1110_BL_TEMPERATURE_LENGTH] = { 0x00 };
 
   cbuffer[0] = ( uint8_t )( LR1110_BL_GET_TEMPERATURE >> 8 );
   cbuffer[1] = ( uint8_t )( LR1110_BL_GET_TEMPERATURE >> 0 );
@@ -744,6 +727,25 @@ void getLR1110_Temperature( const void* context ) {
   }
 }
 
+void getLR1110_GNSS_Version( const void* context ) {
+  HAL_DBG_TRACE_INFO("Getting LR1110 GNSS version... ");
+
+  uint8_t cbuffer[LR1110_GNSS_VERSION_CMD_LENGTH];
+  uint8_t rbuffer[LR1110_GNSS_VERSION_LENGTH] = { 0 };
+
+  cbuffer[0] = LR1110_GROUP_ID_GNSS;
+  cbuffer[1] = LR1110_GNSS_READ_FW_VERSION_CMD;
+
+  if (lr1110_spi_read( context, cbuffer, LR1110_GNSS_VERSION_CMD_LENGTH, rbuffer, LR1110_GNSS_VERSION_LENGTH ) == LR1110_STATUS_OK) {
+    HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+
+    HAL_DBG_TRACE_INFO("GNSS firmware = %d\n\r", rbuffer[0]);
+    HAL_DBG_TRACE_INFO("GNSS almanac = %d\n\r", rbuffer[1]);
+  } else {
+    HAL_DBG_TRACE_ERROR("Failed to get LR1110 GNSS version\r\n");
+  }
+}
+
 void resetLR1110() {
   HAL_DBG_TRACE_INFO("Resetting LR1110... ");
   HAL_GPIO_WritePin(RESET_GPIO_Port, RESET_Pin, GPIO_PIN_RESET);
@@ -753,7 +755,7 @@ void resetLR1110() {
 }
 
 void setupTCXO( const void* context ) {
-    HAL_DBG_TRACE_INFO( "Setting up TCXO..." );
+    HAL_DBG_TRACE_INFO( "Setting up TCXO... " );
     lr1110_modem_system_set_tcxo_mode( context, LR1110_MODEM_SYSTEM_TCXO_CTRL_1_8V,
                                               ( lr1110_modem_board_get_tcxo_wakeup_time( ) * 1000 ) / 30.52 );
     HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);

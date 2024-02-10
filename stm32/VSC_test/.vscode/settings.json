@@ -41,6 +41,8 @@
     "stdint.h": "c",
     "spi.h": "c",
     "stdlib.h": "c",
-    "_locale.h": "c"
+    "_locale.h": "c",
+    "lr1110_bootloader.h": "c",
+    "lr1110_bootloader_types.h": "c"
   }
 }
