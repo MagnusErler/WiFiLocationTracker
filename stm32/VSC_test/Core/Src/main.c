@@ -107,6 +107,13 @@ static void getLR1110_Temperature( const void* context);
 static void getLR1110_GNSS_Version( const void* context);
 
 /*!
+ * @brief Get LR1110 Wi-Fi version
+ *
+ * @param [in] context Radio abstraction
+ */
+static void getLR1110_WiFi_Version( const void* context);
+
+/*!
  * @brief Reset LR1110
  */
 static void resetLR1110();
@@ -308,7 +315,9 @@ int main(void)
 
     getLR1110_Temperature(lr1110_context);
 
-    getLR1110_GNSS_Version(lr1110_context);
+    //getLR1110_GNSS_Version(lr1110_context);
+
+    getLR1110_WiFi_Version(lr1110_context);
 
     // if( wifi_execute_scan( lr1110_context, &wifi_settings, &capture_result ) == WIFI_SCAN_SUCCESS ) {
     //   HAL_DBG_TRACE_MSG( "Success\n\r" );
@@ -678,7 +687,7 @@ void getLR1110_Version( const void* context ) {
   lr1110_bootloader_version_t bootloader_version;
 
   uint8_t cbuffer[LR1110_BL_VERSION_CMD_LENGTH];
-  uint8_t rbuffer[LR1110_BL_VERSION_LENGTH] = { 0x00 };
+  uint8_t rbuffer[LR1110_BL_VERSION_LENGTH] = { 0 };
 
   cbuffer[0] = ( uint8_t )( LR1110_BL_GET_VERSION_OC >> 8 );
   cbuffer[1] = ( uint8_t )( LR1110_BL_GET_VERSION_OC >> 0 );
@@ -710,7 +719,7 @@ void getLR1110_Temperature( const void* context ) {
   HAL_DBG_TRACE_INFO("Getting LR1110 temperature... ");
 
   uint8_t cbuffer[LR1110_BL_TEMPERATURE_CMD_LENGTH];
-  uint8_t rbuffer[LR1110_BL_TEMPERATURE_LENGTH] = { 0x00 };
+  uint8_t rbuffer[LR1110_BL_TEMPERATURE_LENGTH] = { 0 };
 
   cbuffer[0] = ( uint8_t )( LR1110_BL_GET_TEMPERATURE >> 8 );
   cbuffer[1] = ( uint8_t )( LR1110_BL_GET_TEMPERATURE >> 0 );
@@ -728,7 +737,7 @@ void getLR1110_Temperature( const void* context ) {
 }
 
 void getLR1110_GNSS_Version( const void* context ) {
-  HAL_DBG_TRACE_INFO("Getting LR1110 GNSS version... ");
+  HAL_DBG_TRACE_INFO("Getting GNSS version... ");
 
   uint8_t cbuffer[LR1110_GNSS_VERSION_CMD_LENGTH];
   uint8_t rbuffer[LR1110_GNSS_VERSION_LENGTH] = { 0 };
@@ -739,10 +748,28 @@ void getLR1110_GNSS_Version( const void* context ) {
   if (lr1110_spi_read( context, cbuffer, LR1110_GNSS_VERSION_CMD_LENGTH, rbuffer, LR1110_GNSS_VERSION_LENGTH ) == LR1110_STATUS_OK) {
     HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
 
-    HAL_DBG_TRACE_INFO("GNSS firmware = %d\n\r", rbuffer[0]);
-    HAL_DBG_TRACE_INFO("GNSS almanac = %d\n\r", rbuffer[1]);
+    HAL_DBG_TRACE_INFO("GNSS firmware version = %d\n\r", rbuffer[0]);
+    HAL_DBG_TRACE_INFO("GNSS almanac version = %d\n\r", rbuffer[1]);
   } else {
-    HAL_DBG_TRACE_ERROR("Failed to get LR1110 GNSS version\r\n");
+    HAL_DBG_TRACE_ERROR("Failed to get GNSS version\r\n");
+  }
+}
+
+void getLR1110_WiFi_Version( const void* context ) {
+  HAL_DBG_TRACE_INFO("Getting Wi-Fi version... ");
+
+  uint8_t cbuffer[LR1110_WIFI_VERSION_CMD_LENGTH];
+  uint8_t rbuffer[LR1110_WIFI_VERSION_LENGTH] = { 0 };
+
+  cbuffer[0] = LR1110_GROUP_ID_WIFI;
+  cbuffer[1] = LR1110_WIFI_GET_FIRMWARE_WIFI_VERSION_CMD;
+
+  if (lr1110_spi_read( context, cbuffer, LR1110_WIFI_VERSION_CMD_LENGTH, rbuffer, LR1110_WIFI_VERSION_LENGTH ) == LR1110_STATUS_OK) {
+    HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+
+    HAL_DBG_TRACE_INFO("Wi-Fi firmware version: %d.%d\r\n", rbuffer[0], rbuffer[1]);
+  } else {
+    HAL_DBG_TRACE_ERROR("Failed to get Wi-Fi version\r\n");
   }
 }
 

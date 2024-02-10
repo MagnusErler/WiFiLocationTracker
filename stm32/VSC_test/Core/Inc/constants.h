@@ -16,7 +16,7 @@
 #define LR1110_BL_VERSION_CMD_LENGTH LR1110_CMD_NO_PARAM_LENGTH
 
 /*!
- * @brief Length in byte of the LR1110 version blob
+ * @brief Length of return buffer for LR1110 version
  */
 #define LR1110_BL_VERSION_LENGTH LR1110_NO_PARAM_LENGTH + 2
 
@@ -26,19 +26,29 @@
 #define LR1110_BL_TEMPERATURE_CMD_LENGTH LR1110_CMD_NO_PARAM_LENGTH
 
 /*!
- * @brief Length in byte of the LR1110 temperature blob
+ * @brief Length of return buffer for LR1110 temperature
  */
 #define LR1110_BL_TEMPERATURE_LENGTH LR1110_NO_PARAM_LENGTH
 
 /*!
- * @brief Length of command buffer read GNSS firmware version
+ * @brief Length of command buffer for GNSS version
  */
 #define LR1110_GNSS_VERSION_CMD_LENGTH LR1110_CMD_NO_PARAM_LENGTH
 
 /*!
- * @brief Response buffer size for command Read firwmare version
+ * @brief Length of return buffer for GNSS version
  */
 #define LR1110_GNSS_VERSION_LENGTH LR1110_NO_PARAM_LENGTH
+
+/*!
+ * @brief Length of command buffer for WiFi version
+ */
+#define LR1110_WIFI_VERSION_CMD_LENGTH LR1110_CMD_NO_PARAM_LENGTH
+
+/*!
+ * @brief Length of return buffer for WiFi version
+ */
+#define LR1110_WIFI_VERSION_LENGTH LR1110_NO_PARAM_LENGTH
 
 
 
@@ -58,6 +68,18 @@ enum {
     LR1110_BL_GET_CHIP_EUI_OC          = 0x800C,  //!< Operation code for EUI read command
     LR1110_BL_GET_TEMPERATURE          = 0x011A,  //!< Operation code for temperature read command
 };
+
+typedef enum
+{
+    LR1110_WIFI_RESET_CUMUL_TIMING_PHASE_CMD       = 0x07,
+    LR1110_WIFI_READ_CUMUL_TIMING_PHASE_CMD        = 0x08,
+    LR1110_WIFI_CONFIG_TIMESTAMP_AP_PHONE_CMD      = 0x0B,
+    LR1110_WIFI_GET_FIRMWARE_WIFI_VERSION_CMD      = 0x20,
+    LR1110_WIFI_PASSIVE_SCAN_CMD                   = 0x30,
+    LR1110_WIFI_PASSIVE_SCAN_TIME_LIMIT_CMD        = 0x31,
+    LR1110_WIFI_SEARCH_COUNTRY_CODE_CMD            = 0x32,
+    LR1110_WIFI_SEARCH_COUNTRY_CODE_TIME_LIMIT_CMD = 0x33,
+} lr1110_api_command_wifi_t;
 
 /*!
  * @brief Operation code for GNSS commands
@@ -94,3 +116,4 @@ typedef enum
     LR1110_GROUP_ID_GNSS   = 0x04,  //!< Group ID for GNSS commands
     LR1110_GROUP_ID_MODEM  = 0x06,  //!< Group ID for modem commands
 } lr1110_api_group_id_t;
+
