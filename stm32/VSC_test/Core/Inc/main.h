@@ -54,6 +54,8 @@ extern "C" {
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
 
+/* USER CODE BEGIN EFP */
+
 /*!
  * @brief Turn on LED
  *
@@ -88,8 +90,6 @@ void toggleLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin);
  * @param [in] start
  */
 void blinkLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin, uint32_t period, uint8_t count, bool start);
-
-/* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */
 

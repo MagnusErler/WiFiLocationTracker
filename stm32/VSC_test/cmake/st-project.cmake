@@ -104,7 +104,6 @@ target_sources(
     ${TARGET_NAME} PRIVATE
     "Core/Src/boards/lr1110_modem_board.c"
     "Core/Src/main.c"
-    "Core/Src/spi.c"
     "Core/Src/radio/gnss/gnss_scan.c"
     "Core/Src/radio/lr1110_modem/src/lr1110_bootloader.c"
     "Core/Src/radio/lr1110_modem/src/lr1110_modem_gnss.c"
@@ -123,6 +122,7 @@ target_sources(
     "Core/Src/smtc_hal/smtc_hal_tmr.c"
     "Core/Src/smtc_hal/smtc_hal_uart.c"
     "Core/Src/smtc_hal/smtc_utilities.c"
+    "Core/Src/spi.c"
     "Core/Src/stm32l4xx_hal_msp.c"
     "Core/Src/stm32l4xx_it.c"
     "Core/Src/syscalls.c"

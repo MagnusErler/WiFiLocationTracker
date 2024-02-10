@@ -279,15 +279,13 @@ int main(void)
   gnss_settings.scan_type            = AUTONOMOUS_MODE;
   gnss_settings.search_mode          = LR1110_MODEM_GNSS_OPTION_BEST_EFFORT;
 
-  if( gnss_settings.scan_type == ASSISTED_MODE )
-  {
+  if( gnss_settings.scan_type == ASSISTED_MODE ) {
       /* Set approximate position for assisted mode */
       gnss_settings.assistance_position.latitude  = 55.867;
       gnss_settings.assistance_position.longitude = 12.386;
 
       modem_response_code = lr1110_modem_gnss_set_assistance_position( lr1110_context, &gnss_settings.assistance_position );
-      if( modem_response_code != LR1110_MODEM_RESPONSE_CODE_OK )
-      {
+      if( modem_response_code != LR1110_MODEM_RESPONSE_CODE_OK ) {
           HAL_DBG_TRACE_ERROR( "lr1110_modem_gnss_set_assistance_position failed (%d)\r\n", modem_response_code );
       }
 
@@ -295,8 +293,7 @@ int main(void)
       unix_time = 1707491137;
 
       modem_response_code = lr1110_modem_set_gps_time( lr1110_context, unix_time - GNSS_EPOCH_SECONDS + GNSS_LEAP_SECONDS_OFFSET );
-      if( modem_response_code != LR1110_MODEM_RESPONSE_CODE_OK )
-      {
+      if( modem_response_code != LR1110_MODEM_RESPONSE_CODE_OK ) {
           HAL_DBG_TRACE_ERROR( "lr1110_modem_set_gps_time failed (%d)\r\n", modem_response_code );
       }
   }
@@ -316,7 +313,7 @@ int main(void)
 
     getLR1110_Temperature(lr1110_context);
 
-    //getLR1110_GNSS_Version(lr1110_context);
+    getLR1110_GNSS_Version(lr1110_context);
 
     // if( wifi_execute_scan( lr1110_context, &wifi_settings, &capture_result ) == WIFI_SCAN_SUCCESS ) {
     //   HAL_DBG_TRACE_MSG( "Success\n\r" );
@@ -808,9 +805,7 @@ void Error_Handler(void)
   /* Restart system */
   NVIC_SystemReset( );
 
-  while (1)
-  {
-  }
+  while (1) {  }
   /* USER CODE END Error_Handler_Debug */
 }
 
