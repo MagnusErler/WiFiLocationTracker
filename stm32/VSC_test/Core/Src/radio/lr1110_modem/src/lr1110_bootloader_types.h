@@ -54,15 +54,15 @@ extern "C" {
  * --- PUBLIC CONSTANTS --------------------------------------------------------
  */
 
-/*!
- * @brief Length in byte of the LR1110 version blob
- */
-#define LR1110_BL_VERSION_LENGTH ( 4 )
+// /*!
+//  * @brief Length in byte of the LR1110 version blob
+//  */
+// #define LR1110_BL_VERSION_LENGTH ( 4 )
 
-/*!
- * @brief Length in byte of the LR1110 temperature blob
- */
-#define LR1110_BL_TEMPERATURE_LENGTH ( 2 )
+// /*!
+//  * @brief Length in byte of the LR1110 temperature blob
+//  */
+// #define LR1110_BL_TEMPERATURE_LENGTH ( 2 )
 
 /*!
  * @brief Length in byte of the LR1110 status blob

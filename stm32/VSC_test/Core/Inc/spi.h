@@ -10,6 +10,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#include "configuration.h"
+
 /*
  * -----------------------------------------------------------------------------
  * --- PUBLIC MACROS -----------------------------------------------------------
@@ -63,11 +65,43 @@ typedef enum lr1110_gpio_status_e
  * ============================================================================
  */
 
+/*!
+ * @brief Wait for a GPIO pin to reach a specific state
+ *
+ * @param [in] gpio             GPIO pin to be monitored
+ * @param [in] state            Expected state of the GPIO pin
+ * @param [in] timeout_ms       Timeout in milliseconds
+ * 
+ * @returns Operation status
+ */
+lr1110_gpio_status_t waitForBusyState( GPIO_PinState state, uint32_t timeout_ms );
+
+/*!
+ * @brief Wait for a GPIO pin to reach a specific state
+ *
+ * @param [in] spi              SPI peripheral to be used
+ * @param [in] buffer           Pointer to the buffer to be transmitted
+ * @param [in] length           Buffer size to be transmitted
+ * @param [in] timeout_ms       Timeout in milliseconds
+ * 
+ * @returns Operation status
+ */
+lr1110_spi_status_t lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* buffer, uint16_t length, uint32_t timeout_ms );
+
+/*!
+ * @brief Wait for a GPIO pin to reach a specific state
+ *
+ * @param [in] spi              SPI peripheral to be used
+ * @param [in] buffer           Pointer to the buffer to be transmitted
+ * @param [in] length           Buffer size to be transmitted
+ * @param [in] timeout_ms       Timeout in milliseconds
+ * 
+ * @returns Operation status
+ */
+lr1110_spi_status_t lr1110_spi_read_with_dummy_byte( SPI_TypeDef* spi, uint8_t* buffer, uint16_t length, uint8_t dummy_byte, uint32_t timeout_ms );
 
 /*!
  * @brief Radio data transfer - read
- *
- * @remark Must be implemented by the upper layer
  *
  * @param [in] context          Radio implementation parameters
  * @param [in] command          Pointer to the buffer to be transmitted

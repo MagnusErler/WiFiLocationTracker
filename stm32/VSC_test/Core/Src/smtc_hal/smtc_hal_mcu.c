@@ -211,38 +211,38 @@ void hal_mcu_deinit_periph( void )
 #endif
 }
 
-void hal_mcu_init( const void* context )
+void hal_mcu_init( void )
 {
     /* Initialize MCU HAL library */
     // HAL_Init( );
 
-    // /* Initialize clocks */
-    // hal_mcu_system_clock_config( );
+    /* Initialize clocks */
+    hal_mcu_system_clock_config( );
 
-    // /* Initialize GPIOs */
-    // hal_mcu_gpio_init( );
+    /* Initialize GPIOs */
+    hal_mcu_gpio_init( );
 
-    // /* Initialize low power timer */
-    // hal_tmr_init( );
+    /* Initialize low power timer */
+    hal_tmr_init( );
 
-    // /* Initialize the user flash */
-    // flash_init( );
+    /* Initialize the user flash */
+    flash_init( );
 
-    // /* Init power voltage voltage detector */
-    // hal_mcu_pvd_config( );
+    /* Init power voltage voltage detector */
+    hal_mcu_pvd_config( );
 
     /* Initialize UART */
-#if( HAL_USE_PRINTF_UART == HAL_FEATURE_ON )
-    hal_uart_init( HAL_PRINTF_UART_ID, UART_TX, UART_RX );
-#endif
-    /* Initialize SPI */
-    hal_spi_init( HAL_RADIO_SPI_ID, RADIO_MOSI, RADIO_MISO, RADIO_SCLK );
-    lr1110_modem_board_init_io_context( &lr1110);
-    /* Init LR1110 IO */
-    lr1110_modem_board_init_io( &lr1110 );
+// #if( HAL_USE_PRINTF_UART == HAL_FEATURE_ON )
+//     hal_uart_init( HAL_PRINTF_UART_ID, UART_TX, UART_RX );
+// #endif
+//     /* Initialize SPI */
+//     hal_spi_init( HAL_RADIO_SPI_ID, RADIO_MOSI, RADIO_MISO, RADIO_SCLK );
+//     lr1110_modem_board_init_io_context( &lr1110);
+//     /* Init LR1110 IO */
+//     lr1110_modem_board_init_io( &lr1110 );
 
     /* Initialize RTC */
-    //hal_rtc_init( );
+    hal_rtc_init( );
 
     /* Initialize I2C */
     //magnus hal_i2c_init( HAL_I2C_ID, I2C_SDA, I2C_SCL );

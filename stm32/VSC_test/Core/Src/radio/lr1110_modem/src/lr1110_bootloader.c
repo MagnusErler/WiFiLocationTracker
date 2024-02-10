@@ -206,49 +206,49 @@ static void lr1110_bootloader_fill_cbuffer_cdata_flash( uint8_t* cbuffer, uint8_
  * --- PUBLIC FUNCTIONS DEFINITION ---------------------------------------------
  */
 
-lr1110_status_t lr1110_bootloader_get_version( const void* context, lr1110_bootloader_version_t* version )
-{
-    uint8_t         cbuffer[LR1110_BL_VERSION_CMD_LENGTH];
-    uint8_t         rbuffer[LR1110_BL_VERSION_LENGTH] = { 0x00 };
-    lr1110_status_t status                            = LR1110_STATUS_ERROR;
+// lr1110_status_t lr1110_bootloader_get_version( const void* context, lr1110_bootloader_version_t* version )
+// {
+//     uint8_t         cbuffer[LR1110_BL_VERSION_CMD_LENGTH];
+//     uint8_t         rbuffer[LR1110_BL_VERSION_LENGTH] = { 0x00 };
+//     lr1110_status_t status                            = LR1110_STATUS_ERROR;
 
-    cbuffer[0] = ( uint8_t )( LR1110_BL_GET_VERSION_OC >> 8 );
-    cbuffer[1] = ( uint8_t )( LR1110_BL_GET_VERSION_OC >> 0 );
+//     cbuffer[0] = ( uint8_t )( LR1110_BL_GET_VERSION_OC >> 8 );
+//     cbuffer[1] = ( uint8_t )( LR1110_BL_GET_VERSION_OC >> 0 );
 
-    status = ( lr1110_status_t ) lr1110_hal_read( context, cbuffer, LR1110_BL_VERSION_CMD_LENGTH, rbuffer,
-                                                  LR1110_BL_VERSION_LENGTH );
+//     status = ( lr1110_status_t ) lr1110_hal_read( context, cbuffer, LR1110_BL_VERSION_CMD_LENGTH, rbuffer,
+//                                                   LR1110_BL_VERSION_LENGTH );
 
-    if( status == LR1110_STATUS_OK )
-    {
-        version->hw         = rbuffer[0];
-        version->type       = rbuffer[1];
-        version->fw_major   = rbuffer[2];
-        version->fw_minor   = rbuffer[3];
-    }
+//     if( status == LR1110_STATUS_OK )
+//     {
+//         version->hw         = rbuffer[0];
+//         version->type       = rbuffer[1];
+//         version->fw_major   = rbuffer[2];
+//         version->fw_minor   = rbuffer[3];
+//     }
 
-    return status;
-}
+//     return status;
+// }
 
-lr1110_status_t lr1110_bootloader_get_temperature( const void* context, float* temperature )
-{
-    uint8_t         cbuffer[LR1110_BL_TEMPERATURE_CMD_LENGTH];
-    uint8_t         rbuffer[LR1110_BL_TEMPERATURE_LENGTH] = { 0x00 };
-    lr1110_status_t status                                = LR1110_STATUS_ERROR;
+// lr1110_status_t lr1110_bootloader_get_temperature( const void* context, float* temperature )
+// {
+//     uint8_t         cbuffer[LR1110_BL_TEMPERATURE_CMD_LENGTH];
+//     uint8_t         rbuffer[LR1110_BL_TEMPERATURE_LENGTH] = { 0x00 };
+//     lr1110_status_t status                                = LR1110_STATUS_ERROR;
 
-    cbuffer[0] = ( uint8_t )( LR1110_BL_GET_TEMPERATURE >> 8 );
-    cbuffer[1] = ( uint8_t )( LR1110_BL_GET_TEMPERATURE >> 0 );
+//     cbuffer[0] = ( uint8_t )( LR1110_BL_GET_TEMPERATURE >> 8 );
+//     cbuffer[1] = ( uint8_t )( LR1110_BL_GET_TEMPERATURE >> 0 );
 
-    status = ( lr1110_status_t ) lr1110_hal_read( context, cbuffer, LR1110_BL_TEMPERATURE_CMD_LENGTH, rbuffer,
-                                                  LR1110_BL_TEMPERATURE_LENGTH );
+//     status = ( lr1110_status_t ) lr1110_hal_read( context, cbuffer, LR1110_BL_TEMPERATURE_CMD_LENGTH, rbuffer,
+//                                                   LR1110_BL_TEMPERATURE_LENGTH );
 
-    if( status == LR1110_STATUS_OK )
-    {
-        uint16_t temp_10_0 = ((rbuffer[0] << 8) | rbuffer[1]) & 0x7FF;  //((rbuffer[0] & 0x03) << 8) | rbuffer[1];
-        *temperature = 25 + (1000/(-1.7)) * ((temp_10_0/2047.0) * 1.35 - 0.7295);
-    }
+//     if( status == LR1110_STATUS_OK )
+//     {
+//         uint16_t temp_10_0 = ((rbuffer[0] << 8) | rbuffer[1]) & 0x7FF;  //((rbuffer[0] & 0x03) << 8) | rbuffer[1];
+//         *temperature = 25 + (1000/(-1.7)) * ((temp_10_0/2047.0) * 1.35 - 0.7295);
+//     }
 
-    return status;
-}
+//     return status;
+// }
 
 lr1110_status_t lr1110_bootloader_get_status( const void* context, uint16_t* status )
 {
