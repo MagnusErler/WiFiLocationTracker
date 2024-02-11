@@ -11,24 +11,24 @@
 #define LR1110_NO_PARAM_LENGTH 2
 
 /*!
- * @brief Length of command buffer for bootloader get version command
+ * @brief Length of command buffer for LR1110 version
  */
-#define LR1110_BL_VERSION_CMD_LENGTH LR1110_CMD_NO_PARAM_LENGTH
+#define LR1110_VERSION_CMD_LENGTH LR1110_CMD_NO_PARAM_LENGTH
 
 /*!
  * @brief Length of return buffer for LR1110 version
  */
-#define LR1110_BL_VERSION_LENGTH LR1110_NO_PARAM_LENGTH + 2
+#define LR1110_VERSION_LENGTH LR1110_NO_PARAM_LENGTH + 2
 
 /*!
- * @brief Length of command buffer for bootloader get temperature command
+ * @brief Length of command buffer for LR1110 temperature
  */
-#define LR1110_BL_TEMPERATURE_CMD_LENGTH LR1110_CMD_NO_PARAM_LENGTH
+#define LR1110_TEMPERATURE_CMD_LENGTH LR1110_CMD_NO_PARAM_LENGTH
 
 /*!
  * @brief Length of return buffer for LR1110 temperature
  */
-#define LR1110_BL_TEMPERATURE_LENGTH LR1110_NO_PARAM_LENGTH
+#define LR1110_TEMPERATURE_LENGTH LR1110_NO_PARAM_LENGTH
 
 /*!
  * @brief Length of command buffer for GNSS version
@@ -50,23 +50,33 @@
  */
 #define LR1110_WIFI_VERSION_LENGTH LR1110_NO_PARAM_LENGTH
 
+/*!
+ * @brief Length of command buffer for Chip EUI
+ */
+#define LR1110_CHIP_EUI_CMD_LENGTH LR1110_CMD_NO_PARAM_LENGTH
+
+/*!
+ * @brief Length of return buffer for Chip EUI
+ */
+#define LR1110_CHIP_EUI_LENGTH LR1110_NO_PARAM_LENGTH + 6
+
 
 
 
 
 
 enum {
-    LR1110_BL_GET_STATUS_OC            = 0x0100,  //!< Operation code for get status command
-    LR1110_BL_GET_VERSION_OC           = 0x0101,  //!< Operation code for get version command
-    LR1110_BL_ERASE_FLASH_OC           = 0x8000,  //!< Operation code for flash erase command
-    LR1110_BL_ERASE_PAGE_OC            = 0x8001,  //!< Operation code for flash page erase command
-    LR1110_BL_WRITE_FLASH_OC           = 0x8002,  //!< Operation code for write flash command
-    LR1110_BL_WRITE_FLASH_ENCRYPTED_OC = 0x8003,  //!< Operation code for encrypted flash write command
-    LR1110_BL_GET_HASH_OC              = 0x8004,  //!< Operation code for hash getter command
-    LR1110_BL_REBOOT_OC                = 0x8005,  //!< Operation code for reboot command
-    LR1110_BL_GET_PIN_OC               = 0x800B,  //!< Operation code for PIN read command
-    LR1110_BL_GET_CHIP_EUI_OC          = 0x800C,  //!< Operation code for EUI read command
-    LR1110_BL_GET_TEMPERATURE          = 0x011A,  //!< Operation code for temperature read command
+    LR1110_GET_STATUS_OC            = 0x0100,  //!< Operation code for get status command
+    LR1110_GET_VERSION_OC           = 0x0101,  //!< Operation code for get version command
+    LR1110_ERASE_FLASH_OC           = 0x8000,  //!< Operation code for flash erase command
+    LR1110_ERASE_PAGE_OC            = 0x8001,  //!< Operation code for flash page erase command
+    LR1110_WRITE_FLASH_OC           = 0x8002,  //!< Operation code for write flash command
+    LR1110_WRITE_FLASH_ENCRYPTED_OC = 0x8003,  //!< Operation code for encrypted flash write command
+    LR1110_GET_HASH_OC              = 0x8004,  //!< Operation code for hash getter command
+    LR1110_REBOOT_OC                = 0x8005,  //!< Operation code for reboot command
+    LR1110_GET_PIN_OC               = 0x800B,  //!< Operation code for PIN read command
+    LR1110_GET_CHIP_EUI_OC          = 0x800C,  //!< Operation code for EUI read command
+    LR1110_GET_TEMPERATURE          = 0x011A,  //!< Operation code for temperature read command
 };
 
 typedef enum
