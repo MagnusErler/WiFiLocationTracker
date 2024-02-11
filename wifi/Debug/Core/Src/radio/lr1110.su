@@ -1,3 +1,0 @@
-../Core/Src/radio/lr1110.c:80:6:radio_event_init	16	static
-../Core/Src/radio/lr1110.c:82:6:lr1110_modem_event_process	992	static
-../Core/Src/radio/lr1110.c:223:6:radio_event_callback	16	static

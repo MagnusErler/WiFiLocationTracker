@@ -1,3 +1,0 @@
-/home/magnus/repo/WiFiLocationTracker/wifi/build/release/build/CMakeFiles/wifi.dir
-/home/magnus/repo/WiFiLocationTracker/wifi/build/release/build/CMakeFiles/edit_cache.dir
-/home/magnus/repo/WiFiLocationTracker/wifi/build/release/build/CMakeFiles/rebuild_cache.dir

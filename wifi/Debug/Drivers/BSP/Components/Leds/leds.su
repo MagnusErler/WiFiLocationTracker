@@ -1,6 +1,0 @@
-../Drivers/BSP/Components/Leds/leds.c:70:6:leds_init	8	static
-../Drivers/BSP/Components/Leds/leds.c:77:6:leds_deinit	8	static
-../Drivers/BSP/Components/Leds/leds.c:84:6:leds_on	16	static
-../Drivers/BSP/Components/Leds/leds.c:103:6:leds_off	16	static
-../Drivers/BSP/Components/Leds/leds.c:122:6:leds_toggle	16	static
-../Drivers/BSP/Components/Leds/leds.c:141:6:leds_blink	24	static

@@ -1,3 +1,0 @@
-../Core/Src/radio/lr1110_modem/src/lr1110_modem_helper.c:74:30:lr1110_modem_helper_get_utc_time	3
-../Core/Src/radio/lr1110_modem/src/lr1110_modem_helper.c:92:30:lr1110_modem_helper_gnss_get_gnss_week_number_rollover	3
-../Core/Src/radio/lr1110_modem/src/lr1110_modem_helper.c:112:30:lr1110_modem_helper_gnss_get_almanac_date_by_index	1
