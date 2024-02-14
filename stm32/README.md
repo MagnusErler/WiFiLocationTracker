@@ -74,5 +74,5 @@ View serial ouput: `cu -l /dev/ttyACM0 -s 115200`
 1. Look inside **launch.json** for `miDebuggerServerAddress` and `debugServerArgs`, and not the number (e.g. 3333)
 2. Open a terminal and run `sudo lsof -i :<NUMBER>`
 3. Note the `PID` and run `sudo kill <PID>`
-4. Check with `sudo lsof -i :<NUMBER>` to determine if the process is gone (otherwise kill it again)
+4. Check with step 2 again to determine if the process is gone (otherwise kill it again)
 5. Try debugging again
