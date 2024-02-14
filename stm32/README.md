@@ -29,6 +29,9 @@ Currently using a [NUCLEO-L476RG](https://www.st.com/en/evaluation-tools/nucleo-
 * GNSS and WiFi scan data is collected on the device and sent to a cloud-based solver to resolve into a position
 * Semtech provide a Cloud API (fees apply)
 
+When using the Semtech LR1110 shield for STM32 Nucleo board is is also possible to use that shields with an Arduino Uno (see [arduino.ino](arduino/arduino.ino)).
+
+
 The setup can be done in either STM32CubeIDE og Visual Studio Code.
 
 ##### STM32CubeIDE
@@ -41,9 +44,9 @@ Install:
 
 Install:
 
+* [Visual Studio Code](https://code.visualstudio.com/download)
 * [STM32CubeMX](https://www.st.com/resource/en/user_manual/dm00104712-stm32cubemx-for-stm32-configuration-and-initialization-c-code-generation-stmicroelectronics.pdf)
 * [STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html)
-* [Visual Studio Code](https://code.visualstudio.com/download)
 
 ## Usage
 
