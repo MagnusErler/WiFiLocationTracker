@@ -19,6 +19,20 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
+#include "smtc_hal.h"
+
+#include "spi.h"
+
+//#include "lr1110_modem_board.h"
+//#include "system.h"
+
+#include <stdlib.h>   // used for malloc function
+
+// #include "wifi_scan.h"
+// #include "gnss_scan.h"
+
+//#include "constants.h"
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <string.h>
@@ -61,6 +75,11 @@ static void MX_LPTIM1_Init(void);
 static void MX_RTC_Init(void);
 static void MX_SPI1_Init(void);
 /* USER CODE BEGIN PFP */
+
+/*!
+ * @brief Reset LR1110
+ */
+static void resetLR1110();
 
 /*!
  * @brief Turn on LED
@@ -109,7 +128,7 @@ void blinkLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin, uint32_t period, ui
   * @retval int
   */
 int main(void)
-{
+ {
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
@@ -120,6 +139,8 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
+
+  int a = 0;
 
   /* USER CODE END Init */
 
@@ -138,25 +159,29 @@ int main(void)
   MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
 
+  hal_mcu_init();
+
+  hal_uart_init( HAL_PRINTF_UART_ID, PA_2, PA_3 );
+
+  HAL_DBG_TRACE_MSG("-----------------------------\r\n\r\n");
+  resetLR1110();
+
   blinkLED(GPIOC, RX_LED_Pin|TX_LED_Pin, 100, 5, true);
+
+
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  char *msg = "Hello World\r\n";
   while (1)
   {
-    HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-    HAL_Delay(1000);
-
-    if(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == GPIO_PIN_RESET)
-    {
-      HAL_UART_Transmit(&huart2, (uint8_t *)msg, strlen(msg), 100);
-    }
+    HAL_DBG_TRACE_PRINTF("a = %d\r\n", a++);
+    
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    HAL_Delay(1000);
   }
   /* USER CODE END 3 */
 }
@@ -444,6 +469,14 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+void resetLR1110() {
+  HAL_DBG_TRACE_INFO("Resetting LR1110... ");
+  HAL_GPIO_WritePin(RESET_GPIO_Port, RESET_Pin, GPIO_PIN_RESET);
+  HAL_Delay(100);
+  HAL_GPIO_WritePin(RESET_GPIO_Port, RESET_Pin, GPIO_PIN_SET);
+  HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+}
 
 void turnOnLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin) {
   HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);

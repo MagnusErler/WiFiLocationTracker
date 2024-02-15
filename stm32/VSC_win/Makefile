@@ -37,6 +37,17 @@ BUILD_DIR = build
 # C sources
 C_SOURCES =  \
 Src/main.c \
+Src/spi.c \
+Src/radio/lr1110_modem/src/lr1110_modem_helper.c \
+Src/radio/lr1110_modem/src/lr1110_modem_system.c \
+Src/smtc_hal/smtc_hal_flash.c \
+Src/smtc_hal/smtc_hal_gpio.c \
+Src/smtc_hal/smtc_hal_mcu.c \
+Src/smtc_hal/smtc_hal_rtc.c \
+Src/smtc_hal/smtc_hal_tmr_list.c \
+Src/smtc_hal/smtc_hal_tmr.c \
+Src/smtc_hal/smtc_hal_uart.c \
+Src/smtc_hal/smtc_utilities.c \
 Src/stm32l4xx_it.c \
 Src/stm32l4xx_hal_msp.c \
 Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c \
@@ -124,10 +135,14 @@ AS_INCLUDES =
 # C includes
 C_INCLUDES =  \
 -IInc \
+-IInc/smtc_hal \
+-IDrivers/application/inc \
 -IDrivers/STM32L4xx_HAL_Driver/Inc \
 -IDrivers/STM32L4xx_HAL_Driver/Inc/Legacy \
 -IDrivers/CMSIS/Device/ST/STM32L4xx/Include \
--IDrivers/CMSIS/Include
+-IDrivers/CMSIS/Include \
+-ISrc/radio \
+-ISrc/radio/lr1110_modem/src
 
 
 # compile gcc flags
