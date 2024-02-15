@@ -61,7 +61,6 @@ Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c \
 Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c \
 Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart_ex.c \
 Src/main.c \
-Src/smtc_hal/smtc_hal_flash.c \
 Src/smtc_hal/smtc_hal_gpio.c \
 Src/smtc_hal/smtc_hal_mcu.c \
 Src/smtc_hal/smtc_hal_rtc.c \
@@ -69,7 +68,6 @@ Src/smtc_hal/smtc_hal_spi.c \
 Src/smtc_hal/smtc_hal_tmr.c \
 Src/smtc_hal/smtc_hal_tmr_list.c \
 Src/smtc_hal/smtc_hal_uart.c \
-Src/smtc_hal/smtc_utilities.c \
 Src/spi.c \
 Src/stm32l4xx_it.c \
 Src/stm32l4xx_hal_msp.c \

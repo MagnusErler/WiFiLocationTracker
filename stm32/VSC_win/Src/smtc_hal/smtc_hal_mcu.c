@@ -226,7 +226,7 @@ void hal_mcu_init( void )
     hal_tmr_init( );
 
     /* Initialize the user flash */
-    flash_init( );
+    //flash_init( );
 
     /* Init power voltage voltage detector */
     hal_mcu_pvd_config( );
