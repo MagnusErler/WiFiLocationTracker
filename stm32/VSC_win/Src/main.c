@@ -62,6 +62,41 @@ static void MX_RTC_Init(void);
 static void MX_SPI1_Init(void);
 /* USER CODE BEGIN PFP */
 
+/*!
+ * @brief Turn on LED
+ *
+ * @param [in] LED_GPIO_Port
+ * @param [in] LED_Pin
+ */
+void turnOnLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin);
+
+/*!
+ * @brief Turn off LED
+ *
+ * @param [in] LED_GPIO_Port
+ * @param [in] LED_Pin
+ */
+void turnOffLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin);
+
+/*!
+ * @brief Toggle LED
+ *
+ * @param [in] LED_GPIO_Port
+ * @param [in] LED_Pin
+ */
+void toggleLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin);
+
+/*!
+ * @brief Blink LED
+ *
+ * @param [in] LED_GPIO_Port
+ * @param [in] LED_Pin
+ * @param [in] period
+ * @param [in] count
+ * @param [in] start
+ */
+void blinkLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin, uint32_t period, uint8_t count, bool start);
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -102,6 +137,8 @@ int main(void)
   MX_RTC_Init();
   MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
+
+  blinkLED(GPIOC, RX_LED_Pin|TX_LED_Pin, 100, 5, true);
 
   /* USER CODE END 2 */
 
@@ -407,6 +444,29 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+void turnOnLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin) {
+  HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
+}
+
+void turnOffLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin) {
+  HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET);
+}
+
+void toggleLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin) {
+  HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+}
+
+void blinkLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin, uint32_t period, uint8_t count, bool start) {
+  if (start) {
+    for (uint8_t i = 0; i < count; i++) {
+      turnOnLED(LED_GPIO_Port, LED_Pin);
+      HAL_Delay(period);
+      turnOffLED(LED_GPIO_Port, LED_Pin);
+      HAL_Delay(period);
+    }
+  }
+}
 
 /* USER CODE END 4 */
 
