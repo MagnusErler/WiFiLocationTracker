@@ -1,7 +1,7 @@
 /*!
- * @file      smtc_hal.h
+ * @file      gnss_scan.h
  *
- * @brief     Board specific package API definition.
+ * @brief     GNSS scan definition
  *
  * Revised BSD License
  * Copyright Semtech Corporation 2020. All rights reserved.
@@ -29,8 +29,8 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef SMTC_HAL_H
-#define SMTC_HAL_H
+#ifndef GNSS_SCAN_H
+#define GNSS_SCAN_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -40,29 +40,9 @@ extern "C" {
  * -----------------------------------------------------------------------------
  * --- DEPENDENCIES ------------------------------------------------------------
  */
-
-#include "smtc_hal_options.h"
-#include "smtc_hal_dbg_trace.h"
-#include "smtc_hal_gpio.h"
-#include "smtc_hal_gpio_pin_names.h"
-#include "smtc_hal_mcu.h"
-#include "smtc_hal_rtc.h"
-#include "smtc_hal_tmr.h"
-#include "smtc_hal_tmr_list.h"
-#include "smtc_hal_watchdog.h"
-#include "smtc_hal_rng.h"
-#include "smtc_hal_gpio.h"
-#include "smtc_hal_spi.h"
-#include "smtc_hal_uart.h"
-#include "smtc_hal_flash.h"
-//magnus #include "smtc_hal_i2c.h"
-
-#include "board-config.h"
-
-/* user peripheral */
-//magnus #include "lis2de12.h"
-//#include "leds.h"
-//#include "external_supply.h"
+#include <stdint.h>
+#include "lr1110_modem_gnss.h"
+#include "lr1110_modem_system.h"
 
 /*
  * -----------------------------------------------------------------------------
@@ -73,21 +53,93 @@ extern "C" {
  * -----------------------------------------------------------------------------
  * --- PUBLIC CONSTANTS --------------------------------------------------------
  */
+#define GNSS_BUFFER_MAX_SIZE 255
+
+#define GNSS_LEAP_SECONDS_OFFSET 18
+#define GNSS_EPOCH_SECONDS 315964800  // 6/01/1980
+#define SECS_PER_WEEK 604800          //(60L*60*24*7)
+
+#define ASSISTED_MODE 1
+#define AUTONOMOUS_MODE 2
+
+#define GNSS_SCAN_NO_TIME 2
+#define GNSS_SCAN_SUCCESS 1
+#define GNSS_SCAN_FAIL 0
 
 /*
  * -----------------------------------------------------------------------------
  * --- PUBLIC TYPES ------------------------------------------------------------
  */
 
+/*!
+ * @brief GNSS scan result type
+ */
+typedef uint8_t gnss_scan_result_t;
+
+/*!
+ * @brief GNSS general settings
+ */
+typedef struct
+{
+    bool                                           enabled;
+    uint8_t                                        scan_type;
+    lr1110_modem_gnss_search_mode_t                search_mode;
+    uint8_t                                        input_parameters;
+    uint8_t                                        constellation_to_use;
+    lr1110_modem_gnss_solver_assistance_position_t assistance_position;
+    uint8_t                                        nb_sat;
+} gnss_settings_t;
+
+/*!
+ * @brief GNSS scan results
+ */
+typedef struct
+{
+    bool                                   is_valid_nav_message;
+    uint16_t                               nav_message_size;
+    uint8_t                                nav_message[GNSS_BUFFER_MAX_SIZE];
+    uint8_t                                nb_detected_satellites;
+    lr1110_modem_gnss_detected_satellite_t detected_satellites[32];
+    lr1110_modem_gnss_timings_t            timings;
+    uint8_t                                average_cn;
+} gnss_scan_single_result_t;
+
 /*
  * -----------------------------------------------------------------------------
  * --- PUBLIC FUNCTIONS PROTOTYPES ---------------------------------------------
  */
 
+/*!
+ * @brief Function executed on GNSS Scan done event
+ *
+ * @param [in] buffer Buffer containing the NAV Message
+ * @param [in] size Size of the NAV message
+ */
+void lr1110_modem_gnss_scan_done( uint8_t* buffer, uint16_t size );
+
+/*!
+ * @brief Display the last scan results
+ *
+ * @param [in] capture_result Structure containing the capture result, \ref gnss_scan_single_result_t
+ */
+void gnss_scan_display_results( const gnss_scan_single_result_t* capture_result );
+
+/*!
+ * @brief start the gnss capture state machine
+ *
+ * @param [in] context Radio abstraction
+ * @param [in] settings GNSS settings to apply \ref gnss_settings_t
+ * @param [out] capture_result Structure containing the capture result, \ref gnss_scan_single_result_t
+ *
+ * @returns GNSS scan result operation
+ */
+gnss_scan_result_t gnss_scan_execute( const void* context, const gnss_settings_t* settings,
+                                      gnss_scan_single_result_t* capture_result );
+
 #ifdef __cplusplus
 }
 #endif
 
-#endif  // SMTC_HAL_H
+#endif  // GNSS_SCAN_H
 
 /* --- EOF ------------------------------------------------------------------ */

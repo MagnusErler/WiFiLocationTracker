@@ -1,7 +1,7 @@
 /*!
- * @file      smtc_hal.h
+ * @file      smtc_hal_spi.h
  *
- * @brief     Board specific package API definition.
+ * @brief     Board specific package SPI API definition.
  *
  * Revised BSD License
  * Copyright Semtech Corporation 2020. All rights reserved.
@@ -28,9 +28,8 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
-#ifndef SMTC_HAL_H
-#define SMTC_HAL_H
+#ifndef SMTC_HAL_SPI_H
+#define SMTC_HAL_SPI_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -41,28 +40,9 @@ extern "C" {
  * --- DEPENDENCIES ------------------------------------------------------------
  */
 
-#include "smtc_hal_options.h"
-#include "smtc_hal_dbg_trace.h"
-#include "smtc_hal_gpio.h"
+#include "stm32l4xx_hal.h"
+#include "stm32l4xx_ll_spi.h"
 #include "smtc_hal_gpio_pin_names.h"
-#include "smtc_hal_mcu.h"
-#include "smtc_hal_rtc.h"
-#include "smtc_hal_tmr.h"
-#include "smtc_hal_tmr_list.h"
-#include "smtc_hal_watchdog.h"
-#include "smtc_hal_rng.h"
-#include "smtc_hal_gpio.h"
-#include "smtc_hal_spi.h"
-#include "smtc_hal_uart.h"
-#include "smtc_hal_flash.h"
-//magnus #include "smtc_hal_i2c.h"
-
-#include "board-config.h"
-
-/* user peripheral */
-//magnus #include "lis2de12.h"
-//#include "leds.h"
-//#include "external_supply.h"
 
 /*
  * -----------------------------------------------------------------------------
@@ -79,15 +59,56 @@ extern "C" {
  * --- PUBLIC TYPES ------------------------------------------------------------
  */
 
+/*!
+ *  @brief SPI structure
+ */
+typedef struct hal_spi_s
+{
+    SPI_TypeDef*      interface;
+    SPI_HandleTypeDef handle;
+    struct
+    {
+        hal_gpio_pin_names_t mosi;
+        hal_gpio_pin_names_t miso;
+        hal_gpio_pin_names_t sclk;
+    } pins;
+} hal_spi_t;
+
 /*
  * -----------------------------------------------------------------------------
  * --- PUBLIC FUNCTIONS PROTOTYPES ---------------------------------------------
  */
 
+/*!
+ * @brief Initializes the MCU SPI peripheral
+ *
+ * @param [in] id   SPI interface id [1:N]
+ * @param [in] mosi SPI MOSI pin name to be used
+ * @param [in] miso SPI MISO pin name to be used
+ * @param [in] sclk SPI SCLK pin name to be used
+ */
+void hal_spi_init( const uint32_t id, const hal_gpio_pin_names_t mosi, const hal_gpio_pin_names_t miso,
+                   const hal_gpio_pin_names_t sclk );
+
+/*!
+ *  Deinitialize the MCU SPI peripheral
+ *
+ * @param [in] id   SPI interface id [1:N]
+ */
+void hal_spi_deinit( const uint32_t id );
+
+/*!
+ * @brief Sends out_data and receives in_data
+ *
+ * @param [in] id       SPI interface id [1:N]
+ * @param [in] out_data Byte to be sent
+
+ * @returns in_data      Received byte.
+ */
+uint16_t hal_spi_in_out( const uint32_t id, const uint16_t out_data );
+
 #ifdef __cplusplus
 }
 #endif
 
-#endif  // SMTC_HAL_H
-
-/* --- EOF ------------------------------------------------------------------ */
+#endif  // SMTC_HAL_SPI_H

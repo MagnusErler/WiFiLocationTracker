@@ -1,7 +1,7 @@
 /*!
- * @file      smtc_hal.h
+ * @file      lr1110_bootloader_types.h
  *
- * @brief     Board specific package API definition.
+ * @brief     Bootloader driver types for LR1110
  *
  * Revised BSD License
  * Copyright Semtech Corporation 2020. All rights reserved.
@@ -29,40 +29,20 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef SMTC_HAL_H
-#define SMTC_HAL_H
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#ifndef LR1110_BOOTLOADER_TYPES_H
+#define LR1110_BOOTLOADER_TYPES_H
 
 /*
  * -----------------------------------------------------------------------------
  * --- DEPENDENCIES ------------------------------------------------------------
  */
 
-#include "smtc_hal_options.h"
-#include "smtc_hal_dbg_trace.h"
-#include "smtc_hal_gpio.h"
-#include "smtc_hal_gpio_pin_names.h"
-#include "smtc_hal_mcu.h"
-#include "smtc_hal_rtc.h"
-#include "smtc_hal_tmr.h"
-#include "smtc_hal_tmr_list.h"
-#include "smtc_hal_watchdog.h"
-#include "smtc_hal_rng.h"
-#include "smtc_hal_gpio.h"
-#include "smtc_hal_spi.h"
-#include "smtc_hal_uart.h"
-#include "smtc_hal_flash.h"
-//magnus #include "smtc_hal_i2c.h"
+#include <stdbool.h>
+#include <stdint.h>
 
-#include "board-config.h"
-
-/* user peripheral */
-//magnus #include "lis2de12.h"
-//#include "leds.h"
-//#include "external_supply.h"
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /*
  * -----------------------------------------------------------------------------
@@ -74,10 +54,66 @@ extern "C" {
  * --- PUBLIC CONSTANTS --------------------------------------------------------
  */
 
+// /*!
+//  * @brief Length in byte of the LR1110 version blob
+//  */
+// #define LR1110_BL_VERSION_LENGTH ( 4 )
+
+// /*!
+//  * @brief Length in byte of the LR1110 temperature blob
+//  */
+// #define LR1110_BL_TEMPERATURE_LENGTH ( 2 )
+
+/*!
+ * @brief Length in byte of the LR1110 status blob
+ */
+#define LR1110_BL_STATUS_LENGTH ( 4 )
+
+/*!
+ * @brief Length in bytes of a hash value
+ */
+#define LR1110_BL_HASH_LENGTH 0x10
+
+/*!
+ * @brief Length in bytes of a PIN
+ */
+#define LR1110_BL_PIN_LENGTH 0x04
+
+/*!
+ * @brief Length in bytes of a chip eui
+ */
+#define LR1110_BL_CHIP_EUI_LENGTH 0x08
+
 /*
  * -----------------------------------------------------------------------------
  * --- PUBLIC TYPES ------------------------------------------------------------
  */
+
+/*!
+ * @brief Type representing a hash bytestream
+ */
+typedef uint8_t lr1110_bootloader_hash_t[LR1110_BL_HASH_LENGTH];
+
+/*!
+ * @brief Type representing a device PIN bytestream
+ */
+typedef uint8_t lr1110_bootloader_pin_t[LR1110_BL_PIN_LENGTH];
+
+/*!
+ * @brief Type representing a chip EUI bytestream
+ */
+typedef uint8_t lr1110_bootloader_chip_eui_t[LR1110_BL_CHIP_EUI_LENGTH];
+
+/*!
+ * @brief LR1110 modem bootloader version structure
+ */
+typedef struct lr1110_bootloader_version_s
+{
+    uint8_t hw;         //<! Hardware verion
+    uint8_t type;       //!< Type version
+    uint8_t fw_major;   //!< Firmware major version
+    uint8_t fw_minor;   //!< Firmware minor version
+} lr1110_bootloader_version_t;
 
 /*
  * -----------------------------------------------------------------------------
@@ -88,6 +124,6 @@ extern "C" {
 }
 #endif
 
-#endif  // SMTC_HAL_H
+#endif  // LR1110_BOOTLOADER_TYPES_H
 
 /* --- EOF ------------------------------------------------------------------ */

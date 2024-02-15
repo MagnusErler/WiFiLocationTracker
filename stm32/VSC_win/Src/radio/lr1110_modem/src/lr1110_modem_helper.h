@@ -44,8 +44,8 @@ extern "C" {
 #include <stdbool.h>
 #include <stdint.h>
 #include "lr1110_modem_common.h"
-//#include "lr1110_modem_lorawan.h"
-//#include "lr1110_modem_gnss.h"
+#include "lr1110_modem_lorawan.h"
+#include "lr1110_modem_gnss.h"
 
 /*
  * -----------------------------------------------------------------------------
@@ -119,57 +119,57 @@ typedef enum
 /**
  * @brief Structure holding event-related data
  */
-// typedef struct
-// {
-//     uint8_t event_type;
-//     uint8_t missed_events;  //!< Number of event_type events missed before the current one
-//     union
-//     {
-//         struct
-//         {
-//             uint16_t count;
-//         } reset;
-//         struct
-//         {
-//             //lr1110_modem_tx_done_event_t status;
-//         } txdone;
-//         struct
-//         {
-//             int8_t                        rssi;  //!< Signed value in dBm + 64
-//             int8_t                        snr;   //!< Signed value in dB given in 0.25dB step
-//             //lr1110_modem_down_data_flag_t flag;
-//             uint8_t                       fport;
-//             uint8_t                       data[LR1110_MODEM_HELPER_MAX_DOWNLINK_LENGTH];
-//             uint8_t                       length;
-//         } downdata;
-//         struct
-//         {
-//         	lr1110_modem_upload_event_t status;
-//         } upload;
-//         struct
-//         {
-//         	lr1110_modem_event_setconf_tag_t tag;
-//         } setconf;
-//         struct
-//         {
-//         	lr1110_modem_mute_t status;
-//         } mute;
-//          struct
-//         {
-//             uint16_t len;
-//             uint8_t buffer[LR1110_MODEM_HELPER_WIFI_MAX_BUFFER_LENGTH];
-//         } wifi;
-//          struct
-//         {
-//             uint16_t len;
-//             uint8_t nav_message[LR1110_MODEM_HELPER_GNSS_MAX_NAV_LENGTH];
-//         } gnss;
-//         struct
-//         {
-//         	lr1110_modem_alc_sync_state_t status;
-//         } time;
-//     } event_data;
-// } lr1110_modem_event_t;
+typedef struct
+{
+    uint8_t event_type;
+    uint8_t missed_events;  //!< Number of event_type events missed before the current one
+    union
+    {
+        struct
+        {
+            uint16_t count;
+        } reset;
+        struct
+        {
+            lr1110_modem_tx_done_event_t status;
+        } txdone;
+        struct
+        {
+            int8_t                        rssi;  //!< Signed value in dBm + 64
+            int8_t                        snr;   //!< Signed value in dB given in 0.25dB step
+            lr1110_modem_down_data_flag_t flag;
+            uint8_t                       fport;
+            uint8_t                       data[LR1110_MODEM_HELPER_MAX_DOWNLINK_LENGTH];
+            uint8_t                       length;
+        } downdata;
+        struct
+        {
+        	lr1110_modem_upload_event_t status;
+        } upload;
+        struct
+        {
+        	lr1110_modem_event_setconf_tag_t tag;
+        } setconf;
+        struct
+        {
+        	lr1110_modem_mute_t status;
+        } mute;
+         struct
+        {
+            uint16_t len;
+            uint8_t buffer[LR1110_MODEM_HELPER_WIFI_MAX_BUFFER_LENGTH];
+        } wifi;
+         struct
+        {
+            uint16_t len;
+            uint8_t nav_message[LR1110_MODEM_HELPER_GNSS_MAX_NAV_LENGTH];
+        } gnss;
+        struct
+        {
+        	lr1110_modem_alc_sync_state_t status;
+        } time;
+    } event_data;
+} lr1110_modem_event_t;
 
 /*
  * -----------------------------------------------------------------------------
@@ -225,8 +225,8 @@ lr1110_modem_response_code_t lr1110_modem_helper_gnss_get_almanac_date_by_index(
  *
  * @returns  Operation status
  */
-// lr1110_modem_helper_status_t lr1110_modem_helper_gnss_get_result_destination(
-//     const uint8_t* result_buffer, const uint16_t result_buffer_size, lr1110_modem_gnss_destination_t* destination );
+lr1110_modem_helper_status_t lr1110_modem_helper_gnss_get_result_destination(
+    const uint8_t* result_buffer, const uint16_t result_buffer_size, lr1110_modem_gnss_destination_t* destination );
 
 /**
  * @brief Extract the event type from the result returned by a GNSS scan, \note a event type exists only if the
@@ -238,20 +238,20 @@ lr1110_modem_response_code_t lr1110_modem_helper_gnss_get_almanac_date_by_index(
  *
  * @returns  Operation status
  */
-// lr1110_modem_helper_status_t lr1110_modem_helper_gnss_get_event_type( const uint8_t* result_buffer,
-//                                                                       const uint16_t result_buffer_size,
-//                                                                       lr1110_modem_gnss_scan_done_event_t* event_type );
+lr1110_modem_helper_status_t lr1110_modem_helper_gnss_get_event_type( const uint8_t* result_buffer,
+                                                                      const uint16_t result_buffer_size,
+                                                                      lr1110_modem_gnss_scan_done_event_t* event_type );
 
-// /**
-//  * @brief Extract the event data contained in the event field buffer
-//  *
-//  * @param [in] context Chip implementation context
-//  * @param [out] modem_event Struct containing the event data \see lr1110_modem_event_t
-//  *
-//  * @returns  Operation status
-//  */
-// lr1110_modem_helper_status_t lr1110_modem_helper_get_event_data( const void*           context,
-//                                                                  lr1110_modem_event_t* modem_event );
+/**
+ * @brief Extract the event data contained in the event field buffer
+ *
+ * @param [in] context Chip implementation context
+ * @param [out] modem_event Struct containing the event data \see lr1110_modem_event_t
+ *
+ * @returns  Operation status
+ */
+lr1110_modem_helper_status_t lr1110_modem_helper_get_event_data( const void*           context,
+                                                                 lr1110_modem_event_t* modem_event );
 
 #ifdef __cplusplus
 }

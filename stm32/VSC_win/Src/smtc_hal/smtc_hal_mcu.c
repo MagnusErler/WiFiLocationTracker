@@ -39,7 +39,7 @@
 
 #include "stm32l4xx_hal.h"
 #include "stm32l4xx_ll_utils.h"
-//#include "lr1110_modem_board.h"
+#include "lr1110_modem_board.h"
 #include "smtc_hal.h"
 
 #include "main.h"
@@ -74,7 +74,7 @@
 /*!
  * @brief Radio hardware and global parameters
  */
-//lr1110_t lr1110;
+lr1110_t lr1110;
 
 /*!
  * @brief Low Power options
@@ -179,37 +179,37 @@ void hal_mcu_critical_section_begin( uint32_t* mask )
 
 void hal_mcu_critical_section_end( uint32_t* mask ) { __set_PRIMASK( *mask ); }
 
-void hal_mcu_init_periph( void )
-{
-    /* Init TX & RX Leds */
-    //leds_init( );
+// void hal_mcu_init_periph( void )
+// {
+//     /* Init TX & RX Leds */
+//     //leds_init( );
 
-    /* External supplies */
-    //external_supply_init( LNA_SUPPLY_MASK );
+//     /* External supplies */
+//     //external_supply_init( LNA_SUPPLY_MASK );
 
-    /* LIS2DE12 accelerometer */
-    //magnus accelerometer_init( INT_1 );
-}
+//     /* LIS2DE12 accelerometer */
+//     //magnus accelerometer_init( INT_1 );
+// }
 
-static void hal_mcu_reinit_periph( void )
-{
-    //leds_init( );
+// static void hal_mcu_reinit_periph( void )
+// {
+//     leds_init( );
 
-    /* External supplies */
-    //external_supply_init( LNA_SUPPLY_MASK );
-}
+//     /* External supplies */
+//     external_supply_init( LNA_SUPPLY_MASK );
+// }
 
-void hal_mcu_deinit_periph( void )
-{
-    //leds_deinit( );
+// void hal_mcu_deinit_periph( void )
+// {
+//     leds_deinit( );
 
-    // Disable external supply
-    //external_supply_deinit( LNA_SUPPLY_MASK );
+//     // Disable external supply
+//     external_supply_deinit( LNA_SUPPLY_MASK );
     
-#ifdef HAL_MCU_GPIO_DEINIT
-    hal_mcu_gpio_deinit( );
-#endif
-}
+// #ifdef HAL_MCU_GPIO_DEINIT
+//     hal_mcu_gpio_deinit( );
+// #endif
+// }
 
 void hal_mcu_init( void )
 {
@@ -557,7 +557,7 @@ void hal_mcu_low_power_handler( void )
 static void hal_mcu_deinit( void )
 {
     hal_spi_deinit( HAL_RADIO_SPI_ID );
-    //lr1110_modem_board_deinit_io( &lr1110 );
+    lr1110_modem_board_deinit_io( &lr1110 );
     /* Disable I2C */
     //magnus hal_i2c_deinit( HAL_I2C_ID );
     /* Disable UART */
@@ -576,13 +576,13 @@ static void hal_mcu_reinit( void )
 
     /* Initialize UART */
 #if( HAL_USE_PRINTF_UART == HAL_FEATURE_ON )
-    //hal_uart_init( HAL_PRINTF_UART_ID, UART_TX, UART_RX );
+    hal_uart_init( HAL_PRINTF_UART_ID, UART_TX, UART_RX );
 #endif
 
     /* Initialize SPI */
-    //hal_spi_init( HAL_RADIO_SPI_ID, RADIO_MOSI, RADIO_MISO, RADIO_SCLK );
+    hal_spi_init( HAL_RADIO_SPI_ID, RADIO_MOSI, RADIO_MISO, RADIO_SCLK );
     /* Init LR1110 IO */
-    //lr1110_modem_board_init_io( &lr1110 );
+    lr1110_modem_board_init_io( &lr1110 );
 }
 
 static void hal_mcu_system_clock_re_config_after_stop( void )

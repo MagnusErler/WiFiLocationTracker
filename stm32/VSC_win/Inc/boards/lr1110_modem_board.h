@@ -49,7 +49,7 @@ extern "C" {
 #include "board-config.h"
 //magnus #include "lis2de12.h"
 //#include "leds.h"
-//#include "lr1110.h"
+#include "lr1110.h"
 
 /*
  * -----------------------------------------------------------------------------
@@ -110,15 +110,15 @@ void lr1110_modem_board_analog_deinit_io( const void* context );
  */
 uint32_t lr1110_modem_board_get_tcxo_wakeup_time( void );
 
-// /*!
-//  * @brief Initializes the radio driver
-//  *
-//  * @param [in] context Radio abstraction
-//  * @param [in] event Pointeur to the event callbacks \see lr1110_modem_event_callback_t
-//  *
-//  * @returns Status of the init
-//  */
-// lr1110_modem_response_code_t lr1110_modem_board_init( const void* context, lr1110_modem_event_callback_t* event );
+/*!
+ * @brief Initializes the radio driver
+ *
+ * @param [in] context Radio abstraction
+ * @param [in] event Pointeur to the event callbacks \see lr1110_modem_event_callback_t
+ *
+ * @returns Status of the init
+ */
+lr1110_modem_response_code_t lr1110_modem_board_init( const void* context, lr1110_modem_event_callback_t* event );
 
 /*!
  * @brief Flush the modem event queue
