@@ -11,7 +11,7 @@
 
 //#include "configuration.h"
 
-#include "lr1110_modem_board.h"     // for HAL_DBG_TRACE_ERROR
+#include "smtc_hal.h"     // for HAL_DBG_TRACE_ERROR
 
 radio_t1* radio;
 

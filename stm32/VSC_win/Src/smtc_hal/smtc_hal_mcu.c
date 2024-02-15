@@ -39,7 +39,7 @@
 
 #include "stm32l4xx_hal.h"
 #include "stm32l4xx_ll_utils.h"
-#include "lr1110_modem_board.h"
+//#include "lr1110_modem_board.h"
 #include "smtc_hal.h"
 
 #include "main.h"
@@ -74,7 +74,7 @@
 /*!
  * @brief Radio hardware and global parameters
  */
-lr1110_t lr1110;
+//lr1110_t lr1110;
 
 /*!
  * @brief Low Power options
@@ -110,10 +110,10 @@ static timer_event_t soft_watchdog;
  */
 static void hal_mcu_system_clock_config( void );
 
-/*!
- * @brief reinit the MCU clock tree after a stop mode
- */
-static void hal_mcu_system_clock_re_config_after_stop( void );
+// /*!
+//  * @brief reinit the MCU clock tree after a stop mode
+//  */
+// static void hal_mcu_system_clock_re_config_after_stop( void );
 
 /*!
  * @brief init the GPIO
@@ -134,25 +134,25 @@ static void hal_mcu_gpio_deinit( void );
  */
 static void hal_mcu_pvd_config( void );
 
-/*!
- * @brief Deinit the MCU
- */
-static void hal_mcu_deinit( void );
+// /*!
+//  * @brief Deinit the MCU
+//  */
+// static void hal_mcu_deinit( void );
 
-/*!
- * @brief Initializes MCU after a stop mode
- */
-static void hal_mcu_reinit( void );
+// /*!
+//  * @brief Initializes MCU after a stop mode
+//  */
+// static void hal_mcu_reinit( void );
 
-/*!
- * @brief reinit the peripherals
- */
-static void hal_mcu_reinit_periph( void );
+// /*!
+//  * @brief reinit the peripherals
+//  */
+// static void hal_mcu_reinit_periph( void );
 
-/*!
- * @brief deinit the peripherals
- */
-static void hal_mcu_deinit_periph( void );
+// /*!
+//  * @brief deinit the peripherals
+//  */
+// static void hal_mcu_deinit_periph( void );
 
 #if( HAL_DBG_TRACE == HAL_FEATURE_ON )
 /*!
@@ -492,150 +492,150 @@ static void hal_mcu_gpio_deinit( void )
 }
 #endif
 
-/**
- * @brief Enters Low Power Stop Mode
- */
-static void hal_mcu_lpm_enter_stop_mode( void )
-{
-    /* Disable IRQ while the MCU is not running on MSI */
-    CRITICAL_SECTION_BEGIN( );
+// /**
+//  * @brief Enters Low Power Stop Mode
+//  */
+// static void hal_mcu_lpm_enter_stop_mode( void )
+// {
+//     /* Disable IRQ while the MCU is not running on MSI */
+//     CRITICAL_SECTION_BEGIN( );
 
-    if( partial_sleep_enable == true )
-    {
-        hal_mcu_deinit( );
-    }
-    else
-    {
-        hal_mcu_deinit_periph( );
-        hal_mcu_deinit( );
-    }
+//     if( partial_sleep_enable == true )
+//     {
+//         hal_mcu_deinit( );
+//     }
+//     else
+//     {
+//         hal_mcu_deinit_periph( );
+//         hal_mcu_deinit( );
+//     }
 
-    CRITICAL_SECTION_END( );
-    /* Enter Stop Mode */
-    HAL_PWREx_EnterSTOP2Mode( PWR_STOPENTRY_WFI );
-}
+//     CRITICAL_SECTION_END( );
+//     /* Enter Stop Mode */
+//     HAL_PWREx_EnterSTOP2Mode( PWR_STOPENTRY_WFI );
+// }
 
-/*!
- * @brief Exists Low Power Stop Mode
- */
-static void hal_mcu_lpm_exit_stop_mode( void )
-{
-    /* Disable IRQ while the MCU is not running on MSI */
-    CRITICAL_SECTION_BEGIN( );
+// /*!
+//  * @brief Exists Low Power Stop Mode
+//  */
+// static void hal_mcu_lpm_exit_stop_mode( void )
+// {
+//     /* Disable IRQ while the MCU is not running on MSI */
+//     CRITICAL_SECTION_BEGIN( );
 
-    /* Reinitializes the MCU */
-    hal_mcu_reinit( );
+//     /* Reinitializes the MCU */
+//     hal_mcu_reinit( );
 
-    if( partial_sleep_enable == false )
-    {
-        /* Reinitializes the peripherals */
-        hal_mcu_reinit_periph( );
-    }
+//     if( partial_sleep_enable == false )
+//     {
+//         /* Reinitializes the peripherals */
+//         hal_mcu_reinit_periph( );
+//     }
 
-    CRITICAL_SECTION_END( );
-}
+//     CRITICAL_SECTION_END( );
+// }
 
-/*!
- * @brief handler low power (TODO: put in a new smtc_hal_lpm with option)
- */
-void hal_mcu_low_power_handler( void )
-{
-#if( HAL_LOW_POWER_MODE == HAL_FEATURE_ON )
-    __disable_irq( );
-    /*!
-     * If an interrupt has occurred after __disable_irq( ), it is kept pending
-     * and cortex will not enter low power anyway
-     */
+// /*!
+//  * @brief handler low power (TODO: put in a new smtc_hal_lpm with option)
+//  */
+// void hal_mcu_low_power_handler( void )
+// {
+// #if( HAL_LOW_POWER_MODE == HAL_FEATURE_ON )
+//     __disable_irq( );
+//     /*!
+//      * If an interrupt has occurred after __disable_irq( ), it is kept pending
+//      * and cortex will not enter low power anyway
+//      */
 
-    hal_mcu_lpm_enter_stop_mode( );
-    hal_mcu_lpm_exit_stop_mode( );
+//     hal_mcu_lpm_enter_stop_mode( );
+//     hal_mcu_lpm_exit_stop_mode( );
 
-    __enable_irq( );
-#endif
-}
+//     __enable_irq( );
+// #endif
+// }
 
-static void hal_mcu_deinit( void )
-{
-    hal_spi_deinit( HAL_RADIO_SPI_ID );
-    lr1110_modem_board_deinit_io( &lr1110 );
-    /* Disable I2C */
-    //magnus hal_i2c_deinit( HAL_I2C_ID );
-    /* Disable UART */
-#if( HAL_USE_PRINTF_UART == HAL_FEATURE_ON )
-    hal_uart_deinit( HAL_PRINTF_UART_ID );
-#endif
-}
+// static void hal_mcu_deinit( void )
+// {
+//     hal_spi_deinit( HAL_RADIO_SPI_ID );
+//     lr1110_modem_board_deinit_io( &lr1110 );
+//     /* Disable I2C */
+//     //magnus hal_i2c_deinit( HAL_I2C_ID );
+//     /* Disable UART */
+// #if( HAL_USE_PRINTF_UART == HAL_FEATURE_ON )
+//     hal_uart_deinit( HAL_PRINTF_UART_ID );
+// #endif
+// }
 
-static void hal_mcu_reinit( void )
-{
-    /* Reconfig needed OSC and PLL */
-    hal_mcu_system_clock_re_config_after_stop( );
+// static void hal_mcu_reinit( void )
+// {
+//     /* Reconfig needed OSC and PLL */
+//     hal_mcu_system_clock_re_config_after_stop( );
 
-    /* Initialize I2C */
-    //magnus hal_i2c_init( HAL_I2C_ID, I2C_SDA, I2C_SCL );
+//     /* Initialize I2C */
+//     //magnus hal_i2c_init( HAL_I2C_ID, I2C_SDA, I2C_SCL );
 
-    /* Initialize UART */
-#if( HAL_USE_PRINTF_UART == HAL_FEATURE_ON )
-    hal_uart_init( HAL_PRINTF_UART_ID, UART_TX, UART_RX );
-#endif
+//     /* Initialize UART */
+// #if( HAL_USE_PRINTF_UART == HAL_FEATURE_ON )
+//     hal_uart_init( HAL_PRINTF_UART_ID, UART_TX, UART_RX );
+// #endif
 
-    /* Initialize SPI */
-    hal_spi_init( HAL_RADIO_SPI_ID, RADIO_MOSI, RADIO_MISO, RADIO_SCLK );
-    /* Init LR1110 IO */
-    lr1110_modem_board_init_io( &lr1110 );
-}
+//     /* Initialize SPI */
+//     hal_spi_init( HAL_RADIO_SPI_ID, RADIO_MOSI, RADIO_MISO, RADIO_SCLK );
+//     /* Init LR1110 IO */
+//     lr1110_modem_board_init_io( &lr1110 );
+// }
 
-static void hal_mcu_system_clock_re_config_after_stop( void )
-{
-    RCC_OscInitTypeDef       rcc_osc_init;
-    RCC_ClkInitTypeDef       rcc_clk_init;
-    RCC_PeriphCLKInitTypeDef periph_clk_init;
+// static void hal_mcu_system_clock_re_config_after_stop( void )
+// {
+//     RCC_OscInitTypeDef       rcc_osc_init;
+//     RCC_ClkInitTypeDef       rcc_clk_init;
+//     RCC_PeriphCLKInitTypeDef periph_clk_init;
 
-    /* Configure the main internal regulator output voltage */
-    __HAL_RCC_PWR_CLK_ENABLE( );
-    __HAL_PWR_VOLTAGESCALING_CONFIG( PWR_REGULATOR_VOLTAGE_SCALE1 );
-    /* Ensure that MSI is wake-up system clock */
-    __HAL_RCC_WAKEUPSTOP_CLK_CONFIG( RCC_STOP_WAKEUPCLOCK_MSI );
+//     /* Configure the main internal regulator output voltage */
+//     __HAL_RCC_PWR_CLK_ENABLE( );
+//     __HAL_PWR_VOLTAGESCALING_CONFIG( PWR_REGULATOR_VOLTAGE_SCALE1 );
+//     /* Ensure that MSI is wake-up system clock */
+//     __HAL_RCC_WAKEUPSTOP_CLK_CONFIG( RCC_STOP_WAKEUPCLOCK_MSI );
 
-    /* Initializes the CPU, AHB and APB busses clocks */
-    rcc_osc_init.OscillatorType      = RCC_OSCILLATORTYPE_LSE | RCC_OSCILLATORTYPE_MSI;
-    rcc_osc_init.MSIState            = RCC_MSI_ON;
-    rcc_osc_init.HSEState            = RCC_HSE_OFF;
-    rcc_osc_init.HSIState            = RCC_HSI_OFF;
-    rcc_osc_init.LSEState            = RCC_LSE_ON;
-    rcc_osc_init.LSIState            = RCC_LSI_OFF;
-    rcc_osc_init.MSICalibrationValue = RCC_MSICALIBRATION_DEFAULT;
-    rcc_osc_init.MSIClockRange       = RCC_MSIRANGE_11;
-    rcc_osc_init.PLL.PLLState        = RCC_PLL_ON;
-    rcc_osc_init.PLL.PLLSource       = RCC_PLLSOURCE_MSI;
-    rcc_osc_init.PLL.PLLM            = 3;
-    rcc_osc_init.PLL.PLLN            = 10;
-    rcc_osc_init.PLL.PLLP            = RCC_PLLP_DIV7;
-    rcc_osc_init.PLL.PLLQ            = RCC_PLLQ_DIV2;
-    rcc_osc_init.PLL.PLLR            = RCC_PLLR_DIV2;
-    if( HAL_RCC_OscConfig( &rcc_osc_init ) != HAL_OK )
-    {
-    }
+//     /* Initializes the CPU, AHB and APB busses clocks */
+//     rcc_osc_init.OscillatorType      = RCC_OSCILLATORTYPE_LSE | RCC_OSCILLATORTYPE_MSI;
+//     rcc_osc_init.MSIState            = RCC_MSI_ON;
+//     rcc_osc_init.HSEState            = RCC_HSE_OFF;
+//     rcc_osc_init.HSIState            = RCC_HSI_OFF;
+//     rcc_osc_init.LSEState            = RCC_LSE_ON;
+//     rcc_osc_init.LSIState            = RCC_LSI_OFF;
+//     rcc_osc_init.MSICalibrationValue = RCC_MSICALIBRATION_DEFAULT;
+//     rcc_osc_init.MSIClockRange       = RCC_MSIRANGE_11;
+//     rcc_osc_init.PLL.PLLState        = RCC_PLL_ON;
+//     rcc_osc_init.PLL.PLLSource       = RCC_PLLSOURCE_MSI;
+//     rcc_osc_init.PLL.PLLM            = 3;
+//     rcc_osc_init.PLL.PLLN            = 10;
+//     rcc_osc_init.PLL.PLLP            = RCC_PLLP_DIV7;
+//     rcc_osc_init.PLL.PLLQ            = RCC_PLLQ_DIV2;
+//     rcc_osc_init.PLL.PLLR            = RCC_PLLR_DIV2;
+//     if( HAL_RCC_OscConfig( &rcc_osc_init ) != HAL_OK )
+//     {
+//     }
 
-    /* Initializes the CPU, AHB and APB busses clocks */
-    rcc_clk_init.ClockType      = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
-    rcc_clk_init.SYSCLKSource   = RCC_SYSCLKSOURCE_PLLCLK;
-    rcc_clk_init.AHBCLKDivider  = RCC_SYSCLK_DIV1;
-    rcc_clk_init.APB1CLKDivider = RCC_HCLK_DIV1;
-    rcc_clk_init.APB2CLKDivider = RCC_HCLK_DIV1;
+//     /* Initializes the CPU, AHB and APB busses clocks */
+//     rcc_clk_init.ClockType      = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+//     rcc_clk_init.SYSCLKSource   = RCC_SYSCLKSOURCE_PLLCLK;
+//     rcc_clk_init.AHBCLKDivider  = RCC_SYSCLK_DIV1;
+//     rcc_clk_init.APB1CLKDivider = RCC_HCLK_DIV1;
+//     rcc_clk_init.APB2CLKDivider = RCC_HCLK_DIV1;
 
-    if( HAL_RCC_ClockConfig( &rcc_clk_init, FLASH_LATENCY_1 ) != HAL_OK )
-    {
-    }
+//     if( HAL_RCC_ClockConfig( &rcc_clk_init, FLASH_LATENCY_1 ) != HAL_OK )
+//     {
+//     }
 
-    periph_clk_init.PeriphClockSelection = RCC_PERIPHCLK_RTC | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_LPTIM1;
-    periph_clk_init.Lptim1ClockSelection = RCC_LPTIM1CLKSOURCE_LSE;
-    periph_clk_init.RTCClockSelection    = RCC_RTCCLKSOURCE_LSE;
-    periph_clk_init.Usart2ClockSelection = RCC_USART2CLKSOURCE_PCLK1;
-    if( HAL_RCCEx_PeriphCLKConfig( &periph_clk_init ) != HAL_OK )
-    {
-    }
-}
+//     periph_clk_init.PeriphClockSelection = RCC_PERIPHCLK_RTC | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_LPTIM1;
+//     periph_clk_init.Lptim1ClockSelection = RCC_LPTIM1CLKSOURCE_LSE;
+//     periph_clk_init.RTCClockSelection    = RCC_RTCCLKSOURCE_LSE;
+//     periph_clk_init.Usart2ClockSelection = RCC_USART2CLKSOURCE_PCLK1;
+//     if( HAL_RCCEx_PeriphCLKConfig( &periph_clk_init ) != HAL_OK )
+//     {
+//     }
+// }
 
 #if( HAL_LOW_POWER_MODE == HAL_FEATURE_OFF )
 static bool hal_mcu_no_low_power_wait( const int32_t milliseconds )

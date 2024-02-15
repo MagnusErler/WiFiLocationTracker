@@ -60,12 +60,7 @@ Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c \
 Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c \
 Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c \
 Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart_ex.c \
-Src/boards/lr1110_modem_board.c \
 Src/main.c \
-Src/radio/lr1110.c \
-Src/radio/lr1110_modem/src/lr1110_bootloader.c \
-Src/radio/lr1110_modem/src/lr1110_modem_helper.c \
-Src/radio/lr1110_modem/src/lr1110_modem_system.c \
 Src/smtc_hal/smtc_hal_flash.c \
 Src/smtc_hal/smtc_hal_gpio.c \
 Src/smtc_hal/smtc_hal_mcu.c \

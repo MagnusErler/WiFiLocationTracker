@@ -73,13 +73,6 @@ static void MX_USART2_UART_Init(void);
 /* USER CODE BEGIN PFP */
 
 /*!
- * @brief Reset event callback
- *
- * @param [in] reset_count reset counter from the modem
- */
-static void lr1110_reset_event( uint16_t reset_count );
-
-/*!
  * @brief Get LR1110 version
  *
  * @param [in] context Radio abstraction
@@ -239,6 +232,8 @@ int main(void)
 
   setupTCXO(lr1110_context);
 
+  HAL_Delay(5000);
+
   getLR1110_Bootloader_Version(lr1110_context);
   getLR1110_WiFi_Version(lr1110_context);
   getLR1110_Chip_EUI(lr1110_context);
@@ -310,9 +305,10 @@ int main(void)
 
     HAL_DBG_TRACE_PRINTF("2a = %d\r\n", a++);
 
-    getLR1110_Temperature(lr1110_context);
+    getLR1110_Bootloader_Version(lr1110_context);
+    getLR1110_WiFi_Version(lr1110_context);
 
-    getLR1110_GNSS_Version(lr1110_context);
+    getLR1110_Temperature(lr1110_context);
 
     // if( wifi_execute_scan( lr1110_context, &wifi_settings, &capture_result ) == WIFI_SCAN_SUCCESS ) {
     //   HAL_DBG_TRACE_MSG( "Success\n\r" );
@@ -637,22 +633,6 @@ static void MX_GPIO_Init(void)
  * --- PRIVATE FUNCTIONS DEFINITION --------------------------------------------
  */
 
-
-
-static void lr1110_reset_event( uint16_t reset_count ) {
-    HAL_DBG_TRACE_INFO( "###### ===== LR1110 MODEM-E RESET %lu ==== ######\r\n\r\n", reset_count );
-
-    if( lr1110_modem_board_is_ready( ) == true )
-    {
-        /* System reset */
-        hal_mcu_reset( );
-    }
-    else
-    {
-        lr1110_modem_board_set_ready( true );
-    }
-}
-
 void turnOnLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin) {
   HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
 }
@@ -678,8 +658,6 @@ void blinkLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin, uint32_t period, ui
 
 void getLR1110_Bootloader_Version( const void* context ) {
   HAL_DBG_TRACE_INFO("Getting LR1110 version... ");
-
-  lr1110_bootloader_version_t1 bootloader_version;
 
   uint8_t cbuffer[LR1110_VERSION_CMD_LENGTH];
   uint8_t rbuffer[LR1110_VERSION_LENGTH] = { 0 };
