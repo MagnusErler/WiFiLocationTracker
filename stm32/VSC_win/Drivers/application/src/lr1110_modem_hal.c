@@ -40,7 +40,7 @@
 #include "lr1110_modem_system.h"
 #include "lr1110_modem_board.h"
 
-#include "system_spi.h"
+//#include "system_spi.h"
 
 #include "spi.h"
 

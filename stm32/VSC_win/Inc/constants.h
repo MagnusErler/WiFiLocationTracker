@@ -1,4 +1,4 @@
-
+#include "smtc_hal_gpio_pin_names.h"
 
 /*!
  * @brief Length of command buffer for commands that have no parameter
@@ -146,13 +146,13 @@ typedef enum
 /*!
  * @brief LR1110 modem bootloader version structure
  */
-typedef struct lr1110_bootloader_version_s
+typedef struct lr1110_bootloader_version_s1
 {
     uint8_t hw;         //<! Hardware verion
     uint8_t type;       //!< Type version
     uint8_t fw_major;   //!< Firmware major version
     uint8_t fw_minor;   //!< Firmware minor version
-} lr1110_bootloader_version_t;
+} lr1110_bootloader_version_t1;
 
 /*!
  * @brief TCXO supply voltage values
@@ -168,3 +168,25 @@ typedef enum
     LR1110_TCXO_CTRL_3_0V = 0x06,  //!< Supply voltage = 3.0v
     LR1110_TCXO_CTRL_3_3V = 0x07,  //!< Supply voltage = 3.3v
 } lr1110_tcxo_supply_voltage_t;
+
+typedef struct configuration1
+{
+    GPIO_TypeDef* port;
+    uint32_t      pin;
+} gpio_t1;
+
+typedef struct hal_gpio_irq_s2
+{
+    gpio_t1 irq1;
+    void*                context;
+    void ( *callback )( void* context );
+} hal_gpio_irq_t2;
+
+typedef struct
+{
+    SPI_TypeDef*    spi;
+    gpio_t1          nss;
+    gpio_t1          reset;
+    hal_gpio_irq_t2  event;
+    gpio_t1          busy;
+} radio_t1;

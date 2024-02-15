@@ -31,7 +31,7 @@
 //#include "wifi_scan.h"
 //#include "gnss_scan.h"
 
-#include "constants.h"
+
 
 /* USER CODE END Includes */
 
@@ -197,19 +197,19 @@ int main(void)
 
   int a = 0;
 
-  void* lr1110_context = (void*) malloc(sizeof(radio_t));
-  ((radio_t*)lr1110_context)->spi             = SPI1;
-  ((radio_t*)lr1110_context)->nss.port        = GPIOA;
-  ((radio_t*)lr1110_context)->nss.pin         = NSS_Pin;
-  ((radio_t*)lr1110_context)->reset.port      = GPIOA;
-  ((radio_t*)lr1110_context)->reset.pin       = RESET_Pin;
-  // ((radio_t*)lr1110_context)->event.irq1.port = GPIOB;
-  // ((radio_t*)lr1110_context)->event.irq1.pin = EVENT_Pin;
-  ((radio_t*)lr1110_context)->event.pin       = EVENT_Pin;
-  //((radio_t*)lr1110_context)->event.callback  = radio_event_callback;
-  ((radio_t*)lr1110_context)->event.context   = ( ( radio_t* ) lr1110_context );
-  ((radio_t*)lr1110_context)->busy.port       = GPIOB;
-  ((radio_t*)lr1110_context)->busy.pin        = BUSY_Pin;
+  void* lr1110_context = (void*) malloc(sizeof(radio_t1));
+  ((radio_t1*)lr1110_context)->spi             = SPI1;
+  ((radio_t1*)lr1110_context)->nss.port        = GPIOA;
+  ((radio_t1*)lr1110_context)->nss.pin         = NSS_Pin;
+  ((radio_t1*)lr1110_context)->reset.port      = GPIOA;
+  ((radio_t1*)lr1110_context)->reset.pin       = RESET_Pin;
+  // ((radio_t1*)lr1110_context)->event.irq1.port = GPIOB;
+  // ((radio_t1*)lr1110_context)->event.irq1.pin = EVENT_Pin;
+  //((radio_t1*)lr1110_context)->event.pin       = EVENT_Pin;
+  //((radio_t1*)lr1110_context)->event.callback  = radio_event_callback;
+  ((radio_t1*)lr1110_context)->event.context   = ( ( radio_t1* ) lr1110_context );
+  ((radio_t1*)lr1110_context)->busy.port       = GPIOB;
+  ((radio_t1*)lr1110_context)->busy.pin        = BUSY_Pin;
 
   /* USER CODE END Init */
 
@@ -679,7 +679,7 @@ void blinkLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin, uint32_t period, ui
 void getLR1110_Bootloader_Version( const void* context ) {
   HAL_DBG_TRACE_INFO("Getting LR1110 version... ");
 
-  lr1110_bootloader_version_t bootloader_version;
+  lr1110_bootloader_version_t1 bootloader_version;
 
   uint8_t cbuffer[LR1110_VERSION_CMD_LENGTH];
   uint8_t rbuffer[LR1110_VERSION_LENGTH] = { 0 };
@@ -810,7 +810,7 @@ void setupTCXO( const void* context ) {
   cbuffer[4] = ( uint8_t )( timeout >> 8 );
   cbuffer[5] = ( uint8_t )( timeout >> 0 );
 
-  if (lr1110_spi_write( ((radio_t*)context)->spi, cbuffer, LR1110_SET_TCXO_MODE_CMD_LENGTH, 1000 ) == LR1110_SPI_STATUS_OK) {
+  if (lr1110_spi_write( ((radio_t1*)context)->spi, cbuffer, LR1110_SET_TCXO_MODE_CMD_LENGTH, 1000 ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
   } else {
     HAL_DBG_TRACE_ERROR("Failed to set TCXO mode\r\n");

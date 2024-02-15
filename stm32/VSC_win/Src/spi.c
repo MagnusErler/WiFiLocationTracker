@@ -9,11 +9,11 @@
 
 #include "main.h"
 
-#include "configuration.h"
+//#include "configuration.h"
 
 #include "lr1110_modem_board.h"     // for HAL_DBG_TRACE_ERROR
 
-radio_t* radio;
+radio_t1* radio;
 
 lr1110_gpio_status_t waitForBusyState( GPIO_PinState state, uint32_t timeout_ms ) {
 
@@ -111,7 +111,7 @@ lr1110_spi_status_t lr1110_spi_read_with_dummy_byte( SPI_TypeDef* spi, uint8_t* 
 
 lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer, const uint16_t cbuffer_length, uint8_t* rbuffer, const uint16_t rbuffer_length ) {
 
-    radio = ( radio_t* ) context;
+    radio = ( radio_t1* ) context;
     uint8_t  dummy_byte  = 0x00;
 
     if (waitForBusyState( GPIO_PIN_RESET, 1000 ) != LR1110_GPIO_STATUS_OK) {
