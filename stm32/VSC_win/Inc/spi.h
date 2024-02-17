@@ -10,7 +10,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#include "configuration.h"
+#include "stm32l4xx_ll_gpio.h"
+#include "stm32l4xx_ll_spi.h"
 
 /*
  * -----------------------------------------------------------------------------

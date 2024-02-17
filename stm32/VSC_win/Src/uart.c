@@ -4,16 +4,11 @@
 
 #include "stm32l4xx_hal.h"
 #include "stm32l4xx_ll_utils.h"
-//#include "lr1110_modem_board.h"
 #include "smtc_hal.h"
 
-#include "configuration.h"
-
-#if( HAL_DBG_TRACE == HAL_FEATURE_ON )
 #include <stdarg.h>
 #include <string.h>
 #include <stdio.h>
-#endif
 
 /*
  * -----------------------------------------------------------------------------

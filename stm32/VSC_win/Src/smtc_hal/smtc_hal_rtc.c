@@ -163,6 +163,85 @@ static uint32_t hal_rtc_get_calendar_time( uint16_t* milliseconds );
  */
 static uint64_t rtc_get_timestamp_in_ticks( RTC_DateTypeDef* date, RTC_TimeTypeDef* time );
 
+uint32_t hal_rtc_get_time_ms( void )
+{
+    uint32_t seconds      = 0;
+    uint16_t milliseconds = 0;
+
+    seconds = hal_rtc_get_calendar_time( &milliseconds );
+
+    return seconds * 1000 + milliseconds;
+}
+
+uint32_t hal_rtc_set_time_ref_in_ticks( void )
+{
+    hal_rtc.context.time_ref_in_ticks =
+        ( uint32_t ) rtc_get_timestamp_in_ticks( &hal_rtc.context.calendar_date, &hal_rtc.context.calendar_time );
+    return hal_rtc.context.time_ref_in_ticks;
+}
+
+uint32_t hal_rtc_tick_2_ms( const uint32_t tick )
+{
+    uint32_t seconds    = tick >> N_PREDIV_S;
+    uint32_t local_tick = tick & PREDIV_S;
+
+    return ( uint32_t )( ( seconds * 1000 ) + ( ( local_tick * 1000 ) >> N_PREDIV_S ) );
+}
+
+static uint32_t hal_rtc_get_calendar_time( uint16_t* milliseconds )
+{
+    RTC_TimeTypeDef time;
+    RTC_DateTypeDef date;
+    uint32_t        ticks;
+
+    uint64_t timestamp_in_ticks = rtc_get_timestamp_in_ticks( &date, &time );
+
+    uint32_t seconds = ( uint32_t )( timestamp_in_ticks >> N_PREDIV_S );
+
+    ticks = ( uint32_t ) timestamp_in_ticks & PREDIV_S;
+
+    *milliseconds = hal_rtc_tick_2_ms( ticks );
+
+    return seconds;
+}
+
+static uint64_t rtc_get_timestamp_in_ticks( RTC_DateTypeDef* date, RTC_TimeTypeDef* time )
+{
+    uint64_t timestamp_in_ticks = 0;
+    uint32_t correction;
+    uint32_t seconds;
+
+    /* Make sure it is correct due to asynchronous nature of RTC */
+    volatile uint32_t ssr;
+
+    do
+    {
+        ssr = RTC->SSR;
+        HAL_RTC_GetDate( &hal_rtc.handle, date, RTC_FORMAT_BIN );
+        HAL_RTC_GetTime( &hal_rtc.handle, time, RTC_FORMAT_BIN );
+    } while( ssr != RTC->SSR );
+
+    /* Calculate amount of elapsed days since 01/01/2000 */
+    seconds = DIVC( ( DAYS_IN_YEAR * 3 + DAYS_IN_LEAP_YEAR ) * date->Year, 4 );
+
+    correction = ( ( date->Year % 4 ) == 0 ) ? DAYS_IN_MONTH_CORRECTION_LEAP : DAYS_IN_MONTH_CORRECTION_NORM;
+
+    seconds +=
+        ( DIVC( ( date->Month - 1 ) * ( 30 + 31 ), 2 ) - ( ( ( correction >> ( ( date->Month - 1 ) * 2 ) ) & 0x03 ) ) );
+
+    seconds += ( date->Date - 1 );
+
+    /* Convert from days to seconds */
+    seconds *= SECONDS_IN_1DAY;
+
+    seconds += ( ( uint32_t ) time->Seconds + ( ( uint32_t ) time->Minutes * SECONDS_IN_1MINUTE ) +
+                 ( ( uint32_t ) time->Hours * SECONDS_IN_1HOUR ) );
+
+    timestamp_in_ticks = ( ( ( uint64_t ) seconds ) << N_PREDIV_S ) + ( PREDIV_S - time->SubSeconds );
+
+    return timestamp_in_ticks;
+}
+
 // void hal_rtc_init( void )
 // {
 //     RTC_TimeTypeDef time;
@@ -220,15 +299,7 @@ static uint64_t rtc_get_timestamp_in_ticks( RTC_DateTypeDef* date, RTC_TimeTypeD
 //     return hal_rtc_get_calendar_time( &milliseconds );
 // }
 
-uint32_t hal_rtc_get_time_ms( void )
-{
-    uint32_t seconds      = 0;
-    uint16_t milliseconds = 0;
 
-    seconds = hal_rtc_get_calendar_time( &milliseconds );
-
-    return seconds * 1000 + milliseconds;
-}
 
 // void hal_rtc_stop_alarm( void )
 // {
@@ -406,12 +477,7 @@ uint32_t hal_rtc_get_time_ms( void )
 
 //void hal_rtc_stop_timer( void ) { HAL_RTCEx_DeactivateWakeUpTimer( &hal_rtc.handle ); }
 
-uint32_t hal_rtc_set_time_ref_in_ticks( void )
-{
-    hal_rtc.context.time_ref_in_ticks =
-        ( uint32_t ) rtc_get_timestamp_in_ticks( &hal_rtc.context.calendar_date, &hal_rtc.context.calendar_time );
-    return hal_rtc.context.time_ref_in_ticks;
-}
+
 
 //uint32_t hal_rtc_get_time_ref_in_ticks( void ) { return hal_rtc.context.time_ref_in_ticks; }
 
@@ -420,13 +486,7 @@ uint32_t hal_rtc_set_time_ref_in_ticks( void )
 //     return ( uint32_t )( ( ( ( uint64_t ) milliseconds ) * CONV_DENOM ) / CONV_NUMER );
 // }
 
-uint32_t hal_rtc_tick_2_ms( const uint32_t tick )
-{
-    uint32_t seconds    = tick >> N_PREDIV_S;
-    uint32_t local_tick = tick & PREDIV_S;
 
-    return ( uint32_t )( ( seconds * 1000 ) + ( ( local_tick * 1000 ) >> N_PREDIV_S ) );
-}
 
 // static uint32_t hal_rtc_ms_2_wakeup_timer_tick( const uint32_t milliseconds )
 // {
@@ -446,22 +506,7 @@ uint32_t hal_rtc_tick_2_ms( const uint32_t tick )
 //     return nb_tick;
 // }
 
-static uint32_t hal_rtc_get_calendar_time( uint16_t* milliseconds )
-{
-    RTC_TimeTypeDef time;
-    RTC_DateTypeDef date;
-    uint32_t        ticks;
 
-    uint64_t timestamp_in_ticks = rtc_get_timestamp_in_ticks( &date, &time );
-
-    uint32_t seconds = ( uint32_t )( timestamp_in_ticks >> N_PREDIV_S );
-
-    ticks = ( uint32_t ) timestamp_in_ticks & PREDIV_S;
-
-    *milliseconds = hal_rtc_tick_2_ms( ticks );
-
-    return seconds;
-}
 
 // /*!
 //  * @brief RTC IRQ Handler of the RTC Alarm
@@ -494,42 +539,7 @@ static uint32_t hal_rtc_get_calendar_time( uint16_t* milliseconds )
 //  */
 // void HAL_RTC_AlarmAEventCallback( RTC_HandleTypeDef* hrtc ) { timer_irq_handler( ); }
 
-static uint64_t rtc_get_timestamp_in_ticks( RTC_DateTypeDef* date, RTC_TimeTypeDef* time )
-{
-    uint64_t timestamp_in_ticks = 0;
-    uint32_t correction;
-    uint32_t seconds;
 
-    /* Make sure it is correct due to asynchronous nature of RTC */
-    volatile uint32_t ssr;
-
-    do
-    {
-        ssr = RTC->SSR;
-        HAL_RTC_GetDate( &hal_rtc.handle, date, RTC_FORMAT_BIN );
-        HAL_RTC_GetTime( &hal_rtc.handle, time, RTC_FORMAT_BIN );
-    } while( ssr != RTC->SSR );
-
-    /* Calculate amount of elapsed days since 01/01/2000 */
-    seconds = DIVC( ( DAYS_IN_YEAR * 3 + DAYS_IN_LEAP_YEAR ) * date->Year, 4 );
-
-    correction = ( ( date->Year % 4 ) == 0 ) ? DAYS_IN_MONTH_CORRECTION_LEAP : DAYS_IN_MONTH_CORRECTION_NORM;
-
-    seconds +=
-        ( DIVC( ( date->Month - 1 ) * ( 30 + 31 ), 2 ) - ( ( ( correction >> ( ( date->Month - 1 ) * 2 ) ) & 0x03 ) ) );
-
-    seconds += ( date->Date - 1 );
-
-    /* Convert from days to seconds */
-    seconds *= SECONDS_IN_1DAY;
-
-    seconds += ( ( uint32_t ) time->Seconds + ( ( uint32_t ) time->Minutes * SECONDS_IN_1MINUTE ) +
-                 ( ( uint32_t ) time->Hours * SECONDS_IN_1HOUR ) );
-
-    timestamp_in_ticks = ( ( ( uint64_t ) seconds ) << N_PREDIV_S ) + ( PREDIV_S - time->SubSeconds );
-
-    return timestamp_in_ticks;
-}
 
 //void RTC_WKUP_IRQHandler( void ) { HAL_RTCEx_WakeUpTimerIRQHandler( &hal_rtc.handle ); }
 

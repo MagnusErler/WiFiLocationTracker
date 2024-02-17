@@ -51,25 +51,25 @@ extern "C" {
  * --- PUBLIC CONSTANTS --------------------------------------------------------
  */
 
-/*!
- * @brief Temperature coefficient of the clock source
- */
-#define RTC_TEMP_COEFFICIENT ( -0.035 )
+// /*!
+//  * @brief Temperature coefficient of the clock source
+//  */
+// #define RTC_TEMP_COEFFICIENT ( -0.035 )
 
-/*!
- * @brief Temperature coefficient deviation of the clock source
- */
-#define RTC_TEMP_DEV_COEFFICIENT ( 0.0035 )
+// /*!
+//  * @brief Temperature coefficient deviation of the clock source
+//  */
+// #define RTC_TEMP_DEV_COEFFICIENT ( 0.0035 )
 
-/*!
- * @brief Turnover temperature of the clock source
- */
-#define RTC_TEMP_TURNOVER ( 25.0 )
+// /*!
+//  * @brief Turnover temperature of the clock source
+//  */
+// #define RTC_TEMP_TURNOVER ( 25.0 )
 
-/*!
- * @brief Turnover temperature deviation of the clock source
- */
-#define RTC_TEMP_DEV_TURNOVER ( 5.0 )
+// /*!
+//  * @brief Turnover temperature deviation of the clock source
+//  */
+// #define RTC_TEMP_DEV_TURNOVER ( 5.0 )
 
 /*
  * -----------------------------------------------------------------------------
@@ -132,6 +132,21 @@ typedef struct hal_rtc_s
  */
 uint32_t hal_rtc_get_time_ms( void );
 
+/*!
+ * @brief Set the RTC time reference in ticks
+ *
+ * @returns time_ref_in_ticks RTC time reference in ticks
+ */
+uint32_t hal_rtc_set_time_ref_in_ticks( void );
+
+/*!
+ * @brief Converts time in ticks to time in ms
+ *
+ * @param [in] tick Time in timer ticks
+ * @returns tick Time in milliseconds
+ */
+uint32_t hal_rtc_tick_2_ms( const uint32_t tick );
+
 // /*!
 //  * @brief Waits delay milliseconds by polling RTC
 //  *
@@ -160,12 +175,7 @@ uint32_t hal_rtc_get_time_ms( void );
 //  */
 // void hal_rtc_stop_timer( void );
 
-/*!
- * @brief Set the RTC time reference in ticks
- *
- * @returns time_ref_in_ticks RTC time reference in ticks
- */
-uint32_t hal_rtc_set_time_ref_in_ticks( void );
+
 
 // /*!
 //  * @brief Get the RTC time reference in ticks
@@ -196,13 +206,7 @@ uint32_t hal_rtc_set_time_ref_in_ticks( void );
 //  */
 // uint32_t hal_rtc_ms_2_tick( const uint32_t milliseconds );
 
-/*!
- * @brief Converts time in ticks to time in ms
- *
- * @param [in] tick Time in timer ticks
- * @returns tick Time in milliseconds
- */
-uint32_t hal_rtc_tick_2_ms( const uint32_t tick );
+
 
 // /*!
 //  * @brief returns the wake up time in ticks
