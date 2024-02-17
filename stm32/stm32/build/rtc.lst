@@ -1,0 +1,553 @@
+ARM GAS  /tmp/ccSZgud3.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"rtc.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.rtc_get_timestamp_in_ticks,"ax",%progbits
+  18              		.align	1
+  19              		.arch armv7e-m
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	rtc_get_timestamp_in_ticks:
+  26              	.LVL0:
+  27              	.LFB334:
+  28              		.file 1 "Src/rtc.c"
+   1:Src/rtc.c     **** 
+   2:Src/rtc.c     ****  /*
+   3:Src/rtc.c     ****  * -----------------------------------------------------------------------------
+   4:Src/rtc.c     ****  * --- DEPENDENCIES ------------------------------------------------------------
+   5:Src/rtc.c     ****  */
+   6:Src/rtc.c     **** 
+   7:Src/rtc.c     **** #include <time.h>
+   8:Src/rtc.c     **** #include <math.h>
+   9:Src/rtc.c     **** #include "stm32l4xx_hal.h"
+  10:Src/rtc.c     **** #include "stm32l4xx_ll_rtc.h"
+  11:Src/rtc.c     **** #include "rtc.h"
+  12:Src/rtc.c     **** 
+  13:Src/rtc.c     **** /*
+  14:Src/rtc.c     ****  * -----------------------------------------------------------------------------
+  15:Src/rtc.c     ****  * --- PRIVATE MACROS-----------------------------------------------------------
+  16:Src/rtc.c     ****  */
+  17:Src/rtc.c     **** 
+  18:Src/rtc.c     **** /*
+  19:Src/rtc.c     ****  * -----------------------------------------------------------------------------
+  20:Src/rtc.c     ****  * --- PRIVATE CONSTANTS -------------------------------------------------------
+  21:Src/rtc.c     ****  */
+  22:Src/rtc.c     **** 
+  23:Src/rtc.c     **** /* sub-second number of bits */
+  24:Src/rtc.c     **** #define N_PREDIV_S                     10U
+  25:Src/rtc.c     **** 
+  26:Src/rtc.c     **** /* Synchronous prediv */
+  27:Src/rtc.c     **** #define PREDIV_S                       ( ( 1U << N_PREDIV_S ) - 1U )
+  28:Src/rtc.c     **** 
+  29:Src/rtc.c     **** /* Asynchronous prediv */
+  30:Src/rtc.c     **** #define PREDIV_A                       ( ( 1U << ( 15U - N_PREDIV_S ) ) - 1U )
+ARM GAS  /tmp/ccSZgud3.s 			page 2
+
+
+  31:Src/rtc.c     **** 
+  32:Src/rtc.c     **** /* Sub-second mask definition */
+  33:Src/rtc.c     **** #define ALARM_SUBSECOND_MASK           ( N_PREDIV_S << RTC_ALRMASSR_MASKSS_Pos )
+  34:Src/rtc.c     **** 
+  35:Src/rtc.c     **** /*!
+  36:Src/rtc.c     ****  * @brief Days, Hours, Minutes and seconds
+  37:Src/rtc.c     ****  */
+  38:Src/rtc.c     **** #define DAYS_IN_LEAP_YEAR              ( ( uint32_t ) 366U )
+  39:Src/rtc.c     **** #define DAYS_IN_YEAR                   ( ( uint32_t ) 365U )
+  40:Src/rtc.c     **** #define SECONDS_IN_1DAY                ( ( uint32_t ) 86400U )
+  41:Src/rtc.c     **** #define SECONDS_IN_1HOUR               ( ( uint32_t ) 3600U )
+  42:Src/rtc.c     **** #define SECONDS_IN_1MINUTE             ( ( uint32_t ) 60U )
+  43:Src/rtc.c     **** #define MINUTES_IN_1HOUR               ( ( uint32_t ) 60U )
+  44:Src/rtc.c     **** #define HOURS_IN_1DAY                  ( ( uint32_t ) 24U )
+  45:Src/rtc.c     **** 
+  46:Src/rtc.c     **** /*!
+  47:Src/rtc.c     ****  * @brief Correction factors
+  48:Src/rtc.c     ****  */
+  49:Src/rtc.c     **** #define DAYS_IN_MONTH_CORRECTION_NORM  ( ( uint32_t ) 0x99AAA0 )
+  50:Src/rtc.c     **** #define DAYS_IN_MONTH_CORRECTION_LEAP  ( ( uint32_t ) 0x445550 )
+  51:Src/rtc.c     **** 
+  52:Src/rtc.c     **** /*!
+  53:Src/rtc.c     ****  * @brief Calculates ceiling( X / N )
+  54:Src/rtc.c     ****  */
+  55:Src/rtc.c     **** #define DIVC( X, N )                   ( ( ( X ) + ( N ) -1 ) / ( N ) )
+  56:Src/rtc.c     **** 
+  57:Src/rtc.c     **** /*
+  58:Src/rtc.c     ****  * -----------------------------------------------------------------------------
+  59:Src/rtc.c     ****  * --- PRIVATE TYPES -----------------------------------------------------------
+  60:Src/rtc.c     ****  */
+  61:Src/rtc.c     **** 
+  62:Src/rtc.c     **** /*
+  63:Src/rtc.c     ****  * -----------------------------------------------------------------------------
+  64:Src/rtc.c     ****  * --- PRIVATE VARIABLES -------------------------------------------------------
+  65:Src/rtc.c     ****  */
+  66:Src/rtc.c     **** 
+  67:Src/rtc.c     **** hal_rtc_t hal_rtc;
+  68:Src/rtc.c     **** 
+  69:Src/rtc.c     **** /*
+  70:Src/rtc.c     ****  * -----------------------------------------------------------------------------
+  71:Src/rtc.c     ****  * --- PRIVATE FUNCTIONS DECLARATION -------------------------------------------
+  72:Src/rtc.c     ****  */
+  73:Src/rtc.c     **** 
+  74:Src/rtc.c     **** /*!
+  75:Src/rtc.c     ****  * @brief Get the elapsed time in seconds and milliseconds since RTC initialization
+  76:Src/rtc.c     ****  *
+  77:Src/rtc.c     ****  * @param [out] milliseconds Number of milliseconds elapsed since RTC
+  78:Src/rtc.c     ****  *                           initialization
+  79:Src/rtc.c     ****  * @returns seconds           Number of seconds elapsed since RTC initialization
+  80:Src/rtc.c     ****  */
+  81:Src/rtc.c     **** static uint32_t hal_rtc_get_calendar_time( uint16_t* milliseconds );
+  82:Src/rtc.c     **** 
+  83:Src/rtc.c     **** /*!
+  84:Src/rtc.c     ****  * @brief Get current full resolution RTC timestamp in ticks
+  85:Src/rtc.c     ****  *
+  86:Src/rtc.c     ****  * @returns timestamp_in_ticks Current timestamp in ticks
+  87:Src/rtc.c     ****  */
+ARM GAS  /tmp/ccSZgud3.s 			page 3
+
+
+  88:Src/rtc.c     **** static uint64_t rtc_get_timestamp_in_ticks( RTC_DateTypeDef* date, RTC_TimeTypeDef* time );
+  89:Src/rtc.c     **** 
+  90:Src/rtc.c     **** uint32_t hal_rtc_get_time_ms( void )
+  91:Src/rtc.c     **** {
+  92:Src/rtc.c     ****     uint32_t seconds      = 0;
+  93:Src/rtc.c     ****     uint16_t milliseconds = 0;
+  94:Src/rtc.c     **** 
+  95:Src/rtc.c     ****     seconds = hal_rtc_get_calendar_time( &milliseconds );
+  96:Src/rtc.c     **** 
+  97:Src/rtc.c     ****     return seconds * 1000 + milliseconds;
+  98:Src/rtc.c     **** }
+  99:Src/rtc.c     **** 
+ 100:Src/rtc.c     **** static uint32_t hal_rtc_get_calendar_time( uint16_t* milliseconds )
+ 101:Src/rtc.c     **** {
+ 102:Src/rtc.c     ****     RTC_TimeTypeDef time;
+ 103:Src/rtc.c     ****     RTC_DateTypeDef date;
+ 104:Src/rtc.c     ****     uint32_t        ticks;
+ 105:Src/rtc.c     **** 
+ 106:Src/rtc.c     ****     uint64_t timestamp_in_ticks = rtc_get_timestamp_in_ticks( &date, &time );
+ 107:Src/rtc.c     **** 
+ 108:Src/rtc.c     ****     uint32_t seconds = ( uint32_t )( timestamp_in_ticks >> N_PREDIV_S );
+ 109:Src/rtc.c     **** 
+ 110:Src/rtc.c     ****     ticks = ( uint32_t ) timestamp_in_ticks & PREDIV_S;
+ 111:Src/rtc.c     **** 
+ 112:Src/rtc.c     ****     uint32_t second    = ticks >> N_PREDIV_S;
+ 113:Src/rtc.c     ****     uint32_t local_tick = ticks & PREDIV_S;
+ 114:Src/rtc.c     **** 
+ 115:Src/rtc.c     ****     *milliseconds = ( second * 1000 ) + ( ( local_tick * 1000 ) >> N_PREDIV_S );
+ 116:Src/rtc.c     **** 
+ 117:Src/rtc.c     ****     return seconds;
+ 118:Src/rtc.c     **** }
+ 119:Src/rtc.c     **** 
+ 120:Src/rtc.c     **** static uint64_t rtc_get_timestamp_in_ticks( RTC_DateTypeDef* date, RTC_TimeTypeDef* time )
+ 121:Src/rtc.c     **** {
+  29              		.loc 1 121 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 8
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 121 1 is_stmt 0 view .LVU1
+  34 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 20
+  37              		.cfi_offset 4, -20
+  38              		.cfi_offset 5, -16
+  39              		.cfi_offset 6, -12
+  40              		.cfi_offset 7, -8
+  41              		.cfi_offset 14, -4
+  42 0002 83B0     		sub	sp, sp, #12
+  43              	.LCFI1:
+  44              		.cfi_def_cfa_offset 32
+  45 0004 0746     		mov	r7, r0
+  46 0006 0E46     		mov	r6, r1
+ 122:Src/rtc.c     ****     uint64_t timestamp_in_ticks = 0;
+  47              		.loc 1 122 5 is_stmt 1 view .LVU2
+  48              	.LVL1:
+  49              	.L2:
+ 123:Src/rtc.c     ****     uint32_t correction;
+ARM GAS  /tmp/ccSZgud3.s 			page 4
+
+
+  50              		.loc 1 123 5 discriminator 1 view .LVU3
+ 124:Src/rtc.c     ****     uint32_t seconds;
+  51              		.loc 1 124 5 discriminator 1 view .LVU4
+ 125:Src/rtc.c     **** 
+ 126:Src/rtc.c     ****     /* Make sure it is correct due to asynchronous nature of RTC */
+ 127:Src/rtc.c     ****     volatile uint32_t ssr;
+  52              		.loc 1 127 5 discriminator 1 view .LVU5
+ 128:Src/rtc.c     **** 
+ 129:Src/rtc.c     ****     do
+  53              		.loc 1 129 5 discriminator 1 view .LVU6
+ 130:Src/rtc.c     ****     {
+ 131:Src/rtc.c     ****         ssr = RTC->SSR;
+  54              		.loc 1 131 9 discriminator 1 view .LVU7
+  55              		.loc 1 131 18 is_stmt 0 discriminator 1 view .LVU8
+  56 0008 254C     		ldr	r4, .L6
+  57 000a A36A     		ldr	r3, [r4, #40]
+  58              		.loc 1 131 13 discriminator 1 view .LVU9
+  59 000c 0193     		str	r3, [sp, #4]
+ 132:Src/rtc.c     ****         HAL_RTC_GetDate( &hal_rtc.handle, date, RTC_FORMAT_BIN );
+  60              		.loc 1 132 9 is_stmt 1 discriminator 1 view .LVU10
+  61 000e 254D     		ldr	r5, .L6+4
+  62 0010 0022     		movs	r2, #0
+  63 0012 3946     		mov	r1, r7
+  64 0014 2846     		mov	r0, r5
+  65 0016 FFF7FEFF 		bl	HAL_RTC_GetDate
+  66              	.LVL2:
+ 133:Src/rtc.c     ****         HAL_RTC_GetTime( &hal_rtc.handle, time, RTC_FORMAT_BIN );
+  67              		.loc 1 133 9 discriminator 1 view .LVU11
+  68 001a 0022     		movs	r2, #0
+  69 001c 3146     		mov	r1, r6
+  70 001e 2846     		mov	r0, r5
+  71 0020 FFF7FEFF 		bl	HAL_RTC_GetTime
+  72              	.LVL3:
+ 134:Src/rtc.c     ****     } while( ssr != RTC->SSR );
+  73              		.loc 1 134 12 discriminator 1 view .LVU12
+  74              		.loc 1 134 24 is_stmt 0 discriminator 1 view .LVU13
+  75 0024 A26A     		ldr	r2, [r4, #40]
+  76              		.loc 1 134 18 discriminator 1 view .LVU14
+  77 0026 019B     		ldr	r3, [sp, #4]
+  78              		.loc 1 134 5 discriminator 1 view .LVU15
+  79 0028 9A42     		cmp	r2, r3
+  80 002a EDD1     		bne	.L2
+ 135:Src/rtc.c     **** 
+ 136:Src/rtc.c     ****     /* Calculate amount of elapsed days since 01/01/2000 */
+ 137:Src/rtc.c     ****     seconds = DIVC( ( DAYS_IN_YEAR * 3 + DAYS_IN_LEAP_YEAR ) * date->Year, 4 );
+  81              		.loc 1 137 5 is_stmt 1 view .LVU16
+  82              		.loc 1 137 15 is_stmt 0 view .LVU17
+  83 002c FA78     		ldrb	r2, [r7, #3]	@ zero_extendqisi2
+  84 002e 40F2B553 		movw	r3, #1461
+  85 0032 02FB03F3 		mul	r3, r2, r3
+  86 0036 0333     		adds	r3, r3, #3
+  87              		.loc 1 137 13 view .LVU18
+  88 0038 9C08     		lsrs	r4, r3, #2
+  89              	.LVL4:
+ 138:Src/rtc.c     **** 
+ 139:Src/rtc.c     ****     correction = ( ( date->Year % 4 ) == 0 ) ? DAYS_IN_MONTH_CORRECTION_LEAP : DAYS_IN_MONTH_CORREC
+  90              		.loc 1 139 5 is_stmt 1 view .LVU19
+ARM GAS  /tmp/ccSZgud3.s 			page 5
+
+
+  91              		.loc 1 139 78 is_stmt 0 view .LVU20
+  92 003a 12F0030F 		tst	r2, #3
+  93 003e 2DD1     		bne	.L4
+  94 0040 194A     		ldr	r2, .L6+8
+  95              	.L3:
+  96              	.LVL5:
+ 140:Src/rtc.c     **** 
+ 141:Src/rtc.c     ****     seconds +=
+  97              		.loc 1 141 5 is_stmt 1 discriminator 4 view .LVU21
+ 142:Src/rtc.c     ****         ( DIVC( ( date->Month - 1 ) * ( 30 + 31 ), 2 ) - ( ( ( correction >> ( ( date->Month - 1 ) 
+  98              		.loc 1 142 11 is_stmt 0 discriminator 4 view .LVU22
+  99 0042 7878     		ldrb	r0, [r7, #1]	@ zero_extendqisi2
+ 100 0044 0138     		subs	r0, r0, #1
+ 101 0046 C0EB0013 		rsb	r3, r0, r0, lsl #4
+ 102 004a 00EB8303 		add	r3, r0, r3, lsl #2
+ 103 004e 0133     		adds	r3, r3, #1
+ 104 0050 03EBD371 		add	r1, r3, r3, lsr #31
+ 105              		.loc 1 142 100 discriminator 4 view .LVU23
+ 106 0054 4300     		lsls	r3, r0, #1
+ 107              		.loc 1 142 75 discriminator 4 view .LVU24
+ 108 0056 22FA03F3 		lsr	r3, r2, r3
+ 109              		.loc 1 142 108 discriminator 4 view .LVU25
+ 110 005a 03F00303 		and	r3, r3, #3
+ 111              		.loc 1 142 56 discriminator 4 view .LVU26
+ 112 005e C3EB6103 		rsb	r3, r3, r1, asr #1
+ 141:Src/rtc.c     ****         ( DIVC( ( date->Month - 1 ) * ( 30 + 31 ), 2 ) - ( ( ( correction >> ( ( date->Month - 1 ) 
+ 113              		.loc 1 141 13 discriminator 4 view .LVU27
+ 114 0062 2344     		add	r3, r3, r4
+ 115              	.LVL6:
+ 143:Src/rtc.c     **** 
+ 144:Src/rtc.c     ****     seconds += ( date->Date - 1 );
+ 116              		.loc 1 144 5 is_stmt 1 discriminator 4 view .LVU28
+ 117              		.loc 1 144 22 is_stmt 0 discriminator 4 view .LVU29
+ 118 0064 B878     		ldrb	r0, [r7, #2]	@ zero_extendqisi2
+ 119              		.loc 1 144 13 discriminator 4 view .LVU30
+ 120 0066 1844     		add	r0, r0, r3
+ 121 0068 421E     		subs	r2, r0, #1
+ 122              	.LVL7:
+ 145:Src/rtc.c     **** 
+ 146:Src/rtc.c     ****     /* Convert from days to seconds */
+ 147:Src/rtc.c     ****     seconds *= SECONDS_IN_1DAY;
+ 123              		.loc 1 147 5 is_stmt 1 discriminator 4 view .LVU31
+ 148:Src/rtc.c     **** 
+ 149:Src/rtc.c     ****     seconds += ( ( uint32_t ) time->Seconds + ( ( uint32_t ) time->Minutes * SECONDS_IN_1MINUTE ) +
+ 124              		.loc 1 149 5 discriminator 4 view .LVU32
+ 125              		.loc 1 149 35 is_stmt 0 discriminator 4 view .LVU33
+ 126 006a B178     		ldrb	r1, [r6, #2]	@ zero_extendqisi2
+ 150:Src/rtc.c     ****                  ( ( uint32_t ) time->Hours * SECONDS_IN_1HOUR ) );
+ 127              		.loc 1 150 37 discriminator 4 view .LVU34
+ 128 006c 3478     		ldrb	r4, [r6]	@ zero_extendqisi2
+ 149:Src/rtc.c     ****                  ( ( uint32_t ) time->Hours * SECONDS_IN_1HOUR ) );
+ 129              		.loc 1 149 66 discriminator 4 view .LVU35
+ 130 006e 7378     		ldrb	r3, [r6, #1]	@ zero_extendqisi2
+ 149:Src/rtc.c     ****                  ( ( uint32_t ) time->Hours * SECONDS_IN_1HOUR ) );
+ 131              		.loc 1 149 76 discriminator 4 view .LVU36
+ 132 0070 C3EB0313 		rsb	r3, r3, r3, lsl #4
+ 133 0074 9800     		lsls	r0, r3, #2
+ARM GAS  /tmp/ccSZgud3.s 			page 6
+
+
+ 149:Src/rtc.c     ****                  ( ( uint32_t ) time->Hours * SECONDS_IN_1HOUR ) );
+ 134              		.loc 1 149 99 discriminator 4 view .LVU37
+ 135 0076 4FF46163 		mov	r3, #3600
+ 136 007a 03FB0400 		mla	r0, r3, r4, r0
+ 137 007e 0844     		add	r0, r0, r1
+ 149:Src/rtc.c     ****                  ( ( uint32_t ) time->Hours * SECONDS_IN_1HOUR ) );
+ 138              		.loc 1 149 13 discriminator 4 view .LVU38
+ 139 0080 0A4B     		ldr	r3, .L6+12
+ 140 0082 03FB0200 		mla	r0, r3, r2, r0
+ 141              	.LVL8:
+ 151:Src/rtc.c     **** 
+ 152:Src/rtc.c     ****     timestamp_in_ticks = ( ( ( uint64_t ) seconds ) << N_PREDIV_S ) + ( PREDIV_S - time->SubSeconds
+ 142              		.loc 1 152 5 is_stmt 1 discriminator 4 view .LVU39
+ 143              		.loc 1 152 53 is_stmt 0 discriminator 4 view .LVU40
+ 144 0086 810D     		lsrs	r1, r0, #22
+ 145 0088 8002     		lsls	r0, r0, #10
+ 146              	.LVL9:
+ 147              		.loc 1 152 88 discriminator 4 view .LVU41
+ 148 008a 7368     		ldr	r3, [r6, #4]
+ 149              	.LVL10:
+ 150              		.loc 1 152 82 discriminator 4 view .LVU42
+ 151 008c C3F57F73 		rsb	r3, r3, #1020
+ 152 0090 0333     		adds	r3, r3, #3
+ 153              		.loc 1 152 24 discriminator 4 view .LVU43
+ 154 0092 C018     		adds	r0, r0, r3
+ 155              	.LVL11:
+ 153:Src/rtc.c     **** 
+ 154:Src/rtc.c     ****     return timestamp_in_ticks;
+ 156              		.loc 1 154 5 is_stmt 1 discriminator 4 view .LVU44
+ 155:Src/rtc.c     **** }
+ 157              		.loc 1 155 1 is_stmt 0 discriminator 4 view .LVU45
+ 158 0094 41F10001 		adc	r1, r1, #0
+ 159              	.LVL12:
+ 160              		.loc 1 155 1 discriminator 4 view .LVU46
+ 161 0098 03B0     		add	sp, sp, #12
+ 162              	.LCFI2:
+ 163              		.cfi_remember_state
+ 164              		.cfi_def_cfa_offset 20
+ 165              		@ sp needed
+ 166 009a F0BD     		pop	{r4, r5, r6, r7, pc}
+ 167              	.LVL13:
+ 168              	.L4:
+ 169              	.LCFI3:
+ 170              		.cfi_restore_state
+ 139:Src/rtc.c     **** 
+ 171              		.loc 1 139 78 view .LVU47
+ 172 009c 044A     		ldr	r2, .L6+16
+ 173 009e D0E7     		b	.L3
+ 174              	.L7:
+ 175              		.align	2
+ 176              	.L6:
+ 177 00a0 00280040 		.word	1073752064
+ 178 00a4 00000000 		.word	.LANCHOR0
+ 179 00a8 50554400 		.word	4478288
+ 180 00ac 80510100 		.word	86400
+ 181 00b0 A0AA9900 		.word	10070688
+ 182              		.cfi_endproc
+ARM GAS  /tmp/ccSZgud3.s 			page 7
+
+
+ 183              	.LFE334:
+ 185              		.section	.text.hal_rtc_get_calendar_time,"ax",%progbits
+ 186              		.align	1
+ 187              		.syntax unified
+ 188              		.thumb
+ 189              		.thumb_func
+ 190              		.fpu fpv4-sp-d16
+ 192              	hal_rtc_get_calendar_time:
+ 193              	.LVL14:
+ 194              	.LFB333:
+ 101:Src/rtc.c     ****     RTC_TimeTypeDef time;
+ 195              		.loc 1 101 1 is_stmt 1 view -0
+ 196              		.cfi_startproc
+ 197              		@ args = 0, pretend = 0, frame = 24
+ 198              		@ frame_needed = 0, uses_anonymous_args = 0
+ 101:Src/rtc.c     ****     RTC_TimeTypeDef time;
+ 199              		.loc 1 101 1 is_stmt 0 view .LVU49
+ 200 0000 10B5     		push	{r4, lr}
+ 201              	.LCFI4:
+ 202              		.cfi_def_cfa_offset 8
+ 203              		.cfi_offset 4, -8
+ 204              		.cfi_offset 14, -4
+ 205 0002 86B0     		sub	sp, sp, #24
+ 206              	.LCFI5:
+ 207              		.cfi_def_cfa_offset 32
+ 208 0004 0446     		mov	r4, r0
+ 102:Src/rtc.c     ****     RTC_DateTypeDef date;
+ 209              		.loc 1 102 5 is_stmt 1 view .LVU50
+ 103:Src/rtc.c     ****     uint32_t        ticks;
+ 210              		.loc 1 103 5 view .LVU51
+ 104:Src/rtc.c     **** 
+ 211              		.loc 1 104 5 view .LVU52
+ 106:Src/rtc.c     **** 
+ 212              		.loc 1 106 5 view .LVU53
+ 106:Src/rtc.c     **** 
+ 213              		.loc 1 106 35 is_stmt 0 view .LVU54
+ 214 0006 01A9     		add	r1, sp, #4
+ 215 0008 6846     		mov	r0, sp
+ 216              	.LVL15:
+ 106:Src/rtc.c     **** 
+ 217              		.loc 1 106 35 view .LVU55
+ 218 000a FFF7FEFF 		bl	rtc_get_timestamp_in_ticks
+ 219              	.LVL16:
+ 108:Src/rtc.c     **** 
+ 220              		.loc 1 108 5 is_stmt 1 view .LVU56
+ 108:Src/rtc.c     **** 
+ 221              		.loc 1 108 57 is_stmt 0 view .LVU57
+ 222 000e 820A     		lsrs	r2, r0, #10
+ 223              	.LVL17:
+ 110:Src/rtc.c     **** 
+ 224              		.loc 1 110 5 is_stmt 1 view .LVU58
+ 110:Src/rtc.c     **** 
+ 225              		.loc 1 110 11 is_stmt 0 view .LVU59
+ 226 0010 C0F30903 		ubfx	r3, r0, #0, #10
+ 227              	.LVL18:
+ 112:Src/rtc.c     ****     uint32_t local_tick = ticks & PREDIV_S;
+ 228              		.loc 1 112 5 is_stmt 1 view .LVU60
+ARM GAS  /tmp/ccSZgud3.s 			page 8
+
+
+ 113:Src/rtc.c     **** 
+ 229              		.loc 1 113 5 view .LVU61
+ 115:Src/rtc.c     **** 
+ 230              		.loc 1 115 5 view .LVU62
+ 115:Src/rtc.c     **** 
+ 231              		.loc 1 115 56 is_stmt 0 view .LVU63
+ 232 0014 4FF47A70 		mov	r0, #1000
+ 233              	.LVL19:
+ 115:Src/rtc.c     **** 
+ 234              		.loc 1 115 56 view .LVU64
+ 235 0018 00FB03F3 		mul	r3, r0, r3
+ 236              	.LVL20:
+ 115:Src/rtc.c     **** 
+ 237              		.loc 1 115 39 view .LVU65
+ 238 001c C3F38F23 		ubfx	r3, r3, #10, #16
+ 115:Src/rtc.c     **** 
+ 239              		.loc 1 115 19 view .LVU66
+ 240 0020 2380     		strh	r3, [r4]	@ movhi
+ 117:Src/rtc.c     **** }
+ 241              		.loc 1 117 5 is_stmt 1 view .LVU67
+ 118:Src/rtc.c     **** 
+ 242              		.loc 1 118 1 is_stmt 0 view .LVU68
+ 243 0022 42EA8150 		orr	r0, r2, r1, lsl #22
+ 244              	.LVL21:
+ 118:Src/rtc.c     **** 
+ 245              		.loc 1 118 1 view .LVU69
+ 246 0026 06B0     		add	sp, sp, #24
+ 247              	.LCFI6:
+ 248              		.cfi_def_cfa_offset 8
+ 249              		@ sp needed
+ 250 0028 10BD     		pop	{r4, pc}
+ 118:Src/rtc.c     **** 
+ 251              		.loc 1 118 1 view .LVU70
+ 252              		.cfi_endproc
+ 253              	.LFE333:
+ 255              		.section	.text.hal_rtc_get_time_ms,"ax",%progbits
+ 256              		.align	1
+ 257              		.global	hal_rtc_get_time_ms
+ 258              		.syntax unified
+ 259              		.thumb
+ 260              		.thumb_func
+ 261              		.fpu fpv4-sp-d16
+ 263              	hal_rtc_get_time_ms:
+ 264              	.LFB332:
+  91:Src/rtc.c     ****     uint32_t seconds      = 0;
+ 265              		.loc 1 91 1 is_stmt 1 view -0
+ 266              		.cfi_startproc
+ 267              		@ args = 0, pretend = 0, frame = 8
+ 268              		@ frame_needed = 0, uses_anonymous_args = 0
+ 269 0000 00B5     		push	{lr}
+ 270              	.LCFI7:
+ 271              		.cfi_def_cfa_offset 4
+ 272              		.cfi_offset 14, -4
+ 273 0002 83B0     		sub	sp, sp, #12
+ 274              	.LCFI8:
+ 275              		.cfi_def_cfa_offset 16
+  92:Src/rtc.c     ****     uint16_t milliseconds = 0;
+ARM GAS  /tmp/ccSZgud3.s 			page 9
+
+
+ 276              		.loc 1 92 5 view .LVU72
+ 277              	.LVL22:
+  93:Src/rtc.c     **** 
+ 278              		.loc 1 93 5 view .LVU73
+  93:Src/rtc.c     **** 
+ 279              		.loc 1 93 14 is_stmt 0 view .LVU74
+ 280 0004 0023     		movs	r3, #0
+ 281 0006 ADF80630 		strh	r3, [sp, #6]	@ movhi
+  95:Src/rtc.c     **** 
+ 282              		.loc 1 95 5 is_stmt 1 view .LVU75
+  95:Src/rtc.c     **** 
+ 283              		.loc 1 95 15 is_stmt 0 view .LVU76
+ 284 000a 0DF10600 		add	r0, sp, #6
+ 285 000e FFF7FEFF 		bl	hal_rtc_get_calendar_time
+ 286              	.LVL23:
+  97:Src/rtc.c     **** }
+ 287              		.loc 1 97 5 is_stmt 1 view .LVU77
+  97:Src/rtc.c     **** }
+ 288              		.loc 1 97 27 is_stmt 0 view .LVU78
+ 289 0012 BDF80630 		ldrh	r3, [sp, #6]
+  98:Src/rtc.c     **** 
+ 290              		.loc 1 98 1 view .LVU79
+ 291 0016 4FF47A72 		mov	r2, #1000
+ 292 001a 02FB0030 		mla	r0, r2, r0, r3
+ 293              	.LVL24:
+  98:Src/rtc.c     **** 
+ 294              		.loc 1 98 1 view .LVU80
+ 295 001e 03B0     		add	sp, sp, #12
+ 296              	.LCFI9:
+ 297              		.cfi_def_cfa_offset 4
+ 298              		@ sp needed
+ 299 0020 5DF804FB 		ldr	pc, [sp], #4
+ 300              		.cfi_endproc
+ 301              	.LFE332:
+ 303              		.global	hal_rtc
+ 304              		.section	.bss.hal_rtc,"aw",%nobits
+ 305              		.align	2
+ 306              		.set	.LANCHOR0,. + 0
+ 309              	hal_rtc:
+ 310 0000 00000000 		.space	64
+ 310      00000000 
+ 310      00000000 
+ 310      00000000 
+ 310      00000000 
+ 311              		.text
+ 312              	.Letext0:
+ 313              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 314              		.file 3 "/usr/include/newlib/sys/_stdint.h"
+ 315              		.file 4 "Drivers/CMSIS/Device/ST/STM32L4xx/Include/stm32l476xx.h"
+ 316              		.file 5 "Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def.h"
+ 317              		.file 6 "Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rtc.h"
+ 318              		.file 7 "Inc/rtc.h"
+ARM GAS  /tmp/ccSZgud3.s 			page 10
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 rtc.c
+     /tmp/ccSZgud3.s:18     .text.rtc_get_timestamp_in_ticks:0000000000000000 $t
+     /tmp/ccSZgud3.s:25     .text.rtc_get_timestamp_in_ticks:0000000000000000 rtc_get_timestamp_in_ticks
+     /tmp/ccSZgud3.s:177    .text.rtc_get_timestamp_in_ticks:00000000000000a0 $d
+     /tmp/ccSZgud3.s:186    .text.hal_rtc_get_calendar_time:0000000000000000 $t
+     /tmp/ccSZgud3.s:192    .text.hal_rtc_get_calendar_time:0000000000000000 hal_rtc_get_calendar_time
+     /tmp/ccSZgud3.s:256    .text.hal_rtc_get_time_ms:0000000000000000 $t
+     /tmp/ccSZgud3.s:263    .text.hal_rtc_get_time_ms:0000000000000000 hal_rtc_get_time_ms
+     /tmp/ccSZgud3.s:309    .bss.hal_rtc:0000000000000000 hal_rtc
+     /tmp/ccSZgud3.s:305    .bss.hal_rtc:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+HAL_RTC_GetDate
+HAL_RTC_GetTime

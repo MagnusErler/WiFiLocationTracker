@@ -1,0 +1,2779 @@
+ARM GAS  /tmp/cccuU9yN.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"spi.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.rodata.waitForBusyState.str1.4,"aMS",%progbits,1
+  18              		.align	2
+  19              	.LC0:
+  20 0000 0D0A00   		.ascii	"\015\012\000"
+  21 0003 00       		.align	2
+  22              	.LC1:
+  23 0004 1B5B303B 		.ascii	"\033[0;31m\000"
+  23      33316D00 
+  24              		.align	2
+  25              	.LC2:
+  26 000c 4552524F 		.ascii	"ERROR: \000"
+  26      523A2000 
+  27              		.align	2
+  28              	.LC3:
+  29 0014 54696D65 		.ascii	"Timeout occured while waiting for BUSY to become LO"
+  29      6F757420 
+  29      6F636375 
+  29      72656420 
+  29      7768696C 
+  30 0047 570D0A00 		.ascii	"W\015\012\000"
+  31 004b 00       		.align	2
+  32              	.LC4:
+  33 004c 1B5B306D 		.ascii	"\033[0m\000"
+  33      00
+  34 0051 000000   		.align	2
+  35              	.LC5:
+  36 0054 54696D65 		.ascii	"Timeout occured while waiting for BUSY to become HI"
+  36      6F757420 
+  36      6F636375 
+  36      72656420 
+  36      7768696C 
+  37 0087 47480D0A 		.ascii	"GH\015\012\000"
+  37      00
+  38              		.section	.text.waitForBusyState,"ax",%progbits
+  39              		.align	1
+  40              		.global	waitForBusyState
+  41              		.arch armv7e-m
+  42              		.syntax unified
+  43              		.thumb
+  44              		.thumb_func
+  45              		.fpu fpv4-sp-d16
+ARM GAS  /tmp/cccuU9yN.s 			page 2
+
+
+  47              	waitForBusyState:
+  48              	.LVL0:
+  49              	.LFB430:
+  50              		.file 1 "Src/spi.c"
+   1:Src/spi.c     **** /**
+   2:Src/spi.c     ****   ******************************************************************************
+   3:Src/spi.c     ****   * @file           : spi.c
+   4:Src/spi.c     ****   * @brief          : Containing all SPI code
+   5:Src/spi.c     ****   ******************************************************************************
+   6:Src/spi.c     ****   */
+   7:Src/spi.c     **** 
+   8:Src/spi.c     **** #include "spi.h"
+   9:Src/spi.c     **** 
+  10:Src/spi.c     **** #include "main.h"
+  11:Src/spi.c     **** 
+  12:Src/spi.c     **** #include "rtc.h"
+  13:Src/spi.c     **** 
+  14:Src/spi.c     **** radio_t* radio;
+  15:Src/spi.c     **** 
+  16:Src/spi.c     **** lr1110_gpio_status_t waitForBusyState( GPIO_PinState state, uint32_t timeout_ms ) {
+  51              		.loc 1 16 83 view -0
+  52              		.cfi_startproc
+  53              		@ args = 0, pretend = 0, frame = 0
+  54              		@ frame_needed = 0, uses_anonymous_args = 0
+  55              		.loc 1 16 83 is_stmt 0 view .LVU1
+  56 0000 70B5     		push	{r4, r5, r6, lr}
+  57              	.LCFI0:
+  58              		.cfi_def_cfa_offset 16
+  59              		.cfi_offset 4, -16
+  60              		.cfi_offset 5, -12
+  61              		.cfi_offset 6, -8
+  62              		.cfi_offset 14, -4
+  63 0002 0646     		mov	r6, r0
+  64 0004 0D46     		mov	r5, r1
+  17:Src/spi.c     **** 
+  18:Src/spi.c     ****     uint32_t start = hal_rtc_get_time_ms();
+  65              		.loc 1 18 5 is_stmt 1 view .LVU2
+  66              		.loc 1 18 22 is_stmt 0 view .LVU3
+  67 0006 FFF7FEFF 		bl	hal_rtc_get_time_ms
+  68              	.LVL1:
+  69              		.loc 1 18 22 view .LVU4
+  70 000a 0446     		mov	r4, r0
+  71              	.LVL2:
+  19:Src/spi.c     **** 
+  20:Src/spi.c     ****     if( state == GPIO_PIN_RESET ) {
+  72              		.loc 1 20 5 is_stmt 1 view .LVU5
+  73              		.loc 1 20 7 is_stmt 0 view .LVU6
+  74 000c EEB1     		cbz	r6, .L2
+  75              	.LVL3:
+  76              	.L3:
+  21:Src/spi.c     ****         while( HAL_GPIO_ReadPin( radio->busy.port, radio->busy.pin ) == GPIO_PIN_SET ) {
+  22:Src/spi.c     ****             if( ( int32_t )( hal_rtc_get_time_ms() - start ) > ( int32_t ) timeout_ms ) {
+  23:Src/spi.c     ****                 HAL_DBG_TRACE_PRINTF("\r\n");
+  24:Src/spi.c     ****                 HAL_DBG_TRACE_ERROR("Timeout occured while waiting for BUSY to become LOW\r\n");
+  25:Src/spi.c     ****                 return LR1110_GPIO_STATUS_TIMEOUT;
+  26:Src/spi.c     ****             }
+  27:Src/spi.c     ****         };
+ARM GAS  /tmp/cccuU9yN.s 			page 3
+
+
+  28:Src/spi.c     ****     } else {
+  29:Src/spi.c     ****         while( HAL_GPIO_ReadPin( radio->busy.port, radio->busy.pin ) == GPIO_PIN_RESET ) {
+  77              		.loc 1 29 14 is_stmt 1 view .LVU7
+  78              		.loc 1 29 39 is_stmt 0 view .LVU8
+  79 000e 204B     		ldr	r3, .L10
+  80 0010 1B68     		ldr	r3, [r3]
+  81              		.loc 1 29 16 view .LVU9
+  82 0012 198D     		ldrh	r1, [r3, #40]
+  83 0014 586A     		ldr	r0, [r3, #36]
+  84 0016 FFF7FEFF 		bl	HAL_GPIO_ReadPin
+  85              	.LVL4:
+  86              		.loc 1 29 14 view .LVU10
+  87 001a 0028     		cmp	r0, #0
+  88 001c 35D1     		bne	.L8
+  30:Src/spi.c     ****             if( ( int32_t )( hal_rtc_get_time_ms() - start ) > ( int32_t ) timeout_ms ) {
+  89              		.loc 1 30 13 is_stmt 1 view .LVU11
+  90              		.loc 1 30 30 is_stmt 0 view .LVU12
+  91 001e FFF7FEFF 		bl	hal_rtc_get_time_ms
+  92              	.LVL5:
+  93              		.loc 1 30 52 view .LVU13
+  94 0022 001B     		subs	r0, r0, r4
+  95              		.loc 1 30 15 view .LVU14
+  96 0024 A842     		cmp	r0, r5
+  97 0026 F2DD     		ble	.L3
+  31:Src/spi.c     ****                 HAL_DBG_TRACE_PRINTF("\r\n");
+  98              		.loc 1 31 17 is_stmt 1 view .LVU15
+  99 0028 1A48     		ldr	r0, .L10+4
+ 100 002a FFF7FEFF 		bl	hal_mcu_trace_print
+ 101              	.LVL6:
+  32:Src/spi.c     ****                 HAL_DBG_TRACE_ERROR("Timeout occured while waiting for BUSY to become HIGH\r\n");
+ 102              		.loc 1 32 17 view .LVU16
+ 103              		.loc 1 32 17 view .LVU17
+ 104 002e 1A48     		ldr	r0, .L10+8
+ 105 0030 FFF7FEFF 		bl	hal_mcu_trace_print
+ 106              	.LVL7:
+ 107              		.loc 1 32 17 view .LVU18
+ 108 0034 1948     		ldr	r0, .L10+12
+ 109 0036 FFF7FEFF 		bl	hal_mcu_trace_print
+ 110              	.LVL8:
+ 111              		.loc 1 32 17 view .LVU19
+ 112 003a 1948     		ldr	r0, .L10+16
+ 113 003c FFF7FEFF 		bl	hal_mcu_trace_print
+ 114              	.LVL9:
+ 115              		.loc 1 32 17 view .LVU20
+ 116 0040 1848     		ldr	r0, .L10+20
+ 117 0042 FFF7FEFF 		bl	hal_mcu_trace_print
+ 118              	.LVL10:
+ 119              		.loc 1 32 17 view .LVU21
+ 120              		.loc 1 32 97 view .LVU22
+  33:Src/spi.c     ****                 return LR1110_GPIO_STATUS_TIMEOUT;
+ 121              		.loc 1 33 17 view .LVU23
+ 122              		.loc 1 33 24 is_stmt 0 view .LVU24
+ 123 0046 FF20     		movs	r0, #255
+ 124 0048 1EE0     		b	.L4
+ 125              	.L2:
+  21:Src/spi.c     ****             if( ( int32_t )( hal_rtc_get_time_ms() - start ) > ( int32_t ) timeout_ms ) {
+ 126              		.loc 1 21 14 is_stmt 1 view .LVU25
+ARM GAS  /tmp/cccuU9yN.s 			page 4
+
+
+  21:Src/spi.c     ****             if( ( int32_t )( hal_rtc_get_time_ms() - start ) > ( int32_t ) timeout_ms ) {
+ 127              		.loc 1 21 39 is_stmt 0 view .LVU26
+ 128 004a 114B     		ldr	r3, .L10
+ 129 004c 1B68     		ldr	r3, [r3]
+  21:Src/spi.c     ****             if( ( int32_t )( hal_rtc_get_time_ms() - start ) > ( int32_t ) timeout_ms ) {
+ 130              		.loc 1 21 16 view .LVU27
+ 131 004e 198D     		ldrh	r1, [r3, #40]
+ 132 0050 586A     		ldr	r0, [r3, #36]
+ 133 0052 FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 134              	.LVL11:
+  21:Src/spi.c     ****             if( ( int32_t )( hal_rtc_get_time_ms() - start ) > ( int32_t ) timeout_ms ) {
+ 135              		.loc 1 21 14 view .LVU28
+ 136 0056 0128     		cmp	r0, #1
+ 137 0058 15D1     		bne	.L9
+  22:Src/spi.c     ****                 HAL_DBG_TRACE_PRINTF("\r\n");
+ 138              		.loc 1 22 13 is_stmt 1 view .LVU29
+  22:Src/spi.c     ****                 HAL_DBG_TRACE_PRINTF("\r\n");
+ 139              		.loc 1 22 30 is_stmt 0 view .LVU30
+ 140 005a FFF7FEFF 		bl	hal_rtc_get_time_ms
+ 141              	.LVL12:
+  22:Src/spi.c     ****                 HAL_DBG_TRACE_PRINTF("\r\n");
+ 142              		.loc 1 22 52 view .LVU31
+ 143 005e 031B     		subs	r3, r0, r4
+  22:Src/spi.c     ****                 HAL_DBG_TRACE_PRINTF("\r\n");
+ 144              		.loc 1 22 15 view .LVU32
+ 145 0060 AB42     		cmp	r3, r5
+ 146 0062 F2DD     		ble	.L2
+  23:Src/spi.c     ****                 HAL_DBG_TRACE_ERROR("Timeout occured while waiting for BUSY to become LOW\r\n");
+ 147              		.loc 1 23 17 is_stmt 1 view .LVU33
+ 148 0064 0B48     		ldr	r0, .L10+4
+ 149 0066 FFF7FEFF 		bl	hal_mcu_trace_print
+ 150              	.LVL13:
+  24:Src/spi.c     ****                 return LR1110_GPIO_STATUS_TIMEOUT;
+ 151              		.loc 1 24 17 view .LVU34
+  24:Src/spi.c     ****                 return LR1110_GPIO_STATUS_TIMEOUT;
+ 152              		.loc 1 24 17 view .LVU35
+ 153 006a 0B48     		ldr	r0, .L10+8
+ 154 006c FFF7FEFF 		bl	hal_mcu_trace_print
+ 155              	.LVL14:
+  24:Src/spi.c     ****                 return LR1110_GPIO_STATUS_TIMEOUT;
+ 156              		.loc 1 24 17 view .LVU36
+ 157 0070 0A48     		ldr	r0, .L10+12
+ 158 0072 FFF7FEFF 		bl	hal_mcu_trace_print
+ 159              	.LVL15:
+  24:Src/spi.c     ****                 return LR1110_GPIO_STATUS_TIMEOUT;
+ 160              		.loc 1 24 17 view .LVU37
+ 161 0076 0C48     		ldr	r0, .L10+24
+ 162 0078 FFF7FEFF 		bl	hal_mcu_trace_print
+ 163              	.LVL16:
+  24:Src/spi.c     ****                 return LR1110_GPIO_STATUS_TIMEOUT;
+ 164              		.loc 1 24 17 view .LVU38
+ 165 007c 0948     		ldr	r0, .L10+20
+ 166 007e FFF7FEFF 		bl	hal_mcu_trace_print
+ 167              	.LVL17:
+  24:Src/spi.c     ****                 return LR1110_GPIO_STATUS_TIMEOUT;
+ 168              		.loc 1 24 17 view .LVU39
+  24:Src/spi.c     ****                 return LR1110_GPIO_STATUS_TIMEOUT;
+ARM GAS  /tmp/cccuU9yN.s 			page 5
+
+
+ 169              		.loc 1 24 96 view .LVU40
+  25:Src/spi.c     ****             }
+ 170              		.loc 1 25 17 view .LVU41
+  25:Src/spi.c     ****             }
+ 171              		.loc 1 25 24 is_stmt 0 view .LVU42
+ 172 0082 FF20     		movs	r0, #255
+ 173 0084 00E0     		b	.L4
+ 174              	.L9:
+  34:Src/spi.c     ****             }
+  35:Src/spi.c     ****         };
+  36:Src/spi.c     ****     }
+  37:Src/spi.c     ****     return LR1110_GPIO_STATUS_OK;
+ 175              		.loc 1 37 12 view .LVU43
+ 176 0086 3046     		mov	r0, r6
+ 177              	.L4:
+  38:Src/spi.c     **** }
+ 178              		.loc 1 38 1 view .LVU44
+ 179 0088 70BD     		pop	{r4, r5, r6, pc}
+ 180              	.LVL18:
+ 181              	.L8:
+  37:Src/spi.c     **** }
+ 182              		.loc 1 37 12 view .LVU45
+ 183 008a 0020     		movs	r0, #0
+ 184 008c FCE7     		b	.L4
+ 185              	.L11:
+ 186 008e 00BF     		.align	2
+ 187              	.L10:
+ 188 0090 00000000 		.word	.LANCHOR0
+ 189 0094 00000000 		.word	.LC0
+ 190 0098 04000000 		.word	.LC1
+ 191 009c 0C000000 		.word	.LC2
+ 192 00a0 54000000 		.word	.LC5
+ 193 00a4 4C000000 		.word	.LC4
+ 194 00a8 14000000 		.word	.LC3
+ 195              		.cfi_endproc
+ 196              	.LFE430:
+ 198              		.section	.rodata.lr1110_spi_write.str1.4,"aMS",%progbits,1
+ 199              		.align	2
+ 200              	.LC6:
+ 201 0000 54696D65 		.ascii	"Timeout occured while waiting for SPI to become rea"
+ 201      6F757420 
+ 201      6F636375 
+ 201      72656420 
+ 201      7768696C 
+ 202 0033 64792066 		.ascii	"dy for transmission\015\012\000"
+ 202      6F722074 
+ 202      72616E73 
+ 202      6D697373 
+ 202      696F6E0D 
+ 203 0049 000000   		.align	2
+ 204              	.LC7:
+ 205 004c 54696D65 		.ascii	"Timeout occured while waiting for SPI to become rea"
+ 205      6F757420 
+ 205      6F636375 
+ 205      72656420 
+ 205      7768696C 
+ 206 007f 64792066 		.ascii	"dy for reception\015\012\000"
+ARM GAS  /tmp/cccuU9yN.s 			page 6
+
+
+ 206      6F722072 
+ 206      65636570 
+ 206      74696F6E 
+ 206      0D0A00
+ 207              		.section	.text.lr1110_spi_write,"ax",%progbits
+ 208              		.align	1
+ 209              		.global	lr1110_spi_write
+ 210              		.syntax unified
+ 211              		.thumb
+ 212              		.thumb_func
+ 213              		.fpu fpv4-sp-d16
+ 215              	lr1110_spi_write:
+ 216              	.LVL19:
+ 217              	.LFB431:
+  39:Src/spi.c     **** 
+  40:Src/spi.c     **** lr1110_spi_status_t lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* buffer, uint16_t length, uin
+ 218              		.loc 1 40 119 is_stmt 1 view -0
+ 219              		.cfi_startproc
+ 220              		@ args = 0, pretend = 0, frame = 0
+ 221              		@ frame_needed = 0, uses_anonymous_args = 0
+ 222              		.loc 1 40 119 is_stmt 0 view .LVU47
+ 223 0000 2DE9F84F 		push	{r3, r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 224              	.LCFI1:
+ 225              		.cfi_def_cfa_offset 40
+ 226              		.cfi_offset 3, -40
+ 227              		.cfi_offset 4, -36
+ 228              		.cfi_offset 5, -32
+ 229              		.cfi_offset 6, -28
+ 230              		.cfi_offset 7, -24
+ 231              		.cfi_offset 8, -20
+ 232              		.cfi_offset 9, -16
+ 233              		.cfi_offset 10, -12
+ 234              		.cfi_offset 11, -8
+ 235              		.cfi_offset 14, -4
+ 236 0004 0546     		mov	r5, r0
+ 237 0006 8946     		mov	r9, r1
+ 238 0008 9046     		mov	r8, r2
+ 239 000a 1F46     		mov	r7, r3
+  41:Src/spi.c     **** 
+  42:Src/spi.c     ****     lr1110_spi_status_t status = LR1110_SPI_STATUS_OK;
+ 240              		.loc 1 42 5 is_stmt 1 view .LVU48
+ 241              	.LVL20:
+  43:Src/spi.c     **** 
+  44:Src/spi.c     ****     for( uint16_t i = 0; i < length; i++ ) {
+ 242              		.loc 1 44 5 view .LVU49
+ 243              	.LBB22:
+ 244              		.loc 1 44 10 view .LVU50
+ 245              		.loc 1 44 19 is_stmt 0 view .LVU51
+ 246 000c 0024     		movs	r4, #0
+ 247              	.LBE22:
+  42:Src/spi.c     **** 
+ 248              		.loc 1 42 25 view .LVU52
+ 249 000e A246     		mov	r10, r4
+ 250              	.LBB33:
+ 251              		.loc 1 44 5 view .LVU53
+ 252 0010 17E0     		b	.L13
+ 253              	.LVL21:
+ARM GAS  /tmp/cccuU9yN.s 			page 7
+
+
+ 254              	.L23:
+ 255              	.LBB23:
+  45:Src/spi.c     **** 
+  46:Src/spi.c     ****         uint32_t start = hal_rtc_get_time_ms();
+  47:Src/spi.c     **** 
+  48:Src/spi.c     ****         turnOnLED(GPIOC, TX_LED_Pin);
+  49:Src/spi.c     ****         while( LL_SPI_IsActiveFlag_TXE( spi ) == 0 ) {
+  50:Src/spi.c     ****             if( ( int32_t )( hal_rtc_get_time_ms() - start ) > ( int32_t ) timeout_ms ) {
+  51:Src/spi.c     ****                 HAL_DBG_TRACE_PRINTF("\r\n");
+  52:Src/spi.c     ****                 HAL_DBG_TRACE_ERROR("Timeout occured while waiting for SPI to become ready for tran
+  53:Src/spi.c     ****                 status = LR1110_SPI_STATUS_TIMEOUT;
+  54:Src/spi.c     ****                 break;
+  55:Src/spi.c     ****             }
+  56:Src/spi.c     ****         };
+  57:Src/spi.c     ****         LL_SPI_TransmitData8( spi, buffer[i] );
+  58:Src/spi.c     ****         turnOffLED(GPIOC, TX_LED_Pin);
+  59:Src/spi.c     **** 
+  60:Src/spi.c     ****         turnOnLED(GPIOC, RX_LED_Pin);
+  61:Src/spi.c     ****         while( LL_SPI_IsActiveFlag_RXNE( spi ) == 0 ) {
+  62:Src/spi.c     ****             if( ( int32_t )( hal_rtc_get_time_ms() - start ) > ( int32_t ) timeout_ms ) {
+  63:Src/spi.c     ****                 HAL_DBG_TRACE_PRINTF("\r\n");
+ 256              		.loc 1 63 17 is_stmt 1 view .LVU54
+ 257 0012 2A48     		ldr	r0, .L24
+ 258 0014 FFF7FEFF 		bl	hal_mcu_trace_print
+ 259              	.LVL22:
+  64:Src/spi.c     ****                 HAL_DBG_TRACE_ERROR("Timeout occured while waiting for SPI to become ready for rece
+ 260              		.loc 1 64 17 view .LVU55
+ 261              		.loc 1 64 17 view .LVU56
+ 262 0018 2948     		ldr	r0, .L24+4
+ 263 001a FFF7FEFF 		bl	hal_mcu_trace_print
+ 264              	.LVL23:
+ 265              		.loc 1 64 17 view .LVU57
+ 266 001e 2948     		ldr	r0, .L24+8
+ 267 0020 FFF7FEFF 		bl	hal_mcu_trace_print
+ 268              	.LVL24:
+ 269              		.loc 1 64 17 view .LVU58
+ 270 0024 2848     		ldr	r0, .L24+12
+ 271 0026 FFF7FEFF 		bl	hal_mcu_trace_print
+ 272              	.LVL25:
+ 273              		.loc 1 64 17 view .LVU59
+ 274 002a 2848     		ldr	r0, .L24+16
+ 275 002c FFF7FEFF 		bl	hal_mcu_trace_print
+ 276              	.LVL26:
+ 277              		.loc 1 64 17 view .LVU60
+ 278              		.loc 1 64 111 view .LVU61
+  65:Src/spi.c     ****                 status = LR1110_SPI_STATUS_TIMEOUT;
+ 279              		.loc 1 65 17 view .LVU62
+  66:Src/spi.c     ****                 break;
+ 280              		.loc 1 66 17 view .LVU63
+  65:Src/spi.c     ****                 status = LR1110_SPI_STATUS_TIMEOUT;
+ 281              		.loc 1 65 24 is_stmt 0 view .LVU64
+ 282 0030 4FF0FF0A 		mov	r10, #255
+ 283              	.LVL27:
+ 284              	.L18:
+  67:Src/spi.c     ****             }
+  68:Src/spi.c     ****         };
+ 285              		.loc 1 68 10 is_stmt 1 discriminator 2 view .LVU65
+ARM GAS  /tmp/cccuU9yN.s 			page 8
+
+
+  69:Src/spi.c     ****         LL_SPI_ReceiveData8( spi );
+ 286              		.loc 1 69 9 discriminator 2 view .LVU66
+ 287              	.LBB24:
+ 288              	.LBI24:
+ 289              		.file 2 "Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h"
+   1:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+   2:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   ******************************************************************************
+   3:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @file    stm32l4xx_ll_spi.h
+   4:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @author  MCD Application Team
+   5:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief   Header file of SPI LL module.
+   6:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   ******************************************************************************
+   7:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @attention
+   8:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *
+   9:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * Copyright (c) 2017 STMicroelectronics.
+  10:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * All rights reserved.
+  11:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *
+  12:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * This software is licensed under terms that can be found in the LICENSE file
+  13:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * in the root directory of this software component.
+  14:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * If no LICENSE file comes with this software, it is provided AS-IS.
+  15:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *
+  16:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   ******************************************************************************
+  17:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+  18:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+  19:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /* Define to prevent recursive inclusion -------------------------------------*/
+  20:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #ifndef STM32L4xx_LL_SPI_H
+  21:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define STM32L4xx_LL_SPI_H
+  22:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+  23:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #ifdef __cplusplus
+  24:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** extern "C" {
+  25:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #endif
+  26:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+  27:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /* Includes ------------------------------------------------------------------*/
+  28:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #include "stm32l4xx.h"
+  29:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+  30:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /** @addtogroup STM32L4xx_LL_Driver
+  31:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @{
+  32:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+  33:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+  34:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #if defined (SPI1) || defined (SPI2) || defined (SPI3)
+  35:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+  36:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /** @defgroup SPI_LL SPI
+  37:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @{
+  38:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+  39:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+  40:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /* Private types -------------------------------------------------------------*/
+  41:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /* Private variables ---------------------------------------------------------*/
+  42:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /* Private macros ------------------------------------------------------------*/
+  43:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+  44:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /* Exported types ------------------------------------------------------------*/
+  45:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #if defined(USE_FULL_LL_DRIVER)
+  46:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /** @defgroup SPI_LL_ES_INIT SPI Exported Init structure
+  47:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @{
+  48:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+  49:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+  50:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+  51:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  SPI Init structures definition
+  52:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ARM GAS  /tmp/cccuU9yN.s 			page 9
+
+
+  53:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** typedef struct
+  54:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+  55:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   uint32_t TransferDirection;       /*!< Specifies the SPI unidirectional or bidirectional data mod
+  56:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****                                          This parameter can be a value of @ref SPI_LL_EC_TRANSFER_M
+  57:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+  58:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****                                          This feature can be modified afterwards using unitary func
+  59:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+  60:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   uint32_t Mode;                    /*!< Specifies the SPI mode (Master/Slave).
+  61:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****                                          This parameter can be a value of @ref SPI_LL_EC_MODE.
+  62:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+  63:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****                                          This feature can be modified afterwards using unitary func
+  64:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+  65:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   uint32_t DataWidth;               /*!< Specifies the SPI data width.
+  66:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****                                          This parameter can be a value of @ref SPI_LL_EC_DATAWIDTH.
+  67:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+  68:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****                                          This feature can be modified afterwards using unitary func
+  69:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+  70:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   uint32_t ClockPolarity;           /*!< Specifies the serial clock steady state.
+  71:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****                                          This parameter can be a value of @ref SPI_LL_EC_POLARITY.
+  72:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+  73:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****                                          This feature can be modified afterwards using unitary func
+  74:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+  75:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   uint32_t ClockPhase;              /*!< Specifies the clock active edge for the bit capture.
+  76:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****                                          This parameter can be a value of @ref SPI_LL_EC_PHASE.
+  77:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+  78:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****                                          This feature can be modified afterwards using unitary func
+  79:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+  80:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   uint32_t NSS;                     /*!< Specifies whether the NSS signal is managed by hardware (N
+  81:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****                                          This parameter can be a value of @ref SPI_LL_EC_NSS_MODE.
+  82:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+  83:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****                                          This feature can be modified afterwards using unitary func
+  84:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+  85:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   uint32_t BaudRate;                /*!< Specifies the BaudRate prescaler value which will be used 
+  86:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****                                          This parameter can be a value of @ref SPI_LL_EC_BAUDRATEPR
+  87:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****                                          @note The communication clock is derived from the master c
+  88:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+  89:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****                                          This feature can be modified afterwards using unitary func
+  90:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+  91:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   uint32_t BitOrder;                /*!< Specifies whether data transfers start from MSB or LSB bit
+  92:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****                                          This parameter can be a value of @ref SPI_LL_EC_BIT_ORDER.
+  93:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+  94:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****                                          This feature can be modified afterwards using unitary func
+  95:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+  96:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   uint32_t CRCCalculation;          /*!< Specifies if the CRC calculation is enabled or not.
+  97:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****                                          This parameter can be a value of @ref SPI_LL_EC_CRC_CALCUL
+  98:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+  99:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****                                          This feature can be modified afterwards using unitary func
+ 100:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 101:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   uint32_t CRCPoly;                 /*!< Specifies the polynomial used for the CRC calculation.
+ 102:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****                                          This parameter must be a number between Min_Data = 0x00 an
+ 103:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 104:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****                                          This feature can be modified afterwards using unitary func
+ 105:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 106:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** } LL_SPI_InitTypeDef;
+ 107:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 108:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 109:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @}
+ARM GAS  /tmp/cccuU9yN.s 			page 10
+
+
+ 110:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 111:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #endif /* USE_FULL_LL_DRIVER */
+ 112:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 113:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /* Exported constants --------------------------------------------------------*/
+ 114:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /** @defgroup SPI_LL_Exported_Constants SPI Exported Constants
+ 115:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @{
+ 116:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 117:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 118:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /** @defgroup SPI_LL_EC_GET_FLAG Get Flags Defines
+ 119:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief    Flags defines which can be used with LL_SPI_ReadReg function
+ 120:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @{
+ 121:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 122:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_SR_RXNE                     SPI_SR_RXNE               /*!< Rx buffer not empty flag 
+ 123:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_SR_TXE                      SPI_SR_TXE                /*!< Tx buffer empty flag     
+ 124:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_SR_BSY                      SPI_SR_BSY                /*!< Busy flag                
+ 125:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_SR_CRCERR                   SPI_SR_CRCERR             /*!< CRC error flag           
+ 126:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_SR_MODF                     SPI_SR_MODF               /*!< Mode fault flag          
+ 127:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_SR_OVR                      SPI_SR_OVR                /*!< Overrun flag             
+ 128:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_SR_FRE                      SPI_SR_FRE                /*!< TI mode frame format erro
+ 129:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 130:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @}
+ 131:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 132:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 133:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /** @defgroup SPI_LL_EC_IT IT Defines
+ 134:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief    IT defines which can be used with LL_SPI_ReadReg and  LL_SPI_WriteReg functions
+ 135:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @{
+ 136:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 137:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_CR2_RXNEIE                  SPI_CR2_RXNEIE            /*!< Rx buffer not empty inter
+ 138:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_CR2_TXEIE                   SPI_CR2_TXEIE             /*!< Tx buffer empty interrupt
+ 139:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_CR2_ERRIE                   SPI_CR2_ERRIE             /*!< Error interrupt enable   
+ 140:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 141:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @}
+ 142:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 143:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 144:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /** @defgroup SPI_LL_EC_MODE Operation Mode
+ 145:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @{
+ 146:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 147:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_MODE_MASTER                 (SPI_CR1_MSTR | SPI_CR1_SSI)    /*!< Master configuratio
+ 148:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_MODE_SLAVE                  0x00000000U                     /*!< Slave configuration
+ 149:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 150:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @}
+ 151:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 152:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 153:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /** @defgroup SPI_LL_EC_PROTOCOL Serial Protocol
+ 154:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @{
+ 155:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 156:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_PROTOCOL_MOTOROLA           0x00000000U               /*!< Motorola mode. Used as de
+ 157:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_PROTOCOL_TI                 (SPI_CR2_FRF)             /*!< TI mode                  
+ 158:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 159:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @}
+ 160:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 161:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 162:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /** @defgroup SPI_LL_EC_PHASE Clock Phase
+ 163:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @{
+ 164:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 165:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_PHASE_1EDGE                 0x00000000U               /*!< First clock transition is
+ 166:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_PHASE_2EDGE                 (SPI_CR1_CPHA)            /*!< Second clock transition i
+ARM GAS  /tmp/cccuU9yN.s 			page 11
+
+
+ 167:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 168:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @}
+ 169:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 170:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 171:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /** @defgroup SPI_LL_EC_POLARITY Clock Polarity
+ 172:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @{
+ 173:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 174:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_POLARITY_LOW                0x00000000U               /*!< Clock to 0 when idle */
+ 175:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_POLARITY_HIGH               (SPI_CR1_CPOL)            /*!< Clock to 1 when idle */
+ 176:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 177:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @}
+ 178:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 179:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 180:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /** @defgroup SPI_LL_EC_BAUDRATEPRESCALER Baud Rate Prescaler
+ 181:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @{
+ 182:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 183:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_BAUDRATEPRESCALER_DIV2      0x00000000U                                    /*!< Baud
+ 184:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_BAUDRATEPRESCALER_DIV4      (SPI_CR1_BR_0)                                 /*!< Baud
+ 185:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_BAUDRATEPRESCALER_DIV8      (SPI_CR1_BR_1)                                 /*!< Baud
+ 186:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_BAUDRATEPRESCALER_DIV16     (SPI_CR1_BR_1 | SPI_CR1_BR_0)                  /*!< Baud
+ 187:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_BAUDRATEPRESCALER_DIV32     (SPI_CR1_BR_2)                                 /*!< Baud
+ 188:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_BAUDRATEPRESCALER_DIV64     (SPI_CR1_BR_2 | SPI_CR1_BR_0)                  /*!< Baud
+ 189:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_BAUDRATEPRESCALER_DIV128    (SPI_CR1_BR_2 | SPI_CR1_BR_1)                  /*!< Baud
+ 190:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_BAUDRATEPRESCALER_DIV256    (SPI_CR1_BR_2 | SPI_CR1_BR_1 | SPI_CR1_BR_0)   /*!< Baud
+ 191:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 192:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @}
+ 193:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 194:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 195:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /** @defgroup SPI_LL_EC_BIT_ORDER Transmission Bit Order
+ 196:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @{
+ 197:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 198:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_LSB_FIRST                   (SPI_CR1_LSBFIRST)        /*!< Data is transmitted/recei
+ 199:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_MSB_FIRST                   0x00000000U               /*!< Data is transmitted/recei
+ 200:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 201:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @}
+ 202:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 203:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 204:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /** @defgroup SPI_LL_EC_TRANSFER_MODE Transfer Mode
+ 205:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @{
+ 206:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 207:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_FULL_DUPLEX                 0x00000000U                          /*!< Full-Duplex mo
+ 208:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_SIMPLEX_RX                  (SPI_CR1_RXONLY)                     /*!< Simplex Rx mod
+ 209:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_HALF_DUPLEX_RX              (SPI_CR1_BIDIMODE)                   /*!< Half-Duplex Rx
+ 210:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_HALF_DUPLEX_TX              (SPI_CR1_BIDIMODE | SPI_CR1_BIDIOE)  /*!< Half-Duplex Tx
+ 211:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 212:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @}
+ 213:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 214:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 215:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /** @defgroup SPI_LL_EC_NSS_MODE Slave Select Pin Mode
+ 216:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @{
+ 217:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 218:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_NSS_SOFT                    (SPI_CR1_SSM)                     /*!< NSS managed inter
+ 219:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_NSS_HARD_INPUT              0x00000000U                       /*!< NSS pin used in I
+ 220:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_NSS_HARD_OUTPUT             (((uint32_t)SPI_CR2_SSOE << 16U)) /*!< NSS pin used in O
+ 221:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 222:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @}
+ 223:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ARM GAS  /tmp/cccuU9yN.s 			page 12
+
+
+ 224:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 225:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /** @defgroup SPI_LL_EC_DATAWIDTH Datawidth
+ 226:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @{
+ 227:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 228:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_DATAWIDTH_4BIT              (SPI_CR2_DS_0 | SPI_CR2_DS_1)                           
+ 229:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_DATAWIDTH_5BIT              (SPI_CR2_DS_2)                                          
+ 230:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_DATAWIDTH_6BIT              (SPI_CR2_DS_2 | SPI_CR2_DS_0)                           
+ 231:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_DATAWIDTH_7BIT              (SPI_CR2_DS_2 | SPI_CR2_DS_1)                           
+ 232:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_DATAWIDTH_8BIT              (SPI_CR2_DS_2 | SPI_CR2_DS_1 | SPI_CR2_DS_0)            
+ 233:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_DATAWIDTH_9BIT              (SPI_CR2_DS_3)                                          
+ 234:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_DATAWIDTH_10BIT             (SPI_CR2_DS_3 | SPI_CR2_DS_0)                           
+ 235:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_DATAWIDTH_11BIT             (SPI_CR2_DS_3 | SPI_CR2_DS_1)                           
+ 236:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_DATAWIDTH_12BIT             (SPI_CR2_DS_3 | SPI_CR2_DS_1 | SPI_CR2_DS_0)            
+ 237:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_DATAWIDTH_13BIT             (SPI_CR2_DS_3 | SPI_CR2_DS_2)                           
+ 238:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_DATAWIDTH_14BIT             (SPI_CR2_DS_3 | SPI_CR2_DS_2 | SPI_CR2_DS_0)            
+ 239:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_DATAWIDTH_15BIT             (SPI_CR2_DS_3 | SPI_CR2_DS_2 | SPI_CR2_DS_1)            
+ 240:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_DATAWIDTH_16BIT             (SPI_CR2_DS_3 | SPI_CR2_DS_2 | SPI_CR2_DS_1 | SPI_CR2_DS
+ 241:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 242:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @}
+ 243:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 244:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #if defined(USE_FULL_LL_DRIVER)
+ 245:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 246:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /** @defgroup SPI_LL_EC_CRC_CALCULATION CRC Calculation
+ 247:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @{
+ 248:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 249:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_CRCCALCULATION_DISABLE      0x00000000U               /*!< CRC calculation disabled 
+ 250:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_CRCCALCULATION_ENABLE       (SPI_CR1_CRCEN)           /*!< CRC calculation enabled  
+ 251:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 252:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @}
+ 253:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 254:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #endif /* USE_FULL_LL_DRIVER */
+ 255:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 256:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /** @defgroup SPI_LL_EC_CRC_LENGTH CRC Length
+ 257:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @{
+ 258:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 259:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_CRC_8BIT                    0x00000000U               /*!<  8-bit CRC length */
+ 260:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_CRC_16BIT                   (SPI_CR1_CRCL)            /*!< 16-bit CRC length */
+ 261:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 262:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @}
+ 263:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 264:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 265:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /** @defgroup SPI_LL_EC_RX_FIFO_TH RX FIFO Threshold
+ 266:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @{
+ 267:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 268:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_RX_FIFO_TH_HALF             0x00000000U               /*!< RXNE event is generated i
+ 269:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_RX_FIFO_TH_QUARTER          (SPI_CR2_FRXTH)           /*!< RXNE event is generated i
+ 270:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 271:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @}
+ 272:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 273:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 274:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /** @defgroup SPI_LL_EC_RX_FIFO RX FIFO Level
+ 275:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @{
+ 276:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 277:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_RX_FIFO_EMPTY               0x00000000U                       /*!< FIFO reception em
+ 278:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_RX_FIFO_QUARTER_FULL        (SPI_SR_FRLVL_0)                  /*!< FIFO reception 1/
+ 279:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_RX_FIFO_HALF_FULL           (SPI_SR_FRLVL_1)                  /*!< FIFO reception 1/
+ 280:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_RX_FIFO_FULL                (SPI_SR_FRLVL_1 | SPI_SR_FRLVL_0) /*!< FIFO reception fu
+ARM GAS  /tmp/cccuU9yN.s 			page 13
+
+
+ 281:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 282:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @}
+ 283:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 284:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 285:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /** @defgroup SPI_LL_EC_TX_FIFO TX FIFO Level
+ 286:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @{
+ 287:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 288:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_TX_FIFO_EMPTY               0x00000000U                       /*!< FIFO transmission
+ 289:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_TX_FIFO_QUARTER_FULL        (SPI_SR_FTLVL_0)                  /*!< FIFO transmission
+ 290:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_TX_FIFO_HALF_FULL           (SPI_SR_FTLVL_1)                  /*!< FIFO transmission
+ 291:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_TX_FIFO_FULL                (SPI_SR_FTLVL_1 | SPI_SR_FTLVL_0) /*!< FIFO transmission
+ 292:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 293:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @}
+ 294:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 295:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 296:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /** @defgroup SPI_LL_EC_DMA_PARITY DMA Parity
+ 297:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @{
+ 298:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 299:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_DMA_PARITY_EVEN             0x00000000U   /*!< Select DMA parity Even */
+ 300:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_DMA_PARITY_ODD              0x00000001U   /*!< Select DMA parity Odd  */
+ 301:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 302:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 303:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @}
+ 304:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 305:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 306:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 307:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @}
+ 308:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 309:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 310:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /* Exported macro ------------------------------------------------------------*/
+ 311:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /** @defgroup SPI_LL_Exported_Macros SPI Exported Macros
+ 312:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @{
+ 313:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 314:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 315:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /** @defgroup SPI_LL_EM_WRITE_READ Common Write and read registers Macros
+ 316:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @{
+ 317:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 318:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 319:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 320:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Write a value in SPI register
+ 321:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  __INSTANCE__ SPI Instance
+ 322:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  __REG__ Register to be written
+ 323:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  __VALUE__ Value to be written in the register
+ 324:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+ 325:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 326:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_WriteReg(__INSTANCE__, __REG__, __VALUE__) WRITE_REG(__INSTANCE__->__REG__, (__VALUE
+ 327:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 328:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 329:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Read a value in SPI register
+ 330:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  __INSTANCE__ SPI Instance
+ 331:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  __REG__ Register to be read
+ 332:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval Register value
+ 333:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 334:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #define LL_SPI_ReadReg(__INSTANCE__, __REG__) READ_REG(__INSTANCE__->__REG__)
+ 335:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 336:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @}
+ 337:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ARM GAS  /tmp/cccuU9yN.s 			page 14
+
+
+ 338:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 339:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 340:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @}
+ 341:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 342:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 343:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /* Exported functions --------------------------------------------------------*/
+ 344:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /** @defgroup SPI_LL_Exported_Functions SPI Exported Functions
+ 345:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @{
+ 346:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 347:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 348:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /** @defgroup SPI_LL_EF_Configuration Configuration
+ 349:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @{
+ 350:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 351:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 352:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 353:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Enable SPI peripheral
+ 354:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR1          SPE           LL_SPI_Enable
+ 355:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 356:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+ 357:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 358:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_Enable(SPI_TypeDef *SPIx)
+ 359:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 360:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   SET_BIT(SPIx->CR1, SPI_CR1_SPE);
+ 361:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 362:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 363:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 364:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Disable SPI peripheral
+ 365:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @note   When disabling the SPI, follow the procedure described in the Reference Manual.
+ 366:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR1          SPE           LL_SPI_Disable
+ 367:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 368:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+ 369:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 370:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_Disable(SPI_TypeDef *SPIx)
+ 371:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 372:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   CLEAR_BIT(SPIx->CR1, SPI_CR1_SPE);
+ 373:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 374:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 375:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 376:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Check if SPI peripheral is enabled
+ 377:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR1          SPE           LL_SPI_IsEnabled
+ 378:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 379:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval State of bit (1 or 0).
+ 380:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 381:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_IsEnabled(SPI_TypeDef *SPIx)
+ 382:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 383:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return ((READ_BIT(SPIx->CR1, SPI_CR1_SPE) == (SPI_CR1_SPE)) ? 1UL : 0UL);
+ 384:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 385:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 386:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 387:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Set SPI operation mode to Master or Slave
+ 388:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @note   This bit should not be changed when communication is ongoing.
+ 389:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR1          MSTR          LL_SPI_SetMode\n
+ 390:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         CR1          SSI           LL_SPI_SetMode
+ 391:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 392:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  Mode This parameter can be one of the following values:
+ 393:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_MODE_MASTER
+ 394:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_MODE_SLAVE
+ARM GAS  /tmp/cccuU9yN.s 			page 15
+
+
+ 395:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+ 396:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 397:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_SetMode(SPI_TypeDef *SPIx, uint32_t Mode)
+ 398:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 399:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   MODIFY_REG(SPIx->CR1, SPI_CR1_MSTR | SPI_CR1_SSI, Mode);
+ 400:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 401:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 402:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 403:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Get SPI operation mode (Master or Slave)
+ 404:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR1          MSTR          LL_SPI_GetMode\n
+ 405:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         CR1          SSI           LL_SPI_GetMode
+ 406:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 407:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval Returned value can be one of the following values:
+ 408:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_MODE_MASTER
+ 409:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_MODE_SLAVE
+ 410:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 411:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_GetMode(SPI_TypeDef *SPIx)
+ 412:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 413:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return (uint32_t)(READ_BIT(SPIx->CR1, SPI_CR1_MSTR | SPI_CR1_SSI));
+ 414:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 415:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 416:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 417:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Set serial protocol used
+ 418:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @note   This bit should be written only when SPI is disabled (SPE = 0) for correct operation.
+ 419:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR2          FRF           LL_SPI_SetStandard
+ 420:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 421:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  Standard This parameter can be one of the following values:
+ 422:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_PROTOCOL_MOTOROLA
+ 423:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_PROTOCOL_TI
+ 424:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+ 425:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 426:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_SetStandard(SPI_TypeDef *SPIx, uint32_t Standard)
+ 427:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 428:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   MODIFY_REG(SPIx->CR2, SPI_CR2_FRF, Standard);
+ 429:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 430:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 431:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 432:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Get serial protocol used
+ 433:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR2          FRF           LL_SPI_GetStandard
+ 434:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 435:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval Returned value can be one of the following values:
+ 436:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_PROTOCOL_MOTOROLA
+ 437:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_PROTOCOL_TI
+ 438:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 439:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_GetStandard(SPI_TypeDef *SPIx)
+ 440:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 441:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return (uint32_t)(READ_BIT(SPIx->CR2, SPI_CR2_FRF));
+ 442:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 443:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 444:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 445:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Set clock phase
+ 446:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @note   This bit should not be changed when communication is ongoing.
+ 447:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         This bit is not used in SPI TI mode.
+ 448:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR1          CPHA          LL_SPI_SetClockPhase
+ 449:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 450:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  ClockPhase This parameter can be one of the following values:
+ 451:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_PHASE_1EDGE
+ARM GAS  /tmp/cccuU9yN.s 			page 16
+
+
+ 452:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_PHASE_2EDGE
+ 453:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+ 454:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 455:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_SetClockPhase(SPI_TypeDef *SPIx, uint32_t ClockPhase)
+ 456:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 457:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   MODIFY_REG(SPIx->CR1, SPI_CR1_CPHA, ClockPhase);
+ 458:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 459:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 460:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 461:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Get clock phase
+ 462:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR1          CPHA          LL_SPI_GetClockPhase
+ 463:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 464:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval Returned value can be one of the following values:
+ 465:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_PHASE_1EDGE
+ 466:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_PHASE_2EDGE
+ 467:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 468:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_GetClockPhase(SPI_TypeDef *SPIx)
+ 469:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 470:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return (uint32_t)(READ_BIT(SPIx->CR1, SPI_CR1_CPHA));
+ 471:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 472:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 473:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 474:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Set clock polarity
+ 475:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @note   This bit should not be changed when communication is ongoing.
+ 476:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         This bit is not used in SPI TI mode.
+ 477:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR1          CPOL          LL_SPI_SetClockPolarity
+ 478:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 479:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  ClockPolarity This parameter can be one of the following values:
+ 480:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_POLARITY_LOW
+ 481:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_POLARITY_HIGH
+ 482:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+ 483:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 484:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_SetClockPolarity(SPI_TypeDef *SPIx, uint32_t ClockPolarity)
+ 485:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 486:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   MODIFY_REG(SPIx->CR1, SPI_CR1_CPOL, ClockPolarity);
+ 487:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 488:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 489:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 490:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Get clock polarity
+ 491:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR1          CPOL          LL_SPI_GetClockPolarity
+ 492:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 493:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval Returned value can be one of the following values:
+ 494:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_POLARITY_LOW
+ 495:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_POLARITY_HIGH
+ 496:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 497:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_GetClockPolarity(SPI_TypeDef *SPIx)
+ 498:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 499:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return (uint32_t)(READ_BIT(SPIx->CR1, SPI_CR1_CPOL));
+ 500:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 501:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 502:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 503:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Set baud rate prescaler
+ 504:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @note   These bits should not be changed when communication is ongoing. SPI BaudRate = fPCLK/Pr
+ 505:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR1          BR            LL_SPI_SetBaudRatePrescaler
+ 506:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 507:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  BaudRate This parameter can be one of the following values:
+ 508:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV2
+ARM GAS  /tmp/cccuU9yN.s 			page 17
+
+
+ 509:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV4
+ 510:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV8
+ 511:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV16
+ 512:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV32
+ 513:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV64
+ 514:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV128
+ 515:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV256
+ 516:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+ 517:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 518:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_SetBaudRatePrescaler(SPI_TypeDef *SPIx, uint32_t BaudRate)
+ 519:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 520:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   MODIFY_REG(SPIx->CR1, SPI_CR1_BR, BaudRate);
+ 521:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 522:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 523:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 524:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Get baud rate prescaler
+ 525:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR1          BR            LL_SPI_GetBaudRatePrescaler
+ 526:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 527:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval Returned value can be one of the following values:
+ 528:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV2
+ 529:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV4
+ 530:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV8
+ 531:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV16
+ 532:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV32
+ 533:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV64
+ 534:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV128
+ 535:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV256
+ 536:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 537:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_GetBaudRatePrescaler(SPI_TypeDef *SPIx)
+ 538:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 539:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return (uint32_t)(READ_BIT(SPIx->CR1, SPI_CR1_BR));
+ 540:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 541:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 542:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 543:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Set transfer bit order
+ 544:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @note   This bit should not be changed when communication is ongoing. This bit is not used in S
+ 545:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR1          LSBFIRST      LL_SPI_SetTransferBitOrder
+ 546:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 547:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  BitOrder This parameter can be one of the following values:
+ 548:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_LSB_FIRST
+ 549:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_MSB_FIRST
+ 550:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+ 551:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 552:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_SetTransferBitOrder(SPI_TypeDef *SPIx, uint32_t BitOrder)
+ 553:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 554:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   MODIFY_REG(SPIx->CR1, SPI_CR1_LSBFIRST, BitOrder);
+ 555:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 556:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 557:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 558:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Get transfer bit order
+ 559:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR1          LSBFIRST      LL_SPI_GetTransferBitOrder
+ 560:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 561:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval Returned value can be one of the following values:
+ 562:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_LSB_FIRST
+ 563:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_MSB_FIRST
+ 564:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 565:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_GetTransferBitOrder(SPI_TypeDef *SPIx)
+ARM GAS  /tmp/cccuU9yN.s 			page 18
+
+
+ 566:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 567:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return (uint32_t)(READ_BIT(SPIx->CR1, SPI_CR1_LSBFIRST));
+ 568:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 569:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 570:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 571:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Set transfer direction mode
+ 572:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @note   For Half-Duplex mode, Rx Direction is set by default.
+ 573:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         In master mode, the MOSI pin is used and in slave mode, the MISO pin is used for Half-D
+ 574:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR1          RXONLY        LL_SPI_SetTransferDirection\n
+ 575:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         CR1          BIDIMODE      LL_SPI_SetTransferDirection\n
+ 576:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         CR1          BIDIOE        LL_SPI_SetTransferDirection
+ 577:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 578:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  TransferDirection This parameter can be one of the following values:
+ 579:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_FULL_DUPLEX
+ 580:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_SIMPLEX_RX
+ 581:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_HALF_DUPLEX_RX
+ 582:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_HALF_DUPLEX_TX
+ 583:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+ 584:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 585:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_SetTransferDirection(SPI_TypeDef *SPIx, uint32_t TransferDirection)
+ 586:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 587:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   MODIFY_REG(SPIx->CR1, SPI_CR1_RXONLY | SPI_CR1_BIDIMODE | SPI_CR1_BIDIOE, TransferDirection);
+ 588:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 589:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 590:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 591:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Get transfer direction mode
+ 592:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR1          RXONLY        LL_SPI_GetTransferDirection\n
+ 593:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         CR1          BIDIMODE      LL_SPI_GetTransferDirection\n
+ 594:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         CR1          BIDIOE        LL_SPI_GetTransferDirection
+ 595:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 596:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval Returned value can be one of the following values:
+ 597:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_FULL_DUPLEX
+ 598:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_SIMPLEX_RX
+ 599:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_HALF_DUPLEX_RX
+ 600:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_HALF_DUPLEX_TX
+ 601:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 602:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_GetTransferDirection(SPI_TypeDef *SPIx)
+ 603:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 604:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return (uint32_t)(READ_BIT(SPIx->CR1, SPI_CR1_RXONLY | SPI_CR1_BIDIMODE | SPI_CR1_BIDIOE));
+ 605:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 606:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 607:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 608:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Set frame data width
+ 609:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR2          DS            LL_SPI_SetDataWidth
+ 610:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 611:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  DataWidth This parameter can be one of the following values:
+ 612:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DATAWIDTH_4BIT
+ 613:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DATAWIDTH_5BIT
+ 614:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DATAWIDTH_6BIT
+ 615:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DATAWIDTH_7BIT
+ 616:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DATAWIDTH_8BIT
+ 617:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DATAWIDTH_9BIT
+ 618:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DATAWIDTH_10BIT
+ 619:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DATAWIDTH_11BIT
+ 620:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DATAWIDTH_12BIT
+ 621:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DATAWIDTH_13BIT
+ 622:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DATAWIDTH_14BIT
+ARM GAS  /tmp/cccuU9yN.s 			page 19
+
+
+ 623:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DATAWIDTH_15BIT
+ 624:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DATAWIDTH_16BIT
+ 625:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+ 626:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 627:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_SetDataWidth(SPI_TypeDef *SPIx, uint32_t DataWidth)
+ 628:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 629:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   MODIFY_REG(SPIx->CR2, SPI_CR2_DS, DataWidth);
+ 630:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 631:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 632:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 633:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Get frame data width
+ 634:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR2          DS            LL_SPI_GetDataWidth
+ 635:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 636:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval Returned value can be one of the following values:
+ 637:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DATAWIDTH_4BIT
+ 638:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DATAWIDTH_5BIT
+ 639:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DATAWIDTH_6BIT
+ 640:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DATAWIDTH_7BIT
+ 641:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DATAWIDTH_8BIT
+ 642:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DATAWIDTH_9BIT
+ 643:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DATAWIDTH_10BIT
+ 644:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DATAWIDTH_11BIT
+ 645:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DATAWIDTH_12BIT
+ 646:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DATAWIDTH_13BIT
+ 647:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DATAWIDTH_14BIT
+ 648:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DATAWIDTH_15BIT
+ 649:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DATAWIDTH_16BIT
+ 650:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 651:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_GetDataWidth(SPI_TypeDef *SPIx)
+ 652:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 653:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return (uint32_t)(READ_BIT(SPIx->CR2, SPI_CR2_DS));
+ 654:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 655:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 656:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 657:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Set threshold of RXFIFO that triggers an RXNE event
+ 658:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR2          FRXTH         LL_SPI_SetRxFIFOThreshold
+ 659:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 660:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  Threshold This parameter can be one of the following values:
+ 661:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_RX_FIFO_TH_HALF
+ 662:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_RX_FIFO_TH_QUARTER
+ 663:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+ 664:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 665:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_SetRxFIFOThreshold(SPI_TypeDef *SPIx, uint32_t Threshold)
+ 666:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 667:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   MODIFY_REG(SPIx->CR2, SPI_CR2_FRXTH, Threshold);
+ 668:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 669:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 670:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 671:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Get threshold of RXFIFO that triggers an RXNE event
+ 672:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR2          FRXTH         LL_SPI_GetRxFIFOThreshold
+ 673:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 674:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval Returned value can be one of the following values:
+ 675:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_RX_FIFO_TH_HALF
+ 676:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_RX_FIFO_TH_QUARTER
+ 677:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 678:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_GetRxFIFOThreshold(SPI_TypeDef *SPIx)
+ 679:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ARM GAS  /tmp/cccuU9yN.s 			page 20
+
+
+ 680:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return (uint32_t)(READ_BIT(SPIx->CR2, SPI_CR2_FRXTH));
+ 681:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 682:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 683:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 684:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @}
+ 685:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 686:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 687:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /** @defgroup SPI_LL_EF_CRC_Management CRC Management
+ 688:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @{
+ 689:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 690:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 691:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 692:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Enable CRC
+ 693:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @note   This bit should be written only when SPI is disabled (SPE = 0) for correct operation.
+ 694:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR1          CRCEN         LL_SPI_EnableCRC
+ 695:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 696:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+ 697:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 698:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_EnableCRC(SPI_TypeDef *SPIx)
+ 699:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 700:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   SET_BIT(SPIx->CR1, SPI_CR1_CRCEN);
+ 701:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 702:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 703:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 704:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Disable CRC
+ 705:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @note   This bit should be written only when SPI is disabled (SPE = 0) for correct operation.
+ 706:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR1          CRCEN         LL_SPI_DisableCRC
+ 707:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 708:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+ 709:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 710:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_DisableCRC(SPI_TypeDef *SPIx)
+ 711:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 712:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   CLEAR_BIT(SPIx->CR1, SPI_CR1_CRCEN);
+ 713:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 714:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 715:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 716:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Check if CRC is enabled
+ 717:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @note   This bit should be written only when SPI is disabled (SPE = 0) for correct operation.
+ 718:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR1          CRCEN         LL_SPI_IsEnabledCRC
+ 719:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 720:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval State of bit (1 or 0).
+ 721:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 722:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_IsEnabledCRC(SPI_TypeDef *SPIx)
+ 723:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 724:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return ((READ_BIT(SPIx->CR1, SPI_CR1_CRCEN) == (SPI_CR1_CRCEN)) ? 1UL : 0UL);
+ 725:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 726:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 727:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 728:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Set CRC Length
+ 729:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @note   This bit should be written only when SPI is disabled (SPE = 0) for correct operation.
+ 730:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR1          CRCL          LL_SPI_SetCRCWidth
+ 731:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 732:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  CRCLength This parameter can be one of the following values:
+ 733:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_CRC_8BIT
+ 734:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_CRC_16BIT
+ 735:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+ 736:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ARM GAS  /tmp/cccuU9yN.s 			page 21
+
+
+ 737:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_SetCRCWidth(SPI_TypeDef *SPIx, uint32_t CRCLength)
+ 738:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 739:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   MODIFY_REG(SPIx->CR1, SPI_CR1_CRCL, CRCLength);
+ 740:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 741:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 742:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 743:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Get CRC Length
+ 744:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR1          CRCL          LL_SPI_GetCRCWidth
+ 745:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 746:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval Returned value can be one of the following values:
+ 747:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_CRC_8BIT
+ 748:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_CRC_16BIT
+ 749:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 750:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_GetCRCWidth(SPI_TypeDef *SPIx)
+ 751:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 752:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return (uint32_t)(READ_BIT(SPIx->CR1, SPI_CR1_CRCL));
+ 753:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 754:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 755:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 756:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Set CRCNext to transfer CRC on the line
+ 757:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @note   This bit has to be written as soon as the last data is written in the SPIx_DR register.
+ 758:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR1          CRCNEXT       LL_SPI_SetCRCNext
+ 759:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 760:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+ 761:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 762:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_SetCRCNext(SPI_TypeDef *SPIx)
+ 763:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 764:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   SET_BIT(SPIx->CR1, SPI_CR1_CRCNEXT);
+ 765:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 766:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 767:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 768:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Set polynomial for CRC calculation
+ 769:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CRCPR        CRCPOLY       LL_SPI_SetCRCPolynomial
+ 770:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 771:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  CRCPoly This parameter must be a number between Min_Data = 0x00 and Max_Data = 0xFFFF
+ 772:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+ 773:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 774:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_SetCRCPolynomial(SPI_TypeDef *SPIx, uint32_t CRCPoly)
+ 775:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 776:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   WRITE_REG(SPIx->CRCPR, (uint16_t)CRCPoly);
+ 777:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 778:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 779:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 780:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Get polynomial for CRC calculation
+ 781:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CRCPR        CRCPOLY       LL_SPI_GetCRCPolynomial
+ 782:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 783:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval Returned value is a number between Min_Data = 0x00 and Max_Data = 0xFFFF
+ 784:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 785:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_GetCRCPolynomial(SPI_TypeDef *SPIx)
+ 786:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 787:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return (uint32_t)(READ_REG(SPIx->CRCPR));
+ 788:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 789:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 790:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 791:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Get Rx CRC
+ 792:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll RXCRCR       RXCRC         LL_SPI_GetRxCRC
+ 793:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ARM GAS  /tmp/cccuU9yN.s 			page 22
+
+
+ 794:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval Returned value is a number between Min_Data = 0x00 and Max_Data = 0xFFFF
+ 795:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 796:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_GetRxCRC(SPI_TypeDef *SPIx)
+ 797:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 798:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return (uint32_t)(READ_REG(SPIx->RXCRCR));
+ 799:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 800:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 801:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 802:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Get Tx CRC
+ 803:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll TXCRCR       TXCRC         LL_SPI_GetTxCRC
+ 804:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 805:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval Returned value is a number between Min_Data = 0x00 and Max_Data = 0xFFFF
+ 806:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 807:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_GetTxCRC(SPI_TypeDef *SPIx)
+ 808:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 809:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return (uint32_t)(READ_REG(SPIx->TXCRCR));
+ 810:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 811:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 812:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 813:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @}
+ 814:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 815:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 816:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /** @defgroup SPI_LL_EF_NSS_Management Slave Select Pin Management
+ 817:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @{
+ 818:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 819:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 820:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 821:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Set NSS mode
+ 822:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @note   LL_SPI_NSS_SOFT Mode is not used in SPI TI mode.
+ 823:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR1          SSM           LL_SPI_SetNSSMode\n
+ 824:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR2          SSOE          LL_SPI_SetNSSMode
+ 825:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 826:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  NSS This parameter can be one of the following values:
+ 827:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_NSS_SOFT
+ 828:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_NSS_HARD_INPUT
+ 829:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_NSS_HARD_OUTPUT
+ 830:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+ 831:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 832:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_SetNSSMode(SPI_TypeDef *SPIx, uint32_t NSS)
+ 833:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 834:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   MODIFY_REG(SPIx->CR1, SPI_CR1_SSM,  NSS);
+ 835:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   MODIFY_REG(SPIx->CR2, SPI_CR2_SSOE, ((uint32_t)(NSS >> 16U)));
+ 836:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 837:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 838:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 839:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Get NSS mode
+ 840:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR1          SSM           LL_SPI_GetNSSMode\n
+ 841:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR2          SSOE          LL_SPI_GetNSSMode
+ 842:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 843:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval Returned value can be one of the following values:
+ 844:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_NSS_SOFT
+ 845:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_NSS_HARD_INPUT
+ 846:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_NSS_HARD_OUTPUT
+ 847:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 848:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_GetNSSMode(SPI_TypeDef *SPIx)
+ 849:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 850:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   uint32_t Ssm  = (READ_BIT(SPIx->CR1, SPI_CR1_SSM));
+ARM GAS  /tmp/cccuU9yN.s 			page 23
+
+
+ 851:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   uint32_t Ssoe = (READ_BIT(SPIx->CR2,  SPI_CR2_SSOE) << 16U);
+ 852:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return (Ssm | Ssoe);
+ 853:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 854:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 855:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 856:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Enable NSS pulse management
+ 857:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @note   This bit should not be changed when communication is ongoing. This bit is not used in S
+ 858:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR2          NSSP          LL_SPI_EnableNSSPulseMgt
+ 859:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 860:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+ 861:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 862:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_EnableNSSPulseMgt(SPI_TypeDef *SPIx)
+ 863:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 864:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   SET_BIT(SPIx->CR2, SPI_CR2_NSSP);
+ 865:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 866:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 867:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 868:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Disable NSS pulse management
+ 869:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @note   This bit should not be changed when communication is ongoing. This bit is not used in S
+ 870:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR2          NSSP          LL_SPI_DisableNSSPulseMgt
+ 871:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 872:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+ 873:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 874:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_DisableNSSPulseMgt(SPI_TypeDef *SPIx)
+ 875:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 876:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   CLEAR_BIT(SPIx->CR2, SPI_CR2_NSSP);
+ 877:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 878:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 879:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 880:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Check if NSS pulse is enabled
+ 881:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @note   This bit should not be changed when communication is ongoing. This bit is not used in S
+ 882:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR2          NSSP          LL_SPI_IsEnabledNSSPulse
+ 883:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 884:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval State of bit (1 or 0).
+ 885:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 886:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_IsEnabledNSSPulse(SPI_TypeDef *SPIx)
+ 887:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 888:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return ((READ_BIT(SPIx->CR2, SPI_CR2_NSSP) == (SPI_CR2_NSSP)) ? 1UL : 0UL);
+ 889:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 890:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 891:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 892:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @}
+ 893:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 894:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 895:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /** @defgroup SPI_LL_EF_FLAG_Management FLAG Management
+ 896:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @{
+ 897:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 898:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 899:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 900:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Check if Rx buffer is not empty
+ 901:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll SR           RXNE          LL_SPI_IsActiveFlag_RXNE
+ 902:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 903:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval State of bit (1 or 0).
+ 904:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 905:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_IsActiveFlag_RXNE(SPI_TypeDef *SPIx)
+ 906:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 907:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return ((READ_BIT(SPIx->SR, SPI_SR_RXNE) == (SPI_SR_RXNE)) ? 1UL : 0UL);
+ARM GAS  /tmp/cccuU9yN.s 			page 24
+
+
+ 908:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 909:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 910:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 911:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Check if Tx buffer is empty
+ 912:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll SR           TXE           LL_SPI_IsActiveFlag_TXE
+ 913:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 914:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval State of bit (1 or 0).
+ 915:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 916:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_IsActiveFlag_TXE(SPI_TypeDef *SPIx)
+ 917:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 918:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return ((READ_BIT(SPIx->SR, SPI_SR_TXE) == (SPI_SR_TXE)) ? 1UL : 0UL);
+ 919:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 920:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 921:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 922:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Get CRC error flag
+ 923:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll SR           CRCERR        LL_SPI_IsActiveFlag_CRCERR
+ 924:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 925:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval State of bit (1 or 0).
+ 926:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 927:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_IsActiveFlag_CRCERR(SPI_TypeDef *SPIx)
+ 928:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 929:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return ((READ_BIT(SPIx->SR, SPI_SR_CRCERR) == (SPI_SR_CRCERR)) ? 1UL : 0UL);
+ 930:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 931:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 932:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 933:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Get mode fault error flag
+ 934:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll SR           MODF          LL_SPI_IsActiveFlag_MODF
+ 935:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 936:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval State of bit (1 or 0).
+ 937:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 938:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_IsActiveFlag_MODF(SPI_TypeDef *SPIx)
+ 939:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 940:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return ((READ_BIT(SPIx->SR, SPI_SR_MODF) == (SPI_SR_MODF)) ? 1UL : 0UL);
+ 941:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 942:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 943:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 944:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Get overrun error flag
+ 945:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll SR           OVR           LL_SPI_IsActiveFlag_OVR
+ 946:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 947:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval State of bit (1 or 0).
+ 948:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 949:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_IsActiveFlag_OVR(SPI_TypeDef *SPIx)
+ 950:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 951:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return ((READ_BIT(SPIx->SR, SPI_SR_OVR) == (SPI_SR_OVR)) ? 1UL : 0UL);
+ 952:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 953:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 954:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 955:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Get busy flag
+ 956:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @note   The BSY flag is cleared under any one of the following conditions:
+ 957:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * -When the SPI is correctly disabled
+ 958:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * -When a fault is detected in Master mode (MODF bit set to 1)
+ 959:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * -In Master mode, when it finishes a data transmission and no new data is ready to be
+ 960:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * sent
+ 961:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * -In Slave mode, when the BSY flag is set to '0' for at least one SPI clock cycle between
+ 962:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * each data transfer.
+ 963:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll SR           BSY           LL_SPI_IsActiveFlag_BSY
+ 964:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ARM GAS  /tmp/cccuU9yN.s 			page 25
+
+
+ 965:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval State of bit (1 or 0).
+ 966:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 967:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_IsActiveFlag_BSY(SPI_TypeDef *SPIx)
+ 968:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 969:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return ((READ_BIT(SPIx->SR, SPI_SR_BSY) == (SPI_SR_BSY)) ? 1UL : 0UL);
+ 970:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 971:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 972:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 973:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Get frame format error flag
+ 974:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll SR           FRE           LL_SPI_IsActiveFlag_FRE
+ 975:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 976:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval State of bit (1 or 0).
+ 977:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 978:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_IsActiveFlag_FRE(SPI_TypeDef *SPIx)
+ 979:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 980:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return ((READ_BIT(SPIx->SR, SPI_SR_FRE) == (SPI_SR_FRE)) ? 1UL : 0UL);
+ 981:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 982:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 983:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 984:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Get FIFO reception Level
+ 985:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll SR           FRLVL         LL_SPI_GetRxFIFOLevel
+ 986:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ 987:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval Returned value can be one of the following values:
+ 988:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_RX_FIFO_EMPTY
+ 989:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_RX_FIFO_QUARTER_FULL
+ 990:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_RX_FIFO_HALF_FULL
+ 991:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_RX_FIFO_FULL
+ 992:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+ 993:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_GetRxFIFOLevel(SPI_TypeDef *SPIx)
+ 994:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 995:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return (uint32_t)(READ_BIT(SPIx->SR, SPI_SR_FRLVL));
+ 996:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 997:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ 998:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+ 999:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Get FIFO Transmission Level
+1000:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll SR           FTLVL         LL_SPI_GetTxFIFOLevel
+1001:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+1002:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval Returned value can be one of the following values:
+1003:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_TX_FIFO_EMPTY
+1004:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_TX_FIFO_QUARTER_FULL
+1005:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_TX_FIFO_HALF_FULL
+1006:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_TX_FIFO_FULL
+1007:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1008:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_GetTxFIFOLevel(SPI_TypeDef *SPIx)
+1009:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+1010:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return (uint32_t)(READ_BIT(SPIx->SR, SPI_SR_FTLVL));
+1011:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+1012:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+1013:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+1014:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Clear CRC error flag
+1015:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll SR           CRCERR        LL_SPI_ClearFlag_CRCERR
+1016:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+1017:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+1018:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1019:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_ClearFlag_CRCERR(SPI_TypeDef *SPIx)
+1020:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+1021:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   CLEAR_BIT(SPIx->SR, SPI_SR_CRCERR);
+ARM GAS  /tmp/cccuU9yN.s 			page 26
+
+
+1022:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+1023:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+1024:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+1025:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Clear mode fault error flag
+1026:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @note   Clearing this flag is done by a read access to the SPIx_SR
+1027:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         register followed by a write access to the SPIx_CR1 register
+1028:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll SR           MODF          LL_SPI_ClearFlag_MODF
+1029:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+1030:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+1031:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1032:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_ClearFlag_MODF(SPI_TypeDef *SPIx)
+1033:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+1034:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   __IO uint32_t tmpreg_sr;
+1035:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   tmpreg_sr = SPIx->SR;
+1036:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   (void) tmpreg_sr;
+1037:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   CLEAR_BIT(SPIx->CR1, SPI_CR1_SPE);
+1038:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+1039:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+1040:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+1041:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Clear overrun error flag
+1042:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @note   Clearing this flag is done by a read access to the SPIx_DR
+1043:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         register followed by a read access to the SPIx_SR register
+1044:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll SR           OVR           LL_SPI_ClearFlag_OVR
+1045:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+1046:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+1047:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1048:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_ClearFlag_OVR(SPI_TypeDef *SPIx)
+1049:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+1050:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   __IO uint32_t tmpreg;
+1051:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   tmpreg = SPIx->DR;
+1052:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   (void) tmpreg;
+1053:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   tmpreg = SPIx->SR;
+1054:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   (void) tmpreg;
+1055:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+1056:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+1057:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+1058:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Clear frame format error flag
+1059:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @note   Clearing this flag is done by reading SPIx_SR register
+1060:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll SR           FRE           LL_SPI_ClearFlag_FRE
+1061:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+1062:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+1063:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1064:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_ClearFlag_FRE(SPI_TypeDef *SPIx)
+1065:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+1066:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   __IO uint32_t tmpreg;
+1067:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   tmpreg = SPIx->SR;
+1068:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   (void) tmpreg;
+1069:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+1070:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+1071:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+1072:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @}
+1073:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1074:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+1075:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /** @defgroup SPI_LL_EF_IT_Management Interrupt Management
+1076:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @{
+1077:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1078:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ARM GAS  /tmp/cccuU9yN.s 			page 27
+
+
+1079:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+1080:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Enable error interrupt
+1081:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @note   This bit controls the generation of an interrupt when an error condition occurs (CRCERR
+1082:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR2          ERRIE         LL_SPI_EnableIT_ERR
+1083:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+1084:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+1085:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1086:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_EnableIT_ERR(SPI_TypeDef *SPIx)
+1087:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+1088:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   SET_BIT(SPIx->CR2, SPI_CR2_ERRIE);
+1089:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+1090:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+1091:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+1092:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Enable Rx buffer not empty interrupt
+1093:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR2          RXNEIE        LL_SPI_EnableIT_RXNE
+1094:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+1095:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+1096:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1097:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_EnableIT_RXNE(SPI_TypeDef *SPIx)
+1098:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+1099:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   SET_BIT(SPIx->CR2, SPI_CR2_RXNEIE);
+1100:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+1101:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+1102:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+1103:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Enable Tx buffer empty interrupt
+1104:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR2          TXEIE         LL_SPI_EnableIT_TXE
+1105:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+1106:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+1107:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1108:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_EnableIT_TXE(SPI_TypeDef *SPIx)
+1109:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+1110:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   SET_BIT(SPIx->CR2, SPI_CR2_TXEIE);
+1111:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+1112:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+1113:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+1114:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Disable error interrupt
+1115:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @note   This bit controls the generation of an interrupt when an error condition occurs (CRCERR
+1116:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR2          ERRIE         LL_SPI_DisableIT_ERR
+1117:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+1118:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+1119:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1120:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_DisableIT_ERR(SPI_TypeDef *SPIx)
+1121:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+1122:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   CLEAR_BIT(SPIx->CR2, SPI_CR2_ERRIE);
+1123:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+1124:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+1125:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+1126:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Disable Rx buffer not empty interrupt
+1127:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR2          RXNEIE        LL_SPI_DisableIT_RXNE
+1128:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+1129:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+1130:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1131:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_DisableIT_RXNE(SPI_TypeDef *SPIx)
+1132:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+1133:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   CLEAR_BIT(SPIx->CR2, SPI_CR2_RXNEIE);
+1134:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+1135:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+ARM GAS  /tmp/cccuU9yN.s 			page 28
+
+
+1136:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+1137:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Disable Tx buffer empty interrupt
+1138:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR2          TXEIE         LL_SPI_DisableIT_TXE
+1139:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+1140:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+1141:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1142:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_DisableIT_TXE(SPI_TypeDef *SPIx)
+1143:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+1144:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   CLEAR_BIT(SPIx->CR2, SPI_CR2_TXEIE);
+1145:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+1146:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+1147:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+1148:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Check if error interrupt is enabled
+1149:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR2          ERRIE         LL_SPI_IsEnabledIT_ERR
+1150:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+1151:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval State of bit (1 or 0).
+1152:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1153:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_IsEnabledIT_ERR(SPI_TypeDef *SPIx)
+1154:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+1155:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return ((READ_BIT(SPIx->CR2, SPI_CR2_ERRIE) == (SPI_CR2_ERRIE)) ? 1UL : 0UL);
+1156:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+1157:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+1158:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+1159:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Check if Rx buffer not empty interrupt is enabled
+1160:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR2          RXNEIE        LL_SPI_IsEnabledIT_RXNE
+1161:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+1162:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval State of bit (1 or 0).
+1163:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1164:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_IsEnabledIT_RXNE(SPI_TypeDef *SPIx)
+1165:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+1166:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return ((READ_BIT(SPIx->CR2, SPI_CR2_RXNEIE) == (SPI_CR2_RXNEIE)) ? 1UL : 0UL);
+1167:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+1168:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+1169:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+1170:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Check if Tx buffer empty interrupt
+1171:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR2          TXEIE         LL_SPI_IsEnabledIT_TXE
+1172:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+1173:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval State of bit (1 or 0).
+1174:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1175:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_IsEnabledIT_TXE(SPI_TypeDef *SPIx)
+1176:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+1177:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return ((READ_BIT(SPIx->CR2, SPI_CR2_TXEIE) == (SPI_CR2_TXEIE)) ? 1UL : 0UL);
+1178:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+1179:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+1180:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+1181:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @}
+1182:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1183:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+1184:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /** @defgroup SPI_LL_EF_DMA_Management DMA Management
+1185:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @{
+1186:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1187:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+1188:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+1189:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Enable DMA Rx
+1190:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR2          RXDMAEN       LL_SPI_EnableDMAReq_RX
+1191:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+1192:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+ARM GAS  /tmp/cccuU9yN.s 			page 29
+
+
+1193:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1194:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_EnableDMAReq_RX(SPI_TypeDef *SPIx)
+1195:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+1196:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   SET_BIT(SPIx->CR2, SPI_CR2_RXDMAEN);
+1197:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+1198:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+1199:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+1200:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Disable DMA Rx
+1201:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR2          RXDMAEN       LL_SPI_DisableDMAReq_RX
+1202:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+1203:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+1204:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1205:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_DisableDMAReq_RX(SPI_TypeDef *SPIx)
+1206:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+1207:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   CLEAR_BIT(SPIx->CR2, SPI_CR2_RXDMAEN);
+1208:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+1209:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+1210:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+1211:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Check if DMA Rx is enabled
+1212:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR2          RXDMAEN       LL_SPI_IsEnabledDMAReq_RX
+1213:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+1214:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval State of bit (1 or 0).
+1215:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1216:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_IsEnabledDMAReq_RX(SPI_TypeDef *SPIx)
+1217:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+1218:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return ((READ_BIT(SPIx->CR2, SPI_CR2_RXDMAEN) == (SPI_CR2_RXDMAEN)) ? 1UL : 0UL);
+1219:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+1220:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+1221:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+1222:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Enable DMA Tx
+1223:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR2          TXDMAEN       LL_SPI_EnableDMAReq_TX
+1224:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+1225:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+1226:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1227:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_EnableDMAReq_TX(SPI_TypeDef *SPIx)
+1228:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+1229:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   SET_BIT(SPIx->CR2, SPI_CR2_TXDMAEN);
+1230:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+1231:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+1232:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+1233:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Disable DMA Tx
+1234:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR2          TXDMAEN       LL_SPI_DisableDMAReq_TX
+1235:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+1236:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+1237:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1238:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_DisableDMAReq_TX(SPI_TypeDef *SPIx)
+1239:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+1240:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   CLEAR_BIT(SPIx->CR2, SPI_CR2_TXDMAEN);
+1241:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+1242:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+1243:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+1244:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Check if DMA Tx is enabled
+1245:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR2          TXDMAEN       LL_SPI_IsEnabledDMAReq_TX
+1246:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+1247:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval State of bit (1 or 0).
+1248:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1249:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_IsEnabledDMAReq_TX(SPI_TypeDef *SPIx)
+ARM GAS  /tmp/cccuU9yN.s 			page 30
+
+
+1250:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+1251:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return ((READ_BIT(SPIx->CR2, SPI_CR2_TXDMAEN) == (SPI_CR2_TXDMAEN)) ? 1UL : 0UL);
+1252:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+1253:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+1254:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+1255:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Set parity of  Last DMA reception
+1256:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR2          LDMARX        LL_SPI_SetDMAParity_RX
+1257:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+1258:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  Parity This parameter can be one of the following values:
+1259:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DMA_PARITY_ODD
+1260:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DMA_PARITY_EVEN
+1261:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+1262:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1263:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_SetDMAParity_RX(SPI_TypeDef *SPIx, uint32_t Parity)
+1264:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+1265:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   MODIFY_REG(SPIx->CR2, SPI_CR2_LDMARX, (Parity << SPI_CR2_LDMARX_Pos));
+1266:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+1267:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+1268:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+1269:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Get parity configuration for  Last DMA reception
+1270:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR2          LDMARX        LL_SPI_GetDMAParity_RX
+1271:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+1272:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval Returned value can be one of the following values:
+1273:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DMA_PARITY_ODD
+1274:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DMA_PARITY_EVEN
+1275:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1276:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_GetDMAParity_RX(SPI_TypeDef *SPIx)
+1277:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+1278:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return (uint32_t)(READ_BIT(SPIx->CR2, SPI_CR2_LDMARX) >> SPI_CR2_LDMARX_Pos);
+1279:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+1280:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+1281:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+1282:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Set parity of  Last DMA transmission
+1283:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR2          LDMATX        LL_SPI_SetDMAParity_TX
+1284:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+1285:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  Parity This parameter can be one of the following values:
+1286:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DMA_PARITY_ODD
+1287:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DMA_PARITY_EVEN
+1288:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+1289:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1290:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_SetDMAParity_TX(SPI_TypeDef *SPIx, uint32_t Parity)
+1291:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+1292:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   MODIFY_REG(SPIx->CR2, SPI_CR2_LDMATX, (Parity << SPI_CR2_LDMATX_Pos));
+1293:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+1294:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+1295:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+1296:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Get parity configuration for Last DMA transmission
+1297:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll CR2          LDMATX        LL_SPI_GetDMAParity_TX
+1298:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+1299:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval Returned value can be one of the following values:
+1300:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DMA_PARITY_ODD
+1301:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *         @arg @ref LL_SPI_DMA_PARITY_EVEN
+1302:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1303:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_GetDMAParity_TX(SPI_TypeDef *SPIx)
+1304:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+1305:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return (uint32_t)(READ_BIT(SPIx->CR2, SPI_CR2_LDMATX) >> SPI_CR2_LDMATX_Pos);
+1306:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ARM GAS  /tmp/cccuU9yN.s 			page 31
+
+
+1307:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+1308:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+1309:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Get the data register address used for DMA transfer
+1310:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll DR           DR            LL_SPI_DMA_GetRegAddr
+1311:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+1312:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval Address of data register
+1313:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1314:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint32_t LL_SPI_DMA_GetRegAddr(SPI_TypeDef *SPIx)
+1315:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+1316:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return (uint32_t) &(SPIx->DR);
+1317:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+1318:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+1319:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+1320:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @}
+1321:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1322:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+1323:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /** @defgroup SPI_LL_EF_DATA_Management DATA Management
+1324:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @{
+1325:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1326:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+1327:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+1328:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Read 8-Bits in the data register
+1329:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll DR           DR            LL_SPI_ReceiveData8
+1330:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+1331:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval RxData Value between Min_Data=0x00 and Max_Data=0xFF
+1332:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1333:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint8_t LL_SPI_ReceiveData8(SPI_TypeDef *SPIx)
+ 290              		.loc 2 1333 25 discriminator 2 view .LVU67
+ 291              	.LBB25:
+1334:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+1335:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return (*((__IO uint8_t *)&SPIx->DR));
+ 292              		.loc 2 1335 3 discriminator 2 view .LVU68
+ 293              		.loc 2 1335 11 is_stmt 0 discriminator 2 view .LVU69
+ 294 0034 2B7B     		ldrb	r3, [r5, #12]	@ zero_extendqisi2
+ 295              	.LVL28:
+ 296              		.loc 2 1335 11 discriminator 2 view .LVU70
+ 297              	.LBE25:
+ 298              	.LBE24:
+  70:Src/spi.c     ****         turnOffLED(GPIOC, RX_LED_Pin);
+ 299              		.loc 1 70 9 is_stmt 1 discriminator 2 view .LVU71
+ 300 0036 0121     		movs	r1, #1
+ 301 0038 2548     		ldr	r0, .L24+20
+ 302 003a FFF7FEFF 		bl	turnOffLED
+ 303              	.LVL29:
+ 304              	.LBE23:
+  44:Src/spi.c     **** 
+ 305              		.loc 1 44 38 discriminator 2 view .LVU72
+  44:Src/spi.c     **** 
+ 306              		.loc 1 44 39 is_stmt 0 discriminator 2 view .LVU73
+ 307 003e 0134     		adds	r4, r4, #1
+ 308              	.LVL30:
+  44:Src/spi.c     **** 
+ 309              		.loc 1 44 39 discriminator 2 view .LVU74
+ 310 0040 A4B2     		uxth	r4, r4
+ 311              	.LVL31:
+ 312              	.L13:
+  44:Src/spi.c     **** 
+ARM GAS  /tmp/cccuU9yN.s 			page 32
+
+
+ 313              		.loc 1 44 26 is_stmt 1 discriminator 1 view .LVU75
+  44:Src/spi.c     **** 
+ 314              		.loc 1 44 5 is_stmt 0 discriminator 1 view .LVU76
+ 315 0042 4445     		cmp	r4, r8
+ 316 0044 37D2     		bcs	.L22
+ 317              	.LBB32:
+  46:Src/spi.c     **** 
+ 318              		.loc 1 46 9 is_stmt 1 view .LVU77
+  46:Src/spi.c     **** 
+ 319              		.loc 1 46 26 is_stmt 0 view .LVU78
+ 320 0046 FFF7FEFF 		bl	hal_rtc_get_time_ms
+ 321              	.LVL32:
+ 322 004a 0646     		mov	r6, r0
+ 323              	.LVL33:
+  48:Src/spi.c     ****         while( LL_SPI_IsActiveFlag_TXE( spi ) == 0 ) {
+ 324              		.loc 1 48 9 is_stmt 1 view .LVU79
+ 325 004c 0221     		movs	r1, #2
+ 326 004e 2048     		ldr	r0, .L24+20
+ 327              	.LVL34:
+  48:Src/spi.c     ****         while( LL_SPI_IsActiveFlag_TXE( spi ) == 0 ) {
+ 328              		.loc 1 48 9 is_stmt 0 view .LVU80
+ 329 0050 FFF7FEFF 		bl	turnOnLED
+ 330              	.LVL35:
+  49:Src/spi.c     ****             if( ( int32_t )( hal_rtc_get_time_ms() - start ) > ( int32_t ) timeout_ms ) {
+ 331              		.loc 1 49 9 is_stmt 1 view .LVU81
+ 332              	.L14:
+  49:Src/spi.c     ****             if( ( int32_t )( hal_rtc_get_time_ms() - start ) > ( int32_t ) timeout_ms ) {
+ 333              		.loc 1 49 14 view .LVU82
+ 334              	.LBB26:
+ 335              	.LBI26:
+ 916:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 336              		.loc 2 916 26 view .LVU83
+ 337              	.LBB27:
+ 918:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 338              		.loc 2 918 3 view .LVU84
+ 918:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 339              		.loc 2 918 12 is_stmt 0 view .LVU85
+ 340 0054 AB68     		ldr	r3, [r5, #8]
+ 918:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 341              		.loc 2 918 66 view .LVU86
+ 342 0056 13F0020F 		tst	r3, #2
+ 343 005a 15D1     		bne	.L15
+ 344              	.LVL36:
+ 918:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 345              		.loc 2 918 66 view .LVU87
+ 346              	.LBE27:
+ 347              	.LBE26:
+  50:Src/spi.c     ****                 HAL_DBG_TRACE_PRINTF("\r\n");
+ 348              		.loc 1 50 13 is_stmt 1 view .LVU88
+  50:Src/spi.c     ****                 HAL_DBG_TRACE_PRINTF("\r\n");
+ 349              		.loc 1 50 30 is_stmt 0 view .LVU89
+ 350 005c FFF7FEFF 		bl	hal_rtc_get_time_ms
+ 351              	.LVL37:
+  50:Src/spi.c     ****                 HAL_DBG_TRACE_PRINTF("\r\n");
+ 352              		.loc 1 50 52 view .LVU90
+ 353 0060 801B     		subs	r0, r0, r6
+  50:Src/spi.c     ****                 HAL_DBG_TRACE_PRINTF("\r\n");
+ARM GAS  /tmp/cccuU9yN.s 			page 33
+
+
+ 354              		.loc 1 50 15 view .LVU91
+ 355 0062 B842     		cmp	r0, r7
+ 356 0064 F6DD     		ble	.L14
+  51:Src/spi.c     ****                 HAL_DBG_TRACE_ERROR("Timeout occured while waiting for SPI to become ready for tran
+ 357              		.loc 1 51 17 is_stmt 1 view .LVU92
+ 358 0066 1548     		ldr	r0, .L24
+ 359 0068 FFF7FEFF 		bl	hal_mcu_trace_print
+ 360              	.LVL38:
+  52:Src/spi.c     ****                 status = LR1110_SPI_STATUS_TIMEOUT;
+ 361              		.loc 1 52 17 view .LVU93
+  52:Src/spi.c     ****                 status = LR1110_SPI_STATUS_TIMEOUT;
+ 362              		.loc 1 52 17 view .LVU94
+ 363 006c 1448     		ldr	r0, .L24+4
+ 364 006e FFF7FEFF 		bl	hal_mcu_trace_print
+ 365              	.LVL39:
+  52:Src/spi.c     ****                 status = LR1110_SPI_STATUS_TIMEOUT;
+ 366              		.loc 1 52 17 view .LVU95
+ 367 0072 1448     		ldr	r0, .L24+8
+ 368 0074 FFF7FEFF 		bl	hal_mcu_trace_print
+ 369              	.LVL40:
+  52:Src/spi.c     ****                 status = LR1110_SPI_STATUS_TIMEOUT;
+ 370              		.loc 1 52 17 view .LVU96
+ 371 0078 1648     		ldr	r0, .L24+24
+ 372 007a FFF7FEFF 		bl	hal_mcu_trace_print
+ 373              	.LVL41:
+  52:Src/spi.c     ****                 status = LR1110_SPI_STATUS_TIMEOUT;
+ 374              		.loc 1 52 17 view .LVU97
+ 375 007e 1348     		ldr	r0, .L24+16
+ 376 0080 FFF7FEFF 		bl	hal_mcu_trace_print
+ 377              	.LVL42:
+  52:Src/spi.c     ****                 status = LR1110_SPI_STATUS_TIMEOUT;
+ 378              		.loc 1 52 17 view .LVU98
+  52:Src/spi.c     ****                 status = LR1110_SPI_STATUS_TIMEOUT;
+ 379              		.loc 1 52 114 view .LVU99
+  53:Src/spi.c     ****                 break;
+ 380              		.loc 1 53 17 view .LVU100
+  54:Src/spi.c     ****             }
+ 381              		.loc 1 54 17 view .LVU101
+  53:Src/spi.c     ****                 break;
+ 382              		.loc 1 53 24 is_stmt 0 view .LVU102
+ 383 0084 4FF0FF0A 		mov	r10, #255
+ 384              	.LVL43:
+ 385              	.L15:
+  56:Src/spi.c     ****         LL_SPI_TransmitData8( spi, buffer[i] );
+ 386              		.loc 1 56 10 is_stmt 1 view .LVU103
+  57:Src/spi.c     ****         turnOffLED(GPIOC, TX_LED_Pin);
+ 387              		.loc 1 57 9 view .LVU104
+ 388 0088 19F80430 		ldrb	r3, [r9, r4]	@ zero_extendqisi2
+ 389              	.LVL44:
+ 390              	.LBB28:
+ 391              	.LBI28:
+1336:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+1337:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+1338:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+1339:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Read 16-Bits in the data register
+1340:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll DR           DR            LL_SPI_ReceiveData16
+1341:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+ARM GAS  /tmp/cccuU9yN.s 			page 34
+
+
+1342:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval RxData Value between Min_Data=0x00 and Max_Data=0xFFFF
+1343:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1344:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE uint16_t LL_SPI_ReceiveData16(SPI_TypeDef *SPIx)
+1345:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+1346:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   return (uint16_t)(READ_REG(SPIx->DR));
+1347:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+1348:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** 
+1349:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** /**
+1350:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @brief  Write 8-Bits in the data register
+1351:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @rmtoll DR           DR            LL_SPI_TransmitData8
+1352:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  SPIx SPI Instance
+1353:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @param  TxData Value between Min_Data=0x00 and Max_Data=0xFF
+1354:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   * @retval None
+1355:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   */
+1356:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** __STATIC_INLINE void LL_SPI_TransmitData8(SPI_TypeDef *SPIx, uint8_t TxData)
+ 392              		.loc 2 1356 22 view .LVU105
+ 393              	.LBB29:
+1357:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+1358:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** #if defined (__GNUC__)
+1359:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   __IO uint8_t *spidr = ((__IO uint8_t *)&SPIx->DR);
+ 394              		.loc 2 1359 3 view .LVU106
+1360:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *spidr = TxData;
+ 395              		.loc 2 1360 3 view .LVU107
+ 396              		.loc 2 1360 10 is_stmt 0 view .LVU108
+ 397 008c 2B73     		strb	r3, [r5, #12]
+ 398              	.LVL45:
+ 399              		.loc 2 1360 10 view .LVU109
+ 400              	.LBE29:
+ 401              	.LBE28:
+  58:Src/spi.c     **** 
+ 402              		.loc 1 58 9 is_stmt 1 view .LVU110
+ 403 008e DFF840B0 		ldr	fp, .L24+20
+ 404 0092 0221     		movs	r1, #2
+ 405 0094 5846     		mov	r0, fp
+ 406 0096 FFF7FEFF 		bl	turnOffLED
+ 407              	.LVL46:
+  60:Src/spi.c     ****         while( LL_SPI_IsActiveFlag_RXNE( spi ) == 0 ) {
+ 408              		.loc 1 60 9 view .LVU111
+ 409 009a 0121     		movs	r1, #1
+ 410 009c 5846     		mov	r0, fp
+ 411 009e FFF7FEFF 		bl	turnOnLED
+ 412              	.LVL47:
+  61:Src/spi.c     ****             if( ( int32_t )( hal_rtc_get_time_ms() - start ) > ( int32_t ) timeout_ms ) {
+ 413              		.loc 1 61 9 view .LVU112
+ 414              	.L17:
+  61:Src/spi.c     ****             if( ( int32_t )( hal_rtc_get_time_ms() - start ) > ( int32_t ) timeout_ms ) {
+ 415              		.loc 1 61 14 view .LVU113
+ 416              	.LBB30:
+ 417              	.LBI30:
+ 905:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 418              		.loc 2 905 26 view .LVU114
+ 419              	.LBB31:
+ 907:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 420              		.loc 2 907 3 view .LVU115
+ 907:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 421              		.loc 2 907 12 is_stmt 0 view .LVU116
+ 422 00a2 AB68     		ldr	r3, [r5, #8]
+ARM GAS  /tmp/cccuU9yN.s 			page 35
+
+
+ 907:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 423              		.loc 2 907 68 view .LVU117
+ 424 00a4 13F0010F 		tst	r3, #1
+ 425 00a8 C4D1     		bne	.L18
+ 426              	.LVL48:
+ 907:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 427              		.loc 2 907 68 view .LVU118
+ 428              	.LBE31:
+ 429              	.LBE30:
+  62:Src/spi.c     ****                 HAL_DBG_TRACE_PRINTF("\r\n");
+ 430              		.loc 1 62 13 is_stmt 1 view .LVU119
+  62:Src/spi.c     ****                 HAL_DBG_TRACE_PRINTF("\r\n");
+ 431              		.loc 1 62 30 is_stmt 0 view .LVU120
+ 432 00aa FFF7FEFF 		bl	hal_rtc_get_time_ms
+ 433              	.LVL49:
+  62:Src/spi.c     ****                 HAL_DBG_TRACE_PRINTF("\r\n");
+ 434              		.loc 1 62 52 view .LVU121
+ 435 00ae 801B     		subs	r0, r0, r6
+  62:Src/spi.c     ****                 HAL_DBG_TRACE_PRINTF("\r\n");
+ 436              		.loc 1 62 15 view .LVU122
+ 437 00b0 B842     		cmp	r0, r7
+ 438 00b2 F6DD     		ble	.L17
+ 439 00b4 ADE7     		b	.L23
+ 440              	.LVL50:
+ 441              	.L22:
+  62:Src/spi.c     ****                 HAL_DBG_TRACE_PRINTF("\r\n");
+ 442              		.loc 1 62 15 view .LVU123
+ 443              	.LBE32:
+ 444              	.LBE33:
+  71:Src/spi.c     ****     }
+  72:Src/spi.c     ****     return status;
+ 445              		.loc 1 72 5 is_stmt 1 view .LVU124
+  73:Src/spi.c     **** }
+ 446              		.loc 1 73 1 is_stmt 0 view .LVU125
+ 447 00b6 5046     		mov	r0, r10
+ 448 00b8 BDE8F88F 		pop	{r3, r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 449              	.LVL51:
+ 450              	.L25:
+ 451              		.loc 1 73 1 view .LVU126
+ 452              		.align	2
+ 453              	.L24:
+ 454 00bc 00000000 		.word	.LC0
+ 455 00c0 04000000 		.word	.LC1
+ 456 00c4 0C000000 		.word	.LC2
+ 457 00c8 4C000000 		.word	.LC7
+ 458 00cc 4C000000 		.word	.LC4
+ 459 00d0 00080048 		.word	1207961600
+ 460 00d4 00000000 		.word	.LC6
+ 461              		.cfi_endproc
+ 462              	.LFE431:
+ 464              		.section	.text.lr1110_spi_read_with_dummy_byte,"ax",%progbits
+ 465              		.align	1
+ 466              		.global	lr1110_spi_read_with_dummy_byte
+ 467              		.syntax unified
+ 468              		.thumb
+ 469              		.thumb_func
+ 470              		.fpu fpv4-sp-d16
+ARM GAS  /tmp/cccuU9yN.s 			page 36
+
+
+ 472              	lr1110_spi_read_with_dummy_byte:
+ 473              	.LVL52:
+ 474              	.LFB432:
+  74:Src/spi.c     **** 
+  75:Src/spi.c     **** lr1110_spi_status_t lr1110_spi_read_with_dummy_byte( SPI_TypeDef* spi, uint8_t* buffer, uint16_t le
+ 475              		.loc 1 75 148 is_stmt 1 view -0
+ 476              		.cfi_startproc
+ 477              		@ args = 4, pretend = 0, frame = 8
+ 478              		@ frame_needed = 0, uses_anonymous_args = 0
+ 479              		.loc 1 75 148 is_stmt 0 view .LVU128
+ 480 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 481              	.LCFI2:
+ 482              		.cfi_def_cfa_offset 36
+ 483              		.cfi_offset 4, -36
+ 484              		.cfi_offset 5, -32
+ 485              		.cfi_offset 6, -28
+ 486              		.cfi_offset 7, -24
+ 487              		.cfi_offset 8, -20
+ 488              		.cfi_offset 9, -16
+ 489              		.cfi_offset 10, -12
+ 490              		.cfi_offset 11, -8
+ 491              		.cfi_offset 14, -4
+ 492 0004 83B0     		sub	sp, sp, #12
+ 493              	.LCFI3:
+ 494              		.cfi_def_cfa_offset 48
+ 495 0006 0546     		mov	r5, r0
+ 496 0008 8B46     		mov	fp, r1
+ 497 000a 9146     		mov	r9, r2
+ 498 000c 9A46     		mov	r10, r3
+ 499 000e DDF83080 		ldr	r8, [sp, #48]
+  76:Src/spi.c     **** 
+  77:Src/spi.c     ****     lr1110_spi_status_t status = LR1110_SPI_STATUS_OK;
+ 500              		.loc 1 77 5 is_stmt 1 view .LVU129
+ 501              	.LVL53:
+  78:Src/spi.c     **** 
+  79:Src/spi.c     ****     for( uint16_t i = 0; i < length; i++ ) {
+ 502              		.loc 1 79 5 view .LVU130
+ 503              	.LBB34:
+ 504              		.loc 1 79 10 view .LVU131
+ 505              		.loc 1 79 19 is_stmt 0 view .LVU132
+ 506 0012 0024     		movs	r4, #0
+ 507              	.LBE34:
+  77:Src/spi.c     **** 
+ 508              		.loc 1 77 25 view .LVU133
+ 509 0014 0194     		str	r4, [sp, #4]
+ 510              	.LBB45:
+ 511              		.loc 1 79 5 view .LVU134
+ 512 0016 19E0     		b	.L27
+ 513              	.LVL54:
+ 514              	.L37:
+ 515              	.LBB35:
+  80:Src/spi.c     **** 
+  81:Src/spi.c     ****         uint32_t start = hal_rtc_get_time_ms( );
+  82:Src/spi.c     **** 
+  83:Src/spi.c     ****         turnOnLED(GPIOC, TX_LED_Pin);
+  84:Src/spi.c     ****         while( LL_SPI_IsActiveFlag_TXE( spi ) == 0 ) {
+  85:Src/spi.c     ****             if( ( int32_t )( hal_rtc_get_time_ms() - start ) > ( int32_t ) timeout_ms ) {
+ARM GAS  /tmp/cccuU9yN.s 			page 37
+
+
+  86:Src/spi.c     ****                 HAL_DBG_TRACE_PRINTF("\r\n");
+  87:Src/spi.c     ****                 HAL_DBG_TRACE_ERROR("Timeout occured while waiting for SPI to become ready for tran
+  88:Src/spi.c     ****                 status = LR1110_SPI_STATUS_TIMEOUT;
+  89:Src/spi.c     ****                 break;
+  90:Src/spi.c     ****             }
+  91:Src/spi.c     ****         };
+  92:Src/spi.c     ****         LL_SPI_TransmitData8( spi, dummy_byte );
+  93:Src/spi.c     ****         turnOffLED(GPIOC, TX_LED_Pin);
+  94:Src/spi.c     **** 
+  95:Src/spi.c     ****         turnOnLED(GPIOC, RX_LED_Pin);
+  96:Src/spi.c     ****         while( LL_SPI_IsActiveFlag_RXNE( spi ) == 0 ) {
+  97:Src/spi.c     ****             if( ( int32_t )( hal_rtc_get_time_ms() - start ) > ( int32_t ) timeout_ms ) {
+  98:Src/spi.c     ****                 HAL_DBG_TRACE_PRINTF("\r\n");
+ 516              		.loc 1 98 17 is_stmt 1 view .LVU135
+ 517 0018 2A48     		ldr	r0, .L38
+ 518 001a FFF7FEFF 		bl	hal_mcu_trace_print
+ 519              	.LVL55:
+  99:Src/spi.c     ****                 HAL_DBG_TRACE_ERROR("Timeout occured while waiting for SPI to become ready for rece
+ 520              		.loc 1 99 17 view .LVU136
+ 521              		.loc 1 99 17 view .LVU137
+ 522 001e 2A48     		ldr	r0, .L38+4
+ 523 0020 FFF7FEFF 		bl	hal_mcu_trace_print
+ 524              	.LVL56:
+ 525              		.loc 1 99 17 view .LVU138
+ 526 0024 2948     		ldr	r0, .L38+8
+ 527 0026 FFF7FEFF 		bl	hal_mcu_trace_print
+ 528              	.LVL57:
+ 529              		.loc 1 99 17 view .LVU139
+ 530 002a 2948     		ldr	r0, .L38+12
+ 531 002c FFF7FEFF 		bl	hal_mcu_trace_print
+ 532              	.LVL58:
+ 533              		.loc 1 99 17 view .LVU140
+ 534 0030 2848     		ldr	r0, .L38+16
+ 535 0032 FFF7FEFF 		bl	hal_mcu_trace_print
+ 536              	.LVL59:
+ 537              		.loc 1 99 17 view .LVU141
+ 538              		.loc 1 99 111 view .LVU142
+ 100:Src/spi.c     ****                 status = LR1110_SPI_STATUS_TIMEOUT;
+ 539              		.loc 1 100 17 view .LVU143
+ 101:Src/spi.c     ****                 break;
+ 540              		.loc 1 101 17 view .LVU144
+ 100:Src/spi.c     ****                 status = LR1110_SPI_STATUS_TIMEOUT;
+ 541              		.loc 1 100 24 is_stmt 0 view .LVU145
+ 542 0036 FF23     		movs	r3, #255
+ 543 0038 0193     		str	r3, [sp, #4]
+ 544              	.LVL60:
+ 545              	.L32:
+ 102:Src/spi.c     ****             }
+ 103:Src/spi.c     ****         };
+ 546              		.loc 1 103 10 is_stmt 1 discriminator 2 view .LVU146
+ 104:Src/spi.c     ****         buffer[i] = LL_SPI_ReceiveData8( spi );
+ 547              		.loc 1 104 9 discriminator 2 view .LVU147
+ 548              	.LBB36:
+ 549              	.LBI36:
+1333:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 550              		.loc 2 1333 25 discriminator 2 view .LVU148
+ 551              	.LBB37:
+ARM GAS  /tmp/cccuU9yN.s 			page 38
+
+
+1335:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 552              		.loc 2 1335 3 discriminator 2 view .LVU149
+1335:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 553              		.loc 2 1335 11 is_stmt 0 discriminator 2 view .LVU150
+ 554 003a 2B7B     		ldrb	r3, [r5, #12]	@ zero_extendqisi2
+ 555              	.LVL61:
+1335:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 556              		.loc 2 1335 11 discriminator 2 view .LVU151
+ 557              	.LBE37:
+ 558              	.LBE36:
+ 559              		.loc 1 104 19 discriminator 2 view .LVU152
+ 560 003c 0BF80430 		strb	r3, [fp, r4]
+ 105:Src/spi.c     ****         turnOffLED(GPIOC, RX_LED_Pin);
+ 561              		.loc 1 105 9 is_stmt 1 discriminator 2 view .LVU153
+ 562 0040 0121     		movs	r1, #1
+ 563 0042 2548     		ldr	r0, .L38+20
+ 564 0044 FFF7FEFF 		bl	turnOffLED
+ 565              	.LVL62:
+ 566              	.LBE35:
+  79:Src/spi.c     **** 
+ 567              		.loc 1 79 38 discriminator 2 view .LVU154
+  79:Src/spi.c     **** 
+ 568              		.loc 1 79 39 is_stmt 0 discriminator 2 view .LVU155
+ 569 0048 0134     		adds	r4, r4, #1
+ 570              	.LVL63:
+  79:Src/spi.c     **** 
+ 571              		.loc 1 79 39 discriminator 2 view .LVU156
+ 572 004a A4B2     		uxth	r4, r4
+ 573              	.LVL64:
+ 574              	.L27:
+  79:Src/spi.c     **** 
+ 575              		.loc 1 79 26 is_stmt 1 discriminator 1 view .LVU157
+  79:Src/spi.c     **** 
+ 576              		.loc 1 79 5 is_stmt 0 discriminator 1 view .LVU158
+ 577 004c 4C45     		cmp	r4, r9
+ 578 004e 35D2     		bcs	.L36
+ 579              	.LBB44:
+  81:Src/spi.c     **** 
+ 580              		.loc 1 81 9 is_stmt 1 view .LVU159
+  81:Src/spi.c     **** 
+ 581              		.loc 1 81 26 is_stmt 0 view .LVU160
+ 582 0050 FFF7FEFF 		bl	hal_rtc_get_time_ms
+ 583              	.LVL65:
+ 584 0054 0646     		mov	r6, r0
+ 585              	.LVL66:
+  83:Src/spi.c     ****         while( LL_SPI_IsActiveFlag_TXE( spi ) == 0 ) {
+ 586              		.loc 1 83 9 is_stmt 1 view .LVU161
+ 587 0056 0221     		movs	r1, #2
+ 588 0058 1F48     		ldr	r0, .L38+20
+ 589              	.LVL67:
+  83:Src/spi.c     ****         while( LL_SPI_IsActiveFlag_TXE( spi ) == 0 ) {
+ 590              		.loc 1 83 9 is_stmt 0 view .LVU162
+ 591 005a FFF7FEFF 		bl	turnOnLED
+ 592              	.LVL68:
+  84:Src/spi.c     ****             if( ( int32_t )( hal_rtc_get_time_ms() - start ) > ( int32_t ) timeout_ms ) {
+ 593              		.loc 1 84 9 is_stmt 1 view .LVU163
+ 594              	.L28:
+ARM GAS  /tmp/cccuU9yN.s 			page 39
+
+
+  84:Src/spi.c     ****             if( ( int32_t )( hal_rtc_get_time_ms() - start ) > ( int32_t ) timeout_ms ) {
+ 595              		.loc 1 84 14 view .LVU164
+ 596              	.LBB38:
+ 597              	.LBI38:
+ 916:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 598              		.loc 2 916 26 view .LVU165
+ 599              	.LBB39:
+ 918:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 600              		.loc 2 918 3 view .LVU166
+ 918:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 601              		.loc 2 918 12 is_stmt 0 view .LVU167
+ 602 005e AB68     		ldr	r3, [r5, #8]
+ 918:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 603              		.loc 2 918 66 view .LVU168
+ 604 0060 13F0020F 		tst	r3, #2
+ 605 0064 15D1     		bne	.L29
+ 606              	.LVL69:
+ 918:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 607              		.loc 2 918 66 view .LVU169
+ 608              	.LBE39:
+ 609              	.LBE38:
+  85:Src/spi.c     ****                 HAL_DBG_TRACE_PRINTF("\r\n");
+ 610              		.loc 1 85 13 is_stmt 1 view .LVU170
+  85:Src/spi.c     ****                 HAL_DBG_TRACE_PRINTF("\r\n");
+ 611              		.loc 1 85 30 is_stmt 0 view .LVU171
+ 612 0066 FFF7FEFF 		bl	hal_rtc_get_time_ms
+ 613              	.LVL70:
+  85:Src/spi.c     ****                 HAL_DBG_TRACE_PRINTF("\r\n");
+ 614              		.loc 1 85 52 view .LVU172
+ 615 006a 801B     		subs	r0, r0, r6
+  85:Src/spi.c     ****                 HAL_DBG_TRACE_PRINTF("\r\n");
+ 616              		.loc 1 85 15 view .LVU173
+ 617 006c 4045     		cmp	r0, r8
+ 618 006e F6DD     		ble	.L28
+  86:Src/spi.c     ****                 HAL_DBG_TRACE_ERROR("Timeout occured while waiting for SPI to become ready for tran
+ 619              		.loc 1 86 17 is_stmt 1 view .LVU174
+ 620 0070 1448     		ldr	r0, .L38
+ 621 0072 FFF7FEFF 		bl	hal_mcu_trace_print
+ 622              	.LVL71:
+  87:Src/spi.c     ****                 status = LR1110_SPI_STATUS_TIMEOUT;
+ 623              		.loc 1 87 17 view .LVU175
+  87:Src/spi.c     ****                 status = LR1110_SPI_STATUS_TIMEOUT;
+ 624              		.loc 1 87 17 view .LVU176
+ 625 0076 1448     		ldr	r0, .L38+4
+ 626 0078 FFF7FEFF 		bl	hal_mcu_trace_print
+ 627              	.LVL72:
+  87:Src/spi.c     ****                 status = LR1110_SPI_STATUS_TIMEOUT;
+ 628              		.loc 1 87 17 view .LVU177
+ 629 007c 1348     		ldr	r0, .L38+8
+ 630 007e FFF7FEFF 		bl	hal_mcu_trace_print
+ 631              	.LVL73:
+  87:Src/spi.c     ****                 status = LR1110_SPI_STATUS_TIMEOUT;
+ 632              		.loc 1 87 17 view .LVU178
+ 633 0082 1648     		ldr	r0, .L38+24
+ 634 0084 FFF7FEFF 		bl	hal_mcu_trace_print
+ 635              	.LVL74:
+  87:Src/spi.c     ****                 status = LR1110_SPI_STATUS_TIMEOUT;
+ARM GAS  /tmp/cccuU9yN.s 			page 40
+
+
+ 636              		.loc 1 87 17 view .LVU179
+ 637 0088 1248     		ldr	r0, .L38+16
+ 638 008a FFF7FEFF 		bl	hal_mcu_trace_print
+ 639              	.LVL75:
+  87:Src/spi.c     ****                 status = LR1110_SPI_STATUS_TIMEOUT;
+ 640              		.loc 1 87 17 view .LVU180
+  87:Src/spi.c     ****                 status = LR1110_SPI_STATUS_TIMEOUT;
+ 641              		.loc 1 87 114 view .LVU181
+  88:Src/spi.c     ****                 break;
+ 642              		.loc 1 88 17 view .LVU182
+  89:Src/spi.c     ****             }
+ 643              		.loc 1 89 17 view .LVU183
+  88:Src/spi.c     ****                 break;
+ 644              		.loc 1 88 24 is_stmt 0 view .LVU184
+ 645 008e FF23     		movs	r3, #255
+ 646 0090 0193     		str	r3, [sp, #4]
+ 647              	.LVL76:
+ 648              	.L29:
+  91:Src/spi.c     ****         LL_SPI_TransmitData8( spi, dummy_byte );
+ 649              		.loc 1 91 10 is_stmt 1 view .LVU185
+  92:Src/spi.c     ****         turnOffLED(GPIOC, TX_LED_Pin);
+ 650              		.loc 1 92 9 view .LVU186
+ 651              	.LBB40:
+ 652              	.LBI40:
+1356:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ 653              		.loc 2 1356 22 view .LVU187
+ 654              	.LBB41:
+1359:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h ****   *spidr = TxData;
+ 655              		.loc 2 1359 3 view .LVU188
+ 656              		.loc 2 1360 3 view .LVU189
+ 657              		.loc 2 1360 10 is_stmt 0 view .LVU190
+ 658 0092 85F80CA0 		strb	r10, [r5, #12]
+ 659              	.LVL77:
+ 660              		.loc 2 1360 10 view .LVU191
+ 661              	.LBE41:
+ 662              	.LBE40:
+  93:Src/spi.c     **** 
+ 663              		.loc 1 93 9 is_stmt 1 view .LVU192
+ 664 0096 104F     		ldr	r7, .L38+20
+ 665 0098 0221     		movs	r1, #2
+ 666 009a 3846     		mov	r0, r7
+ 667 009c FFF7FEFF 		bl	turnOffLED
+ 668              	.LVL78:
+  95:Src/spi.c     ****         while( LL_SPI_IsActiveFlag_RXNE( spi ) == 0 ) {
+ 669              		.loc 1 95 9 view .LVU193
+ 670 00a0 0121     		movs	r1, #1
+ 671 00a2 3846     		mov	r0, r7
+ 672 00a4 FFF7FEFF 		bl	turnOnLED
+ 673              	.LVL79:
+  96:Src/spi.c     ****             if( ( int32_t )( hal_rtc_get_time_ms() - start ) > ( int32_t ) timeout_ms ) {
+ 674              		.loc 1 96 9 view .LVU194
+ 675              	.L31:
+  96:Src/spi.c     ****             if( ( int32_t )( hal_rtc_get_time_ms() - start ) > ( int32_t ) timeout_ms ) {
+ 676              		.loc 1 96 14 view .LVU195
+ 677              	.LBB42:
+ 678              	.LBI42:
+ 905:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** {
+ARM GAS  /tmp/cccuU9yN.s 			page 41
+
+
+ 679              		.loc 2 905 26 view .LVU196
+ 680              	.LBB43:
+ 907:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 681              		.loc 2 907 3 view .LVU197
+ 907:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 682              		.loc 2 907 12 is_stmt 0 view .LVU198
+ 683 00a8 AB68     		ldr	r3, [r5, #8]
+ 907:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 684              		.loc 2 907 68 view .LVU199
+ 685 00aa 13F0010F 		tst	r3, #1
+ 686 00ae C4D1     		bne	.L32
+ 687              	.LVL80:
+ 907:Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_spi.h **** }
+ 688              		.loc 2 907 68 view .LVU200
+ 689              	.LBE43:
+ 690              	.LBE42:
+  97:Src/spi.c     ****                 HAL_DBG_TRACE_PRINTF("\r\n");
+ 691              		.loc 1 97 13 is_stmt 1 view .LVU201
+  97:Src/spi.c     ****                 HAL_DBG_TRACE_PRINTF("\r\n");
+ 692              		.loc 1 97 30 is_stmt 0 view .LVU202
+ 693 00b0 FFF7FEFF 		bl	hal_rtc_get_time_ms
+ 694              	.LVL81:
+  97:Src/spi.c     ****                 HAL_DBG_TRACE_PRINTF("\r\n");
+ 695              		.loc 1 97 52 view .LVU203
+ 696 00b4 801B     		subs	r0, r0, r6
+  97:Src/spi.c     ****                 HAL_DBG_TRACE_PRINTF("\r\n");
+ 697              		.loc 1 97 15 view .LVU204
+ 698 00b6 4045     		cmp	r0, r8
+ 699 00b8 F6DD     		ble	.L31
+ 700 00ba ADE7     		b	.L37
+ 701              	.LVL82:
+ 702              	.L36:
+  97:Src/spi.c     ****                 HAL_DBG_TRACE_PRINTF("\r\n");
+ 703              		.loc 1 97 15 view .LVU205
+ 704              	.LBE44:
+ 705              	.LBE45:
+ 106:Src/spi.c     ****     }
+ 107:Src/spi.c     ****     return status;
+ 706              		.loc 1 107 5 is_stmt 1 view .LVU206
+ 108:Src/spi.c     **** }
+ 707              		.loc 1 108 1 is_stmt 0 view .LVU207
+ 708 00bc 0198     		ldr	r0, [sp, #4]
+ 709 00be 03B0     		add	sp, sp, #12
+ 710              	.LCFI4:
+ 711              		.cfi_def_cfa_offset 36
+ 712              		@ sp needed
+ 713 00c0 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 714              	.LVL83:
+ 715              	.L39:
+ 716              		.loc 1 108 1 view .LVU208
+ 717              		.align	2
+ 718              	.L38:
+ 719 00c4 00000000 		.word	.LC0
+ 720 00c8 04000000 		.word	.LC1
+ 721 00cc 0C000000 		.word	.LC2
+ 722 00d0 4C000000 		.word	.LC7
+ 723 00d4 4C000000 		.word	.LC4
+ARM GAS  /tmp/cccuU9yN.s 			page 42
+
+
+ 724 00d8 00080048 		.word	1207961600
+ 725 00dc 00000000 		.word	.LC6
+ 726              		.cfi_endproc
+ 727              	.LFE432:
+ 729              		.section	.text.lr1110_spi_read,"ax",%progbits
+ 730              		.align	1
+ 731              		.global	lr1110_spi_read
+ 732              		.syntax unified
+ 733              		.thumb
+ 734              		.thumb_func
+ 735              		.fpu fpv4-sp-d16
+ 737              	lr1110_spi_read:
+ 738              	.LVL84:
+ 739              	.LFB433:
+ 109:Src/spi.c     **** 
+ 110:Src/spi.c     **** lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer, const uint16_t cb
+ 740              		.loc 1 110 164 is_stmt 1 view -0
+ 741              		.cfi_startproc
+ 742              		@ args = 4, pretend = 0, frame = 8
+ 743              		@ frame_needed = 0, uses_anonymous_args = 0
+ 744              		.loc 1 110 164 is_stmt 0 view .LVU210
+ 745 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 746              	.LCFI5:
+ 747              		.cfi_def_cfa_offset 20
+ 748              		.cfi_offset 4, -20
+ 749              		.cfi_offset 5, -16
+ 750              		.cfi_offset 6, -12
+ 751              		.cfi_offset 7, -8
+ 752              		.cfi_offset 14, -4
+ 753 0002 85B0     		sub	sp, sp, #20
+ 754              	.LCFI6:
+ 755              		.cfi_def_cfa_offset 40
+ 756 0004 0C46     		mov	r4, r1
+ 757 0006 1646     		mov	r6, r2
+ 758 0008 1D46     		mov	r5, r3
+ 111:Src/spi.c     **** 
+ 112:Src/spi.c     ****     radio = ( radio_t* ) context;
+ 759              		.loc 1 112 5 is_stmt 1 view .LVU211
+ 760              		.loc 1 112 11 is_stmt 0 view .LVU212
+ 761 000a 2B49     		ldr	r1, .L53
+ 762              	.LVL85:
+ 763              		.loc 1 112 11 view .LVU213
+ 764 000c 0860     		str	r0, [r1]
+ 113:Src/spi.c     ****     uint8_t  dummy_byte  = 0x00;
+ 765              		.loc 1 113 5 is_stmt 1 view .LVU214
+ 766              		.loc 1 113 14 is_stmt 0 view .LVU215
+ 767 000e 0020     		movs	r0, #0
+ 768              	.LVL86:
+ 769              		.loc 1 113 14 view .LVU216
+ 770 0010 8DF80F00 		strb	r0, [sp, #15]
+ 114:Src/spi.c     **** 
+ 115:Src/spi.c     ****     if (waitForBusyState( GPIO_PIN_RESET, 1000 ) != LR1110_GPIO_STATUS_OK) {
+ 771              		.loc 1 115 5 is_stmt 1 view .LVU217
+ 772              		.loc 1 115 9 is_stmt 0 view .LVU218
+ 773 0014 4FF47A71 		mov	r1, #1000
+ 774              		.loc 1 115 9 view .LVU219
+ 775 0018 FFF7FEFF 		bl	waitForBusyState
+ARM GAS  /tmp/cccuU9yN.s 			page 43
+
+
+ 776              	.LVL87:
+ 777              		.loc 1 115 8 view .LVU220
+ 778 001c 18B1     		cbz	r0, .L48
+ 116:Src/spi.c     ****         return LR1110_SPI_STATUS_ERROR;
+ 779              		.loc 1 116 16 view .LVU221
+ 780 001e 0124     		movs	r4, #1
+ 781              	.LVL88:
+ 782              	.L41:
+ 117:Src/spi.c     ****     }
+ 118:Src/spi.c     **** 
+ 119:Src/spi.c     ****     /* 1st SPI transaction */
+ 120:Src/spi.c     ****     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_RESET );
+ 121:Src/spi.c     ****     if (lr1110_spi_write( radio->spi, cbuffer, cbuffer_length, 1000 ) != LR1110_SPI_STATUS_OK) {
+ 122:Src/spi.c     ****         return LR1110_SPI_STATUS_ERROR;
+ 123:Src/spi.c     ****     }
+ 124:Src/spi.c     ****     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
+ 125:Src/spi.c     **** 
+ 126:Src/spi.c     ****     if (waitForBusyState( GPIO_PIN_RESET, 1000 ) != LR1110_GPIO_STATUS_OK) {
+ 127:Src/spi.c     ****         return LR1110_SPI_STATUS_ERROR;
+ 128:Src/spi.c     ****     }
+ 129:Src/spi.c     **** 
+ 130:Src/spi.c     ****     /* 2nd SPI transaction */
+ 131:Src/spi.c     ****     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_RESET );
+ 132:Src/spi.c     ****     if (lr1110_spi_write( radio->spi, &dummy_byte, 1, 1000 ) != LR1110_SPI_STATUS_OK) {
+ 133:Src/spi.c     ****         return LR1110_SPI_STATUS_ERROR;
+ 134:Src/spi.c     ****     }
+ 135:Src/spi.c     ****     if (lr1110_spi_read_with_dummy_byte( radio->spi, rbuffer, rbuffer_length, LR1110_NOP, 1000 ) !=
+ 136:Src/spi.c     ****         return LR1110_SPI_STATUS_ERROR;
+ 137:Src/spi.c     ****     }
+ 138:Src/spi.c     **** 
+ 139:Src/spi.c     ****     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
+ 140:Src/spi.c     **** 
+ 141:Src/spi.c     ****     return LR1110_SPI_STATUS_OK;
+ 142:Src/spi.c     **** }
+ 783              		.loc 1 142 1 view .LVU222
+ 784 0020 2046     		mov	r0, r4
+ 785 0022 05B0     		add	sp, sp, #20
+ 786              	.LCFI7:
+ 787              		.cfi_remember_state
+ 788              		.cfi_def_cfa_offset 20
+ 789              		@ sp needed
+ 790 0024 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 791              	.LVL89:
+ 792              	.L48:
+ 793              	.LCFI8:
+ 794              		.cfi_restore_state
+ 120:Src/spi.c     ****     if (lr1110_spi_write( radio->spi, cbuffer, cbuffer_length, 1000 ) != LR1110_SPI_STATUS_OK) {
+ 795              		.loc 1 120 5 is_stmt 1 view .LVU223
+ 120:Src/spi.c     ****     if (lr1110_spi_write( radio->spi, cbuffer, cbuffer_length, 1000 ) != LR1110_SPI_STATUS_OK) {
+ 796              		.loc 1 120 29 is_stmt 0 view .LVU224
+ 797 0026 244F     		ldr	r7, .L53
+ 798 0028 3B68     		ldr	r3, [r7]
+ 120:Src/spi.c     ****     if (lr1110_spi_write( radio->spi, cbuffer, cbuffer_length, 1000 ) != LR1110_SPI_STATUS_OK) {
+ 799              		.loc 1 120 5 view .LVU225
+ 800 002a 0022     		movs	r2, #0
+ 801 002c 1989     		ldrh	r1, [r3, #8]
+ 802 002e 5868     		ldr	r0, [r3, #4]
+ARM GAS  /tmp/cccuU9yN.s 			page 44
+
+
+ 803 0030 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 804              	.LVL90:
+ 121:Src/spi.c     ****         return LR1110_SPI_STATUS_ERROR;
+ 805              		.loc 1 121 5 is_stmt 1 view .LVU226
+ 121:Src/spi.c     ****         return LR1110_SPI_STATUS_ERROR;
+ 806              		.loc 1 121 32 is_stmt 0 view .LVU227
+ 807 0034 3868     		ldr	r0, [r7]
+ 121:Src/spi.c     ****         return LR1110_SPI_STATUS_ERROR;
+ 808              		.loc 1 121 9 view .LVU228
+ 809 0036 4FF47A73 		mov	r3, #1000
+ 810 003a 3246     		mov	r2, r6
+ 811 003c 2146     		mov	r1, r4
+ 812 003e 0068     		ldr	r0, [r0]
+ 813 0040 FFF7FEFF 		bl	lr1110_spi_write
+ 814              	.LVL91:
+ 121:Src/spi.c     ****         return LR1110_SPI_STATUS_ERROR;
+ 815              		.loc 1 121 8 view .LVU229
+ 816 0044 08B1     		cbz	r0, .L49
+ 122:Src/spi.c     ****     }
+ 817              		.loc 1 122 16 view .LVU230
+ 818 0046 0124     		movs	r4, #1
+ 819              	.LVL92:
+ 122:Src/spi.c     ****     }
+ 820              		.loc 1 122 16 view .LVU231
+ 821 0048 EAE7     		b	.L41
+ 822              	.LVL93:
+ 823              	.L49:
+ 124:Src/spi.c     **** 
+ 824              		.loc 1 124 5 is_stmt 1 view .LVU232
+ 124:Src/spi.c     **** 
+ 825              		.loc 1 124 29 is_stmt 0 view .LVU233
+ 826 004a 3B68     		ldr	r3, [r7]
+ 124:Src/spi.c     **** 
+ 827              		.loc 1 124 5 view .LVU234
+ 828 004c 0122     		movs	r2, #1
+ 829 004e 1989     		ldrh	r1, [r3, #8]
+ 830 0050 5868     		ldr	r0, [r3, #4]
+ 831 0052 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 832              	.LVL94:
+ 126:Src/spi.c     ****         return LR1110_SPI_STATUS_ERROR;
+ 833              		.loc 1 126 5 is_stmt 1 view .LVU235
+ 126:Src/spi.c     ****         return LR1110_SPI_STATUS_ERROR;
+ 834              		.loc 1 126 9 is_stmt 0 view .LVU236
+ 835 0056 4FF47A71 		mov	r1, #1000
+ 836 005a 0020     		movs	r0, #0
+ 837 005c FFF7FEFF 		bl	waitForBusyState
+ 838              	.LVL95:
+ 126:Src/spi.c     ****         return LR1110_SPI_STATUS_ERROR;
+ 839              		.loc 1 126 8 view .LVU237
+ 840 0060 08B1     		cbz	r0, .L50
+ 127:Src/spi.c     ****     }
+ 841              		.loc 1 127 16 view .LVU238
+ 842 0062 0124     		movs	r4, #1
+ 843              	.LVL96:
+ 127:Src/spi.c     ****     }
+ 844              		.loc 1 127 16 view .LVU239
+ 845 0064 DCE7     		b	.L41
+ARM GAS  /tmp/cccuU9yN.s 			page 45
+
+
+ 846              	.LVL97:
+ 847              	.L50:
+ 131:Src/spi.c     ****     if (lr1110_spi_write( radio->spi, &dummy_byte, 1, 1000 ) != LR1110_SPI_STATUS_OK) {
+ 848              		.loc 1 131 5 is_stmt 1 view .LVU240
+ 131:Src/spi.c     ****     if (lr1110_spi_write( radio->spi, &dummy_byte, 1, 1000 ) != LR1110_SPI_STATUS_OK) {
+ 849              		.loc 1 131 29 is_stmt 0 view .LVU241
+ 850 0066 3B68     		ldr	r3, [r7]
+ 131:Src/spi.c     ****     if (lr1110_spi_write( radio->spi, &dummy_byte, 1, 1000 ) != LR1110_SPI_STATUS_OK) {
+ 851              		.loc 1 131 5 view .LVU242
+ 852 0068 0022     		movs	r2, #0
+ 853 006a 1989     		ldrh	r1, [r3, #8]
+ 854 006c 5868     		ldr	r0, [r3, #4]
+ 855 006e FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 856              	.LVL98:
+ 132:Src/spi.c     ****         return LR1110_SPI_STATUS_ERROR;
+ 857              		.loc 1 132 5 is_stmt 1 view .LVU243
+ 132:Src/spi.c     ****         return LR1110_SPI_STATUS_ERROR;
+ 858              		.loc 1 132 32 is_stmt 0 view .LVU244
+ 859 0072 3868     		ldr	r0, [r7]
+ 132:Src/spi.c     ****         return LR1110_SPI_STATUS_ERROR;
+ 860              		.loc 1 132 9 view .LVU245
+ 861 0074 4FF47A73 		mov	r3, #1000
+ 862 0078 0122     		movs	r2, #1
+ 863 007a 0DF10F01 		add	r1, sp, #15
+ 864 007e 0068     		ldr	r0, [r0]
+ 865 0080 FFF7FEFF 		bl	lr1110_spi_write
+ 866              	.LVL99:
+ 132:Src/spi.c     ****         return LR1110_SPI_STATUS_ERROR;
+ 867              		.loc 1 132 8 view .LVU246
+ 868 0084 08B1     		cbz	r0, .L51
+ 133:Src/spi.c     ****     }
+ 869              		.loc 1 133 16 view .LVU247
+ 870 0086 0124     		movs	r4, #1
+ 871              	.LVL100:
+ 133:Src/spi.c     ****     }
+ 872              		.loc 1 133 16 view .LVU248
+ 873 0088 CAE7     		b	.L41
+ 874              	.LVL101:
+ 875              	.L51:
+ 135:Src/spi.c     ****         return LR1110_SPI_STATUS_ERROR;
+ 876              		.loc 1 135 5 is_stmt 1 view .LVU249
+ 135:Src/spi.c     ****         return LR1110_SPI_STATUS_ERROR;
+ 877              		.loc 1 135 47 is_stmt 0 view .LVU250
+ 878 008a 3B68     		ldr	r3, [r7]
+ 135:Src/spi.c     ****         return LR1110_SPI_STATUS_ERROR;
+ 879              		.loc 1 135 9 view .LVU251
+ 880 008c 1868     		ldr	r0, [r3]
+ 881 008e 4FF47A73 		mov	r3, #1000
+ 882 0092 0093     		str	r3, [sp]
+ 883 0094 0023     		movs	r3, #0
+ 884 0096 BDF82820 		ldrh	r2, [sp, #40]
+ 885 009a 2946     		mov	r1, r5
+ 886 009c FFF7FEFF 		bl	lr1110_spi_read_with_dummy_byte
+ 887              	.LVL102:
+ 135:Src/spi.c     ****         return LR1110_SPI_STATUS_ERROR;
+ 888              		.loc 1 135 8 view .LVU252
+ 889 00a0 0446     		mov	r4, r0
+ARM GAS  /tmp/cccuU9yN.s 			page 46
+
+
+ 890              	.LVL103:
+ 135:Src/spi.c     ****         return LR1110_SPI_STATUS_ERROR;
+ 891              		.loc 1 135 8 view .LVU253
+ 892 00a2 08B1     		cbz	r0, .L52
+ 136:Src/spi.c     ****     }
+ 893              		.loc 1 136 16 view .LVU254
+ 894 00a4 0124     		movs	r4, #1
+ 895 00a6 BBE7     		b	.L41
+ 896              	.L52:
+ 139:Src/spi.c     **** 
+ 897              		.loc 1 139 5 is_stmt 1 view .LVU255
+ 139:Src/spi.c     **** 
+ 898              		.loc 1 139 29 is_stmt 0 view .LVU256
+ 899 00a8 3B68     		ldr	r3, [r7]
+ 139:Src/spi.c     **** 
+ 900              		.loc 1 139 5 view .LVU257
+ 901 00aa 0122     		movs	r2, #1
+ 902 00ac 1989     		ldrh	r1, [r3, #8]
+ 903 00ae 5868     		ldr	r0, [r3, #4]
+ 904 00b0 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 905              	.LVL104:
+ 141:Src/spi.c     **** }
+ 906              		.loc 1 141 5 is_stmt 1 view .LVU258
+ 141:Src/spi.c     **** }
+ 907              		.loc 1 141 12 is_stmt 0 view .LVU259
+ 908 00b4 B4E7     		b	.L41
+ 909              	.L54:
+ 910 00b6 00BF     		.align	2
+ 911              	.L53:
+ 912 00b8 00000000 		.word	.LANCHOR0
+ 913              		.cfi_endproc
+ 914              	.LFE433:
+ 916              		.global	radio
+ 917              		.section	.bss.radio,"aw",%nobits
+ 918              		.align	2
+ 919              		.set	.LANCHOR0,. + 0
+ 922              	radio:
+ 923 0000 00000000 		.space	4
+ 924              		.text
+ 925              	.Letext0:
+ 926              		.file 3 "/usr/lib/gcc/arm-none-eabi/10.3.1/include/stdint.h"
+ 927              		.file 4 "Drivers/CMSIS/Device/ST/STM32L4xx/Include/stm32l476xx.h"
+ 928              		.file 5 "Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_gpio.h"
+ 929              		.file 6 "Inc/spi.h"
+ 930              		.file 7 "Inc/constants.h"
+ 931              		.file 8 "Inc/main.h"
+ 932              		.file 9 "Inc/rtc.h"
+ARM GAS  /tmp/cccuU9yN.s 			page 47
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 spi.c
+     /tmp/cccuU9yN.s:18     .rodata.waitForBusyState.str1.4:0000000000000000 $d
+     /tmp/cccuU9yN.s:39     .text.waitForBusyState:0000000000000000 $t
+     /tmp/cccuU9yN.s:47     .text.waitForBusyState:0000000000000000 waitForBusyState
+     /tmp/cccuU9yN.s:188    .text.waitForBusyState:0000000000000090 $d
+     /tmp/cccuU9yN.s:199    .rodata.lr1110_spi_write.str1.4:0000000000000000 $d
+     /tmp/cccuU9yN.s:208    .text.lr1110_spi_write:0000000000000000 $t
+     /tmp/cccuU9yN.s:215    .text.lr1110_spi_write:0000000000000000 lr1110_spi_write
+     /tmp/cccuU9yN.s:454    .text.lr1110_spi_write:00000000000000bc $d
+     /tmp/cccuU9yN.s:465    .text.lr1110_spi_read_with_dummy_byte:0000000000000000 $t
+     /tmp/cccuU9yN.s:472    .text.lr1110_spi_read_with_dummy_byte:0000000000000000 lr1110_spi_read_with_dummy_byte
+     /tmp/cccuU9yN.s:719    .text.lr1110_spi_read_with_dummy_byte:00000000000000c4 $d
+     /tmp/cccuU9yN.s:730    .text.lr1110_spi_read:0000000000000000 $t
+     /tmp/cccuU9yN.s:737    .text.lr1110_spi_read:0000000000000000 lr1110_spi_read
+     /tmp/cccuU9yN.s:912    .text.lr1110_spi_read:00000000000000b8 $d
+     /tmp/cccuU9yN.s:922    .bss.radio:0000000000000000 radio
+     /tmp/cccuU9yN.s:918    .bss.radio:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+hal_rtc_get_time_ms
+HAL_GPIO_ReadPin
+hal_mcu_trace_print
+turnOffLED
+turnOnLED
+HAL_GPIO_WritePin
