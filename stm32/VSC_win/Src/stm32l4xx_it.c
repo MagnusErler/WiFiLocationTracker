@@ -22,7 +22,7 @@
 #include "stm32l4xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "smtc_hal_dbg_trace.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/

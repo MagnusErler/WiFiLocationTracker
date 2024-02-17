@@ -1,17 +1,16 @@
 
 #include <stdint.h>   // C99 types
 #include <stdbool.h>  // bool type
+#include <stdarg.h>
+#include <string.h>
+#include <stdio.h>
 
 #include "stm32l4xx_hal.h"
 #include "stm32l4xx_ll_utils.h"
 
-#include "smtc_hal_dbg_trace.h"
 #include "smtc_hal_gpio_pin_names.h"
-#include "smtc_hal_rtc.h"
 
-#include <stdarg.h>
-#include <string.h>
-#include <stdio.h>
+
 
 /*
  * -----------------------------------------------------------------------------
