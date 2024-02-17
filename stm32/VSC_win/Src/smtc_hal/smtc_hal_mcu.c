@@ -675,19 +675,19 @@ static void vprint( const char* fmt, va_list argp )
 //     hal_mcu_reset( );
 // }
 
-/*!
- * @brief  This function handles PVD interrupt request.
- */
-void PVD_PVM_IRQHandler( void )
-{
-    HAL_DBG_TRACE_ERROR( "PVD_PVM_IRQHandler\n\r" );
-    /* Loop inside the handler to prevent the Cortex from using the Flash,
-       allowing the flash interface to finish any ongoing transfer. */
-    while( __HAL_PWR_GET_FLAG( PWR_FLAG_PVDO ) != RESET )
-    {
-    }
-    /* Then reset the board */
-    hal_mcu_reset( );
-}
+// /*!
+//  * @brief  This function handles PVD interrupt request.
+//  */
+// void PVD_PVM_IRQHandler( void )
+// {
+//     HAL_DBG_TRACE_ERROR( "PVD_PVM_IRQHandler\n\r" );
+//     /* Loop inside the handler to prevent the Cortex from using the Flash,
+//        allowing the flash interface to finish any ongoing transfer. */
+//     while( __HAL_PWR_GET_FLAG( PWR_FLAG_PVDO ) != RESET )
+//     {
+//     }
+//     /* Then reset the board */
+//     hal_mcu_reset( );
+// }
 
 /* --- EOF ------------------------------------------------------------------ */

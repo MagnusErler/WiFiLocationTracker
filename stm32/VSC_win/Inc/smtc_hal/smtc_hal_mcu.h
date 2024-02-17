@@ -96,10 +96,10 @@ void hal_mcu_critical_section_end( uint32_t* mask );
  */
 void hal_mcu_init( void );
 
-/*!
- * @brief Initializes HAL used Peripherals
- */
-void hal_mcu_init_periph( void );
+// /*!
+//  * @brief Initializes HAL used Peripherals
+//  */
+// void hal_mcu_init_periph( void );
 
 /*!
  * @brief Disable irq at core side
@@ -184,34 +184,34 @@ void hal_mcu_disable_once_low_power_wait( void );
  */
 void hal_mcu_partial_sleep_enable( bool enable );
 
-/*!
- * @brief Enter in low power state
- */
-void hal_mcu_low_power_handler( void );
+// /*!
+//  * @brief Enter in low power state
+//  */
+// void hal_mcu_low_power_handler( void );
 
-/*!
- * @brief Init the software watchdog
- *
- * @param value value in ms of the watchdog
- */
-void hal_mcu_init_software_watchdog( uint32_t value );
+// /*!
+//  * @brief Init the software watchdog
+//  *
+//  * @param value value in ms of the watchdog
+//  */
+// void hal_mcu_init_software_watchdog( uint32_t value );
 
-/*!
- * @brief Set the reload value of the software watchdog
- *
- * @param value value in ms of the watchdog
- */
-void hal_mcu_set_software_watchdog_value( uint32_t value );
+// /*!
+//  * @brief Set the reload value of the software watchdog
+//  *
+//  * @param value value in ms of the watchdog
+//  */
+// void hal_mcu_set_software_watchdog_value( uint32_t value );
 
-/*!
- * @brief Start the software watchdog
- */
-void hal_mcu_start_software_watchdog( void );
+// /*!
+//  * @brief Start the software watchdog
+//  */
+// void hal_mcu_start_software_watchdog( void );
 
-/*!
- * @brief Reset the software watchdog
- */
-void hal_mcu_reset_software_watchdog( void );
+// /*!
+//  * @brief Reset the software watchdog
+//  */
+// void hal_mcu_reset_software_watchdog( void );
 
 #ifdef __cplusplus
 }
