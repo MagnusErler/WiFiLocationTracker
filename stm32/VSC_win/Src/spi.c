@@ -17,7 +17,7 @@ radio_t1* radio;
 
 lr1110_gpio_status_t waitForBusyState( GPIO_PinState state, uint32_t timeout_ms ) {
 
-    uint32_t start = hal_rtc_get_time_ms( );
+    uint32_t start = hal_rtc_get_time_ms();
 
     if( state == GPIO_PIN_RESET ) {
         while( HAL_GPIO_ReadPin( radio->busy.port, radio->busy.pin ) == GPIO_PIN_SET ) {
@@ -45,7 +45,7 @@ lr1110_spi_status_t lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* buffer, u
 
     for( uint16_t i = 0; i < length; i++ ) {
 
-        uint32_t start = hal_rtc_get_time_ms( );
+        uint32_t start = hal_rtc_get_time_ms();
 
         turnOnLED(GPIOC, TX_LED_Pin);
         while( LL_SPI_IsActiveFlag_TXE( spi ) == 0 ) {

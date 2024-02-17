@@ -699,6 +699,11 @@ void getLR1110_Temperature( const void* context ) {
     uint16_t temp_10_0 = ((rbuffer[0] << 8) | rbuffer[1]) & 0x7FF;
     float temperature = 25 + (1000/(-1.7)) * ((temp_10_0/2047.0) * 1.35 - 0.7295);
 
+    if ((int)temperature > 50) {
+      HAL_DBG_TRACE_ERROR("LR1110 temperature is too high\r\n");
+      HAL_DBG_TRACE_ERROR("TCXO mode is maybe not set up correctly\r\n");
+    }
+
     HAL_DBG_TRACE_INFO("LR1110 temperature: %d.%d °C\r\n", (int)temperature, (int)((temperature - (int)temperature) * 100));
   } else {
     HAL_DBG_TRACE_ERROR("\r\nFailed to get LR1110 temperature\r\n");
@@ -789,8 +794,6 @@ void setupTCXO( const void* context ) {
   } else {
     HAL_DBG_TRACE_ERROR("Failed to set TCXO mode\r\n");
   }
-
-  HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
 }
 
 /* USER CODE END 4 */

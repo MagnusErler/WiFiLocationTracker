@@ -43,7 +43,7 @@ extern "C" {
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "lr1110_modem_common.h"
+//#include "lr1110_modem_common.h"
 
 /*
  * -----------------------------------------------------------------------------
