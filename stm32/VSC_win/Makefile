@@ -65,8 +65,7 @@ Src/smtc_hal_rtc.c \
 Src/spi.c \
 Src/stm32l4xx_it.c \
 Src/stm32l4xx_hal_msp.c \
-Src/system_stm32l4xx.c \
-Src/uart.c
+Src/system_stm32l4xx.c
 
 # ASM sources
 ASM_SOURCES =  \

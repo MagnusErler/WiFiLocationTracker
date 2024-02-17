@@ -121,6 +121,64 @@ void blinkLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin, uint32_t period, ui
 
 /* USER CODE BEGIN Private defines */
 
+
+#define HAL_DBG_TRACE_COLOR_RED "\x1B[0;31m"
+#define HAL_DBG_TRACE_COLOR_GREEN "\x1B[0;32m"
+#define HAL_DBG_TRACE_COLOR_YELLOW "\x1B[0;33m"
+#define HAL_DBG_TRACE_COLOR_DEFAULT "\x1B[0m"
+
+
+#define HAL_DBG_TRACE_PRINTF( ... ) hal_mcu_trace_print( __VA_ARGS__ )
+
+#define HAL_DBG_TRACE_MSG( msg )                             \
+    do                                                       \
+    {                                                        \
+        HAL_DBG_TRACE_PRINTF( HAL_DBG_TRACE_COLOR_DEFAULT ); \
+        HAL_DBG_TRACE_PRINTF( msg );                         \
+    } while( 0 );
+
+#define HAL_DBG_TRACE_MSG_COLOR( msg, color )                \
+    do                                                       \
+    {                                                        \
+        HAL_DBG_TRACE_PRINTF( color );                       \
+        HAL_DBG_TRACE_PRINTF( msg );                         \
+        HAL_DBG_TRACE_PRINTF( HAL_DBG_TRACE_COLOR_DEFAULT ); \
+    } while( 0 );
+
+#define HAL_DBG_TRACE_INFO( ... )                            \
+    do                                                       \
+    {                                                        \
+        HAL_DBG_TRACE_PRINTF( HAL_DBG_TRACE_COLOR_GREEN );   \
+        HAL_DBG_TRACE_PRINTF( "INFO : " );                   \
+        HAL_DBG_TRACE_PRINTF( __VA_ARGS__ );                 \
+        HAL_DBG_TRACE_PRINTF( HAL_DBG_TRACE_COLOR_DEFAULT ); \
+    } while( 0 );
+
+#define HAL_DBG_TRACE_WARNING( ... )                         \
+    do                                                       \
+    {                                                        \
+        HAL_DBG_TRACE_PRINTF( HAL_DBG_TRACE_COLOR_YELLOW );  \
+        HAL_DBG_TRACE_PRINTF( "WARN : " );                   \
+        HAL_DBG_TRACE_PRINTF( __VA_ARGS__ );                 \
+        HAL_DBG_TRACE_PRINTF( HAL_DBG_TRACE_COLOR_DEFAULT ); \
+    } while( 0 );
+
+#define HAL_DBG_TRACE_ERROR( ... )                           \
+    do                                                       \
+    {                                                        \
+        HAL_DBG_TRACE_PRINTF( HAL_DBG_TRACE_COLOR_RED );     \
+        HAL_DBG_TRACE_PRINTF( "ERROR: " );                   \
+        HAL_DBG_TRACE_PRINTF( __VA_ARGS__ );                 \
+        HAL_DBG_TRACE_PRINTF( HAL_DBG_TRACE_COLOR_DEFAULT ); \
+    } while( 0 );
+
+/*!
+ * @brief Prints debug trace
+ *
+ * @param variadics arguments
+ */
+void hal_mcu_trace_print( const char* fmt, ... );
+
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

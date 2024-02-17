@@ -9,9 +9,6 @@
 
 #include "main.h"
 
-#include "uart.h"
-
-//#include "smtc_hal_dbg_trace.h"
 #include "smtc_hal_rtc.h"
 
 radio_t1* radio;

@@ -23,16 +23,13 @@
 /* USER CODE BEGIN Includes */
 
 #include "spi.h"
-#include "uart.h"
 
 #include "smtc_hal_rtc.h"
 
-#include <stdlib.h>   // used for malloc function
-
-//#include "wifi_scan.h"
-//#include "gnss_scan.h"
-
-
+#include <stdlib.h>  // used for malloc function
+#include <string.h>  // used for strlen function
+#include <stdarg.h> // used for va_list, va_start, va_end functions
+#include <stdio.h>  // used for vsprintf function
 
 /* USER CODE END Includes */
 
@@ -222,7 +219,6 @@ int main(void)
   MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
 
-  hal_uart_init( 2, PA_2, PA_3 );
 
   HAL_DBG_TRACE_MSG("-----------------------------\r\n\r\n");
   resetLR1110();
@@ -657,6 +653,18 @@ void blinkLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin, uint32_t period, ui
       HAL_Delay(period);
     }
   }
+}
+
+void hal_mcu_trace_print( const char* fmt, ... ) {
+  va_list argp;
+  va_start( argp, fmt );
+
+  char string[255];
+  if( 0 < vsprintf( string, fmt, argp ) ) {
+      HAL_UART_Transmit(&huart2, (uint8_t*) string, (uint16_t) strlen((const char*) string), 0xffffff);
+  }
+
+  va_end( argp );
 }
 
 void getLR1110_Bootloader_Version( const void* context ) {
