@@ -1,4 +1,4 @@
-#include "smtc_hal_gpio_pin_names.h"
+
 
 /*!
  * @brief Length of command buffer for commands that have no parameter

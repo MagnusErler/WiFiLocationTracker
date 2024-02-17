@@ -59,7 +59,7 @@ Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c \
 Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c \
 Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart_ex.c \
 Src/main.c \
-Src/smtc_hal/smtc_hal_rtc.c \
+Src/smtc_hal_rtc.c \
 Src/spi.c \
 Src/stm32l4xx_it.c \
 Src/stm32l4xx_hal_msp.c \
@@ -129,7 +129,6 @@ C_INCLUDES =  \
 -IDrivers/STM32L4xx_HAL_Driver/Inc \
 -IDrivers/STM32L4xx_HAL_Driver/Inc/Legacy \
 -IInc \
--IInc/smtc_hal \
 
 
 # compile gcc flags
