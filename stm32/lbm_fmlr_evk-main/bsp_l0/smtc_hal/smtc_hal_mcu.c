@@ -150,30 +150,15 @@ void hal_mcu_init( void ) {
     system_clock_config( );  // Initialize clocks
     mcu_gpio_init( );        // Initialize GPIOs
 
-#if defined( HW_MODEM_ENABLED )
-    uart4_init( );
-#endif
-#if( MODEM_HAL_DBG_TRACE == MODEM_HAL_FEATURE_ON )
     uart1_init( );
-#endif
 
-    hal_lp_timer_init( );
+    //hal_lp_timer_init( );
     hal_spi_init( RADIO_SPI_ID, RADIO_SPI_MOSI, RADIO_SPI_MISO, RADIO_SPI_SCLK );
     hal_rtc_init( );
-    hal_rng_init( );
+    //hal_rng_init( );
 
-#ifdef I2C1_ENABLED
-    hal_i2c_init( 1, I2C1_SDA, I2C1_SCL );
-#endif
-
-#ifdef SPI1_ENABLED
-    hal_spi_init( 1, SPI1_MOSI, SPI1_MISO, SPI1_SCK );
-#endif
-
-#if( LOW_POWER_MODE == 1 )
-    TimerInit( &wut, &wut_cb );
-    wut_flag = false;
-#endif
+    // TimerInit( &wut, &wut_cb );
+    // wut_flag = false;
 
     // Initialize watchdog
     hal_watchdog_init( );
