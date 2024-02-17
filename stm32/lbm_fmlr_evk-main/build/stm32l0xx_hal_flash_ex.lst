@@ -1,0 +1,925 @@
+ARM GAS  /tmp/ccMGBJvW.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.eabi_attribute 23, 1
+   3              		.eabi_attribute 24, 1
+   4              		.eabi_attribute 25, 1
+   5              		.eabi_attribute 26, 1
+   6              		.eabi_attribute 30, 4
+   7              		.eabi_attribute 34, 0
+   8              		.eabi_attribute 18, 4
+   9              		.file	"stm32l0xx_hal_flash_ex.c"
+  10              		.text
+  11              		.section	.text.FLASH_OB_ProtectedSectorsConfig,"ax",%progbits
+  12              		.align	1
+  13              		.arch armv6s-m
+  14              		.syntax unified
+  15              		.code	16
+  16              		.thumb_func
+  17              		.fpu softvfp
+  19              	FLASH_OB_ProtectedSectorsConfig:
+  20              		@ args = 0, pretend = 0, frame = 0
+  21              		@ frame_needed = 0, uses_anonymous_args = 0
+  22 0000 70B5     		push	{r4, r5, r6, lr}
+  23 0002 0500     		movs	r5, r0
+  24 0004 2548     		ldr	r0, .L24
+  25 0006 0C00     		movs	r4, r1
+  26 0008 1600     		movs	r6, r2
+  27 000a FFF7FEFF 		bl	FLASH_WaitForLastOperation
+  28 000e 0028     		cmp	r0, #0
+  29 0010 2CD1     		bne	.L3
+  30 0012 234B     		ldr	r3, .L24+4
+  31 0014 5861     		str	r0, [r3, #20]
+  32 0016 002D     		cmp	r5, #0
+  33 0018 18D0     		beq	.L5
+  34 001a ABB2     		uxth	r3, r5
+  35 001c 002B     		cmp	r3, #0
+  36 001e 09D0     		beq	.L6
+  37 0020 204A     		ldr	r2, .L24+8
+  38 0022 9168     		ldr	r1, [r2, #8]
+  39 0024 002E     		cmp	r6, #0
+  40 0026 25D0     		beq	.L7
+  41 0028 0B43     		orrs	r3, r1
+  42 002a 9BB2     		uxth	r3, r3
+  43              	.L23:
+  44 002c D943     		mvns	r1, r3
+  45 002e 0904     		lsls	r1, r1, #16
+  46 0030 0B43     		orrs	r3, r1
+  47 0032 9360     		str	r3, [r2, #8]
+  48              	.L6:
+  49 0034 2B0C     		lsrs	r3, r5, #16
+  50 0036 09D0     		beq	.L5
+  51 0038 1A4A     		ldr	r2, .L24+8
+  52 003a 002E     		cmp	r6, #0
+  53 003c 1DD0     		beq	.L8
+  54 003e D168     		ldr	r1, [r2, #12]
+  55 0040 0B43     		orrs	r3, r1
+  56 0042 9BB2     		uxth	r3, r3
+  57 0044 D943     		mvns	r1, r3
+  58 0046 0904     		lsls	r1, r1, #16
+ARM GAS  /tmp/ccMGBJvW.s 			page 2
+
+
+  59 0048 0B43     		orrs	r3, r1
+  60 004a D360     		str	r3, [r2, #12]
+  61              	.L5:
+  62 004c 002C     		cmp	r4, #0
+  63 004e 0DD0     		beq	.L3
+  64 0050 A3B2     		uxth	r3, r4
+  65 0052 002B     		cmp	r3, #0
+  66 0054 0AD0     		beq	.L3
+  67 0056 1C00     		movs	r4, r3
+  68 0058 124A     		ldr	r2, .L24+8
+  69 005a 002E     		cmp	r6, #0
+  70 005c 16D0     		beq	.L10
+  71 005e 1169     		ldr	r1, [r2, #16]
+  72 0060 0C43     		orrs	r4, r1
+  73 0062 A4B2     		uxth	r4, r4
+  74 0064 E143     		mvns	r1, r4
+  75 0066 0904     		lsls	r1, r1, #16
+  76 0068 0C43     		orrs	r4, r1
+  77 006a 1461     		str	r4, [r2, #16]
+  78              	.L3:
+  79 006c 0B48     		ldr	r0, .L24
+  80 006e FFF7FEFF 		bl	FLASH_WaitForLastOperation
+  81              		@ sp needed
+  82 0072 70BD     		pop	{r4, r5, r6, pc}
+  83              	.L7:
+  84 0074 9943     		bics	r1, r3
+  85 0076 8BB2     		uxth	r3, r1
+  86 0078 D8E7     		b	.L23
+  87              	.L8:
+  88 007a ED43     		mvns	r5, r5
+  89 007c D068     		ldr	r0, [r2, #12]
+  90 007e 2D0C     		lsrs	r5, r5, #16
+  91 0080 2840     		ands	r0, r5
+  92 0082 C543     		mvns	r5, r0
+  93 0084 2D04     		lsls	r5, r5, #16
+  94 0086 0543     		orrs	r5, r0
+  95 0088 D560     		str	r5, [r2, #12]
+  96 008a DFE7     		b	.L5
+  97              	.L10:
+  98 008c 1369     		ldr	r3, [r2, #16]
+  99 008e A343     		bics	r3, r4
+ 100 0090 9BB2     		uxth	r3, r3
+ 101 0092 D943     		mvns	r1, r3
+ 102 0094 0904     		lsls	r1, r1, #16
+ 103 0096 0B43     		orrs	r3, r1
+ 104 0098 1361     		str	r3, [r2, #16]
+ 105 009a E7E7     		b	.L3
+ 106              	.L25:
+ 107              		.align	2
+ 108              	.L24:
+ 109 009c 50C30000 		.word	50000
+ 110 00a0 00000000 		.word	pFlash
+ 111 00a4 0000F81F 		.word	536346624
+ 113              		.section	.text.HAL_FLASHEx_OBProgram,"ax",%progbits
+ 114              		.align	1
+ 115              		.global	HAL_FLASHEx_OBProgram
+ 116              		.syntax unified
+ARM GAS  /tmp/ccMGBJvW.s 			page 3
+
+
+ 117              		.code	16
+ 118              		.thumb_func
+ 119              		.fpu softvfp
+ 121              	HAL_FLASHEx_OBProgram:
+ 122              		@ args = 0, pretend = 0, frame = 8
+ 123              		@ frame_needed = 0, uses_anonymous_args = 0
+ 124 0000 F7B5     		push	{r0, r1, r2, r4, r5, r6, r7, lr}
+ 125 0002 3F4D     		ldr	r5, .L63
+ 126 0004 0400     		movs	r4, r0
+ 127 0006 2B7C     		ldrb	r3, [r5, #16]
+ 128 0008 0220     		movs	r0, #2
+ 129 000a 012B     		cmp	r3, #1
+ 130 000c 0DD0     		beq	.L27
+ 131 000e 0138     		subs	r0, r0, #1
+ 132 0010 2874     		strb	r0, [r5, #16]
+ 133 0012 2368     		ldr	r3, [r4]
+ 134 0014 0342     		tst	r3, r0
+ 135 0016 09D0     		beq	.L28
+ 136 0018 6268     		ldr	r2, [r4, #4]
+ 137 001a E168     		ldr	r1, [r4, #12]
+ 138 001c A068     		ldr	r0, [r4, #8]
+ 139 001e FFF7FEFF 		bl	FLASH_OB_ProtectedSectorsConfig
+ 140 0022 0028     		cmp	r0, #0
+ 141 0024 02D0     		beq	.L28
+ 142              	.L35:
+ 143 0026 0023     		movs	r3, #0
+ 144 0028 2B74     		strb	r3, [r5, #16]
+ 145              	.L27:
+ 146              		@ sp needed
+ 147 002a FEBD     		pop	{r1, r2, r3, r4, r5, r6, r7, pc}
+ 148              	.L28:
+ 149 002c 2368     		ldr	r3, [r4]
+ 150 002e 9B07     		lsls	r3, r3, #30
+ 151 0030 18D5     		bpl	.L29
+ 152 0032 237C     		ldrb	r3, [r4, #16]
+ 153 0034 334F     		ldr	r7, .L63+4
+ 154 0036 3448     		ldr	r0, .L63+8
+ 155 0038 0193     		str	r3, [sp, #4]
+ 156 003a 3B68     		ldr	r3, [r7]
+ 157 003c 3E68     		ldr	r6, [r7]
+ 158 003e FFF7FEFF 		bl	FLASH_WaitForLastOperation
+ 159 0042 0028     		cmp	r0, #0
+ 160 0044 EFD1     		bne	.L35
+ 161 0046 8023     		movs	r3, #128
+ 162 0048 5B00     		lsls	r3, r3, #1
+ 163 004a 1E40     		ands	r6, r3
+ 164 004c 019B     		ldr	r3, [sp, #4]
+ 165 004e 6861     		str	r0, [r5, #20]
+ 166 0050 1E43     		orrs	r6, r3
+ 167 0052 F343     		mvns	r3, r6
+ 168 0054 1B04     		lsls	r3, r3, #16
+ 169 0056 1E43     		orrs	r6, r3
+ 170 0058 2B48     		ldr	r0, .L63+8
+ 171 005a 3E60     		str	r6, [r7]
+ 172 005c FFF7FEFF 		bl	FLASH_WaitForLastOperation
+ 173 0060 0028     		cmp	r0, #0
+ 174 0062 E0D1     		bne	.L35
+ARM GAS  /tmp/ccMGBJvW.s 			page 4
+
+
+ 175              	.L29:
+ 176 0064 2368     		ldr	r3, [r4]
+ 177 0066 5B07     		lsls	r3, r3, #29
+ 178 0068 18D5     		bpl	.L31
+ 179 006a A37C     		ldrb	r3, [r4, #18]
+ 180 006c 254F     		ldr	r7, .L63+4
+ 181 006e 2648     		ldr	r0, .L63+8
+ 182 0070 7E68     		ldr	r6, [r7, #4]
+ 183 0072 0193     		str	r3, [sp, #4]
+ 184 0074 FFF7FEFF 		bl	FLASH_WaitForLastOperation
+ 185 0078 0028     		cmp	r0, #0
+ 186 007a D4D1     		bne	.L35
+ 187 007c 234B     		ldr	r3, .L63+12
+ 188 007e 019A     		ldr	r2, [sp, #4]
+ 189 0080 1E40     		ands	r6, r3
+ 190 0082 7023     		movs	r3, #112
+ 191 0084 1A40     		ands	r2, r3
+ 192 0086 1643     		orrs	r6, r2
+ 193 0088 F343     		mvns	r3, r6
+ 194 008a 1B04     		lsls	r3, r3, #16
+ 195 008c 1E43     		orrs	r6, r3
+ 196 008e 6861     		str	r0, [r5, #20]
+ 197 0090 1D48     		ldr	r0, .L63+8
+ 198 0092 7E60     		str	r6, [r7, #4]
+ 199 0094 FFF7FEFF 		bl	FLASH_WaitForLastOperation
+ 200 0098 0028     		cmp	r0, #0
+ 201 009a C4D1     		bne	.L35
+ 202              	.L31:
+ 203 009c 2368     		ldr	r3, [r4]
+ 204 009e 1B07     		lsls	r3, r3, #28
+ 205 00a0 16D5     		bpl	.L33
+ 206 00a2 637C     		ldrb	r3, [r4, #17]
+ 207 00a4 174F     		ldr	r7, .L63+4
+ 208 00a6 1848     		ldr	r0, .L63+8
+ 209 00a8 7E68     		ldr	r6, [r7, #4]
+ 210 00aa 0193     		str	r3, [sp, #4]
+ 211 00ac FFF7FEFF 		bl	FLASH_WaitForLastOperation
+ 212 00b0 0028     		cmp	r0, #0
+ 213 00b2 B8D1     		bne	.L35
+ 214 00b4 164B     		ldr	r3, .L63+16
+ 215 00b6 6861     		str	r0, [r5, #20]
+ 216 00b8 1E40     		ands	r6, r3
+ 217 00ba 019B     		ldr	r3, [sp, #4]
+ 218 00bc 1248     		ldr	r0, .L63+8
+ 219 00be 1E43     		orrs	r6, r3
+ 220 00c0 F343     		mvns	r3, r6
+ 221 00c2 1B04     		lsls	r3, r3, #16
+ 222 00c4 1E43     		orrs	r6, r3
+ 223 00c6 7E60     		str	r6, [r7, #4]
+ 224 00c8 FFF7FEFF 		bl	FLASH_WaitForLastOperation
+ 225 00cc 0028     		cmp	r0, #0
+ 226 00ce AAD1     		bne	.L35
+ 227              	.L33:
+ 228 00d0 2368     		ldr	r3, [r4]
+ 229 00d2 DB06     		lsls	r3, r3, #27
+ 230 00d4 A7D5     		bpl	.L35
+ 231 00d6 0B4F     		ldr	r7, .L63+4
+ARM GAS  /tmp/ccMGBJvW.s 			page 5
+
+
+ 232 00d8 0B48     		ldr	r0, .L63+8
+ 233 00da E47C     		ldrb	r4, [r4, #19]
+ 234 00dc 7E68     		ldr	r6, [r7, #4]
+ 235 00de FFF7FEFF 		bl	FLASH_WaitForLastOperation
+ 236 00e2 0028     		cmp	r0, #0
+ 237 00e4 9FD1     		bne	.L35
+ 238 00e6 7604     		lsls	r6, r6, #17
+ 239 00e8 760C     		lsrs	r6, r6, #17
+ 240 00ea E403     		lsls	r4, r4, #15
+ 241 00ec 3443     		orrs	r4, r6
+ 242 00ee E643     		mvns	r6, r4
+ 243 00f0 3604     		lsls	r6, r6, #16
+ 244 00f2 3443     		orrs	r4, r6
+ 245 00f4 6861     		str	r0, [r5, #20]
+ 246 00f6 7C60     		str	r4, [r7, #4]
+ 247 00f8 0348     		ldr	r0, .L63+8
+ 248 00fa FFF7FEFF 		bl	FLASH_WaitForLastOperation
+ 249 00fe 92E7     		b	.L35
+ 250              	.L64:
+ 251              		.align	2
+ 252              	.L63:
+ 253 0100 00000000 		.word	pFlash
+ 254 0104 0000F81F 		.word	536346624
+ 255 0108 50C30000 		.word	50000
+ 256 010c 8FFF0000 		.word	65423
+ 257 0110 F0FF0000 		.word	65520
+ 259              		.section	.text.HAL_FLASHEx_OBGetConfig,"ax",%progbits
+ 260              		.align	1
+ 261              		.global	HAL_FLASHEx_OBGetConfig
+ 262              		.syntax unified
+ 263              		.code	16
+ 264              		.thumb_func
+ 265              		.fpu softvfp
+ 267              	HAL_FLASHEx_OBGetConfig:
+ 268              		@ args = 0, pretend = 0, frame = 0
+ 269              		@ frame_needed = 0, uses_anonymous_args = 0
+ 270              		@ link register save eliminated.
+ 271 0000 0F23     		movs	r3, #15
+ 272 0002 0E4A     		ldr	r2, .L71
+ 273 0004 0360     		str	r3, [r0]
+ 274 0006 136A     		ldr	r3, [r2, #32]
+ 275 0008 8360     		str	r3, [r0, #8]
+ 276 000a 0D4B     		ldr	r3, .L71+4
+ 277 000c DB6F     		ldr	r3, [r3, #124]
+ 278 000e C360     		str	r3, [r0, #12]
+ 279 0010 D369     		ldr	r3, [r2, #28]
+ 280 0012 DBB2     		uxtb	r3, r3
+ 281 0014 AA2B     		cmp	r3, #170
+ 282 0016 02D0     		beq	.L66
+ 283 0018 CC2B     		cmp	r3, #204
+ 284 001a 00D0     		beq	.L66
+ 285 001c BB23     		movs	r3, #187
+ 286              	.L66:
+ 287              		@ sp needed
+ 288 001e 7021     		movs	r1, #112
+ 289 0020 0374     		strb	r3, [r0, #16]
+ 290 0022 D369     		ldr	r3, [r2, #28]
+ARM GAS  /tmp/ccMGBJvW.s 			page 6
+
+
+ 291 0024 1B0C     		lsrs	r3, r3, #16
+ 292 0026 0B40     		ands	r3, r1
+ 293 0028 8374     		strb	r3, [r0, #18]
+ 294 002a D369     		ldr	r3, [r2, #28]
+ 295 002c 1B03     		lsls	r3, r3, #12
+ 296 002e 1B0F     		lsrs	r3, r3, #28
+ 297 0030 4374     		strb	r3, [r0, #17]
+ 298 0032 D369     		ldr	r3, [r2, #28]
+ 299 0034 DB0F     		lsrs	r3, r3, #31
+ 300 0036 C374     		strb	r3, [r0, #19]
+ 301 0038 7047     		bx	lr
+ 302              	.L72:
+ 303 003a C046     		.align	2
+ 304              	.L71:
+ 305 003c 00200240 		.word	1073881088
+ 306 0040 04200240 		.word	1073881092
+ 308              		.section	.text.HAL_FLASHEx_AdvOBProgram,"ax",%progbits
+ 309              		.align	1
+ 310              		.global	HAL_FLASHEx_AdvOBProgram
+ 311              		.syntax unified
+ 312              		.code	16
+ 313              		.thumb_func
+ 314              		.fpu softvfp
+ 316              	HAL_FLASHEx_AdvOBProgram:
+ 317              		@ args = 0, pretend = 0, frame = 0
+ 318              		@ frame_needed = 0, uses_anonymous_args = 0
+ 319 0000 70B5     		push	{r4, r5, r6, lr}
+ 320 0002 0400     		movs	r4, r0
+ 321 0004 0120     		movs	r0, #1
+ 322 0006 2368     		ldr	r3, [r4]
+ 323 0008 0342     		tst	r3, r0
+ 324 000a 04D0     		beq	.L74
+ 325 000c 6268     		ldr	r2, [r4, #4]
+ 326 000e E168     		ldr	r1, [r4, #12]
+ 327 0010 A068     		ldr	r0, [r4, #8]
+ 328 0012 FFF7FEFF 		bl	FLASH_OB_ProtectedSectorsConfig
+ 329              	.L74:
+ 330 0016 2368     		ldr	r3, [r4]
+ 331 0018 9B07     		lsls	r3, r3, #30
+ 332 001a 14D5     		bpl	.L75
+ 333 001c 258A     		ldrh	r5, [r4, #16]
+ 334 001e 0A4C     		ldr	r4, .L81
+ 335 0020 0A48     		ldr	r0, .L81+4
+ 336 0022 6668     		ldr	r6, [r4, #4]
+ 337 0024 FFF7FEFF 		bl	FLASH_WaitForLastOperation
+ 338 0028 0028     		cmp	r0, #0
+ 339 002a 0CD1     		bne	.L75
+ 340 002c 084B     		ldr	r3, .L81+8
+ 341 002e 094A     		ldr	r2, .L81+12
+ 342 0030 3340     		ands	r3, r6
+ 343 0032 EDB2     		uxtb	r5, r5
+ 344 0034 2B43     		orrs	r3, r5
+ 345 0036 5061     		str	r0, [r2, #20]
+ 346 0038 DA43     		mvns	r2, r3
+ 347 003a 1204     		lsls	r2, r2, #16
+ 348 003c 1343     		orrs	r3, r2
+ 349 003e 0348     		ldr	r0, .L81+4
+ARM GAS  /tmp/ccMGBJvW.s 			page 7
+
+
+ 350 0040 6360     		str	r3, [r4, #4]
+ 351 0042 FFF7FEFF 		bl	FLASH_WaitForLastOperation
+ 352              	.L75:
+ 353              		@ sp needed
+ 354 0046 70BD     		pop	{r4, r5, r6, pc}
+ 355              	.L82:
+ 356              		.align	2
+ 357              	.L81:
+ 358 0048 0000F81F 		.word	536346624
+ 359 004c 50C30000 		.word	50000
+ 360 0050 7FFF0000 		.word	65407
+ 361 0054 00000000 		.word	pFlash
+ 363              		.section	.text.HAL_FLASHEx_AdvOBGetConfig,"ax",%progbits
+ 364              		.align	1
+ 365              		.global	HAL_FLASHEx_AdvOBGetConfig
+ 366              		.syntax unified
+ 367              		.code	16
+ 368              		.thumb_func
+ 369              		.fpu softvfp
+ 371              	HAL_FLASHEx_AdvOBGetConfig:
+ 372              		@ args = 0, pretend = 0, frame = 0
+ 373              		@ frame_needed = 0, uses_anonymous_args = 0
+ 374              		@ link register save eliminated.
+ 375 0000 084A     		ldr	r2, .L84
+ 376              		@ sp needed
+ 377 0002 D369     		ldr	r3, [r2, #28]
+ 378 0004 DB05     		lsls	r3, r3, #23
+ 379 0006 DB0F     		lsrs	r3, r3, #31
+ 380 0008 4360     		str	r3, [r0, #4]
+ 381 000a 136A     		ldr	r3, [r2, #32]
+ 382 000c 8360     		str	r3, [r0, #8]
+ 383 000e 131D     		adds	r3, r2, #4
+ 384 0010 DB6F     		ldr	r3, [r3, #124]
+ 385 0012 C360     		str	r3, [r0, #12]
+ 386 0014 0323     		movs	r3, #3
+ 387 0016 0360     		str	r3, [r0]
+ 388 0018 D369     		ldr	r3, [r2, #28]
+ 389 001a 8022     		movs	r2, #128
+ 390 001c 1B0C     		lsrs	r3, r3, #16
+ 391 001e 1340     		ands	r3, r2
+ 392 0020 0382     		strh	r3, [r0, #16]
+ 393 0022 7047     		bx	lr
+ 394              	.L85:
+ 395              		.align	2
+ 396              	.L84:
+ 397 0024 00200240 		.word	1073881088
+ 399              		.section	.text.HAL_FLASHEx_OB_SelectPCROP,"ax",%progbits
+ 400              		.align	1
+ 401              		.global	HAL_FLASHEx_OB_SelectPCROP
+ 402              		.syntax unified
+ 403              		.code	16
+ 404              		.thumb_func
+ 405              		.fpu softvfp
+ 407              	HAL_FLASHEx_OB_SelectPCROP:
+ 408              		@ args = 0, pretend = 0, frame = 0
+ 409              		@ frame_needed = 0, uses_anonymous_args = 0
+ 410 0000 10B5     		push	{r4, lr}
+ARM GAS  /tmp/ccMGBJvW.s 			page 8
+
+
+ 411 0002 0A48     		ldr	r0, .L88
+ 412 0004 FFF7FEFF 		bl	FLASH_WaitForLastOperation
+ 413 0008 094C     		ldr	r4, .L88+4
+ 414 000a 2178     		ldrb	r1, [r4]
+ 415 000c C9B2     		uxtb	r1, r1
+ 416 000e 0028     		cmp	r0, #0
+ 417 0010 0BD1     		bne	.L87
+ 418 0012 8023     		movs	r3, #128
+ 419 0014 5B00     		lsls	r3, r3, #1
+ 420 0016 1943     		orrs	r1, r3
+ 421 0018 064B     		ldr	r3, .L88+8
+ 422 001a 5861     		str	r0, [r3, #20]
+ 423 001c CB43     		mvns	r3, r1
+ 424 001e 1B04     		lsls	r3, r3, #16
+ 425 0020 0B43     		orrs	r3, r1
+ 426 0022 0248     		ldr	r0, .L88
+ 427 0024 2360     		str	r3, [r4]
+ 428 0026 FFF7FEFF 		bl	FLASH_WaitForLastOperation
+ 429              	.L87:
+ 430              		@ sp needed
+ 431 002a 10BD     		pop	{r4, pc}
+ 432              	.L89:
+ 433              		.align	2
+ 434              	.L88:
+ 435 002c 50C30000 		.word	50000
+ 436 0030 0000F81F 		.word	536346624
+ 437 0034 00000000 		.word	pFlash
+ 439              		.section	.text.HAL_FLASHEx_OB_DeSelectPCROP,"ax",%progbits
+ 440              		.align	1
+ 441              		.global	HAL_FLASHEx_OB_DeSelectPCROP
+ 442              		.syntax unified
+ 443              		.code	16
+ 444              		.thumb_func
+ 445              		.fpu softvfp
+ 447              	HAL_FLASHEx_OB_DeSelectPCROP:
+ 448              		@ args = 0, pretend = 0, frame = 0
+ 449              		@ frame_needed = 0, uses_anonymous_args = 0
+ 450 0000 10B5     		push	{r4, lr}
+ 451 0002 0948     		ldr	r0, .L92
+ 452 0004 FFF7FEFF 		bl	FLASH_WaitForLastOperation
+ 453 0008 0849     		ldr	r1, .L92+4
+ 454 000a 0A78     		ldrb	r2, [r1]
+ 455 000c D2B2     		uxtb	r2, r2
+ 456 000e 0028     		cmp	r0, #0
+ 457 0010 08D1     		bne	.L91
+ 458 0012 074B     		ldr	r3, .L92+8
+ 459 0014 5861     		str	r0, [r3, #20]
+ 460 0016 D343     		mvns	r3, r2
+ 461 0018 1B04     		lsls	r3, r3, #16
+ 462 001a 1343     		orrs	r3, r2
+ 463 001c 0248     		ldr	r0, .L92
+ 464 001e 0B60     		str	r3, [r1]
+ 465 0020 FFF7FEFF 		bl	FLASH_WaitForLastOperation
+ 466              	.L91:
+ 467              		@ sp needed
+ 468 0024 10BD     		pop	{r4, pc}
+ 469              	.L93:
+ARM GAS  /tmp/ccMGBJvW.s 			page 9
+
+
+ 470 0026 C046     		.align	2
+ 471              	.L92:
+ 472 0028 50C30000 		.word	50000
+ 473 002c 0000F81F 		.word	536346624
+ 474 0030 00000000 		.word	pFlash
+ 476              		.section	.text.HAL_FLASHEx_DATAEEPROM_Unlock,"ax",%progbits
+ 477              		.align	1
+ 478              		.global	HAL_FLASHEx_DATAEEPROM_Unlock
+ 479              		.syntax unified
+ 480              		.code	16
+ 481              		.thumb_func
+ 482              		.fpu softvfp
+ 484              	HAL_FLASHEx_DATAEEPROM_Unlock:
+ 485              		@ args = 0, pretend = 0, frame = 0
+ 486              		@ frame_needed = 0, uses_anonymous_args = 0
+ 487              		@ link register save eliminated.
+ 488 0000 0122     		movs	r2, #1
+ 489 0002 084B     		ldr	r3, .L98
+ 490 0004 0020     		movs	r0, #0
+ 491 0006 5968     		ldr	r1, [r3, #4]
+ 492 0008 1142     		tst	r1, r2
+ 493 000a 0AD0     		beq	.L95
+ 494              		.syntax divided
+ 495              	@ 453 "bsp_l0/mcu_drivers/cmsis/Core/Include/cmsis_gcc.h" 1
+ 496 000c EFF31081 		MRS r1, primask
+ 497              	@ 0 "" 2
+ 498              	@ 209 "bsp_l0/mcu_drivers/cmsis/Core/Include/cmsis_gcc.h" 1
+ 499 0010 72B6     		cpsid i
+ 500              	@ 0 "" 2
+ 501              		.thumb
+ 502              		.syntax unified
+ 503 0012 0548     		ldr	r0, .L98+4
+ 504 0014 D860     		str	r0, [r3, #12]
+ 505 0016 0548     		ldr	r0, .L98+8
+ 506 0018 D860     		str	r0, [r3, #12]
+ 507              		.syntax divided
+ 508              	@ 481 "bsp_l0/mcu_drivers/cmsis/Core/Include/cmsis_gcc.h" 1
+ 509 001a 81F31088 		MSR primask, r1
+ 510              	@ 0 "" 2
+ 511              		.thumb
+ 512              		.syntax unified
+ 513 001e 5868     		ldr	r0, [r3, #4]
+ 514 0020 1040     		ands	r0, r2
+ 515              	.L95:
+ 516              		@ sp needed
+ 517 0022 7047     		bx	lr
+ 518              	.L99:
+ 519              		.align	2
+ 520              	.L98:
+ 521 0024 00200240 		.word	1073881088
+ 522 0028 EFCDAB89 		.word	-1985229329
+ 523 002c 05040302 		.word	33752069
+ 525              		.section	.text.HAL_FLASHEx_DATAEEPROM_Lock,"ax",%progbits
+ 526              		.align	1
+ 527              		.global	HAL_FLASHEx_DATAEEPROM_Lock
+ 528              		.syntax unified
+ 529              		.code	16
+ARM GAS  /tmp/ccMGBJvW.s 			page 10
+
+
+ 530              		.thumb_func
+ 531              		.fpu softvfp
+ 533              	HAL_FLASHEx_DATAEEPROM_Lock:
+ 534              		@ args = 0, pretend = 0, frame = 0
+ 535              		@ frame_needed = 0, uses_anonymous_args = 0
+ 536              		@ link register save eliminated.
+ 537 0000 0123     		movs	r3, #1
+ 538              		@ sp needed
+ 539 0002 034A     		ldr	r2, .L101
+ 540 0004 0020     		movs	r0, #0
+ 541 0006 5168     		ldr	r1, [r2, #4]
+ 542 0008 0B43     		orrs	r3, r1
+ 543 000a 5360     		str	r3, [r2, #4]
+ 544 000c 7047     		bx	lr
+ 545              	.L102:
+ 546 000e C046     		.align	2
+ 547              	.L101:
+ 548 0010 00200240 		.word	1073881088
+ 550              		.section	.text.HAL_FLASHEx_DATAEEPROM_Erase,"ax",%progbits
+ 551              		.align	1
+ 552              		.global	HAL_FLASHEx_DATAEEPROM_Erase
+ 553              		.syntax unified
+ 554              		.code	16
+ 555              		.thumb_func
+ 556              		.fpu softvfp
+ 558              	HAL_FLASHEx_DATAEEPROM_Erase:
+ 559              		@ args = 0, pretend = 0, frame = 0
+ 560              		@ frame_needed = 0, uses_anonymous_args = 0
+ 561 0000 10B5     		push	{r4, lr}
+ 562 0002 0400     		movs	r4, r0
+ 563 0004 0548     		ldr	r0, .L105
+ 564 0006 FFF7FEFF 		bl	FLASH_WaitForLastOperation
+ 565 000a 0028     		cmp	r0, #0
+ 566 000c 05D1     		bne	.L104
+ 567 000e 044B     		ldr	r3, .L105+4
+ 568 0010 5861     		str	r0, [r3, #20]
+ 569 0012 2060     		str	r0, [r4]
+ 570 0014 0148     		ldr	r0, .L105
+ 571 0016 FFF7FEFF 		bl	FLASH_WaitForLastOperation
+ 572              	.L104:
+ 573              		@ sp needed
+ 574 001a 10BD     		pop	{r4, pc}
+ 575              	.L106:
+ 576              		.align	2
+ 577              	.L105:
+ 578 001c 50C30000 		.word	50000
+ 579 0020 00000000 		.word	pFlash
+ 581              		.section	.text.HAL_FLASHEx_DATAEEPROM_Program,"ax",%progbits
+ 582              		.align	1
+ 583              		.global	HAL_FLASHEx_DATAEEPROM_Program
+ 584              		.syntax unified
+ 585              		.code	16
+ 586              		.thumb_func
+ 587              		.fpu softvfp
+ 589              	HAL_FLASHEx_DATAEEPROM_Program:
+ 590              		@ args = 0, pretend = 0, frame = 0
+ 591              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  /tmp/ccMGBJvW.s 			page 11
+
+
+ 592 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 593 0002 124F     		ldr	r7, .L114
+ 594 0004 0600     		movs	r6, r0
+ 595 0006 3B7C     		ldrb	r3, [r7, #16]
+ 596 0008 0D00     		movs	r5, r1
+ 597 000a 1400     		movs	r4, r2
+ 598 000c 0220     		movs	r0, #2
+ 599 000e 012B     		cmp	r3, #1
+ 600 0010 0CD0     		beq	.L108
+ 601 0012 0123     		movs	r3, #1
+ 602 0014 0E48     		ldr	r0, .L114+4
+ 603 0016 3B74     		strb	r3, [r7, #16]
+ 604 0018 FFF7FEFF 		bl	FLASH_WaitForLastOperation
+ 605 001c 0028     		cmp	r0, #0
+ 606 001e 03D1     		bne	.L109
+ 607 0020 7861     		str	r0, [r7, #20]
+ 608 0022 022E     		cmp	r6, #2
+ 609 0024 03D1     		bne	.L110
+ 610 0026 2C60     		str	r4, [r5]
+ 611              	.L109:
+ 612 0028 0023     		movs	r3, #0
+ 613 002a 3B74     		strb	r3, [r7, #16]
+ 614              	.L108:
+ 615              		@ sp needed
+ 616 002c F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 617              	.L110:
+ 618 002e 012E     		cmp	r6, #1
+ 619 0030 02D1     		bne	.L111
+ 620 0032 A4B2     		uxth	r4, r4
+ 621 0034 2C80     		strh	r4, [r5]
+ 622 0036 F7E7     		b	.L109
+ 623              	.L111:
+ 624 0038 002E     		cmp	r6, #0
+ 625 003a 03D0     		beq	.L112
+ 626 003c 0448     		ldr	r0, .L114+4
+ 627 003e FFF7FEFF 		bl	FLASH_WaitForLastOperation
+ 628 0042 F1E7     		b	.L109
+ 629              	.L112:
+ 630 0044 E4B2     		uxtb	r4, r4
+ 631 0046 2C70     		strb	r4, [r5]
+ 632 0048 EEE7     		b	.L109
+ 633              	.L115:
+ 634 004a C046     		.align	2
+ 635              	.L114:
+ 636 004c 00000000 		.word	pFlash
+ 637 0050 50C30000 		.word	50000
+ 639              		.section	.text.HAL_FLASHEx_DATAEEPROM_EnableFixedTimeProgram,"ax",%progbits
+ 640              		.align	1
+ 641              		.global	HAL_FLASHEx_DATAEEPROM_EnableFixedTimeProgram
+ 642              		.syntax unified
+ 643              		.code	16
+ 644              		.thumb_func
+ 645              		.fpu softvfp
+ 647              	HAL_FLASHEx_DATAEEPROM_EnableFixedTimeProgram:
+ 648              		@ args = 0, pretend = 0, frame = 0
+ 649              		@ frame_needed = 0, uses_anonymous_args = 0
+ 650              		@ link register save eliminated.
+ARM GAS  /tmp/ccMGBJvW.s 			page 12
+
+
+ 651 0000 8023     		movs	r3, #128
+ 652              		@ sp needed
+ 653 0002 034A     		ldr	r2, .L117
+ 654 0004 5B00     		lsls	r3, r3, #1
+ 655 0006 5168     		ldr	r1, [r2, #4]
+ 656 0008 0B43     		orrs	r3, r1
+ 657 000a 5360     		str	r3, [r2, #4]
+ 658 000c 7047     		bx	lr
+ 659              	.L118:
+ 660 000e C046     		.align	2
+ 661              	.L117:
+ 662 0010 00200240 		.word	1073881088
+ 664              		.section	.text.HAL_FLASHEx_DATAEEPROM_DisableFixedTimeProgram,"ax",%progbits
+ 665              		.align	1
+ 666              		.global	HAL_FLASHEx_DATAEEPROM_DisableFixedTimeProgram
+ 667              		.syntax unified
+ 668              		.code	16
+ 669              		.thumb_func
+ 670              		.fpu softvfp
+ 672              	HAL_FLASHEx_DATAEEPROM_DisableFixedTimeProgram:
+ 673              		@ args = 0, pretend = 0, frame = 0
+ 674              		@ frame_needed = 0, uses_anonymous_args = 0
+ 675              		@ link register save eliminated.
+ 676 0000 024A     		ldr	r2, .L120
+ 677 0002 0349     		ldr	r1, .L120+4
+ 678 0004 5368     		ldr	r3, [r2, #4]
+ 679              		@ sp needed
+ 680 0006 0B40     		ands	r3, r1
+ 681 0008 5360     		str	r3, [r2, #4]
+ 682 000a 7047     		bx	lr
+ 683              	.L121:
+ 684              		.align	2
+ 685              	.L120:
+ 686 000c 00200240 		.word	1073881088
+ 687 0010 FFFEFFFF 		.word	-257
+ 689              		.section	.text.FLASH_PageErase,"ax",%progbits
+ 690              		.align	1
+ 691              		.global	FLASH_PageErase
+ 692              		.syntax unified
+ 693              		.code	16
+ 694              		.thumb_func
+ 695              		.fpu softvfp
+ 697              	FLASH_PageErase:
+ 698              		@ args = 0, pretend = 0, frame = 0
+ 699              		@ frame_needed = 0, uses_anonymous_args = 0
+ 700 0000 0021     		movs	r1, #0
+ 701 0002 8022     		movs	r2, #128
+ 702 0004 074B     		ldr	r3, .L123
+ 703 0006 10B5     		push	{r4, lr}
+ 704 0008 5961     		str	r1, [r3, #20]
+ 705 000a 074B     		ldr	r3, .L123+4
+ 706 000c 9200     		lsls	r2, r2, #2
+ 707 000e 5C68     		ldr	r4, [r3, #4]
+ 708              		@ sp needed
+ 709 0010 2243     		orrs	r2, r4
+ 710 0012 5A60     		str	r2, [r3, #4]
+ 711 0014 0822     		movs	r2, #8
+ARM GAS  /tmp/ccMGBJvW.s 			page 13
+
+
+ 712 0016 5C68     		ldr	r4, [r3, #4]
+ 713 0018 2243     		orrs	r2, r4
+ 714 001a 5A60     		str	r2, [r3, #4]
+ 715 001c 7F23     		movs	r3, #127
+ 716 001e 9843     		bics	r0, r3
+ 717 0020 0160     		str	r1, [r0]
+ 718 0022 10BD     		pop	{r4, pc}
+ 719              	.L124:
+ 720              		.align	2
+ 721              	.L123:
+ 722 0024 00000000 		.word	pFlash
+ 723 0028 00200240 		.word	1073881088
+ 725              		.section	.text.HAL_FLASHEx_Erase,"ax",%progbits
+ 726              		.align	1
+ 727              		.global	HAL_FLASHEx_Erase
+ 728              		.syntax unified
+ 729              		.code	16
+ 730              		.thumb_func
+ 731              		.fpu softvfp
+ 733              	HAL_FLASHEx_Erase:
+ 734              		@ args = 0, pretend = 0, frame = 0
+ 735              		@ frame_needed = 0, uses_anonymous_args = 0
+ 736 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 737 0002 194B     		ldr	r3, .L132
+ 738 0004 0600     		movs	r6, r0
+ 739 0006 1B7C     		ldrb	r3, [r3, #16]
+ 740 0008 0F00     		movs	r7, r1
+ 741 000a 0224     		movs	r4, #2
+ 742 000c 012B     		cmp	r3, #1
+ 743 000e 27D0     		beq	.L126
+ 744 0010 0123     		movs	r3, #1
+ 745 0012 154A     		ldr	r2, .L132
+ 746 0014 1548     		ldr	r0, .L132+4
+ 747 0016 1374     		strb	r3, [r2, #16]
+ 748 0018 FFF7FEFF 		bl	FLASH_WaitForLastOperation
+ 749 001c 041E     		subs	r4, r0, #0
+ 750 001e 1CD1     		bne	.L127
+ 751 0020 0123     		movs	r3, #1
+ 752 0022 5B42     		rsbs	r3, r3, #0
+ 753 0024 3B60     		str	r3, [r7]
+ 754 0026 7568     		ldr	r5, [r6, #4]
+ 755              	.L128:
+ 756 0028 B368     		ldr	r3, [r6, #8]
+ 757 002a 7268     		ldr	r2, [r6, #4]
+ 758 002c DB01     		lsls	r3, r3, #7
+ 759 002e 9B18     		adds	r3, r3, r2
+ 760 0030 AB42     		cmp	r3, r5
+ 761 0032 12D9     		bls	.L127
+ 762 0034 2800     		movs	r0, r5
+ 763 0036 FFF7FEFF 		bl	FLASH_PageErase
+ 764 003a 0C48     		ldr	r0, .L132+4
+ 765 003c FFF7FEFF 		bl	FLASH_WaitForLastOperation
+ 766 0040 0821     		movs	r1, #8
+ 767 0042 0B4B     		ldr	r3, .L132+8
+ 768 0044 5A68     		ldr	r2, [r3, #4]
+ 769 0046 8A43     		bics	r2, r1
+ 770 0048 5A60     		str	r2, [r3, #4]
+ARM GAS  /tmp/ccMGBJvW.s 			page 14
+
+
+ 771 004a 5A68     		ldr	r2, [r3, #4]
+ 772 004c 0949     		ldr	r1, .L132+12
+ 773 004e 0A40     		ands	r2, r1
+ 774 0050 5A60     		str	r2, [r3, #4]
+ 775 0052 0028     		cmp	r0, #0
+ 776 0054 06D0     		beq	.L129
+ 777 0056 0400     		movs	r4, r0
+ 778 0058 3D60     		str	r5, [r7]
+ 779              	.L127:
+ 780 005a 0023     		movs	r3, #0
+ 781 005c 024A     		ldr	r2, .L132
+ 782 005e 1374     		strb	r3, [r2, #16]
+ 783              	.L126:
+ 784 0060 2000     		movs	r0, r4
+ 785              		@ sp needed
+ 786 0062 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 787              	.L129:
+ 788 0064 8035     		adds	r5, r5, #128
+ 789 0066 DFE7     		b	.L128
+ 790              	.L133:
+ 791              		.align	2
+ 792              	.L132:
+ 793 0068 00000000 		.word	pFlash
+ 794 006c 50C30000 		.word	50000
+ 795 0070 00200240 		.word	1073881088
+ 796 0074 FFFDFFFF 		.word	-513
+ 798              		.section	.text.HAL_FLASHEx_Erase_IT,"ax",%progbits
+ 799              		.align	1
+ 800              		.global	HAL_FLASHEx_Erase_IT
+ 801              		.syntax unified
+ 802              		.code	16
+ 803              		.thumb_func
+ 804              		.fpu softvfp
+ 806              	HAL_FLASHEx_Erase_IT:
+ 807              		@ args = 0, pretend = 0, frame = 8
+ 808              		@ frame_needed = 0, uses_anonymous_args = 0
+ 809 0000 F7B5     		push	{r0, r1, r2, r4, r5, r6, r7, lr}
+ 810 0002 124C     		ldr	r4, .L139
+ 811 0004 0600     		movs	r6, r0
+ 812 0006 2378     		ldrb	r3, [r4]
+ 813 0008 0125     		movs	r5, #1
+ 814 000a DAB2     		uxtb	r2, r3
+ 815 000c 0192     		str	r2, [sp, #4]
+ 816 000e 002B     		cmp	r3, #0
+ 817 0010 17D1     		bne	.L135
+ 818 0012 237C     		ldrb	r3, [r4, #16]
+ 819 0014 6D19     		adds	r5, r5, r5
+ 820 0016 012B     		cmp	r3, #1
+ 821 0018 13D0     		beq	.L135
+ 822 001a 0127     		movs	r7, #1
+ 823 001c 0C48     		ldr	r0, .L139+4
+ 824 001e 2774     		strb	r7, [r4, #16]
+ 825 0020 FFF7FEFF 		bl	FLASH_WaitForLastOperation
+ 826 0024 051E     		subs	r5, r0, #0
+ 827 0026 0ED1     		bne	.L136
+ 828 0028 C023     		movs	r3, #192
+ 829 002a 0A4A     		ldr	r2, .L139+8
+ARM GAS  /tmp/ccMGBJvW.s 			page 15
+
+
+ 830 002c 9B02     		lsls	r3, r3, #10
+ 831 002e 5168     		ldr	r1, [r2, #4]
+ 832 0030 0B43     		orrs	r3, r1
+ 833 0032 5360     		str	r3, [r2, #4]
+ 834 0034 B368     		ldr	r3, [r6, #8]
+ 835 0036 7068     		ldr	r0, [r6, #4]
+ 836 0038 2770     		strb	r7, [r4]
+ 837 003a 6360     		str	r3, [r4, #4]
+ 838 003c E060     		str	r0, [r4, #12]
+ 839 003e FFF7FEFF 		bl	FLASH_PageErase
+ 840              	.L135:
+ 841              		@ sp needed
+ 842 0042 2800     		movs	r0, r5
+ 843 0044 FEBD     		pop	{r1, r2, r3, r4, r5, r6, r7, pc}
+ 844              	.L136:
+ 845 0046 019B     		ldr	r3, [sp, #4]
+ 846 0048 2374     		strb	r3, [r4, #16]
+ 847 004a FAE7     		b	.L135
+ 848              	.L140:
+ 849              		.align	2
+ 850              	.L139:
+ 851 004c 00000000 		.word	pFlash
+ 852 0050 50C30000 		.word	50000
+ 853 0054 00200240 		.word	1073881088
+ 855              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccMGBJvW.s 			page 16
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 stm32l0xx_hal_flash_ex.c
+     /tmp/ccMGBJvW.s:12     .text.FLASH_OB_ProtectedSectorsConfig:0000000000000000 $t
+     /tmp/ccMGBJvW.s:19     .text.FLASH_OB_ProtectedSectorsConfig:0000000000000000 FLASH_OB_ProtectedSectorsConfig
+     /tmp/ccMGBJvW.s:109    .text.FLASH_OB_ProtectedSectorsConfig:000000000000009c $d
+     /tmp/ccMGBJvW.s:114    .text.HAL_FLASHEx_OBProgram:0000000000000000 $t
+     /tmp/ccMGBJvW.s:121    .text.HAL_FLASHEx_OBProgram:0000000000000000 HAL_FLASHEx_OBProgram
+     /tmp/ccMGBJvW.s:253    .text.HAL_FLASHEx_OBProgram:0000000000000100 $d
+     /tmp/ccMGBJvW.s:260    .text.HAL_FLASHEx_OBGetConfig:0000000000000000 $t
+     /tmp/ccMGBJvW.s:267    .text.HAL_FLASHEx_OBGetConfig:0000000000000000 HAL_FLASHEx_OBGetConfig
+     /tmp/ccMGBJvW.s:305    .text.HAL_FLASHEx_OBGetConfig:000000000000003c $d
+     /tmp/ccMGBJvW.s:309    .text.HAL_FLASHEx_AdvOBProgram:0000000000000000 $t
+     /tmp/ccMGBJvW.s:316    .text.HAL_FLASHEx_AdvOBProgram:0000000000000000 HAL_FLASHEx_AdvOBProgram
+     /tmp/ccMGBJvW.s:358    .text.HAL_FLASHEx_AdvOBProgram:0000000000000048 $d
+     /tmp/ccMGBJvW.s:364    .text.HAL_FLASHEx_AdvOBGetConfig:0000000000000000 $t
+     /tmp/ccMGBJvW.s:371    .text.HAL_FLASHEx_AdvOBGetConfig:0000000000000000 HAL_FLASHEx_AdvOBGetConfig
+     /tmp/ccMGBJvW.s:397    .text.HAL_FLASHEx_AdvOBGetConfig:0000000000000024 $d
+     /tmp/ccMGBJvW.s:400    .text.HAL_FLASHEx_OB_SelectPCROP:0000000000000000 $t
+     /tmp/ccMGBJvW.s:407    .text.HAL_FLASHEx_OB_SelectPCROP:0000000000000000 HAL_FLASHEx_OB_SelectPCROP
+     /tmp/ccMGBJvW.s:435    .text.HAL_FLASHEx_OB_SelectPCROP:000000000000002c $d
+     /tmp/ccMGBJvW.s:440    .text.HAL_FLASHEx_OB_DeSelectPCROP:0000000000000000 $t
+     /tmp/ccMGBJvW.s:447    .text.HAL_FLASHEx_OB_DeSelectPCROP:0000000000000000 HAL_FLASHEx_OB_DeSelectPCROP
+     /tmp/ccMGBJvW.s:472    .text.HAL_FLASHEx_OB_DeSelectPCROP:0000000000000028 $d
+     /tmp/ccMGBJvW.s:477    .text.HAL_FLASHEx_DATAEEPROM_Unlock:0000000000000000 $t
+     /tmp/ccMGBJvW.s:484    .text.HAL_FLASHEx_DATAEEPROM_Unlock:0000000000000000 HAL_FLASHEx_DATAEEPROM_Unlock
+     /tmp/ccMGBJvW.s:521    .text.HAL_FLASHEx_DATAEEPROM_Unlock:0000000000000024 $d
+     /tmp/ccMGBJvW.s:526    .text.HAL_FLASHEx_DATAEEPROM_Lock:0000000000000000 $t
+     /tmp/ccMGBJvW.s:533    .text.HAL_FLASHEx_DATAEEPROM_Lock:0000000000000000 HAL_FLASHEx_DATAEEPROM_Lock
+     /tmp/ccMGBJvW.s:548    .text.HAL_FLASHEx_DATAEEPROM_Lock:0000000000000010 $d
+     /tmp/ccMGBJvW.s:551    .text.HAL_FLASHEx_DATAEEPROM_Erase:0000000000000000 $t
+     /tmp/ccMGBJvW.s:558    .text.HAL_FLASHEx_DATAEEPROM_Erase:0000000000000000 HAL_FLASHEx_DATAEEPROM_Erase
+     /tmp/ccMGBJvW.s:578    .text.HAL_FLASHEx_DATAEEPROM_Erase:000000000000001c $d
+     /tmp/ccMGBJvW.s:582    .text.HAL_FLASHEx_DATAEEPROM_Program:0000000000000000 $t
+     /tmp/ccMGBJvW.s:589    .text.HAL_FLASHEx_DATAEEPROM_Program:0000000000000000 HAL_FLASHEx_DATAEEPROM_Program
+     /tmp/ccMGBJvW.s:636    .text.HAL_FLASHEx_DATAEEPROM_Program:000000000000004c $d
+     /tmp/ccMGBJvW.s:640    .text.HAL_FLASHEx_DATAEEPROM_EnableFixedTimeProgram:0000000000000000 $t
+     /tmp/ccMGBJvW.s:647    .text.HAL_FLASHEx_DATAEEPROM_EnableFixedTimeProgram:0000000000000000 HAL_FLASHEx_DATAEEPROM_EnableFixedTimeProgram
+     /tmp/ccMGBJvW.s:662    .text.HAL_FLASHEx_DATAEEPROM_EnableFixedTimeProgram:0000000000000010 $d
+     /tmp/ccMGBJvW.s:665    .text.HAL_FLASHEx_DATAEEPROM_DisableFixedTimeProgram:0000000000000000 $t
+     /tmp/ccMGBJvW.s:672    .text.HAL_FLASHEx_DATAEEPROM_DisableFixedTimeProgram:0000000000000000 HAL_FLASHEx_DATAEEPROM_DisableFixedTimeProgram
+     /tmp/ccMGBJvW.s:686    .text.HAL_FLASHEx_DATAEEPROM_DisableFixedTimeProgram:000000000000000c $d
+     /tmp/ccMGBJvW.s:690    .text.FLASH_PageErase:0000000000000000 $t
+     /tmp/ccMGBJvW.s:697    .text.FLASH_PageErase:0000000000000000 FLASH_PageErase
+     /tmp/ccMGBJvW.s:722    .text.FLASH_PageErase:0000000000000024 $d
+     /tmp/ccMGBJvW.s:726    .text.HAL_FLASHEx_Erase:0000000000000000 $t
+     /tmp/ccMGBJvW.s:733    .text.HAL_FLASHEx_Erase:0000000000000000 HAL_FLASHEx_Erase
+     /tmp/ccMGBJvW.s:793    .text.HAL_FLASHEx_Erase:0000000000000068 $d
+     /tmp/ccMGBJvW.s:799    .text.HAL_FLASHEx_Erase_IT:0000000000000000 $t
+     /tmp/ccMGBJvW.s:806    .text.HAL_FLASHEx_Erase_IT:0000000000000000 HAL_FLASHEx_Erase_IT
+     /tmp/ccMGBJvW.s:851    .text.HAL_FLASHEx_Erase_IT:000000000000004c $d
+
+UNDEFINED SYMBOLS
+FLASH_WaitForLastOperation
+pFlash

@@ -1,0 +1,401 @@
+ARM GAS  /tmp/ccBj3L0M.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.eabi_attribute 23, 1
+   3              		.eabi_attribute 24, 1
+   4              		.eabi_attribute 25, 1
+   5              		.eabi_attribute 26, 1
+   6              		.eabi_attribute 30, 4
+   7              		.eabi_attribute 34, 0
+   8              		.eabi_attribute 18, 4
+   9              		.file	"lr11xx_bootloader.c"
+  10              		.text
+  11              		.section	.text.lr11xx_bootloader_get_status,"ax",%progbits
+  12              		.align	1
+  13              		.global	lr11xx_bootloader_get_status
+  14              		.arch armv6s-m
+  15              		.syntax unified
+  16              		.code	16
+  17              		.thumb_func
+  18              		.fpu softvfp
+  20              	lr11xx_bootloader_get_status:
+  21              		@ args = 0, pretend = 0, frame = 8
+  22              		@ frame_needed = 0, uses_anonymous_args = 0
+  23 0000 73B5     		push	{r0, r1, r4, r5, r6, lr}
+  24 0002 0E00     		movs	r6, r1
+  25 0004 1500     		movs	r5, r2
+  26 0006 6946     		mov	r1, sp
+  27 0008 0622     		movs	r2, #6
+  28 000a 1C00     		movs	r4, r3
+  29 000c FFF7FEFF 		bl	lr11xx_hal_direct_read
+  30 0010 0028     		cmp	r0, #0
+  31 0012 1ED1     		bne	.L2
+  32 0014 6B46     		mov	r3, sp
+  33 0016 0122     		movs	r2, #1
+  34 0018 1B78     		ldrb	r3, [r3]
+  35 001a 1900     		movs	r1, r3
+  36 001c D340     		lsrs	r3, r3, r2
+  37 001e 3370     		strb	r3, [r6]
+  38 0020 6B46     		mov	r3, sp
+  39 0022 1140     		ands	r1, r2
+  40 0024 7170     		strb	r1, [r6, #1]
+  41 0026 5B78     		ldrb	r3, [r3, #1]
+  42 0028 1A40     		ands	r2, r3
+  43 002a AA70     		strb	r2, [r5, #2]
+  44 002c 1A07     		lsls	r2, r3, #28
+  45 002e 1B09     		lsrs	r3, r3, #4
+  46 0030 2B70     		strb	r3, [r5]
+  47 0032 6B46     		mov	r3, sp
+  48 0034 520F     		lsrs	r2, r2, #29
+  49 0036 6A70     		strb	r2, [r5, #1]
+  50 0038 9A78     		ldrb	r2, [r3, #2]
+  51 003a DB78     		ldrb	r3, [r3, #3]
+  52 003c 1206     		lsls	r2, r2, #24
+  53 003e 1B04     		lsls	r3, r3, #16
+  54 0040 D218     		adds	r2, r2, r3
+  55 0042 6B46     		mov	r3, sp
+  56 0044 5B79     		ldrb	r3, [r3, #5]
+  57 0046 D218     		adds	r2, r2, r3
+  58 0048 6B46     		mov	r3, sp
+ARM GAS  /tmp/ccBj3L0M.s 			page 2
+
+
+  59 004a 1B79     		ldrb	r3, [r3, #4]
+  60 004c 1B02     		lsls	r3, r3, #8
+  61 004e D218     		adds	r2, r2, r3
+  62 0050 2260     		str	r2, [r4]
+  63              	.L2:
+  64              		@ sp needed
+  65 0052 76BD     		pop	{r1, r2, r4, r5, r6, pc}
+  67              		.section	.text.lr11xx_bootloader_clear_reset_status_info,"ax",%progbits
+  68              		.align	1
+  69              		.global	lr11xx_bootloader_clear_reset_status_info
+  70              		.syntax unified
+  71              		.code	16
+  72              		.thumb_func
+  73              		.fpu softvfp
+  75              	lr11xx_bootloader_clear_reset_status_info:
+  76              		@ args = 0, pretend = 0, frame = 8
+  77              		@ frame_needed = 0, uses_anonymous_args = 0
+  78 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+  79 0002 0123     		movs	r3, #1
+  80 0004 03A9     		add	r1, sp, #12
+  81 0006 0B80     		strh	r3, [r1]
+  82 0008 0023     		movs	r3, #0
+  83 000a 0222     		movs	r2, #2
+  84 000c 0093     		str	r3, [sp]
+  85 000e FFF7FEFF 		bl	lr11xx_hal_write
+  86 0012 05B0     		add	sp, sp, #20
+  87              		@ sp needed
+  88 0014 00BD     		pop	{pc}
+  90              		.section	.text.lr11xx_bootloader_get_version,"ax",%progbits
+  91              		.align	1
+  92              		.global	lr11xx_bootloader_get_version
+  93              		.syntax unified
+  94              		.code	16
+  95              		.thumb_func
+  96              		.fpu softvfp
+  98              	lr11xx_bootloader_get_version:
+  99              		@ args = 0, pretend = 0, frame = 8
+ 100              		@ frame_needed = 0, uses_anonymous_args = 0
+ 101 0000 0223     		movs	r3, #2
+ 102 0002 30B5     		push	{r4, r5, lr}
+ 103 0004 85B0     		sub	sp, sp, #20
+ 104 0006 FF33     		adds	r3, r3, #255
+ 105 0008 0C00     		movs	r4, r1
+ 106 000a 02A9     		add	r1, sp, #8
+ 107 000c 0B80     		strh	r3, [r1]
+ 108 000e 0023     		movs	r3, #0
+ 109 0010 03AD     		add	r5, sp, #12
+ 110 0012 0393     		str	r3, [sp, #12]
+ 111 0014 0433     		adds	r3, r3, #4
+ 112 0016 0093     		str	r3, [sp]
+ 113 0018 0222     		movs	r2, #2
+ 114 001a 2B00     		movs	r3, r5
+ 115 001c FFF7FEFF 		bl	lr11xx_hal_read
+ 116 0020 0028     		cmp	r0, #0
+ 117 0022 06D1     		bne	.L5
+ 118 0024 2B88     		ldrh	r3, [r5]
+ 119 0026 AA78     		ldrb	r2, [r5, #2]
+ARM GAS  /tmp/ccBj3L0M.s 			page 3
+
+
+ 120 0028 2380     		strh	r3, [r4]
+ 121 002a EB78     		ldrb	r3, [r5, #3]
+ 122 002c 1202     		lsls	r2, r2, #8
+ 123 002e 9B18     		adds	r3, r3, r2
+ 124 0030 6380     		strh	r3, [r4, #2]
+ 125              	.L5:
+ 126 0032 05B0     		add	sp, sp, #20
+ 127              		@ sp needed
+ 128 0034 30BD     		pop	{r4, r5, pc}
+ 130              		.section	.text.lr11xx_bootloader_erase_flash,"ax",%progbits
+ 131              		.align	1
+ 132              		.global	lr11xx_bootloader_erase_flash
+ 133              		.syntax unified
+ 134              		.code	16
+ 135              		.thumb_func
+ 136              		.fpu softvfp
+ 138              	lr11xx_bootloader_erase_flash:
+ 139              		@ args = 0, pretend = 0, frame = 8
+ 140              		@ frame_needed = 0, uses_anonymous_args = 0
+ 141 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 142 0002 8023     		movs	r3, #128
+ 143 0004 03A9     		add	r1, sp, #12
+ 144 0006 0B80     		strh	r3, [r1]
+ 145 0008 0023     		movs	r3, #0
+ 146 000a 0222     		movs	r2, #2
+ 147 000c 0093     		str	r3, [sp]
+ 148 000e FFF7FEFF 		bl	lr11xx_hal_write
+ 149 0012 05B0     		add	sp, sp, #20
+ 150              		@ sp needed
+ 151 0014 00BD     		pop	{pc}
+ 153              		.section	.text.lr11xx_bootloader_write_flash_encrypted,"ax",%progbits
+ 154              		.align	1
+ 155              		.global	lr11xx_bootloader_write_flash_encrypted
+ 156              		.syntax unified
+ 157              		.code	16
+ 158              		.thumb_func
+ 159              		.fpu softvfp
+ 161              	lr11xx_bootloader_write_flash_encrypted:
+ 162              		@ args = 0, pretend = 0, frame = 264
+ 163              		@ frame_needed = 0, uses_anonymous_args = 0
+ 164 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 165 0002 1E00     		movs	r6, r3
+ 166 0004 8023     		movs	r3, #128
+ 167 0006 C5B0     		sub	sp, sp, #276
+ 168 0008 02AD     		add	r5, sp, #8
+ 169 000a 2B70     		strb	r3, [r5]
+ 170 000c 7D3B     		subs	r3, r3, #125
+ 171 000e 6B70     		strb	r3, [r5, #1]
+ 172 0010 0B0E     		lsrs	r3, r1, #24
+ 173 0012 AB70     		strb	r3, [r5, #2]
+ 174 0014 0B0C     		lsrs	r3, r1, #16
+ 175 0016 1400     		movs	r4, r2
+ 176 0018 EB70     		strb	r3, [r5, #3]
+ 177 001a 6971     		strb	r1, [r5, #5]
+ 178 001c 0B0A     		lsrs	r3, r1, #8
+ 179 001e 0021     		movs	r1, #0
+ 180 0020 0700     		movs	r7, r0
+ARM GAS  /tmp/ccBj3L0M.s 			page 4
+
+
+ 181 0022 FC22     		movs	r2, #252
+ 182 0024 05A8     		add	r0, sp, #20
+ 183 0026 B600     		lsls	r6, r6, #2
+ 184 0028 0491     		str	r1, [sp, #16]
+ 185 002a 2B71     		strb	r3, [r5, #4]
+ 186 002c FFF7FEFF 		bl	memset
+ 187 0030 04A9     		add	r1, sp, #16
+ 188 0032 A019     		adds	r0, r4, r6
+ 189              	.L8:
+ 190 0034 A042     		cmp	r0, r4
+ 191 0036 08D1     		bne	.L9
+ 192 0038 0622     		movs	r2, #6
+ 193 003a 2900     		movs	r1, r5
+ 194 003c 3800     		movs	r0, r7
+ 195 003e 0096     		str	r6, [sp]
+ 196 0040 04AB     		add	r3, sp, #16
+ 197 0042 FFF7FEFF 		bl	lr11xx_hal_write
+ 198 0046 45B0     		add	sp, sp, #276
+ 199              		@ sp needed
+ 200 0048 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 201              	.L9:
+ 202 004a 04CC     		ldmia	r4!, {r2}
+ 203 004c 130E     		lsrs	r3, r2, #24
+ 204 004e 0B70     		strb	r3, [r1]
+ 205 0050 130C     		lsrs	r3, r2, #16
+ 206 0052 4B70     		strb	r3, [r1, #1]
+ 207 0054 130A     		lsrs	r3, r2, #8
+ 208 0056 8B70     		strb	r3, [r1, #2]
+ 209 0058 CA70     		strb	r2, [r1, #3]
+ 210 005a 0431     		adds	r1, r1, #4
+ 211 005c EAE7     		b	.L8
+ 213              		.section	.text.lr11xx_bootloader_write_flash_encrypted_full,"ax",%progbits
+ 214              		.align	1
+ 215              		.global	lr11xx_bootloader_write_flash_encrypted_full
+ 216              		.syntax unified
+ 217              		.code	16
+ 218              		.thumb_func
+ 219              		.fpu softvfp
+ 221              	lr11xx_bootloader_write_flash_encrypted_full:
+ 222              		@ args = 0, pretend = 0, frame = 8
+ 223              		@ frame_needed = 0, uses_anonymous_args = 0
+ 224 0000 F7B5     		push	{r0, r1, r2, r4, r5, r6, r7, lr}
+ 225 0002 0E00     		movs	r6, r1
+ 226 0004 1C00     		movs	r4, r3
+ 227 0006 0D00     		movs	r5, r1
+ 228 0008 4027     		movs	r7, #64
+ 229 000a 0090     		str	r0, [sp]
+ 230 000c 0192     		str	r2, [sp, #4]
+ 231              	.L11:
+ 232 000e 002C     		cmp	r4, #0
+ 233 0010 01D1     		bne	.L15
+ 234 0012 2000     		movs	r0, r4
+ 235              	.L13:
+ 236              		@ sp needed
+ 237 0014 FEBD     		pop	{r1, r2, r3, r4, r5, r6, r7, pc}
+ 238              	.L15:
+ 239 0016 2300     		movs	r3, r4
+ARM GAS  /tmp/ccBj3L0M.s 			page 5
+
+
+ 240 0018 402C     		cmp	r4, #64
+ 241 001a 00D9     		bls	.L12
+ 242 001c 3B00     		movs	r3, r7
+ 243              	.L12:
+ 244 001e 019A     		ldr	r2, [sp, #4]
+ 245 0020 2900     		movs	r1, r5
+ 246 0022 921B     		subs	r2, r2, r6
+ 247 0024 0098     		ldr	r0, [sp]
+ 248 0026 DBB2     		uxtb	r3, r3
+ 249 0028 5219     		adds	r2, r2, r5
+ 250 002a FFF7FEFF 		bl	lr11xx_bootloader_write_flash_encrypted
+ 251 002e 0028     		cmp	r0, #0
+ 252 0030 F0D1     		bne	.L13
+ 253 0032 0135     		adds	r5, r5, #1
+ 254 0034 FF35     		adds	r5, r5, #255
+ 255 0036 402C     		cmp	r4, #64
+ 256 0038 00D2     		bcs	.L14
+ 257 003a 3C00     		movs	r4, r7
+ 258              	.L14:
+ 259 003c 403C     		subs	r4, r4, #64
+ 260 003e E6E7     		b	.L11
+ 262              		.section	.text.lr11xx_bootloader_reboot,"ax",%progbits
+ 263              		.align	1
+ 264              		.global	lr11xx_bootloader_reboot
+ 265              		.syntax unified
+ 266              		.code	16
+ 267              		.thumb_func
+ 268              		.fpu softvfp
+ 270              	lr11xx_bootloader_reboot:
+ 271              		@ args = 0, pretend = 0, frame = 8
+ 272              		@ frame_needed = 0, uses_anonymous_args = 0
+ 273 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 274 0002 B023     		movs	r3, #176
+ 275 0004 6A46     		mov	r2, sp
+ 276 0006 4C1E     		subs	r4, r1, #1
+ 277 0008 A141     		sbcs	r1, r1, r4
+ 278 000a DB00     		lsls	r3, r3, #3
+ 279 000c 9381     		strh	r3, [r2, #12]
+ 280 000e 0322     		movs	r2, #3
+ 281 0010 4942     		rsbs	r1, r1, #0
+ 282 0012 0023     		movs	r3, #0
+ 283 0014 0A40     		ands	r2, r1
+ 284 0016 6946     		mov	r1, sp
+ 285 0018 8A73     		strb	r2, [r1, #14]
+ 286 001a 0322     		movs	r2, #3
+ 287 001c 0093     		str	r3, [sp]
+ 288 001e 03A9     		add	r1, sp, #12
+ 289 0020 FFF7FEFF 		bl	lr11xx_hal_write
+ 290 0024 04B0     		add	sp, sp, #16
+ 291              		@ sp needed
+ 292 0026 10BD     		pop	{r4, pc}
+ 294              		.section	.text.lr11xx_bootloader_read_pin,"ax",%progbits
+ 295              		.align	1
+ 296              		.global	lr11xx_bootloader_read_pin
+ 297              		.syntax unified
+ 298              		.code	16
+ 299              		.thumb_func
+ARM GAS  /tmp/ccBj3L0M.s 			page 6
+
+
+ 300              		.fpu softvfp
+ 302              	lr11xx_bootloader_read_pin:
+ 303              		@ args = 0, pretend = 0, frame = 8
+ 304              		@ frame_needed = 0, uses_anonymous_args = 0
+ 305 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 306 0002 B822     		movs	r2, #184
+ 307 0004 0B00     		movs	r3, r1
+ 308 0006 1201     		lsls	r2, r2, #4
+ 309 0008 03A9     		add	r1, sp, #12
+ 310 000a 0A80     		strh	r2, [r1]
+ 311 000c 0422     		movs	r2, #4
+ 312 000e 0092     		str	r2, [sp]
+ 313 0010 023A     		subs	r2, r2, #2
+ 314 0012 FFF7FEFF 		bl	lr11xx_hal_read
+ 315 0016 05B0     		add	sp, sp, #20
+ 316              		@ sp needed
+ 317 0018 00BD     		pop	{pc}
+ 319              		.section	.text.lr11xx_bootloader_read_chip_eui,"ax",%progbits
+ 320              		.align	1
+ 321              		.global	lr11xx_bootloader_read_chip_eui
+ 322              		.syntax unified
+ 323              		.code	16
+ 324              		.thumb_func
+ 325              		.fpu softvfp
+ 327              	lr11xx_bootloader_read_chip_eui:
+ 328              		@ args = 0, pretend = 0, frame = 8
+ 329              		@ frame_needed = 0, uses_anonymous_args = 0
+ 330 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 331 0002 C822     		movs	r2, #200
+ 332 0004 0B00     		movs	r3, r1
+ 333 0006 1201     		lsls	r2, r2, #4
+ 334 0008 03A9     		add	r1, sp, #12
+ 335 000a 0A80     		strh	r2, [r1]
+ 336 000c 0822     		movs	r2, #8
+ 337 000e 0092     		str	r2, [sp]
+ 338 0010 063A     		subs	r2, r2, #6
+ 339 0012 FFF7FEFF 		bl	lr11xx_hal_read
+ 340 0016 05B0     		add	sp, sp, #20
+ 341              		@ sp needed
+ 342 0018 00BD     		pop	{pc}
+ 344              		.section	.text.lr11xx_bootloader_read_join_eui,"ax",%progbits
+ 345              		.align	1
+ 346              		.global	lr11xx_bootloader_read_join_eui
+ 347              		.syntax unified
+ 348              		.code	16
+ 349              		.thumb_func
+ 350              		.fpu softvfp
+ 352              	lr11xx_bootloader_read_join_eui:
+ 353              		@ args = 0, pretend = 0, frame = 8
+ 354              		@ frame_needed = 0, uses_anonymous_args = 0
+ 355 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 356 0002 D822     		movs	r2, #216
+ 357 0004 0B00     		movs	r3, r1
+ 358 0006 1201     		lsls	r2, r2, #4
+ 359 0008 03A9     		add	r1, sp, #12
+ 360 000a 0A80     		strh	r2, [r1]
+ 361 000c 0822     		movs	r2, #8
+ARM GAS  /tmp/ccBj3L0M.s 			page 7
+
+
+ 362 000e 0092     		str	r2, [sp]
+ 363 0010 063A     		subs	r2, r2, #6
+ 364 0012 FFF7FEFF 		bl	lr11xx_hal_read
+ 365 0016 05B0     		add	sp, sp, #20
+ 366              		@ sp needed
+ 367 0018 00BD     		pop	{pc}
+ 369              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccBj3L0M.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 lr11xx_bootloader.c
+     /tmp/ccBj3L0M.s:12     .text.lr11xx_bootloader_get_status:0000000000000000 $t
+     /tmp/ccBj3L0M.s:20     .text.lr11xx_bootloader_get_status:0000000000000000 lr11xx_bootloader_get_status
+     /tmp/ccBj3L0M.s:68     .text.lr11xx_bootloader_clear_reset_status_info:0000000000000000 $t
+     /tmp/ccBj3L0M.s:75     .text.lr11xx_bootloader_clear_reset_status_info:0000000000000000 lr11xx_bootloader_clear_reset_status_info
+     /tmp/ccBj3L0M.s:91     .text.lr11xx_bootloader_get_version:0000000000000000 $t
+     /tmp/ccBj3L0M.s:98     .text.lr11xx_bootloader_get_version:0000000000000000 lr11xx_bootloader_get_version
+     /tmp/ccBj3L0M.s:131    .text.lr11xx_bootloader_erase_flash:0000000000000000 $t
+     /tmp/ccBj3L0M.s:138    .text.lr11xx_bootloader_erase_flash:0000000000000000 lr11xx_bootloader_erase_flash
+     /tmp/ccBj3L0M.s:154    .text.lr11xx_bootloader_write_flash_encrypted:0000000000000000 $t
+     /tmp/ccBj3L0M.s:161    .text.lr11xx_bootloader_write_flash_encrypted:0000000000000000 lr11xx_bootloader_write_flash_encrypted
+     /tmp/ccBj3L0M.s:214    .text.lr11xx_bootloader_write_flash_encrypted_full:0000000000000000 $t
+     /tmp/ccBj3L0M.s:221    .text.lr11xx_bootloader_write_flash_encrypted_full:0000000000000000 lr11xx_bootloader_write_flash_encrypted_full
+     /tmp/ccBj3L0M.s:263    .text.lr11xx_bootloader_reboot:0000000000000000 $t
+     /tmp/ccBj3L0M.s:270    .text.lr11xx_bootloader_reboot:0000000000000000 lr11xx_bootloader_reboot
+     /tmp/ccBj3L0M.s:295    .text.lr11xx_bootloader_read_pin:0000000000000000 $t
+     /tmp/ccBj3L0M.s:302    .text.lr11xx_bootloader_read_pin:0000000000000000 lr11xx_bootloader_read_pin
+     /tmp/ccBj3L0M.s:320    .text.lr11xx_bootloader_read_chip_eui:0000000000000000 $t
+     /tmp/ccBj3L0M.s:327    .text.lr11xx_bootloader_read_chip_eui:0000000000000000 lr11xx_bootloader_read_chip_eui
+     /tmp/ccBj3L0M.s:345    .text.lr11xx_bootloader_read_join_eui:0000000000000000 $t
+     /tmp/ccBj3L0M.s:352    .text.lr11xx_bootloader_read_join_eui:0000000000000000 lr11xx_bootloader_read_join_eui
+
+UNDEFINED SYMBOLS
+lr11xx_hal_direct_read
+lr11xx_hal_write
+lr11xx_hal_read
+memset

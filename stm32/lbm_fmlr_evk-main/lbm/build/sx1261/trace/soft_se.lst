@@ -1,0 +1,1080 @@
+ARM GAS  /tmp/ccolZZRT.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.eabi_attribute 23, 1
+   3              		.eabi_attribute 24, 1
+   4              		.eabi_attribute 25, 1
+   5              		.eabi_attribute 26, 1
+   6              		.eabi_attribute 30, 4
+   7              		.eabi_attribute 34, 0
+   8              		.eabi_attribute 18, 4
+   9              		.file	"soft_se.c"
+  10              		.text
+  11              		.section	.text.compute_cmac,"ax",%progbits
+  12              		.align	1
+  13              		.arch armv6s-m
+  14              		.syntax unified
+  15              		.code	16
+  16              		.thumb_func
+  17              		.fpu softvfp
+  19              	compute_cmac:
+  20              		@ args = 4, pretend = 0, frame = 296
+  21              		@ frame_needed = 0, uses_anonymous_args = 0
+  22 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+  23 0002 0500     		movs	r5, r0
+  24 0004 0C00     		movs	r4, r1
+  25 0006 1600     		movs	r6, r2
+  26 0008 1F00     		movs	r7, r3
+  27 000a 0220     		movs	r0, #2
+  28 000c CBB0     		sub	sp, sp, #300
+  29 000e 0029     		cmp	r1, #0
+  30 0010 27D0     		beq	.L2
+  31 0012 509B     		ldr	r3, [sp, #320]
+  32 0014 002B     		cmp	r3, #0
+  33 0016 24D0     		beq	.L2
+  34 0018 04A8     		add	r0, sp, #16
+  35 001a FFF7FEFF 		bl	AES_CMAC_Init
+  36 001e 1549     		ldr	r1, .L10
+  37 0020 0023     		movs	r3, #0
+  38 0022 0A00     		movs	r2, r1
+  39              	.L6:
+  40 0024 087D     		ldrb	r0, [r1, #20]
+  41 0026 B842     		cmp	r0, r7
+  42 0028 16D1     		bne	.L3
+  43 002a 1121     		movs	r1, #17
+  44 002c 5943     		muls	r1, r3
+  45 002e 1531     		adds	r1, r1, #21
+  46 0030 5118     		adds	r1, r2, r1
+  47 0032 04A8     		add	r0, sp, #16
+  48 0034 FFF7FEFF 		bl	AES_CMAC_SetKey
+  49 0038 002D     		cmp	r5, #0
+  50 003a 14D1     		bne	.L4
+  51              	.L5:
+  52 003c 3200     		movs	r2, r6
+  53 003e 2100     		movs	r1, r4
+  54 0040 04A8     		add	r0, sp, #16
+  55 0042 FFF7FEFF 		bl	AES_CMAC_Update
+  56 0046 6846     		mov	r0, sp
+  57 0048 04A9     		add	r1, sp, #16
+  58 004a FFF7FEFF 		bl	AES_CMAC_Final
+ARM GAS  /tmp/ccolZZRT.s 			page 2
+
+
+  59 004e 509B     		ldr	r3, [sp, #320]
+  60 0050 009A     		ldr	r2, [sp]
+  61 0052 0020     		movs	r0, #0
+  62 0054 1A60     		str	r2, [r3]
+  63 0056 04E0     		b	.L2
+  64              	.L3:
+  65 0058 0133     		adds	r3, r3, #1
+  66 005a 1131     		adds	r1, r1, #17
+  67 005c 172B     		cmp	r3, #23
+  68 005e E1D1     		bne	.L6
+  69 0060 0320     		movs	r0, #3
+  70              	.L2:
+  71 0062 4BB0     		add	sp, sp, #300
+  72              		@ sp needed
+  73 0064 F0BD     		pop	{r4, r5, r6, r7, pc}
+  74              	.L4:
+  75 0066 1022     		movs	r2, #16
+  76 0068 2900     		movs	r1, r5
+  77 006a 04A8     		add	r0, sp, #16
+  78 006c FFF7FEFF 		bl	AES_CMAC_Update
+  79 0070 E4E7     		b	.L5
+  80              	.L11:
+  81 0072 C046     		.align	2
+  82              	.L10:
+  83 0074 00000000 		.word	soft_se_data
+  85              		.section	.rodata.smtc_secure_element_init.str1.1,"aMS",%progbits,1
+  86              	.LC4:
+  87 0000 1B5B303B 		.ascii	"\033[0;32mINFO: Use soft secure element for cryptog"
+  87      33326D49 
+  87      4E464F3A 
+  87      20557365 
+  87      20736F66 
+  88 0030 72617068 		.ascii	"raphic functionalities\012\000"
+  88      69632066 
+  88      756E6374 
+  88      696F6E61 
+  88      6C697469 
+  89              	.LC6:
+  90 0048 1B5B306D 		.ascii	"\033[0m\000"
+  90      00
+  91              		.section	.text.smtc_secure_element_init,"ax",%progbits
+  92              		.align	1
+  93              		.global	smtc_secure_element_init
+  94              		.syntax unified
+  95              		.code	16
+  96              		.thumb_func
+  97              		.fpu softvfp
+  99              	smtc_secure_element_init:
+ 100              		@ args = 0, pretend = 0, frame = 416
+ 101              		@ frame_needed = 0, uses_anonymous_args = 0
+ 102 0000 10B5     		push	{r4, lr}
+ 103 0002 9C24     		movs	r4, #156
+ 104 0004 E8B0     		sub	sp, sp, #416
+ 105 0006 FF34     		adds	r4, r4, #255
+ 106 0008 2200     		movs	r2, r4
+ 107 000a 0949     		ldr	r1, .L13
+ 108 000c 01A8     		add	r0, sp, #4
+ARM GAS  /tmp/ccolZZRT.s 			page 3
+
+
+ 109 000e FFF7FEFF 		bl	memcpy
+ 110 0012 2200     		movs	r2, r4
+ 111 0014 01A9     		add	r1, sp, #4
+ 112 0016 0748     		ldr	r0, .L13+4
+ 113 0018 FFF7FEFF 		bl	memcpy
+ 114 001c 0648     		ldr	r0, .L13+8
+ 115 001e FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 116 0022 0648     		ldr	r0, .L13+12
+ 117 0024 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 118 0028 0020     		movs	r0, #0
+ 119 002a 68B0     		add	sp, sp, #416
+ 120              		@ sp needed
+ 121 002c 10BD     		pop	{r4, pc}
+ 122              	.L14:
+ 123 002e C046     		.align	2
+ 124              	.L13:
+ 125 0030 00000000 		.word	.LC0
+ 126 0034 00000000 		.word	soft_se_data
+ 127 0038 00000000 		.word	.LC4
+ 128 003c 48000000 		.word	.LC6
+ 130              		.section	.text.smtc_secure_element_compute_aes_cmac,"ax",%progbits
+ 131              		.align	1
+ 132              		.global	smtc_secure_element_compute_aes_cmac
+ 133              		.syntax unified
+ 134              		.code	16
+ 135              		.thumb_func
+ 136              		.fpu softvfp
+ 138              	smtc_secure_element_compute_aes_cmac:
+ 139              		@ args = 4, pretend = 0, frame = 0
+ 140              		@ frame_needed = 0, uses_anonymous_args = 0
+ 141 0000 13B5     		push	{r0, r1, r4, lr}
+ 142 0002 0400     		movs	r4, r0
+ 143 0004 0320     		movs	r0, #3
+ 144 0006 8B2B     		cmp	r3, #139
+ 145 0008 04D8     		bhi	.L16
+ 146 000a 0498     		ldr	r0, [sp, #16]
+ 147 000c 0090     		str	r0, [sp]
+ 148 000e 2000     		movs	r0, r4
+ 149 0010 FFF7FEFF 		bl	compute_cmac
+ 150              	.L16:
+ 151              		@ sp needed
+ 152 0014 16BD     		pop	{r1, r2, r4, pc}
+ 154              		.section	.text.smtc_secure_element_verify_aes_cmac,"ax",%progbits
+ 155              		.align	1
+ 156              		.global	smtc_secure_element_verify_aes_cmac
+ 157              		.syntax unified
+ 158              		.code	16
+ 159              		.thumb_func
+ 160              		.fpu softvfp
+ 162              	smtc_secure_element_verify_aes_cmac:
+ 163              		@ args = 0, pretend = 0, frame = 8
+ 164              		@ frame_needed = 0, uses_anonymous_args = 0
+ 165 0000 30B5     		push	{r4, r5, lr}
+ 166 0002 0400     		movs	r4, r0
+ 167 0004 1500     		movs	r5, r2
+ 168 0006 0220     		movs	r0, #2
+ 169 0008 85B0     		sub	sp, sp, #20
+ARM GAS  /tmp/ccolZZRT.s 			page 4
+
+
+ 170 000a 002C     		cmp	r4, #0
+ 171 000c 0ED0     		beq	.L19
+ 172 000e 0020     		movs	r0, #0
+ 173 0010 03AA     		add	r2, sp, #12
+ 174 0012 0092     		str	r2, [sp]
+ 175 0014 0A00     		movs	r2, r1
+ 176 0016 2100     		movs	r1, r4
+ 177 0018 0390     		str	r0, [sp, #12]
+ 178 001a FFF7FEFF 		bl	compute_cmac
+ 179 001e 0028     		cmp	r0, #0
+ 180 0020 04D1     		bne	.L19
+ 181 0022 039B     		ldr	r3, [sp, #12]
+ 182 0024 581B     		subs	r0, r3, r5
+ 183 0026 431E     		subs	r3, r0, #1
+ 184 0028 9841     		sbcs	r0, r0, r3
+ 185 002a C0B2     		uxtb	r0, r0
+ 186              	.L19:
+ 187 002c 05B0     		add	sp, sp, #20
+ 188              		@ sp needed
+ 189 002e 30BD     		pop	{r4, r5, pc}
+ 191              		.section	.text.smtc_secure_element_aes_encrypt,"ax",%progbits
+ 192              		.align	1
+ 193              		.global	smtc_secure_element_aes_encrypt
+ 194              		.syntax unified
+ 195              		.code	16
+ 196              		.thumb_func
+ 197              		.fpu softvfp
+ 199              	smtc_secure_element_aes_encrypt:
+ 200              		@ args = 0, pretend = 0, frame = 256
+ 201              		@ frame_needed = 0, uses_anonymous_args = 0
+ 202 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 203 0002 C1B0     		sub	sp, sp, #260
+ 204 0004 0600     		movs	r6, r0
+ 205 0006 0D00     		movs	r5, r1
+ 206 0008 1F00     		movs	r7, r3
+ 207 000a 0220     		movs	r0, #2
+ 208 000c 0192     		str	r2, [sp, #4]
+ 209 000e 002E     		cmp	r6, #0
+ 210 0010 26D0     		beq	.L22
+ 211 0012 002B     		cmp	r3, #0
+ 212 0014 24D0     		beq	.L22
+ 213 0016 0F23     		movs	r3, #15
+ 214 0018 0C00     		movs	r4, r1
+ 215 001a 0330     		adds	r0, r0, #3
+ 216 001c 1C40     		ands	r4, r3
+ 217 001e 1942     		tst	r1, r3
+ 218 0020 1ED1     		bne	.L22
+ 219 0022 F122     		movs	r2, #241
+ 220 0024 2100     		movs	r1, r4
+ 221 0026 03A8     		add	r0, sp, #12
+ 222 0028 FFF7FEFF 		bl	memset
+ 223 002c 114A     		ldr	r2, .L32
+ 224 002e 1300     		movs	r3, r2
+ 225              	.L25:
+ 226 0030 117D     		ldrb	r1, [r2, #20]
+ 227 0032 0198     		ldr	r0, [sp, #4]
+ 228 0034 8142     		cmp	r1, r0
+ARM GAS  /tmp/ccolZZRT.s 			page 5
+
+
+ 229 0036 0ED1     		bne	.L23
+ 230 0038 1120     		movs	r0, #17
+ 231 003a 6043     		muls	r0, r4
+ 232 003c 1530     		adds	r0, r0, #21
+ 233 003e 1021     		movs	r1, #16
+ 234 0040 1818     		adds	r0, r3, r0
+ 235 0042 03AA     		add	r2, sp, #12
+ 236 0044 FFF7FEFF 		bl	aes_set_key
+ 237 0048 2C00     		movs	r4, r5
+ 238              	.L24:
+ 239 004a 281B     		subs	r0, r5, r4
+ 240 004c C0B2     		uxtb	r0, r0
+ 241 004e 002C     		cmp	r4, #0
+ 242 0050 08D1     		bne	.L27
+ 243 0052 2000     		movs	r0, r4
+ 244 0054 04E0     		b	.L22
+ 245              	.L23:
+ 246 0056 0134     		adds	r4, r4, #1
+ 247 0058 1132     		adds	r2, r2, #17
+ 248 005a 172C     		cmp	r4, #23
+ 249 005c E8D1     		bne	.L25
+ 250 005e 0320     		movs	r0, #3
+ 251              	.L22:
+ 252 0060 41B0     		add	sp, sp, #260
+ 253              		@ sp needed
+ 254 0062 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 255              	.L27:
+ 256 0064 3918     		adds	r1, r7, r0
+ 257 0066 03AA     		add	r2, sp, #12
+ 258 0068 3018     		adds	r0, r6, r0
+ 259 006a 103C     		subs	r4, r4, #16
+ 260 006c FFF7FEFF 		bl	aes_encrypt
+ 261 0070 A4B2     		uxth	r4, r4
+ 262 0072 EAE7     		b	.L24
+ 263              	.L33:
+ 264              		.align	2
+ 265              	.L32:
+ 266 0074 00000000 		.word	soft_se_data
+ 268              		.section	.text.smtc_secure_element_set_key.part.0,"ax",%progbits
+ 269              		.align	1
+ 270              		.syntax unified
+ 271              		.code	16
+ 272              		.thumb_func
+ 273              		.fpu softvfp
+ 275              	smtc_secure_element_set_key.part.0:
+ 276              		@ args = 0, pretend = 0, frame = 16
+ 277              		@ frame_needed = 0, uses_anonymous_args = 0
+ 278 0000 30B5     		push	{r4, r5, lr}
+ 279 0002 0C00     		movs	r4, r1
+ 280 0004 1B49     		ldr	r1, .L42
+ 281 0006 0300     		movs	r3, r0
+ 282 0008 0A00     		movs	r2, r1
+ 283 000a 0020     		movs	r0, #0
+ 284 000c 85B0     		sub	sp, sp, #20
+ 285              	.L39:
+ 286 000e 0D7D     		ldrb	r5, [r1, #20]
+ 287 0010 9D42     		cmp	r5, r3
+ARM GAS  /tmp/ccolZZRT.s 			page 6
+
+
+ 288 0012 28D1     		bne	.L35
+ 289 0014 803B     		subs	r3, r3, #128
+ 290 0016 DBB2     		uxtb	r3, r3
+ 291 0018 0121     		movs	r1, #1
+ 292 001a 092B     		cmp	r3, #9
+ 293 001c 02D8     		bhi	.L36
+ 294 001e 164D     		ldr	r5, .L42+4
+ 295 0020 DD40     		lsrs	r5, r5, r3
+ 296 0022 A943     		bics	r1, r5
+ 297              	.L36:
+ 298 0024 1125     		movs	r5, #17
+ 299 0026 4543     		muls	r5, r0
+ 300 0028 1535     		adds	r5, r5, #21
+ 301 002a 5519     		adds	r5, r2, r5
+ 302 002c 0029     		cmp	r1, #0
+ 303 002e 13D1     		bne	.L37
+ 304 0030 0C22     		movs	r2, #12
+ 305 0032 01A8     		add	r0, sp, #4
+ 306 0034 0091     		str	r1, [sp]
+ 307 0036 FFF7FEFF 		bl	memset
+ 308 003a 7F22     		movs	r2, #127
+ 309 003c 1021     		movs	r1, #16
+ 310 003e 2000     		movs	r0, r4
+ 311 0040 6B46     		mov	r3, sp
+ 312 0042 FFF7FEFF 		bl	smtc_secure_element_aes_encrypt
+ 313 0046 1022     		movs	r2, #16
+ 314 0048 0400     		movs	r4, r0
+ 315 004a 6946     		mov	r1, sp
+ 316 004c 2800     		movs	r0, r5
+ 317 004e FFF7FEFF 		bl	memcpy
+ 318              	.L38:
+ 319 0052 2000     		movs	r0, r4
+ 320 0054 05B0     		add	sp, sp, #20
+ 321              		@ sp needed
+ 322 0056 30BD     		pop	{r4, r5, pc}
+ 323              	.L37:
+ 324 0058 2100     		movs	r1, r4
+ 325 005a 1022     		movs	r2, #16
+ 326 005c 2800     		movs	r0, r5
+ 327 005e FFF7FEFF 		bl	memcpy
+ 328 0062 0024     		movs	r4, #0
+ 329 0064 F5E7     		b	.L38
+ 330              	.L35:
+ 331 0066 0130     		adds	r0, r0, #1
+ 332 0068 1131     		adds	r1, r1, #17
+ 333 006a 1728     		cmp	r0, #23
+ 334 006c CFD1     		bne	.L39
+ 335 006e 0324     		movs	r4, #3
+ 336 0070 EFE7     		b	.L38
+ 337              	.L43:
+ 338 0072 C046     		.align	2
+ 339              	.L42:
+ 340 0074 00000000 		.word	soft_se_data
+ 341 0078 49020000 		.word	585
+ 343              		.section	.text.smtc_secure_element_set_key,"ax",%progbits
+ 344              		.align	1
+ 345              		.global	smtc_secure_element_set_key
+ARM GAS  /tmp/ccolZZRT.s 			page 7
+
+
+ 346              		.syntax unified
+ 347              		.code	16
+ 348              		.thumb_func
+ 349              		.fpu softvfp
+ 351              	smtc_secure_element_set_key:
+ 352              		@ args = 0, pretend = 0, frame = 0
+ 353              		@ frame_needed = 0, uses_anonymous_args = 0
+ 354 0000 0300     		movs	r3, r0
+ 355 0002 10B5     		push	{r4, lr}
+ 356 0004 0220     		movs	r0, #2
+ 357 0006 0029     		cmp	r1, #0
+ 358 0008 02D0     		beq	.L45
+ 359 000a 1800     		movs	r0, r3
+ 360 000c FFF7FEFF 		bl	smtc_secure_element_set_key.part.0
+ 361              	.L45:
+ 362              		@ sp needed
+ 363 0010 10BD     		pop	{r4, pc}
+ 365              		.section	.text.smtc_secure_element_derive_and_store_key,"ax",%progbits
+ 366              		.align	1
+ 367              		.global	smtc_secure_element_derive_and_store_key
+ 368              		.syntax unified
+ 369              		.code	16
+ 370              		.thumb_func
+ 371              		.fpu softvfp
+ 373              	smtc_secure_element_derive_and_store_key:
+ 374              		@ args = 0, pretend = 0, frame = 16
+ 375              		@ frame_needed = 0, uses_anonymous_args = 0
+ 376 0000 7FB5     		push	{r0, r1, r2, r3, r4, r5, r6, lr}
+ 377 0002 0500     		movs	r5, r0
+ 378 0004 0E00     		movs	r6, r1
+ 379 0006 1400     		movs	r4, r2
+ 380 0008 0220     		movs	r0, #2
+ 381 000a 002D     		cmp	r5, #0
+ 382 000c 16D0     		beq	.L48
+ 383 000e 0021     		movs	r1, #0
+ 384 0010 0C22     		movs	r2, #12
+ 385 0012 01A8     		add	r0, sp, #4
+ 386 0014 0091     		str	r1, [sp]
+ 387 0016 FFF7FEFF 		bl	memset
+ 388 001a 7F2C     		cmp	r4, #127
+ 389 001c 02D1     		bne	.L49
+ 390 001e 0320     		movs	r0, #3
+ 391 0020 082E     		cmp	r6, #8
+ 392 0022 0BD1     		bne	.L48
+ 393              	.L49:
+ 394 0024 6B46     		mov	r3, sp
+ 395 0026 3200     		movs	r2, r6
+ 396 0028 1021     		movs	r1, #16
+ 397 002a 2800     		movs	r0, r5
+ 398 002c FFF7FEFF 		bl	smtc_secure_element_aes_encrypt
+ 399 0030 0028     		cmp	r0, #0
+ 400 0032 03D1     		bne	.L48
+ 401 0034 6946     		mov	r1, sp
+ 402 0036 2000     		movs	r0, r4
+ 403 0038 FFF7FEFF 		bl	smtc_secure_element_set_key.part.0
+ 404              	.L48:
+ 405 003c 04B0     		add	sp, sp, #16
+ARM GAS  /tmp/ccolZZRT.s 			page 8
+
+
+ 406              		@ sp needed
+ 407 003e 70BD     		pop	{r4, r5, r6, pc}
+ 409              		.section	.text.smtc_secure_element_process_join_accept,"ax",%progbits
+ 410              		.align	1
+ 411              		.global	smtc_secure_element_process_join_accept
+ 412              		.syntax unified
+ 413              		.code	16
+ 414              		.thumb_func
+ 415              		.fpu softvfp
+ 417              	smtc_secure_element_process_join_accept:
+ 418              		@ args = 12, pretend = 0, frame = 8
+ 419              		@ frame_needed = 0, uses_anonymous_args = 0
+ 420 0000 F7B5     		push	{r0, r1, r2, r4, r5, r6, r7, lr}
+ 421 0002 1D00     		movs	r5, r3
+ 422 0004 08AB     		add	r3, sp, #32
+ 423 0006 1C78     		ldrb	r4, [r3]
+ 424 0008 099E     		ldr	r6, [sp, #36]
+ 425 000a 0223     		movs	r3, #2
+ 426 000c 002D     		cmp	r5, #0
+ 427 000e 3CD0     		beq	.L53
+ 428 0010 002E     		cmp	r6, #0
+ 429 0012 3AD0     		beq	.L53
+ 430 0014 0A9A     		ldr	r2, [sp, #40]
+ 431 0016 002A     		cmp	r2, #0
+ 432 0018 37D0     		beq	.L53
+ 433 001a 0333     		adds	r3, r3, #3
+ 434 001c 212C     		cmp	r4, #33
+ 435 001e 34D8     		bhi	.L53
+ 436 0020 0127     		movs	r7, #1
+ 437 0022 FF28     		cmp	r0, #255
+ 438 0024 00D0     		beq	.L54
+ 439 0026 0237     		adds	r7, r7, #2
+ 440              	.L54:
+ 441 0028 2200     		movs	r2, r4
+ 442 002a 2900     		movs	r1, r5
+ 443 002c 3000     		movs	r0, r6
+ 444 002e FFF7FEFF 		bl	memcpy
+ 445 0032 A3B2     		uxth	r3, r4
+ 446 0034 611E     		subs	r1, r4, #1
+ 447 0036 0193     		str	r3, [sp, #4]
+ 448 0038 3A00     		movs	r2, r7
+ 449 003a 731C     		adds	r3, r6, #1
+ 450 003c 89B2     		uxth	r1, r1
+ 451 003e 681C     		adds	r0, r5, #1
+ 452 0040 FFF7FEFF 		bl	smtc_secure_element_aes_encrypt
+ 453 0044 0723     		movs	r3, #7
+ 454 0046 0028     		cmp	r0, #0
+ 455 0048 1FD1     		bne	.L53
+ 456 004a F27A     		ldrb	r2, [r6, #11]
+ 457 004c DA40     		lsrs	r2, r2, r3
+ 458 004e 0A9B     		ldr	r3, [sp, #40]
+ 459 0050 1A70     		strb	r2, [r3]
+ 460 0052 0423     		movs	r3, #4
+ 461 0054 002A     		cmp	r2, #0
+ 462 0056 18D1     		bne	.L53
+ 463 0058 3419     		adds	r4, r6, r4
+ 464 005a A31E     		subs	r3, r4, #2
+ARM GAS  /tmp/ccolZZRT.s 			page 9
+
+
+ 465 005c 1A78     		ldrb	r2, [r3]
+ 466 005e 631E     		subs	r3, r4, #1
+ 467 0060 1B78     		ldrb	r3, [r3]
+ 468 0062 1204     		lsls	r2, r2, #16
+ 469 0064 1B06     		lsls	r3, r3, #24
+ 470 0066 1A43     		orrs	r2, r3
+ 471 0068 231F     		subs	r3, r4, #4
+ 472 006a 1B78     		ldrb	r3, [r3]
+ 473 006c 033C     		subs	r4, r4, #3
+ 474 006e 0199     		ldr	r1, [sp, #4]
+ 475 0070 1A43     		orrs	r2, r3
+ 476 0072 2378     		ldrb	r3, [r4]
+ 477 0074 0439     		subs	r1, r1, #4
+ 478 0076 1B02     		lsls	r3, r3, #8
+ 479 0078 1A43     		orrs	r2, r3
+ 480 007a 3000     		movs	r0, r6
+ 481 007c 0123     		movs	r3, #1
+ 482 007e 89B2     		uxth	r1, r1
+ 483 0080 FFF7FEFF 		bl	smtc_secure_element_verify_aes_cmac
+ 484 0084 431E     		subs	r3, r0, #1
+ 485 0086 9841     		sbcs	r0, r0, r3
+ 486 0088 C3B2     		uxtb	r3, r0
+ 487              	.L53:
+ 488 008a 1800     		movs	r0, r3
+ 489              		@ sp needed
+ 490 008c FEBD     		pop	{r1, r2, r3, r4, r5, r6, r7, pc}
+ 492              		.section	.text.smtc_secure_element_set_deveui,"ax",%progbits
+ 493              		.align	1
+ 494              		.global	smtc_secure_element_set_deveui
+ 495              		.syntax unified
+ 496              		.code	16
+ 497              		.thumb_func
+ 498              		.fpu softvfp
+ 500              	smtc_secure_element_set_deveui:
+ 501              		@ args = 0, pretend = 0, frame = 0
+ 502              		@ frame_needed = 0, uses_anonymous_args = 0
+ 503 0000 0100     		movs	r1, r0
+ 504 0002 10B5     		push	{r4, lr}
+ 505 0004 0220     		movs	r0, #2
+ 506 0006 0029     		cmp	r1, #0
+ 507 0008 04D0     		beq	.L63
+ 508 000a 0822     		movs	r2, #8
+ 509 000c 0248     		ldr	r0, .L65
+ 510 000e FFF7FEFF 		bl	memcpy
+ 511 0012 0020     		movs	r0, #0
+ 512              	.L63:
+ 513              		@ sp needed
+ 514 0014 10BD     		pop	{r4, pc}
+ 515              	.L66:
+ 516 0016 C046     		.align	2
+ 517              	.L65:
+ 518 0018 00000000 		.word	soft_se_data
+ 520              		.section	.text.smtc_secure_element_get_deveui,"ax",%progbits
+ 521              		.align	1
+ 522              		.global	smtc_secure_element_get_deveui
+ 523              		.syntax unified
+ 524              		.code	16
+ARM GAS  /tmp/ccolZZRT.s 			page 10
+
+
+ 525              		.thumb_func
+ 526              		.fpu softvfp
+ 528              	smtc_secure_element_get_deveui:
+ 529              		@ args = 0, pretend = 0, frame = 0
+ 530              		@ frame_needed = 0, uses_anonymous_args = 0
+ 531 0000 0223     		movs	r3, #2
+ 532 0002 10B5     		push	{r4, lr}
+ 533 0004 0028     		cmp	r0, #0
+ 534 0006 04D0     		beq	.L68
+ 535 0008 0822     		movs	r2, #8
+ 536 000a 0349     		ldr	r1, .L70
+ 537 000c FFF7FEFF 		bl	memcpy
+ 538 0010 0023     		movs	r3, #0
+ 539              	.L68:
+ 540              		@ sp needed
+ 541 0012 1800     		movs	r0, r3
+ 542 0014 10BD     		pop	{r4, pc}
+ 543              	.L71:
+ 544 0016 C046     		.align	2
+ 545              	.L70:
+ 546 0018 00000000 		.word	soft_se_data
+ 548              		.section	.text.smtc_secure_element_set_joineui,"ax",%progbits
+ 549              		.align	1
+ 550              		.global	smtc_secure_element_set_joineui
+ 551              		.syntax unified
+ 552              		.code	16
+ 553              		.thumb_func
+ 554              		.fpu softvfp
+ 556              	smtc_secure_element_set_joineui:
+ 557              		@ args = 0, pretend = 0, frame = 0
+ 558              		@ frame_needed = 0, uses_anonymous_args = 0
+ 559 0000 0100     		movs	r1, r0
+ 560 0002 10B5     		push	{r4, lr}
+ 561 0004 0220     		movs	r0, #2
+ 562 0006 0029     		cmp	r1, #0
+ 563 0008 04D0     		beq	.L73
+ 564 000a 0822     		movs	r2, #8
+ 565 000c 0248     		ldr	r0, .L75
+ 566 000e FFF7FEFF 		bl	memcpy
+ 567 0012 0020     		movs	r0, #0
+ 568              	.L73:
+ 569              		@ sp needed
+ 570 0014 10BD     		pop	{r4, pc}
+ 571              	.L76:
+ 572 0016 C046     		.align	2
+ 573              	.L75:
+ 574 0018 08000000 		.word	soft_se_data+8
+ 576              		.section	.text.smtc_secure_element_get_joineui,"ax",%progbits
+ 577              		.align	1
+ 578              		.global	smtc_secure_element_get_joineui
+ 579              		.syntax unified
+ 580              		.code	16
+ 581              		.thumb_func
+ 582              		.fpu softvfp
+ 584              	smtc_secure_element_get_joineui:
+ 585              		@ args = 0, pretend = 0, frame = 0
+ 586              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  /tmp/ccolZZRT.s 			page 11
+
+
+ 587 0000 0223     		movs	r3, #2
+ 588 0002 10B5     		push	{r4, lr}
+ 589 0004 0028     		cmp	r0, #0
+ 590 0006 04D0     		beq	.L78
+ 591 0008 0822     		movs	r2, #8
+ 592 000a 0349     		ldr	r1, .L80
+ 593 000c FFF7FEFF 		bl	memcpy
+ 594 0010 0023     		movs	r3, #0
+ 595              	.L78:
+ 596              		@ sp needed
+ 597 0012 1800     		movs	r0, r3
+ 598 0014 10BD     		pop	{r4, pc}
+ 599              	.L81:
+ 600 0016 C046     		.align	2
+ 601              	.L80:
+ 602 0018 08000000 		.word	soft_se_data+8
+ 604              		.section	.text.smtc_secure_element_set_pin,"ax",%progbits
+ 605              		.align	1
+ 606              		.global	smtc_secure_element_set_pin
+ 607              		.syntax unified
+ 608              		.code	16
+ 609              		.thumb_func
+ 610              		.fpu softvfp
+ 612              	smtc_secure_element_set_pin:
+ 613              		@ args = 0, pretend = 0, frame = 0
+ 614              		@ frame_needed = 0, uses_anonymous_args = 0
+ 615 0000 0100     		movs	r1, r0
+ 616 0002 10B5     		push	{r4, lr}
+ 617 0004 0220     		movs	r0, #2
+ 618 0006 0029     		cmp	r1, #0
+ 619 0008 04D0     		beq	.L83
+ 620 000a 0422     		movs	r2, #4
+ 621 000c 0248     		ldr	r0, .L85
+ 622 000e FFF7FEFF 		bl	memcpy
+ 623 0012 0020     		movs	r0, #0
+ 624              	.L83:
+ 625              		@ sp needed
+ 626 0014 10BD     		pop	{r4, pc}
+ 627              	.L86:
+ 628 0016 C046     		.align	2
+ 629              	.L85:
+ 630 0018 10000000 		.word	soft_se_data+16
+ 632              		.section	.text.smtc_secure_element_get_pin,"ax",%progbits
+ 633              		.align	1
+ 634              		.global	smtc_secure_element_get_pin
+ 635              		.syntax unified
+ 636              		.code	16
+ 637              		.thumb_func
+ 638              		.fpu softvfp
+ 640              	smtc_secure_element_get_pin:
+ 641              		@ args = 0, pretend = 0, frame = 0
+ 642              		@ frame_needed = 0, uses_anonymous_args = 0
+ 643 0000 0223     		movs	r3, #2
+ 644 0002 10B5     		push	{r4, lr}
+ 645 0004 0028     		cmp	r0, #0
+ 646 0006 04D0     		beq	.L88
+ 647 0008 0822     		movs	r2, #8
+ARM GAS  /tmp/ccolZZRT.s 			page 12
+
+
+ 648 000a 0349     		ldr	r1, .L90
+ 649 000c FFF7FEFF 		bl	memcpy
+ 650 0010 0023     		movs	r3, #0
+ 651              	.L88:
+ 652              		@ sp needed
+ 653 0012 1800     		movs	r0, r3
+ 654 0014 10BD     		pop	{r4, pc}
+ 655              	.L91:
+ 656 0016 C046     		.align	2
+ 657              	.L90:
+ 658 0018 10000000 		.word	soft_se_data+16
+ 660              		.section	.text.soft_ce_crc,"ax",%progbits
+ 661              		.align	1
+ 662              		.global	soft_ce_crc
+ 663              		.syntax unified
+ 664              		.code	16
+ 665              		.thumb_func
+ 666              		.fpu softvfp
+ 668              	soft_ce_crc:
+ 669              		@ args = 0, pretend = 0, frame = 0
+ 670              		@ frame_needed = 0, uses_anonymous_args = 0
+ 671 0000 0123     		movs	r3, #1
+ 672 0002 70B5     		push	{r4, r5, r6, lr}
+ 673 0004 0124     		movs	r4, #1
+ 674 0006 0A4D     		ldr	r5, .L97
+ 675 0008 5B42     		rsbs	r3, r3, #0
+ 676 000a 4118     		adds	r1, r0, r1
+ 677              	.L93:
+ 678 000c 0A1A     		subs	r2, r1, r0
+ 679 000e 002A     		cmp	r2, #0
+ 680 0010 01DC     		bgt	.L95
+ 681              		@ sp needed
+ 682 0012 D843     		mvns	r0, r3
+ 683 0014 70BD     		pop	{r4, r5, r6, pc}
+ 684              	.L95:
+ 685 0016 0278     		ldrb	r2, [r0]
+ 686 0018 5340     		eors	r3, r2
+ 687 001a 0822     		movs	r2, #8
+ 688              	.L94:
+ 689 001c 5E08     		lsrs	r6, r3, #1
+ 690 001e 2340     		ands	r3, r4
+ 691 0020 5B42     		rsbs	r3, r3, #0
+ 692 0022 2B40     		ands	r3, r5
+ 693 0024 013A     		subs	r2, r2, #1
+ 694 0026 7340     		eors	r3, r6
+ 695 0028 002A     		cmp	r2, #0
+ 696 002a F7D1     		bne	.L94
+ 697 002c 0130     		adds	r0, r0, #1
+ 698 002e EDE7     		b	.L93
+ 699              	.L98:
+ 700              		.align	2
+ 701              	.L97:
+ 702 0030 2083B8ED 		.word	-306674912
+ 704              		.section	.rodata.smtc_secure_element_restore_context.str1.1,"aMS",%progbits,1
+ 705              	.LC17:
+ 706 0000 1B5B303B 		.ascii	"\033[0;31mERROR: Restore of Secure Element context "
+ 706      33316D45 
+ARM GAS  /tmp/ccolZZRT.s 			page 13
+
+
+ 706      52524F52 
+ 706      3A205265 
+ 706      73746F72 
+ 707 0030 6661696C 		.ascii	"fails => Return to init values\012\000"
+ 707      73203D3E 
+ 707      20526574 
+ 707      75726E20 
+ 707      746F2069 
+ 708              		.section	.text.smtc_secure_element_restore_context,"ax",%progbits
+ 709              		.align	1
+ 710              		.global	smtc_secure_element_restore_context
+ 711              		.syntax unified
+ 712              		.code	16
+ 713              		.thumb_func
+ 714              		.fpu softvfp
+ 716              	smtc_secure_element_restore_context:
+ 717              		@ args = 0, pretend = 0, frame = 832
+ 718              		@ frame_needed = 0, uses_anonymous_args = 0
+ 719 0000 10B5     		push	{r4, lr}
+ 720 0002 1A4C     		ldr	r4, .L102
+ 721 0004 D022     		movs	r2, #208
+ 722 0006 A544     		add	sp, sp, r4
+ 723 0008 CE24     		movs	r4, #206
+ 724 000a 5200     		lsls	r2, r2, #1
+ 725 000c 6400     		lsls	r4, r4, #1
+ 726 000e 0320     		movs	r0, #3
+ 727 0010 68A9     		add	r1, sp, #416
+ 728 0012 FFF7FEFF 		bl	smtc_modem_hal_context_restore
+ 729 0016 2100     		movs	r1, r4
+ 730 0018 68A8     		add	r0, sp, #416
+ 731 001a FFF7FEFF 		bl	soft_ce_crc
+ 732 001e D022     		movs	r2, #208
+ 733 0020 6B46     		mov	r3, sp
+ 734 0022 5200     		lsls	r2, r2, #1
+ 735 0024 9B18     		adds	r3, r3, r2
+ 736 0026 1B59     		ldr	r3, [r3, r4]
+ 737 0028 114C     		ldr	r4, .L102+4
+ 738 002a 9842     		cmp	r0, r3
+ 739 002c 0AD1     		bne	.L100
+ 740 002e 9C22     		movs	r2, #156
+ 741 0030 2000     		movs	r0, r4
+ 742 0032 FF32     		adds	r2, r2, #255
+ 743 0034 68A9     		add	r1, sp, #416
+ 744 0036 FFF7FEFF 		bl	memcpy
+ 745 003a 0020     		movs	r0, #0
+ 746              	.L101:
+ 747 003c D023     		movs	r3, #208
+ 748 003e 9B00     		lsls	r3, r3, #2
+ 749 0040 9D44     		add	sp, sp, r3
+ 750              		@ sp needed
+ 751 0042 10BD     		pop	{r4, pc}
+ 752              	.L100:
+ 753 0044 0B48     		ldr	r0, .L102+8
+ 754 0046 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 755 004a 0B48     		ldr	r0, .L102+12
+ 756 004c FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 757 0050 9C22     		movs	r2, #156
+ARM GAS  /tmp/ccolZZRT.s 			page 14
+
+
+ 758 0052 0A49     		ldr	r1, .L102+16
+ 759 0054 FF32     		adds	r2, r2, #255
+ 760 0056 01A8     		add	r0, sp, #4
+ 761 0058 FFF7FEFF 		bl	memcpy
+ 762 005c 9C22     		movs	r2, #156
+ 763 005e 2000     		movs	r0, r4
+ 764 0060 FF32     		adds	r2, r2, #255
+ 765 0062 01A9     		add	r1, sp, #4
+ 766 0064 FFF7FEFF 		bl	memcpy
+ 767 0068 0620     		movs	r0, #6
+ 768 006a E7E7     		b	.L101
+ 769              	.L103:
+ 770              		.align	2
+ 771              	.L102:
+ 772 006c C0FCFFFF 		.word	-832
+ 773 0070 00000000 		.word	soft_se_data
+ 774 0074 00000000 		.word	.LC17
+ 775 0078 48000000 		.word	.LC6
+ 776 007c 00000000 		.word	.LC0
+ 778              		.section	.text.smtc_secure_element_store_context,"ax",%progbits
+ 779              		.align	1
+ 780              		.global	smtc_secure_element_store_context
+ 781              		.syntax unified
+ 782              		.code	16
+ 783              		.thumb_func
+ 784              		.fpu softvfp
+ 786              	smtc_secure_element_store_context:
+ 787              		@ args = 0, pretend = 0, frame = 416
+ 788              		@ frame_needed = 0, uses_anonymous_args = 0
+ 789 0000 30B5     		push	{r4, r5, lr}
+ 790 0002 D024     		movs	r4, #208
+ 791 0004 E9B0     		sub	sp, sp, #420
+ 792 0006 6400     		lsls	r4, r4, #1
+ 793 0008 2200     		movs	r2, r4
+ 794 000a 0021     		movs	r1, #0
+ 795 000c 6846     		mov	r0, sp
+ 796 000e FFF7FEFF 		bl	memset
+ 797 0012 CE25     		movs	r5, #206
+ 798 0014 9C22     		movs	r2, #156
+ 799 0016 6D00     		lsls	r5, r5, #1
+ 800 0018 FF32     		adds	r2, r2, #255
+ 801 001a 6846     		mov	r0, sp
+ 802 001c 0949     		ldr	r1, .L105
+ 803 001e FFF7FEFF 		bl	memcpy
+ 804 0022 2900     		movs	r1, r5
+ 805 0024 6846     		mov	r0, sp
+ 806 0026 FFF7FEFF 		bl	soft_ce_crc
+ 807 002a 6B46     		mov	r3, sp
+ 808 002c 2200     		movs	r2, r4
+ 809 002e 5851     		str	r0, [r3, r5]
+ 810 0030 6946     		mov	r1, sp
+ 811 0032 0320     		movs	r0, #3
+ 812 0034 FFF7FEFF 		bl	smtc_modem_hal_context_store
+ 813 0038 FFF7FEFF 		bl	smtc_secure_element_restore_context
+ 814 003c 0020     		movs	r0, #0
+ 815 003e 69B0     		add	sp, sp, #420
+ 816              		@ sp needed
+ARM GAS  /tmp/ccolZZRT.s 			page 15
+
+
+ 817 0040 30BD     		pop	{r4, r5, pc}
+ 818              	.L106:
+ 819 0042 C046     		.align	2
+ 820              	.L105:
+ 821 0044 00000000 		.word	soft_se_data
+ 823              		.section	.rodata
+ 824              	.LC0:
+ 825 0000 00000000 		.ascii	"\000\000\000\000\000\000\000\000"
+ 825      00000000 
+ 826 0008 00000000 		.ascii	"\000\000\000\000\000\000\000\000"
+ 826      00000000 
+ 827 0010 00000000 		.ascii	"\000\000\000\000"
+ 828 0014 00       		.byte	0
+ 829 0015 00000000 		.ascii	"\000\000\000\000\000\000\000\000\000\000\000\000\000"
+ 829      00000000 
+ 829      00000000 
+ 829      00
+ 830 0022 000000   		.ascii	"\000\000\000"
+ 831 0025 01       		.byte	1
+ 832 0026 00000000 		.ascii	"\000\000\000\000\000\000\000\000\000\000\000\000\000"
+ 832      00000000 
+ 832      00000000 
+ 832      00
+ 833 0033 000000   		.ascii	"\000\000\000"
+ 834 0036 02       		.byte	2
+ 835 0037 00000000 		.ascii	"\000\000\000\000\000\000\000\000\000\000\000\000\000"
+ 835      00000000 
+ 835      00000000 
+ 835      00
+ 836 0044 000000   		.ascii	"\000\000\000"
+ 837 0047 03       		.byte	3
+ 838 0048 00000000 		.ascii	"\000\000\000\000\000\000\000\000\000\000\000\000\000"
+ 838      00000000 
+ 838      00000000 
+ 838      00
+ 839 0055 000000   		.ascii	"\000\000\000"
+ 840 0058 04       		.byte	4
+ 841 0059 00000000 		.ascii	"\000\000\000\000\000\000\000\000\000\000\000\000\000"
+ 841      00000000 
+ 841      00000000 
+ 841      00
+ 842 0066 000000   		.ascii	"\000\000\000"
+ 843 0069 05       		.byte	5
+ 844 006a 00000000 		.ascii	"\000\000\000\000\000\000\000\000\000\000\000\000\000"
+ 844      00000000 
+ 844      00000000 
+ 844      00
+ 845 0077 000000   		.ascii	"\000\000\000"
+ 846 007a 06       		.byte	6
+ 847 007b 00000000 		.ascii	"\000\000\000\000\000\000\000\000\000\000\000\000\000"
+ 847      00000000 
+ 847      00000000 
+ 847      00
+ 848 0088 000000   		.ascii	"\000\000\000"
+ 849 008b 07       		.byte	7
+ 850 008c 00000000 		.ascii	"\000\000\000\000\000\000\000\000\000\000\000\000\000"
+ 850      00000000 
+ARM GAS  /tmp/ccolZZRT.s 			page 16
+
+
+ 850      00000000 
+ 850      00
+ 851 0099 000000   		.ascii	"\000\000\000"
+ 852 009c 08       		.byte	8
+ 853 009d 00000000 		.ascii	"\000\000\000\000\000\000\000\000\000\000\000\000\000"
+ 853      00000000 
+ 853      00000000 
+ 853      00
+ 854 00aa 000000   		.ascii	"\000\000\000"
+ 855 00ad 7F       		.byte	127
+ 856 00ae 00000000 		.ascii	"\000\000\000\000\000\000\000\000\000\000\000\000\000"
+ 856      00000000 
+ 856      00000000 
+ 856      00
+ 857 00bb 000000   		.ascii	"\000\000\000"
+ 858 00be 80       		.byte	-128
+ 859 00bf 00000000 		.ascii	"\000\000\000\000\000\000\000\000\000\000\000\000\000"
+ 859      00000000 
+ 859      00000000 
+ 859      00
+ 860 00cc 000000   		.ascii	"\000\000\000"
+ 861 00cf 81       		.byte	-127
+ 862 00d0 00000000 		.ascii	"\000\000\000\000\000\000\000\000\000\000\000\000\000"
+ 862      00000000 
+ 862      00000000 
+ 862      00
+ 863 00dd 000000   		.ascii	"\000\000\000"
+ 864 00e0 82       		.byte	-126
+ 865 00e1 00000000 		.ascii	"\000\000\000\000\000\000\000\000\000\000\000\000\000"
+ 865      00000000 
+ 865      00000000 
+ 865      00
+ 866 00ee 000000   		.ascii	"\000\000\000"
+ 867 00f1 83       		.byte	-125
+ 868 00f2 00000000 		.ascii	"\000\000\000\000\000\000\000\000\000\000\000\000\000"
+ 868      00000000 
+ 868      00000000 
+ 868      00
+ 869 00ff 000000   		.ascii	"\000\000\000"
+ 870 0102 84       		.byte	-124
+ 871 0103 00000000 		.ascii	"\000\000\000\000\000\000\000\000\000\000\000\000\000"
+ 871      00000000 
+ 871      00000000 
+ 871      00
+ 872 0110 000000   		.ascii	"\000\000\000"
+ 873 0113 85       		.byte	-123
+ 874 0114 00000000 		.ascii	"\000\000\000\000\000\000\000\000\000\000\000\000\000"
+ 874      00000000 
+ 874      00000000 
+ 874      00
+ 875 0121 000000   		.ascii	"\000\000\000"
+ 876 0124 86       		.byte	-122
+ 877 0125 00000000 		.ascii	"\000\000\000\000\000\000\000\000\000\000\000\000\000"
+ 877      00000000 
+ 877      00000000 
+ 877      00
+ 878 0132 000000   		.ascii	"\000\000\000"
+ARM GAS  /tmp/ccolZZRT.s 			page 17
+
+
+ 879 0135 87       		.byte	-121
+ 880 0136 00000000 		.ascii	"\000\000\000\000\000\000\000\000\000\000\000\000\000"
+ 880      00000000 
+ 880      00000000 
+ 880      00
+ 881 0143 000000   		.ascii	"\000\000\000"
+ 882 0146 88       		.byte	-120
+ 883 0147 00000000 		.ascii	"\000\000\000\000\000\000\000\000\000\000\000\000\000"
+ 883      00000000 
+ 883      00000000 
+ 883      00
+ 884 0154 000000   		.ascii	"\000\000\000"
+ 885 0157 89       		.byte	-119
+ 886 0158 00000000 		.ascii	"\000\000\000\000\000\000\000\000\000\000\000\000\000"
+ 886      00000000 
+ 886      00000000 
+ 886      00
+ 887 0165 000000   		.ascii	"\000\000\000"
+ 888 0168 8A       		.byte	-118
+ 889 0169 00000000 		.ascii	"\000\000\000\000\000\000\000\000\000\000\000\000\000"
+ 889      00000000 
+ 889      00000000 
+ 889      00
+ 890 0176 000000   		.ascii	"\000\000\000"
+ 891 0179 8B       		.byte	-117
+ 892 017a 00000000 		.ascii	"\000\000\000\000\000\000\000\000\000\000\000\000\000"
+ 892      00000000 
+ 892      00000000 
+ 892      00
+ 893 0187 000000   		.ascii	"\000\000\000"
+ 894 018a 8C       		.byte	-116
+ 895 018b 00000000 		.ascii	"\000\000\000\000\000\000\000\000\000\000\000\000\000"
+ 895      00000000 
+ 895      00000000 
+ 895      00
+ 896 0198 000000   		.ascii	"\000\000\000"
+ 897              		.section	.bss.soft_se_data,"aw",%nobits
+ 898              		.align	2
+ 901              	soft_se_data:
+ 902 0000 00000000 		.space	411
+ 902      00000000 
+ 902      00000000 
+ 902      00000000 
+ 902      00000000 
+ 903              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccolZZRT.s 			page 18
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 soft_se.c
+     /tmp/ccolZZRT.s:12     .text.compute_cmac:0000000000000000 $t
+     /tmp/ccolZZRT.s:19     .text.compute_cmac:0000000000000000 compute_cmac
+     /tmp/ccolZZRT.s:83     .text.compute_cmac:0000000000000074 $d
+     /tmp/ccolZZRT.s:901    .bss.soft_se_data:0000000000000000 soft_se_data
+     /tmp/ccolZZRT.s:92     .text.smtc_secure_element_init:0000000000000000 $t
+     /tmp/ccolZZRT.s:99     .text.smtc_secure_element_init:0000000000000000 smtc_secure_element_init
+     /tmp/ccolZZRT.s:125    .text.smtc_secure_element_init:0000000000000030 $d
+     /tmp/ccolZZRT.s:131    .text.smtc_secure_element_compute_aes_cmac:0000000000000000 $t
+     /tmp/ccolZZRT.s:138    .text.smtc_secure_element_compute_aes_cmac:0000000000000000 smtc_secure_element_compute_aes_cmac
+     /tmp/ccolZZRT.s:155    .text.smtc_secure_element_verify_aes_cmac:0000000000000000 $t
+     /tmp/ccolZZRT.s:162    .text.smtc_secure_element_verify_aes_cmac:0000000000000000 smtc_secure_element_verify_aes_cmac
+     /tmp/ccolZZRT.s:192    .text.smtc_secure_element_aes_encrypt:0000000000000000 $t
+     /tmp/ccolZZRT.s:199    .text.smtc_secure_element_aes_encrypt:0000000000000000 smtc_secure_element_aes_encrypt
+     /tmp/ccolZZRT.s:266    .text.smtc_secure_element_aes_encrypt:0000000000000074 $d
+     /tmp/ccolZZRT.s:269    .text.smtc_secure_element_set_key.part.0:0000000000000000 $t
+     /tmp/ccolZZRT.s:275    .text.smtc_secure_element_set_key.part.0:0000000000000000 smtc_secure_element_set_key.part.0
+     /tmp/ccolZZRT.s:340    .text.smtc_secure_element_set_key.part.0:0000000000000074 $d
+     /tmp/ccolZZRT.s:344    .text.smtc_secure_element_set_key:0000000000000000 $t
+     /tmp/ccolZZRT.s:351    .text.smtc_secure_element_set_key:0000000000000000 smtc_secure_element_set_key
+     /tmp/ccolZZRT.s:366    .text.smtc_secure_element_derive_and_store_key:0000000000000000 $t
+     /tmp/ccolZZRT.s:373    .text.smtc_secure_element_derive_and_store_key:0000000000000000 smtc_secure_element_derive_and_store_key
+     /tmp/ccolZZRT.s:410    .text.smtc_secure_element_process_join_accept:0000000000000000 $t
+     /tmp/ccolZZRT.s:417    .text.smtc_secure_element_process_join_accept:0000000000000000 smtc_secure_element_process_join_accept
+     /tmp/ccolZZRT.s:493    .text.smtc_secure_element_set_deveui:0000000000000000 $t
+     /tmp/ccolZZRT.s:500    .text.smtc_secure_element_set_deveui:0000000000000000 smtc_secure_element_set_deveui
+     /tmp/ccolZZRT.s:518    .text.smtc_secure_element_set_deveui:0000000000000018 $d
+     /tmp/ccolZZRT.s:521    .text.smtc_secure_element_get_deveui:0000000000000000 $t
+     /tmp/ccolZZRT.s:528    .text.smtc_secure_element_get_deveui:0000000000000000 smtc_secure_element_get_deveui
+     /tmp/ccolZZRT.s:546    .text.smtc_secure_element_get_deveui:0000000000000018 $d
+     /tmp/ccolZZRT.s:549    .text.smtc_secure_element_set_joineui:0000000000000000 $t
+     /tmp/ccolZZRT.s:556    .text.smtc_secure_element_set_joineui:0000000000000000 smtc_secure_element_set_joineui
+     /tmp/ccolZZRT.s:574    .text.smtc_secure_element_set_joineui:0000000000000018 $d
+     /tmp/ccolZZRT.s:577    .text.smtc_secure_element_get_joineui:0000000000000000 $t
+     /tmp/ccolZZRT.s:584    .text.smtc_secure_element_get_joineui:0000000000000000 smtc_secure_element_get_joineui
+     /tmp/ccolZZRT.s:602    .text.smtc_secure_element_get_joineui:0000000000000018 $d
+     /tmp/ccolZZRT.s:605    .text.smtc_secure_element_set_pin:0000000000000000 $t
+     /tmp/ccolZZRT.s:612    .text.smtc_secure_element_set_pin:0000000000000000 smtc_secure_element_set_pin
+     /tmp/ccolZZRT.s:630    .text.smtc_secure_element_set_pin:0000000000000018 $d
+     /tmp/ccolZZRT.s:633    .text.smtc_secure_element_get_pin:0000000000000000 $t
+     /tmp/ccolZZRT.s:640    .text.smtc_secure_element_get_pin:0000000000000000 smtc_secure_element_get_pin
+     /tmp/ccolZZRT.s:658    .text.smtc_secure_element_get_pin:0000000000000018 $d
+     /tmp/ccolZZRT.s:661    .text.soft_ce_crc:0000000000000000 $t
+     /tmp/ccolZZRT.s:668    .text.soft_ce_crc:0000000000000000 soft_ce_crc
+     /tmp/ccolZZRT.s:702    .text.soft_ce_crc:0000000000000030 $d
+     /tmp/ccolZZRT.s:709    .text.smtc_secure_element_restore_context:0000000000000000 $t
+     /tmp/ccolZZRT.s:716    .text.smtc_secure_element_restore_context:0000000000000000 smtc_secure_element_restore_context
+     /tmp/ccolZZRT.s:772    .text.smtc_secure_element_restore_context:000000000000006c $d
+     /tmp/ccolZZRT.s:779    .text.smtc_secure_element_store_context:0000000000000000 $t
+     /tmp/ccolZZRT.s:786    .text.smtc_secure_element_store_context:0000000000000000 smtc_secure_element_store_context
+     /tmp/ccolZZRT.s:821    .text.smtc_secure_element_store_context:0000000000000044 $d
+     /tmp/ccolZZRT.s:898    .bss.soft_se_data:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+AES_CMAC_Init
+AES_CMAC_SetKey
+ARM GAS  /tmp/ccolZZRT.s 			page 19
+
+
+AES_CMAC_Update
+AES_CMAC_Final
+memcpy
+smtc_modem_hal_print_trace
+memset
+aes_set_key
+aes_encrypt
+smtc_modem_hal_context_restore
+smtc_modem_hal_context_store

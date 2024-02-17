@@ -22,14 +22,20 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
-#include "spi.h"
-
-#include "rtc.h"
-
 #include <stdlib.h>  // used for malloc function
 #include <string.h>  // used for strlen function
 #include <stdarg.h> // used for va_list, va_start, va_end functions
 #include <stdio.h>  // used for vsprintf function
+
+
+#include "spi.h"
+
+#include "rtc.h"
+
+#include "lr11xx_wifi.h"
+#include "ralf.h"
+#include "ralf_lr11xx.h"
+
 
 /* USER CODE END Includes */
 
@@ -45,6 +51,9 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
+
+const ralf_t modem_radio = RALF_LR11XX_INSTANTIATE( NULL );
+#define RADIO   "LR11XX"
 
 /* USER CODE END PM */
 
@@ -103,6 +112,13 @@ static void getLR1110_WiFi_Version( const void* context);
 static void getLR1110_Chip_EUI( const void* context);
 
 /*!
+ * @brief Scan Wi-Fi networks
+ *
+ * @param [in] context Radio abstraction
+ */
+static void scanWiFiNetworks( const void* context);
+
+/*!
  * @brief Reset LR1110
  */
 static void resetLR1110();
@@ -148,6 +164,8 @@ void toggleLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin);
  * @param [in] start
  */
 void blinkLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin, uint32_t period, uint8_t count, bool start);
+
+static void get_event( void );
 
 /* USER CODE END PFP */
 
@@ -218,6 +236,9 @@ int main(void)
   getLR1110_WiFi_Version(lr1110_context);
   getLR1110_Chip_EUI(lr1110_context);
 
+
+  smtc_modem_init( &modem_radio, &get_event );
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -231,6 +252,8 @@ int main(void)
     HAL_DBG_TRACE_PRINTF("2a = %d\r\n", a++);
 
     getLR1110_Temperature(lr1110_context);
+
+    scanWiFiNetworks(lr1110_context);
 
     /* USER CODE END WHILE */
 
@@ -643,6 +666,53 @@ void getLR1110_Chip_EUI( const void* context ) {
   } else {
     HAL_DBG_TRACE_ERROR("Failed to get LR1110 Chip EUI\r\n");
   }
+}
+
+void scanWiFiNetworks( const void* context ) {
+  HAL_DBG_TRACE_INFO("Scanning Wi-Fi networks... ");
+  uint32_t i;
+  uint32_t wifi_counter = 0;
+
+  lr11xx_wifi_extended_full_result_t wifi_scan_result;
+  lr11xx_status_t ret;
+  uint8_t nb_results;
+  ret = lr11xx_wifi_scan( modem_radio.ral.context, LR11XX_WIFI_TYPE_SCAN_B_G_N, 0x3FFF, LR11XX_WIFI_SCAN_MODE_UNTIL_SSID, 12, 3, 110, true );
+  HAL_Delay( 110 );
+
+  if( ret != LR11XX_STATUS_OK ) {
+      HAL_DBG_TRACE_INFO( "WIFI scan error\n" );
+  }
+
+  ret = lr11xx_wifi_get_nb_results( modem_radio.ral.context, &nb_results );
+
+  if( nb_results > 0 ) {
+      HAL_DBG_TRACE_INFO( "Listing WIFI networks: %d\n", nb_results );
+  } else {
+      HAL_DBG_TRACE_INFO( "No WIFI networks found: %d\n", nb_results );
+  }
+
+  for( i = wifi_counter; i < nb_results; i++ ) {
+      ret = lr11xx_wifi_read_extended_full_results( modem_radio.ral.context, i, 1, &wifi_scan_result );
+      HAL_DBG_TRACE_INFO( "wifi %d: SSID: %s, ", i, wifi_scan_result.ssid_bytes );
+      HAL_DBG_TRACE_INFO( "mac: %02x:%02x:%02x:%02x:%02x:%02x, rssi: %d\n", wifi_scan_result.mac_address_3[0], wifi_scan_result.mac_address_3[1], wifi_scan_result.mac_address_3[2], wifi_scan_result.mac_address_3[3], wifi_scan_result.mac_address_3[4], wifi_scan_result.mac_address_3[5], wifi_scan_result.rssi );
+  }
+
+  if( ret != LR11XX_STATUS_OK ) {
+      HAL_DBG_TRACE_INFO( "LR1110 ERROR \n" );
+  }
+
+  wifi_counter = nb_results;
+  //wifi_count = nb_results;
+}
+
+/**
+ * @brief User callback for modem event
+ *
+ *  This callback is called every time an event ( see smtc_modem_event_t ) appears in the modem.
+ *  Several events may have to be read from the modem when this callback is called.
+ */
+static void get_event( void ) {
+  HAL_DBG_TRACE_INFO( "get_event () callback\n");
 }
 
 void resetLR1110() {

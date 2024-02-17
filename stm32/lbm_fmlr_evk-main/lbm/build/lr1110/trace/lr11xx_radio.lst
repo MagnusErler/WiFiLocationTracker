@@ -1,0 +1,2129 @@
+ARM GAS  /tmp/ccxoaqOj.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.eabi_attribute 23, 1
+   3              		.eabi_attribute 24, 1
+   4              		.eabi_attribute 25, 1
+   5              		.eabi_attribute 26, 1
+   6              		.eabi_attribute 30, 4
+   7              		.eabi_attribute 34, 0
+   8              		.eabi_attribute 18, 4
+   9              		.file	"lr11xx_radio.c"
+  10              		.text
+  11              		.section	.text.lr11xx_radio_reset_stats,"ax",%progbits
+  12              		.align	1
+  13              		.global	lr11xx_radio_reset_stats
+  14              		.arch armv6s-m
+  15              		.syntax unified
+  16              		.code	16
+  17              		.thumb_func
+  18              		.fpu softvfp
+  20              	lr11xx_radio_reset_stats:
+  21              		@ args = 0, pretend = 0, frame = 8
+  22              		@ frame_needed = 0, uses_anonymous_args = 0
+  23 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+  24 0002 0222     		movs	r2, #2
+  25 0004 0023     		movs	r3, #0
+  26 0006 03A9     		add	r1, sp, #12
+  27 0008 0A80     		strh	r2, [r1]
+  28 000a 0093     		str	r3, [sp]
+  29 000c FFF7FEFF 		bl	lr11xx_hal_write
+  30 0010 05B0     		add	sp, sp, #20
+  31              		@ sp needed
+  32 0012 00BD     		pop	{pc}
+  34              		.section	.text.lr11xx_radio_get_gfsk_stats,"ax",%progbits
+  35              		.align	1
+  36              		.global	lr11xx_radio_get_gfsk_stats
+  37              		.syntax unified
+  38              		.code	16
+  39              		.thumb_func
+  40              		.fpu softvfp
+  42              	lr11xx_radio_get_gfsk_stats:
+  43              		@ args = 0, pretend = 0, frame = 16
+  44              		@ frame_needed = 0, uses_anonymous_args = 0
+  45 0000 8123     		movs	r3, #129
+  46 0002 30B5     		push	{r4, r5, lr}
+  47 0004 87B0     		sub	sp, sp, #28
+  48 0006 5B00     		lsls	r3, r3, #1
+  49 0008 0D00     		movs	r5, r1
+  50 000a 03A9     		add	r1, sp, #12
+  51 000c 0B80     		strh	r3, [r1]
+  52 000e 0023     		movs	r3, #0
+  53 0010 04AC     		add	r4, sp, #16
+  54 0012 A380     		strh	r3, [r4, #4]
+  55 0014 0493     		str	r3, [sp, #16]
+  56 0016 0633     		adds	r3, r3, #6
+  57 0018 0093     		str	r3, [sp]
+  58 001a 0222     		movs	r2, #2
+  59 001c 2300     		movs	r3, r4
+  60 001e FFF7FEFF 		bl	lr11xx_hal_read
+ARM GAS  /tmp/ccxoaqOj.s 			page 2
+
+
+  61 0022 0028     		cmp	r0, #0
+  62 0024 0ED1     		bne	.L3
+  63 0026 2278     		ldrb	r2, [r4]
+  64 0028 6378     		ldrb	r3, [r4, #1]
+  65 002a 1202     		lsls	r2, r2, #8
+  66 002c 9B18     		adds	r3, r3, r2
+  67 002e A278     		ldrb	r2, [r4, #2]
+  68 0030 2B80     		strh	r3, [r5]
+  69 0032 E378     		ldrb	r3, [r4, #3]
+  70 0034 1202     		lsls	r2, r2, #8
+  71 0036 9B18     		adds	r3, r3, r2
+  72 0038 2279     		ldrb	r2, [r4, #4]
+  73 003a 6B80     		strh	r3, [r5, #2]
+  74 003c 6379     		ldrb	r3, [r4, #5]
+  75 003e 1202     		lsls	r2, r2, #8
+  76 0040 9B18     		adds	r3, r3, r2
+  77 0042 AB80     		strh	r3, [r5, #4]
+  78              	.L3:
+  79 0044 07B0     		add	sp, sp, #28
+  80              		@ sp needed
+  81 0046 30BD     		pop	{r4, r5, pc}
+  83              		.section	.text.lr11xx_radio_get_lora_stats,"ax",%progbits
+  84              		.align	1
+  85              		.global	lr11xx_radio_get_lora_stats
+  86              		.syntax unified
+  87              		.code	16
+  88              		.thumb_func
+  89              		.fpu softvfp
+  91              	lr11xx_radio_get_lora_stats:
+  92              		@ args = 0, pretend = 0, frame = 16
+  93              		@ frame_needed = 0, uses_anonymous_args = 0
+  94 0000 8123     		movs	r3, #129
+  95 0002 30B5     		push	{r4, r5, lr}
+  96 0004 87B0     		sub	sp, sp, #28
+  97 0006 5B00     		lsls	r3, r3, #1
+  98 0008 0D00     		movs	r5, r1
+  99 000a 03A9     		add	r1, sp, #12
+ 100 000c 0B80     		strh	r3, [r1]
+ 101 000e 0023     		movs	r3, #0
+ 102 0010 04AC     		add	r4, sp, #16
+ 103 0012 0493     		str	r3, [sp, #16]
+ 104 0014 0593     		str	r3, [sp, #20]
+ 105 0016 0833     		adds	r3, r3, #8
+ 106 0018 0093     		str	r3, [sp]
+ 107 001a 0222     		movs	r2, #2
+ 108 001c 2300     		movs	r3, r4
+ 109 001e FFF7FEFF 		bl	lr11xx_hal_read
+ 110 0022 0028     		cmp	r0, #0
+ 111 0024 13D1     		bne	.L5
+ 112 0026 2278     		ldrb	r2, [r4]
+ 113 0028 6378     		ldrb	r3, [r4, #1]
+ 114 002a 1202     		lsls	r2, r2, #8
+ 115 002c 9B18     		adds	r3, r3, r2
+ 116 002e A278     		ldrb	r2, [r4, #2]
+ 117 0030 2B80     		strh	r3, [r5]
+ 118 0032 E378     		ldrb	r3, [r4, #3]
+ 119 0034 1202     		lsls	r2, r2, #8
+ARM GAS  /tmp/ccxoaqOj.s 			page 3
+
+
+ 120 0036 9B18     		adds	r3, r3, r2
+ 121 0038 2279     		ldrb	r2, [r4, #4]
+ 122 003a 6B80     		strh	r3, [r5, #2]
+ 123 003c 6379     		ldrb	r3, [r4, #5]
+ 124 003e 1202     		lsls	r2, r2, #8
+ 125 0040 9B18     		adds	r3, r3, r2
+ 126 0042 A279     		ldrb	r2, [r4, #6]
+ 127 0044 AB80     		strh	r3, [r5, #4]
+ 128 0046 E379     		ldrb	r3, [r4, #7]
+ 129 0048 1202     		lsls	r2, r2, #8
+ 130 004a 9B18     		adds	r3, r3, r2
+ 131 004c EB80     		strh	r3, [r5, #6]
+ 132              	.L5:
+ 133 004e 07B0     		add	sp, sp, #28
+ 134              		@ sp needed
+ 135 0050 30BD     		pop	{r4, r5, pc}
+ 137              		.section	.text.lr11xx_radio_get_pkt_type,"ax",%progbits
+ 138              		.align	1
+ 139              		.global	lr11xx_radio_get_pkt_type
+ 140              		.syntax unified
+ 141              		.code	16
+ 142              		.thumb_func
+ 143              		.fpu softvfp
+ 145              	lr11xx_radio_get_pkt_type:
+ 146              		@ args = 0, pretend = 0, frame = 8
+ 147              		@ frame_needed = 0, uses_anonymous_args = 0
+ 148 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 149 0002 0A4B     		ldr	r3, .L8
+ 150 0004 0C00     		movs	r4, r1
+ 151 0006 03A9     		add	r1, sp, #12
+ 152 0008 6A46     		mov	r2, sp
+ 153 000a 0B80     		strh	r3, [r1]
+ 154 000c 0023     		movs	r3, #0
+ 155 000e D372     		strb	r3, [r2, #11]
+ 156 0010 0133     		adds	r3, r3, #1
+ 157 0012 0093     		str	r3, [sp]
+ 158 0014 0A33     		adds	r3, r3, #10
+ 159 0016 0222     		movs	r2, #2
+ 160 0018 6B44     		add	r3, r3, sp
+ 161 001a FFF7FEFF 		bl	lr11xx_hal_read
+ 162 001e 0028     		cmp	r0, #0
+ 163 0020 02D1     		bne	.L7
+ 164 0022 6B46     		mov	r3, sp
+ 165 0024 DB7A     		ldrb	r3, [r3, #11]
+ 166 0026 2370     		strb	r3, [r4]
+ 167              	.L7:
+ 168 0028 04B0     		add	sp, sp, #16
+ 169              		@ sp needed
+ 170 002a 10BD     		pop	{r4, pc}
+ 171              	.L9:
+ 172              		.align	2
+ 173              	.L8:
+ 174 002c 02020000 		.word	514
+ 176              		.section	.text.lr11xx_radio_get_rx_buffer_status,"ax",%progbits
+ 177              		.align	1
+ 178              		.global	lr11xx_radio_get_rx_buffer_status
+ 179              		.syntax unified
+ARM GAS  /tmp/ccxoaqOj.s 			page 4
+
+
+ 180              		.code	16
+ 181              		.thumb_func
+ 182              		.fpu softvfp
+ 184              	lr11xx_radio_get_rx_buffer_status:
+ 185              		@ args = 0, pretend = 0, frame = 8
+ 186              		@ frame_needed = 0, uses_anonymous_args = 0
+ 187 0000 30B5     		push	{r4, r5, lr}
+ 188 0002 0A4B     		ldr	r3, .L12
+ 189 0004 85B0     		sub	sp, sp, #20
+ 190 0006 0C00     		movs	r4, r1
+ 191 0008 02A9     		add	r1, sp, #8
+ 192 000a 0B80     		strh	r3, [r1]
+ 193 000c 0222     		movs	r2, #2
+ 194 000e 0023     		movs	r3, #0
+ 195 0010 03AD     		add	r5, sp, #12
+ 196 0012 2B80     		strh	r3, [r5]
+ 197 0014 2B00     		movs	r3, r5
+ 198 0016 0092     		str	r2, [sp]
+ 199 0018 FFF7FEFF 		bl	lr11xx_hal_read
+ 200 001c 0028     		cmp	r0, #0
+ 201 001e 03D1     		bne	.L11
+ 202 0020 2B78     		ldrb	r3, [r5]
+ 203 0022 2370     		strb	r3, [r4]
+ 204 0024 6B78     		ldrb	r3, [r5, #1]
+ 205 0026 6370     		strb	r3, [r4, #1]
+ 206              	.L11:
+ 207 0028 05B0     		add	sp, sp, #20
+ 208              		@ sp needed
+ 209 002a 30BD     		pop	{r4, r5, pc}
+ 210              	.L13:
+ 211              		.align	2
+ 212              	.L12:
+ 213 002c 02030000 		.word	770
+ 215              		.section	.text.lr11xx_radio_get_gfsk_pkt_status,"ax",%progbits
+ 216              		.align	1
+ 217              		.global	lr11xx_radio_get_gfsk_pkt_status
+ 218              		.syntax unified
+ 219              		.code	16
+ 220              		.thumb_func
+ 221              		.fpu softvfp
+ 223              	lr11xx_radio_get_gfsk_pkt_status:
+ 224              		@ args = 0, pretend = 0, frame = 8
+ 225              		@ frame_needed = 0, uses_anonymous_args = 0
+ 226 0000 30B5     		push	{r4, r5, lr}
+ 227 0002 174B     		ldr	r3, .L16
+ 228 0004 85B0     		sub	sp, sp, #20
+ 229 0006 0C00     		movs	r4, r1
+ 230 0008 02A9     		add	r1, sp, #8
+ 231 000a 0B80     		strh	r3, [r1]
+ 232 000c 0023     		movs	r3, #0
+ 233 000e 03AD     		add	r5, sp, #12
+ 234 0010 0393     		str	r3, [sp, #12]
+ 235 0012 0433     		adds	r3, r3, #4
+ 236 0014 0093     		str	r3, [sp]
+ 237 0016 0222     		movs	r2, #2
+ 238 0018 2B00     		movs	r3, r5
+ 239 001a FFF7FEFF 		bl	lr11xx_hal_read
+ARM GAS  /tmp/ccxoaqOj.s 			page 5
+
+
+ 240 001e 0028     		cmp	r0, #0
+ 241 0020 1CD1     		bne	.L15
+ 242 0022 0122     		movs	r2, #1
+ 243 0024 2B78     		ldrb	r3, [r5]
+ 244 0026 5B08     		lsrs	r3, r3, #1
+ 245 0028 5B42     		rsbs	r3, r3, #0
+ 246 002a 2370     		strb	r3, [r4]
+ 247 002c 6B78     		ldrb	r3, [r5, #1]
+ 248 002e 5B08     		lsrs	r3, r3, #1
+ 249 0030 5B42     		rsbs	r3, r3, #0
+ 250 0032 6370     		strb	r3, [r4, #1]
+ 251 0034 AB78     		ldrb	r3, [r5, #2]
+ 252 0036 A370     		strb	r3, [r4, #2]
+ 253 0038 EB78     		ldrb	r3, [r5, #3]
+ 254 003a 5911     		asrs	r1, r3, #5
+ 255 003c 1140     		ands	r1, r2
+ 256 003e E170     		strb	r1, [r4, #3]
+ 257 0040 1911     		asrs	r1, r3, #4
+ 258 0042 1140     		ands	r1, r2
+ 259 0044 2171     		strb	r1, [r4, #4]
+ 260 0046 D910     		asrs	r1, r3, #3
+ 261 0048 1140     		ands	r1, r2
+ 262 004a 6171     		strb	r1, [r4, #5]
+ 263 004c 9910     		asrs	r1, r3, #2
+ 264 004e 1140     		ands	r1, r2
+ 265 0050 A171     		strb	r1, [r4, #6]
+ 266 0052 5910     		asrs	r1, r3, #1
+ 267 0054 1140     		ands	r1, r2
+ 268 0056 1340     		ands	r3, r2
+ 269 0058 E171     		strb	r1, [r4, #7]
+ 270 005a 2372     		strb	r3, [r4, #8]
+ 271              	.L15:
+ 272 005c 05B0     		add	sp, sp, #20
+ 273              		@ sp needed
+ 274 005e 30BD     		pop	{r4, r5, pc}
+ 275              	.L17:
+ 276              		.align	2
+ 277              	.L16:
+ 278 0060 02040000 		.word	1026
+ 280              		.section	.text.lr11xx_radio_get_lora_pkt_status,"ax",%progbits
+ 281              		.align	1
+ 282              		.global	lr11xx_radio_get_lora_pkt_status
+ 283              		.syntax unified
+ 284              		.code	16
+ 285              		.thumb_func
+ 286              		.fpu softvfp
+ 288              	lr11xx_radio_get_lora_pkt_status:
+ 289              		@ args = 0, pretend = 0, frame = 8
+ 290              		@ frame_needed = 0, uses_anonymous_args = 0
+ 291 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 292 0002 85B0     		sub	sp, sp, #20
+ 293 0004 134B     		ldr	r3, .L20
+ 294 0006 03AD     		add	r5, sp, #12
+ 295 0008 0600     		movs	r6, r0
+ 296 000a 0222     		movs	r2, #2
+ 297 000c 02AF     		add	r7, sp, #8
+ 298 000e 0C00     		movs	r4, r1
+ARM GAS  /tmp/ccxoaqOj.s 			page 6
+
+
+ 299 0010 2800     		movs	r0, r5
+ 300 0012 1149     		ldr	r1, .L20+4
+ 301 0014 3B80     		strh	r3, [r7]
+ 302 0016 FFF7FEFF 		bl	memcpy
+ 303 001a 0E23     		movs	r3, #14
+ 304 001c 0022     		movs	r2, #0
+ 305 001e 6B44     		add	r3, r3, sp
+ 306 0020 1A70     		strb	r2, [r3]
+ 307 0022 0323     		movs	r3, #3
+ 308 0024 3900     		movs	r1, r7
+ 309 0026 0093     		str	r3, [sp]
+ 310 0028 3000     		movs	r0, r6
+ 311 002a 2B00     		movs	r3, r5
+ 312 002c 0232     		adds	r2, r2, #2
+ 313 002e FFF7FEFF 		bl	lr11xx_hal_read
+ 314 0032 0028     		cmp	r0, #0
+ 315 0034 0CD1     		bne	.L19
+ 316 0036 2B78     		ldrb	r3, [r5]
+ 317 0038 5B08     		lsrs	r3, r3, #1
+ 318 003a 5B42     		rsbs	r3, r3, #0
+ 319 003c 2370     		strb	r3, [r4]
+ 320 003e 0123     		movs	r3, #1
+ 321 0040 EB56     		ldrsb	r3, [r5, r3]
+ 322 0042 0233     		adds	r3, r3, #2
+ 323 0044 9B10     		asrs	r3, r3, #2
+ 324 0046 6370     		strb	r3, [r4, #1]
+ 325 0048 AB78     		ldrb	r3, [r5, #2]
+ 326 004a 5B08     		lsrs	r3, r3, #1
+ 327 004c 5B42     		rsbs	r3, r3, #0
+ 328 004e A370     		strb	r3, [r4, #2]
+ 329              	.L19:
+ 330 0050 05B0     		add	sp, sp, #20
+ 331              		@ sp needed
+ 332 0052 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 333              	.L21:
+ 334              		.align	2
+ 335              	.L20:
+ 336 0054 02040000 		.word	1026
+ 337 0058 00000000 		.word	.LANCHOR0
+ 339              		.section	.text.lr11xx_radio_get_rssi_inst,"ax",%progbits
+ 340              		.align	1
+ 341              		.global	lr11xx_radio_get_rssi_inst
+ 342              		.syntax unified
+ 343              		.code	16
+ 344              		.thumb_func
+ 345              		.fpu softvfp
+ 347              	lr11xx_radio_get_rssi_inst:
+ 348              		@ args = 0, pretend = 0, frame = 8
+ 349              		@ frame_needed = 0, uses_anonymous_args = 0
+ 350 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 351 0002 0B4B     		ldr	r3, .L24
+ 352 0004 0C00     		movs	r4, r1
+ 353 0006 03A9     		add	r1, sp, #12
+ 354 0008 6A46     		mov	r2, sp
+ 355 000a 0B80     		strh	r3, [r1]
+ 356 000c 0023     		movs	r3, #0
+ 357 000e D372     		strb	r3, [r2, #11]
+ARM GAS  /tmp/ccxoaqOj.s 			page 7
+
+
+ 358 0010 0133     		adds	r3, r3, #1
+ 359 0012 0093     		str	r3, [sp]
+ 360 0014 0A33     		adds	r3, r3, #10
+ 361 0016 0222     		movs	r2, #2
+ 362 0018 6B44     		add	r3, r3, sp
+ 363 001a FFF7FEFF 		bl	lr11xx_hal_read
+ 364 001e 0028     		cmp	r0, #0
+ 365 0020 04D1     		bne	.L23
+ 366 0022 6B46     		mov	r3, sp
+ 367 0024 DB7A     		ldrb	r3, [r3, #11]
+ 368 0026 5B08     		lsrs	r3, r3, #1
+ 369 0028 5B42     		rsbs	r3, r3, #0
+ 370 002a 2370     		strb	r3, [r4]
+ 371              	.L23:
+ 372 002c 04B0     		add	sp, sp, #16
+ 373              		@ sp needed
+ 374 002e 10BD     		pop	{r4, pc}
+ 375              	.L25:
+ 376              		.align	2
+ 377              	.L24:
+ 378 0030 02050000 		.word	1282
+ 380              		.section	.text.lr11xx_radio_set_gfsk_sync_word,"ax",%progbits
+ 381              		.align	1
+ 382              		.global	lr11xx_radio_set_gfsk_sync_word
+ 383              		.syntax unified
+ 384              		.code	16
+ 385              		.thumb_func
+ 386              		.fpu softvfp
+ 388              	lr11xx_radio_set_gfsk_sync_word:
+ 389              		@ args = 0, pretend = 0, frame = 16
+ 390              		@ frame_needed = 0, uses_anonymous_args = 0
+ 391 0000 7FB5     		push	{r0, r1, r2, r3, r4, r5, r6, lr}
+ 392 0002 0222     		movs	r2, #2
+ 393 0004 0B00     		movs	r3, r1
+ 394 0006 03A9     		add	r1, sp, #12
+ 395 0008 0A70     		strb	r2, [r1]
+ 396 000a 0432     		adds	r2, r2, #4
+ 397 000c 4A70     		strb	r2, [r1, #1]
+ 398 000e 1A78     		ldrb	r2, [r3]
+ 399 0010 8A70     		strb	r2, [r1, #2]
+ 400 0012 5A78     		ldrb	r2, [r3, #1]
+ 401 0014 CA70     		strb	r2, [r1, #3]
+ 402 0016 9A78     		ldrb	r2, [r3, #2]
+ 403 0018 0A71     		strb	r2, [r1, #4]
+ 404 001a DA78     		ldrb	r2, [r3, #3]
+ 405 001c 4A71     		strb	r2, [r1, #5]
+ 406 001e 1A79     		ldrb	r2, [r3, #4]
+ 407 0020 8A71     		strb	r2, [r1, #6]
+ 408 0022 5A79     		ldrb	r2, [r3, #5]
+ 409 0024 CA71     		strb	r2, [r1, #7]
+ 410 0026 9A79     		ldrb	r2, [r3, #6]
+ 411 0028 DB79     		ldrb	r3, [r3, #7]
+ 412 002a 0A72     		strb	r2, [r1, #8]
+ 413 002c 4B72     		strb	r3, [r1, #9]
+ 414 002e 0023     		movs	r3, #0
+ 415 0030 0A22     		movs	r2, #10
+ 416 0032 0093     		str	r3, [sp]
+ARM GAS  /tmp/ccxoaqOj.s 			page 8
+
+
+ 417 0034 FFF7FEFF 		bl	lr11xx_hal_write
+ 418 0038 07B0     		add	sp, sp, #28
+ 419              		@ sp needed
+ 420 003a 00BD     		pop	{pc}
+ 422              		.section	.text.lr11xx_radio_set_lora_sync_word,"ax",%progbits
+ 423              		.align	1
+ 424              		.global	lr11xx_radio_set_lora_sync_word
+ 425              		.syntax unified
+ 426              		.code	16
+ 427              		.thumb_func
+ 428              		.fpu softvfp
+ 430              	lr11xx_radio_set_lora_sync_word:
+ 431              		@ args = 0, pretend = 0, frame = 8
+ 432              		@ frame_needed = 0, uses_anonymous_args = 0
+ 433 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 434 0002 0223     		movs	r3, #2
+ 435 0004 03AC     		add	r4, sp, #12
+ 436 0006 2370     		strb	r3, [r4]
+ 437 0008 2933     		adds	r3, r3, #41
+ 438 000a 6370     		strb	r3, [r4, #1]
+ 439 000c 0023     		movs	r3, #0
+ 440 000e A170     		strb	r1, [r4, #2]
+ 441 0010 0322     		movs	r2, #3
+ 442 0012 2100     		movs	r1, r4
+ 443 0014 0093     		str	r3, [sp]
+ 444 0016 FFF7FEFF 		bl	lr11xx_hal_write
+ 445 001a 04B0     		add	sp, sp, #16
+ 446              		@ sp needed
+ 447 001c 10BD     		pop	{r4, pc}
+ 449              		.section	.text.lr11xx_radio_set_lora_public_network,"ax",%progbits
+ 450              		.align	1
+ 451              		.global	lr11xx_radio_set_lora_public_network
+ 452              		.syntax unified
+ 453              		.code	16
+ 454              		.thumb_func
+ 455              		.fpu softvfp
+ 457              	lr11xx_radio_set_lora_public_network:
+ 458              		@ args = 0, pretend = 0, frame = 16
+ 459              		@ frame_needed = 0, uses_anonymous_args = 0
+ 460 0000 70B5     		push	{r4, r5, r6, lr}
+ 461 0002 86B0     		sub	sp, sp, #24
+ 462 0004 03AC     		add	r4, sp, #12
+ 463 0006 0500     		movs	r5, r0
+ 464 0008 0E00     		movs	r6, r1
+ 465 000a 0A22     		movs	r2, #10
+ 466 000c 0021     		movs	r1, #0
+ 467 000e 2000     		movs	r0, r4
+ 468 0010 FFF7FEFF 		bl	memset
+ 469 0014 0223     		movs	r3, #2
+ 470 0016 2370     		strb	r3, [r4]
+ 471 0018 0633     		adds	r3, r3, #6
+ 472 001a 6370     		strb	r3, [r4, #1]
+ 473 001c 0023     		movs	r3, #0
+ 474 001e A670     		strb	r6, [r4, #2]
+ 475 0020 0322     		movs	r2, #3
+ 476 0022 2100     		movs	r1, r4
+ 477 0024 2800     		movs	r0, r5
+ARM GAS  /tmp/ccxoaqOj.s 			page 9
+
+
+ 478 0026 0093     		str	r3, [sp]
+ 479 0028 FFF7FEFF 		bl	lr11xx_hal_write
+ 480 002c 06B0     		add	sp, sp, #24
+ 481              		@ sp needed
+ 482 002e 70BD     		pop	{r4, r5, r6, pc}
+ 484              		.section	.text.lr11xx_radio_set_rf_freq,"ax",%progbits
+ 485              		.align	1
+ 486              		.global	lr11xx_radio_set_rf_freq
+ 487              		.syntax unified
+ 488              		.code	16
+ 489              		.thumb_func
+ 490              		.fpu softvfp
+ 492              	lr11xx_radio_set_rf_freq:
+ 493              		@ args = 0, pretend = 0, frame = 8
+ 494              		@ frame_needed = 0, uses_anonymous_args = 0
+ 495 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 496 0002 0222     		movs	r2, #2
+ 497 0004 0B00     		movs	r3, r1
+ 498 0006 02A9     		add	r1, sp, #8
+ 499 0008 0A70     		strb	r2, [r1]
+ 500 000a 0932     		adds	r2, r2, #9
+ 501 000c 4A70     		strb	r2, [r1, #1]
+ 502 000e 1A0E     		lsrs	r2, r3, #24
+ 503 0010 8A70     		strb	r2, [r1, #2]
+ 504 0012 1A0C     		lsrs	r2, r3, #16
+ 505 0014 CA70     		strb	r2, [r1, #3]
+ 506 0016 4B71     		strb	r3, [r1, #5]
+ 507 0018 1A0A     		lsrs	r2, r3, #8
+ 508 001a 0023     		movs	r3, #0
+ 509 001c 0A71     		strb	r2, [r1, #4]
+ 510 001e 0622     		movs	r2, #6
+ 511 0020 0093     		str	r3, [sp]
+ 512 0022 FFF7FEFF 		bl	lr11xx_hal_write
+ 513 0026 05B0     		add	sp, sp, #20
+ 514              		@ sp needed
+ 515 0028 00BD     		pop	{pc}
+ 517              		.section	.text.lr11xx_radio_auto_tx_rx,"ax",%progbits
+ 518              		.align	1
+ 519              		.global	lr11xx_radio_auto_tx_rx
+ 520              		.syntax unified
+ 521              		.code	16
+ 522              		.thumb_func
+ 523              		.fpu softvfp
+ 525              	lr11xx_radio_auto_tx_rx:
+ 526              		@ args = 0, pretend = 0, frame = 16
+ 527              		@ frame_needed = 0, uses_anonymous_args = 0
+ 528 0000 30B5     		push	{r4, r5, lr}
+ 529 0002 0225     		movs	r5, #2
+ 530 0004 87B0     		sub	sp, sp, #28
+ 531 0006 0C00     		movs	r4, r1
+ 532 0008 03A9     		add	r1, sp, #12
+ 533 000a 4A71     		strb	r2, [r1, #5]
+ 534 000c 1A0C     		lsrs	r2, r3, #16
+ 535 000e 8A71     		strb	r2, [r1, #6]
+ 536 0010 0B72     		strb	r3, [r1, #8]
+ 537 0012 1A0A     		lsrs	r2, r3, #8
+ 538 0014 0023     		movs	r3, #0
+ARM GAS  /tmp/ccxoaqOj.s 			page 10
+
+
+ 539 0016 0D70     		strb	r5, [r1]
+ 540 0018 0A35     		adds	r5, r5, #10
+ 541 001a 4D70     		strb	r5, [r1, #1]
+ 542 001c 250C     		lsrs	r5, r4, #16
+ 543 001e 8D70     		strb	r5, [r1, #2]
+ 544 0020 250A     		lsrs	r5, r4, #8
+ 545 0022 CA71     		strb	r2, [r1, #7]
+ 546 0024 CD70     		strb	r5, [r1, #3]
+ 547 0026 0C71     		strb	r4, [r1, #4]
+ 548 0028 0922     		movs	r2, #9
+ 549 002a 0093     		str	r3, [sp]
+ 550 002c FFF7FEFF 		bl	lr11xx_hal_write
+ 551 0030 07B0     		add	sp, sp, #28
+ 552              		@ sp needed
+ 553 0032 30BD     		pop	{r4, r5, pc}
+ 555              		.section	.text.lr11xx_radio_set_cad_params,"ax",%progbits
+ 556              		.align	1
+ 557              		.global	lr11xx_radio_set_cad_params
+ 558              		.syntax unified
+ 559              		.code	16
+ 560              		.thumb_func
+ 561              		.fpu softvfp
+ 563              	lr11xx_radio_set_cad_params:
+ 564              		@ args = 0, pretend = 0, frame = 16
+ 565              		@ frame_needed = 0, uses_anonymous_args = 0
+ 566 0000 7FB5     		push	{r0, r1, r2, r3, r4, r5, r6, lr}
+ 567 0002 0222     		movs	r2, #2
+ 568 0004 0B00     		movs	r3, r1
+ 569 0006 03A9     		add	r1, sp, #12
+ 570 0008 0A70     		strb	r2, [r1]
+ 571 000a 0B32     		adds	r2, r2, #11
+ 572 000c 4A70     		strb	r2, [r1, #1]
+ 573 000e 1A78     		ldrb	r2, [r3]
+ 574 0010 8A70     		strb	r2, [r1, #2]
+ 575 0012 5A78     		ldrb	r2, [r3, #1]
+ 576 0014 CA70     		strb	r2, [r1, #3]
+ 577 0016 9A78     		ldrb	r2, [r3, #2]
+ 578 0018 0A71     		strb	r2, [r1, #4]
+ 579 001a DA78     		ldrb	r2, [r3, #3]
+ 580 001c 5B68     		ldr	r3, [r3, #4]
+ 581 001e 4A71     		strb	r2, [r1, #5]
+ 582 0020 1A0C     		lsrs	r2, r3, #16
+ 583 0022 8A71     		strb	r2, [r1, #6]
+ 584 0024 0B72     		strb	r3, [r1, #8]
+ 585 0026 1A0A     		lsrs	r2, r3, #8
+ 586 0028 0023     		movs	r3, #0
+ 587 002a CA71     		strb	r2, [r1, #7]
+ 588 002c 0922     		movs	r2, #9
+ 589 002e 0093     		str	r3, [sp]
+ 590 0030 FFF7FEFF 		bl	lr11xx_hal_write
+ 591 0034 07B0     		add	sp, sp, #28
+ 592              		@ sp needed
+ 593 0036 00BD     		pop	{pc}
+ 595              		.section	.text.lr11xx_radio_set_pkt_type,"ax",%progbits
+ 596              		.align	1
+ 597              		.global	lr11xx_radio_set_pkt_type
+ 598              		.syntax unified
+ARM GAS  /tmp/ccxoaqOj.s 			page 11
+
+
+ 599              		.code	16
+ 600              		.thumb_func
+ 601              		.fpu softvfp
+ 603              	lr11xx_radio_set_pkt_type:
+ 604              		@ args = 0, pretend = 0, frame = 8
+ 605              		@ frame_needed = 0, uses_anonymous_args = 0
+ 606 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 607 0002 0223     		movs	r3, #2
+ 608 0004 03AC     		add	r4, sp, #12
+ 609 0006 2370     		strb	r3, [r4]
+ 610 0008 0C33     		adds	r3, r3, #12
+ 611 000a 6370     		strb	r3, [r4, #1]
+ 612 000c 0023     		movs	r3, #0
+ 613 000e A170     		strb	r1, [r4, #2]
+ 614 0010 0322     		movs	r2, #3
+ 615 0012 2100     		movs	r1, r4
+ 616 0014 0093     		str	r3, [sp]
+ 617 0016 FFF7FEFF 		bl	lr11xx_hal_write
+ 618 001a 04B0     		add	sp, sp, #16
+ 619              		@ sp needed
+ 620 001c 10BD     		pop	{r4, pc}
+ 622              		.section	.text.lr11xx_radio_set_gfsk_mod_params,"ax",%progbits
+ 623              		.align	1
+ 624              		.global	lr11xx_radio_set_gfsk_mod_params
+ 625              		.syntax unified
+ 626              		.code	16
+ 627              		.thumb_func
+ 628              		.fpu softvfp
+ 630              	lr11xx_radio_set_gfsk_mod_params:
+ 631              		@ args = 0, pretend = 0, frame = 16
+ 632              		@ frame_needed = 0, uses_anonymous_args = 0
+ 633 0000 0222     		movs	r2, #2
+ 634 0002 0B00     		movs	r3, r1
+ 635 0004 10B5     		push	{r4, lr}
+ 636 0006 86B0     		sub	sp, sp, #24
+ 637 0008 03A9     		add	r1, sp, #12
+ 638 000a 0A70     		strb	r2, [r1]
+ 639 000c 0D32     		adds	r2, r2, #13
+ 640 000e 4A70     		strb	r2, [r1, #1]
+ 641 0010 1A68     		ldr	r2, [r3]
+ 642 0012 140E     		lsrs	r4, r2, #24
+ 643 0014 8C70     		strb	r4, [r1, #2]
+ 644 0016 140C     		lsrs	r4, r2, #16
+ 645 0018 CC70     		strb	r4, [r1, #3]
+ 646 001a 140A     		lsrs	r4, r2, #8
+ 647 001c 0C71     		strb	r4, [r1, #4]
+ 648 001e 4A71     		strb	r2, [r1, #5]
+ 649 0020 1A79     		ldrb	r2, [r3, #4]
+ 650 0022 8A71     		strb	r2, [r1, #6]
+ 651 0024 5A79     		ldrb	r2, [r3, #5]
+ 652 0026 9B68     		ldr	r3, [r3, #8]
+ 653 0028 CA71     		strb	r2, [r1, #7]
+ 654 002a 1A0E     		lsrs	r2, r3, #24
+ 655 002c 0A72     		strb	r2, [r1, #8]
+ 656 002e 1A0C     		lsrs	r2, r3, #16
+ 657 0030 4A72     		strb	r2, [r1, #9]
+ 658 0032 CB72     		strb	r3, [r1, #11]
+ARM GAS  /tmp/ccxoaqOj.s 			page 12
+
+
+ 659 0034 1A0A     		lsrs	r2, r3, #8
+ 660 0036 0023     		movs	r3, #0
+ 661 0038 8A72     		strb	r2, [r1, #10]
+ 662 003a 0C22     		movs	r2, #12
+ 663 003c 0093     		str	r3, [sp]
+ 664 003e FFF7FEFF 		bl	lr11xx_hal_write
+ 665 0042 06B0     		add	sp, sp, #24
+ 666              		@ sp needed
+ 667 0044 10BD     		pop	{r4, pc}
+ 669              		.section	.text.lr11xx_radio_set_lora_mod_params,"ax",%progbits
+ 670              		.align	1
+ 671              		.global	lr11xx_radio_set_lora_mod_params
+ 672              		.syntax unified
+ 673              		.code	16
+ 674              		.thumb_func
+ 675              		.fpu softvfp
+ 677              	lr11xx_radio_set_lora_mod_params:
+ 678              		@ args = 0, pretend = 0, frame = 8
+ 679              		@ frame_needed = 0, uses_anonymous_args = 0
+ 680 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 681 0002 0222     		movs	r2, #2
+ 682 0004 0B00     		movs	r3, r1
+ 683 0006 02A9     		add	r1, sp, #8
+ 684 0008 0A70     		strb	r2, [r1]
+ 685 000a 0D32     		adds	r2, r2, #13
+ 686 000c 4A70     		strb	r2, [r1, #1]
+ 687 000e 1A78     		ldrb	r2, [r3]
+ 688 0010 8A70     		strb	r2, [r1, #2]
+ 689 0012 5A78     		ldrb	r2, [r3, #1]
+ 690 0014 CA70     		strb	r2, [r1, #3]
+ 691 0016 9A78     		ldrb	r2, [r3, #2]
+ 692 0018 0A71     		strb	r2, [r1, #4]
+ 693 001a DB78     		ldrb	r3, [r3, #3]
+ 694 001c 0622     		movs	r2, #6
+ 695 001e 4B71     		strb	r3, [r1, #5]
+ 696 0020 0023     		movs	r3, #0
+ 697 0022 0093     		str	r3, [sp]
+ 698 0024 FFF7FEFF 		bl	lr11xx_hal_write
+ 699 0028 05B0     		add	sp, sp, #20
+ 700              		@ sp needed
+ 701 002a 00BD     		pop	{pc}
+ 703              		.section	.text.lr11xx_radio_set_gfsk_pkt_params,"ax",%progbits
+ 704              		.align	1
+ 705              		.global	lr11xx_radio_set_gfsk_pkt_params
+ 706              		.syntax unified
+ 707              		.code	16
+ 708              		.thumb_func
+ 709              		.fpu softvfp
+ 711              	lr11xx_radio_set_gfsk_pkt_params:
+ 712              		@ args = 0, pretend = 0, frame = 16
+ 713              		@ frame_needed = 0, uses_anonymous_args = 0
+ 714 0000 0222     		movs	r2, #2
+ 715 0002 0B00     		movs	r3, r1
+ 716 0004 10B5     		push	{r4, lr}
+ 717 0006 86B0     		sub	sp, sp, #24
+ 718 0008 03A9     		add	r1, sp, #12
+ 719 000a 0A70     		strb	r2, [r1]
+ARM GAS  /tmp/ccxoaqOj.s 			page 13
+
+
+ 720 000c 0E32     		adds	r2, r2, #14
+ 721 000e 4A70     		strb	r2, [r1, #1]
+ 722 0010 1A88     		ldrh	r2, [r3]
+ 723 0012 140A     		lsrs	r4, r2, #8
+ 724 0014 8C70     		strb	r4, [r1, #2]
+ 725 0016 CA70     		strb	r2, [r1, #3]
+ 726 0018 9A78     		ldrb	r2, [r3, #2]
+ 727 001a 0A71     		strb	r2, [r1, #4]
+ 728 001c DA78     		ldrb	r2, [r3, #3]
+ 729 001e 4A71     		strb	r2, [r1, #5]
+ 730 0020 1A79     		ldrb	r2, [r3, #4]
+ 731 0022 8A71     		strb	r2, [r1, #6]
+ 732 0024 5A79     		ldrb	r2, [r3, #5]
+ 733 0026 CA71     		strb	r2, [r1, #7]
+ 734 0028 9A79     		ldrb	r2, [r3, #6]
+ 735 002a 0A72     		strb	r2, [r1, #8]
+ 736 002c DA79     		ldrb	r2, [r3, #7]
+ 737 002e 4A72     		strb	r2, [r1, #9]
+ 738 0030 1B7A     		ldrb	r3, [r3, #8]
+ 739 0032 0B22     		movs	r2, #11
+ 740 0034 8B72     		strb	r3, [r1, #10]
+ 741 0036 0023     		movs	r3, #0
+ 742 0038 0093     		str	r3, [sp]
+ 743 003a FFF7FEFF 		bl	lr11xx_hal_write
+ 744 003e 06B0     		add	sp, sp, #24
+ 745              		@ sp needed
+ 746 0040 10BD     		pop	{r4, pc}
+ 748              		.section	.text.lr11xx_radio_set_lora_pkt_params,"ax",%progbits
+ 749              		.align	1
+ 750              		.global	lr11xx_radio_set_lora_pkt_params
+ 751              		.syntax unified
+ 752              		.code	16
+ 753              		.thumb_func
+ 754              		.fpu softvfp
+ 756              	lr11xx_radio_set_lora_pkt_params:
+ 757              		@ args = 0, pretend = 0, frame = 8
+ 758              		@ frame_needed = 0, uses_anonymous_args = 0
+ 759 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 760 0002 0222     		movs	r2, #2
+ 761 0004 0B00     		movs	r3, r1
+ 762 0006 02A9     		add	r1, sp, #8
+ 763 0008 0A70     		strb	r2, [r1]
+ 764 000a 0E32     		adds	r2, r2, #14
+ 765 000c 4A70     		strb	r2, [r1, #1]
+ 766 000e 1A88     		ldrh	r2, [r3]
+ 767 0010 140A     		lsrs	r4, r2, #8
+ 768 0012 8C70     		strb	r4, [r1, #2]
+ 769 0014 CA70     		strb	r2, [r1, #3]
+ 770 0016 9A78     		ldrb	r2, [r3, #2]
+ 771 0018 0A71     		strb	r2, [r1, #4]
+ 772 001a DA78     		ldrb	r2, [r3, #3]
+ 773 001c 4A71     		strb	r2, [r1, #5]
+ 774 001e 1A79     		ldrb	r2, [r3, #4]
+ 775 0020 8A71     		strb	r2, [r1, #6]
+ 776 0022 5B79     		ldrb	r3, [r3, #5]
+ 777 0024 0822     		movs	r2, #8
+ 778 0026 CB71     		strb	r3, [r1, #7]
+ARM GAS  /tmp/ccxoaqOj.s 			page 14
+
+
+ 779 0028 0023     		movs	r3, #0
+ 780 002a 0093     		str	r3, [sp]
+ 781 002c FFF7FEFF 		bl	lr11xx_hal_write
+ 782 0030 04B0     		add	sp, sp, #16
+ 783              		@ sp needed
+ 784 0032 10BD     		pop	{r4, pc}
+ 786              		.section	.text.lr11xx_radio_set_tx_params,"ax",%progbits
+ 787              		.align	1
+ 788              		.global	lr11xx_radio_set_tx_params
+ 789              		.syntax unified
+ 790              		.code	16
+ 791              		.thumb_func
+ 792              		.fpu softvfp
+ 794              	lr11xx_radio_set_tx_params:
+ 795              		@ args = 0, pretend = 0, frame = 8
+ 796              		@ frame_needed = 0, uses_anonymous_args = 0
+ 797 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 798 0002 0223     		movs	r3, #2
+ 799 0004 03AC     		add	r4, sp, #12
+ 800 0006 2370     		strb	r3, [r4]
+ 801 0008 0F33     		adds	r3, r3, #15
+ 802 000a 6370     		strb	r3, [r4, #1]
+ 803 000c 0023     		movs	r3, #0
+ 804 000e A170     		strb	r1, [r4, #2]
+ 805 0010 E270     		strb	r2, [r4, #3]
+ 806 0012 2100     		movs	r1, r4
+ 807 0014 0422     		movs	r2, #4
+ 808 0016 0093     		str	r3, [sp]
+ 809 0018 FFF7FEFF 		bl	lr11xx_hal_write
+ 810 001c 04B0     		add	sp, sp, #16
+ 811              		@ sp needed
+ 812 001e 10BD     		pop	{r4, pc}
+ 814              		.section	.text.lr11xx_radio_set_pkt_address,"ax",%progbits
+ 815              		.align	1
+ 816              		.global	lr11xx_radio_set_pkt_address
+ 817              		.syntax unified
+ 818              		.code	16
+ 819              		.thumb_func
+ 820              		.fpu softvfp
+ 822              	lr11xx_radio_set_pkt_address:
+ 823              		@ args = 0, pretend = 0, frame = 8
+ 824              		@ frame_needed = 0, uses_anonymous_args = 0
+ 825 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 826 0002 0223     		movs	r3, #2
+ 827 0004 03AC     		add	r4, sp, #12
+ 828 0006 2370     		strb	r3, [r4]
+ 829 0008 1033     		adds	r3, r3, #16
+ 830 000a 6370     		strb	r3, [r4, #1]
+ 831 000c 0023     		movs	r3, #0
+ 832 000e A170     		strb	r1, [r4, #2]
+ 833 0010 E270     		strb	r2, [r4, #3]
+ 834 0012 2100     		movs	r1, r4
+ 835 0014 0422     		movs	r2, #4
+ 836 0016 0093     		str	r3, [sp]
+ 837 0018 FFF7FEFF 		bl	lr11xx_hal_write
+ 838 001c 04B0     		add	sp, sp, #16
+ 839              		@ sp needed
+ARM GAS  /tmp/ccxoaqOj.s 			page 15
+
+
+ 840 001e 10BD     		pop	{r4, pc}
+ 842              		.section	.text.lr11xx_radio_set_rx_tx_fallback_mode,"ax",%progbits
+ 843              		.align	1
+ 844              		.global	lr11xx_radio_set_rx_tx_fallback_mode
+ 845              		.syntax unified
+ 846              		.code	16
+ 847              		.thumb_func
+ 848              		.fpu softvfp
+ 850              	lr11xx_radio_set_rx_tx_fallback_mode:
+ 851              		@ args = 0, pretend = 0, frame = 8
+ 852              		@ frame_needed = 0, uses_anonymous_args = 0
+ 853 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 854 0002 0223     		movs	r3, #2
+ 855 0004 03AC     		add	r4, sp, #12
+ 856 0006 2370     		strb	r3, [r4]
+ 857 0008 1133     		adds	r3, r3, #17
+ 858 000a 6370     		strb	r3, [r4, #1]
+ 859 000c 0023     		movs	r3, #0
+ 860 000e A170     		strb	r1, [r4, #2]
+ 861 0010 0322     		movs	r2, #3
+ 862 0012 2100     		movs	r1, r4
+ 863 0014 0093     		str	r3, [sp]
+ 864 0016 FFF7FEFF 		bl	lr11xx_hal_write
+ 865 001a 04B0     		add	sp, sp, #16
+ 866              		@ sp needed
+ 867 001c 10BD     		pop	{r4, pc}
+ 869              		.section	.text.lr11xx_radio_set_rx_duty_cycle_with_timings_in_rtc_step,"ax",%progbits
+ 870              		.align	1
+ 871              		.global	lr11xx_radio_set_rx_duty_cycle_with_timings_in_rtc_step
+ 872              		.syntax unified
+ 873              		.code	16
+ 874              		.thumb_func
+ 875              		.fpu softvfp
+ 877              	lr11xx_radio_set_rx_duty_cycle_with_timings_in_rtc_step:
+ 878              		@ args = 0, pretend = 0, frame = 16
+ 879              		@ frame_needed = 0, uses_anonymous_args = 0
+ 880 0000 30B5     		push	{r4, r5, lr}
+ 881 0002 0225     		movs	r5, #2
+ 882 0004 0C00     		movs	r4, r1
+ 883 0006 87B0     		sub	sp, sp, #28
+ 884 0008 03A9     		add	r1, sp, #12
+ 885 000a 0B72     		strb	r3, [r1, #8]
+ 886 000c 0023     		movs	r3, #0
+ 887 000e 0D70     		strb	r5, [r1]
+ 888 0010 1235     		adds	r5, r5, #18
+ 889 0012 4D70     		strb	r5, [r1, #1]
+ 890 0014 250C     		lsrs	r5, r4, #16
+ 891 0016 8D70     		strb	r5, [r1, #2]
+ 892 0018 0C71     		strb	r4, [r1, #4]
+ 893 001a 250A     		lsrs	r5, r4, #8
+ 894 001c 140C     		lsrs	r4, r2, #16
+ 895 001e 4C71     		strb	r4, [r1, #5]
+ 896 0020 140A     		lsrs	r4, r2, #8
+ 897 0022 CA71     		strb	r2, [r1, #7]
+ 898 0024 CD70     		strb	r5, [r1, #3]
+ 899 0026 8C71     		strb	r4, [r1, #6]
+ 900 0028 0922     		movs	r2, #9
+ARM GAS  /tmp/ccxoaqOj.s 			page 16
+
+
+ 901 002a 0093     		str	r3, [sp]
+ 902 002c FFF7FEFF 		bl	lr11xx_hal_write
+ 903 0030 07B0     		add	sp, sp, #28
+ 904              		@ sp needed
+ 905 0032 30BD     		pop	{r4, r5, pc}
+ 907              		.global	__aeabi_uidiv
+ 908              		.section	.text.lr11xx_radio_set_rx_duty_cycle,"ax",%progbits
+ 909              		.align	1
+ 910              		.global	lr11xx_radio_set_rx_duty_cycle
+ 911              		.syntax unified
+ 912              		.code	16
+ 913              		.thumb_func
+ 914              		.fpu softvfp
+ 916              	lr11xx_radio_set_rx_duty_cycle:
+ 917              		@ args = 0, pretend = 0, frame = 0
+ 918              		@ frame_needed = 0, uses_anonymous_args = 0
+ 919 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 920 0002 0C00     		movs	r4, r1
+ 921              		@ sp needed
+ 922 0004 FA21     		movs	r1, #250
+ 923 0006 0500     		movs	r5, r0
+ 924 0008 8900     		lsls	r1, r1, #2
+ 925 000a D003     		lsls	r0, r2, #15
+ 926 000c 1F00     		movs	r7, r3
+ 927 000e FFF7FEFF 		bl	__aeabi_uidiv
+ 928 0012 FA21     		movs	r1, #250
+ 929 0014 0600     		movs	r6, r0
+ 930 0016 8900     		lsls	r1, r1, #2
+ 931 0018 E003     		lsls	r0, r4, #15
+ 932 001a FFF7FEFF 		bl	__aeabi_uidiv
+ 933 001e 3B00     		movs	r3, r7
+ 934 0020 0100     		movs	r1, r0
+ 935 0022 3200     		movs	r2, r6
+ 936 0024 2800     		movs	r0, r5
+ 937 0026 FFF7FEFF 		bl	lr11xx_radio_set_rx_duty_cycle_with_timings_in_rtc_step
+ 938 002a F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 940              		.section	.text.lr11xx_radio_set_pa_cfg,"ax",%progbits
+ 941              		.align	1
+ 942              		.global	lr11xx_radio_set_pa_cfg
+ 943              		.syntax unified
+ 944              		.code	16
+ 945              		.thumb_func
+ 946              		.fpu softvfp
+ 948              	lr11xx_radio_set_pa_cfg:
+ 949              		@ args = 0, pretend = 0, frame = 8
+ 950              		@ frame_needed = 0, uses_anonymous_args = 0
+ 951 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 952 0002 0222     		movs	r2, #2
+ 953 0004 0B00     		movs	r3, r1
+ 954 0006 02A9     		add	r1, sp, #8
+ 955 0008 0A70     		strb	r2, [r1]
+ 956 000a 1332     		adds	r2, r2, #19
+ 957 000c 4A70     		strb	r2, [r1, #1]
+ 958 000e 1A78     		ldrb	r2, [r3]
+ 959 0010 8A70     		strb	r2, [r1, #2]
+ 960 0012 5A78     		ldrb	r2, [r3, #1]
+ 961 0014 CA70     		strb	r2, [r1, #3]
+ARM GAS  /tmp/ccxoaqOj.s 			page 17
+
+
+ 962 0016 9A78     		ldrb	r2, [r3, #2]
+ 963 0018 0A71     		strb	r2, [r1, #4]
+ 964 001a DB78     		ldrb	r3, [r3, #3]
+ 965 001c 0622     		movs	r2, #6
+ 966 001e 4B71     		strb	r3, [r1, #5]
+ 967 0020 0023     		movs	r3, #0
+ 968 0022 0093     		str	r3, [sp]
+ 969 0024 FFF7FEFF 		bl	lr11xx_hal_write
+ 970 0028 05B0     		add	sp, sp, #20
+ 971              		@ sp needed
+ 972 002a 00BD     		pop	{pc}
+ 974              		.section	.text.lr11xx_radio_stop_timeout_on_preamble,"ax",%progbits
+ 975              		.align	1
+ 976              		.global	lr11xx_radio_stop_timeout_on_preamble
+ 977              		.syntax unified
+ 978              		.code	16
+ 979              		.thumb_func
+ 980              		.fpu softvfp
+ 982              	lr11xx_radio_stop_timeout_on_preamble:
+ 983              		@ args = 0, pretend = 0, frame = 8
+ 984              		@ frame_needed = 0, uses_anonymous_args = 0
+ 985 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 986 0002 0223     		movs	r3, #2
+ 987 0004 03AC     		add	r4, sp, #12
+ 988 0006 2370     		strb	r3, [r4]
+ 989 0008 1533     		adds	r3, r3, #21
+ 990 000a 6370     		strb	r3, [r4, #1]
+ 991 000c 0023     		movs	r3, #0
+ 992 000e A170     		strb	r1, [r4, #2]
+ 993 0010 0322     		movs	r2, #3
+ 994 0012 2100     		movs	r1, r4
+ 995 0014 0093     		str	r3, [sp]
+ 996 0016 FFF7FEFF 		bl	lr11xx_hal_write
+ 997 001a 04B0     		add	sp, sp, #16
+ 998              		@ sp needed
+ 999 001c 10BD     		pop	{r4, pc}
+ 1001              		.section	.text.lr11xx_radio_set_tx_cw,"ax",%progbits
+ 1002              		.align	1
+ 1003              		.global	lr11xx_radio_set_tx_cw
+ 1004              		.syntax unified
+ 1005              		.code	16
+ 1006              		.thumb_func
+ 1007              		.fpu softvfp
+ 1009              	lr11xx_radio_set_tx_cw:
+ 1010              		@ args = 0, pretend = 0, frame = 8
+ 1011              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1012 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 1013 0002 054B     		ldr	r3, .L45
+ 1014 0004 03A9     		add	r1, sp, #12
+ 1015 0006 0B80     		strh	r3, [r1]
+ 1016 0008 0023     		movs	r3, #0
+ 1017 000a 0222     		movs	r2, #2
+ 1018 000c 0093     		str	r3, [sp]
+ 1019 000e FFF7FEFF 		bl	lr11xx_hal_write
+ 1020 0012 05B0     		add	sp, sp, #20
+ 1021              		@ sp needed
+ 1022 0014 00BD     		pop	{pc}
+ARM GAS  /tmp/ccxoaqOj.s 			page 18
+
+
+ 1023              	.L46:
+ 1024 0016 C046     		.align	2
+ 1025              	.L45:
+ 1026 0018 02190000 		.word	6402
+ 1028              		.section	.text.lr11xx_radio_set_lora_sync_timeout,"ax",%progbits
+ 1029              		.align	1
+ 1030              		.global	lr11xx_radio_set_lora_sync_timeout
+ 1031              		.syntax unified
+ 1032              		.code	16
+ 1033              		.thumb_func
+ 1034              		.fpu softvfp
+ 1036              	lr11xx_radio_set_lora_sync_timeout:
+ 1037              		@ args = 0, pretend = 0, frame = 8
+ 1038              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1039 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 1040 0002 0223     		movs	r3, #2
+ 1041 0004 03AC     		add	r4, sp, #12
+ 1042 0006 2370     		strb	r3, [r4]
+ 1043 0008 1933     		adds	r3, r3, #25
+ 1044 000a 6370     		strb	r3, [r4, #1]
+ 1045 000c 0023     		movs	r3, #0
+ 1046 000e A170     		strb	r1, [r4, #2]
+ 1047 0010 0322     		movs	r2, #3
+ 1048 0012 2100     		movs	r1, r4
+ 1049 0014 0093     		str	r3, [sp]
+ 1050 0016 FFF7FEFF 		bl	lr11xx_hal_write
+ 1051 001a 04B0     		add	sp, sp, #16
+ 1052              		@ sp needed
+ 1053 001c 10BD     		pop	{r4, pc}
+ 1055              		.section	.text.lr11xx_radio_set_gfsk_crc_params,"ax",%progbits
+ 1056              		.align	1
+ 1057              		.global	lr11xx_radio_set_gfsk_crc_params
+ 1058              		.syntax unified
+ 1059              		.code	16
+ 1060              		.thumb_func
+ 1061              		.fpu softvfp
+ 1063              	lr11xx_radio_set_gfsk_crc_params:
+ 1064              		@ args = 0, pretend = 0, frame = 16
+ 1065              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1066 0000 10B5     		push	{r4, lr}
+ 1067 0002 0224     		movs	r4, #2
+ 1068 0004 0B00     		movs	r3, r1
+ 1069 0006 86B0     		sub	sp, sp, #24
+ 1070 0008 03A9     		add	r1, sp, #12
+ 1071 000a 0C70     		strb	r4, [r1]
+ 1072 000c 2234     		adds	r4, r4, #34
+ 1073 000e 4C70     		strb	r4, [r1, #1]
+ 1074 0010 1C0E     		lsrs	r4, r3, #24
+ 1075 0012 8C70     		strb	r4, [r1, #2]
+ 1076 0014 1C0C     		lsrs	r4, r3, #16
+ 1077 0016 CC70     		strb	r4, [r1, #3]
+ 1078 0018 4B71     		strb	r3, [r1, #5]
+ 1079 001a 1C0A     		lsrs	r4, r3, #8
+ 1080 001c 130E     		lsrs	r3, r2, #24
+ 1081 001e 8B71     		strb	r3, [r1, #6]
+ 1082 0020 130C     		lsrs	r3, r2, #16
+ 1083 0022 CB71     		strb	r3, [r1, #7]
+ARM GAS  /tmp/ccxoaqOj.s 			page 19
+
+
+ 1084 0024 130A     		lsrs	r3, r2, #8
+ 1085 0026 0B72     		strb	r3, [r1, #8]
+ 1086 0028 0023     		movs	r3, #0
+ 1087 002a 4A72     		strb	r2, [r1, #9]
+ 1088 002c 0C71     		strb	r4, [r1, #4]
+ 1089 002e 0A22     		movs	r2, #10
+ 1090 0030 0093     		str	r3, [sp]
+ 1091 0032 FFF7FEFF 		bl	lr11xx_hal_write
+ 1092 0036 06B0     		add	sp, sp, #24
+ 1093              		@ sp needed
+ 1094 0038 10BD     		pop	{r4, pc}
+ 1096              		.section	.text.lr11xx_radio_set_gfsk_whitening_seed,"ax",%progbits
+ 1097              		.align	1
+ 1098              		.global	lr11xx_radio_set_gfsk_whitening_seed
+ 1099              		.syntax unified
+ 1100              		.code	16
+ 1101              		.thumb_func
+ 1102              		.fpu softvfp
+ 1104              	lr11xx_radio_set_gfsk_whitening_seed:
+ 1105              		@ args = 0, pretend = 0, frame = 8
+ 1106              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1107 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 1108 0002 0222     		movs	r2, #2
+ 1109 0004 0B00     		movs	r3, r1
+ 1110 0006 03A9     		add	r1, sp, #12
+ 1111 0008 0A70     		strb	r2, [r1]
+ 1112 000a 2332     		adds	r2, r2, #35
+ 1113 000c 4A70     		strb	r2, [r1, #1]
+ 1114 000e CB70     		strb	r3, [r1, #3]
+ 1115 0010 1A0A     		lsrs	r2, r3, #8
+ 1116 0012 0023     		movs	r3, #0
+ 1117 0014 8A70     		strb	r2, [r1, #2]
+ 1118 0016 0422     		movs	r2, #4
+ 1119 0018 0093     		str	r3, [sp]
+ 1120 001a FFF7FEFF 		bl	lr11xx_hal_write
+ 1121 001e 05B0     		add	sp, sp, #20
+ 1122              		@ sp needed
+ 1123 0020 00BD     		pop	{pc}
+ 1125              		.section	.text.lr11xx_radio_cfg_rx_boosted,"ax",%progbits
+ 1126              		.align	1
+ 1127              		.global	lr11xx_radio_cfg_rx_boosted
+ 1128              		.syntax unified
+ 1129              		.code	16
+ 1130              		.thumb_func
+ 1131              		.fpu softvfp
+ 1133              	lr11xx_radio_cfg_rx_boosted:
+ 1134              		@ args = 0, pretend = 0, frame = 8
+ 1135              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1136 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 1137 0002 0223     		movs	r3, #2
+ 1138 0004 03AC     		add	r4, sp, #12
+ 1139 0006 2370     		strb	r3, [r4]
+ 1140 0008 2533     		adds	r3, r3, #37
+ 1141 000a 6370     		strb	r3, [r4, #1]
+ 1142 000c 0023     		movs	r3, #0
+ 1143 000e A170     		strb	r1, [r4, #2]
+ 1144 0010 0322     		movs	r2, #3
+ARM GAS  /tmp/ccxoaqOj.s 			page 20
+
+
+ 1145 0012 2100     		movs	r1, r4
+ 1146 0014 0093     		str	r3, [sp]
+ 1147 0016 FFF7FEFF 		bl	lr11xx_hal_write
+ 1148 001a 04B0     		add	sp, sp, #16
+ 1149              		@ sp needed
+ 1150 001c 10BD     		pop	{r4, pc}
+ 1152              		.section	.text.lr11xx_radio_set_rssi_calibration,"ax",%progbits
+ 1153              		.align	1
+ 1154              		.global	lr11xx_radio_set_rssi_calibration
+ 1155              		.syntax unified
+ 1156              		.code	16
+ 1157              		.thumb_func
+ 1158              		.fpu softvfp
+ 1160              	lr11xx_radio_set_rssi_calibration:
+ 1161              		@ args = 0, pretend = 0, frame = 16
+ 1162              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1163 0000 0222     		movs	r2, #2
+ 1164 0002 0B00     		movs	r3, r1
+ 1165 0004 30B5     		push	{r4, r5, lr}
+ 1166 0006 87B0     		sub	sp, sp, #28
+ 1167 0008 02A9     		add	r1, sp, #8
+ 1168 000a 0A70     		strb	r2, [r1]
+ 1169 000c 2732     		adds	r2, r2, #39
+ 1170 000e 4A70     		strb	r2, [r1, #1]
+ 1171 0010 5C78     		ldrb	r4, [r3, #1]
+ 1172 0012 1D78     		ldrb	r5, [r3]
+ 1173 0014 1A3A     		subs	r2, r2, #26
+ 1174 0016 1540     		ands	r5, r2
+ 1175 0018 2401     		lsls	r4, r4, #4
+ 1176 001a 6419     		adds	r4, r4, r5
+ 1177 001c 8C70     		strb	r4, [r1, #2]
+ 1178 001e DC78     		ldrb	r4, [r3, #3]
+ 1179 0020 9D78     		ldrb	r5, [r3, #2]
+ 1180 0022 2401     		lsls	r4, r4, #4
+ 1181 0024 1540     		ands	r5, r2
+ 1182 0026 6419     		adds	r4, r4, r5
+ 1183 0028 CC70     		strb	r4, [r1, #3]
+ 1184 002a 5C79     		ldrb	r4, [r3, #5]
+ 1185 002c 1D79     		ldrb	r5, [r3, #4]
+ 1186 002e 2401     		lsls	r4, r4, #4
+ 1187 0030 1540     		ands	r5, r2
+ 1188 0032 6419     		adds	r4, r4, r5
+ 1189 0034 0C71     		strb	r4, [r1, #4]
+ 1190 0036 DC79     		ldrb	r4, [r3, #7]
+ 1191 0038 9D79     		ldrb	r5, [r3, #6]
+ 1192 003a 2401     		lsls	r4, r4, #4
+ 1193 003c 1540     		ands	r5, r2
+ 1194 003e 6419     		adds	r4, r4, r5
+ 1195 0040 4C71     		strb	r4, [r1, #5]
+ 1196 0042 5C7A     		ldrb	r4, [r3, #9]
+ 1197 0044 1D7A     		ldrb	r5, [r3, #8]
+ 1198 0046 2401     		lsls	r4, r4, #4
+ 1199 0048 1540     		ands	r5, r2
+ 1200 004a 6419     		adds	r4, r4, r5
+ 1201 004c 8C71     		strb	r4, [r1, #6]
+ 1202 004e DC7A     		ldrb	r4, [r3, #11]
+ 1203 0050 9D7A     		ldrb	r5, [r3, #10]
+ARM GAS  /tmp/ccxoaqOj.s 			page 21
+
+
+ 1204 0052 2401     		lsls	r4, r4, #4
+ 1205 0054 1540     		ands	r5, r2
+ 1206 0056 6419     		adds	r4, r4, r5
+ 1207 0058 CC71     		strb	r4, [r1, #7]
+ 1208 005a 5C7B     		ldrb	r4, [r3, #13]
+ 1209 005c 1D7B     		ldrb	r5, [r3, #12]
+ 1210 005e 2401     		lsls	r4, r4, #4
+ 1211 0060 1540     		ands	r5, r2
+ 1212 0062 6419     		adds	r4, r4, r5
+ 1213 0064 0C72     		strb	r4, [r1, #8]
+ 1214 0066 DC7B     		ldrb	r4, [r3, #15]
+ 1215 0068 9D7B     		ldrb	r5, [r3, #14]
+ 1216 006a 2401     		lsls	r4, r4, #4
+ 1217 006c 1540     		ands	r5, r2
+ 1218 006e 6419     		adds	r4, r4, r5
+ 1219 0070 4C72     		strb	r4, [r1, #9]
+ 1220 0072 1C7C     		ldrb	r4, [r3, #16]
+ 1221 0074 2240     		ands	r2, r4
+ 1222 0076 8A72     		strb	r2, [r1, #10]
+ 1223 0078 1222     		movs	r2, #18
+ 1224 007a 9B5E     		ldrsh	r3, [r3, r2]
+ 1225 007c 0B73     		strb	r3, [r1, #12]
+ 1226 007e 1A12     		asrs	r2, r3, #8
+ 1227 0080 0023     		movs	r3, #0
+ 1228 0082 CA72     		strb	r2, [r1, #11]
+ 1229 0084 0D22     		movs	r2, #13
+ 1230 0086 0093     		str	r3, [sp]
+ 1231 0088 FFF7FEFF 		bl	lr11xx_hal_write
+ 1232 008c 07B0     		add	sp, sp, #28
+ 1233              		@ sp needed
+ 1234 008e 30BD     		pop	{r4, r5, pc}
+ 1236              		.section	.text.lr11xx_radio_get_gfsk_rx_bandwidth,"ax",%progbits
+ 1237              		.align	1
+ 1238              		.global	lr11xx_radio_get_gfsk_rx_bandwidth
+ 1239              		.syntax unified
+ 1240              		.code	16
+ 1241              		.thumb_func
+ 1242              		.fpu softvfp
+ 1244              	lr11xx_radio_get_gfsk_rx_bandwidth:
+ 1245              		@ args = 0, pretend = 0, frame = 0
+ 1246              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1247              		@ link register save eliminated.
+ 1248 0000 9622     		movs	r2, #150
+ 1249 0002 0300     		movs	r3, r0
+ 1250 0004 5201     		lsls	r2, r2, #5
+ 1251 0006 9042     		cmp	r0, r2
+ 1252 0008 03D8     		bhi	.L53
+ 1253 000a 1F23     		movs	r3, #31
+ 1254              	.L75:
+ 1255 000c 0020     		movs	r0, #0
+ 1256 000e 0B70     		strb	r3, [r1]
+ 1257              	.L54:
+ 1258              		@ sp needed
+ 1259 0010 7047     		bx	lr
+ 1260              	.L53:
+ 1261 0012 324A     		ldr	r2, .L76
+ 1262 0014 9042     		cmp	r0, r2
+ARM GAS  /tmp/ccxoaqOj.s 			page 22
+
+
+ 1263 0016 01D8     		bhi	.L55
+ 1264 0018 1723     		movs	r3, #23
+ 1265 001a F7E7     		b	.L75
+ 1266              	.L55:
+ 1267 001c 304A     		ldr	r2, .L76+4
+ 1268 001e 9042     		cmp	r0, r2
+ 1269 0020 01D8     		bhi	.L56
+ 1270 0022 0F23     		movs	r3, #15
+ 1271 0024 F2E7     		b	.L75
+ 1272              	.L56:
+ 1273 0026 2F4A     		ldr	r2, .L76+8
+ 1274 0028 9042     		cmp	r0, r2
+ 1275 002a 01D8     		bhi	.L57
+ 1276 002c 1E23     		movs	r3, #30
+ 1277 002e EDE7     		b	.L75
+ 1278              	.L57:
+ 1279 0030 2D4A     		ldr	r2, .L76+12
+ 1280 0032 9042     		cmp	r0, r2
+ 1281 0034 01D8     		bhi	.L58
+ 1282 0036 1623     		movs	r3, #22
+ 1283 0038 E8E7     		b	.L75
+ 1284              	.L58:
+ 1285 003a 2C4A     		ldr	r2, .L76+16
+ 1286 003c 9042     		cmp	r0, r2
+ 1287 003e 01D8     		bhi	.L59
+ 1288 0040 0E23     		movs	r3, #14
+ 1289 0042 E3E7     		b	.L75
+ 1290              	.L59:
+ 1291 0044 2A4A     		ldr	r2, .L76+20
+ 1292 0046 9042     		cmp	r0, r2
+ 1293 0048 01D8     		bhi	.L60
+ 1294 004a 1D23     		movs	r3, #29
+ 1295 004c DEE7     		b	.L75
+ 1296              	.L60:
+ 1297 004e 294A     		ldr	r2, .L76+24
+ 1298 0050 9042     		cmp	r0, r2
+ 1299 0052 01D8     		bhi	.L61
+ 1300 0054 1523     		movs	r3, #21
+ 1301 0056 D9E7     		b	.L75
+ 1302              	.L61:
+ 1303 0058 274A     		ldr	r2, .L76+28
+ 1304 005a 9042     		cmp	r0, r2
+ 1305 005c 01D8     		bhi	.L62
+ 1306 005e 0D23     		movs	r3, #13
+ 1307 0060 D4E7     		b	.L75
+ 1308              	.L62:
+ 1309 0062 264A     		ldr	r2, .L76+32
+ 1310 0064 9042     		cmp	r0, r2
+ 1311 0066 01D8     		bhi	.L63
+ 1312 0068 1C23     		movs	r3, #28
+ 1313 006a CFE7     		b	.L75
+ 1314              	.L63:
+ 1315 006c 244A     		ldr	r2, .L76+36
+ 1316 006e 9042     		cmp	r0, r2
+ 1317 0070 01D8     		bhi	.L64
+ 1318 0072 1423     		movs	r3, #20
+ 1319 0074 CAE7     		b	.L75
+ARM GAS  /tmp/ccxoaqOj.s 			page 23
+
+
+ 1320              	.L64:
+ 1321 0076 234A     		ldr	r2, .L76+40
+ 1322 0078 9042     		cmp	r0, r2
+ 1323 007a 01D8     		bhi	.L65
+ 1324 007c 0C23     		movs	r3, #12
+ 1325 007e C5E7     		b	.L75
+ 1326              	.L65:
+ 1327 0080 214A     		ldr	r2, .L76+44
+ 1328 0082 9042     		cmp	r0, r2
+ 1329 0084 01D8     		bhi	.L66
+ 1330 0086 1B23     		movs	r3, #27
+ 1331 0088 C0E7     		b	.L75
+ 1332              	.L66:
+ 1333 008a 204A     		ldr	r2, .L76+48
+ 1334 008c 9042     		cmp	r0, r2
+ 1335 008e 01D8     		bhi	.L67
+ 1336 0090 1323     		movs	r3, #19
+ 1337 0092 BBE7     		b	.L75
+ 1338              	.L67:
+ 1339 0094 1E4A     		ldr	r2, .L76+52
+ 1340 0096 9042     		cmp	r0, r2
+ 1341 0098 01D8     		bhi	.L68
+ 1342 009a 0B23     		movs	r3, #11
+ 1343 009c B6E7     		b	.L75
+ 1344              	.L68:
+ 1345 009e 1D4A     		ldr	r2, .L76+56
+ 1346 00a0 9042     		cmp	r0, r2
+ 1347 00a2 01D8     		bhi	.L69
+ 1348 00a4 1A23     		movs	r3, #26
+ 1349 00a6 B1E7     		b	.L75
+ 1350              	.L69:
+ 1351 00a8 1B4A     		ldr	r2, .L76+60
+ 1352 00aa 9042     		cmp	r0, r2
+ 1353 00ac 01D8     		bhi	.L70
+ 1354 00ae 1223     		movs	r3, #18
+ 1355 00b0 ACE7     		b	.L75
+ 1356              	.L70:
+ 1357 00b2 1A4A     		ldr	r2, .L76+64
+ 1358 00b4 9042     		cmp	r0, r2
+ 1359 00b6 01D8     		bhi	.L71
+ 1360 00b8 0A23     		movs	r3, #10
+ 1361 00ba A7E7     		b	.L75
+ 1362              	.L71:
+ 1363 00bc 184A     		ldr	r2, .L76+68
+ 1364 00be 9042     		cmp	r0, r2
+ 1365 00c0 01D8     		bhi	.L72
+ 1366 00c2 1923     		movs	r3, #25
+ 1367 00c4 A2E7     		b	.L75
+ 1368              	.L72:
+ 1369 00c6 174A     		ldr	r2, .L76+72
+ 1370 00c8 9042     		cmp	r0, r2
+ 1371 00ca 01D8     		bhi	.L73
+ 1372 00cc 1123     		movs	r3, #17
+ 1373 00ce 9DE7     		b	.L75
+ 1374              	.L73:
+ 1375 00d0 154A     		ldr	r2, .L76+76
+ 1376 00d2 0320     		movs	r0, #3
+ARM GAS  /tmp/ccxoaqOj.s 			page 24
+
+
+ 1377 00d4 9342     		cmp	r3, r2
+ 1378 00d6 9BD8     		bhi	.L54
+ 1379 00d8 0923     		movs	r3, #9
+ 1380 00da 97E7     		b	.L75
+ 1381              	.L77:
+ 1382              		.align	2
+ 1383              	.L76:
+ 1384 00dc A8160000 		.word	5800
+ 1385 00e0 841C0000 		.word	7300
+ 1386 00e4 E4250000 		.word	9700
+ 1387 00e8 B42D0000 		.word	11700
+ 1388 00ec 08390000 		.word	14600
+ 1389 00f0 2C4C0000 		.word	19500
+ 1390 00f4 685B0000 		.word	23400
+ 1391 00f8 74720000 		.word	29300
+ 1392 00fc 58980000 		.word	39000
+ 1393 0100 34B70000 		.word	46900
+ 1394 0104 E8E40000 		.word	58600
+ 1395 0108 78310100 		.word	78200
+ 1396 010c 686E0100 		.word	93800
+ 1397 0110 34CA0100 		.word	117300
+ 1398 0114 28620200 		.word	156200
+ 1399 0118 40DB0200 		.word	187200
+ 1400 011c 3C930300 		.word	234300
+ 1401 0120 C0C20400 		.word	312000
+ 1402 0124 60B30500 		.word	373600
+ 1403 0128 38200700 		.word	467000
+ 1405              		.global	__aeabi_idiv
+ 1406              		.section	.text.lr11xx_radio_get_lora_time_on_air_numerator,"ax",%progbits
+ 1407              		.align	1
+ 1408              		.global	lr11xx_radio_get_lora_time_on_air_numerator
+ 1409              		.syntax unified
+ 1410              		.code	16
+ 1411              		.thumb_func
+ 1412              		.fpu softvfp
+ 1414              	lr11xx_radio_get_lora_time_on_air_numerator:
+ 1415              		@ args = 0, pretend = 0, frame = 8
+ 1416              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1417 0000 F7B5     		push	{r0, r1, r2, r4, r5, r6, r7, lr}
+ 1418 0002 C378     		ldrb	r3, [r0, #3]
+ 1419 0004 0D78     		ldrb	r5, [r1]
+ 1420 0006 0093     		str	r3, [sp]
+ 1421 0008 0779     		ldrb	r7, [r0, #4]
+ 1422 000a 8C78     		ldrb	r4, [r1, #2]
+ 1423 000c 013F     		subs	r7, r7, #1
+ 1424 000e 7B42     		rsbs	r3, r7, #0
+ 1425 0010 5F41     		adcs	r7, r7, r3
+ 1426 0012 C978     		ldrb	r1, [r1, #3]
+ 1427 0014 009B     		ldr	r3, [sp]
+ 1428 0016 7F00     		lsls	r7, r7, #1
+ 1429 0018 FF18     		adds	r7, r7, r3
+ 1430 001a 4B1E     		subs	r3, r1, #1
+ 1431 001c 9941     		sbcs	r1, r1, r3
+ 1432 001e AB1E     		subs	r3, r5, #2
+ 1433 0020 4900     		lsls	r1, r1, #1
+ 1434 0022 8278     		ldrb	r2, [r0, #2]
+ 1435 0024 0600     		movs	r6, r0
+ARM GAS  /tmp/ccxoaqOj.s 			page 25
+
+
+ 1436 0026 691A     		subs	r1, r5, r1
+ 1437 0028 0193     		str	r3, [sp, #4]
+ 1438 002a 042C     		cmp	r4, #4
+ 1439 002c 4CD9     		bls	.L81
+ 1440 002e E31F     		subs	r3, r4, #7
+ 1441 0030 1800     		movs	r0, r3
+ 1442 0032 4342     		rsbs	r3, r0, #0
+ 1443 0034 4341     		adcs	r3, r3, r0
+ 1444 0036 1B19     		adds	r3, r3, r4
+ 1445 0038 012A     		cmp	r2, #1
+ 1446 003a 2BD1     		bne	.L82
+ 1447 003c 0022     		movs	r2, #0
+ 1448 003e 062D     		cmp	r5, #6
+ 1449 0040 00DC     		bgt	.L84
+ 1450 0042 0232     		adds	r2, r2, #2
+ 1451              	.L84:
+ 1452 0044 5F43     		muls	r7, r3
+ 1453 0046 1C23     		movs	r3, #28
+ 1454 0048 A81E     		subs	r0, r5, #2
+ 1455 004a 1218     		adds	r2, r2, r0
+ 1456 004c 5343     		muls	r3, r2
+ 1457 004e F800     		lsls	r0, r7, #3
+ 1458 0050 9842     		cmp	r0, r3
+ 1459 0052 18DC     		bgt	.L85
+ 1460 0054 9100     		lsls	r1, r2, #2
+ 1461              	.L86:
+ 1462 0056 4018     		adds	r0, r0, r1
+ 1463 0058 0138     		subs	r0, r0, #1
+ 1464 005a FFF7FEFF 		bl	__aeabi_idiv
+ 1465 005e 0200     		movs	r2, r0
+ 1466 0060 042C     		cmp	r4, #4
+ 1467 0062 02D8     		bhi	.L96
+ 1468 0064 0434     		adds	r4, r4, #4
+ 1469 0066 6243     		muls	r2, r4
+ 1470 0068 0832     		adds	r2, r2, #8
+ 1471              	.L96:
+ 1472 006a 3088     		ldrh	r0, [r6]
+ 1473 006c 0023     		movs	r3, #0
+ 1474 006e 0430     		adds	r0, r0, #4
+ 1475 0070 062D     		cmp	r5, #6
+ 1476 0072 00DC     		bgt	.L98
+ 1477 0074 0233     		adds	r3, r3, #2
+ 1478              	.L98:
+ 1479 0076 C018     		adds	r0, r0, r3
+ 1480 0078 8018     		adds	r0, r0, r2
+ 1481 007a 019B     		ldr	r3, [sp, #4]
+ 1482 007c 8000     		lsls	r0, r0, #2
+ 1483 007e 0130     		adds	r0, r0, #1
+ 1484 0080 9840     		lsls	r0, r0, r3
+ 1485              		@ sp needed
+ 1486 0082 0138     		subs	r0, r0, #1
+ 1487 0084 FEBD     		pop	{r1, r2, r3, r4, r5, r6, r7, pc}
+ 1488              	.L85:
+ 1489 0086 8900     		lsls	r1, r1, #2
+ 1490 0088 7F18     		adds	r7, r7, r1
+ 1491 008a 7800     		lsls	r0, r7, #1
+ 1492 008c D200     		lsls	r2, r2, #3
+ARM GAS  /tmp/ccxoaqOj.s 			page 26
+
+
+ 1493 008e 801A     		subs	r0, r0, r2
+ 1494 0090 8000     		lsls	r0, r0, #2
+ 1495 0092 E0E7     		b	.L86
+ 1496              	.L82:
+ 1497 0094 0022     		movs	r2, #0
+ 1498 0096 062D     		cmp	r5, #6
+ 1499 0098 00DC     		bgt	.L88
+ 1500 009a 0232     		adds	r2, r2, #2
+ 1501              	.L88:
+ 1502 009c 0720     		movs	r0, #7
+ 1503 009e 5219     		adds	r2, r2, r5
+ 1504 00a0 073A     		subs	r2, r2, #7
+ 1505 00a2 9200     		lsls	r2, r2, #2
+ 1506 00a4 8243     		bics	r2, r0
+ 1507 00a6 FF00     		lsls	r7, r7, #3
+ 1508 00a8 9742     		cmp	r7, r2
+ 1509 00aa 04DD     		ble	.L89
+ 1510 00ac 0098     		ldr	r0, [sp]
+ 1511 00ae C000     		lsls	r0, r0, #3
+ 1512 00b0 8242     		cmp	r2, r0
+ 1513 00b2 00DD     		ble	.L89
+ 1514 00b4 0200     		movs	r2, r0
+ 1515              	.L89:
+ 1516 00b6 B81A     		subs	r0, r7, r2
+ 1517 00b8 C243     		mvns	r2, r0
+ 1518 00ba D217     		asrs	r2, r2, #31
+ 1519 00bc 1040     		ands	r0, r2
+ 1520 00be 5843     		muls	r0, r3
+ 1521 00c0 4F01     		lsls	r7, r1, #5
+ 1522 00c2 C019     		adds	r0, r0, r7
+ 1523              	.L104:
+ 1524 00c4 8900     		lsls	r1, r1, #2
+ 1525 00c6 C6E7     		b	.L86
+ 1526              	.L81:
+ 1527 00c8 0020     		movs	r0, #0
+ 1528 00ca 062D     		cmp	r5, #6
+ 1529 00cc 00DC     		bgt	.L93
+ 1530 00ce 0230     		adds	r0, r0, #2
+ 1531              	.L93:
+ 1532 00d0 4019     		adds	r0, r0, r5
+ 1533 00d2 0238     		subs	r0, r0, #2
+ 1534 00d4 8000     		lsls	r0, r0, #2
+ 1535 00d6 012A     		cmp	r2, #1
+ 1536 00d8 00D0     		beq	.L94
+ 1537 00da 1438     		subs	r0, r0, #20
+ 1538              	.L94:
+ 1539 00dc FF00     		lsls	r7, r7, #3
+ 1540 00de 381A     		subs	r0, r7, r0
+ 1541 00e0 C343     		mvns	r3, r0
+ 1542 00e2 DB17     		asrs	r3, r3, #31
+ 1543 00e4 1840     		ands	r0, r3
+ 1544 00e6 EDE7     		b	.L104
+ 1546              		.section	.text.lr11xx_radio_get_lora_bw_in_hz,"ax",%progbits
+ 1547              		.align	1
+ 1548              		.global	lr11xx_radio_get_lora_bw_in_hz
+ 1549              		.syntax unified
+ 1550              		.code	16
+ARM GAS  /tmp/ccxoaqOj.s 			page 27
+
+
+ 1551              		.thumb_func
+ 1552              		.fpu softvfp
+ 1554              	lr11xx_radio_get_lora_bw_in_hz:
+ 1555              		@ args = 0, pretend = 0, frame = 0
+ 1556              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1557              		@ link register save eliminated.
+ 1558 0000 0138     		subs	r0, r0, #1
+ 1559 0002 C3B2     		uxtb	r3, r0
+ 1560 0004 0020     		movs	r0, #0
+ 1561 0006 0E2B     		cmp	r3, #14
+ 1562 0008 02D8     		bhi	.L105
+ 1563 000a 024A     		ldr	r2, .L108
+ 1564 000c 9B00     		lsls	r3, r3, #2
+ 1565 000e 9858     		ldr	r0, [r3, r2]
+ 1566              	.L105:
+ 1567              		@ sp needed
+ 1568 0010 7047     		bx	lr
+ 1569              	.L109:
+ 1570 0012 C046     		.align	2
+ 1571              	.L108:
+ 1572 0014 00000000 		.word	.LANCHOR1
+ 1574              		.section	.text.lr11xx_radio_get_lora_time_on_air_in_ms,"ax",%progbits
+ 1575              		.align	1
+ 1576              		.global	lr11xx_radio_get_lora_time_on_air_in_ms
+ 1577              		.syntax unified
+ 1578              		.code	16
+ 1579              		.thumb_func
+ 1580              		.fpu softvfp
+ 1582              	lr11xx_radio_get_lora_time_on_air_in_ms:
+ 1583              		@ args = 0, pretend = 0, frame = 0
+ 1584              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1585 0000 70B5     		push	{r4, r5, r6, lr}
+ 1586 0002 0D00     		movs	r5, r1
+ 1587              		@ sp needed
+ 1588 0004 FFF7FEFF 		bl	lr11xx_radio_get_lora_time_on_air_numerator
+ 1589 0008 0400     		movs	r4, r0
+ 1590 000a 6878     		ldrb	r0, [r5, #1]
+ 1591 000c FFF7FEFF 		bl	lr11xx_radio_get_lora_bw_in_hz
+ 1592 0010 0100     		movs	r1, r0
+ 1593 0012 FA20     		movs	r0, #250
+ 1594 0014 8000     		lsls	r0, r0, #2
+ 1595 0016 6043     		muls	r0, r4
+ 1596 0018 4B1E     		subs	r3, r1, #1
+ 1597 001a C018     		adds	r0, r0, r3
+ 1598 001c FFF7FEFF 		bl	__aeabi_uidiv
+ 1599 0020 70BD     		pop	{r4, r5, r6, pc}
+ 1601              		.section	.text.lr11xx_radio_get_gfsk_time_on_air_numerator,"ax",%progbits
+ 1602              		.align	1
+ 1603              		.global	lr11xx_radio_get_gfsk_time_on_air_numerator
+ 1604              		.syntax unified
+ 1605              		.code	16
+ 1606              		.thumb_func
+ 1607              		.fpu softvfp
+ 1609              	lr11xx_radio_get_gfsk_time_on_air_numerator:
+ 1610              		@ args = 0, pretend = 0, frame = 0
+ 1611              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1612 0000 10B5     		push	{r4, lr}
+ARM GAS  /tmp/ccxoaqOj.s 			page 28
+
+
+ 1613 0002 4179     		ldrb	r1, [r0, #5]
+ 1614 0004 0200     		movs	r2, r0
+ 1615 0006 0020     		movs	r0, #0
+ 1616 0008 0229     		cmp	r1, #2
+ 1617 000a 12D8     		bhi	.L111
+ 1618 000c 094C     		ldr	r4, .L116
+ 1619 000e 1388     		ldrh	r3, [r2]
+ 1620 0010 615C     		ldrb	r1, [r4, r1]
+ 1621 0012 5B18     		adds	r3, r3, r1
+ 1622 0014 D178     		ldrb	r1, [r2, #3]
+ 1623 0016 5918     		adds	r1, r3, r1
+ 1624 0018 1379     		ldrb	r3, [r2, #4]
+ 1625 001a 5C1E     		subs	r4, r3, #1
+ 1626 001c A341     		sbcs	r3, r3, r4
+ 1627 001e 9479     		ldrb	r4, [r2, #6]
+ 1628 0020 D279     		ldrb	r2, [r2, #7]
+ 1629 0022 1B19     		adds	r3, r3, r4
+ 1630 0024 062A     		cmp	r2, #6
+ 1631 0026 01D8     		bhi	.L113
+ 1632 0028 0348     		ldr	r0, .L116+4
+ 1633 002a 805C     		ldrb	r0, [r0, r2]
+ 1634              	.L113:
+ 1635 002c 1818     		adds	r0, r3, r0
+ 1636 002e C000     		lsls	r0, r0, #3
+ 1637 0030 4018     		adds	r0, r0, r1
+ 1638              	.L111:
+ 1639              		@ sp needed
+ 1640 0032 10BD     		pop	{r4, pc}
+ 1641              	.L117:
+ 1642              		.align	2
+ 1643              	.L116:
+ 1644 0034 00000000 		.word	.LANCHOR2
+ 1645 0038 00000000 		.word	.LANCHOR3
+ 1647              		.section	.text.lr11xx_radio_get_gfsk_time_on_air_in_ms,"ax",%progbits
+ 1648              		.align	1
+ 1649              		.global	lr11xx_radio_get_gfsk_time_on_air_in_ms
+ 1650              		.syntax unified
+ 1651              		.code	16
+ 1652              		.thumb_func
+ 1653              		.fpu softvfp
+ 1655              	lr11xx_radio_get_gfsk_time_on_air_in_ms:
+ 1656              		@ args = 0, pretend = 0, frame = 0
+ 1657              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1658 0000 10B5     		push	{r4, lr}
+ 1659 0002 0C00     		movs	r4, r1
+ 1660              		@ sp needed
+ 1661 0004 FFF7FEFF 		bl	lr11xx_radio_get_gfsk_time_on_air_numerator
+ 1662 0008 FA23     		movs	r3, #250
+ 1663 000a 9B00     		lsls	r3, r3, #2
+ 1664 000c 5843     		muls	r0, r3
+ 1665 000e 2168     		ldr	r1, [r4]
+ 1666 0010 4B1E     		subs	r3, r1, #1
+ 1667 0012 C018     		adds	r0, r0, r3
+ 1668 0014 FFF7FEFF 		bl	__aeabi_uidiv
+ 1669 0018 10BD     		pop	{r4, pc}
+ 1671              		.section	.text.lr11xx_radio_convert_time_in_ms_to_rtc_step,"ax",%progbits
+ 1672              		.align	1
+ARM GAS  /tmp/ccxoaqOj.s 			page 29
+
+
+ 1673              		.global	lr11xx_radio_convert_time_in_ms_to_rtc_step
+ 1674              		.syntax unified
+ 1675              		.code	16
+ 1676              		.thumb_func
+ 1677              		.fpu softvfp
+ 1679              	lr11xx_radio_convert_time_in_ms_to_rtc_step:
+ 1680              		@ args = 0, pretend = 0, frame = 0
+ 1681              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1682 0000 FA21     		movs	r1, #250
+ 1683 0002 10B5     		push	{r4, lr}
+ 1684 0004 C003     		lsls	r0, r0, #15
+ 1685 0006 8900     		lsls	r1, r1, #2
+ 1686 0008 FFF7FEFF 		bl	__aeabi_uidiv
+ 1687              		@ sp needed
+ 1688 000c 10BD     		pop	{r4, pc}
+ 1690              		.section	.text.lr11xx_radio_get_lora_rx_info,"ax",%progbits
+ 1691              		.align	1
+ 1692              		.global	lr11xx_radio_get_lora_rx_info
+ 1693              		.syntax unified
+ 1694              		.code	16
+ 1695              		.thumb_func
+ 1696              		.fpu softvfp
+ 1698              	lr11xx_radio_get_lora_rx_info:
+ 1699              		@ args = 0, pretend = 0, frame = 8
+ 1700              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1701 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 1702 0002 0B27     		movs	r7, #11
+ 1703 0004 0126     		movs	r6, #1
+ 1704 0006 85B0     		sub	sp, sp, #20
+ 1705 0008 0A4B     		ldr	r3, .L122
+ 1706 000a 0D00     		movs	r5, r1
+ 1707 000c 6F44     		add	r7, r7, sp
+ 1708 000e 03A9     		add	r1, sp, #12
+ 1709 0010 0B80     		strh	r3, [r1]
+ 1710 0012 1400     		movs	r4, r2
+ 1711 0014 3B00     		movs	r3, r7
+ 1712 0016 0222     		movs	r2, #2
+ 1713 0018 0096     		str	r6, [sp]
+ 1714 001a FFF7FEFF 		bl	lr11xx_hal_read
+ 1715 001e 0028     		cmp	r0, #0
+ 1716 0020 06D1     		bne	.L121
+ 1717 0022 3B78     		ldrb	r3, [r7]
+ 1718 0024 1A09     		lsrs	r2, r3, #4
+ 1719 0026 1640     		ands	r6, r2
+ 1720 0028 0722     		movs	r2, #7
+ 1721 002a 1340     		ands	r3, r2
+ 1722 002c 2E70     		strb	r6, [r5]
+ 1723 002e 2370     		strb	r3, [r4]
+ 1724              	.L121:
+ 1725 0030 05B0     		add	sp, sp, #20
+ 1726              		@ sp needed
+ 1727 0032 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 1728              	.L123:
+ 1729              		.align	2
+ 1730              	.L122:
+ 1731 0034 02300000 		.word	12290
+ 1733              		.section	.text.lr11xx_radio_apply_high_acp_workaround,"ax",%progbits
+ARM GAS  /tmp/ccxoaqOj.s 			page 30
+
+
+ 1734              		.align	1
+ 1735              		.global	lr11xx_radio_apply_high_acp_workaround
+ 1736              		.syntax unified
+ 1737              		.code	16
+ 1738              		.thumb_func
+ 1739              		.fpu softvfp
+ 1741              	lr11xx_radio_apply_high_acp_workaround:
+ 1742              		@ args = 0, pretend = 0, frame = 0
+ 1743              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1744 0000 8022     		movs	r2, #128
+ 1745 0002 10B5     		push	{r4, lr}
+ 1746 0004 0023     		movs	r3, #0
+ 1747              		@ sp needed
+ 1748 0006 0249     		ldr	r1, .L125
+ 1749 0008 D205     		lsls	r2, r2, #23
+ 1750 000a FFF7FEFF 		bl	lr11xx_regmem_write_regmem32_mask
+ 1751 000e 10BD     		pop	{r4, pc}
+ 1752              	.L126:
+ 1753              		.align	2
+ 1754              	.L125:
+ 1755 0010 5400F300 		.word	15925332
+ 1757              		.section	.text.lr11xx_radio_set_rx_with_timeout_in_rtc_step,"ax",%progbits
+ 1758              		.align	1
+ 1759              		.global	lr11xx_radio_set_rx_with_timeout_in_rtc_step
+ 1760              		.syntax unified
+ 1761              		.code	16
+ 1762              		.thumb_func
+ 1763              		.fpu softvfp
+ 1765              	lr11xx_radio_set_rx_with_timeout_in_rtc_step:
+ 1766              		@ args = 0, pretend = 0, frame = 8
+ 1767              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1768 0000 0223     		movs	r3, #2
+ 1769 0002 30B5     		push	{r4, r5, lr}
+ 1770 0004 85B0     		sub	sp, sp, #20
+ 1771 0006 02AC     		add	r4, sp, #8
+ 1772 0008 2370     		strb	r3, [r4]
+ 1773 000a 0733     		adds	r3, r3, #7
+ 1774 000c 6370     		strb	r3, [r4, #1]
+ 1775 000e 0B0C     		lsrs	r3, r1, #16
+ 1776 0010 A370     		strb	r3, [r4, #2]
+ 1777 0012 0B0A     		lsrs	r3, r1, #8
+ 1778 0014 0500     		movs	r5, r0
+ 1779 0016 E370     		strb	r3, [r4, #3]
+ 1780 0018 2171     		strb	r1, [r4, #4]
+ 1781 001a FFF7FEFF 		bl	lr11xx_radio_apply_high_acp_workaround
+ 1782 001e 0028     		cmp	r0, #0
+ 1783 0020 06D1     		bne	.L128
+ 1784 0022 0300     		movs	r3, r0
+ 1785 0024 0090     		str	r0, [sp]
+ 1786 0026 0522     		movs	r2, #5
+ 1787 0028 2100     		movs	r1, r4
+ 1788 002a 2800     		movs	r0, r5
+ 1789 002c FFF7FEFF 		bl	lr11xx_hal_write
+ 1790              	.L128:
+ 1791 0030 05B0     		add	sp, sp, #20
+ 1792              		@ sp needed
+ 1793 0032 30BD     		pop	{r4, r5, pc}
+ARM GAS  /tmp/ccxoaqOj.s 			page 31
+
+
+ 1795              		.section	.text.lr11xx_radio_set_rx,"ax",%progbits
+ 1796              		.align	1
+ 1797              		.global	lr11xx_radio_set_rx
+ 1798              		.syntax unified
+ 1799              		.code	16
+ 1800              		.thumb_func
+ 1801              		.fpu softvfp
+ 1803              	lr11xx_radio_set_rx:
+ 1804              		@ args = 0, pretend = 0, frame = 0
+ 1805              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1806 0000 10B5     		push	{r4, lr}
+ 1807 0002 0400     		movs	r4, r0
+ 1808              		@ sp needed
+ 1809 0004 C803     		lsls	r0, r1, #15
+ 1810 0006 FA21     		movs	r1, #250
+ 1811 0008 8900     		lsls	r1, r1, #2
+ 1812 000a FFF7FEFF 		bl	__aeabi_uidiv
+ 1813 000e 0100     		movs	r1, r0
+ 1814 0010 2000     		movs	r0, r4
+ 1815 0012 FFF7FEFF 		bl	lr11xx_radio_set_rx_with_timeout_in_rtc_step
+ 1816 0016 10BD     		pop	{r4, pc}
+ 1818              		.section	.text.lr11xx_radio_set_tx_with_timeout_in_rtc_step,"ax",%progbits
+ 1819              		.align	1
+ 1820              		.global	lr11xx_radio_set_tx_with_timeout_in_rtc_step
+ 1821              		.syntax unified
+ 1822              		.code	16
+ 1823              		.thumb_func
+ 1824              		.fpu softvfp
+ 1826              	lr11xx_radio_set_tx_with_timeout_in_rtc_step:
+ 1827              		@ args = 0, pretend = 0, frame = 8
+ 1828              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1829 0000 0223     		movs	r3, #2
+ 1830 0002 30B5     		push	{r4, r5, lr}
+ 1831 0004 85B0     		sub	sp, sp, #20
+ 1832 0006 02AC     		add	r4, sp, #8
+ 1833 0008 2370     		strb	r3, [r4]
+ 1834 000a 0833     		adds	r3, r3, #8
+ 1835 000c 6370     		strb	r3, [r4, #1]
+ 1836 000e 0B0C     		lsrs	r3, r1, #16
+ 1837 0010 A370     		strb	r3, [r4, #2]
+ 1838 0012 0B0A     		lsrs	r3, r1, #8
+ 1839 0014 0500     		movs	r5, r0
+ 1840 0016 E370     		strb	r3, [r4, #3]
+ 1841 0018 2171     		strb	r1, [r4, #4]
+ 1842 001a FFF7FEFF 		bl	lr11xx_radio_apply_high_acp_workaround
+ 1843 001e 0028     		cmp	r0, #0
+ 1844 0020 06D1     		bne	.L131
+ 1845 0022 0300     		movs	r3, r0
+ 1846 0024 0090     		str	r0, [sp]
+ 1847 0026 0522     		movs	r2, #5
+ 1848 0028 2100     		movs	r1, r4
+ 1849 002a 2800     		movs	r0, r5
+ 1850 002c FFF7FEFF 		bl	lr11xx_hal_write
+ 1851              	.L131:
+ 1852 0030 05B0     		add	sp, sp, #20
+ 1853              		@ sp needed
+ 1854 0032 30BD     		pop	{r4, r5, pc}
+ARM GAS  /tmp/ccxoaqOj.s 			page 32
+
+
+ 1856              		.section	.text.lr11xx_radio_set_tx,"ax",%progbits
+ 1857              		.align	1
+ 1858              		.global	lr11xx_radio_set_tx
+ 1859              		.syntax unified
+ 1860              		.code	16
+ 1861              		.thumb_func
+ 1862              		.fpu softvfp
+ 1864              	lr11xx_radio_set_tx:
+ 1865              		@ args = 0, pretend = 0, frame = 0
+ 1866              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1867 0000 10B5     		push	{r4, lr}
+ 1868 0002 0400     		movs	r4, r0
+ 1869              		@ sp needed
+ 1870 0004 C803     		lsls	r0, r1, #15
+ 1871 0006 FA21     		movs	r1, #250
+ 1872 0008 8900     		lsls	r1, r1, #2
+ 1873 000a FFF7FEFF 		bl	__aeabi_uidiv
+ 1874 000e 0100     		movs	r1, r0
+ 1875 0010 2000     		movs	r0, r4
+ 1876 0012 FFF7FEFF 		bl	lr11xx_radio_set_tx_with_timeout_in_rtc_step
+ 1877 0016 10BD     		pop	{r4, pc}
+ 1879              		.section	.text.lr11xx_radio_set_cad,"ax",%progbits
+ 1880              		.align	1
+ 1881              		.global	lr11xx_radio_set_cad
+ 1882              		.syntax unified
+ 1883              		.code	16
+ 1884              		.thumb_func
+ 1885              		.fpu softvfp
+ 1887              	lr11xx_radio_set_cad:
+ 1888              		@ args = 0, pretend = 0, frame = 8
+ 1889              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1890 0000 30B5     		push	{r4, r5, lr}
+ 1891 0002 094B     		ldr	r3, .L135
+ 1892 0004 85B0     		sub	sp, sp, #20
+ 1893 0006 03AD     		add	r5, sp, #12
+ 1894 0008 0400     		movs	r4, r0
+ 1895 000a 2B80     		strh	r3, [r5]
+ 1896 000c FFF7FEFF 		bl	lr11xx_radio_apply_high_acp_workaround
+ 1897 0010 0028     		cmp	r0, #0
+ 1898 0012 06D1     		bne	.L134
+ 1899 0014 0300     		movs	r3, r0
+ 1900 0016 0090     		str	r0, [sp]
+ 1901 0018 0222     		movs	r2, #2
+ 1902 001a 2900     		movs	r1, r5
+ 1903 001c 2000     		movs	r0, r4
+ 1904 001e FFF7FEFF 		bl	lr11xx_hal_write
+ 1905              	.L134:
+ 1906 0022 05B0     		add	sp, sp, #20
+ 1907              		@ sp needed
+ 1908 0024 30BD     		pop	{r4, r5, pc}
+ 1909              	.L136:
+ 1910 0026 C046     		.align	2
+ 1911              	.L135:
+ 1912 0028 02180000 		.word	6146
+ 1914              		.section	.text.lr11xx_radio_set_tx_infinite_preamble,"ax",%progbits
+ 1915              		.align	1
+ 1916              		.global	lr11xx_radio_set_tx_infinite_preamble
+ARM GAS  /tmp/ccxoaqOj.s 			page 33
+
+
+ 1917              		.syntax unified
+ 1918              		.code	16
+ 1919              		.thumb_func
+ 1920              		.fpu softvfp
+ 1922              	lr11xx_radio_set_tx_infinite_preamble:
+ 1923              		@ args = 0, pretend = 0, frame = 8
+ 1924              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1925 0000 30B5     		push	{r4, r5, lr}
+ 1926 0002 094B     		ldr	r3, .L139
+ 1927 0004 85B0     		sub	sp, sp, #20
+ 1928 0006 03AD     		add	r5, sp, #12
+ 1929 0008 0400     		movs	r4, r0
+ 1930 000a 2B80     		strh	r3, [r5]
+ 1931 000c FFF7FEFF 		bl	lr11xx_radio_apply_high_acp_workaround
+ 1932 0010 0028     		cmp	r0, #0
+ 1933 0012 06D1     		bne	.L138
+ 1934 0014 0300     		movs	r3, r0
+ 1935 0016 0090     		str	r0, [sp]
+ 1936 0018 0222     		movs	r2, #2
+ 1937 001a 2900     		movs	r1, r5
+ 1938 001c 2000     		movs	r0, r4
+ 1939 001e FFF7FEFF 		bl	lr11xx_hal_write
+ 1940              	.L138:
+ 1941 0022 05B0     		add	sp, sp, #20
+ 1942              		@ sp needed
+ 1943 0024 30BD     		pop	{r4, r5, pc}
+ 1944              	.L140:
+ 1945 0026 C046     		.align	2
+ 1946              	.L139:
+ 1947 0028 021A0000 		.word	6658
+ 1949              		.section	.rodata
+ 1950              		.set	.LANCHOR0,. + 0
+ 1951              	.LC0:
+ 1952 0000 0000     		.ascii	"\000\000"
+ 1953 0002 00       		.space	1
+ 1954              		.section	.rodata.CSWTCH.43,"a"
+ 1955              		.align	2
+ 1956              		.set	.LANCHOR1,. + 0
+ 1959              	CSWTCH.43:
+ 1960 0000 093D0000 		.word	15625
+ 1961 0004 127A0000 		.word	31250
+ 1962 0008 24F40000 		.word	62500
+ 1963 000c 48E80100 		.word	125000
+ 1964 0010 90D00300 		.word	250000
+ 1965 0014 20A10700 		.word	500000
+ 1966 0018 00000000 		.word	0
+ 1967 001c B1280000 		.word	10417
+ 1968 0020 61510000 		.word	20833
+ 1969 0024 C3A20000 		.word	41667
+ 1970 0028 00000000 		.word	0
+ 1971 002c 00000000 		.word	0
+ 1972 0030 F8180300 		.word	203000
+ 1973 0034 F0310600 		.word	406000
+ 1974 0038 E0630C00 		.word	812000
+ 1975              		.section	.rodata.CSWTCH.46,"a"
+ 1976              		.set	.LANCHOR2,. + 0
+ 1979              	CSWTCH.46:
+ARM GAS  /tmp/ccxoaqOj.s 			page 34
+
+
+ 1980 0000 00       		.byte	0
+ 1981 0001 08       		.byte	8
+ 1982 0002 09       		.byte	9
+ 1983              		.section	.rodata.CSWTCH.8,"a"
+ 1984              		.set	.LANCHOR3,. + 0
+ 1987              	CSWTCH.8:
+ 1988 0000 01       		.byte	1
+ 1989 0001 00       		.byte	0
+ 1990 0002 02       		.byte	2
+ 1991 0003 00       		.byte	0
+ 1992 0004 01       		.byte	1
+ 1993 0005 00       		.byte	0
+ 1994 0006 02       		.byte	2
+ 1995              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccxoaqOj.s 			page 35
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 lr11xx_radio.c
+     /tmp/ccxoaqOj.s:12     .text.lr11xx_radio_reset_stats:0000000000000000 $t
+     /tmp/ccxoaqOj.s:20     .text.lr11xx_radio_reset_stats:0000000000000000 lr11xx_radio_reset_stats
+     /tmp/ccxoaqOj.s:35     .text.lr11xx_radio_get_gfsk_stats:0000000000000000 $t
+     /tmp/ccxoaqOj.s:42     .text.lr11xx_radio_get_gfsk_stats:0000000000000000 lr11xx_radio_get_gfsk_stats
+     /tmp/ccxoaqOj.s:84     .text.lr11xx_radio_get_lora_stats:0000000000000000 $t
+     /tmp/ccxoaqOj.s:91     .text.lr11xx_radio_get_lora_stats:0000000000000000 lr11xx_radio_get_lora_stats
+     /tmp/ccxoaqOj.s:138    .text.lr11xx_radio_get_pkt_type:0000000000000000 $t
+     /tmp/ccxoaqOj.s:145    .text.lr11xx_radio_get_pkt_type:0000000000000000 lr11xx_radio_get_pkt_type
+     /tmp/ccxoaqOj.s:174    .text.lr11xx_radio_get_pkt_type:000000000000002c $d
+     /tmp/ccxoaqOj.s:177    .text.lr11xx_radio_get_rx_buffer_status:0000000000000000 $t
+     /tmp/ccxoaqOj.s:184    .text.lr11xx_radio_get_rx_buffer_status:0000000000000000 lr11xx_radio_get_rx_buffer_status
+     /tmp/ccxoaqOj.s:213    .text.lr11xx_radio_get_rx_buffer_status:000000000000002c $d
+     /tmp/ccxoaqOj.s:216    .text.lr11xx_radio_get_gfsk_pkt_status:0000000000000000 $t
+     /tmp/ccxoaqOj.s:223    .text.lr11xx_radio_get_gfsk_pkt_status:0000000000000000 lr11xx_radio_get_gfsk_pkt_status
+     /tmp/ccxoaqOj.s:278    .text.lr11xx_radio_get_gfsk_pkt_status:0000000000000060 $d
+     /tmp/ccxoaqOj.s:281    .text.lr11xx_radio_get_lora_pkt_status:0000000000000000 $t
+     /tmp/ccxoaqOj.s:288    .text.lr11xx_radio_get_lora_pkt_status:0000000000000000 lr11xx_radio_get_lora_pkt_status
+     /tmp/ccxoaqOj.s:336    .text.lr11xx_radio_get_lora_pkt_status:0000000000000054 $d
+     /tmp/ccxoaqOj.s:340    .text.lr11xx_radio_get_rssi_inst:0000000000000000 $t
+     /tmp/ccxoaqOj.s:347    .text.lr11xx_radio_get_rssi_inst:0000000000000000 lr11xx_radio_get_rssi_inst
+     /tmp/ccxoaqOj.s:378    .text.lr11xx_radio_get_rssi_inst:0000000000000030 $d
+     /tmp/ccxoaqOj.s:381    .text.lr11xx_radio_set_gfsk_sync_word:0000000000000000 $t
+     /tmp/ccxoaqOj.s:388    .text.lr11xx_radio_set_gfsk_sync_word:0000000000000000 lr11xx_radio_set_gfsk_sync_word
+     /tmp/ccxoaqOj.s:423    .text.lr11xx_radio_set_lora_sync_word:0000000000000000 $t
+     /tmp/ccxoaqOj.s:430    .text.lr11xx_radio_set_lora_sync_word:0000000000000000 lr11xx_radio_set_lora_sync_word
+     /tmp/ccxoaqOj.s:450    .text.lr11xx_radio_set_lora_public_network:0000000000000000 $t
+     /tmp/ccxoaqOj.s:457    .text.lr11xx_radio_set_lora_public_network:0000000000000000 lr11xx_radio_set_lora_public_network
+     /tmp/ccxoaqOj.s:485    .text.lr11xx_radio_set_rf_freq:0000000000000000 $t
+     /tmp/ccxoaqOj.s:492    .text.lr11xx_radio_set_rf_freq:0000000000000000 lr11xx_radio_set_rf_freq
+     /tmp/ccxoaqOj.s:518    .text.lr11xx_radio_auto_tx_rx:0000000000000000 $t
+     /tmp/ccxoaqOj.s:525    .text.lr11xx_radio_auto_tx_rx:0000000000000000 lr11xx_radio_auto_tx_rx
+     /tmp/ccxoaqOj.s:556    .text.lr11xx_radio_set_cad_params:0000000000000000 $t
+     /tmp/ccxoaqOj.s:563    .text.lr11xx_radio_set_cad_params:0000000000000000 lr11xx_radio_set_cad_params
+     /tmp/ccxoaqOj.s:596    .text.lr11xx_radio_set_pkt_type:0000000000000000 $t
+     /tmp/ccxoaqOj.s:603    .text.lr11xx_radio_set_pkt_type:0000000000000000 lr11xx_radio_set_pkt_type
+     /tmp/ccxoaqOj.s:623    .text.lr11xx_radio_set_gfsk_mod_params:0000000000000000 $t
+     /tmp/ccxoaqOj.s:630    .text.lr11xx_radio_set_gfsk_mod_params:0000000000000000 lr11xx_radio_set_gfsk_mod_params
+     /tmp/ccxoaqOj.s:670    .text.lr11xx_radio_set_lora_mod_params:0000000000000000 $t
+     /tmp/ccxoaqOj.s:677    .text.lr11xx_radio_set_lora_mod_params:0000000000000000 lr11xx_radio_set_lora_mod_params
+     /tmp/ccxoaqOj.s:704    .text.lr11xx_radio_set_gfsk_pkt_params:0000000000000000 $t
+     /tmp/ccxoaqOj.s:711    .text.lr11xx_radio_set_gfsk_pkt_params:0000000000000000 lr11xx_radio_set_gfsk_pkt_params
+     /tmp/ccxoaqOj.s:749    .text.lr11xx_radio_set_lora_pkt_params:0000000000000000 $t
+     /tmp/ccxoaqOj.s:756    .text.lr11xx_radio_set_lora_pkt_params:0000000000000000 lr11xx_radio_set_lora_pkt_params
+     /tmp/ccxoaqOj.s:787    .text.lr11xx_radio_set_tx_params:0000000000000000 $t
+     /tmp/ccxoaqOj.s:794    .text.lr11xx_radio_set_tx_params:0000000000000000 lr11xx_radio_set_tx_params
+     /tmp/ccxoaqOj.s:815    .text.lr11xx_radio_set_pkt_address:0000000000000000 $t
+     /tmp/ccxoaqOj.s:822    .text.lr11xx_radio_set_pkt_address:0000000000000000 lr11xx_radio_set_pkt_address
+     /tmp/ccxoaqOj.s:843    .text.lr11xx_radio_set_rx_tx_fallback_mode:0000000000000000 $t
+     /tmp/ccxoaqOj.s:850    .text.lr11xx_radio_set_rx_tx_fallback_mode:0000000000000000 lr11xx_radio_set_rx_tx_fallback_mode
+     /tmp/ccxoaqOj.s:870    .text.lr11xx_radio_set_rx_duty_cycle_with_timings_in_rtc_step:0000000000000000 $t
+     /tmp/ccxoaqOj.s:877    .text.lr11xx_radio_set_rx_duty_cycle_with_timings_in_rtc_step:0000000000000000 lr11xx_radio_set_rx_duty_cycle_with_timings_in_rtc_step
+     /tmp/ccxoaqOj.s:909    .text.lr11xx_radio_set_rx_duty_cycle:0000000000000000 $t
+     /tmp/ccxoaqOj.s:916    .text.lr11xx_radio_set_rx_duty_cycle:0000000000000000 lr11xx_radio_set_rx_duty_cycle
+     /tmp/ccxoaqOj.s:941    .text.lr11xx_radio_set_pa_cfg:0000000000000000 $t
+     /tmp/ccxoaqOj.s:948    .text.lr11xx_radio_set_pa_cfg:0000000000000000 lr11xx_radio_set_pa_cfg
+ARM GAS  /tmp/ccxoaqOj.s 			page 36
+
+
+     /tmp/ccxoaqOj.s:975    .text.lr11xx_radio_stop_timeout_on_preamble:0000000000000000 $t
+     /tmp/ccxoaqOj.s:982    .text.lr11xx_radio_stop_timeout_on_preamble:0000000000000000 lr11xx_radio_stop_timeout_on_preamble
+     /tmp/ccxoaqOj.s:1002   .text.lr11xx_radio_set_tx_cw:0000000000000000 $t
+     /tmp/ccxoaqOj.s:1009   .text.lr11xx_radio_set_tx_cw:0000000000000000 lr11xx_radio_set_tx_cw
+     /tmp/ccxoaqOj.s:1026   .text.lr11xx_radio_set_tx_cw:0000000000000018 $d
+     /tmp/ccxoaqOj.s:1029   .text.lr11xx_radio_set_lora_sync_timeout:0000000000000000 $t
+     /tmp/ccxoaqOj.s:1036   .text.lr11xx_radio_set_lora_sync_timeout:0000000000000000 lr11xx_radio_set_lora_sync_timeout
+     /tmp/ccxoaqOj.s:1056   .text.lr11xx_radio_set_gfsk_crc_params:0000000000000000 $t
+     /tmp/ccxoaqOj.s:1063   .text.lr11xx_radio_set_gfsk_crc_params:0000000000000000 lr11xx_radio_set_gfsk_crc_params
+     /tmp/ccxoaqOj.s:1097   .text.lr11xx_radio_set_gfsk_whitening_seed:0000000000000000 $t
+     /tmp/ccxoaqOj.s:1104   .text.lr11xx_radio_set_gfsk_whitening_seed:0000000000000000 lr11xx_radio_set_gfsk_whitening_seed
+     /tmp/ccxoaqOj.s:1126   .text.lr11xx_radio_cfg_rx_boosted:0000000000000000 $t
+     /tmp/ccxoaqOj.s:1133   .text.lr11xx_radio_cfg_rx_boosted:0000000000000000 lr11xx_radio_cfg_rx_boosted
+     /tmp/ccxoaqOj.s:1153   .text.lr11xx_radio_set_rssi_calibration:0000000000000000 $t
+     /tmp/ccxoaqOj.s:1160   .text.lr11xx_radio_set_rssi_calibration:0000000000000000 lr11xx_radio_set_rssi_calibration
+     /tmp/ccxoaqOj.s:1237   .text.lr11xx_radio_get_gfsk_rx_bandwidth:0000000000000000 $t
+     /tmp/ccxoaqOj.s:1244   .text.lr11xx_radio_get_gfsk_rx_bandwidth:0000000000000000 lr11xx_radio_get_gfsk_rx_bandwidth
+     /tmp/ccxoaqOj.s:1384   .text.lr11xx_radio_get_gfsk_rx_bandwidth:00000000000000dc $d
+     /tmp/ccxoaqOj.s:1407   .text.lr11xx_radio_get_lora_time_on_air_numerator:0000000000000000 $t
+     /tmp/ccxoaqOj.s:1414   .text.lr11xx_radio_get_lora_time_on_air_numerator:0000000000000000 lr11xx_radio_get_lora_time_on_air_numerator
+     /tmp/ccxoaqOj.s:1547   .text.lr11xx_radio_get_lora_bw_in_hz:0000000000000000 $t
+     /tmp/ccxoaqOj.s:1554   .text.lr11xx_radio_get_lora_bw_in_hz:0000000000000000 lr11xx_radio_get_lora_bw_in_hz
+     /tmp/ccxoaqOj.s:1572   .text.lr11xx_radio_get_lora_bw_in_hz:0000000000000014 $d
+     /tmp/ccxoaqOj.s:1575   .text.lr11xx_radio_get_lora_time_on_air_in_ms:0000000000000000 $t
+     /tmp/ccxoaqOj.s:1582   .text.lr11xx_radio_get_lora_time_on_air_in_ms:0000000000000000 lr11xx_radio_get_lora_time_on_air_in_ms
+     /tmp/ccxoaqOj.s:1602   .text.lr11xx_radio_get_gfsk_time_on_air_numerator:0000000000000000 $t
+     /tmp/ccxoaqOj.s:1609   .text.lr11xx_radio_get_gfsk_time_on_air_numerator:0000000000000000 lr11xx_radio_get_gfsk_time_on_air_numerator
+     /tmp/ccxoaqOj.s:1644   .text.lr11xx_radio_get_gfsk_time_on_air_numerator:0000000000000034 $d
+     /tmp/ccxoaqOj.s:1648   .text.lr11xx_radio_get_gfsk_time_on_air_in_ms:0000000000000000 $t
+     /tmp/ccxoaqOj.s:1655   .text.lr11xx_radio_get_gfsk_time_on_air_in_ms:0000000000000000 lr11xx_radio_get_gfsk_time_on_air_in_ms
+     /tmp/ccxoaqOj.s:1672   .text.lr11xx_radio_convert_time_in_ms_to_rtc_step:0000000000000000 $t
+     /tmp/ccxoaqOj.s:1679   .text.lr11xx_radio_convert_time_in_ms_to_rtc_step:0000000000000000 lr11xx_radio_convert_time_in_ms_to_rtc_step
+     /tmp/ccxoaqOj.s:1691   .text.lr11xx_radio_get_lora_rx_info:0000000000000000 $t
+     /tmp/ccxoaqOj.s:1698   .text.lr11xx_radio_get_lora_rx_info:0000000000000000 lr11xx_radio_get_lora_rx_info
+     /tmp/ccxoaqOj.s:1731   .text.lr11xx_radio_get_lora_rx_info:0000000000000034 $d
+     /tmp/ccxoaqOj.s:1734   .text.lr11xx_radio_apply_high_acp_workaround:0000000000000000 $t
+     /tmp/ccxoaqOj.s:1741   .text.lr11xx_radio_apply_high_acp_workaround:0000000000000000 lr11xx_radio_apply_high_acp_workaround
+     /tmp/ccxoaqOj.s:1755   .text.lr11xx_radio_apply_high_acp_workaround:0000000000000010 $d
+     /tmp/ccxoaqOj.s:1758   .text.lr11xx_radio_set_rx_with_timeout_in_rtc_step:0000000000000000 $t
+     /tmp/ccxoaqOj.s:1765   .text.lr11xx_radio_set_rx_with_timeout_in_rtc_step:0000000000000000 lr11xx_radio_set_rx_with_timeout_in_rtc_step
+     /tmp/ccxoaqOj.s:1796   .text.lr11xx_radio_set_rx:0000000000000000 $t
+     /tmp/ccxoaqOj.s:1803   .text.lr11xx_radio_set_rx:0000000000000000 lr11xx_radio_set_rx
+     /tmp/ccxoaqOj.s:1819   .text.lr11xx_radio_set_tx_with_timeout_in_rtc_step:0000000000000000 $t
+     /tmp/ccxoaqOj.s:1826   .text.lr11xx_radio_set_tx_with_timeout_in_rtc_step:0000000000000000 lr11xx_radio_set_tx_with_timeout_in_rtc_step
+     /tmp/ccxoaqOj.s:1857   .text.lr11xx_radio_set_tx:0000000000000000 $t
+     /tmp/ccxoaqOj.s:1864   .text.lr11xx_radio_set_tx:0000000000000000 lr11xx_radio_set_tx
+     /tmp/ccxoaqOj.s:1880   .text.lr11xx_radio_set_cad:0000000000000000 $t
+     /tmp/ccxoaqOj.s:1887   .text.lr11xx_radio_set_cad:0000000000000000 lr11xx_radio_set_cad
+     /tmp/ccxoaqOj.s:1912   .text.lr11xx_radio_set_cad:0000000000000028 $d
+     /tmp/ccxoaqOj.s:1915   .text.lr11xx_radio_set_tx_infinite_preamble:0000000000000000 $t
+     /tmp/ccxoaqOj.s:1922   .text.lr11xx_radio_set_tx_infinite_preamble:0000000000000000 lr11xx_radio_set_tx_infinite_preamble
+     /tmp/ccxoaqOj.s:1947   .text.lr11xx_radio_set_tx_infinite_preamble:0000000000000028 $d
+     /tmp/ccxoaqOj.s:1953   .rodata:0000000000000002 $d
+     /tmp/ccxoaqOj.s:1955   .rodata.CSWTCH.43:0000000000000000 $d
+     /tmp/ccxoaqOj.s:1959   .rodata.CSWTCH.43:0000000000000000 CSWTCH.43
+     /tmp/ccxoaqOj.s:1979   .rodata.CSWTCH.46:0000000000000000 CSWTCH.46
+     /tmp/ccxoaqOj.s:1987   .rodata.CSWTCH.8:0000000000000000 CSWTCH.8
+ARM GAS  /tmp/ccxoaqOj.s 			page 37
+
+
+
+UNDEFINED SYMBOLS
+lr11xx_hal_write
+lr11xx_hal_read
+memcpy
+memset
+__aeabi_uidiv
+__aeabi_idiv
+lr11xx_regmem_write_regmem32_mask

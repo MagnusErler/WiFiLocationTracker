@@ -1,0 +1,385 @@
+ARM GAS  /tmp/cccSSqhu.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.eabi_attribute 23, 1
+   3              		.eabi_attribute 24, 1
+   4              		.eabi_attribute 25, 1
+   5              		.eabi_attribute 26, 1
+   6              		.eabi_attribute 30, 4
+   7              		.eabi_attribute 34, 0
+   8              		.eabi_attribute 18, 4
+   9              		.file	"smtc_hal_adc.c"
+  10              		.text
+  11              		.section	.text.adc_read,"ax",%progbits
+  12              		.align	1
+  13              		.arch armv6s-m
+  14              		.syntax unified
+  15              		.code	16
+  16              		.thumb_func
+  17              		.fpu softvfp
+  19              	adc_read:
+  20              		@ args = 0, pretend = 0, frame = 8
+  21              		@ frame_needed = 0, uses_anonymous_args = 0
+  22 0000 37B5     		push	{r0, r1, r2, r4, r5, lr}
+  23 0002 194D     		ldr	r5, .L10
+  24 0004 194A     		ldr	r2, .L10+4
+  25 0006 1A4B     		ldr	r3, .L10+8
+  26 0008 0400     		movs	r4, r0
+  27 000a 6946     		mov	r1, sp
+  28 000c 2800     		movs	r0, r5
+  29 000e 0092     		str	r2, [sp]
+  30 0010 0193     		str	r3, [sp, #4]
+  31 0012 FFF7FEFF 		bl	HAL_ADC_ConfigChannel
+  32 0016 0028     		cmp	r0, #0
+  33 0018 22D1     		bne	.L2
+  34 001a 8023     		movs	r3, #128
+  35 001c 6946     		mov	r1, sp
+  36 001e 5B01     		lsls	r3, r3, #5
+  37 0020 2800     		movs	r0, r5
+  38 0022 0094     		str	r4, [sp]
+  39 0024 0193     		str	r3, [sp, #4]
+  40 0026 FFF7FEFF 		bl	HAL_ADC_ConfigChannel
+  41 002a 0028     		cmp	r0, #0
+  42 002c 18D1     		bne	.L2
+  43 002e 2800     		movs	r0, r5
+  44 0030 FFF7FEFF 		bl	HAL_ADC_Start
+  45 0034 0028     		cmp	r0, #0
+  46 0036 13D1     		bne	.L2
+  47 0038 0A21     		movs	r1, #10
+  48 003a 2800     		movs	r0, r5
+  49 003c FFF7FEFF 		bl	HAL_ADC_PollForConversion
+  50 0040 041E     		subs	r4, r0, #0
+  51 0042 0DD1     		bne	.L2
+  52 0044 2800     		movs	r0, r5
+  53 0046 FFF7FEFF 		bl	HAL_ADC_GetState
+  54 004a 8305     		lsls	r3, r0, #22
+  55 004c 03D5     		bpl	.L3
+  56 004e 2800     		movs	r0, r5
+  57 0050 FFF7FEFF 		bl	HAL_ADC_GetValue
+  58 0054 84B2     		uxth	r4, r0
+ARM GAS  /tmp/cccSSqhu.s 			page 2
+
+
+  59              	.L3:
+  60 0056 2800     		movs	r0, r5
+  61 0058 FFF7FEFF 		bl	HAL_ADC_Stop
+  62 005c 0028     		cmp	r0, #0
+  63 005e 00D0     		beq	.L4
+  64              	.L2:
+  65 0060 0024     		movs	r4, #0
+  66              	.L4:
+  67              		@ sp needed
+  68 0062 2000     		movs	r0, r4
+  69 0064 3EBD     		pop	{r1, r2, r3, r4, r5, pc}
+  70              	.L11:
+  71 0066 C046     		.align	2
+  72              	.L10:
+  73 0068 00000000 		.word	.LANCHOR0
+  74 006c FFFF0700 		.word	524287
+  75 0070 01100000 		.word	4097
+  77              		.section	.rodata.hal_adc_init.str1.1,"aMS",%progbits,1
+  78              	.LC3:
+  79 0000 4552524F 		.ascii	"ERROR: mcu_panic:%s\012\000"
+  79      523A206D 
+  79      63755F70 
+  79      616E6963 
+  79      3A25730A 
+  80              	.LC5:
+  81 0015 00       		.ascii	"\000"
+  82              	.LC7:
+  83 0016 4552524F 		.ascii	"ERROR: -> \000"
+  83      523A202D 
+  83      3E2000
+  84              		.section	.text.hal_adc_init,"ax",%progbits
+  85              		.align	1
+  86              		.global	hal_adc_init
+  87              		.syntax unified
+  88              		.code	16
+  89              		.thumb_func
+  90              		.fpu softvfp
+  92              	hal_adc_init:
+  93              		@ args = 0, pretend = 0, frame = 0
+  94              		@ frame_needed = 0, uses_anonymous_args = 0
+  95 0000 C221     		movs	r1, #194
+  96 0002 70B5     		push	{r4, r5, r6, lr}
+  97 0004 244B     		ldr	r3, .L21
+  98 0006 254C     		ldr	r4, .L21+4
+  99 0008 FF31     		adds	r1, r1, #255
+ 100 000a 2360     		str	r3, [r4]
+ 101 000c C023     		movs	r3, #192
+ 102 000e 6162     		str	r1, [r4, #36]
+ 103 0010 BE39     		subs	r1, r1, #190
+ 104 0012 FF39     		subs	r1, r1, #255
+ 105 0014 5B03     		lsls	r3, r3, #13
+ 106 0016 6161     		str	r1, [r4, #20]
+ 107 0018 2100     		movs	r1, r4
+ 108 001a 6360     		str	r3, [r4, #4]
+ 109 001c 0023     		movs	r3, #0
+ 110 001e 2C31     		adds	r1, r1, #44
+ 111 0020 0B70     		strb	r3, [r1]
+ARM GAS  /tmp/cccSSqhu.s 			page 3
+
+
+ 112 0022 8021     		movs	r1, #128
+ 113 0024 4901     		lsls	r1, r1, #5
+ 114 0026 0122     		movs	r2, #1
+ 115 0028 2163     		str	r1, [r4, #48]
+ 116 002a 0521     		movs	r1, #5
+ 117 002c 2000     		movs	r0, r4
+ 118 002e 2384     		strh	r3, [r4, #32]
+ 119 0030 E360     		str	r3, [r4, #12]
+ 120 0032 A360     		str	r3, [r4, #8]
+ 121 0034 2261     		str	r2, [r4, #16]
+ 122 0036 A362     		str	r3, [r4, #40]
+ 123 0038 A361     		str	r3, [r4, #24]
+ 124 003a E363     		str	r3, [r4, #60]
+ 125 003c A163     		str	r1, [r4, #56]
+ 126 003e 6263     		str	r2, [r4, #52]
+ 127 0040 E361     		str	r3, [r4, #28]
+ 128 0042 FFF7FEFF 		bl	HAL_ADC_Init
+ 129 0046 0028     		cmp	r0, #0
+ 130 0048 0FD0     		beq	.L13
+ 131 004a 1549     		ldr	r1, .L21+8
+ 132 004c 1548     		ldr	r0, .L21+12
+ 133 004e FFF7FEFF 		bl	hal_trace_print_var
+ 134 0052 154D     		ldr	r5, .L21+16
+ 135 0054 2800     		movs	r0, r5
+ 136 0056 FFF7FEFF 		bl	hal_trace_print_var
+ 137 005a 1448     		ldr	r0, .L21+20
+ 138 005c FFF7FEFF 		bl	hal_trace_print_var
+ 139 0060 2800     		movs	r0, r5
+ 140 0062 FFF7FEFF 		bl	hal_trace_print_var
+ 141 0066 FFF7FEFF 		bl	hal_mcu_reset
+ 142              	.L13:
+ 143 006a 0021     		movs	r1, #0
+ 144 006c 2000     		movs	r0, r4
+ 145 006e FFF7FEFF 		bl	HAL_ADCEx_Calibration_Start
+ 146 0072 0028     		cmp	r0, #0
+ 147 0074 0FD0     		beq	.L12
+ 148 0076 0A49     		ldr	r1, .L21+8
+ 149 0078 0A48     		ldr	r0, .L21+12
+ 150 007a FFF7FEFF 		bl	hal_trace_print_var
+ 151 007e 0A4C     		ldr	r4, .L21+16
+ 152 0080 2000     		movs	r0, r4
+ 153 0082 FFF7FEFF 		bl	hal_trace_print_var
+ 154 0086 0948     		ldr	r0, .L21+20
+ 155 0088 FFF7FEFF 		bl	hal_trace_print_var
+ 156 008c 2000     		movs	r0, r4
+ 157 008e FFF7FEFF 		bl	hal_trace_print_var
+ 158 0092 FFF7FEFF 		bl	hal_mcu_reset
+ 159              	.L12:
+ 160              		@ sp needed
+ 161 0096 70BD     		pop	{r4, r5, r6, pc}
+ 162              	.L22:
+ 163              		.align	2
+ 164              	.L21:
+ 165 0098 00240140 		.word	1073816576
+ 166 009c 00000000 		.word	.LANCHOR0
+ 167 00a0 00000000 		.word	.LANCHOR1
+ 168 00a4 00000000 		.word	.LC3
+ARM GAS  /tmp/cccSSqhu.s 			page 4
+
+
+ 169 00a8 15000000 		.word	.LC5
+ 170 00ac 16000000 		.word	.LC7
+ 172              		.global	__aeabi_uidiv
+ 173              		.global	__aeabi_idiv
+ 174              		.section	.text.hal_adc_get_vref_int,"ax",%progbits
+ 175              		.align	1
+ 176              		.global	hal_adc_get_vref_int
+ 177              		.syntax unified
+ 178              		.code	16
+ 179              		.thumb_func
+ 180              		.fpu softvfp
+ 182              	hal_adc_get_vref_int:
+ 183              		@ args = 0, pretend = 0, frame = 0
+ 184              		@ frame_needed = 0, uses_anonymous_args = 0
+ 185 0000 10B5     		push	{r4, lr}
+ 186 0002 0648     		ldr	r0, .L24
+ 187 0004 FFF7FEFF 		bl	adc_read
+ 188              		@ sp needed
+ 189 0008 054B     		ldr	r3, .L24+4
+ 190 000a 0100     		movs	r1, r0
+ 191 000c 1B88     		ldrh	r3, [r3]
+ 192 000e 0548     		ldr	r0, .L24+8
+ 193 0010 5843     		muls	r0, r3
+ 194 0012 FFF7FEFF 		bl	__aeabi_uidiv
+ 195 0016 80B2     		uxth	r0, r0
+ 196 0018 10BD     		pop	{r4, pc}
+ 197              	.L25:
+ 198 001a C046     		.align	2
+ 199              	.L24:
+ 200 001c 00000244 		.word	1140981760
+ 201 0020 7800F81F 		.word	536346744
+ 202 0024 B80B0000 		.word	3000
+ 204              		.section	.text.hal_adc_get_temp,"ax",%progbits
+ 205              		.align	1
+ 206              		.global	hal_adc_get_temp
+ 207              		.syntax unified
+ 208              		.code	16
+ 209              		.thumb_func
+ 210              		.fpu softvfp
+ 212              	hal_adc_get_temp:
+ 213              		@ args = 0, pretend = 0, frame = 0
+ 214              		@ frame_needed = 0, uses_anonymous_args = 0
+ 215 0000 70B5     		push	{r4, r5, r6, lr}
+ 216 0002 FFF7FEFF 		bl	hal_adc_get_vref_int
+ 217              		@ sp needed
+ 218 0006 0400     		movs	r4, r0
+ 219 0008 0948     		ldr	r0, .L27
+ 220 000a FFF7FEFF 		bl	adc_read
+ 221 000e 094B     		ldr	r3, .L27+4
+ 222 0010 6043     		muls	r0, r4
+ 223 0012 0949     		ldr	r1, .L27+8
+ 224 0014 1D88     		ldrh	r5, [r3]
+ 225 0016 FFF7FEFF 		bl	__aeabi_uidiv
+ 226 001a 431B     		subs	r3, r0, r5
+ 227 001c 6420     		movs	r0, #100
+ 228 001e 5843     		muls	r0, r3
+ 229 0020 064B     		ldr	r3, .L27+12
+ARM GAS  /tmp/cccSSqhu.s 			page 5
+
+
+ 230 0022 1988     		ldrh	r1, [r3]
+ 231 0024 491B     		subs	r1, r1, r5
+ 232 0026 FFF7FEFF 		bl	__aeabi_idiv
+ 233 002a 1E30     		adds	r0, r0, #30
+ 234 002c 40B2     		sxtb	r0, r0
+ 235 002e 70BD     		pop	{r4, r5, r6, pc}
+ 236              	.L28:
+ 237              		.align	2
+ 238              	.L27:
+ 239 0030 00000448 		.word	1208221696
+ 240 0034 7A00F81F 		.word	536346746
+ 241 0038 B80B0000 		.word	3000
+ 242 003c 7E00F81F 		.word	536346750
+ 244              		.section	.text.hal_adc_deinit,"ax",%progbits
+ 245              		.align	1
+ 246              		.global	hal_adc_deinit
+ 247              		.syntax unified
+ 248              		.code	16
+ 249              		.thumb_func
+ 250              		.fpu softvfp
+ 252              	hal_adc_deinit:
+ 253              		@ args = 0, pretend = 0, frame = 0
+ 254              		@ frame_needed = 0, uses_anonymous_args = 0
+ 255 0000 10B5     		push	{r4, lr}
+ 256 0002 0248     		ldr	r0, .L30
+ 257 0004 FFF7FEFF 		bl	HAL_ADC_DeInit
+ 258              		@ sp needed
+ 259 0008 10BD     		pop	{r4, pc}
+ 260              	.L31:
+ 261 000a C046     		.align	2
+ 262              	.L30:
+ 263 000c 00000000 		.word	.LANCHOR0
+ 265              		.section	.text.HAL_ADC_MspInit,"ax",%progbits
+ 266              		.align	1
+ 267              		.global	HAL_ADC_MspInit
+ 268              		.syntax unified
+ 269              		.code	16
+ 270              		.thumb_func
+ 271              		.fpu softvfp
+ 273              	HAL_ADC_MspInit:
+ 274              		@ args = 0, pretend = 0, frame = 0
+ 275              		@ frame_needed = 0, uses_anonymous_args = 0
+ 276              		@ link register save eliminated.
+ 277 0000 8023     		movs	r3, #128
+ 278              		@ sp needed
+ 279 0002 034A     		ldr	r2, .L33
+ 280 0004 9B00     		lsls	r3, r3, #2
+ 281 0006 516B     		ldr	r1, [r2, #52]
+ 282 0008 0B43     		orrs	r3, r1
+ 283 000a 5363     		str	r3, [r2, #52]
+ 284 000c 7047     		bx	lr
+ 285              	.L34:
+ 286 000e C046     		.align	2
+ 287              	.L33:
+ 288 0010 00100240 		.word	1073876992
+ 290              		.section	.text.HAL_ADC_MspDeInit,"ax",%progbits
+ 291              		.align	1
+ARM GAS  /tmp/cccSSqhu.s 			page 6
+
+
+ 292              		.global	HAL_ADC_MspDeInit
+ 293              		.syntax unified
+ 294              		.code	16
+ 295              		.thumb_func
+ 296              		.fpu softvfp
+ 298              	HAL_ADC_MspDeInit:
+ 299              		@ args = 0, pretend = 0, frame = 0
+ 300              		@ frame_needed = 0, uses_anonymous_args = 0
+ 301              		@ link register save eliminated.
+ 302 0000 024A     		ldr	r2, .L36
+ 303 0002 0349     		ldr	r1, .L36+4
+ 304 0004 536B     		ldr	r3, [r2, #52]
+ 305              		@ sp needed
+ 306 0006 0B40     		ands	r3, r1
+ 307 0008 5363     		str	r3, [r2, #52]
+ 308 000a 7047     		bx	lr
+ 309              	.L37:
+ 310              		.align	2
+ 311              	.L36:
+ 312 000c 00100240 		.word	1073876992
+ 313 0010 FFFDFFFF 		.word	-513
+ 315              		.section	.bss.hal_adc_handle,"aw",%nobits
+ 316              		.align	2
+ 317              		.set	.LANCHOR0,. + 0
+ 320              	hal_adc_handle:
+ 321 0000 00000000 		.space	92
+ 321      00000000 
+ 321      00000000 
+ 321      00000000 
+ 321      00000000 
+ 322              		.section	.rodata.__func__.0,"a"
+ 323              		.set	.LANCHOR1,. + 0
+ 326              	__func__.0:
+ 327 0000 68616C5F 		.ascii	"hal_adc_init\000"
+ 327      6164635F 
+ 327      696E6974 
+ 327      00
+ 328              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/cccSSqhu.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 smtc_hal_adc.c
+     /tmp/cccSSqhu.s:12     .text.adc_read:0000000000000000 $t
+     /tmp/cccSSqhu.s:19     .text.adc_read:0000000000000000 adc_read
+     /tmp/cccSSqhu.s:73     .text.adc_read:0000000000000068 $d
+     /tmp/cccSSqhu.s:85     .text.hal_adc_init:0000000000000000 $t
+     /tmp/cccSSqhu.s:92     .text.hal_adc_init:0000000000000000 hal_adc_init
+     /tmp/cccSSqhu.s:165    .text.hal_adc_init:0000000000000098 $d
+     /tmp/cccSSqhu.s:175    .text.hal_adc_get_vref_int:0000000000000000 $t
+     /tmp/cccSSqhu.s:182    .text.hal_adc_get_vref_int:0000000000000000 hal_adc_get_vref_int
+     /tmp/cccSSqhu.s:200    .text.hal_adc_get_vref_int:000000000000001c $d
+     /tmp/cccSSqhu.s:205    .text.hal_adc_get_temp:0000000000000000 $t
+     /tmp/cccSSqhu.s:212    .text.hal_adc_get_temp:0000000000000000 hal_adc_get_temp
+     /tmp/cccSSqhu.s:239    .text.hal_adc_get_temp:0000000000000030 $d
+     /tmp/cccSSqhu.s:245    .text.hal_adc_deinit:0000000000000000 $t
+     /tmp/cccSSqhu.s:252    .text.hal_adc_deinit:0000000000000000 hal_adc_deinit
+     /tmp/cccSSqhu.s:263    .text.hal_adc_deinit:000000000000000c $d
+     /tmp/cccSSqhu.s:266    .text.HAL_ADC_MspInit:0000000000000000 $t
+     /tmp/cccSSqhu.s:273    .text.HAL_ADC_MspInit:0000000000000000 HAL_ADC_MspInit
+     /tmp/cccSSqhu.s:288    .text.HAL_ADC_MspInit:0000000000000010 $d
+     /tmp/cccSSqhu.s:291    .text.HAL_ADC_MspDeInit:0000000000000000 $t
+     /tmp/cccSSqhu.s:298    .text.HAL_ADC_MspDeInit:0000000000000000 HAL_ADC_MspDeInit
+     /tmp/cccSSqhu.s:312    .text.HAL_ADC_MspDeInit:000000000000000c $d
+     /tmp/cccSSqhu.s:316    .bss.hal_adc_handle:0000000000000000 $d
+     /tmp/cccSSqhu.s:320    .bss.hal_adc_handle:0000000000000000 hal_adc_handle
+     /tmp/cccSSqhu.s:326    .rodata.__func__.0:0000000000000000 __func__.0
+
+UNDEFINED SYMBOLS
+HAL_ADC_ConfigChannel
+HAL_ADC_Start
+HAL_ADC_PollForConversion
+HAL_ADC_GetState
+HAL_ADC_GetValue
+HAL_ADC_Stop
+HAL_ADC_Init
+hal_trace_print_var
+hal_mcu_reset
+HAL_ADCEx_Calibration_Start
+__aeabi_uidiv
+__aeabi_idiv
+HAL_ADC_DeInit

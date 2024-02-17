@@ -59,9 +59,12 @@ Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c \
 Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c \
 Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c \
 Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart_ex.c \
+Src/lr11xx_regmem.c \
+Src/lr11xx_wifi.c \
 Src/main.c \
 Src/rtc.c \
 Src/spi.c \
+Src/smtc_modem.c \
 Src/stm32l4xx_it.c \
 Src/stm32l4xx_hal_msp.c \
 Src/system_stm32l4xx.c

@@ -1,0 +1,685 @@
+ARM GAS  /tmp/ccO6Eh0w.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.eabi_attribute 23, 1
+   3              		.eabi_attribute 24, 1
+   4              		.eabi_attribute 25, 1
+   5              		.eabi_attribute 26, 1
+   6              		.eabi_attribute 30, 4
+   7              		.eabi_attribute 34, 0
+   8              		.eabi_attribute 18, 4
+   9              		.file	"dm_downlink.c"
+  10              		.text
+  11              		.section	.rodata.dm_parse_cmd.str1.1,"aMS",%progbits,1
+  12              	.LC0:
+  13 0000 1B5B303B 		.ascii	"\033[0;31mERROR: Invalid DM command %x\012\000"
+  13      33316D45 
+  13      52524F52 
+  13      3A20496E 
+  13      76616C69 
+  14              	.LC2:
+  15 0025 1B5B306D 		.ascii	"\033[0m\000"
+  15      00
+  16              	.LC5:
+  17 002a 1B5B303B 		.ascii	"\033[0;31mERROR: Invalid DM command size (too small"
+  17      33316D45 
+  17      52524F52 
+  17      3A20496E 
+  17      76616C69 
+  18 005a 290A00   		.ascii	")\012\000"
+  19              	.LC7:
+  20 005d 1B5B303B 		.ascii	"\033[0;31mERROR: Invalid DM command size (too long)"
+  20      33316D45 
+  20      52524F52 
+  20      3A20496E 
+  20      76616C69 
+  21 008d 0A00     		.ascii	"\012\000"
+  22              	.LC10:
+  23 008f 1B5B303B 		.ascii	"\033[0;33mWARN: DM_%s (0x%02x)\012\000"
+  23      33336D57 
+  23      41524E3A 
+  23      20444D5F 
+  23      25732028 
+  24              	.LC12:
+  25 00ac 1B5B303B 		.ascii	"\033[0;31mERROR: invalid DM reset code (0x%02x)\012"
+  25      33316D45 
+  25      52524F52 
+  25      3A20696E 
+  25      76616C69 
+  26 00d9 00       		.ascii	"\000"
+  27              	.LC16:
+  28 00da 1B5B303B 		.ascii	"\033[0;31mERROR: invalid DM reset session code\012\000"
+  28      33316D45 
+  28      52524F52 
+  28      3A20696E 
+  28      76616C69 
+  29              	.LC18:
+  30 0107 1B5B303B 		.ascii	"\033[0;31mERROR: NOT RESET !!!\012\000"
+  30      33316D45 
+  30      52524F52 
+ARM GAS  /tmp/ccO6Eh0w.s 			page 2
+
+
+  30      3A204E4F 
+  30      54205245 
+  31              	.LC20:
+  32 0124 1B5B303B 		.ascii	"\033[0;33mWARN: DM_FILE_DONE donwlink\012\000"
+  32      33336D57 
+  32      41524E3A 
+  32      20444D5F 
+  32      46494C45 
+  33              	.LC22:
+  34 0148 1B5B303B 		.ascii	"\033[0;31mERROR: No FileUpload ongoing\012\000"
+  34      33316D45 
+  34      52524F52 
+  34      3A204E6F 
+  34      2046696C 
+  35              	.LC25:
+  36 016d 1B5B303B 		.ascii	"\033[0;31mERROR: DM_FILE_DONE bad session_counter o"
+  36      33316D45 
+  36      52524F52 
+  36      3A20444D 
+  36      5F46494C 
+  37 019d 72206261 		.ascii	"r bad message\012\000"
+  37      64206D65 
+  37      73736167 
+  37      650A00
+  38              	.LC27:
+  39 01ac 1B5B303B 		.ascii	"\033[0;32mINFO: File upload DONE with server confir"
+  39      33326D49 
+  39      4E464F3A 
+  39      2046696C 
+  39      65207570 
+  40 01dc 6D617469 		.ascii	"mation \012\000"
+  40      6F6E200A 
+  40      00
+  41              	.LC14:
+  42 01e5 0F00     		.ascii	"\017\000"
+  43              	.LC29:
+  44 01e7 1200     		.ascii	"\022\000"
+  45              		.section	.text.dm_parse_cmd,"ax",%progbits
+  46              		.align	1
+  47              		.global	dm_parse_cmd
+  48              		.arch armv6s-m
+  49              		.syntax unified
+  50              		.code	16
+  51              		.thumb_func
+  52              		.fpu softvfp
+  54              	dm_parse_cmd:
+  55              		@ args = 0, pretend = 0, frame = 8
+  56              		@ frame_needed = 0, uses_anonymous_args = 0
+  57 0000 F7B5     		push	{r0, r1, r2, r4, r5, r6, r7, lr}
+  58 0002 8278     		ldrb	r2, [r0, #2]
+  59 0004 0500     		movs	r5, r0
+  60 0006 017A     		ldrb	r1, [r0, #8]
+  61 0008 A34E     		ldr	r6, .L60
+  62 000a 0D2A     		cmp	r2, #13
+  63 000c 08D9     		bls	.L2
+  64 000e 1100     		movs	r1, r2
+  65 0010 A248     		ldr	r0, .L60+4
+ARM GAS  /tmp/ccO6Eh0w.s 			page 3
+
+
+  66 0012 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+  67              	.L58:
+  68 0016 3000     		movs	r0, r6
+  69 0018 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+  70              	.L40:
+  71 001c 0024     		movs	r4, #0
+  72 001e 41E0     		b	.L3
+  73              	.L2:
+  74 0020 9F4B     		ldr	r3, .L60+8
+  75 0022 5000     		lsls	r0, r2, #1
+  76 0024 C45C     		ldrb	r4, [r0, r3]
+  77 0026 8C42     		cmp	r4, r1
+  78 0028 03D9     		bls	.L4
+  79 002a 9E48     		ldr	r0, .L60+12
+  80              	.L59:
+  81 002c FFF7FEFF 		bl	smtc_modem_hal_print_trace
+  82 0030 F1E7     		b	.L58
+  83              	.L4:
+  84 0032 1B18     		adds	r3, r3, r0
+  85 0034 5B78     		ldrb	r3, [r3, #1]
+  86 0036 9C48     		ldr	r0, .L60+16
+  87 0038 8B42     		cmp	r3, r1
+  88 003a F7D3     		bcc	.L59
+  89 003c 9B4B     		ldr	r3, .L60+20
+  90 003e 9100     		lsls	r1, r2, #2
+  91 0040 C958     		ldr	r1, [r1, r3]
+  92 0042 9B48     		ldr	r0, .L60+24
+  93 0044 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+  94 0048 3000     		movs	r0, r6
+  95 004a FFF7FEFF 		bl	smtc_modem_hal_print_trace
+  96 004e AC78     		ldrb	r4, [r5, #2]
+  97 0050 092C     		cmp	r4, #9
+  98 0052 E3D8     		bhi	.L40
+  99 0054 2000     		movs	r0, r4
+ 100 0056 FFF7FEFF 		bl	__gnu_thumb1_case_uqi
+ 101              	.L8:
+ 102 005a 05       		.byte	(.L16-.L8)/2
+ 103 005b 25       		.byte	(.L3-.L8)/2
+ 104 005c 37       		.byte	(.L15-.L8)/2
+ 105 005d 65       		.byte	(.L14-.L8)/2
+ 106 005e 71       		.byte	(.L13-.L8)/2
+ 107 005f 7E       		.byte	(.L12-.L8)/2
+ 108 0060 9A       		.byte	(.L11-.L8)/2
+ 109 0061 A9       		.byte	(.L10-.L8)/2
+ 110 0062 AF       		.byte	(.L9-.L8)/2
+ 111 0063 B5       		.byte	(.L7-.L8)/2
+ 112              		.p2align 1
+ 113              	.L16:
+ 114 0064 6B68     		ldr	r3, [r5, #4]
+ 115 0066 9D78     		ldrb	r5, [r3, #2]
+ 116 0068 5A78     		ldrb	r2, [r3, #1]
+ 117 006a 2D02     		lsls	r5, r5, #8
+ 118 006c 1543     		orrs	r5, r2
+ 119 006e 1F78     		ldrb	r7, [r3]
+ 120 0070 FFF7FEFF 		bl	lorawan_api_nb_reset_get
+ 121 0074 8542     		cmp	r5, r0
+ 122 0076 17D1     		bne	.L17
+ARM GAS  /tmp/ccO6Eh0w.s 			page 4
+
+
+ 123 0078 7B1E     		subs	r3, r7, #1
+ 124 007a 022B     		cmp	r3, #2
+ 125 007c 05D8     		bhi	.L18
+ 126 007e FFF7FEFF 		bl	lorawan_api_context_save
+ 127 0082 FFF7FEFF 		bl	smtc_modem_hal_reset_mcu
+ 128              	.L54:
+ 129 0086 0124     		movs	r4, #1
+ 130 0088 0CE0     		b	.L3
+ 131              	.L18:
+ 132 008a 3900     		movs	r1, r7
+ 133 008c 8948     		ldr	r0, .L60+28
+ 134 008e FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 135              	.L51:
+ 136 0092 3000     		movs	r0, r6
+ 137 0094 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 138 0098 8748     		ldr	r0, .L60+32
+ 139 009a FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 140 009e 3000     		movs	r0, r6
+ 141 00a0 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 142              	.L3:
+ 143              		@ sp needed
+ 144 00a4 2000     		movs	r0, r4
+ 145 00a6 FEBD     		pop	{r1, r2, r3, r4, r5, r6, r7, pc}
+ 146              	.L17:
+ 147 00a8 0122     		movs	r2, #1
+ 148 00aa 844B     		ldr	r3, .L60+36
+ 149 00ac 01A8     		add	r0, sp, #4
+ 150 00ae 1B78     		ldrb	r3, [r3]
+ 151 00b0 1100     		movs	r1, r2
+ 152 00b2 0370     		strb	r3, [r0]
+ 153 00b4 FFF7FEFF 		bl	set_dm_info
+ 154 00b8 0128     		cmp	r0, #1
+ 155 00ba 01D1     		bne	.L20
+ 156 00bc FFF7FEFF 		bl	modem_supervisor_add_task_dm_status_now
+ 157              	.L20:
+ 158 00c0 7F48     		ldr	r0, .L60+40
+ 159 00c2 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 160 00c6 E4E7     		b	.L51
+ 161              	.L15:
+ 162 00c8 7E48     		ldr	r0, .L60+44
+ 163 00ca FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 164 00ce 3000     		movs	r0, r6
+ 165 00d0 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 166 00d4 FFF7FEFF 		bl	modem_get_upload_state
+ 167 00d8 0228     		cmp	r0, #2
+ 168 00da 06D0     		beq	.L21
+ 169 00dc 7A48     		ldr	r0, .L60+48
+ 170              	.L57:
+ 171 00de FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 172 00e2 3000     		movs	r0, r6
+ 173 00e4 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 174 00e8 CDE7     		b	.L54
+ 175              	.L21:
+ 176 00ea 2A7A     		ldrb	r2, [r5, #8]
+ 177 00ec 6968     		ldr	r1, [r5, #4]
+ 178 00ee 7748     		ldr	r0, .L60+52
+ 179 00f0 FFF7FEFF 		bl	file_upload_process_file_done_frame
+ARM GAS  /tmp/ccO6Eh0w.s 			page 5
+
+
+ 180 00f4 041E     		subs	r4, r0, #0
+ 181 00f6 01D0     		beq	.L22
+ 182 00f8 7548     		ldr	r0, .L60+56
+ 183 00fa F0E7     		b	.L57
+ 184              	.L22:
+ 185 00fc 7548     		ldr	r0, .L60+60
+ 186 00fe FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 187 0102 3000     		movs	r0, r6
+ 188 0104 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 189 0108 0121     		movs	r1, #1
+ 190 010a 0520     		movs	r0, #5
+ 191 010c FFF7FEFF 		bl	increment_asynchronous_msgnumber
+ 192 0110 2000     		movs	r0, r4
+ 193 0112 FFF7FEFF 		bl	set_modem_status_file_upload
+ 194 0116 0320     		movs	r0, #3
+ 195 0118 FFF7FEFF 		bl	modem_set_upload_state
+ 196 011c 0420     		movs	r0, #4
+ 197 011e FFF7FEFF 		bl	modem_supervisor_remove_task
+ 198 0122 B0E7     		b	.L54
+ 199              	.L14:
+ 200 0124 0122     		movs	r2, #1
+ 201 0126 297A     		ldrb	r1, [r5, #8]
+ 202 0128 6868     		ldr	r0, [r5, #4]
+ 203 012a FFF7FEFF 		bl	set_dm_info
+ 204 012e 0400     		movs	r4, r0
+ 205 0130 0128     		cmp	r0, #1
+ 206 0132 00D0     		beq	.LCB181
+ 207 0134 72E7     		b	.L40	@long jump
+ 208              	.LCB181:
+ 209 0136 FFF7FEFF 		bl	modem_supervisor_add_task_dm_status_now
+ 210 013a B3E7     		b	.L3
+ 211              	.L13:
+ 212 013c 2A7A     		ldrb	r2, [r5, #8]
+ 213 013e 6B68     		ldr	r3, [r5, #4]
+ 214 0140 013A     		subs	r2, r2, #1
+ 215 0142 1878     		ldrb	r0, [r3]
+ 216 0144 D2B2     		uxtb	r2, r2
+ 217 0146 591C     		adds	r1, r3, #1
+ 218 0148 FFF7FEFF 		bl	dm_set_conf
+ 219              	.L56:
+ 220 014c 0138     		subs	r0, r0, #1
+ 221              	.L55:
+ 222 014e 4342     		rsbs	r3, r0, #0
+ 223 0150 5841     		adcs	r0, r0, r3
+ 224 0152 C4B2     		uxtb	r4, r0
+ 225 0154 A6E7     		b	.L3
+ 226              	.L12:
+ 227 0156 6B68     		ldr	r3, [r5, #4]
+ 228 0158 5C78     		ldrb	r4, [r3, #1]
+ 229 015a 1A78     		ldrb	r2, [r3]
+ 230 015c 2402     		lsls	r4, r4, #8
+ 231 015e 1443     		orrs	r4, r2
+ 232 0160 FFF7FEFF 		bl	lorawan_api_devnonce_get
+ 233 0164 8442     		cmp	r4, r0
+ 234 0166 0DD0     		beq	.L23
+ 235 0168 0122     		movs	r2, #1
+ 236 016a 5B4B     		ldr	r3, .L60+64
+ARM GAS  /tmp/ccO6Eh0w.s 			page 6
+
+
+ 237 016c 01A8     		add	r0, sp, #4
+ 238 016e 1B78     		ldrb	r3, [r3]
+ 239 0170 1100     		movs	r1, r2
+ 240 0172 0370     		strb	r3, [r0]
+ 241 0174 FFF7FEFF 		bl	set_dm_info
+ 242 0178 0128     		cmp	r0, #1
+ 243 017a 00D0     		beq	.LCB226
+ 244 017c 4EE7     		b	.L40	@long jump
+ 245              	.LCB226:
+ 246 017e FFF7FEFF 		bl	modem_supervisor_add_task_dm_status_now
+ 247 0182 4BE7     		b	.L40
+ 248              	.L23:
+ 249 0184 FFF7FEFF 		bl	modem_leave
+ 250 0188 FFF7FEFF 		bl	modem_supervisor_add_task_join
+ 251 018c 7BE7     		b	.L54
+ 252              	.L11:
+ 253 018e 6B68     		ldr	r3, [r5, #4]
+ 254 0190 1878     		ldrb	r0, [r3]
+ 255 0192 FFF7FEFF 		bl	dm_set_number_of_days_mute
+ 256 0196 FFF7FEFF 		bl	get_modem_muted
+ 257 019a 0128     		cmp	r0, #1
+ 258 019c 01D1     		bne	.L25
+ 259 019e FFF7FEFF 		bl	modem_supervisor_add_task_modem_mute
+ 260              	.L25:
+ 261 01a2 0021     		movs	r1, #0
+ 262 01a4 0720     		movs	r0, #7
+ 263 01a6 FFF7FEFF 		bl	increment_asynchronous_msgnumber
+ 264 01aa 6CE7     		b	.L54
+ 265              	.L10:
+ 266 01ac 0022     		movs	r2, #0
+ 267 01ae 297A     		ldrb	r1, [r5, #8]
+ 268 01b0 6868     		ldr	r0, [r5, #4]
+ 269 01b2 FFF7FEFF 		bl	set_dm_info
+ 270 01b6 C9E7     		b	.L56
+ 271              	.L9:
+ 272 01b8 2A7A     		ldrb	r2, [r5, #8]
+ 273 01ba 6968     		ldr	r1, [r5, #4]
+ 274 01bc 4748     		ldr	r0, .L60+68
+ 275 01be FFF7FEFF 		bl	stream_process_dn_frame
+ 276 01c2 C4E7     		b	.L55
+ 277              	.L7:
+ 278 01c4 464C     		ldr	r4, .L60+72
+ 279 01c6 6968     		ldr	r1, [r5, #4]
+ 280 01c8 2A7A     		ldrb	r2, [r5, #8]
+ 281 01ca 2000     		movs	r0, r4
+ 282 01cc FFF7FEFF 		bl	alc_sync_parser
+ 283 01d0 0121     		movs	r1, #1
+ 284 01d2 0500     		movs	r5, r0
+ 285 01d4 8307     		lsls	r3, r0, #30
+ 286 01d6 27D5     		bpl	.L27
+ 287 01d8 0D20     		movs	r0, #13
+ 288 01da 2934     		adds	r4, r4, #41
+ 289 01dc 2170     		strb	r1, [r4]
+ 290 01de FFF7FEFF 		bl	increment_asynchronous_msgnumber
+ 291 01e2 FFF7FEFF 		bl	modem_supervisor_remove_task_clock_sync
+ 292 01e6 3F4C     		ldr	r4, .L60+76
+ 293 01e8 2000     		movs	r0, r4
+ARM GAS  /tmp/ccO6Eh0w.s 			page 7
+
+
+ 294 01ea FFF7FEFF 		bl	clock_sync_is_enabled
+ 295 01ee 0028     		cmp	r0, #0
+ 296 01f0 1AD0     		beq	.L27
+ 297 01f2 2000     		movs	r0, r4
+ 298 01f4 FFF7FEFF 		bl	clock_sync_get_interval_second
+ 299 01f8 0600     		movs	r6, r0
+ 300 01fa 2000     		movs	r0, r4
+ 301 01fc FFF7FEFF 		bl	clock_sync_get_time_left_connection_lost
+ 302 0200 8642     		cmp	r6, r0
+ 303 0202 41D2     		bcs	.L29
+ 304 0204 2000     		movs	r0, r4
+ 305 0206 FFF7FEFF 		bl	clock_sync_get_interval_second
+ 306              	.L52:
+ 307 020a 1E26     		movs	r6, #30
+ 308 020c 0400     		movs	r4, r0
+ 309 020e 7642     		rsbs	r6, r6, #0
+ 310              	.L32:
+ 311 0210 1E21     		movs	r1, #30
+ 312 0212 3000     		movs	r0, r6
+ 313 0214 FFF7FEFF 		bl	smtc_modem_hal_get_signed_random_nb_in_range
+ 314 0218 0028     		cmp	r0, #0
+ 315 021a 02DA     		bge	.L31
+ 316 021c 4342     		rsbs	r3, r0, #0
+ 317 021e A342     		cmp	r3, r4
+ 318 0220 F6D8     		bhi	.L32
+ 319              	.L31:
+ 320 0222 0019     		adds	r0, r0, r4
+ 321 0224 FFF7FEFF 		bl	modem_supervisor_add_task_clock_sync_time_req
+ 322              	.L27:
+ 323 0228 0223     		movs	r3, #2
+ 324 022a 2A00     		movs	r2, r5
+ 325 022c 9A43     		bics	r2, r3
+ 326 022e 013B     		subs	r3, r3, #1
+ 327 0230 1C00     		movs	r4, r3
+ 328 0232 002A     		cmp	r2, #0
+ 329 0234 00D1     		bne	.LCB330
+ 330 0236 35E7     		b	.L3	@long jump
+ 331              	.LCB330:
+ 332 0238 AD08     		lsrs	r5, r5, #2
+ 333 023a 1D42     		tst	r5, r3
+ 334 023c 20D0     		beq	.L34
+ 335 023e 294C     		ldr	r4, .L60+76
+ 336 0240 2000     		movs	r0, r4
+ 337 0242 FFF7FEFF 		bl	clock_sync_is_enabled
+ 338 0246 0028     		cmp	r0, #0
+ 339 0248 1AD0     		beq	.L34
+ 340 024a 2000     		movs	r0, r4
+ 341 024c FFF7FEFF 		bl	clock_sync_get_interval_second
+ 342 0250 0500     		movs	r5, r0
+ 343 0252 2000     		movs	r0, r4
+ 344 0254 FFF7FEFF 		bl	clock_sync_get_time_left_connection_lost
+ 345 0258 8542     		cmp	r5, r0
+ 346 025a 19D2     		bcs	.L36
+ 347 025c 2000     		movs	r0, r4
+ 348 025e FFF7FEFF 		bl	clock_sync_get_interval_second
+ 349              	.L53:
+ 350 0262 1E25     		movs	r5, #30
+ARM GAS  /tmp/ccO6Eh0w.s 			page 8
+
+
+ 351 0264 0400     		movs	r4, r0
+ 352 0266 6D42     		rsbs	r5, r5, #0
+ 353              	.L39:
+ 354 0268 1E21     		movs	r1, #30
+ 355 026a 2800     		movs	r0, r5
+ 356 026c FFF7FEFF 		bl	smtc_modem_hal_get_signed_random_nb_in_range
+ 357 0270 0028     		cmp	r0, #0
+ 358 0272 02DA     		bge	.L38
+ 359 0274 4342     		rsbs	r3, r0, #0
+ 360 0276 A342     		cmp	r3, r4
+ 361 0278 F6D8     		bhi	.L39
+ 362              	.L38:
+ 363 027a 0019     		adds	r0, r0, r4
+ 364 027c FFF7FEFF 		bl	modem_supervisor_add_task_clock_sync_time_req
+ 365              	.L34:
+ 366 0280 0120     		movs	r0, #1
+ 367 0282 FFF7FEFF 		bl	modem_supervisor_add_task_alc_sync_ans
+ 368 0286 FEE6     		b	.L54
+ 369              	.L29:
+ 370 0288 2000     		movs	r0, r4
+ 371 028a FFF7FEFF 		bl	clock_sync_get_time_left_connection_lost
+ 372 028e BCE7     		b	.L52
+ 373              	.L36:
+ 374 0290 2000     		movs	r0, r4
+ 375 0292 FFF7FEFF 		bl	clock_sync_get_time_left_connection_lost
+ 376 0296 E4E7     		b	.L53
+ 377              	.L61:
+ 378              		.align	2
+ 379              	.L60:
+ 380 0298 25000000 		.word	.LC2
+ 381 029c 00000000 		.word	.LC0
+ 382 02a0 00000000 		.word	.LANCHOR0
+ 383 02a4 2A000000 		.word	.LC5
+ 384 02a8 5D000000 		.word	.LC7
+ 385 02ac 00000000 		.word	.LANCHOR1
+ 386 02b0 8F000000 		.word	.LC10
+ 387 02b4 AC000000 		.word	.LC12
+ 388 02b8 07010000 		.word	.LC18
+ 389 02bc E5010000 		.word	.LC14
+ 390 02c0 DA000000 		.word	.LC16
+ 391 02c4 24010000 		.word	.LC20
+ 392 02c8 48010000 		.word	.LC22
+ 393 02cc A8040000 		.word	smtc_modem_services_ctx+1192
+ 394 02d0 6D010000 		.word	.LC25
+ 395 02d4 AC010000 		.word	.LC27
+ 396 02d8 E7010000 		.word	.LC29
+ 397 02dc 54000000 		.word	smtc_modem_services_ctx+84
+ 398 02e0 00000000 		.word	smtc_modem_services_ctx
+ 399 02e4 2C000000 		.word	smtc_modem_services_ctx+44
+ 401              		.section	.rodata.dm_downlink.str1.1,"aMS",%progbits,1
+ 402              	.LC35:
+ 403 0000 1B5B303B 		.ascii	"\033[0;31mERROR: DM Downlink must contain at least "
+ 403      33316D45 
+ 403      52524F52 
+ 403      3A20444D 
+ 403      20446F77 
+ 404 0030 34206279 		.ascii	"4 bytes\012\000"
+ARM GAS  /tmp/ccO6Eh0w.s 			page 9
+
+
+ 404      7465730A 
+ 404      00
+ 405              		.section	.text.dm_downlink,"ax",%progbits
+ 406              		.align	1
+ 407              		.global	dm_downlink
+ 408              		.syntax unified
+ 409              		.code	16
+ 410              		.thumb_func
+ 411              		.fpu softvfp
+ 413              	dm_downlink:
+ 414              		@ args = 0, pretend = 0, frame = 16
+ 415              		@ frame_needed = 0, uses_anonymous_args = 0
+ 416 0000 30B5     		push	{r4, r5, lr}
+ 417 0002 85B0     		sub	sp, sp, #20
+ 418 0004 0329     		cmp	r1, #3
+ 419 0006 09D8     		bhi	.L63
+ 420 0008 1148     		ldr	r0, .L68
+ 421 000a FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 422 000e 1148     		ldr	r0, .L68+4
+ 423 0010 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 424 0014 0025     		movs	r5, #0
+ 425              	.L64:
+ 426 0016 2800     		movs	r0, r5
+ 427 0018 05B0     		add	sp, sp, #20
+ 428              		@ sp needed
+ 429 001a 30BD     		pop	{r4, r5, pc}
+ 430              	.L63:
+ 431 001c 0378     		ldrb	r3, [r0]
+ 432 001e 01AC     		add	r4, sp, #4
+ 433 0020 2370     		strb	r3, [r4]
+ 434 0022 4378     		ldrb	r3, [r0, #1]
+ 435 0024 0339     		subs	r1, r1, #3
+ 436 0026 6370     		strb	r3, [r4, #1]
+ 437 0028 8378     		ldrb	r3, [r0, #2]
+ 438 002a 0330     		adds	r0, r0, #3
+ 439 002c 0290     		str	r0, [sp, #8]
+ 440 002e 2000     		movs	r0, r4
+ 441 0030 A370     		strb	r3, [r4, #2]
+ 442 0032 2172     		strb	r1, [r4, #8]
+ 443 0034 FFF7FEFF 		bl	dm_parse_cmd
+ 444 0038 6178     		ldrb	r1, [r4, #1]
+ 445 003a 0500     		movs	r5, r0
+ 446 003c 2078     		ldrb	r0, [r4]
+ 447 003e FFF7FEFF 		bl	set_dm_retrieve_pending_dl
+ 448 0042 2378     		ldrb	r3, [r4]
+ 449 0044 002B     		cmp	r3, #0
+ 450 0046 E6D0     		beq	.L64
+ 451 0048 6078     		ldrb	r0, [r4, #1]
+ 452 004a FFF7FEFF 		bl	modem_supervisor_add_task_retrieve_dl
+ 453 004e E2E7     		b	.L64
+ 454              	.L69:
+ 455              		.align	2
+ 456              	.L68:
+ 457 0050 00000000 		.word	.LC35
+ 458 0054 25000000 		.word	.LC2
+ 460              		.section	.rodata.str1.1,"aMS",%progbits,1
+ 461              	.LC38:
+ARM GAS  /tmp/ccO6Eh0w.s 			page 10
+
+
+ 462 0000 52455345 		.ascii	"RESET\000"
+ 462      5400
+ 463              	.LC39:
+ 464 0006 46554F54 		.ascii	"FUOTA\000"
+ 464      4100
+ 465              	.LC40:
+ 466 000c 46494C45 		.ascii	"FILE_DONE\000"
+ 466      5F444F4E 
+ 466      4500
+ 467              	.LC41:
+ 468 0016 4745545F 		.ascii	"GET_INFO\000"
+ 468      494E464F 
+ 468      00
+ 469              	.LC42:
+ 470 001f 5345545F 		.ascii	"SET_CONF\000"
+ 470      434F4E46 
+ 470      00
+ 471              	.LC43:
+ 472 0028 52454A4F 		.ascii	"REJOIN\000"
+ 472      494E00
+ 473              	.LC44:
+ 474 002f 4D555445 		.ascii	"MUTE\000"
+ 474      00
+ 475              	.LC45:
+ 476 0034 5345545F 		.ascii	"SET_DM_INFO\000"
+ 476      444D5F49 
+ 476      4E464F00 
+ 477              	.LC46:
+ 478 0040 53545245 		.ascii	"STREAM\000"
+ 478      414D00
+ 479              	.LC47:
+ 480 0047 414C435F 		.ascii	"ALC_SYNC\000"
+ 480      53594E43 
+ 480      00
+ 481              	.LC48:
+ 482 0050 414C4D5F 		.ascii	"ALM_UPDATE\000"
+ 482      55504441 
+ 482      544500
+ 483              	.LC49:
+ 484 005b 414C4D5F 		.ascii	"ALM_DEBUG\000"
+ 484      44454255 
+ 484      4700
+ 485              	.LC50:
+ 486 0065 534F4C56 		.ascii	"SOLVER_UPDATE\000"
+ 486      45525F55 
+ 486      50444154 
+ 486      4500
+ 487              	.LC51:
+ 488 0073 414C4D5F 		.ascii	"ALM_FUPDATE\000"
+ 488      46555044 
+ 488      41544500 
+ 489              		.section	.rodata.dm_cmd_len,"a"
+ 490              		.align	2
+ 491              		.set	.LANCHOR0,. + 0
+ 494              	dm_cmd_len:
+ 495 0000 0303     		.ascii	"\003\003"
+ 496 0002 01FF     		.ascii	"\001\377"
+ARM GAS  /tmp/ccO6Eh0w.s 			page 11
+
+
+ 497 0004 0101     		.ascii	"\001\001"
+ 498 0006 01FF     		.ascii	"\001\377"
+ 499 0008 02FF     		.ascii	"\002\377"
+ 500 000a 0202     		.ascii	"\002\002"
+ 501 000c 0101     		.ascii	"\001\001"
+ 502 000e 011C     		.ascii	"\001\034"
+ 503 0010 01FF     		.ascii	"\001\377"
+ 504 0012 01FF     		.ascii	"\001\377"
+ 505 0014 01FF     		.ascii	"\001\377"
+ 506 0016 01FF     		.ascii	"\001\377"
+ 507 0018 01FF     		.ascii	"\001\377"
+ 508 001a 01FF     		.ascii	"\001\377"
+ 509              		.section	.rodata.dm_cmd_str,"a"
+ 510              		.align	2
+ 511              		.set	.LANCHOR1,. + 0
+ 514              	dm_cmd_str:
+ 515 0000 00000000 		.word	.LC38
+ 516 0004 06000000 		.word	.LC39
+ 517 0008 0C000000 		.word	.LC40
+ 518 000c 16000000 		.word	.LC41
+ 519 0010 1F000000 		.word	.LC42
+ 520 0014 28000000 		.word	.LC43
+ 521 0018 2F000000 		.word	.LC44
+ 522 001c 34000000 		.word	.LC45
+ 523 0020 40000000 		.word	.LC46
+ 524 0024 47000000 		.word	.LC47
+ 525 0028 50000000 		.word	.LC48
+ 526 002c 5B000000 		.word	.LC49
+ 527 0030 65000000 		.word	.LC50
+ 528 0034 73000000 		.word	.LC51
+ 529              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccO6Eh0w.s 			page 12
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 dm_downlink.c
+     /tmp/ccO6Eh0w.s:46     .text.dm_parse_cmd:0000000000000000 $t
+     /tmp/ccO6Eh0w.s:54     .text.dm_parse_cmd:0000000000000000 dm_parse_cmd
+     /tmp/ccO6Eh0w.s:102    .text.dm_parse_cmd:000000000000005a $d
+     /tmp/ccO6Eh0w.s:112    .text.dm_parse_cmd:0000000000000064 $t
+     /tmp/ccO6Eh0w.s:380    .text.dm_parse_cmd:0000000000000298 $d
+     /tmp/ccO6Eh0w.s:406    .text.dm_downlink:0000000000000000 $t
+     /tmp/ccO6Eh0w.s:413    .text.dm_downlink:0000000000000000 dm_downlink
+     /tmp/ccO6Eh0w.s:457    .text.dm_downlink:0000000000000050 $d
+     /tmp/ccO6Eh0w.s:490    .rodata.dm_cmd_len:0000000000000000 $d
+     /tmp/ccO6Eh0w.s:494    .rodata.dm_cmd_len:0000000000000000 dm_cmd_len
+     /tmp/ccO6Eh0w.s:510    .rodata.dm_cmd_str:0000000000000000 $d
+     /tmp/ccO6Eh0w.s:514    .rodata.dm_cmd_str:0000000000000000 dm_cmd_str
+
+UNDEFINED SYMBOLS
+smtc_modem_hal_print_trace
+__gnu_thumb1_case_uqi
+lorawan_api_nb_reset_get
+lorawan_api_context_save
+smtc_modem_hal_reset_mcu
+set_dm_info
+modem_supervisor_add_task_dm_status_now
+modem_get_upload_state
+file_upload_process_file_done_frame
+increment_asynchronous_msgnumber
+set_modem_status_file_upload
+modem_set_upload_state
+modem_supervisor_remove_task
+dm_set_conf
+lorawan_api_devnonce_get
+modem_leave
+modem_supervisor_add_task_join
+dm_set_number_of_days_mute
+get_modem_muted
+modem_supervisor_add_task_modem_mute
+stream_process_dn_frame
+alc_sync_parser
+modem_supervisor_remove_task_clock_sync
+clock_sync_is_enabled
+clock_sync_get_interval_second
+clock_sync_get_time_left_connection_lost
+smtc_modem_hal_get_signed_random_nb_in_range
+modem_supervisor_add_task_clock_sync_time_req
+modem_supervisor_add_task_alc_sync_ans
+smtc_modem_services_ctx
+set_dm_retrieve_pending_dl
+modem_supervisor_add_task_retrieve_dl

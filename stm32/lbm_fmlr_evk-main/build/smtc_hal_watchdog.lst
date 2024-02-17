@@ -1,0 +1,90 @@
+ARM GAS  /tmp/ccjFMlTc.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.eabi_attribute 23, 1
+   3              		.eabi_attribute 24, 1
+   4              		.eabi_attribute 25, 1
+   5              		.eabi_attribute 26, 1
+   6              		.eabi_attribute 30, 4
+   7              		.eabi_attribute 34, 0
+   8              		.eabi_attribute 18, 4
+   9              		.file	"smtc_hal_watchdog.c"
+  10              		.text
+  11              		.section	.text.hal_watchdog_init,"ax",%progbits
+  12              		.align	1
+  13              		.global	hal_watchdog_init
+  14              		.arch armv6s-m
+  15              		.syntax unified
+  16              		.code	16
+  17              		.thumb_func
+  18              		.fpu softvfp
+  20              	hal_watchdog_init:
+  21              		@ args = 0, pretend = 0, frame = 0
+  22              		@ frame_needed = 0, uses_anonymous_args = 0
+  23 0000 0548     		ldr	r0, .L2
+  24 0002 064B     		ldr	r3, .L2+4
+  25 0004 10B5     		push	{r4, lr}
+  26 0006 0360     		str	r3, [r0]
+  27 0008 0623     		movs	r3, #6
+  28              		@ sp needed
+  29 000a 4360     		str	r3, [r0, #4]
+  30 000c 044B     		ldr	r3, .L2+8
+  31 000e C360     		str	r3, [r0, #12]
+  32 0010 8360     		str	r3, [r0, #8]
+  33 0012 FFF7FEFF 		bl	HAL_IWDG_Init
+  34 0016 10BD     		pop	{r4, pc}
+  35              	.L3:
+  36              		.align	2
+  37              	.L2:
+  38 0018 00000000 		.word	.LANCHOR0
+  39 001c 00300040 		.word	1073754112
+  40 0020 FF0F0000 		.word	4095
+  42              		.section	.text.watchdog_reload,"ax",%progbits
+  43              		.align	1
+  44              		.global	watchdog_reload
+  45              		.syntax unified
+  46              		.code	16
+  47              		.thumb_func
+  48              		.fpu softvfp
+  50              	watchdog_reload:
+  51              		@ args = 0, pretend = 0, frame = 0
+  52              		@ frame_needed = 0, uses_anonymous_args = 0
+  53 0000 10B5     		push	{r4, lr}
+  54 0002 0248     		ldr	r0, .L5
+  55 0004 FFF7FEFF 		bl	HAL_IWDG_Refresh
+  56              		@ sp needed
+  57 0008 10BD     		pop	{r4, pc}
+  58              	.L6:
+  59 000a C046     		.align	2
+  60              	.L5:
+ARM GAS  /tmp/ccjFMlTc.s 			page 2
+
+
+  61 000c 00000000 		.word	.LANCHOR0
+  63              		.section	.bss.iwdg_handle,"aw",%nobits
+  64              		.align	2
+  65              		.set	.LANCHOR0,. + 0
+  68              	iwdg_handle:
+  69 0000 00000000 		.space	16
+  69      00000000 
+  69      00000000 
+  69      00000000 
+  70              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccjFMlTc.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 smtc_hal_watchdog.c
+     /tmp/ccjFMlTc.s:12     .text.hal_watchdog_init:0000000000000000 $t
+     /tmp/ccjFMlTc.s:20     .text.hal_watchdog_init:0000000000000000 hal_watchdog_init
+     /tmp/ccjFMlTc.s:38     .text.hal_watchdog_init:0000000000000018 $d
+     /tmp/ccjFMlTc.s:43     .text.watchdog_reload:0000000000000000 $t
+     /tmp/ccjFMlTc.s:50     .text.watchdog_reload:0000000000000000 watchdog_reload
+     /tmp/ccjFMlTc.s:61     .text.watchdog_reload:000000000000000c $d
+     /tmp/ccjFMlTc.s:64     .bss.iwdg_handle:0000000000000000 $d
+     /tmp/ccjFMlTc.s:68     .bss.iwdg_handle:0000000000000000 iwdg_handle
+
+UNDEFINED SYMBOLS
+HAL_IWDG_Init
+HAL_IWDG_Refresh

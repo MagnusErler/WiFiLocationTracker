@@ -1,0 +1,366 @@
+ARM GAS  /tmp/ccrKsE8x.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.eabi_attribute 23, 1
+   3              		.eabi_attribute 24, 1
+   4              		.eabi_attribute 25, 1
+   5              		.eabi_attribute 26, 1
+   6              		.eabi_attribute 30, 4
+   7              		.eabi_attribute 34, 0
+   8              		.eabi_attribute 18, 4
+   9              		.file	"stm32l0xx_hal_adc_ex.c"
+  10              		.text
+  11              		.section	.text.HAL_ADCEx_Calibration_Start,"ax",%progbits
+  12              		.align	1
+  13              		.global	HAL_ADCEx_Calibration_Start
+  14              		.arch armv6s-m
+  15              		.syntax unified
+  16              		.code	16
+  17              		.thumb_func
+  18              		.fpu softvfp
+  20              	HAL_ADCEx_Calibration_Start:
+  21              		@ args = 0, pretend = 0, frame = 0
+  22              		@ frame_needed = 0, uses_anonymous_args = 0
+  23 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+  24 0002 0500     		movs	r5, r0
+  25 0004 5035     		adds	r5, r5, #80
+  26 0006 2B78     		ldrb	r3, [r5]
+  27 0008 0400     		movs	r4, r0
+  28 000a 0220     		movs	r0, #2
+  29 000c 012B     		cmp	r3, #1
+  30 000e 48D0     		beq	.L2
+  31 0010 0123     		movs	r3, #1
+  32 0012 0322     		movs	r2, #3
+  33 0014 2B70     		strb	r3, [r5]
+  34 0016 2368     		ldr	r3, [r4]
+  35 0018 9868     		ldr	r0, [r3, #8]
+  36 001a 1040     		ands	r0, r2
+  37 001c 0128     		cmp	r0, #1
+  38 001e 09D1     		bne	.L3
+  39 0020 1A68     		ldr	r2, [r3]
+  40 0022 0242     		tst	r2, r0
+  41 0024 06D0     		beq	.L3
+  42 0026 2023     		movs	r3, #32
+  43 0028 626D     		ldr	r2, [r4, #84]
+  44 002a 1343     		orrs	r3, r2
+  45 002c 6365     		str	r3, [r4, #84]
+  46              	.L4:
+  47 002e 0023     		movs	r3, #0
+  48 0030 2B70     		strb	r3, [r5]
+  49 0032 36E0     		b	.L2
+  50              	.L3:
+  51 0034 626D     		ldr	r2, [r4, #84]
+  52 0036 1B49     		ldr	r1, .L12
+  53 0038 1140     		ands	r1, r2
+  54 003a 0222     		movs	r2, #2
+  55 003c 0A43     		orrs	r2, r1
+  56 003e 0321     		movs	r1, #3
+  57 0040 6265     		str	r2, [r4, #84]
+  58 0042 DE68     		ldr	r6, [r3, #12]
+ARM GAS  /tmp/ccrKsE8x.s 			page 2
+
+
+  59 0044 DA68     		ldr	r2, [r3, #12]
+  60 0046 8A43     		bics	r2, r1
+  61 0048 DA60     		str	r2, [r3, #12]
+  62 004a 8022     		movs	r2, #128
+  63 004c 9968     		ldr	r1, [r3, #8]
+  64 004e 1206     		lsls	r2, r2, #24
+  65 0050 0A43     		orrs	r2, r1
+  66 0052 9A60     		str	r2, [r3, #8]
+  67 0054 FFF7FEFF 		bl	HAL_GetTick
+  68 0058 0700     		movs	r7, r0
+  69              	.L10:
+  70 005a 2368     		ldr	r3, [r4]
+  71 005c 9A68     		ldr	r2, [r3, #8]
+  72 005e 002A     		cmp	r2, #0
+  73 0060 0CDB     		blt	.L6
+  74 0062 0322     		movs	r2, #3
+  75 0064 D968     		ldr	r1, [r3, #12]
+  76 0066 1640     		ands	r6, r2
+  77 0068 0E43     		orrs	r6, r1
+  78 006a DE60     		str	r6, [r3, #12]
+  79 006c 636D     		ldr	r3, [r4, #84]
+  80 006e 0020     		movs	r0, #0
+  81 0070 9343     		bics	r3, r2
+  82 0072 1A00     		movs	r2, r3
+  83 0074 0123     		movs	r3, #1
+  84 0076 1343     		orrs	r3, r2
+  85 0078 6365     		str	r3, [r4, #84]
+  86 007a D8E7     		b	.L4
+  87              	.L6:
+  88 007c FFF7FEFF 		bl	HAL_GetTick
+  89 0080 C01B     		subs	r0, r0, r7
+  90 0082 0A28     		cmp	r0, #10
+  91 0084 E9D9     		bls	.L10
+  92 0086 2368     		ldr	r3, [r4]
+  93 0088 9B68     		ldr	r3, [r3, #8]
+  94 008a 002B     		cmp	r3, #0
+  95 008c E5DA     		bge	.L10
+  96 008e 1222     		movs	r2, #18
+  97 0090 636D     		ldr	r3, [r4, #84]
+  98 0092 0120     		movs	r0, #1
+  99 0094 9343     		bics	r3, r2
+ 100 0096 1A00     		movs	r2, r3
+ 101 0098 1023     		movs	r3, #16
+ 102 009a 1343     		orrs	r3, r2
+ 103 009c 6365     		str	r3, [r4, #84]
+ 104 009e 0023     		movs	r3, #0
+ 105 00a0 2B70     		strb	r3, [r5]
+ 106              	.L2:
+ 107              		@ sp needed
+ 108 00a2 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 109              	.L13:
+ 110              		.align	2
+ 111              	.L12:
+ 112 00a4 FDFEFFFF 		.word	-259
+ 114              		.section	.text.HAL_ADCEx_Calibration_GetValue,"ax",%progbits
+ 115              		.align	1
+ 116              		.global	HAL_ADCEx_Calibration_GetValue
+ARM GAS  /tmp/ccrKsE8x.s 			page 3
+
+
+ 117              		.syntax unified
+ 118              		.code	16
+ 119              		.thumb_func
+ 120              		.fpu softvfp
+ 122              	HAL_ADCEx_Calibration_GetValue:
+ 123              		@ args = 0, pretend = 0, frame = 0
+ 124              		@ frame_needed = 0, uses_anonymous_args = 0
+ 125              		@ link register save eliminated.
+ 126 0000 0368     		ldr	r3, [r0]
+ 127              		@ sp needed
+ 128 0002 B433     		adds	r3, r3, #180
+ 129 0004 1868     		ldr	r0, [r3]
+ 130 0006 7F23     		movs	r3, #127
+ 131 0008 1840     		ands	r0, r3
+ 132 000a 7047     		bx	lr
+ 134              		.section	.text.HAL_ADCEx_Calibration_SetValue,"ax",%progbits
+ 135              		.align	1
+ 136              		.global	HAL_ADCEx_Calibration_SetValue
+ 137              		.syntax unified
+ 138              		.code	16
+ 139              		.thumb_func
+ 140              		.fpu softvfp
+ 142              	HAL_ADCEx_Calibration_SetValue:
+ 143              		@ args = 0, pretend = 0, frame = 0
+ 144              		@ frame_needed = 0, uses_anonymous_args = 0
+ 145 0000 70B5     		push	{r4, r5, r6, lr}
+ 146 0002 0400     		movs	r4, r0
+ 147 0004 5034     		adds	r4, r4, #80
+ 148 0006 2378     		ldrb	r3, [r4]
+ 149 0008 0100     		movs	r1, r0
+ 150 000a 0220     		movs	r0, #2
+ 151 000c 012B     		cmp	r3, #1
+ 152 000e 1AD0     		beq	.L16
+ 153 0010 0123     		movs	r3, #1
+ 154 0012 0325     		movs	r5, #3
+ 155 0014 2370     		strb	r3, [r4]
+ 156 0016 0B68     		ldr	r3, [r1]
+ 157 0018 9868     		ldr	r0, [r3, #8]
+ 158 001a 2840     		ands	r0, r5
+ 159 001c 0128     		cmp	r0, #1
+ 160 001e 13D1     		bne	.L17
+ 161 0020 1D68     		ldr	r5, [r3]
+ 162 0022 0542     		tst	r5, r0
+ 163 0024 10D0     		beq	.L17
+ 164 0026 9E68     		ldr	r6, [r3, #8]
+ 165 0028 0425     		movs	r5, #4
+ 166 002a 3000     		movs	r0, r6
+ 167 002c 2840     		ands	r0, r5
+ 168 002e 2E42     		tst	r6, r5
+ 169 0030 0AD1     		bne	.L17
+ 170 0032 B433     		adds	r3, r3, #180
+ 171 0034 1968     		ldr	r1, [r3]
+ 172 0036 7B35     		adds	r5, r5, #123
+ 173 0038 A943     		bics	r1, r5
+ 174 003a 1960     		str	r1, [r3]
+ 175 003c 1968     		ldr	r1, [r3]
+ 176 003e 0A43     		orrs	r2, r1
+ARM GAS  /tmp/ccrKsE8x.s 			page 4
+
+
+ 177 0040 1A60     		str	r2, [r3]
+ 178              	.L18:
+ 179 0042 0023     		movs	r3, #0
+ 180 0044 2370     		strb	r3, [r4]
+ 181              	.L16:
+ 182              		@ sp needed
+ 183 0046 70BD     		pop	{r4, r5, r6, pc}
+ 184              	.L17:
+ 185 0048 1023     		movs	r3, #16
+ 186 004a 0120     		movs	r0, #1
+ 187 004c 4A6D     		ldr	r2, [r1, #84]
+ 188 004e 1343     		orrs	r3, r2
+ 189 0050 4B65     		str	r3, [r1, #84]
+ 190 0052 8B6D     		ldr	r3, [r1, #88]
+ 191 0054 0343     		orrs	r3, r0
+ 192 0056 8B65     		str	r3, [r1, #88]
+ 193 0058 F3E7     		b	.L18
+ 195              		.section	.text.HAL_ADCEx_EnableVREFINT,"ax",%progbits
+ 196              		.align	1
+ 197              		.global	HAL_ADCEx_EnableVREFINT
+ 198              		.syntax unified
+ 199              		.code	16
+ 200              		.thumb_func
+ 201              		.fpu softvfp
+ 203              	HAL_ADCEx_EnableVREFINT:
+ 204              		@ args = 0, pretend = 0, frame = 0
+ 205              		@ frame_needed = 0, uses_anonymous_args = 0
+ 206 0000 8023     		movs	r3, #128
+ 207 0002 70B5     		push	{r4, r5, r6, lr}
+ 208 0004 0C4C     		ldr	r4, .L29
+ 209 0006 5B00     		lsls	r3, r3, #1
+ 210 0008 226A     		ldr	r2, [r4, #32]
+ 211 000a 8026     		movs	r6, #128
+ 212 000c 1343     		orrs	r3, r2
+ 213 000e 2362     		str	r3, [r4, #32]
+ 214 0010 FFF7FEFF 		bl	HAL_GetTick
+ 215 0014 0500     		movs	r5, r0
+ 216 0016 F605     		lsls	r6, r6, #23
+ 217              	.L28:
+ 218 0018 236A     		ldr	r3, [r4, #32]
+ 219 001a 3342     		tst	r3, r6
+ 220 001c 01D0     		beq	.L26
+ 221 001e 0020     		movs	r0, #0
+ 222              	.L25:
+ 223              		@ sp needed
+ 224 0020 70BD     		pop	{r4, r5, r6, pc}
+ 225              	.L26:
+ 226 0022 FFF7FEFF 		bl	HAL_GetTick
+ 227 0026 401B     		subs	r0, r0, r5
+ 228 0028 0328     		cmp	r0, #3
+ 229 002a F5D9     		bls	.L28
+ 230 002c 236A     		ldr	r3, [r4, #32]
+ 231 002e 3342     		tst	r3, r6
+ 232 0030 F2D1     		bne	.L28
+ 233 0032 0120     		movs	r0, #1
+ 234 0034 F4E7     		b	.L25
+ 235              	.L30:
+ARM GAS  /tmp/ccrKsE8x.s 			page 5
+
+
+ 236 0036 C046     		.align	2
+ 237              	.L29:
+ 238 0038 00000140 		.word	1073807360
+ 240              		.section	.text.HAL_ADCEx_DisableVREFINT,"ax",%progbits
+ 241              		.align	1
+ 242              		.global	HAL_ADCEx_DisableVREFINT
+ 243              		.syntax unified
+ 244              		.code	16
+ 245              		.thumb_func
+ 246              		.fpu softvfp
+ 248              	HAL_ADCEx_DisableVREFINT:
+ 249              		@ args = 0, pretend = 0, frame = 0
+ 250              		@ frame_needed = 0, uses_anonymous_args = 0
+ 251              		@ link register save eliminated.
+ 252 0000 024A     		ldr	r2, .L32
+ 253 0002 0349     		ldr	r1, .L32+4
+ 254 0004 136A     		ldr	r3, [r2, #32]
+ 255              		@ sp needed
+ 256 0006 0B40     		ands	r3, r1
+ 257 0008 1362     		str	r3, [r2, #32]
+ 258 000a 7047     		bx	lr
+ 259              	.L33:
+ 260              		.align	2
+ 261              	.L32:
+ 262 000c 00000140 		.word	1073807360
+ 263 0010 FFFEFFFF 		.word	-257
+ 265              		.section	.text.HAL_ADCEx_EnableVREFINTTempSensor,"ax",%progbits
+ 266              		.align	1
+ 267              		.global	HAL_ADCEx_EnableVREFINTTempSensor
+ 268              		.syntax unified
+ 269              		.code	16
+ 270              		.thumb_func
+ 271              		.fpu softvfp
+ 273              	HAL_ADCEx_EnableVREFINTTempSensor:
+ 274              		@ args = 0, pretend = 0, frame = 0
+ 275              		@ frame_needed = 0, uses_anonymous_args = 0
+ 276 0000 8023     		movs	r3, #128
+ 277 0002 70B5     		push	{r4, r5, r6, lr}
+ 278 0004 0C4C     		ldr	r4, .L40
+ 279 0006 9B00     		lsls	r3, r3, #2
+ 280 0008 226A     		ldr	r2, [r4, #32]
+ 281 000a 8026     		movs	r6, #128
+ 282 000c 1343     		orrs	r3, r2
+ 283 000e 2362     		str	r3, [r4, #32]
+ 284 0010 FFF7FEFF 		bl	HAL_GetTick
+ 285 0014 0500     		movs	r5, r0
+ 286 0016 F605     		lsls	r6, r6, #23
+ 287              	.L39:
+ 288 0018 236A     		ldr	r3, [r4, #32]
+ 289 001a 3342     		tst	r3, r6
+ 290 001c 01D0     		beq	.L37
+ 291 001e 0020     		movs	r0, #0
+ 292              	.L36:
+ 293              		@ sp needed
+ 294 0020 70BD     		pop	{r4, r5, r6, pc}
+ 295              	.L37:
+ 296 0022 FFF7FEFF 		bl	HAL_GetTick
+ARM GAS  /tmp/ccrKsE8x.s 			page 6
+
+
+ 297 0026 401B     		subs	r0, r0, r5
+ 298 0028 0128     		cmp	r0, #1
+ 299 002a F5D9     		bls	.L39
+ 300 002c 236A     		ldr	r3, [r4, #32]
+ 301 002e 3342     		tst	r3, r6
+ 302 0030 F2D1     		bne	.L39
+ 303 0032 0120     		movs	r0, #1
+ 304 0034 F4E7     		b	.L36
+ 305              	.L41:
+ 306 0036 C046     		.align	2
+ 307              	.L40:
+ 308 0038 00000140 		.word	1073807360
+ 310              		.section	.text.HAL_ADCEx_DisableVREFINTTempSensor,"ax",%progbits
+ 311              		.align	1
+ 312              		.global	HAL_ADCEx_DisableVREFINTTempSensor
+ 313              		.syntax unified
+ 314              		.code	16
+ 315              		.thumb_func
+ 316              		.fpu softvfp
+ 318              	HAL_ADCEx_DisableVREFINTTempSensor:
+ 319              		@ args = 0, pretend = 0, frame = 0
+ 320              		@ frame_needed = 0, uses_anonymous_args = 0
+ 321              		@ link register save eliminated.
+ 322 0000 024A     		ldr	r2, .L43
+ 323 0002 0349     		ldr	r1, .L43+4
+ 324 0004 136A     		ldr	r3, [r2, #32]
+ 325              		@ sp needed
+ 326 0006 0B40     		ands	r3, r1
+ 327 0008 1362     		str	r3, [r2, #32]
+ 328 000a 7047     		bx	lr
+ 329              	.L44:
+ 330              		.align	2
+ 331              	.L43:
+ 332 000c 00000140 		.word	1073807360
+ 333 0010 FFFDFFFF 		.word	-513
+ 335              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccrKsE8x.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 stm32l0xx_hal_adc_ex.c
+     /tmp/ccrKsE8x.s:12     .text.HAL_ADCEx_Calibration_Start:0000000000000000 $t
+     /tmp/ccrKsE8x.s:20     .text.HAL_ADCEx_Calibration_Start:0000000000000000 HAL_ADCEx_Calibration_Start
+     /tmp/ccrKsE8x.s:112    .text.HAL_ADCEx_Calibration_Start:00000000000000a4 $d
+     /tmp/ccrKsE8x.s:115    .text.HAL_ADCEx_Calibration_GetValue:0000000000000000 $t
+     /tmp/ccrKsE8x.s:122    .text.HAL_ADCEx_Calibration_GetValue:0000000000000000 HAL_ADCEx_Calibration_GetValue
+     /tmp/ccrKsE8x.s:135    .text.HAL_ADCEx_Calibration_SetValue:0000000000000000 $t
+     /tmp/ccrKsE8x.s:142    .text.HAL_ADCEx_Calibration_SetValue:0000000000000000 HAL_ADCEx_Calibration_SetValue
+     /tmp/ccrKsE8x.s:196    .text.HAL_ADCEx_EnableVREFINT:0000000000000000 $t
+     /tmp/ccrKsE8x.s:203    .text.HAL_ADCEx_EnableVREFINT:0000000000000000 HAL_ADCEx_EnableVREFINT
+     /tmp/ccrKsE8x.s:238    .text.HAL_ADCEx_EnableVREFINT:0000000000000038 $d
+     /tmp/ccrKsE8x.s:241    .text.HAL_ADCEx_DisableVREFINT:0000000000000000 $t
+     /tmp/ccrKsE8x.s:248    .text.HAL_ADCEx_DisableVREFINT:0000000000000000 HAL_ADCEx_DisableVREFINT
+     /tmp/ccrKsE8x.s:262    .text.HAL_ADCEx_DisableVREFINT:000000000000000c $d
+     /tmp/ccrKsE8x.s:266    .text.HAL_ADCEx_EnableVREFINTTempSensor:0000000000000000 $t
+     /tmp/ccrKsE8x.s:273    .text.HAL_ADCEx_EnableVREFINTTempSensor:0000000000000000 HAL_ADCEx_EnableVREFINTTempSensor
+     /tmp/ccrKsE8x.s:308    .text.HAL_ADCEx_EnableVREFINTTempSensor:0000000000000038 $d
+     /tmp/ccrKsE8x.s:311    .text.HAL_ADCEx_DisableVREFINTTempSensor:0000000000000000 $t
+     /tmp/ccrKsE8x.s:318    .text.HAL_ADCEx_DisableVREFINTTempSensor:0000000000000000 HAL_ADCEx_DisableVREFINTTempSensor
+     /tmp/ccrKsE8x.s:332    .text.HAL_ADCEx_DisableVREFINTTempSensor:000000000000000c $d
+
+UNDEFINED SYMBOLS
+HAL_GetTick

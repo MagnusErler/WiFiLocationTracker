@@ -1,0 +1,8 @@
+lbm/smtc_modem_core/radio_drivers/lr11xx_driver/src/lr11xx_hal.h:168:23:lr11xx_hal_compute_crc	32	static
+bsp_l0/radio_hal/lr11xx_hal.c:232:21:lr11xx_hal_reset	8	static
+bsp_l0/radio_hal/lr11xx_hal.c:255:6:lr11xx_hal_wait_on_busy	8	static
+bsp_l0/radio_hal/lr11xx_hal.c:260:6:lr11xx_hal_check_device_ready	8	static
+bsp_l0/radio_hal/lr11xx_hal.c:98:21:lr11xx_hal_write	32	static
+bsp_l0/radio_hal/lr11xx_hal.c:138:21:lr11xx_hal_read	40	static
+bsp_l0/radio_hal/lr11xx_hal.c:201:21:lr11xx_hal_direct_read	24	static
+bsp_l0/radio_hal/lr11xx_hal.c:245:21:lr11xx_hal_wakeup	8	static

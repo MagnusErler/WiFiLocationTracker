@@ -1,0 +1,683 @@
+ARM GAS  /tmp/ccWXBTmZ.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.eabi_attribute 23, 1
+   3              		.eabi_attribute 24, 1
+   4              		.eabi_attribute 25, 1
+   5              		.eabi_attribute 26, 1
+   6              		.eabi_attribute 30, 4
+   7              		.eabi_attribute 34, 0
+   8              		.eabi_attribute 18, 4
+   9              		.file	"timer.c"
+  10              		.text
+  11              		.section	.text.TimerInsertTimer,"ax",%progbits
+  12              		.align	1
+  13              		.arch armv6s-m
+  14              		.syntax unified
+  15              		.code	16
+  16              		.thumb_func
+  17              		.fpu softvfp
+  19              	TimerInsertTimer:
+  20              		@ args = 0, pretend = 0, frame = 0
+  21              		@ frame_needed = 0, uses_anonymous_args = 0
+  22 0000 094B     		ldr	r3, .L6
+  23 0002 10B5     		push	{r4, lr}
+  24 0004 1B68     		ldr	r3, [r3]
+  25 0006 5A69     		ldr	r2, [r3, #20]
+  26              	.L2:
+  27 0008 5969     		ldr	r1, [r3, #20]
+  28 000a 0029     		cmp	r1, #0
+  29 000c 02D1     		bne	.L5
+  30 000e 5861     		str	r0, [r3, #20]
+  31 0010 4161     		str	r1, [r0, #20]
+  32 0012 08E0     		b	.L1
+  33              	.L5:
+  34 0014 0168     		ldr	r1, [r0]
+  35 0016 1468     		ldr	r4, [r2]
+  36 0018 A142     		cmp	r1, r4
+  37 001a 02D9     		bls	.L3
+  38 001c 1300     		movs	r3, r2
+  39 001e 5269     		ldr	r2, [r2, #20]
+  40 0020 F2E7     		b	.L2
+  41              	.L3:
+  42 0022 5861     		str	r0, [r3, #20]
+  43 0024 4261     		str	r2, [r0, #20]
+  44              	.L1:
+  45              		@ sp needed
+  46 0026 10BD     		pop	{r4, pc}
+  47              	.L7:
+  48              		.align	2
+  49              	.L6:
+  50 0028 00000000 		.word	.LANCHOR0
+  52              		.section	.text.TimerSetTimeout,"ax",%progbits
+  53              		.align	1
+  54              		.syntax unified
+  55              		.code	16
+  56              		.thumb_func
+  57              		.fpu softvfp
+  59              	TimerSetTimeout:
+  60              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  /tmp/ccWXBTmZ.s 			page 2
+
+
+  61              		@ frame_needed = 0, uses_anonymous_args = 0
+  62 0000 70B5     		push	{r4, r5, r6, lr}
+  63 0002 0500     		movs	r5, r0
+  64 0004 FFF7FEFF 		bl	hal_rtc_get_minimum_timeout
+  65 0008 0123     		movs	r3, #1
+  66 000a 6B72     		strb	r3, [r5, #9]
+  67 000c 0400     		movs	r4, r0
+  68 000e 2D68     		ldr	r5, [r5]
+  69 0010 FFF7FEFF 		bl	hal_rtc_get_timer_elapsed_time
+  70 0014 2D1A     		subs	r5, r5, r0
+  71 0016 2000     		movs	r0, r4
+  72 0018 AC42     		cmp	r4, r5
+  73 001a 00D2     		bcs	.L9
+  74 001c 2800     		movs	r0, r5
+  75              	.L9:
+  76              		@ sp needed
+  77 001e FFF7FEFF 		bl	hal_rtc_wakeup_timer_set_ms
+  78 0022 70BD     		pop	{r4, r5, r6, pc}
+  80              		.section	.text.TimerInsertNewHeadTimer,"ax",%progbits
+  81              		.align	1
+  82              		.syntax unified
+  83              		.code	16
+  84              		.thumb_func
+  85              		.fpu softvfp
+  87              	TimerInsertNewHeadTimer:
+  88              		@ args = 0, pretend = 0, frame = 0
+  89              		@ frame_needed = 0, uses_anonymous_args = 0
+  90 0000 054A     		ldr	r2, .L15
+  91 0002 10B5     		push	{r4, lr}
+  92 0004 1368     		ldr	r3, [r2]
+  93 0006 002B     		cmp	r3, #0
+  94 0008 01D0     		beq	.L11
+  95 000a 0021     		movs	r1, #0
+  96 000c 5972     		strb	r1, [r3, #9]
+  97              	.L11:
+  98 000e 4361     		str	r3, [r0, #20]
+  99 0010 1060     		str	r0, [r2]
+ 100              		@ sp needed
+ 101 0012 FFF7FEFF 		bl	TimerSetTimeout
+ 102 0016 10BD     		pop	{r4, pc}
+ 103              	.L16:
+ 104              		.align	2
+ 105              	.L15:
+ 106 0018 00000000 		.word	.LANCHOR0
+ 108              		.section	.text.TimerInit,"ax",%progbits
+ 109              		.align	1
+ 110              		.global	TimerInit
+ 111              		.syntax unified
+ 112              		.code	16
+ 113              		.thumb_func
+ 114              		.fpu softvfp
+ 116              	TimerInit:
+ 117              		@ args = 0, pretend = 0, frame = 0
+ 118              		@ frame_needed = 0, uses_anonymous_args = 0
+ 119              		@ link register save eliminated.
+ 120 0000 0023     		movs	r3, #0
+ 121              		@ sp needed
+ARM GAS  /tmp/ccWXBTmZ.s 			page 3
+
+
+ 122 0002 0360     		str	r3, [r0]
+ 123 0004 4360     		str	r3, [r0, #4]
+ 124 0006 0381     		strh	r3, [r0, #8]
+ 125 0008 C160     		str	r1, [r0, #12]
+ 126 000a 0361     		str	r3, [r0, #16]
+ 127 000c 4361     		str	r3, [r0, #20]
+ 128 000e 7047     		bx	lr
+ 130              		.section	.text.TimerSetContext,"ax",%progbits
+ 131              		.align	1
+ 132              		.global	TimerSetContext
+ 133              		.syntax unified
+ 134              		.code	16
+ 135              		.thumb_func
+ 136              		.fpu softvfp
+ 138              	TimerSetContext:
+ 139              		@ args = 0, pretend = 0, frame = 0
+ 140              		@ frame_needed = 0, uses_anonymous_args = 0
+ 141              		@ link register save eliminated.
+ 142 0000 0161     		str	r1, [r0, #16]
+ 143              		@ sp needed
+ 144 0002 7047     		bx	lr
+ 146              		.section	.text.TimerStart,"ax",%progbits
+ 147              		.align	1
+ 148              		.global	TimerStart
+ 149              		.syntax unified
+ 150              		.code	16
+ 151              		.thumb_func
+ 152              		.fpu softvfp
+ 154              	TimerStart:
+ 155              		@ args = 0, pretend = 0, frame = 8
+ 156              		@ frame_needed = 0, uses_anonymous_args = 0
+ 157 0000 37B5     		push	{r0, r1, r2, r4, r5, lr}
+ 158 0002 0400     		movs	r4, r0
+ 159 0004 01A8     		add	r0, sp, #4
+ 160 0006 FFF7FEFF 		bl	hal_mcu_critical_section_begin
+ 161 000a 002C     		cmp	r4, #0
+ 162 000c 0FD0     		beq	.L20
+ 163 000e 124D     		ldr	r5, .L34
+ 164 0010 2A68     		ldr	r2, [r5]
+ 165 0012 1300     		movs	r3, r2
+ 166              	.L21:
+ 167 0014 002B     		cmp	r3, #0
+ 168 0016 0ED1     		bne	.L22
+ 169 0018 6368     		ldr	r3, [r4, #4]
+ 170 001a 2360     		str	r3, [r4]
+ 171 001c 0123     		movs	r3, #1
+ 172 001e 2381     		strh	r3, [r4, #8]
+ 173 0020 002A     		cmp	r2, #0
+ 174 0022 0CD1     		bne	.L32
+ 175 0024 FFF7FEFF 		bl	hal_rtc_set_timer_context
+ 176              	.L33:
+ 177 0028 2000     		movs	r0, r4
+ 178 002a FFF7FEFF 		bl	TimerInsertNewHeadTimer
+ 179              	.L20:
+ 180              		@ sp needed
+ 181 002e 01A8     		add	r0, sp, #4
+ 182 0030 FFF7FEFF 		bl	hal_mcu_critical_section_end
+ARM GAS  /tmp/ccWXBTmZ.s 			page 4
+
+
+ 183 0034 37BD     		pop	{r0, r1, r2, r4, r5, pc}
+ 184              	.L22:
+ 185 0036 9C42     		cmp	r4, r3
+ 186 0038 F9D0     		beq	.L20
+ 187 003a 5B69     		ldr	r3, [r3, #20]
+ 188 003c EAE7     		b	.L21
+ 189              	.L32:
+ 190 003e FFF7FEFF 		bl	hal_rtc_get_timer_elapsed_time
+ 191 0042 2368     		ldr	r3, [r4]
+ 192 0044 C018     		adds	r0, r0, r3
+ 193 0046 2B68     		ldr	r3, [r5]
+ 194 0048 2060     		str	r0, [r4]
+ 195 004a 1B68     		ldr	r3, [r3]
+ 196 004c 9842     		cmp	r0, r3
+ 197 004e EBD3     		bcc	.L33
+ 198 0050 2000     		movs	r0, r4
+ 199 0052 FFF7FEFF 		bl	TimerInsertTimer
+ 200 0056 EAE7     		b	.L20
+ 201              	.L35:
+ 202              		.align	2
+ 203              	.L34:
+ 204 0058 00000000 		.word	.LANCHOR0
+ 206              		.section	.text.TimerStartNoReload,"ax",%progbits
+ 207              		.align	1
+ 208              		.global	TimerStartNoReload
+ 209              		.syntax unified
+ 210              		.code	16
+ 211              		.thumb_func
+ 212              		.fpu softvfp
+ 214              	TimerStartNoReload:
+ 215              		@ args = 0, pretend = 0, frame = 8
+ 216              		@ frame_needed = 0, uses_anonymous_args = 0
+ 217 0000 37B5     		push	{r0, r1, r2, r4, r5, lr}
+ 218 0002 0400     		movs	r4, r0
+ 219 0004 01A8     		add	r0, sp, #4
+ 220 0006 FFF7FEFF 		bl	hal_mcu_critical_section_begin
+ 221 000a 002C     		cmp	r4, #0
+ 222 000c 0DD0     		beq	.L37
+ 223 000e 114D     		ldr	r5, .L51
+ 224 0010 2A68     		ldr	r2, [r5]
+ 225 0012 1300     		movs	r3, r2
+ 226              	.L38:
+ 227 0014 002B     		cmp	r3, #0
+ 228 0016 0CD1     		bne	.L39
+ 229 0018 0123     		movs	r3, #1
+ 230 001a 2381     		strh	r3, [r4, #8]
+ 231 001c 002A     		cmp	r2, #0
+ 232 001e 0CD1     		bne	.L49
+ 233 0020 FFF7FEFF 		bl	hal_rtc_set_timer_context
+ 234              	.L50:
+ 235 0024 2000     		movs	r0, r4
+ 236 0026 FFF7FEFF 		bl	TimerInsertNewHeadTimer
+ 237              	.L37:
+ 238              		@ sp needed
+ 239 002a 01A8     		add	r0, sp, #4
+ 240 002c FFF7FEFF 		bl	hal_mcu_critical_section_end
+ 241 0030 37BD     		pop	{r0, r1, r2, r4, r5, pc}
+ARM GAS  /tmp/ccWXBTmZ.s 			page 5
+
+
+ 242              	.L39:
+ 243 0032 9C42     		cmp	r4, r3
+ 244 0034 F9D0     		beq	.L37
+ 245 0036 5B69     		ldr	r3, [r3, #20]
+ 246 0038 ECE7     		b	.L38
+ 247              	.L49:
+ 248 003a FFF7FEFF 		bl	hal_rtc_get_timer_elapsed_time
+ 249 003e 2368     		ldr	r3, [r4]
+ 250 0040 C018     		adds	r0, r0, r3
+ 251 0042 2B68     		ldr	r3, [r5]
+ 252 0044 2060     		str	r0, [r4]
+ 253 0046 1B68     		ldr	r3, [r3]
+ 254 0048 9842     		cmp	r0, r3
+ 255 004a EBD3     		bcc	.L50
+ 256 004c 2000     		movs	r0, r4
+ 257 004e FFF7FEFF 		bl	TimerInsertTimer
+ 258 0052 EAE7     		b	.L37
+ 259              	.L52:
+ 260              		.align	2
+ 261              	.L51:
+ 262 0054 00000000 		.word	.LANCHOR0
+ 264              		.section	.text.TimerIsStarted,"ax",%progbits
+ 265              		.align	1
+ 266              		.global	TimerIsStarted
+ 267              		.syntax unified
+ 268              		.code	16
+ 269              		.thumb_func
+ 270              		.fpu softvfp
+ 272              	TimerIsStarted:
+ 273              		@ args = 0, pretend = 0, frame = 0
+ 274              		@ frame_needed = 0, uses_anonymous_args = 0
+ 275              		@ link register save eliminated.
+ 276 0000 007A     		ldrb	r0, [r0, #8]
+ 277              		@ sp needed
+ 278 0002 7047     		bx	lr
+ 280              		.section	.text.TimerIrqHandler,"ax",%progbits
+ 281              		.align	1
+ 282              		.global	TimerIrqHandler
+ 283              		.syntax unified
+ 284              		.code	16
+ 285              		.thumb_func
+ 286              		.fpu softvfp
+ 288              	TimerIrqHandler:
+ 289              		@ args = 0, pretend = 0, frame = 0
+ 290              		@ frame_needed = 0, uses_anonymous_args = 0
+ 291 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 292 0002 FFF7FEFF 		bl	hal_rtc_get_timer_context
+ 293 0006 0500     		movs	r5, r0
+ 294 0008 FFF7FEFF 		bl	hal_rtc_set_timer_context
+ 295 000c 1A4C     		ldr	r4, .L77
+ 296 000e 2368     		ldr	r3, [r4]
+ 297 0010 002B     		cmp	r3, #0
+ 298 0012 15D0     		beq	.L61
+ 299 0014 1A00     		movs	r2, r3
+ 300 0016 471B     		subs	r7, r0, r5
+ 301              	.L56:
+ 302 0018 5269     		ldr	r2, [r2, #20]
+ARM GAS  /tmp/ccWXBTmZ.s 			page 6
+
+
+ 303 001a 002A     		cmp	r2, #0
+ 304 001c 06D1     		bne	.L58
+ 305 001e 5969     		ldr	r1, [r3, #20]
+ 306 0020 1A72     		strb	r2, [r3, #8]
+ 307 0022 DA68     		ldr	r2, [r3, #12]
+ 308 0024 2160     		str	r1, [r4]
+ 309 0026 002A     		cmp	r2, #0
+ 310 0028 08D1     		bne	.L62
+ 311              	.L60:
+ 312 002a FEE7     		b	.L60
+ 313              	.L58:
+ 314 002c 1168     		ldr	r1, [r2]
+ 315 002e 0026     		movs	r6, #0
+ 316 0030 B942     		cmp	r1, r7
+ 317 0032 01D9     		bls	.L57
+ 318 0034 4919     		adds	r1, r1, r5
+ 319 0036 0E1A     		subs	r6, r1, r0
+ 320              	.L57:
+ 321 0038 1660     		str	r6, [r2]
+ 322 003a EDE7     		b	.L56
+ 323              	.L62:
+ 324 003c 1869     		ldr	r0, [r3, #16]
+ 325 003e 9047     		blx	r2
+ 326              	.L61:
+ 327 0040 2368     		ldr	r3, [r4]
+ 328 0042 002B     		cmp	r3, #0
+ 329 0044 03D1     		bne	.L64
+ 330              	.L68:
+ 331 0046 2068     		ldr	r0, [r4]
+ 332 0048 0028     		cmp	r0, #0
+ 333 004a 0ED1     		bne	.L65
+ 334              	.L54:
+ 335              		@ sp needed
+ 336 004c F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 337              	.L64:
+ 338 004e 1D68     		ldr	r5, [r3]
+ 339 0050 FFF7FEFF 		bl	hal_rtc_get_timer_elapsed_time
+ 340 0054 8542     		cmp	r5, r0
+ 341 0056 F6D2     		bcs	.L68
+ 342 0058 2368     		ldr	r3, [r4]
+ 343 005a 5A69     		ldr	r2, [r3, #20]
+ 344 005c 2260     		str	r2, [r4]
+ 345 005e 0022     		movs	r2, #0
+ 346 0060 1A72     		strb	r2, [r3, #8]
+ 347 0062 DA68     		ldr	r2, [r3, #12]
+ 348 0064 002A     		cmp	r2, #0
+ 349 0066 E9D1     		bne	.L62
+ 350              	.L63:
+ 351 0068 FEE7     		b	.L63
+ 352              	.L65:
+ 353 006a 437A     		ldrb	r3, [r0, #9]
+ 354 006c 002B     		cmp	r3, #0
+ 355 006e EDD1     		bne	.L54
+ 356 0070 FFF7FEFF 		bl	TimerSetTimeout
+ 357 0074 EAE7     		b	.L54
+ 358              	.L78:
+ 359 0076 C046     		.align	2
+ARM GAS  /tmp/ccWXBTmZ.s 			page 7
+
+
+ 360              	.L77:
+ 361 0078 00000000 		.word	.LANCHOR0
+ 363              		.section	.text.TimerStop,"ax",%progbits
+ 364              		.align	1
+ 365              		.global	TimerStop
+ 366              		.syntax unified
+ 367              		.code	16
+ 368              		.thumb_func
+ 369              		.fpu softvfp
+ 371              	TimerStop:
+ 372              		@ args = 0, pretend = 0, frame = 8
+ 373              		@ frame_needed = 0, uses_anonymous_args = 0
+ 374 0000 37B5     		push	{r0, r1, r2, r4, r5, lr}
+ 375 0002 0400     		movs	r4, r0
+ 376 0004 01A8     		add	r0, sp, #4
+ 377 0006 FFF7FEFF 		bl	hal_mcu_critical_section_begin
+ 378 000a 134D     		ldr	r5, .L97
+ 379 000c 2B68     		ldr	r3, [r5]
+ 380 000e 002B     		cmp	r3, #0
+ 381 0010 01D0     		beq	.L81
+ 382 0012 002C     		cmp	r4, #0
+ 383 0014 03D1     		bne	.L95
+ 384              	.L81:
+ 385              		@ sp needed
+ 386 0016 01A8     		add	r0, sp, #4
+ 387 0018 FFF7FEFF 		bl	hal_mcu_critical_section_end
+ 388 001c 37BD     		pop	{r0, r1, r2, r4, r5, pc}
+ 389              	.L95:
+ 390 001e 0022     		movs	r2, #0
+ 391 0020 2272     		strb	r2, [r4, #8]
+ 392 0022 A342     		cmp	r3, r4
+ 393 0024 0FD1     		bne	.L84
+ 394 0026 597A     		ldrb	r1, [r3, #9]
+ 395 0028 5C69     		ldr	r4, [r3, #20]
+ 396 002a 9142     		cmp	r1, r2
+ 397 002c 09D0     		beq	.L85
+ 398 002e 5A72     		strb	r2, [r3, #9]
+ 399 0030 9442     		cmp	r4, r2
+ 400 0032 04D0     		beq	.L86
+ 401 0034 2000     		movs	r0, r4
+ 402 0036 2C60     		str	r4, [r5]
+ 403 0038 FFF7FEFF 		bl	TimerSetTimeout
+ 404 003c EBE7     		b	.L81
+ 405              	.L86:
+ 406 003e FFF7FEFF 		bl	hal_rtc_wakeup_timer_stop
+ 407              	.L85:
+ 408 0042 2C60     		str	r4, [r5]
+ 409 0044 E7E7     		b	.L81
+ 410              	.L84:
+ 411 0046 1A00     		movs	r2, r3
+ 412 0048 5B69     		ldr	r3, [r3, #20]
+ 413 004a 002B     		cmp	r3, #0
+ 414 004c E3D0     		beq	.L81
+ 415 004e 9C42     		cmp	r4, r3
+ 416 0050 F9D1     		bne	.L84
+ 417 0052 6369     		ldr	r3, [r4, #20]
+ 418 0054 5361     		str	r3, [r2, #20]
+ARM GAS  /tmp/ccWXBTmZ.s 			page 8
+
+
+ 419 0056 DEE7     		b	.L81
+ 420              	.L98:
+ 421              		.align	2
+ 422              	.L97:
+ 423 0058 00000000 		.word	.LANCHOR0
+ 425              		.section	.text.TimerReset,"ax",%progbits
+ 426              		.align	1
+ 427              		.global	TimerReset
+ 428              		.syntax unified
+ 429              		.code	16
+ 430              		.thumb_func
+ 431              		.fpu softvfp
+ 433              	TimerReset:
+ 434              		@ args = 0, pretend = 0, frame = 0
+ 435              		@ frame_needed = 0, uses_anonymous_args = 0
+ 436 0000 10B5     		push	{r4, lr}
+ 437 0002 0400     		movs	r4, r0
+ 438              		@ sp needed
+ 439 0004 FFF7FEFF 		bl	TimerStop
+ 440 0008 2000     		movs	r0, r4
+ 441 000a FFF7FEFF 		bl	TimerStart
+ 442 000e 10BD     		pop	{r4, pc}
+ 444              		.section	.text.TimerSetValue,"ax",%progbits
+ 445              		.align	1
+ 446              		.global	TimerSetValue
+ 447              		.syntax unified
+ 448              		.code	16
+ 449              		.thumb_func
+ 450              		.fpu softvfp
+ 452              	TimerSetValue:
+ 453              		@ args = 0, pretend = 0, frame = 0
+ 454              		@ frame_needed = 0, uses_anonymous_args = 0
+ 455 0000 70B5     		push	{r4, r5, r6, lr}
+ 456 0002 0500     		movs	r5, r0
+ 457 0004 0800     		movs	r0, r1
+ 458 0006 FFF7FEFF 		bl	rtc_ms_2_ticks
+ 459 000a 0400     		movs	r4, r0
+ 460 000c 2800     		movs	r0, r5
+ 461 000e FFF7FEFF 		bl	TimerStop
+ 462 0012 FFF7FEFF 		bl	hal_rtc_get_minimum_timeout
+ 463 0016 8442     		cmp	r4, r0
+ 464 0018 00D2     		bcs	.L101
+ 465 001a 0400     		movs	r4, r0
+ 466              	.L101:
+ 467              		@ sp needed
+ 468 001c 2C60     		str	r4, [r5]
+ 469 001e 6C60     		str	r4, [r5, #4]
+ 470 0020 70BD     		pop	{r4, r5, r6, pc}
+ 472              		.section	.text.TimerGetCurrentTime,"ax",%progbits
+ 473              		.align	1
+ 474              		.global	TimerGetCurrentTime
+ 475              		.syntax unified
+ 476              		.code	16
+ 477              		.thumb_func
+ 478              		.fpu softvfp
+ 480              	TimerGetCurrentTime:
+ 481              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  /tmp/ccWXBTmZ.s 			page 9
+
+
+ 482              		@ frame_needed = 0, uses_anonymous_args = 0
+ 483 0000 10B5     		push	{r4, lr}
+ 484 0002 FFF7FEFF 		bl	hal_rtc_get_time_ms
+ 485              		@ sp needed
+ 486 0006 10BD     		pop	{r4, pc}
+ 488              		.section	.text.TimerGetElapsedTime,"ax",%progbits
+ 489              		.align	1
+ 490              		.global	TimerGetElapsedTime
+ 491              		.syntax unified
+ 492              		.code	16
+ 493              		.thumb_func
+ 494              		.fpu softvfp
+ 496              	TimerGetElapsedTime:
+ 497              		@ args = 0, pretend = 0, frame = 0
+ 498              		@ frame_needed = 0, uses_anonymous_args = 0
+ 499 0000 70B5     		push	{r4, r5, r6, lr}
+ 500 0002 041E     		subs	r4, r0, #0
+ 501 0004 09D0     		beq	.L104
+ 502 0006 FFF7FEFF 		bl	hal_rtc_get_time_ticks
+ 503 000a 0500     		movs	r5, r0
+ 504 000c 2000     		movs	r0, r4
+ 505 000e FFF7FEFF 		bl	rtc_ms_2_ticks
+ 506 0012 281A     		subs	r0, r5, r0
+ 507 0014 FFF7FEFF 		bl	rtc_tick_2_ms
+ 508 0018 0400     		movs	r4, r0
+ 509              	.L104:
+ 510              		@ sp needed
+ 511 001a 2000     		movs	r0, r4
+ 512 001c 70BD     		pop	{r4, r5, r6, pc}
+ 514              		.section	.text.TimerBackup,"ax",%progbits
+ 515              		.align	1
+ 516              		.global	TimerBackup
+ 517              		.syntax unified
+ 518              		.code	16
+ 519              		.thumb_func
+ 520              		.fpu softvfp
+ 522              	TimerBackup:
+ 523              		@ args = 0, pretend = 0, frame = 0
+ 524              		@ frame_needed = 0, uses_anonymous_args = 0
+ 525 0000 0D4B     		ldr	r3, .L111
+ 526 0002 70B5     		push	{r4, r5, r6, lr}
+ 527 0004 1C68     		ldr	r4, [r3]
+ 528              	.L109:
+ 529 0006 002C     		cmp	r4, #0
+ 530 0008 00D1     		bne	.L110
+ 531              		@ sp needed
+ 532 000a 70BD     		pop	{r4, r5, r6, pc}
+ 533              	.L110:
+ 534 000c 0B4D     		ldr	r5, .L111+4
+ 535 000e 0C4E     		ldr	r6, .L111+8
+ 536 0010 2B78     		ldrb	r3, [r5]
+ 537 0012 9B00     		lsls	r3, r3, #2
+ 538 0014 9C51     		str	r4, [r3, r6]
+ 539 0016 FFF7FEFF 		bl	hal_rtc_get_timer_elapsed_time
+ 540 001a 2B78     		ldrb	r3, [r5]
+ 541 001c 9B00     		lsls	r3, r3, #2
+ 542 001e 9B59     		ldr	r3, [r3, r6]
+ARM GAS  /tmp/ccWXBTmZ.s 			page 10
+
+
+ 543 0020 1A68     		ldr	r2, [r3]
+ 544 0022 101A     		subs	r0, r2, r0
+ 545 0024 1860     		str	r0, [r3]
+ 546 0026 1800     		movs	r0, r3
+ 547 0028 FFF7FEFF 		bl	TimerStop
+ 548 002c 2B78     		ldrb	r3, [r5]
+ 549 002e 6469     		ldr	r4, [r4, #20]
+ 550 0030 0133     		adds	r3, r3, #1
+ 551 0032 2B70     		strb	r3, [r5]
+ 552 0034 E7E7     		b	.L109
+ 553              	.L112:
+ 554 0036 C046     		.align	2
+ 555              	.L111:
+ 556 0038 00000000 		.word	.LANCHOR0
+ 557 003c 00000000 		.word	.LANCHOR2
+ 558 0040 00000000 		.word	.LANCHOR1
+ 560              		.section	.text.TimerRestore,"ax",%progbits
+ 561              		.align	1
+ 562              		.global	TimerRestore
+ 563              		.syntax unified
+ 564              		.code	16
+ 565              		.thumb_func
+ 566              		.fpu softvfp
+ 568              	TimerRestore:
+ 569              		@ args = 0, pretend = 0, frame = 0
+ 570              		@ frame_needed = 0, uses_anonymous_args = 0
+ 571 0000 10B5     		push	{r4, lr}
+ 572 0002 0024     		movs	r4, #0
+ 573              	.L114:
+ 574 0004 074B     		ldr	r3, .L116
+ 575 0006 1A78     		ldrb	r2, [r3]
+ 576 0008 A242     		cmp	r2, r4
+ 577 000a 02D8     		bhi	.L115
+ 578              		@ sp needed
+ 579 000c 0022     		movs	r2, #0
+ 580 000e 1A70     		strb	r2, [r3]
+ 581 0010 10BD     		pop	{r4, pc}
+ 582              	.L115:
+ 583 0012 054B     		ldr	r3, .L116+4
+ 584 0014 A200     		lsls	r2, r4, #2
+ 585 0016 D058     		ldr	r0, [r2, r3]
+ 586 0018 0134     		adds	r4, r4, #1
+ 587 001a FFF7FEFF 		bl	TimerStartNoReload
+ 588 001e E4B2     		uxtb	r4, r4
+ 589 0020 F0E7     		b	.L114
+ 590              	.L117:
+ 591 0022 C046     		.align	2
+ 592              	.L116:
+ 593 0024 00000000 		.word	.LANCHOR2
+ 594 0028 00000000 		.word	.LANCHOR1
+ 596              		.section	.bss.TimerListHead,"aw",%nobits
+ 597              		.align	2
+ 598              		.set	.LANCHOR0,. + 0
+ 601              	TimerListHead:
+ 602 0000 00000000 		.space	4
+ 603              		.section	.bss.backup,"aw",%nobits
+ 604              		.align	2
+ARM GAS  /tmp/ccWXBTmZ.s 			page 11
+
+
+ 605              		.set	.LANCHOR1,. + 0
+ 608              	backup:
+ 609 0000 00000000 		.space	32
+ 609      00000000 
+ 609      00000000 
+ 609      00000000 
+ 609      00000000 
+ 610              		.section	.bss.backuped_timers,"aw",%nobits
+ 611              		.set	.LANCHOR2,. + 0
+ 614              	backuped_timers:
+ 615 0000 00       		.space	1
+ 616              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccWXBTmZ.s 			page 12
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 timer.c
+     /tmp/ccWXBTmZ.s:12     .text.TimerInsertTimer:0000000000000000 $t
+     /tmp/ccWXBTmZ.s:19     .text.TimerInsertTimer:0000000000000000 TimerInsertTimer
+     /tmp/ccWXBTmZ.s:50     .text.TimerInsertTimer:0000000000000028 $d
+     /tmp/ccWXBTmZ.s:53     .text.TimerSetTimeout:0000000000000000 $t
+     /tmp/ccWXBTmZ.s:59     .text.TimerSetTimeout:0000000000000000 TimerSetTimeout
+     /tmp/ccWXBTmZ.s:81     .text.TimerInsertNewHeadTimer:0000000000000000 $t
+     /tmp/ccWXBTmZ.s:87     .text.TimerInsertNewHeadTimer:0000000000000000 TimerInsertNewHeadTimer
+     /tmp/ccWXBTmZ.s:106    .text.TimerInsertNewHeadTimer:0000000000000018 $d
+     /tmp/ccWXBTmZ.s:109    .text.TimerInit:0000000000000000 $t
+     /tmp/ccWXBTmZ.s:116    .text.TimerInit:0000000000000000 TimerInit
+     /tmp/ccWXBTmZ.s:131    .text.TimerSetContext:0000000000000000 $t
+     /tmp/ccWXBTmZ.s:138    .text.TimerSetContext:0000000000000000 TimerSetContext
+     /tmp/ccWXBTmZ.s:147    .text.TimerStart:0000000000000000 $t
+     /tmp/ccWXBTmZ.s:154    .text.TimerStart:0000000000000000 TimerStart
+     /tmp/ccWXBTmZ.s:204    .text.TimerStart:0000000000000058 $d
+     /tmp/ccWXBTmZ.s:207    .text.TimerStartNoReload:0000000000000000 $t
+     /tmp/ccWXBTmZ.s:214    .text.TimerStartNoReload:0000000000000000 TimerStartNoReload
+     /tmp/ccWXBTmZ.s:262    .text.TimerStartNoReload:0000000000000054 $d
+     /tmp/ccWXBTmZ.s:265    .text.TimerIsStarted:0000000000000000 $t
+     /tmp/ccWXBTmZ.s:272    .text.TimerIsStarted:0000000000000000 TimerIsStarted
+     /tmp/ccWXBTmZ.s:281    .text.TimerIrqHandler:0000000000000000 $t
+     /tmp/ccWXBTmZ.s:288    .text.TimerIrqHandler:0000000000000000 TimerIrqHandler
+     /tmp/ccWXBTmZ.s:361    .text.TimerIrqHandler:0000000000000078 $d
+     /tmp/ccWXBTmZ.s:364    .text.TimerStop:0000000000000000 $t
+     /tmp/ccWXBTmZ.s:371    .text.TimerStop:0000000000000000 TimerStop
+     /tmp/ccWXBTmZ.s:423    .text.TimerStop:0000000000000058 $d
+     /tmp/ccWXBTmZ.s:426    .text.TimerReset:0000000000000000 $t
+     /tmp/ccWXBTmZ.s:433    .text.TimerReset:0000000000000000 TimerReset
+     /tmp/ccWXBTmZ.s:445    .text.TimerSetValue:0000000000000000 $t
+     /tmp/ccWXBTmZ.s:452    .text.TimerSetValue:0000000000000000 TimerSetValue
+     /tmp/ccWXBTmZ.s:473    .text.TimerGetCurrentTime:0000000000000000 $t
+     /tmp/ccWXBTmZ.s:480    .text.TimerGetCurrentTime:0000000000000000 TimerGetCurrentTime
+     /tmp/ccWXBTmZ.s:489    .text.TimerGetElapsedTime:0000000000000000 $t
+     /tmp/ccWXBTmZ.s:496    .text.TimerGetElapsedTime:0000000000000000 TimerGetElapsedTime
+     /tmp/ccWXBTmZ.s:515    .text.TimerBackup:0000000000000000 $t
+     /tmp/ccWXBTmZ.s:522    .text.TimerBackup:0000000000000000 TimerBackup
+     /tmp/ccWXBTmZ.s:556    .text.TimerBackup:0000000000000038 $d
+     /tmp/ccWXBTmZ.s:561    .text.TimerRestore:0000000000000000 $t
+     /tmp/ccWXBTmZ.s:568    .text.TimerRestore:0000000000000000 TimerRestore
+     /tmp/ccWXBTmZ.s:593    .text.TimerRestore:0000000000000024 $d
+     /tmp/ccWXBTmZ.s:597    .bss.TimerListHead:0000000000000000 $d
+     /tmp/ccWXBTmZ.s:601    .bss.TimerListHead:0000000000000000 TimerListHead
+     /tmp/ccWXBTmZ.s:604    .bss.backup:0000000000000000 $d
+     /tmp/ccWXBTmZ.s:608    .bss.backup:0000000000000000 backup
+     /tmp/ccWXBTmZ.s:614    .bss.backuped_timers:0000000000000000 backuped_timers
+     /tmp/ccWXBTmZ.s:615    .bss.backuped_timers:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+hal_rtc_get_minimum_timeout
+hal_rtc_get_timer_elapsed_time
+hal_rtc_wakeup_timer_set_ms
+hal_mcu_critical_section_begin
+hal_rtc_set_timer_context
+hal_mcu_critical_section_end
+hal_rtc_get_timer_context
+ARM GAS  /tmp/ccWXBTmZ.s 			page 13
+
+
+hal_rtc_wakeup_timer_stop
+rtc_ms_2_ticks
+hal_rtc_get_time_ms
+hal_rtc_get_time_ticks
+rtc_tick_2_ms

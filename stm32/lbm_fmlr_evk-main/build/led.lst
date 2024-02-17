@@ -1,0 +1,175 @@
+ARM GAS  /tmp/ccPGxcd3.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.eabi_attribute 23, 1
+   3              		.eabi_attribute 24, 1
+   4              		.eabi_attribute 25, 1
+   5              		.eabi_attribute 26, 1
+   6              		.eabi_attribute 30, 4
+   7              		.eabi_attribute 34, 0
+   8              		.eabi_attribute 18, 4
+   9              		.file	"led.c"
+  10              		.text
+  11              		.section	.text.led_set,"ax",%progbits
+  12              		.align	1
+  13              		.global	led_set
+  14              		.arch armv6s-m
+  15              		.syntax unified
+  16              		.code	16
+  17              		.thumb_func
+  18              		.fpu softvfp
+  20              	led_set:
+  21              		@ args = 0, pretend = 0, frame = 0
+  22              		@ frame_needed = 0, uses_anonymous_args = 0
+  23 0000 70B5     		push	{r4, r5, r6, lr}
+  24 0002 0400     		movs	r4, r0
+  25 0004 0020     		movs	r0, #0
+  26 0006 6378     		ldrb	r3, [r4, #1]
+  27 0008 0D00     		movs	r5, r1
+  28 000a 2056     		ldrsb	r0, [r4, r0]
+  29 000c 002B     		cmp	r3, #0
+  30 000e 01D1     		bne	.L3
+  31 0010 0121     		movs	r1, #1
+  32 0012 6940     		eors	r1, r5
+  33              	.L3:
+  34 0014 FFF7FEFF 		bl	hal_gpio_set_value
+  35              		@ sp needed
+  36 0018 A570     		strb	r5, [r4, #2]
+  37 001a 70BD     		pop	{r4, r5, r6, pc}
+  39              		.section	.text.led_init,"ax",%progbits
+  40              		.align	1
+  41              		.global	led_init
+  42              		.syntax unified
+  43              		.code	16
+  44              		.thumb_func
+  45              		.fpu softvfp
+  47              	led_init:
+  48              		@ args = 0, pretend = 0, frame = 0
+  49              		@ frame_needed = 0, uses_anonymous_args = 0
+  50 0000 10B5     		push	{r4, lr}
+  51 0002 0400     		movs	r4, r0
+  52              		@ sp needed
+  53 0004 0800     		movs	r0, r1
+  54 0006 2170     		strb	r1, [r4]
+  55 0008 0121     		movs	r1, #1
+  56 000a 6270     		strb	r2, [r4, #1]
+  57 000c 5140     		eors	r1, r2
+  58 000e FFF7FEFF 		bl	hal_gpio_init_out
+  59 0012 0021     		movs	r1, #0
+  60 0014 2000     		movs	r0, r4
+ARM GAS  /tmp/ccPGxcd3.s 			page 2
+
+
+  61 0016 FFF7FEFF 		bl	led_set
+  62 001a 10BD     		pop	{r4, pc}
+  64              		.section	.text.led_toggle,"ax",%progbits
+  65              		.align	1
+  66              		.global	led_toggle
+  67              		.syntax unified
+  68              		.code	16
+  69              		.thumb_func
+  70              		.fpu softvfp
+  72              	led_toggle:
+  73              		@ args = 0, pretend = 0, frame = 0
+  74              		@ frame_needed = 0, uses_anonymous_args = 0
+  75 0000 0121     		movs	r1, #1
+  76 0002 10B5     		push	{r4, lr}
+  77 0004 8378     		ldrb	r3, [r0, #2]
+  78              		@ sp needed
+  79 0006 5940     		eors	r1, r3
+  80 0008 FFF7FEFF 		bl	led_set
+  81 000c 10BD     		pop	{r4, pc}
+  83              		.section	.text.blink_timer_cb,"ax",%progbits
+  84              		.align	1
+  85              		.syntax unified
+  86              		.code	16
+  87              		.thumb_func
+  88              		.fpu softvfp
+  90              	blink_timer_cb:
+  91              		@ args = 0, pretend = 0, frame = 0
+  92              		@ frame_needed = 0, uses_anonymous_args = 0
+  93 0000 4368     		ldr	r3, [r0, #4]
+  94 0002 10B5     		push	{r4, lr}
+  95 0004 0400     		movs	r4, r0
+  96 0006 002B     		cmp	r3, #0
+  97 0008 03DC     		bgt	.L7
+  98 000a 0021     		movs	r1, #0
+  99 000c FFF7FEFF 		bl	led_set
+ 100              	.L6:
+ 101              		@ sp needed
+ 102 0010 10BD     		pop	{r4, pc}
+ 103              	.L7:
+ 104 0012 8268     		ldr	r2, [r0, #8]
+ 105 0014 9B1A     		subs	r3, r3, r2
+ 106 0016 4360     		str	r3, [r0, #4]
+ 107 0018 FFF7FEFF 		bl	led_toggle
+ 108 001c 2000     		movs	r0, r4
+ 109 001e 0C30     		adds	r0, r0, #12
+ 110 0020 FFF7FEFF 		bl	TimerStart
+ 111 0024 F4E7     		b	.L6
+ 113              		.section	.text.led_blink,"ax",%progbits
+ 114              		.align	1
+ 115              		.global	led_blink
+ 116              		.syntax unified
+ 117              		.code	16
+ 118              		.thumb_func
+ 119              		.fpu softvfp
+ 121              	led_blink:
+ 122              		@ args = 0, pretend = 0, frame = 0
+ 123              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  /tmp/ccPGxcd3.s 			page 3
+
+
+ 124 0000 70B5     		push	{r4, r5, r6, lr}
+ 125 0002 0600     		movs	r6, r0
+ 126              		@ sp needed
+ 127 0004 0D00     		movs	r5, r1
+ 128 0006 0400     		movs	r4, r0
+ 129 0008 0C36     		adds	r6, r6, #12
+ 130 000a 4260     		str	r2, [r0, #4]
+ 131 000c 8160     		str	r1, [r0, #8]
+ 132 000e 3000     		movs	r0, r6
+ 133 0010 0949     		ldr	r1, .L10
+ 134 0012 FFF7FEFF 		bl	TimerInit
+ 135 0016 2900     		movs	r1, r5
+ 136 0018 3000     		movs	r0, r6
+ 137 001a FFF7FEFF 		bl	TimerSetValue
+ 138 001e 3000     		movs	r0, r6
+ 139 0020 2100     		movs	r1, r4
+ 140 0022 FFF7FEFF 		bl	TimerSetContext
+ 141 0026 0121     		movs	r1, #1
+ 142 0028 2000     		movs	r0, r4
+ 143 002a FFF7FEFF 		bl	led_set
+ 144 002e 2000     		movs	r0, r4
+ 145 0030 FFF7FEFF 		bl	blink_timer_cb
+ 146 0034 70BD     		pop	{r4, r5, r6, pc}
+ 147              	.L11:
+ 148 0036 C046     		.align	2
+ 149              	.L10:
+ 150 0038 00000000 		.word	blink_timer_cb
+ 152              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccPGxcd3.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 led.c
+     /tmp/ccPGxcd3.s:12     .text.led_set:0000000000000000 $t
+     /tmp/ccPGxcd3.s:20     .text.led_set:0000000000000000 led_set
+     /tmp/ccPGxcd3.s:40     .text.led_init:0000000000000000 $t
+     /tmp/ccPGxcd3.s:47     .text.led_init:0000000000000000 led_init
+     /tmp/ccPGxcd3.s:65     .text.led_toggle:0000000000000000 $t
+     /tmp/ccPGxcd3.s:72     .text.led_toggle:0000000000000000 led_toggle
+     /tmp/ccPGxcd3.s:84     .text.blink_timer_cb:0000000000000000 $t
+     /tmp/ccPGxcd3.s:90     .text.blink_timer_cb:0000000000000000 blink_timer_cb
+     /tmp/ccPGxcd3.s:114    .text.led_blink:0000000000000000 $t
+     /tmp/ccPGxcd3.s:121    .text.led_blink:0000000000000000 led_blink
+     /tmp/ccPGxcd3.s:150    .text.led_blink:0000000000000038 $d
+
+UNDEFINED SYMBOLS
+hal_gpio_set_value
+hal_gpio_init_out
+TimerStart
+TimerInit
+TimerSetValue
+TimerSetContext

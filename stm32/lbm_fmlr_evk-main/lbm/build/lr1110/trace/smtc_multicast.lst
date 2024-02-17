@@ -1,0 +1,254 @@
+ARM GAS  /tmp/ccPIHYwr.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.eabi_attribute 23, 1
+   3              		.eabi_attribute 24, 1
+   4              		.eabi_attribute 25, 1
+   5              		.eabi_attribute 26, 1
+   6              		.eabi_attribute 30, 4
+   7              		.eabi_attribute 34, 0
+   8              		.eabi_attribute 18, 4
+   9              		.file	"smtc_multicast.c"
+  10              		.text
+  11              		.section	.text.smtc_multicast_init,"ax",%progbits
+  12              		.align	1
+  13              		.global	smtc_multicast_init
+  14              		.arch armv6s-m
+  15              		.syntax unified
+  16              		.code	16
+  17              		.thumb_func
+  18              		.fpu softvfp
+  20              	smtc_multicast_init:
+  21              		@ args = 0, pretend = 0, frame = 0
+  22              		@ frame_needed = 0, uses_anonymous_args = 0
+  23 0000 70B5     		push	{r4, r5, r6, lr}
+  24 0002 0400     		movs	r4, r0
+  25 0004 B022     		movs	r2, #176
+  26 0006 0021     		movs	r1, #0
+  27 0008 FFF7FEFF 		bl	memset
+  28 000c 2300     		movs	r3, r4
+  29 000e 0121     		movs	r1, #1
+  30 0010 0626     		movs	r6, #6
+  31 0012 0125     		movs	r5, #1
+  32 0014 084A     		ldr	r2, .L4
+  33 0016 0833     		adds	r3, r3, #8
+  34 0018 B834     		adds	r4, r4, #184
+  35 001a 4942     		rsbs	r1, r1, #0
+  36              	.L2:
+  37 001c 1960     		str	r1, [r3]
+  38 001e 1078     		ldrb	r0, [r2]
+  39 0020 5871     		strb	r0, [r3, #5]
+  40 0022 5078     		ldrb	r0, [r2, #1]
+  41 0024 1973     		strb	r1, [r3, #12]
+  42 0026 1871     		strb	r0, [r3, #4]
+  43 0028 DE81     		strh	r6, [r3, #14]
+  44 002a 581C     		adds	r0, r3, #1
+  45 002c 2C33     		adds	r3, r3, #44
+  46 002e C577     		strb	r5, [r0, #31]
+  47 0030 0232     		adds	r2, r2, #2
+  48 0032 A342     		cmp	r3, r4
+  49 0034 F2D1     		bne	.L2
+  50              		@ sp needed
+  51 0036 70BD     		pop	{r4, r5, r6, pc}
+  52              	.L5:
+  53              		.align	2
+  54              	.L4:
+  55 0038 00000000 		.word	.LANCHOR0
+  57              		.section	.text.smtc_multicast_set_group_address,"ax",%progbits
+  58              		.align	1
+  59              		.global	smtc_multicast_set_group_address
+ARM GAS  /tmp/ccPIHYwr.s 			page 2
+
+
+  60              		.syntax unified
+  61              		.code	16
+  62              		.thumb_func
+  63              		.fpu softvfp
+  65              	smtc_multicast_set_group_address:
+  66              		@ args = 0, pretend = 0, frame = 0
+  67              		@ frame_needed = 0, uses_anonymous_args = 0
+  68 0000 0300     		movs	r3, r0
+  69 0002 10B5     		push	{r4, lr}
+  70 0004 0120     		movs	r0, #1
+  71 0006 0C00     		movs	r4, r1
+  72 0008 0329     		cmp	r1, #3
+  73 000a 0DD8     		bhi	.L7
+  74 000c 2C21     		movs	r1, #44
+  75 000e 6143     		muls	r1, r4
+  76 0010 5C18     		adds	r4, r3, r1
+  77 0012 5B5C     		ldrb	r3, [r3, r1]
+  78 0014 0018     		adds	r0, r0, r0
+  79 0016 002B     		cmp	r3, #0
+  80 0018 06D1     		bne	.L7
+  81 001a 2300     		movs	r3, r4
+  82 001c 2933     		adds	r3, r3, #41
+  83 001e 1B78     		ldrb	r3, [r3]
+  84 0020 002B     		cmp	r3, #0
+  85 0022 01D1     		bne	.L7
+  86 0024 1800     		movs	r0, r3
+  87 0026 6260     		str	r2, [r4, #4]
+  88              	.L7:
+  89              		@ sp needed
+  90 0028 10BD     		pop	{r4, pc}
+  92              		.section	.text.smtc_multicast_get_group_address,"ax",%progbits
+  93              		.align	1
+  94              		.global	smtc_multicast_get_group_address
+  95              		.syntax unified
+  96              		.code	16
+  97              		.thumb_func
+  98              		.fpu softvfp
+ 100              	smtc_multicast_get_group_address:
+ 101              		@ args = 0, pretend = 0, frame = 0
+ 102              		@ frame_needed = 0, uses_anonymous_args = 0
+ 103              		@ link register save eliminated.
+ 104 0000 0300     		movs	r3, r0
+ 105 0002 0120     		movs	r0, #1
+ 106 0004 0329     		cmp	r1, #3
+ 107 0006 05D8     		bhi	.L12
+ 108 0008 2B30     		adds	r0, r0, #43
+ 109 000a 4143     		muls	r1, r0
+ 110 000c 0020     		movs	r0, #0
+ 111 000e 5B18     		adds	r3, r3, r1
+ 112 0010 5B68     		ldr	r3, [r3, #4]
+ 113 0012 1360     		str	r3, [r2]
+ 114              	.L12:
+ 115              		@ sp needed
+ 116 0014 7047     		bx	lr
+ 118              		.section	.rodata.smtc_multicast_set_group_keys.str1.1,"aMS",%progbits,1
+ 119              	.LC2:
+ 120 0000 1B5B303B 		.ascii	"\033[0;31mERROR: Error setting multicast ntw_skey f"
+ARM GAS  /tmp/ccPIHYwr.s 			page 3
+
+
+ 120      33316D45 
+ 120      52524F52 
+ 120      3A204572 
+ 120      726F7220 
+ 121 0030 6F722067 		.ascii	"or group:%d\012\000"
+ 121      726F7570 
+ 121      3A25640A 
+ 121      00
+ 122              	.LC4:
+ 123 003d 1B5B306D 		.ascii	"\033[0m\000"
+ 123      00
+ 124              		.section	.text.smtc_multicast_set_group_keys,"ax",%progbits
+ 125              		.align	1
+ 126              		.global	smtc_multicast_set_group_keys
+ 127              		.syntax unified
+ 128              		.code	16
+ 129              		.thumb_func
+ 130              		.fpu softvfp
+ 132              	smtc_multicast_set_group_keys:
+ 133              		@ args = 0, pretend = 0, frame = 0
+ 134              		@ frame_needed = 0, uses_anonymous_args = 0
+ 135 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 136 0002 0400     		movs	r4, r0
+ 137 0004 0D00     		movs	r5, r1
+ 138 0006 1E00     		movs	r6, r3
+ 139 0008 1100     		movs	r1, r2
+ 140 000a 0120     		movs	r0, #1
+ 141 000c 032D     		cmp	r5, #3
+ 142 000e 21D8     		bhi	.L15
+ 143 0010 2C23     		movs	r3, #44
+ 144 0012 6B43     		muls	r3, r5
+ 145 0014 1A5D     		ldrb	r2, [r3, r4]
+ 146 0016 0018     		adds	r0, r0, r0
+ 147 0018 002A     		cmp	r2, #0
+ 148 001a 1BD1     		bne	.L15
+ 149 001c E418     		adds	r4, r4, r3
+ 150 001e 2934     		adds	r4, r4, #41
+ 151 0020 2378     		ldrb	r3, [r4]
+ 152 0022 002B     		cmp	r3, #0
+ 153 0024 16D1     		bne	.L15
+ 154 0026 0C4C     		ldr	r4, .L24
+ 155 0028 6F00     		lsls	r7, r5, #1
+ 156 002a E319     		adds	r3, r4, r7
+ 157 002c 5878     		ldrb	r0, [r3, #1]
+ 158 002e FFF7FEFF 		bl	smtc_modem_crypto_set_key
+ 159 0032 0028     		cmp	r0, #0
+ 160 0034 08D0     		beq	.L16
+ 161              	.L23:
+ 162 0036 2900     		movs	r1, r5
+ 163 0038 0848     		ldr	r0, .L24+4
+ 164 003a FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 165 003e 0848     		ldr	r0, .L24+8
+ 166 0040 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 167 0044 0320     		movs	r0, #3
+ 168 0046 05E0     		b	.L15
+ 169              	.L16:
+ 170 0048 3100     		movs	r1, r6
+ARM GAS  /tmp/ccPIHYwr.s 			page 4
+
+
+ 171 004a 385D     		ldrb	r0, [r7, r4]
+ 172 004c FFF7FEFF 		bl	smtc_modem_crypto_set_key
+ 173 0050 0028     		cmp	r0, #0
+ 174 0052 F0D1     		bne	.L23
+ 175              	.L15:
+ 176              		@ sp needed
+ 177 0054 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 178              	.L25:
+ 179 0056 C046     		.align	2
+ 180              	.L24:
+ 181 0058 00000000 		.word	.LANCHOR0
+ 182 005c 00000000 		.word	.LC2
+ 183 0060 3D000000 		.word	.LC4
+ 185              		.section	.text.smtc_multicast_get_running_status,"ax",%progbits
+ 186              		.align	1
+ 187              		.global	smtc_multicast_get_running_status
+ 188              		.syntax unified
+ 189              		.code	16
+ 190              		.thumb_func
+ 191              		.fpu softvfp
+ 193              	smtc_multicast_get_running_status:
+ 194              		@ args = 0, pretend = 0, frame = 0
+ 195              		@ frame_needed = 0, uses_anonymous_args = 0
+ 196              		@ link register save eliminated.
+ 197 0000 0300     		movs	r3, r0
+ 198 0002 0120     		movs	r0, #1
+ 199 0004 0329     		cmp	r1, #3
+ 200 0006 04D8     		bhi	.L27
+ 201 0008 2B30     		adds	r0, r0, #43
+ 202 000a 4143     		muls	r1, r0
+ 203 000c 0020     		movs	r0, #0
+ 204 000e CB5C     		ldrb	r3, [r1, r3]
+ 205 0010 1370     		strb	r3, [r2]
+ 206              	.L27:
+ 207              		@ sp needed
+ 208 0012 7047     		bx	lr
+ 210              		.section	.rodata.smtc_mc_skey_tab,"a"
+ 211              		.set	.LANCHOR0,. + 0
+ 214              	smtc_mc_skey_tab:
+ 215 0000 81       		.byte	-127
+ 216 0001 82       		.byte	-126
+ 217 0002 84       		.byte	-124
+ 218 0003 85       		.byte	-123
+ 219 0004 87       		.byte	-121
+ 220 0005 88       		.byte	-120
+ 221 0006 8A       		.byte	-118
+ 222 0007 8B       		.byte	-117
+ 223              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccPIHYwr.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 smtc_multicast.c
+     /tmp/ccPIHYwr.s:12     .text.smtc_multicast_init:0000000000000000 $t
+     /tmp/ccPIHYwr.s:20     .text.smtc_multicast_init:0000000000000000 smtc_multicast_init
+     /tmp/ccPIHYwr.s:55     .text.smtc_multicast_init:0000000000000038 $d
+     /tmp/ccPIHYwr.s:58     .text.smtc_multicast_set_group_address:0000000000000000 $t
+     /tmp/ccPIHYwr.s:65     .text.smtc_multicast_set_group_address:0000000000000000 smtc_multicast_set_group_address
+     /tmp/ccPIHYwr.s:93     .text.smtc_multicast_get_group_address:0000000000000000 $t
+     /tmp/ccPIHYwr.s:100    .text.smtc_multicast_get_group_address:0000000000000000 smtc_multicast_get_group_address
+     /tmp/ccPIHYwr.s:125    .text.smtc_multicast_set_group_keys:0000000000000000 $t
+     /tmp/ccPIHYwr.s:132    .text.smtc_multicast_set_group_keys:0000000000000000 smtc_multicast_set_group_keys
+     /tmp/ccPIHYwr.s:181    .text.smtc_multicast_set_group_keys:0000000000000058 $d
+     /tmp/ccPIHYwr.s:186    .text.smtc_multicast_get_running_status:0000000000000000 $t
+     /tmp/ccPIHYwr.s:193    .text.smtc_multicast_get_running_status:0000000000000000 smtc_multicast_get_running_status
+     /tmp/ccPIHYwr.s:214    .rodata.smtc_mc_skey_tab:0000000000000000 smtc_mc_skey_tab
+
+UNDEFINED SYMBOLS
+memset
+smtc_modem_crypto_set_key
+smtc_modem_hal_print_trace

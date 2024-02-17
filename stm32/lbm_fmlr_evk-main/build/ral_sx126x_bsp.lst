@@ -1,0 +1,172 @@
+ARM GAS  /tmp/ccPPDPrH.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.eabi_attribute 23, 1
+   3              		.eabi_attribute 24, 1
+   4              		.eabi_attribute 25, 1
+   5              		.eabi_attribute 26, 1
+   6              		.eabi_attribute 30, 4
+   7              		.eabi_attribute 34, 0
+   8              		.eabi_attribute 18, 4
+   9              		.file	"ral_sx126x_bsp.c"
+  10              		.text
+  11              		.section	.text.ral_sx126x_bsp_get_reg_mode,"ax",%progbits
+  12              		.align	1
+  13              		.global	ral_sx126x_bsp_get_reg_mode
+  14              		.arch armv6s-m
+  15              		.syntax unified
+  16              		.code	16
+  17              		.thumb_func
+  18              		.fpu softvfp
+  20              	ral_sx126x_bsp_get_reg_mode:
+  21              		@ args = 0, pretend = 0, frame = 0
+  22              		@ frame_needed = 0, uses_anonymous_args = 0
+  23              		@ link register save eliminated.
+  24 0000 0123     		movs	r3, #1
+  25              		@ sp needed
+  26 0002 0B70     		strb	r3, [r1]
+  27 0004 7047     		bx	lr
+  29              		.section	.text.ral_sx126x_bsp_get_rf_switch_cfg,"ax",%progbits
+  30              		.align	1
+  31              		.global	ral_sx126x_bsp_get_rf_switch_cfg
+  32              		.syntax unified
+  33              		.code	16
+  34              		.thumb_func
+  35              		.fpu softvfp
+  37              	ral_sx126x_bsp_get_rf_switch_cfg:
+  38              		@ args = 0, pretend = 0, frame = 0
+  39              		@ frame_needed = 0, uses_anonymous_args = 0
+  40              		@ link register save eliminated.
+  41 0000 0123     		movs	r3, #1
+  42              		@ sp needed
+  43 0002 0B70     		strb	r3, [r1]
+  44 0004 7047     		bx	lr
+  46              		.section	.text.ral_sx126x_bsp_get_tx_cfg,"ax",%progbits
+  47              		.align	1
+  48              		.global	ral_sx126x_bsp_get_tx_cfg
+  49              		.syntax unified
+  50              		.code	16
+  51              		.thumb_func
+  52              		.fpu softvfp
+  54              	ral_sx126x_bsp_get_tx_cfg:
+  55              		@ args = 0, pretend = 0, frame = 8
+  56              		@ frame_needed = 0, uses_anonymous_args = 0
+  57 0000 37B5     		push	{r0, r1, r2, r4, r5, lr}
+  58 0002 6B46     		mov	r3, sp
+  59 0004 0D00     		movs	r5, r1
+  60 0006 0020     		movs	r0, #0
+  61 0008 D91D     		adds	r1, r3, #7
+  62 000a 1400     		movs	r4, r2
+ARM GAS  /tmp/ccPPDPrH.s 			page 2
+
+
+  63 000c FFF7FEFF 		bl	smtc_modem_get_tx_power_offset_db
+  64 0010 0028     		cmp	r0, #0
+  65 0012 02D0     		beq	.L4
+  66 0014 0023     		movs	r3, #0
+  67 0016 6A46     		mov	r2, sp
+  68 0018 D371     		strb	r3, [r2, #7]
+  69              	.L4:
+  70 001a 6A46     		mov	r2, sp
+  71 001c 0023     		movs	r3, #0
+  72 001e D279     		ldrb	r2, [r2, #7]
+  73 0020 EB56     		ldrsb	r3, [r5, r3]
+  74 0022 52B2     		sxtb	r2, r2
+  75 0024 9B18     		adds	r3, r3, r2
+  76 0026 0222     		movs	r2, #2
+  77 0028 2271     		strb	r2, [r4, #4]
+  78 002a 013A     		subs	r2, r2, #1
+  79 002c E270     		strb	r2, [r4, #3]
+  80 002e 0F2B     		cmp	r3, #15
+  81 0030 04DC     		bgt	.L5
+  82 0032 1900     		movs	r1, r3
+  83 0034 1131     		adds	r1, r1, #17
+  84 0036 14DB     		blt	.L9
+  85 0038 0F2B     		cmp	r3, #15
+  86 003a 09D1     		bne	.L7
+  87              	.L5:
+  88 003c 0023     		movs	r3, #0
+  89 003e 6370     		strb	r3, [r4, #1]
+  90 0040 0633     		adds	r3, r3, #6
+  91 0042 2370     		strb	r3, [r4]
+  92 0044 0833     		adds	r3, r3, #8
+  93 0046 6371     		strb	r3, [r4, #5]
+  94 0048 A270     		strb	r2, [r4, #2]
+  95 004a 0133     		adds	r3, r3, #1
+  96              	.L13:
+  97 004c A371     		strb	r3, [r4, #6]
+  98              		@ sp needed
+  99 004e 37BD     		pop	{r0, r1, r2, r4, r5, pc}
+ 100              	.L7:
+ 101 0050 0E2B     		cmp	r3, #14
+ 102 0052 08D1     		bne	.L6
+ 103 0054 A270     		strb	r2, [r4, #2]
+ 104 0056 0022     		movs	r2, #0
+ 105 0058 6270     		strb	r2, [r4, #1]
+ 106 005a 0432     		adds	r2, r2, #4
+ 107 005c 2270     		strb	r2, [r4]
+ 108              	.L14:
+ 109 005e 6371     		strb	r3, [r4, #5]
+ 110 0060 F4E7     		b	.L13
+ 111              	.L9:
+ 112 0062 1123     		movs	r3, #17
+ 113 0064 5B42     		rsbs	r3, r3, #0
+ 114              	.L6:
+ 115 0066 A270     		strb	r2, [r4, #2]
+ 116 0068 0022     		movs	r2, #0
+ 117 006a 6270     		strb	r2, [r4, #1]
+ 118 006c 0432     		adds	r2, r2, #4
+ 119 006e 2270     		strb	r2, [r4]
+ARM GAS  /tmp/ccPPDPrH.s 			page 3
+
+
+ 120 0070 5BB2     		sxtb	r3, r3
+ 121 0072 F4E7     		b	.L14
+ 123              		.section	.text.ral_sx126x_bsp_get_xosc_cfg,"ax",%progbits
+ 124              		.align	1
+ 125              		.global	ral_sx126x_bsp_get_xosc_cfg
+ 126              		.syntax unified
+ 127              		.code	16
+ 128              		.thumb_func
+ 129              		.fpu softvfp
+ 131              	ral_sx126x_bsp_get_xosc_cfg:
+ 132              		@ args = 0, pretend = 0, frame = 0
+ 133              		@ frame_needed = 0, uses_anonymous_args = 0
+ 134              		@ link register save eliminated.
+ 135 0000 0023     		movs	r3, #0
+ 136              		@ sp needed
+ 137 0002 0B70     		strb	r3, [r1]
+ 138 0004 7047     		bx	lr
+ 140              		.section	.text.ral_sx126x_bsp_get_ocp_value,"ax",%progbits
+ 141              		.align	1
+ 142              		.global	ral_sx126x_bsp_get_ocp_value
+ 143              		.syntax unified
+ 144              		.code	16
+ 145              		.thumb_func
+ 146              		.fpu softvfp
+ 148              	ral_sx126x_bsp_get_ocp_value:
+ 149              		@ args = 0, pretend = 0, frame = 0
+ 150              		@ frame_needed = 0, uses_anonymous_args = 0
+ 151              		@ link register save eliminated.
+ 152              		@ sp needed
+ 153 0000 7047     		bx	lr
+ 155              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccPPDPrH.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 ral_sx126x_bsp.c
+     /tmp/ccPPDPrH.s:12     .text.ral_sx126x_bsp_get_reg_mode:0000000000000000 $t
+     /tmp/ccPPDPrH.s:20     .text.ral_sx126x_bsp_get_reg_mode:0000000000000000 ral_sx126x_bsp_get_reg_mode
+     /tmp/ccPPDPrH.s:30     .text.ral_sx126x_bsp_get_rf_switch_cfg:0000000000000000 $t
+     /tmp/ccPPDPrH.s:37     .text.ral_sx126x_bsp_get_rf_switch_cfg:0000000000000000 ral_sx126x_bsp_get_rf_switch_cfg
+     /tmp/ccPPDPrH.s:47     .text.ral_sx126x_bsp_get_tx_cfg:0000000000000000 $t
+     /tmp/ccPPDPrH.s:54     .text.ral_sx126x_bsp_get_tx_cfg:0000000000000000 ral_sx126x_bsp_get_tx_cfg
+     /tmp/ccPPDPrH.s:124    .text.ral_sx126x_bsp_get_xosc_cfg:0000000000000000 $t
+     /tmp/ccPPDPrH.s:131    .text.ral_sx126x_bsp_get_xosc_cfg:0000000000000000 ral_sx126x_bsp_get_xosc_cfg
+     /tmp/ccPPDPrH.s:141    .text.ral_sx126x_bsp_get_ocp_value:0000000000000000 $t
+     /tmp/ccPPDPrH.s:148    .text.ral_sx126x_bsp_get_ocp_value:0000000000000000 ral_sx126x_bsp_get_ocp_value
+
+UNDEFINED SYMBOLS
+smtc_modem_get_tx_power_offset_db

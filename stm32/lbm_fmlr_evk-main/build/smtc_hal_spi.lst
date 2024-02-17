@@ -1,0 +1,616 @@
+ARM GAS  /tmp/cczLOmvX.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.eabi_attribute 23, 1
+   3              		.eabi_attribute 24, 1
+   4              		.eabi_attribute 25, 1
+   5              		.eabi_attribute 26, 1
+   6              		.eabi_attribute 30, 4
+   7              		.eabi_attribute 34, 0
+   8              		.eabi_attribute 18, 4
+   9              		.file	"smtc_hal_spi.c"
+  10              		.text
+  11              		.section	.rodata.hal_spi_init.str1.1,"aMS",%progbits,1
+  12              	.LC2:
+  13 0000 4552524F 		.ascii	"ERROR: mcu_panic:%s\012\000"
+  13      523A206D 
+  13      63755F70 
+  13      616E6963 
+  13      3A25730A 
+  14              	.LC4:
+  15 0015 00       		.ascii	"\000"
+  16              	.LC6:
+  17 0016 4552524F 		.ascii	"ERROR: -> \000"
+  17      523A202D 
+  17      3E2000
+  18              		.section	.text.hal_spi_init,"ax",%progbits
+  19              		.align	1
+  20              		.global	hal_spi_init
+  21              		.arch armv6s-m
+  22              		.syntax unified
+  23              		.code	16
+  24              		.thumb_func
+  25              		.fpu softvfp
+  27              	hal_spi_init:
+  28              		@ args = 0, pretend = 0, frame = 8
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30 0000 F7B5     		push	{r0, r1, r2, r4, r5, r6, r7, lr}
+  31 0002 461E     		subs	r6, r0, #1
+  32 0004 6020     		movs	r0, #96
+  33 0006 7043     		muls	r0, r6
+  34 0008 1F4D     		ldr	r5, .L6
+  35 000a 0193     		str	r3, [sp, #4]
+  36 000c 4759     		ldr	r7, [r0, r5]
+  37 000e 2C18     		adds	r4, r5, r0
+  38 0010 6760     		str	r7, [r4, #4]
+  39 0012 8227     		movs	r7, #130
+  40 0014 7F00     		lsls	r7, r7, #1
+  41 0016 A760     		str	r7, [r4, #8]
+  42 0018 0027     		movs	r7, #0
+  43 001a E760     		str	r7, [r4, #12]
+  44 001c 2761     		str	r7, [r4, #16]
+  45 001e 6761     		str	r7, [r4, #20]
+  46 0020 A761     		str	r7, [r4, #24]
+  47 0022 6762     		str	r7, [r4, #36]
+  48 0024 A762     		str	r7, [r4, #40]
+  49 0026 E762     		str	r7, [r4, #44]
+  50 0028 0737     		adds	r7, r7, #7
+  51 002a 2763     		str	r7, [r4, #48]
+  52 002c 2700     		movs	r7, r4
+ARM GAS  /tmp/cczLOmvX.s 			page 2
+
+
+  53 002e 8023     		movs	r3, #128
+  54 0030 5C37     		adds	r7, r7, #92
+  55 0032 3970     		strb	r1, [r7]
+  56 0034 2100     		movs	r1, r4
+  57 0036 9B00     		lsls	r3, r3, #2
+  58 0038 E361     		str	r3, [r4, #28]
+  59 003a F13B     		subs	r3, r3, #241
+  60 003c FF3B     		subs	r3, r3, #255
+  61 003e 2362     		str	r3, [r4, #32]
+  62 0040 019B     		ldr	r3, [sp, #4]
+  63 0042 5D31     		adds	r1, r1, #93
+  64 0044 5E34     		adds	r4, r4, #94
+  65 0046 0430     		adds	r0, r0, #4
+  66 0048 0A70     		strb	r2, [r1]
+  67 004a 2370     		strb	r3, [r4]
+  68 004c 4019     		adds	r0, r0, r5
+  69 004e FFF7FEFF 		bl	HAL_SPI_Init
+  70 0052 0028     		cmp	r0, #0
+  71 0054 0FD0     		beq	.L2
+  72 0056 0D49     		ldr	r1, .L6+4
+  73 0058 0D48     		ldr	r0, .L6+8
+  74 005a FFF7FEFF 		bl	hal_trace_print_var
+  75 005e 0D4C     		ldr	r4, .L6+12
+  76 0060 2000     		movs	r0, r4
+  77 0062 FFF7FEFF 		bl	hal_trace_print_var
+  78 0066 0C48     		ldr	r0, .L6+16
+  79 0068 FFF7FEFF 		bl	hal_trace_print_var
+  80 006c 2000     		movs	r0, r4
+  81 006e FFF7FEFF 		bl	hal_trace_print_var
+  82 0072 FFF7FEFF 		bl	hal_mcu_reset
+  83              	.L2:
+  84              		@ sp needed
+  85 0076 6020     		movs	r0, #96
+  86 0078 4023     		movs	r3, #64
+  87 007a 4643     		muls	r6, r0
+  88 007c AD19     		adds	r5, r5, r6
+  89 007e 6A68     		ldr	r2, [r5, #4]
+  90 0080 1168     		ldr	r1, [r2]
+  91 0082 0B43     		orrs	r3, r1
+  92 0084 1360     		str	r3, [r2]
+  93 0086 F7BD     		pop	{r0, r1, r2, r4, r5, r6, r7, pc}
+  94              	.L7:
+  95              		.align	2
+  96              	.L6:
+  97 0088 00000000 		.word	spi_periph
+  98 008c 00000000 		.word	.LANCHOR0
+  99 0090 00000000 		.word	.LC2
+ 100 0094 15000000 		.word	.LC4
+ 101 0098 16000000 		.word	.LC6
+ 103              		.section	.text.hal_spi_de_init,"ax",%progbits
+ 104              		.align	1
+ 105              		.global	hal_spi_de_init
+ 106              		.syntax unified
+ 107              		.code	16
+ 108              		.thumb_func
+ 109              		.fpu softvfp
+ 111              	hal_spi_de_init:
+ARM GAS  /tmp/cczLOmvX.s 			page 3
+
+
+ 112              		@ args = 0, pretend = 0, frame = 0
+ 113              		@ frame_needed = 0, uses_anonymous_args = 0
+ 114 0000 431E     		subs	r3, r0, #1
+ 115 0002 6020     		movs	r0, #96
+ 116 0004 5843     		muls	r0, r3
+ 117 0006 10B5     		push	{r4, lr}
+ 118 0008 024B     		ldr	r3, .L9
+ 119 000a 0430     		adds	r0, r0, #4
+ 120 000c C018     		adds	r0, r0, r3
+ 121 000e FFF7FEFF 		bl	HAL_SPI_DeInit
+ 122              		@ sp needed
+ 123 0012 10BD     		pop	{r4, pc}
+ 124              	.L10:
+ 125              		.align	2
+ 126              	.L9:
+ 127 0014 00000000 		.word	spi_periph
+ 129              		.section	.text.hal_spi_in_out,"ax",%progbits
+ 130              		.align	1
+ 131              		.global	hal_spi_in_out
+ 132              		.syntax unified
+ 133              		.code	16
+ 134              		.thumb_func
+ 135              		.fpu softvfp
+ 137              	hal_spi_in_out:
+ 138              		@ args = 0, pretend = 0, frame = 0
+ 139              		@ frame_needed = 0, uses_anonymous_args = 0
+ 140 0000 6023     		movs	r3, #96
+ 141 0002 30B5     		push	{r4, r5, lr}
+ 142 0004 0224     		movs	r4, #2
+ 143 0006 0138     		subs	r0, r0, #1
+ 144 0008 4343     		muls	r3, r0
+ 145 000a 084A     		ldr	r2, .L18
+ 146 000c 9B58     		ldr	r3, [r3, r2]
+ 147              	.L12:
+ 148 000e 9D68     		ldr	r5, [r3, #8]
+ 149 0010 2542     		tst	r5, r4
+ 150 0012 FCD0     		beq	.L12
+ 151 0014 C9B2     		uxtb	r1, r1
+ 152 0016 1973     		strb	r1, [r3, #12]
+ 153 0018 6023     		movs	r3, #96
+ 154 001a 5843     		muls	r0, r3
+ 155 001c 1358     		ldr	r3, [r2, r0]
+ 156 001e 0122     		movs	r2, #1
+ 157              	.L13:
+ 158 0020 9968     		ldr	r1, [r3, #8]
+ 159 0022 1142     		tst	r1, r2
+ 160 0024 FCD0     		beq	.L13
+ 161              		@ sp needed
+ 162 0026 187B     		ldrb	r0, [r3, #12]
+ 163 0028 30BD     		pop	{r4, r5, pc}
+ 164              	.L19:
+ 165 002a C046     		.align	2
+ 166              	.L18:
+ 167 002c 00000000 		.word	spi_periph
+ 169              		.section	.text.HAL_SPI_MspInit,"ax",%progbits
+ 170              		.align	1
+ 171              		.global	HAL_SPI_MspInit
+ARM GAS  /tmp/cczLOmvX.s 			page 4
+
+
+ 172              		.syntax unified
+ 173              		.code	16
+ 174              		.thumb_func
+ 175              		.fpu softvfp
+ 177              	HAL_SPI_MspInit:
+ 178              		@ args = 0, pretend = 0, frame = 32
+ 179              		@ frame_needed = 0, uses_anonymous_args = 0
+ 180 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 181 0002 554C     		ldr	r4, .L33
+ 182 0004 0368     		ldr	r3, [r0]
+ 183 0006 2268     		ldr	r2, [r4]
+ 184 0008 89B0     		sub	sp, sp, #36
+ 185 000a 9342     		cmp	r3, r2
+ 186 000c 30D1     		bne	.L21
+ 187 000e 5C25     		movs	r5, #92
+ 188 0010 0C22     		movs	r2, #12
+ 189 0012 0021     		movs	r1, #0
+ 190 0014 05A8     		add	r0, sp, #20
+ 191 0016 6557     		ldrsb	r5, [r4, r5]
+ 192 0018 FFF7FEFF 		bl	memset
+ 193 001c 0223     		movs	r3, #2
+ 194 001e 0122     		movs	r2, #1
+ 195 0020 0493     		str	r3, [sp, #16]
+ 196 0022 0133     		adds	r3, r3, #1
+ 197 0024 0693     		str	r3, [sp, #24]
+ 198 0026 2300     		movs	r3, r4
+ 199 0028 0F20     		movs	r0, #15
+ 200 002a 1100     		movs	r1, r2
+ 201 002c 5D33     		adds	r3, r3, #93
+ 202 002e 1B78     		ldrb	r3, [r3]
+ 203 0030 1600     		movs	r6, r2
+ 204 0032 0340     		ands	r3, r0
+ 205 0034 9940     		lsls	r1, r1, r3
+ 206 0036 0B00     		movs	r3, r1
+ 207 0038 2900     		movs	r1, r5
+ 208 003a 5E34     		adds	r4, r4, #94
+ 209 003c 0140     		ands	r1, r0
+ 210 003e 8E40     		lsls	r6, r6, r1
+ 211 0040 2178     		ldrb	r1, [r4]
+ 212 0042 3343     		orrs	r3, r6
+ 213 0044 0140     		ands	r1, r0
+ 214 0046 8A40     		lsls	r2, r2, r1
+ 215 0048 A801     		lsls	r0, r5, #6
+ 216 004a 1343     		orrs	r3, r2
+ 217 004c F025     		movs	r5, #240
+ 218 004e 0393     		str	r3, [sp, #12]
+ 219 0050 A023     		movs	r3, #160
+ 220 0052 AD01     		lsls	r5, r5, #6
+ 221 0054 DB05     		lsls	r3, r3, #23
+ 222 0056 2840     		ands	r0, r5
+ 223 0058 C018     		adds	r0, r0, r3
+ 224 005a 03A9     		add	r1, sp, #12
+ 225 005c FFF7FEFF 		bl	HAL_GPIO_Init
+ 226 0060 8023     		movs	r3, #128
+ 227 0062 3E4A     		ldr	r2, .L33+4
+ 228 0064 5B01     		lsls	r3, r3, #5
+ 229 0066 516B     		ldr	r1, [r2, #52]
+ARM GAS  /tmp/cczLOmvX.s 			page 5
+
+
+ 230 0068 0B43     		orrs	r3, r1
+ 231 006a 5363     		str	r3, [r2, #52]
+ 232              	.L20:
+ 233 006c 09B0     		add	sp, sp, #36
+ 234              		@ sp needed
+ 235 006e F0BD     		pop	{r4, r5, r6, r7, pc}
+ 236              	.L21:
+ 237 0070 226E     		ldr	r2, [r4, #96]
+ 238 0072 9342     		cmp	r3, r2
+ 239 0074 5FD1     		bne	.L23
+ 240 0076 0223     		movs	r3, #2
+ 241 0078 384E     		ldr	r6, .L33+4
+ 242 007a F021     		movs	r1, #240
+ 243 007c F26A     		ldr	r2, [r6, #44]
+ 244 007e 8901     		lsls	r1, r1, #6
+ 245 0080 1A43     		orrs	r2, r3
+ 246 0082 F262     		str	r2, [r6, #44]
+ 247 0084 F26A     		ldr	r2, [r6, #44]
+ 248 0086 0027     		movs	r7, #0
+ 249 0088 1A40     		ands	r2, r3
+ 250 008a 0292     		str	r2, [sp, #8]
+ 251 008c 029A     		ldr	r2, [sp, #8]
+ 252 008e 2200     		movs	r2, r4
+ 253 0090 BC32     		adds	r2, r2, #188
+ 254 0092 1278     		ldrb	r2, [r2]
+ 255 0094 0597     		str	r7, [sp, #20]
+ 256 0096 52B2     		sxtb	r2, r2
+ 257 0098 9501     		lsls	r5, r2, #6
+ 258 009a 0D40     		ands	r5, r1
+ 259 009c A021     		movs	r1, #160
+ 260 009e C905     		lsls	r1, r1, #23
+ 261 00a0 6D18     		adds	r5, r5, r1
+ 262 00a2 0321     		movs	r1, #3
+ 263 00a4 0691     		str	r1, [sp, #24]
+ 264 00a6 D1B2     		uxtb	r1, r2
+ 265 00a8 0191     		str	r1, [sp, #4]
+ 266 00aa 0F21     		movs	r1, #15
+ 267 00ac 1140     		ands	r1, r2
+ 268 00ae 8C46     		mov	ip, r1
+ 269 00b0 0121     		movs	r1, #1
+ 270 00b2 6046     		mov	r0, ip
+ 271 00b4 8140     		lsls	r1, r1, r0
+ 272 00b6 0493     		str	r3, [sp, #16]
+ 273 00b8 0391     		str	r1, [sp, #12]
+ 274 00ba 0521     		movs	r1, #5
+ 275 00bc 1A2A     		cmp	r2, #26
+ 276 00be 05D0     		beq	.L24
+ 277 00c0 0198     		ldr	r0, [sp, #4]
+ 278 00c2 1900     		movs	r1, r3
+ 279 00c4 2238     		subs	r0, r0, #34
+ 280 00c6 0128     		cmp	r0, #1
+ 281 00c8 00D9     		bls	.L24
+ 282 00ca 3900     		movs	r1, r7
+ 283              	.L24:
+ 284 00cc 2800     		movs	r0, r5
+ 285 00ce 0791     		str	r1, [sp, #28]
+ 286 00d0 03A9     		add	r1, sp, #12
+ARM GAS  /tmp/cczLOmvX.s 			page 6
+
+
+ 287 00d2 FFF7FEFF 		bl	HAL_GPIO_Init
+ 288 00d6 BD21     		movs	r1, #189
+ 289 00d8 0F20     		movs	r0, #15
+ 290 00da 0123     		movs	r3, #1
+ 291 00dc 6156     		ldrsb	r1, [r4, r1]
+ 292 00de 0840     		ands	r0, r1
+ 293 00e0 8340     		lsls	r3, r3, r0
+ 294 00e2 CAB2     		uxtb	r2, r1
+ 295 00e4 0393     		str	r3, [sp, #12]
+ 296 00e6 0523     		movs	r3, #5
+ 297 00e8 1A29     		cmp	r1, #26
+ 298 00ea 04D0     		beq	.L25
+ 299 00ec 223A     		subs	r2, r2, #34
+ 300 00ee 033B     		subs	r3, r3, #3
+ 301 00f0 012A     		cmp	r2, #1
+ 302 00f2 00D9     		bls	.L25
+ 303 00f4 0023     		movs	r3, #0
+ 304              	.L25:
+ 305 00f6 2800     		movs	r0, r5
+ 306 00f8 03A9     		add	r1, sp, #12
+ 307 00fa 0793     		str	r3, [sp, #28]
+ 308 00fc FFF7FEFF 		bl	HAL_GPIO_Init
+ 309 0100 BE21     		movs	r1, #190
+ 310 0102 0F20     		movs	r0, #15
+ 311 0104 0123     		movs	r3, #1
+ 312 0106 6156     		ldrsb	r1, [r4, r1]
+ 313 0108 0840     		ands	r0, r1
+ 314 010a 8340     		lsls	r3, r3, r0
+ 315 010c CAB2     		uxtb	r2, r1
+ 316 010e 0393     		str	r3, [sp, #12]
+ 317 0110 0523     		movs	r3, #5
+ 318 0112 1A29     		cmp	r1, #26
+ 319 0114 04D0     		beq	.L26
+ 320 0116 223A     		subs	r2, r2, #34
+ 321 0118 033B     		subs	r3, r3, #3
+ 322 011a 012A     		cmp	r2, #1
+ 323 011c 00D9     		bls	.L26
+ 324 011e 0023     		movs	r3, #0
+ 325              	.L26:
+ 326 0120 2800     		movs	r0, r5
+ 327 0122 03A9     		add	r1, sp, #12
+ 328 0124 0793     		str	r3, [sp, #28]
+ 329 0126 FFF7FEFF 		bl	HAL_GPIO_Init
+ 330 012a 8023     		movs	r3, #128
+ 331 012c B26B     		ldr	r2, [r6, #56]
+ 332 012e DB01     		lsls	r3, r3, #7
+ 333 0130 1343     		orrs	r3, r2
+ 334 0132 B363     		str	r3, [r6, #56]
+ 335 0134 9AE7     		b	.L20
+ 336              	.L23:
+ 337 0136 0A49     		ldr	r1, .L33+8
+ 338 0138 0A48     		ldr	r0, .L33+12
+ 339 013a FFF7FEFF 		bl	hal_trace_print_var
+ 340 013e 0A4C     		ldr	r4, .L33+16
+ 341 0140 2000     		movs	r0, r4
+ 342 0142 FFF7FEFF 		bl	hal_trace_print_var
+ 343 0146 0948     		ldr	r0, .L33+20
+ARM GAS  /tmp/cczLOmvX.s 			page 7
+
+
+ 344 0148 FFF7FEFF 		bl	hal_trace_print_var
+ 345 014c 2000     		movs	r0, r4
+ 346 014e FFF7FEFF 		bl	hal_trace_print_var
+ 347 0152 FFF7FEFF 		bl	hal_mcu_reset
+ 348 0156 89E7     		b	.L20
+ 349              	.L34:
+ 350              		.align	2
+ 351              	.L33:
+ 352 0158 00000000 		.word	spi_periph
+ 353 015c 00100240 		.word	1073876992
+ 354 0160 00000000 		.word	.LANCHOR1
+ 355 0164 00000000 		.word	.LC2
+ 356 0168 15000000 		.word	.LC4
+ 357 016c 16000000 		.word	.LC6
+ 359              		.section	.text.HAL_SPI_MspDeInit,"ax",%progbits
+ 360              		.align	1
+ 361              		.global	HAL_SPI_MspDeInit
+ 362              		.syntax unified
+ 363              		.code	16
+ 364              		.thumb_func
+ 365              		.fpu softvfp
+ 367              	HAL_SPI_MspDeInit:
+ 368              		@ args = 0, pretend = 0, frame = 24
+ 369              		@ frame_needed = 0, uses_anonymous_args = 0
+ 370 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 371 0002 414C     		ldr	r4, .L40
+ 372 0004 0368     		ldr	r3, [r0]
+ 373 0006 2268     		ldr	r2, [r4]
+ 374 0008 87B0     		sub	sp, sp, #28
+ 375 000a 9342     		cmp	r3, r2
+ 376 000c 38D1     		bne	.L36
+ 377 000e 0025     		movs	r5, #0
+ 378 0010 3E4A     		ldr	r2, .L40+4
+ 379 0012 3F49     		ldr	r1, .L40+8
+ 380 0014 536B     		ldr	r3, [r2, #52]
+ 381 0016 03A8     		add	r0, sp, #12
+ 382 0018 0B40     		ands	r3, r1
+ 383 001a 5363     		str	r3, [r2, #52]
+ 384 001c 3D4B     		ldr	r3, .L40+12
+ 385 001e 0C22     		movs	r2, #12
+ 386 0020 5D57     		ldrsb	r5, [r3, r5]
+ 387 0022 F023     		movs	r3, #240
+ 388 0024 AD01     		lsls	r5, r5, #6
+ 389 0026 9B01     		lsls	r3, r3, #6
+ 390 0028 1D40     		ands	r5, r3
+ 391 002a A023     		movs	r3, #160
+ 392 002c 0021     		movs	r1, #0
+ 393 002e DB05     		lsls	r3, r3, #23
+ 394 0030 ED18     		adds	r5, r5, r3
+ 395 0032 FFF7FEFF 		bl	memset
+ 396 0036 0323     		movs	r3, #3
+ 397 0038 0126     		movs	r6, #1
+ 398 003a 0293     		str	r3, [sp, #8]
+ 399 003c 2300     		movs	r3, r4
+ 400 003e 0F27     		movs	r7, #15
+ 401 0040 3200     		movs	r2, r6
+ 402 0042 5D33     		adds	r3, r3, #93
+ARM GAS  /tmp/cczLOmvX.s 			page 8
+
+
+ 403 0044 1B78     		ldrb	r3, [r3]
+ 404 0046 2800     		movs	r0, r5
+ 405 0048 3B40     		ands	r3, r7
+ 406 004a 9A40     		lsls	r2, r2, r3
+ 407 004c 01A9     		add	r1, sp, #4
+ 408 004e 0192     		str	r2, [sp, #4]
+ 409 0050 FFF7FEFF 		bl	HAL_GPIO_Init
+ 410 0054 0023     		movs	r3, #0
+ 411 0056 3200     		movs	r2, r6
+ 412 0058 0293     		str	r3, [sp, #8]
+ 413 005a 0233     		adds	r3, r3, #2
+ 414 005c 0393     		str	r3, [sp, #12]
+ 415 005e 2D4B     		ldr	r3, .L40+12
+ 416 0060 5E34     		adds	r4, r4, #94
+ 417 0062 1B78     		ldrb	r3, [r3]
+ 418 0064 3B40     		ands	r3, r7
+ 419 0066 9A40     		lsls	r2, r2, r3
+ 420 0068 1300     		movs	r3, r2
+ 421              	.L39:
+ 422 006a 2278     		ldrb	r2, [r4]
+ 423 006c 2800     		movs	r0, r5
+ 424 006e 1740     		ands	r7, r2
+ 425 0070 BE40     		lsls	r6, r6, r7
+ 426 0072 01A9     		add	r1, sp, #4
+ 427 0074 1E43     		orrs	r6, r3
+ 428 0076 0196     		str	r6, [sp, #4]
+ 429 0078 FFF7FEFF 		bl	HAL_GPIO_Init
+ 430              	.L35:
+ 431 007c 07B0     		add	sp, sp, #28
+ 432              		@ sp needed
+ 433 007e F0BD     		pop	{r4, r5, r6, r7, pc}
+ 434              	.L36:
+ 435 0080 226E     		ldr	r2, [r4, #96]
+ 436 0082 9342     		cmp	r3, r2
+ 437 0084 2ED1     		bne	.L38
+ 438 0086 0025     		movs	r5, #0
+ 439 0088 204A     		ldr	r2, .L40+4
+ 440 008a 2349     		ldr	r1, .L40+16
+ 441 008c 936B     		ldr	r3, [r2, #56]
+ 442 008e 03A8     		add	r0, sp, #12
+ 443 0090 0B40     		ands	r3, r1
+ 444 0092 9363     		str	r3, [r2, #56]
+ 445 0094 214B     		ldr	r3, .L40+20
+ 446 0096 0C22     		movs	r2, #12
+ 447 0098 5D57     		ldrsb	r5, [r3, r5]
+ 448 009a F023     		movs	r3, #240
+ 449 009c AD01     		lsls	r5, r5, #6
+ 450 009e 9B01     		lsls	r3, r3, #6
+ 451 00a0 1D40     		ands	r5, r3
+ 452 00a2 A023     		movs	r3, #160
+ 453 00a4 0021     		movs	r1, #0
+ 454 00a6 DB05     		lsls	r3, r3, #23
+ 455 00a8 ED18     		adds	r5, r5, r3
+ 456 00aa FFF7FEFF 		bl	memset
+ 457 00ae 0323     		movs	r3, #3
+ 458 00b0 0126     		movs	r6, #1
+ 459 00b2 0293     		str	r3, [sp, #8]
+ARM GAS  /tmp/cczLOmvX.s 			page 9
+
+
+ 460 00b4 2300     		movs	r3, r4
+ 461 00b6 0F27     		movs	r7, #15
+ 462 00b8 3200     		movs	r2, r6
+ 463 00ba BD33     		adds	r3, r3, #189
+ 464 00bc 1B78     		ldrb	r3, [r3]
+ 465 00be 2800     		movs	r0, r5
+ 466 00c0 3B40     		ands	r3, r7
+ 467 00c2 9A40     		lsls	r2, r2, r3
+ 468 00c4 01A9     		add	r1, sp, #4
+ 469 00c6 0192     		str	r2, [sp, #4]
+ 470 00c8 FFF7FEFF 		bl	HAL_GPIO_Init
+ 471 00cc 0023     		movs	r3, #0
+ 472 00ce 3200     		movs	r2, r6
+ 473 00d0 0293     		str	r3, [sp, #8]
+ 474 00d2 0233     		adds	r3, r3, #2
+ 475 00d4 0393     		str	r3, [sp, #12]
+ 476 00d6 114B     		ldr	r3, .L40+20
+ 477 00d8 BE34     		adds	r4, r4, #190
+ 478 00da 1B78     		ldrb	r3, [r3]
+ 479 00dc 3B40     		ands	r3, r7
+ 480 00de 9A40     		lsls	r2, r2, r3
+ 481 00e0 1300     		movs	r3, r2
+ 482 00e2 C2E7     		b	.L39
+ 483              	.L38:
+ 484 00e4 0E49     		ldr	r1, .L40+24
+ 485 00e6 0F48     		ldr	r0, .L40+28
+ 486 00e8 FFF7FEFF 		bl	hal_trace_print_var
+ 487 00ec 0E4C     		ldr	r4, .L40+32
+ 488 00ee 2000     		movs	r0, r4
+ 489 00f0 FFF7FEFF 		bl	hal_trace_print_var
+ 490 00f4 0D48     		ldr	r0, .L40+36
+ 491 00f6 FFF7FEFF 		bl	hal_trace_print_var
+ 492 00fa 2000     		movs	r0, r4
+ 493 00fc FFF7FEFF 		bl	hal_trace_print_var
+ 494 0100 FFF7FEFF 		bl	hal_mcu_reset
+ 495 0104 BAE7     		b	.L35
+ 496              	.L41:
+ 497 0106 C046     		.align	2
+ 498              	.L40:
+ 499 0108 00000000 		.word	spi_periph
+ 500 010c 00100240 		.word	1073876992
+ 501 0110 FFEFFFFF 		.word	-4097
+ 502 0114 5C000000 		.word	spi_periph+92
+ 503 0118 FFBFFFFF 		.word	-16385
+ 504 011c BC000000 		.word	spi_periph+188
+ 505 0120 00000000 		.word	.LANCHOR2
+ 506 0124 00000000 		.word	.LC2
+ 507 0128 15000000 		.word	.LC4
+ 508 012c 16000000 		.word	.LC6
+ 510              		.section	.data.spi_periph,"aw"
+ 511              		.align	2
+ 514              	spi_periph:
+ 515 0000 00300140 		.word	1073819648
+ 516 0004 00000000 		.word	0
+ 517 0008 00000000 		.space	84
+ 517      00000000 
+ 517      00000000 
+ARM GAS  /tmp/cczLOmvX.s 			page 10
+
+
+ 517      00000000 
+ 517      00000000 
+ 518 005c FF       		.byte	-1
+ 519 005d FF       		.byte	-1
+ 520 005e FF       		.byte	-1
+ 521 005f 00       		.space	1
+ 522 0060 00380040 		.word	1073756160
+ 523 0064 00000000 		.word	0
+ 524 0068 00000000 		.space	84
+ 524      00000000 
+ 524      00000000 
+ 524      00000000 
+ 524      00000000 
+ 525 00bc FF       		.byte	-1
+ 526 00bd FF       		.byte	-1
+ 527 00be FF       		.byte	-1
+ 528 00bf 00       		.space	1
+ 529              		.section	.rodata.__func__.0,"a"
+ 530              		.set	.LANCHOR2,. + 0
+ 533              	__func__.0:
+ 534 0000 48414C5F 		.ascii	"HAL_SPI_MspDeInit\000"
+ 534      5350495F 
+ 534      4D737044 
+ 534      65496E69 
+ 534      7400
+ 535              		.section	.rodata.__func__.1,"a"
+ 536              		.set	.LANCHOR1,. + 0
+ 539              	__func__.1:
+ 540 0000 48414C5F 		.ascii	"HAL_SPI_MspInit\000"
+ 540      5350495F 
+ 540      4D737049 
+ 540      6E697400 
+ 541              		.section	.rodata.__func__.2,"a"
+ 542              		.set	.LANCHOR0,. + 0
+ 545              	__func__.2:
+ 546 0000 68616C5F 		.ascii	"hal_spi_init\000"
+ 546      7370695F 
+ 546      696E6974 
+ 546      00
+ 547              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/cczLOmvX.s 			page 11
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 smtc_hal_spi.c
+     /tmp/cczLOmvX.s:19     .text.hal_spi_init:0000000000000000 $t
+     /tmp/cczLOmvX.s:27     .text.hal_spi_init:0000000000000000 hal_spi_init
+     /tmp/cczLOmvX.s:97     .text.hal_spi_init:0000000000000088 $d
+     /tmp/cczLOmvX.s:514    .data.spi_periph:0000000000000000 spi_periph
+     /tmp/cczLOmvX.s:104    .text.hal_spi_de_init:0000000000000000 $t
+     /tmp/cczLOmvX.s:111    .text.hal_spi_de_init:0000000000000000 hal_spi_de_init
+     /tmp/cczLOmvX.s:127    .text.hal_spi_de_init:0000000000000014 $d
+     /tmp/cczLOmvX.s:130    .text.hal_spi_in_out:0000000000000000 $t
+     /tmp/cczLOmvX.s:137    .text.hal_spi_in_out:0000000000000000 hal_spi_in_out
+     /tmp/cczLOmvX.s:167    .text.hal_spi_in_out:000000000000002c $d
+     /tmp/cczLOmvX.s:170    .text.HAL_SPI_MspInit:0000000000000000 $t
+     /tmp/cczLOmvX.s:177    .text.HAL_SPI_MspInit:0000000000000000 HAL_SPI_MspInit
+     /tmp/cczLOmvX.s:352    .text.HAL_SPI_MspInit:0000000000000158 $d
+     /tmp/cczLOmvX.s:360    .text.HAL_SPI_MspDeInit:0000000000000000 $t
+     /tmp/cczLOmvX.s:367    .text.HAL_SPI_MspDeInit:0000000000000000 HAL_SPI_MspDeInit
+     /tmp/cczLOmvX.s:499    .text.HAL_SPI_MspDeInit:0000000000000108 $d
+     /tmp/cczLOmvX.s:511    .data.spi_periph:0000000000000000 $d
+     /tmp/cczLOmvX.s:533    .rodata.__func__.0:0000000000000000 __func__.0
+     /tmp/cczLOmvX.s:539    .rodata.__func__.1:0000000000000000 __func__.1
+     /tmp/cczLOmvX.s:545    .rodata.__func__.2:0000000000000000 __func__.2
+
+UNDEFINED SYMBOLS
+HAL_SPI_Init
+hal_trace_print_var
+hal_mcu_reset
+HAL_SPI_DeInit
+memset
+HAL_GPIO_Init

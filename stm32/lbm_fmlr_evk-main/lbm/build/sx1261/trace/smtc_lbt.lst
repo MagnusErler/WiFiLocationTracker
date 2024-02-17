@@ -1,0 +1,736 @@
+ARM GAS  /tmp/ccuovqHS.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.eabi_attribute 23, 1
+   3              		.eabi_attribute 24, 1
+   4              		.eabi_attribute 25, 1
+   5              		.eabi_attribute 26, 1
+   6              		.eabi_attribute 30, 4
+   7              		.eabi_attribute 34, 0
+   8              		.eabi_attribute 18, 4
+   9              		.file	"smtc_lbt.c"
+  10              		.text
+  11              		.section	.rodata.smtc_lbt_rp_callback.str1.1,"aMS",%progbits,1
+  12              	.LC0:
+  13 0000 6C627420 		.ascii	"lbt abort max retry reach \012\000"
+  13      61626F72 
+  13      74206D61 
+  13      78207265 
+  13      74727920 
+  14              		.section	.text.smtc_lbt_rp_callback,"ax",%progbits
+  15              		.align	1
+  16              		.global	smtc_lbt_rp_callback
+  17              		.arch armv6s-m
+  18              		.syntax unified
+  19              		.code	16
+  20              		.thumb_func
+  21              		.fpu softvfp
+  23              	smtc_lbt_rp_callback:
+  24              		@ args = 0, pretend = 0, frame = 8
+  25              		@ frame_needed = 0, uses_anonymous_args = 0
+  26 0000 73B5     		push	{r0, r1, r4, r5, r6, lr}
+  27 0002 6B46     		mov	r3, sp
+  28 0004 DE1C     		adds	r6, r3, #3
+  29 0006 0100     		movs	r1, r0
+  30 0008 0400     		movs	r4, r0
+  31 000a 3200     		movs	r2, r6
+  32 000c 0068     		ldr	r0, [r0]
+  33 000e FFF7FEFF 		bl	rp_hook_get_id
+  34 0012 6B46     		mov	r3, sp
+  35 0014 9D1C     		adds	r5, r3, #2
+  36 0016 2B00     		movs	r3, r5
+  37 0018 3178     		ldrb	r1, [r6]
+  38 001a 2068     		ldr	r0, [r4]
+  39 001c 01AA     		add	r2, sp, #4
+  40 001e FFF7FEFF 		bl	rp_get_status
+  41 0022 2B78     		ldrb	r3, [r5]
+  42 0024 062B     		cmp	r3, #6
+  43 0026 03D1     		bne	.L2
+  44 0028 A369     		ldr	r3, [r4, #24]
+  45 002a E069     		ldr	r0, [r4, #28]
+  46              	.L6:
+  47 002c 9847     		blx	r3
+  48              		@ sp needed
+  49 002e 73BD     		pop	{r0, r1, r4, r5, r6, pc}
+  50              	.L2:
+  51 0030 072B     		cmp	r3, #7
+  52 0032 05D1     		bne	.L4
+  53 0034 237D     		ldrb	r3, [r4, #20]
+  54 0036 002B     		cmp	r3, #0
+ARM GAS  /tmp/ccuovqHS.s 			page 2
+
+
+  55 0038 05D0     		beq	.L5
+  56 003a 0448     		ldr	r0, .L7
+  57 003c FFF7FEFF 		bl	smtc_modem_hal_print_trace
+  58              	.L4:
+  59 0040 A36A     		ldr	r3, [r4, #40]
+  60 0042 E06A     		ldr	r0, [r4, #44]
+  61 0044 F2E7     		b	.L6
+  62              	.L5:
+  63 0046 236A     		ldr	r3, [r4, #32]
+  64 0048 606A     		ldr	r0, [r4, #36]
+  65 004a EFE7     		b	.L6
+  66              	.L8:
+  67              		.align	2
+  68              	.L7:
+  69 004c 00000000 		.word	.LC0
+  71              		.section	.rodata.smtc_lbt_launch_callback_for_rp.str1.1,"aMS",%progbits,1
+  72              	.LC3:
+  73 0000 6C627420 		.ascii	"lbt rssi: %d dBm\012\000"
+  73      72737369 
+  73      3A202564 
+  73      2064426D 
+  73      0A00
+  74              		.section	.text.smtc_lbt_launch_callback_for_rp,"ax",%progbits
+  75              		.align	1
+  76              		.global	smtc_lbt_launch_callback_for_rp
+  77              		.syntax unified
+  78              		.code	16
+  79              		.thumb_func
+  80              		.fpu softvfp
+  82              	smtc_lbt_launch_callback_for_rp:
+  83              		@ args = 0, pretend = 0, frame = 16
+  84              		@ frame_needed = 0, uses_anonymous_args = 0
+  85 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+  86 0002 4F4B     		ldr	r3, .L41
+  87 0004 85B0     		sub	sp, sp, #20
+  88 0006 0400     		movs	r4, r0
+  89 0008 C55C     		ldrb	r5, [r0, r3]
+  90 000a FFF7FEFF 		bl	smtc_modem_hal_start_radio_tcxo
+  91 000e 8423     		movs	r3, #132
+  92 0010 9C26     		movs	r6, #156
+  93 0012 6B43     		muls	r3, r5
+  94 0014 3601     		lsls	r6, r6, #4
+  95 0016 A259     		ldr	r2, [r4, r6]
+  96 0018 E318     		adds	r3, r4, r3
+  97 001a 197F     		ldrb	r1, [r3, #28]
+  98 001c 1068     		ldr	r0, [r2]
+  99 001e 936E     		ldr	r3, [r2, #104]
+ 100 0020 9847     		blx	r3
+ 101 0022 0028     		cmp	r0, #0
+ 102 0024 03D0     		beq	.L10
+ 103 0026 6A21     		movs	r1, #106
+ 104 0028 4648     		ldr	r0, .L41+4
+ 105 002a FFF7FEFF 		bl	smtc_modem_hal_assert_fail
+ 106              	.L10:
+ 107 002e 8423     		movs	r3, #132
+ 108 0030 6B43     		muls	r3, r5
+ 109 0032 A259     		ldr	r2, [r4, r6]
+ARM GAS  /tmp/ccuovqHS.s 			page 3
+
+
+ 110 0034 E318     		adds	r3, r4, r3
+ 111 0036 566E     		ldr	r6, [r2, #100]
+ 112 0038 D96E     		ldr	r1, [r3, #108]
+ 113 003a 1068     		ldr	r0, [r2]
+ 114 003c B047     		blx	r6
+ 115 003e 0028     		cmp	r0, #0
+ 116 0040 03D0     		beq	.L11
+ 117 0042 6B21     		movs	r1, #107
+ 118 0044 3F48     		ldr	r0, .L41+4
+ 119 0046 FFF7FEFF 		bl	smtc_modem_hal_assert_fail
+ 120              	.L11:
+ 121 004a 8421     		movs	r1, #132
+ 122 004c 9C26     		movs	r6, #156
+ 123 004e 6943     		muls	r1, r5
+ 124 0050 3601     		lsls	r6, r6, #4
+ 125 0052 A359     		ldr	r3, [r4, r6]
+ 126 0054 4C31     		adds	r1, r1, #76
+ 127 0056 1A6F     		ldr	r2, [r3, #112]
+ 128 0058 1868     		ldr	r0, [r3]
+ 129 005a 6118     		adds	r1, r4, r1
+ 130 005c 9047     		blx	r2
+ 131 005e 0028     		cmp	r0, #0
+ 132 0060 03D0     		beq	.L12
+ 133 0062 6D21     		movs	r1, #109
+ 134 0064 3748     		ldr	r0, .L41+4
+ 135 0066 FFF7FEFF 		bl	smtc_modem_hal_assert_fail
+ 136              	.L12:
+ 137 006a A359     		ldr	r3, [r4, r6]
+ 138 006c 0021     		movs	r1, #0
+ 139 006e 1A6E     		ldr	r2, [r3, #96]
+ 140 0070 1868     		ldr	r0, [r3]
+ 141 0072 9047     		blx	r2
+ 142 0074 0028     		cmp	r0, #0
+ 143 0076 03D0     		beq	.L13
+ 144 0078 6F21     		movs	r1, #111
+ 145 007a 3248     		ldr	r0, .L41+4
+ 146 007c FFF7FEFF 		bl	smtc_modem_hal_assert_fail
+ 147              	.L13:
+ 148 0080 9C23     		movs	r3, #156
+ 149 0082 0121     		movs	r1, #1
+ 150 0084 1B01     		lsls	r3, r3, #4
+ 151 0086 E358     		ldr	r3, [r4, r3]
+ 152 0088 4942     		rsbs	r1, r1, #0
+ 153 008a 5A6A     		ldr	r2, [r3, #36]
+ 154 008c 1868     		ldr	r0, [r3]
+ 155 008e 9047     		blx	r2
+ 156 0090 0028     		cmp	r0, #0
+ 157 0092 03D0     		beq	.L14
+ 158 0094 7021     		movs	r1, #112
+ 159 0096 2B48     		ldr	r0, .L41+4
+ 160 0098 FFF7FEFF 		bl	smtc_modem_hal_assert_fail
+ 161              	.L14:
+ 162 009c FFF7FEFF 		bl	smtc_modem_hal_get_time_in_ms
+ 163 00a0 0090     		str	r0, [sp]
+ 164              	.L15:
+ 165 00a2 FFF7FEFF 		bl	smtc_modem_hal_get_time_in_ms
+ 166 00a6 009B     		ldr	r3, [sp]
+ARM GAS  /tmp/ccuovqHS.s 			page 4
+
+
+ 167 00a8 0233     		adds	r3, r3, #2
+ 168 00aa 1B1A     		subs	r3, r3, r0
+ 169 00ac 002B     		cmp	r3, #0
+ 170 00ae F8DC     		bgt	.L15
+ 171 00b0 2B00     		movs	r3, r5
+ 172 00b2 8426     		movs	r6, #132
+ 173 00b4 D333     		adds	r3, r3, #211
+ 174 00b6 6E43     		muls	r6, r5
+ 175 00b8 FF33     		adds	r3, r3, #255
+ 176 00ba 9B00     		lsls	r3, r3, #2
+ 177 00bc E318     		adds	r3, r4, r3
+ 178 00be 0193     		str	r3, [sp, #4]
+ 179 00c0 A619     		adds	r6, r4, r6
+ 180              	.L19:
+ 181 00c2 9C23     		movs	r3, #156
+ 182 00c4 1B01     		lsls	r3, r3, #4
+ 183 00c6 E358     		ldr	r3, [r4, r3]
+ 184 00c8 02AA     		add	r2, sp, #8
+ 185 00ca 971D     		adds	r7, r2, #6
+ 186 00cc 1A00     		movs	r2, r3
+ 187 00ce 9C32     		adds	r2, r2, #156
+ 188 00d0 3900     		movs	r1, r7
+ 189 00d2 1268     		ldr	r2, [r2]
+ 190 00d4 1868     		ldr	r0, [r3]
+ 191 00d6 9047     		blx	r2
+ 192 00d8 0028     		cmp	r0, #0
+ 193 00da 03D0     		beq	.L16
+ 194 00dc 7821     		movs	r1, #120
+ 195 00de 1948     		ldr	r0, .L41+4
+ 196 00e0 FFF7FEFF 		bl	smtc_modem_hal_assert_fail
+ 197              	.L16:
+ 198 00e4 019B     		ldr	r3, [sp, #4]
+ 199 00e6 0022     		movs	r2, #0
+ 200 00e8 B95E     		ldrsh	r1, [r7, r2]
+ 201 00ea 5B68     		ldr	r3, [r3, #4]
+ 202 00ec 5A6B     		ldr	r2, [r3, #52]
+ 203 00ee 1986     		strh	r1, [r3, #48]
+ 204 00f0 5218     		adds	r2, r2, r1
+ 205 00f2 5A63     		str	r2, [r3, #52]
+ 206 00f4 9A6B     		ldr	r2, [r3, #56]
+ 207 00f6 0132     		adds	r2, r2, #1
+ 208 00f8 9A63     		str	r2, [r3, #56]
+ 209 00fa 3300     		movs	r3, r6
+ 210 00fc 8433     		adds	r3, r3, #132
+ 211 00fe 0022     		movs	r2, #0
+ 212 0100 9B5E     		ldrsh	r3, [r3, r2]
+ 213 0102 8B42     		cmp	r3, r1
+ 214 0104 0DDC     		bgt	.L17
+ 215 0106 1048     		ldr	r0, .L41+8
+ 216 0108 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 217 010c EF23     		movs	r3, #239
+ 218 010e 6519     		adds	r5, r4, r5
+ 219 0110 DB00     		lsls	r3, r3, #3
+ 220 0112 ED18     		adds	r5, r5, r3
+ 221 0114 0723     		movs	r3, #7
+ 222              	.L40:
+ 223 0116 2000     		movs	r0, r4
+ARM GAS  /tmp/ccuovqHS.s 			page 5
+
+
+ 224 0118 2B70     		strb	r3, [r5]
+ 225 011a FFF7FEFF 		bl	rp_radio_irq_callback
+ 226 011e 05B0     		add	sp, sp, #20
+ 227              		@ sp needed
+ 228 0120 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 229              	.L17:
+ 230 0122 009B     		ldr	r3, [sp]
+ 231 0124 B26F     		ldr	r2, [r6, #120]
+ 232 0126 9F18     		adds	r7, r3, r2
+ 233 0128 FFF7FEFF 		bl	smtc_modem_hal_get_time_in_ms
+ 234 012c 3F1A     		subs	r7, r7, r0
+ 235 012e 002F     		cmp	r7, #0
+ 236 0130 C7DC     		bgt	.L19
+ 237 0132 EF23     		movs	r3, #239
+ 238 0134 6519     		adds	r5, r4, r5
+ 239 0136 DB00     		lsls	r3, r3, #3
+ 240 0138 ED18     		adds	r5, r5, r3
+ 241 013a 0623     		movs	r3, #6
+ 242 013c EBE7     		b	.L40
+ 243              	.L42:
+ 244 013e C046     		.align	2
+ 245              	.L41:
+ 246 0140 84090000 		.word	2436
+ 247 0144 00000000 		.word	.LANCHOR0
+ 248 0148 00000000 		.word	.LC3
+ 250              		.section	.rodata.smtc_lbt_init.str1.1,"aMS",%progbits,1
+ 251              	.LC6:
+ 252 0000 1B5B303B 		.ascii	"\033[0;31mERROR: crash log :%s\012\000"
+ 252      33316D45 
+ 252      52524F52 
+ 252      3A206372 
+ 252      61736820 
+ 253              	.LC8:
+ 254 001d 1B5B306D 		.ascii	"\033[0m\000"
+ 254      00
+ 255              	.LC10:
+ 256 0022 1B5B303B 		.ascii	"\033[0;31mERROR: -> lbt bad init\012\000"
+ 256      33316D45 
+ 256      52524F52 
+ 256      3A202D3E 
+ 256      206C6274 
+ 257              		.section	.text.smtc_lbt_init,"ax",%progbits
+ 258              		.align	1
+ 259              		.global	smtc_lbt_init
+ 260              		.syntax unified
+ 261              		.code	16
+ 262              		.thumb_func
+ 263              		.fpu softvfp
+ 265              	smtc_lbt_init:
+ 266              		@ args = 20, pretend = 0, frame = 8
+ 267              		@ frame_needed = 0, uses_anonymous_args = 0
+ 268 0000 F7B5     		push	{r0, r1, r2, r4, r5, r6, r7, lr}
+ 269 0002 0400     		movs	r4, r0
+ 270 0004 0E00     		movs	r6, r1
+ 271 0006 1500     		movs	r5, r2
+ 272 0008 0193     		str	r3, [sp, #4]
+ 273 000a 002B     		cmp	r3, #0
+ARM GAS  /tmp/ccuovqHS.s 			page 6
+
+
+ 274 000c 05D0     		beq	.L44
+ 275 000e 099B     		ldr	r3, [sp, #36]
+ 276 0010 002B     		cmp	r3, #0
+ 277 0012 02D0     		beq	.L44
+ 278 0014 0B9B     		ldr	r3, [sp, #44]
+ 279 0016 002B     		cmp	r3, #0
+ 280 0018 16D1     		bne	.L45
+ 281              	.L44:
+ 282 001a 1D4F     		ldr	r7, .L52
+ 283 001c 3800     		movs	r0, r7
+ 284 001e FFF7FEFF 		bl	smtc_modem_hal_store_crashlog
+ 285 0022 0120     		movs	r0, #1
+ 286 0024 FFF7FEFF 		bl	smtc_modem_hal_set_crashlog_status
+ 287 0028 3900     		movs	r1, r7
+ 288 002a 1A48     		ldr	r0, .L52+4
+ 289 002c FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 290 0030 194F     		ldr	r7, .L52+8
+ 291 0032 3800     		movs	r0, r7
+ 292 0034 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 293 0038 1848     		ldr	r0, .L52+12
+ 294 003a FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 295 003e 3800     		movs	r0, r7
+ 296 0040 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 297 0044 FFF7FEFF 		bl	smtc_modem_hal_reset_mcu
+ 298              	.L45:
+ 299              		@ sp needed
+ 300 0048 019B     		ldr	r3, [sp, #4]
+ 301 004a 2200     		movs	r2, r4
+ 302 004c A361     		str	r3, [r4, #24]
+ 303 004e 089B     		ldr	r3, [sp, #32]
+ 304 0050 3C32     		adds	r2, r2, #60
+ 305 0052 E361     		str	r3, [r4, #28]
+ 306 0054 099B     		ldr	r3, [sp, #36]
+ 307 0056 2900     		movs	r1, r5
+ 308 0058 2362     		str	r3, [r4, #32]
+ 309 005a 0A9B     		ldr	r3, [sp, #40]
+ 310 005c 2660     		str	r6, [r4]
+ 311 005e 6362     		str	r3, [r4, #36]
+ 312 0060 0B9B     		ldr	r3, [sp, #44]
+ 313 0062 2571     		strb	r5, [r4, #4]
+ 314 0064 A362     		str	r3, [r4, #40]
+ 315 0066 0C9B     		ldr	r3, [sp, #48]
+ 316 0068 3000     		movs	r0, r6
+ 317 006a E362     		str	r3, [r4, #44]
+ 318 006c 0023     		movs	r3, #0
+ 319 006e 2386     		strh	r3, [r4, #48]
+ 320 0070 6363     		str	r3, [r4, #52]
+ 321 0072 A363     		str	r3, [r4, #56]
+ 322 0074 2375     		strb	r3, [r4, #20]
+ 323 0076 1370     		strb	r3, [r2]
+ 324 0078 A360     		str	r3, [r4, #8]
+ 325 007a A381     		strh	r3, [r4, #12]
+ 326 007c 2361     		str	r3, [r4, #16]
+ 327 007e FFF7FEFF 		bl	rp_release_hook
+ 328 0082 2900     		movs	r1, r5
+ 329 0084 3000     		movs	r0, r6
+ 330 0086 2300     		movs	r3, r4
+ARM GAS  /tmp/ccuovqHS.s 			page 7
+
+
+ 331 0088 054A     		ldr	r2, .L52+16
+ 332 008a FFF7FEFF 		bl	rp_hook_init
+ 333 008e F7BD     		pop	{r0, r1, r2, r4, r5, r6, r7, pc}
+ 334              	.L53:
+ 335              		.align	2
+ 336              	.L52:
+ 337 0090 00000000 		.word	.LANCHOR1
+ 338 0094 00000000 		.word	.LC6
+ 339 0098 1D000000 		.word	.LC8
+ 340 009c 22000000 		.word	.LC10
+ 341 00a0 00000000 		.word	smtc_lbt_rp_callback
+ 343              		.section	.text.smtc_lbt_set_parameters,"ax",%progbits
+ 344              		.align	1
+ 345              		.global	smtc_lbt_set_parameters
+ 346              		.syntax unified
+ 347              		.code	16
+ 348              		.thumb_func
+ 349              		.fpu softvfp
+ 351              	smtc_lbt_set_parameters:
+ 352              		@ args = 0, pretend = 0, frame = 0
+ 353              		@ frame_needed = 0, uses_anonymous_args = 0
+ 354 0000 10B5     		push	{r4, lr}
+ 355 0002 0024     		movs	r4, #0
+ 356              		@ sp needed
+ 357 0004 0231     		adds	r1, r1, #2
+ 358 0006 0486     		strh	r4, [r0, #48]
+ 359 0008 4463     		str	r4, [r0, #52]
+ 360 000a 8463     		str	r4, [r0, #56]
+ 361 000c 8160     		str	r1, [r0, #8]
+ 362 000e 8281     		strh	r2, [r0, #12]
+ 363 0010 0361     		str	r3, [r0, #16]
+ 364 0012 10BD     		pop	{r4, pc}
+ 366              		.section	.text.smtc_lbt_get_parameters,"ax",%progbits
+ 367              		.align	1
+ 368              		.global	smtc_lbt_get_parameters
+ 369              		.syntax unified
+ 370              		.code	16
+ 371              		.thumb_func
+ 372              		.fpu softvfp
+ 374              	smtc_lbt_get_parameters:
+ 375              		@ args = 0, pretend = 0, frame = 0
+ 376              		@ frame_needed = 0, uses_anonymous_args = 0
+ 377 0000 10B5     		push	{r4, lr}
+ 378 0002 8468     		ldr	r4, [r0, #8]
+ 379              		@ sp needed
+ 380 0004 023C     		subs	r4, r4, #2
+ 381 0006 0C60     		str	r4, [r1]
+ 382 0008 0C24     		movs	r4, #12
+ 383 000a 015F     		ldrsh	r1, [r0, r4]
+ 384 000c 1180     		strh	r1, [r2]
+ 385 000e 0269     		ldr	r2, [r0, #16]
+ 386 0010 1A60     		str	r2, [r3]
+ 387 0012 10BD     		pop	{r4, pc}
+ 389              		.section	.text.smtc_lbt_set_state,"ax",%progbits
+ 390              		.align	1
+ 391              		.global	smtc_lbt_set_state
+ 392              		.syntax unified
+ARM GAS  /tmp/ccuovqHS.s 			page 8
+
+
+ 393              		.code	16
+ 394              		.thumb_func
+ 395              		.fpu softvfp
+ 397              	smtc_lbt_set_state:
+ 398              		@ args = 0, pretend = 0, frame = 0
+ 399              		@ frame_needed = 0, uses_anonymous_args = 0
+ 400              		@ link register save eliminated.
+ 401 0000 3C30     		adds	r0, r0, #60
+ 402 0002 0170     		strb	r1, [r0]
+ 403              		@ sp needed
+ 404 0004 7047     		bx	lr
+ 406              		.section	.text.smtc_lbt_get_state,"ax",%progbits
+ 407              		.align	1
+ 408              		.global	smtc_lbt_get_state
+ 409              		.syntax unified
+ 410              		.code	16
+ 411              		.thumb_func
+ 412              		.fpu softvfp
+ 414              	smtc_lbt_get_state:
+ 415              		@ args = 0, pretend = 0, frame = 0
+ 416              		@ frame_needed = 0, uses_anonymous_args = 0
+ 417              		@ link register save eliminated.
+ 418 0000 3C30     		adds	r0, r0, #60
+ 419 0002 0078     		ldrb	r0, [r0]
+ 420              		@ sp needed
+ 421 0004 7047     		bx	lr
+ 423              		.section	.rodata.smtc_lbt_listen_channel.str1.1,"aMS",%progbits,1
+ 424              	.LC16:
+ 425 0000 1B5B303B 		.ascii	"\033[0;31mERROR: -> lbt_obj bad initialization \012"
+ 425      33316D45 
+ 425      52524F52 
+ 425      3A202D3E 
+ 425      206C6274 
+ 426 002d 00       		.ascii	"\000"
+ 427              	.LC18:
+ 428 002e 1B5B303B 		.ascii	"\033[0;31mERROR: -> radioplanner isn't initialized "
+ 428      33316D45 
+ 428      52524F52 
+ 428      3A202D3E 
+ 428      20726164 
+ 429 005e 666F7220 		.ascii	"for lbt obj \012\000"
+ 429      6C627420 
+ 429      6F626A20 
+ 429      0A00
+ 430              	.LC21:
+ 431 006c 52616469 		.ascii	"Radio planner hook %d is busy \012\000"
+ 431      6F20706C 
+ 431      616E6E65 
+ 431      7220686F 
+ 431      6F6B2025 
+ 432              	.LC23:
+ 433 008c 20204C69 		.ascii	"  Listen Frequency = %u during %d ms \012\000"
+ 433      7374656E 
+ 433      20467265 
+ 433      7175656E 
+ 433      6379203D 
+ 434              		.section	.text.smtc_lbt_listen_channel,"ax",%progbits
+ARM GAS  /tmp/ccuovqHS.s 			page 9
+
+
+ 435              		.align	1
+ 436              		.global	smtc_lbt_listen_channel
+ 437              		.syntax unified
+ 438              		.code	16
+ 439              		.thumb_func
+ 440              		.fpu softvfp
+ 442              	smtc_lbt_listen_channel:
+ 443              		@ args = 4, pretend = 0, frame = 224
+ 444              		@ frame_needed = 0, uses_anonymous_args = 0
+ 445 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 446 0002 BBB0     		sub	sp, sp, #236
+ 447 0004 0593     		str	r3, [sp, #20]
+ 448 0006 8369     		ldr	r3, [r0, #24]
+ 449 0008 0500     		movs	r5, r0
+ 450 000a 0391     		str	r1, [sp, #12]
+ 451 000c 0492     		str	r2, [sp, #16]
+ 452 000e 0275     		strb	r2, [r0, #20]
+ 453 0010 002B     		cmp	r3, #0
+ 454 0012 05D0     		beq	.L59
+ 455 0014 036A     		ldr	r3, [r0, #32]
+ 456 0016 002B     		cmp	r3, #0
+ 457 0018 02D0     		beq	.L59
+ 458 001a 836A     		ldr	r3, [r0, #40]
+ 459 001c 002B     		cmp	r3, #0
+ 460 001e 16D1     		bne	.L60
+ 461              	.L59:
+ 462 0020 4D4C     		ldr	r4, .L73
+ 463 0022 2000     		movs	r0, r4
+ 464 0024 FFF7FEFF 		bl	smtc_modem_hal_store_crashlog
+ 465 0028 0120     		movs	r0, #1
+ 466 002a FFF7FEFF 		bl	smtc_modem_hal_set_crashlog_status
+ 467 002e 2100     		movs	r1, r4
+ 468 0030 4A48     		ldr	r0, .L73+4
+ 469 0032 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 470 0036 4A4C     		ldr	r4, .L73+8
+ 471 0038 2000     		movs	r0, r4
+ 472 003a FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 473 003e 4948     		ldr	r0, .L73+12
+ 474 0040 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 475 0044 2000     		movs	r0, r4
+ 476 0046 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 477 004a FFF7FEFF 		bl	smtc_modem_hal_reset_mcu
+ 478              	.L60:
+ 479 004e 1C22     		movs	r2, #28
+ 480 0050 0021     		movs	r1, #0
+ 481 0052 19AE     		add	r6, sp, #100
+ 482 0054 07A8     		add	r0, sp, #28
+ 483 0056 FFF7FEFF 		bl	memset
+ 484 005a 8422     		movs	r2, #132
+ 485 005c 0021     		movs	r1, #0
+ 486 005e 3000     		movs	r0, r6
+ 487 0060 FFF7FEFF 		bl	memset
+ 488 0064 0EAC     		add	r4, sp, #56
+ 489 0066 1C22     		movs	r2, #28
+ 490 0068 0021     		movs	r1, #0
+ 491 006a 07A8     		add	r0, sp, #28
+ 492 006c FFF7FEFF 		bl	memset
+ARM GAS  /tmp/ccuovqHS.s 			page 10
+
+
+ 493 0070 0021     		movs	r1, #0
+ 494 0072 2C22     		movs	r2, #44
+ 495 0074 2000     		movs	r0, r4
+ 496 0076 FFF7FEFF 		bl	memset
+ 497 007a 5223     		movs	r3, #82
+ 498 007c 0127     		movs	r7, #1
+ 499 007e 04AA     		add	r2, sp, #16
+ 500 0080 9B18     		adds	r3, r3, r2
+ 501 0082 1F70     		strb	r7, [r3]
+ 502 0084 039B     		ldr	r3, [sp, #12]
+ 503 0086 1693     		str	r3, [sp, #88]
+ 504 0088 2B69     		ldr	r3, [r5, #16]
+ 505 008a 1093     		str	r3, [sp, #64]
+ 506 008c 5A08     		lsrs	r2, r3, #1
+ 507 008e 9B08     		lsrs	r3, r3, #2
+ 508 0090 0F93     		str	r3, [sp, #60]
+ 509 0092 0023     		movs	r3, #0
+ 510 0094 0E92     		str	r2, [sp, #56]
+ 511 0096 0422     		movs	r2, #4
+ 512 0098 3370     		strb	r3, [r6]
+ 513 009a 25AB     		add	r3, sp, #148
+ 514 009c 2273     		strb	r2, [r4, #12]
+ 515 009e 07CC     		ldmia	r4!, {r0, r1, r2}
+ 516 00a0 07C3     		stmia	r3!, {r0, r1, r2}
+ 517 00a2 07CC     		ldmia	r4!, {r0, r1, r2}
+ 518 00a4 07C3     		stmia	r3!, {r0, r1, r2}
+ 519 00a6 07CC     		ldmia	r4!, {r0, r1, r2}
+ 520 00a8 07C3     		stmia	r3!, {r0, r1, r2}
+ 521 00aa 06CC     		ldmia	r4!, {r1, r2}
+ 522 00ac 06C3     		stmia	r3!, {r1, r2}
+ 523 00ae AB68     		ldr	r3, [r5, #8]
+ 524 00b0 2900     		movs	r1, r5
+ 525 00b2 3093     		str	r3, [sp, #192]
+ 526 00b4 AA89     		ldrh	r2, [r5, #12]
+ 527 00b6 33AB     		add	r3, sp, #204
+ 528 00b8 1A80     		strh	r2, [r3]
+ 529 00ba 0B23     		movs	r3, #11
+ 530 00bc 04AA     		add	r2, sp, #16
+ 531 00be 9B18     		adds	r3, r3, r2
+ 532 00c0 1A00     		movs	r2, r3
+ 533 00c2 2868     		ldr	r0, [r5]
+ 534 00c4 FFF7FEFF 		bl	rp_hook_get_id
+ 535 00c8 0028     		cmp	r0, #0
+ 536 00ca 16D0     		beq	.L61
+ 537 00cc 224C     		ldr	r4, .L73
+ 538 00ce 2000     		movs	r0, r4
+ 539 00d0 FFF7FEFF 		bl	smtc_modem_hal_store_crashlog
+ 540 00d4 3800     		movs	r0, r7
+ 541 00d6 FFF7FEFF 		bl	smtc_modem_hal_set_crashlog_status
+ 542 00da 2100     		movs	r1, r4
+ 543 00dc 1F48     		ldr	r0, .L73+4
+ 544 00de FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 545 00e2 1F4C     		ldr	r4, .L73+8
+ 546 00e4 2000     		movs	r0, r4
+ 547 00e6 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 548 00ea 1F48     		ldr	r0, .L73+16
+ 549 00ec FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ARM GAS  /tmp/ccuovqHS.s 			page 11
+
+
+ 550 00f0 2000     		movs	r0, r4
+ 551 00f2 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 552 00f6 FFF7FEFF 		bl	smtc_modem_hal_reset_mcu
+ 553              	.L61:
+ 554 00fa 04AB     		add	r3, sp, #16
+ 555 00fc DB7A     		ldrb	r3, [r3, #11]
+ 556 00fe 04AA     		add	r2, sp, #16
+ 557 0100 A868     		ldr	r0, [r5, #8]
+ 558 0102 1373     		strb	r3, [r2, #12]
+ 559 0104 409B     		ldr	r3, [sp, #256]
+ 560 0106 C318     		adds	r3, r0, r3
+ 561 0108 0D93     		str	r3, [sp, #52]
+ 562 010a 0C23     		movs	r3, #12
+ 563 010c 5373     		strb	r3, [r2, #13]
+ 564 010e 174B     		ldr	r3, .L73+20
+ 565 0110 0893     		str	r3, [sp, #32]
+ 566 0112 059B     		ldr	r3, [sp, #20]
+ 567 0114 1C1A     		subs	r4, r3, r0
+ 568 0116 FFF7FEFF 		bl	smtc_modem_hal_get_radio_tcxo_startup_delay_ms
+ 569 011a 0122     		movs	r2, #1
+ 570 011c 049B     		ldr	r3, [sp, #16]
+ 571 011e 201A     		subs	r0, r4, r0
+ 572 0120 5A40     		eors	r2, r3
+ 573 0122 04AB     		add	r3, sp, #16
+ 574 0124 9A75     		strb	r2, [r3, #22]
+ 575 0126 19AB     		add	r3, sp, #100
+ 576 0128 0093     		str	r3, [sp]
+ 577 012a 0023     		movs	r3, #0
+ 578 012c 0A90     		str	r0, [sp, #40]
+ 579 012e 1A00     		movs	r2, r3
+ 580 0130 2868     		ldr	r0, [r5]
+ 581 0132 07A9     		add	r1, sp, #28
+ 582 0134 FFF7FEFF 		bl	rp_task_enqueue
+ 583 0138 0028     		cmp	r0, #0
+ 584 013a 06D0     		beq	.L62
+ 585 013c 04AB     		add	r3, sp, #16
+ 586 013e D97A     		ldrb	r1, [r3, #11]
+ 587 0140 0B48     		ldr	r0, .L73+24
+ 588 0142 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 589              	.L58:
+ 590 0146 3BB0     		add	sp, sp, #236
+ 591              		@ sp needed
+ 592 0148 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 593              	.L62:
+ 594 014a AA68     		ldr	r2, [r5, #8]
+ 595 014c 0399     		ldr	r1, [sp, #12]
+ 596 014e 0948     		ldr	r0, .L73+28
+ 597 0150 023A     		subs	r2, r2, #2
+ 598 0152 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 599 0156 F6E7     		b	.L58
+ 600              	.L74:
+ 601              		.align	2
+ 602              	.L73:
+ 603 0158 00000000 		.word	.LANCHOR2
+ 604 015c 00000000 		.word	.LC6
+ 605 0160 1D000000 		.word	.LC8
+ 606 0164 00000000 		.word	.LC16
+ARM GAS  /tmp/ccuovqHS.s 			page 12
+
+
+ 607 0168 2E000000 		.word	.LC18
+ 608 016c 00000000 		.word	smtc_lbt_launch_callback_for_rp
+ 609 0170 6C000000 		.word	.LC21
+ 610 0174 8C000000 		.word	.LC23
+ 612              		.section	.rodata.__func__.0,"a"
+ 613              		.set	.LANCHOR2,. + 0
+ 616              	__func__.0:
+ 617 0000 736D7463 		.ascii	"smtc_lbt_listen_channel\000"
+ 617      5F6C6274 
+ 617      5F6C6973 
+ 617      74656E5F 
+ 617      6368616E 
+ 618              		.section	.rodata.__func__.1,"a"
+ 619              		.set	.LANCHOR0,. + 0
+ 622              	__func__.1:
+ 623 0000 736D7463 		.ascii	"smtc_lbt_launch_callback_for_rp\000"
+ 623      5F6C6274 
+ 623      5F6C6175 
+ 623      6E63685F 
+ 623      63616C6C 
+ 624              		.section	.rodata.__func__.2,"a"
+ 625              		.set	.LANCHOR1,. + 0
+ 628              	__func__.2:
+ 629 0000 736D7463 		.ascii	"smtc_lbt_init\000"
+ 629      5F6C6274 
+ 629      5F696E69 
+ 629      7400
+ 630              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccuovqHS.s 			page 13
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 smtc_lbt.c
+     /tmp/ccuovqHS.s:15     .text.smtc_lbt_rp_callback:0000000000000000 $t
+     /tmp/ccuovqHS.s:23     .text.smtc_lbt_rp_callback:0000000000000000 smtc_lbt_rp_callback
+     /tmp/ccuovqHS.s:69     .text.smtc_lbt_rp_callback:000000000000004c $d
+     /tmp/ccuovqHS.s:75     .text.smtc_lbt_launch_callback_for_rp:0000000000000000 $t
+     /tmp/ccuovqHS.s:82     .text.smtc_lbt_launch_callback_for_rp:0000000000000000 smtc_lbt_launch_callback_for_rp
+     /tmp/ccuovqHS.s:246    .text.smtc_lbt_launch_callback_for_rp:0000000000000140 $d
+     /tmp/ccuovqHS.s:258    .text.smtc_lbt_init:0000000000000000 $t
+     /tmp/ccuovqHS.s:265    .text.smtc_lbt_init:0000000000000000 smtc_lbt_init
+     /tmp/ccuovqHS.s:337    .text.smtc_lbt_init:0000000000000090 $d
+     /tmp/ccuovqHS.s:344    .text.smtc_lbt_set_parameters:0000000000000000 $t
+     /tmp/ccuovqHS.s:351    .text.smtc_lbt_set_parameters:0000000000000000 smtc_lbt_set_parameters
+     /tmp/ccuovqHS.s:367    .text.smtc_lbt_get_parameters:0000000000000000 $t
+     /tmp/ccuovqHS.s:374    .text.smtc_lbt_get_parameters:0000000000000000 smtc_lbt_get_parameters
+     /tmp/ccuovqHS.s:390    .text.smtc_lbt_set_state:0000000000000000 $t
+     /tmp/ccuovqHS.s:397    .text.smtc_lbt_set_state:0000000000000000 smtc_lbt_set_state
+     /tmp/ccuovqHS.s:407    .text.smtc_lbt_get_state:0000000000000000 $t
+     /tmp/ccuovqHS.s:414    .text.smtc_lbt_get_state:0000000000000000 smtc_lbt_get_state
+     /tmp/ccuovqHS.s:435    .text.smtc_lbt_listen_channel:0000000000000000 $t
+     /tmp/ccuovqHS.s:442    .text.smtc_lbt_listen_channel:0000000000000000 smtc_lbt_listen_channel
+     /tmp/ccuovqHS.s:603    .text.smtc_lbt_listen_channel:0000000000000158 $d
+     /tmp/ccuovqHS.s:616    .rodata.__func__.0:0000000000000000 __func__.0
+     /tmp/ccuovqHS.s:622    .rodata.__func__.1:0000000000000000 __func__.1
+     /tmp/ccuovqHS.s:628    .rodata.__func__.2:0000000000000000 __func__.2
+
+UNDEFINED SYMBOLS
+rp_hook_get_id
+rp_get_status
+smtc_modem_hal_print_trace
+smtc_modem_hal_start_radio_tcxo
+smtc_modem_hal_assert_fail
+smtc_modem_hal_get_time_in_ms
+rp_radio_irq_callback
+smtc_modem_hal_store_crashlog
+smtc_modem_hal_set_crashlog_status
+smtc_modem_hal_reset_mcu
+rp_release_hook
+rp_hook_init
+memset
+smtc_modem_hal_get_radio_tcxo_startup_delay_ms
+rp_task_enqueue

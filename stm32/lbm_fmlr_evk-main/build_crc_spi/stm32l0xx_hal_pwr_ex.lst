@@ -1,0 +1,248 @@
+ARM GAS  /tmp/cc28c5f3.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.eabi_attribute 23, 1
+   3              		.eabi_attribute 24, 1
+   4              		.eabi_attribute 25, 1
+   5              		.eabi_attribute 26, 1
+   6              		.eabi_attribute 30, 4
+   7              		.eabi_attribute 34, 0
+   8              		.eabi_attribute 18, 4
+   9              		.file	"stm32l0xx_hal_pwr_ex.c"
+  10              		.text
+  11              		.section	.text.HAL_PWREx_GetVoltageRange,"ax",%progbits
+  12              		.align	1
+  13              		.global	HAL_PWREx_GetVoltageRange
+  14              		.arch armv6s-m
+  15              		.syntax unified
+  16              		.code	16
+  17              		.thumb_func
+  18              		.fpu softvfp
+  20              	HAL_PWREx_GetVoltageRange:
+  21              		@ args = 0, pretend = 0, frame = 0
+  22              		@ frame_needed = 0, uses_anonymous_args = 0
+  23              		@ link register save eliminated.
+  24 0000 024B     		ldr	r3, .L2
+  25              		@ sp needed
+  26 0002 1868     		ldr	r0, [r3]
+  27 0004 C023     		movs	r3, #192
+  28 0006 5B01     		lsls	r3, r3, #5
+  29 0008 1840     		ands	r0, r3
+  30 000a 7047     		bx	lr
+  31              	.L3:
+  32              		.align	2
+  33              	.L2:
+  34 000c 00700040 		.word	1073770496
+  36              		.section	.text.HAL_PWREx_EnableFastWakeUp,"ax",%progbits
+  37              		.align	1
+  38              		.global	HAL_PWREx_EnableFastWakeUp
+  39              		.syntax unified
+  40              		.code	16
+  41              		.thumb_func
+  42              		.fpu softvfp
+  44              	HAL_PWREx_EnableFastWakeUp:
+  45              		@ args = 0, pretend = 0, frame = 0
+  46              		@ frame_needed = 0, uses_anonymous_args = 0
+  47              		@ link register save eliminated.
+  48 0000 8023     		movs	r3, #128
+  49              		@ sp needed
+  50 0002 034A     		ldr	r2, .L5
+  51 0004 DB00     		lsls	r3, r3, #3
+  52 0006 1168     		ldr	r1, [r2]
+  53 0008 0B43     		orrs	r3, r1
+  54 000a 1360     		str	r3, [r2]
+  55 000c 7047     		bx	lr
+  56              	.L6:
+  57 000e C046     		.align	2
+  58              	.L5:
+  59 0010 00700040 		.word	1073770496
+  61              		.section	.text.HAL_PWREx_DisableFastWakeUp,"ax",%progbits
+ARM GAS  /tmp/cc28c5f3.s 			page 2
+
+
+  62              		.align	1
+  63              		.global	HAL_PWREx_DisableFastWakeUp
+  64              		.syntax unified
+  65              		.code	16
+  66              		.thumb_func
+  67              		.fpu softvfp
+  69              	HAL_PWREx_DisableFastWakeUp:
+  70              		@ args = 0, pretend = 0, frame = 0
+  71              		@ frame_needed = 0, uses_anonymous_args = 0
+  72              		@ link register save eliminated.
+  73 0000 024A     		ldr	r2, .L8
+  74 0002 0349     		ldr	r1, .L8+4
+  75 0004 1368     		ldr	r3, [r2]
+  76              		@ sp needed
+  77 0006 0B40     		ands	r3, r1
+  78 0008 1360     		str	r3, [r2]
+  79 000a 7047     		bx	lr
+  80              	.L9:
+  81              		.align	2
+  82              	.L8:
+  83 000c 00700040 		.word	1073770496
+  84 0010 FFFBFFFF 		.word	-1025
+  86              		.section	.text.HAL_PWREx_EnableUltraLowPower,"ax",%progbits
+  87              		.align	1
+  88              		.global	HAL_PWREx_EnableUltraLowPower
+  89              		.syntax unified
+  90              		.code	16
+  91              		.thumb_func
+  92              		.fpu softvfp
+  94              	HAL_PWREx_EnableUltraLowPower:
+  95              		@ args = 0, pretend = 0, frame = 0
+  96              		@ frame_needed = 0, uses_anonymous_args = 0
+  97              		@ link register save eliminated.
+  98 0000 8023     		movs	r3, #128
+  99              		@ sp needed
+ 100 0002 034A     		ldr	r2, .L11
+ 101 0004 9B00     		lsls	r3, r3, #2
+ 102 0006 1168     		ldr	r1, [r2]
+ 103 0008 0B43     		orrs	r3, r1
+ 104 000a 1360     		str	r3, [r2]
+ 105 000c 7047     		bx	lr
+ 106              	.L12:
+ 107 000e C046     		.align	2
+ 108              	.L11:
+ 109 0010 00700040 		.word	1073770496
+ 111              		.section	.text.HAL_PWREx_DisableUltraLowPower,"ax",%progbits
+ 112              		.align	1
+ 113              		.global	HAL_PWREx_DisableUltraLowPower
+ 114              		.syntax unified
+ 115              		.code	16
+ 116              		.thumb_func
+ 117              		.fpu softvfp
+ 119              	HAL_PWREx_DisableUltraLowPower:
+ 120              		@ args = 0, pretend = 0, frame = 0
+ 121              		@ frame_needed = 0, uses_anonymous_args = 0
+ 122              		@ link register save eliminated.
+ 123 0000 024A     		ldr	r2, .L14
+ARM GAS  /tmp/cc28c5f3.s 			page 3
+
+
+ 124 0002 0349     		ldr	r1, .L14+4
+ 125 0004 1368     		ldr	r3, [r2]
+ 126              		@ sp needed
+ 127 0006 0B40     		ands	r3, r1
+ 128 0008 1360     		str	r3, [r2]
+ 129 000a 7047     		bx	lr
+ 130              	.L15:
+ 131              		.align	2
+ 132              	.L14:
+ 133 000c 00700040 		.word	1073770496
+ 134 0010 FFFDFFFF 		.word	-513
+ 136              		.section	.text.HAL_PWREx_EnableLowPowerRunMode,"ax",%progbits
+ 137              		.align	1
+ 138              		.global	HAL_PWREx_EnableLowPowerRunMode
+ 139              		.syntax unified
+ 140              		.code	16
+ 141              		.thumb_func
+ 142              		.fpu softvfp
+ 144              	HAL_PWREx_EnableLowPowerRunMode:
+ 145              		@ args = 0, pretend = 0, frame = 0
+ 146              		@ frame_needed = 0, uses_anonymous_args = 0
+ 147              		@ link register save eliminated.
+ 148 0000 0122     		movs	r2, #1
+ 149              		@ sp needed
+ 150 0002 054B     		ldr	r3, .L17
+ 151 0004 1968     		ldr	r1, [r3]
+ 152 0006 0A43     		orrs	r2, r1
+ 153 0008 1A60     		str	r2, [r3]
+ 154 000a 8022     		movs	r2, #128
+ 155 000c 1968     		ldr	r1, [r3]
+ 156 000e D201     		lsls	r2, r2, #7
+ 157 0010 0A43     		orrs	r2, r1
+ 158 0012 1A60     		str	r2, [r3]
+ 159 0014 7047     		bx	lr
+ 160              	.L18:
+ 161 0016 C046     		.align	2
+ 162              	.L17:
+ 163 0018 00700040 		.word	1073770496
+ 165              		.global	__aeabi_uidiv
+ 166              		.section	.text.HAL_PWREx_DisableLowPowerRunMode,"ax",%progbits
+ 167              		.align	1
+ 168              		.global	HAL_PWREx_DisableLowPowerRunMode
+ 169              		.syntax unified
+ 170              		.code	16
+ 171              		.thumb_func
+ 172              		.fpu softvfp
+ 174              	HAL_PWREx_DisableLowPowerRunMode:
+ 175              		@ args = 0, pretend = 0, frame = 0
+ 176              		@ frame_needed = 0, uses_anonymous_args = 0
+ 177 0000 10B5     		push	{r4, lr}
+ 178 0002 0F4C     		ldr	r4, .L29
+ 179 0004 0F4A     		ldr	r2, .L29+4
+ 180 0006 2368     		ldr	r3, [r4]
+ 181 0008 0F49     		ldr	r1, .L29+8
+ 182 000a 1340     		ands	r3, r2
+ 183 000c 0122     		movs	r2, #1
+ 184 000e 2360     		str	r3, [r4]
+ARM GAS  /tmp/cc28c5f3.s 			page 4
+
+
+ 185 0010 2368     		ldr	r3, [r4]
+ 186 0012 9343     		bics	r3, r2
+ 187 0014 2360     		str	r3, [r4]
+ 188 0016 0D4B     		ldr	r3, .L29+12
+ 189 0018 1868     		ldr	r0, [r3]
+ 190 001a FFF7FEFF 		bl	__aeabi_uidiv
+ 191 001e 3223     		movs	r3, #50
+ 192 0020 5843     		muls	r0, r3
+ 193 0022 123B     		subs	r3, r3, #18
+ 194              	.L20:
+ 195 0024 0028     		cmp	r0, #0
+ 196 0026 02D0     		beq	.L21
+ 197 0028 6268     		ldr	r2, [r4, #4]
+ 198 002a 1A42     		tst	r2, r3
+ 199 002c 05D1     		bne	.L22
+ 200              	.L21:
+ 201 002e 6368     		ldr	r3, [r4, #4]
+ 202 0030 0020     		movs	r0, #0
+ 203 0032 9B06     		lsls	r3, r3, #26
+ 204 0034 00D5     		bpl	.L23
+ 205 0036 0330     		adds	r0, r0, #3
+ 206              	.L23:
+ 207              		@ sp needed
+ 208 0038 10BD     		pop	{r4, pc}
+ 209              	.L22:
+ 210 003a 0138     		subs	r0, r0, #1
+ 211 003c F2E7     		b	.L20
+ 212              	.L30:
+ 213 003e C046     		.align	2
+ 214              	.L29:
+ 215 0040 00700040 		.word	1073770496
+ 216 0044 FFBFFFFF 		.word	-16385
+ 217 0048 40420F00 		.word	1000000
+ 218 004c 00000000 		.word	SystemCoreClock
+ 220              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/cc28c5f3.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 stm32l0xx_hal_pwr_ex.c
+     /tmp/cc28c5f3.s:12     .text.HAL_PWREx_GetVoltageRange:0000000000000000 $t
+     /tmp/cc28c5f3.s:20     .text.HAL_PWREx_GetVoltageRange:0000000000000000 HAL_PWREx_GetVoltageRange
+     /tmp/cc28c5f3.s:34     .text.HAL_PWREx_GetVoltageRange:000000000000000c $d
+     /tmp/cc28c5f3.s:37     .text.HAL_PWREx_EnableFastWakeUp:0000000000000000 $t
+     /tmp/cc28c5f3.s:44     .text.HAL_PWREx_EnableFastWakeUp:0000000000000000 HAL_PWREx_EnableFastWakeUp
+     /tmp/cc28c5f3.s:59     .text.HAL_PWREx_EnableFastWakeUp:0000000000000010 $d
+     /tmp/cc28c5f3.s:62     .text.HAL_PWREx_DisableFastWakeUp:0000000000000000 $t
+     /tmp/cc28c5f3.s:69     .text.HAL_PWREx_DisableFastWakeUp:0000000000000000 HAL_PWREx_DisableFastWakeUp
+     /tmp/cc28c5f3.s:83     .text.HAL_PWREx_DisableFastWakeUp:000000000000000c $d
+     /tmp/cc28c5f3.s:87     .text.HAL_PWREx_EnableUltraLowPower:0000000000000000 $t
+     /tmp/cc28c5f3.s:94     .text.HAL_PWREx_EnableUltraLowPower:0000000000000000 HAL_PWREx_EnableUltraLowPower
+     /tmp/cc28c5f3.s:109    .text.HAL_PWREx_EnableUltraLowPower:0000000000000010 $d
+     /tmp/cc28c5f3.s:112    .text.HAL_PWREx_DisableUltraLowPower:0000000000000000 $t
+     /tmp/cc28c5f3.s:119    .text.HAL_PWREx_DisableUltraLowPower:0000000000000000 HAL_PWREx_DisableUltraLowPower
+     /tmp/cc28c5f3.s:133    .text.HAL_PWREx_DisableUltraLowPower:000000000000000c $d
+     /tmp/cc28c5f3.s:137    .text.HAL_PWREx_EnableLowPowerRunMode:0000000000000000 $t
+     /tmp/cc28c5f3.s:144    .text.HAL_PWREx_EnableLowPowerRunMode:0000000000000000 HAL_PWREx_EnableLowPowerRunMode
+     /tmp/cc28c5f3.s:163    .text.HAL_PWREx_EnableLowPowerRunMode:0000000000000018 $d
+     /tmp/cc28c5f3.s:167    .text.HAL_PWREx_DisableLowPowerRunMode:0000000000000000 $t
+     /tmp/cc28c5f3.s:174    .text.HAL_PWREx_DisableLowPowerRunMode:0000000000000000 HAL_PWREx_DisableLowPowerRunMode
+     /tmp/cc28c5f3.s:215    .text.HAL_PWREx_DisableLowPowerRunMode:0000000000000040 $d
+
+UNDEFINED SYMBOLS
+__aeabi_uidiv
+SystemCoreClock

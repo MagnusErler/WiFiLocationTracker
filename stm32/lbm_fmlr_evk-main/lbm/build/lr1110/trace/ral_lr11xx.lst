@@ -1,0 +1,2529 @@
+ARM GAS  /tmp/cchkk89K.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.eabi_attribute 23, 1
+   3              		.eabi_attribute 24, 1
+   4              		.eabi_attribute 25, 1
+   5              		.eabi_attribute 26, 1
+   6              		.eabi_attribute 30, 4
+   7              		.eabi_attribute 34, 0
+   8              		.eabi_attribute 18, 4
+   9              		.file	"ral_lr11xx.c"
+  10              		.text
+  11              		.section	.text.ral_lr11xx_convert_irq_flags_to_ral,"ax",%progbits
+  12              		.align	1
+  13              		.arch armv6s-m
+  14              		.syntax unified
+  15              		.code	16
+  16              		.thumb_func
+  17              		.fpu softvfp
+  19              	ral_lr11xx_convert_irq_flags_to_ral:
+  20              		@ args = 0, pretend = 0, frame = 0
+  21              		@ frame_needed = 0, uses_anonymous_args = 0
+  22              		@ link register save eliminated.
+  23 0000 0300     		movs	r3, r0
+  24 0002 0421     		movs	r1, #4
+  25 0004 0B40     		ands	r3, r1
+  26 0006 0200     		movs	r2, r0
+  27 0008 581E     		subs	r0, r3, #1
+  28 000a 8341     		sbcs	r3, r3, r0
+  29 000c 5800     		lsls	r0, r3, #1
+  30 000e 1307     		lsls	r3, r2, #28
+  31 0010 00D5     		bpl	.L3
+  32 0012 0843     		orrs	r0, r1
+  33              	.L3:
+  34 0014 1023     		movs	r3, #16
+  35 0016 1A42     		tst	r2, r3
+  36 0018 00D0     		beq	.L4
+  37 001a 1843     		orrs	r0, r3
+  38              	.L4:
+  39 001c 5305     		lsls	r3, r2, #21
+  40 001e 01D5     		bpl	.L5
+  41 0020 0823     		movs	r3, #8
+  42 0022 1843     		orrs	r0, r3
+  43              	.L5:
+  44 0024 2023     		movs	r3, #32
+  45 0026 1A42     		tst	r2, r3
+  46 0028 00D0     		beq	.L6
+  47 002a 1843     		orrs	r0, r3
+  48              	.L6:
+  49 002c 4023     		movs	r3, #64
+  50 002e 1A42     		tst	r2, r3
+  51 0030 00D0     		beq	.L7
+  52 0032 1843     		orrs	r0, r3
+  53              	.L7:
+  54 0034 8023     		movs	r3, #128
+  55 0036 1A42     		tst	r2, r3
+  56 0038 00D0     		beq	.L8
+  57 003a 1843     		orrs	r0, r3
+  58              	.L8:
+ARM GAS  /tmp/cchkk89K.s 			page 2
+
+
+  59 003c 8023     		movs	r3, #128
+  60 003e 5B00     		lsls	r3, r3, #1
+  61 0040 1A42     		tst	r2, r3
+  62 0042 00D0     		beq	.L9
+  63 0044 1843     		orrs	r0, r3
+  64              	.L9:
+  65 0046 8023     		movs	r3, #128
+  66 0048 9B00     		lsls	r3, r3, #2
+  67 004a 1A42     		tst	r2, r3
+  68 004c 00D0     		beq	.L10
+  69 004e 1843     		orrs	r0, r3
+  70              	.L10:
+  71 0050 8023     		movs	r3, #128
+  72 0052 1B01     		lsls	r3, r3, #4
+  73 0054 1A42     		tst	r2, r3
+  74 0056 02D0     		beq	.L11
+  75 0058 8021     		movs	r1, #128
+  76 005a C900     		lsls	r1, r1, #3
+  77 005c 0843     		orrs	r0, r1
+  78              	.L11:
+  79 005e D102     		lsls	r1, r2, #11
+  80 0060 00D5     		bpl	.L12
+  81 0062 1843     		orrs	r0, r3
+  82              	.L12:
+  83 0064 1303     		lsls	r3, r2, #12
+  84 0066 02D5     		bpl	.L13
+  85 0068 8023     		movs	r3, #128
+  86 006a 5B01     		lsls	r3, r3, #5
+  87 006c 1843     		orrs	r0, r3
+  88              	.L13:
+  89              		@ sp needed
+  90 006e 7047     		bx	lr
+  92              		.section	.text.ral_lr11xx_convert_irq_flags_from_ral,"ax",%progbits
+  93              		.align	1
+  94              		.syntax unified
+  95              		.code	16
+  96              		.thumb_func
+  97              		.fpu softvfp
+  99              	ral_lr11xx_convert_irq_flags_from_ral:
+ 100              		@ args = 0, pretend = 0, frame = 0
+ 101              		@ frame_needed = 0, uses_anonymous_args = 0
+ 102              		@ link register save eliminated.
+ 103 0000 0200     		movs	r2, r0
+ 104 0002 8307     		lsls	r3, r0, #30
+ 105 0004 DB0F     		lsrs	r3, r3, #31
+ 106 0006 9800     		lsls	r0, r3, #2
+ 107 0008 5307     		lsls	r3, r2, #29
+ 108 000a 01D5     		bpl	.L50
+ 109 000c 0823     		movs	r3, #8
+ 110 000e 1843     		orrs	r0, r3
+ 111              	.L50:
+ 112 0010 1023     		movs	r3, #16
+ 113 0012 1A42     		tst	r2, r3
+ 114 0014 00D0     		beq	.L51
+ 115 0016 1843     		orrs	r0, r3
+ 116              	.L51:
+ 117 0018 1307     		lsls	r3, r2, #28
+ARM GAS  /tmp/cchkk89K.s 			page 3
+
+
+ 118 001a 02D5     		bpl	.L52
+ 119 001c 8023     		movs	r3, #128
+ 120 001e DB00     		lsls	r3, r3, #3
+ 121 0020 1843     		orrs	r0, r3
+ 122              	.L52:
+ 123 0022 2023     		movs	r3, #32
+ 124 0024 1A42     		tst	r2, r3
+ 125 0026 00D0     		beq	.L53
+ 126 0028 1843     		orrs	r0, r3
+ 127              	.L53:
+ 128 002a 4023     		movs	r3, #64
+ 129 002c 1A42     		tst	r2, r3
+ 130 002e 00D0     		beq	.L54
+ 131 0030 1843     		orrs	r0, r3
+ 132              	.L54:
+ 133 0032 8023     		movs	r3, #128
+ 134 0034 1A42     		tst	r2, r3
+ 135 0036 00D0     		beq	.L55
+ 136 0038 1843     		orrs	r0, r3
+ 137              	.L55:
+ 138 003a 8023     		movs	r3, #128
+ 139 003c 5B00     		lsls	r3, r3, #1
+ 140 003e 1A42     		tst	r2, r3
+ 141 0040 00D0     		beq	.L56
+ 142 0042 1843     		orrs	r0, r3
+ 143              	.L56:
+ 144 0044 8023     		movs	r3, #128
+ 145 0046 9B00     		lsls	r3, r3, #2
+ 146 0048 1A42     		tst	r2, r3
+ 147 004a 00D0     		beq	.L57
+ 148 004c 1843     		orrs	r0, r3
+ 149              	.L57:
+ 150 004e 8023     		movs	r3, #128
+ 151 0050 1B01     		lsls	r3, r3, #4
+ 152 0052 5105     		lsls	r1, r2, #21
+ 153 0054 00D5     		bpl	.L58
+ 154 0056 1843     		orrs	r0, r3
+ 155              	.L58:
+ 156 0058 1A42     		tst	r2, r3
+ 157 005a 02D0     		beq	.L59
+ 158 005c 8023     		movs	r3, #128
+ 159 005e 5B03     		lsls	r3, r3, #13
+ 160 0060 1843     		orrs	r0, r3
+ 161              	.L59:
+ 162 0062 D304     		lsls	r3, r2, #19
+ 163 0064 02D5     		bpl	.L48
+ 164 0066 8023     		movs	r3, #128
+ 165 0068 1B03     		lsls	r3, r3, #12
+ 166 006a 1843     		orrs	r0, r3
+ 167              	.L48:
+ 168              		@ sp needed
+ 169 006c 7047     		bx	lr
+ 171              		.section	.text.ral_lr11xx_convert_gfsk_pkt_params_from_ral,"ax",%progbits
+ 172              		.align	1
+ 173              		.syntax unified
+ 174              		.code	16
+ 175              		.thumb_func
+ARM GAS  /tmp/cchkk89K.s 			page 4
+
+
+ 176              		.fpu softvfp
+ 178              	ral_lr11xx_convert_gfsk_pkt_params_from_ral:
+ 179              		@ args = 0, pretend = 0, frame = 0
+ 180              		@ frame_needed = 0, uses_anonymous_args = 0
+ 181 0000 00B5     		push	{lr}
+ 182 0002 0288     		ldrh	r2, [r0]
+ 183 0004 0300     		movs	r3, r0
+ 184 0006 0A80     		strh	r2, [r1]
+ 185 0008 8078     		ldrb	r0, [r0, #2]
+ 186 000a 0428     		cmp	r0, #4
+ 187 000c 15D8     		bhi	.L96
+ 188 000e FFF7FEFF 		bl	__gnu_thumb1_case_uqi
+ 189              	.L98:
+ 190 0012 03       		.byte	(.L102-.L98)/2
+ 191 0013 16       		.byte	(.L101-.L98)/2
+ 192 0014 18       		.byte	(.L100-.L98)/2
+ 193 0015 1A       		.byte	(.L99-.L98)/2
+ 194 0016 1C       		.byte	(.L97-.L98)/2
+ 195 0017 00       		.p2align 1
+ 196              	.L102:
+ 197 0018 0022     		movs	r2, #0
+ 198              	.L120:
+ 199 001a 8A70     		strb	r2, [r1, #2]
+ 200 001c DA78     		ldrb	r2, [r3, #3]
+ 201 001e CA70     		strb	r2, [r1, #3]
+ 202 0020 1A79     		ldrb	r2, [r3, #4]
+ 203 0022 012A     		cmp	r2, #1
+ 204 0024 03D0     		beq	.L106
+ 205 0026 022A     		cmp	r2, #2
+ 206 0028 01D0     		beq	.L106
+ 207 002a 002A     		cmp	r2, #0
+ 208 002c 05D1     		bne	.L96
+ 209              	.L106:
+ 210 002e 0A71     		strb	r2, [r1, #4]
+ 211 0030 5A79     		ldrb	r2, [r3, #5]
+ 212 0032 002A     		cmp	r2, #0
+ 213 0034 0BD0     		beq	.L109
+ 214 0036 012A     		cmp	r2, #1
+ 215 0038 09D0     		beq	.L109
+ 216              	.L96:
+ 217 003a 0220     		movs	r0, #2
+ 218              	.L103:
+ 219              		@ sp needed
+ 220 003c 00BD     		pop	{pc}
+ 221              	.L101:
+ 222 003e 0422     		movs	r2, #4
+ 223 0040 EBE7     		b	.L120
+ 224              	.L100:
+ 225 0042 0522     		movs	r2, #5
+ 226 0044 E9E7     		b	.L120
+ 227              	.L99:
+ 228 0046 0622     		movs	r2, #6
+ 229 0048 E7E7     		b	.L120
+ 230              	.L97:
+ 231 004a 0722     		movs	r2, #7
+ 232 004c E5E7     		b	.L120
+ 233              	.L109:
+ARM GAS  /tmp/cchkk89K.s 			page 5
+
+
+ 234 004e 4A71     		strb	r2, [r1, #5]
+ 235 0050 9A79     		ldrb	r2, [r3, #6]
+ 236 0052 8A71     		strb	r2, [r1, #6]
+ 237 0054 D879     		ldrb	r0, [r3, #7]
+ 238 0056 0428     		cmp	r0, #4
+ 239 0058 EFD8     		bhi	.L96
+ 240 005a FFF7FEFF 		bl	__gnu_thumb1_case_uqi
+ 241              	.L112:
+ 242 005e 03       		.byte	(.L116-.L112)/2
+ 243 005f 0D       		.byte	(.L115-.L112)/2
+ 244 0060 0F       		.byte	(.L114-.L112)/2
+ 245 0061 11       		.byte	(.L113-.L112)/2
+ 246 0062 13       		.byte	(.L111-.L112)/2
+ 247 0063 00       		.p2align 1
+ 248              	.L116:
+ 249 0064 0122     		movs	r2, #1
+ 250              	.L121:
+ 251 0066 CA71     		strb	r2, [r1, #7]
+ 252 0068 187A     		ldrb	r0, [r3, #8]
+ 253 006a 0028     		cmp	r0, #0
+ 254 006c 0CD0     		beq	.L118
+ 255 006e 0128     		cmp	r0, #1
+ 256 0070 E3D1     		bne	.L96
+ 257 0072 0872     		strb	r0, [r1, #8]
+ 258 0074 0020     		movs	r0, #0
+ 259 0076 E1E7     		b	.L103
+ 260              	.L115:
+ 261 0078 0022     		movs	r2, #0
+ 262 007a F4E7     		b	.L121
+ 263              	.L114:
+ 264 007c 0222     		movs	r2, #2
+ 265 007e F2E7     		b	.L121
+ 266              	.L113:
+ 267 0080 0422     		movs	r2, #4
+ 268 0082 F0E7     		b	.L121
+ 269              	.L111:
+ 270 0084 0622     		movs	r2, #6
+ 271 0086 EEE7     		b	.L121
+ 272              	.L118:
+ 273 0088 0872     		strb	r0, [r1, #8]
+ 274 008a D7E7     		b	.L103
+ 276              		.section	.text.ral_lr11xx_convert_lora_mod_params_from_ral,"ax",%progbits
+ 277              		.align	1
+ 278              		.syntax unified
+ 279              		.code	16
+ 280              		.thumb_func
+ 281              		.fpu softvfp
+ 283              	ral_lr11xx_convert_lora_mod_params_from_ral:
+ 284              		@ args = 0, pretend = 0, frame = 0
+ 285              		@ frame_needed = 0, uses_anonymous_args = 0
+ 286 0000 00B5     		push	{lr}
+ 287 0002 0278     		ldrb	r2, [r0]
+ 288 0004 0300     		movs	r3, r0
+ 289 0006 0A70     		strb	r2, [r1]
+ 290 0008 4278     		ldrb	r2, [r0, #1]
+ 291 000a 0220     		movs	r0, #2
+ 292 000c 013A     		subs	r2, r2, #1
+ARM GAS  /tmp/cchkk89K.s 			page 6
+
+
+ 293 000e 0B2A     		cmp	r2, #11
+ 294 0010 0FD8     		bhi	.L123
+ 295 0012 1000     		movs	r0, r2
+ 296 0014 FFF7FEFF 		bl	__gnu_thumb1_case_uqi
+ 297              	.L125:
+ 298 0018 06       		.byte	(.L136-.L125)/2
+ 299 0019 0E       		.byte	(.L135-.L125)/2
+ 300 001a 10       		.byte	(.L134-.L125)/2
+ 301 001b 12       		.byte	(.L133-.L125)/2
+ 302 001c 14       		.byte	(.L132-.L125)/2
+ 303 001d 16       		.byte	(.L131-.L125)/2
+ 304 001e 18       		.byte	(.L130-.L125)/2
+ 305 001f 1A       		.byte	(.L129-.L125)/2
+ 306 0020 1C       		.byte	(.L128-.L125)/2
+ 307 0021 1E       		.byte	(.L127-.L125)/2
+ 308 0022 20       		.byte	(.L126-.L125)/2
+ 309 0023 22       		.byte	(.L124-.L125)/2
+ 310              		.p2align 1
+ 311              	.L136:
+ 312 0024 0822     		movs	r2, #8
+ 313              	.L139:
+ 314 0026 0020     		movs	r0, #0
+ 315 0028 4A70     		strb	r2, [r1, #1]
+ 316 002a 9A78     		ldrb	r2, [r3, #2]
+ 317 002c 8A70     		strb	r2, [r1, #2]
+ 318 002e DB78     		ldrb	r3, [r3, #3]
+ 319 0030 CB70     		strb	r3, [r1, #3]
+ 320              	.L123:
+ 321              		@ sp needed
+ 322 0032 00BD     		pop	{pc}
+ 323              	.L135:
+ 324 0034 0122     		movs	r2, #1
+ 325 0036 F6E7     		b	.L139
+ 326              	.L134:
+ 327 0038 0922     		movs	r2, #9
+ 328 003a F4E7     		b	.L139
+ 329              	.L133:
+ 330 003c 0222     		movs	r2, #2
+ 331 003e F2E7     		b	.L139
+ 332              	.L132:
+ 333 0040 0A22     		movs	r2, #10
+ 334 0042 F0E7     		b	.L139
+ 335              	.L131:
+ 336 0044 0322     		movs	r2, #3
+ 337 0046 EEE7     		b	.L139
+ 338              	.L130:
+ 339 0048 0422     		movs	r2, #4
+ 340 004a ECE7     		b	.L139
+ 341              	.L129:
+ 342 004c 0D22     		movs	r2, #13
+ 343 004e EAE7     		b	.L139
+ 344              	.L128:
+ 345 0050 0522     		movs	r2, #5
+ 346 0052 E8E7     		b	.L139
+ 347              	.L127:
+ 348 0054 0E22     		movs	r2, #14
+ 349 0056 E6E7     		b	.L139
+ARM GAS  /tmp/cchkk89K.s 			page 7
+
+
+ 350              	.L126:
+ 351 0058 0622     		movs	r2, #6
+ 352 005a E4E7     		b	.L139
+ 353              	.L124:
+ 354 005c 0F22     		movs	r2, #15
+ 355 005e E2E7     		b	.L139
+ 357              		.section	.text.ral_lr11xx_convert_gfsk_mod_params_from_ral,"ax",%progbits
+ 358              		.align	1
+ 359              		.syntax unified
+ 360              		.code	16
+ 361              		.thumb_func
+ 362              		.fpu softvfp
+ 364              	ral_lr11xx_convert_gfsk_mod_params_from_ral:
+ 365              		@ args = 0, pretend = 0, frame = 8
+ 366              		@ frame_needed = 0, uses_anonymous_args = 0
+ 367 0000 73B5     		push	{r0, r1, r4, r5, r6, lr}
+ 368 0002 6B46     		mov	r3, sp
+ 369 0004 DE1D     		adds	r6, r3, #7
+ 370 0006 0500     		movs	r5, r0
+ 371 0008 0C00     		movs	r4, r1
+ 372 000a 8068     		ldr	r0, [r0, #8]
+ 373 000c 3100     		movs	r1, r6
+ 374 000e FFF7FEFF 		bl	lr11xx_radio_get_gfsk_rx_bandwidth
+ 375 0012 031E     		subs	r3, r0, #0
+ 376 0014 10D1     		bne	.L141
+ 377 0016 2A68     		ldr	r2, [r5]
+ 378 0018 2260     		str	r2, [r4]
+ 379 001a 6A68     		ldr	r2, [r5, #4]
+ 380 001c A260     		str	r2, [r4, #8]
+ 381 001e 3278     		ldrb	r2, [r6]
+ 382 0020 6271     		strb	r2, [r4, #5]
+ 383 0022 287B     		ldrb	r0, [r5, #12]
+ 384 0024 0428     		cmp	r0, #4
+ 385 0026 12D8     		bhi	.L148
+ 386 0028 FFF7FEFF 		bl	__gnu_thumb1_case_uqi
+ 387              	.L143:
+ 388 002c 03       		.byte	(.L147-.L143)/2
+ 389 002d 08       		.byte	(.L146-.L143)/2
+ 390 002e 0B       		.byte	(.L145-.L143)/2
+ 391 002f 0D       		.byte	(.L144-.L143)/2
+ 392 0030 0F       		.byte	(.L142-.L143)/2
+ 393 0031 00       		.p2align 1
+ 394              	.L147:
+ 395 0032 0023     		movs	r3, #0
+ 396 0034 2371     		strb	r3, [r4, #4]
+ 397 0036 0300     		movs	r3, r0
+ 398              	.L141:
+ 399              		@ sp needed
+ 400 0038 1800     		movs	r0, r3
+ 401 003a 76BD     		pop	{r1, r2, r4, r5, r6, pc}
+ 402              	.L146:
+ 403 003c 0822     		movs	r2, #8
+ 404              	.L149:
+ 405 003e 2271     		strb	r2, [r4, #4]
+ 406 0040 FAE7     		b	.L141
+ 407              	.L145:
+ 408 0042 0922     		movs	r2, #9
+ARM GAS  /tmp/cchkk89K.s 			page 8
+
+
+ 409 0044 FBE7     		b	.L149
+ 410              	.L144:
+ 411 0046 0A22     		movs	r2, #10
+ 412 0048 F9E7     		b	.L149
+ 413              	.L142:
+ 414 004a 0B22     		movs	r2, #11
+ 415 004c F7E7     		b	.L149
+ 416              	.L148:
+ 417 004e 0223     		movs	r3, #2
+ 418 0050 F2E7     		b	.L141
+ 420              		.section	.text.ral_lr11xx_convert_lora_pkt_params_from_ral,"ax",%progbits
+ 421              		.align	1
+ 422              		.syntax unified
+ 423              		.code	16
+ 424              		.thumb_func
+ 425              		.fpu softvfp
+ 427              	ral_lr11xx_convert_lora_pkt_params_from_ral:
+ 428              		@ args = 0, pretend = 0, frame = 0
+ 429              		@ frame_needed = 0, uses_anonymous_args = 0
+ 430 0000 10B5     		push	{r4, lr}
+ 431 0002 0388     		ldrh	r3, [r0]
+ 432 0004 0B80     		strh	r3, [r1]
+ 433 0006 8378     		ldrb	r3, [r0, #2]
+ 434 0008 002B     		cmp	r3, #0
+ 435 000a 03D0     		beq	.L152
+ 436 000c 012B     		cmp	r3, #1
+ 437 000e 01D0     		beq	.L152
+ 438 0010 0220     		movs	r0, #2
+ 439              	.L153:
+ 440              		@ sp needed
+ 441 0012 10BD     		pop	{r4, pc}
+ 442              	.L152:
+ 443 0014 8B70     		strb	r3, [r1, #2]
+ 444 0016 C478     		ldrb	r4, [r0, #3]
+ 445 0018 0279     		ldrb	r2, [r0, #4]
+ 446 001a 4379     		ldrb	r3, [r0, #5]
+ 447 001c 0020     		movs	r0, #0
+ 448 001e CC70     		strb	r4, [r1, #3]
+ 449 0020 0A71     		strb	r2, [r1, #4]
+ 450 0022 4B71     		strb	r3, [r1, #5]
+ 451 0024 F5E7     		b	.L153
+ 453              		.section	.rodata.ral_lr11xx_handles_part.str1.1,"aMS",%progbits,1
+ 454              	.LC0:
+ 455 0000 6C723131 		.ascii	"lr1110\000"
+ 455      313000
+ 456              	.LC2:
+ 457 0007 6C723131 		.ascii	"lr1120\000"
+ 457      323000
+ 458              		.section	.text.ral_lr11xx_handles_part,"ax",%progbits
+ 459              		.align	1
+ 460              		.global	ral_lr11xx_handles_part
+ 461              		.syntax unified
+ 462              		.code	16
+ 463              		.thumb_func
+ 464              		.fpu softvfp
+ 466              	ral_lr11xx_handles_part:
+ 467              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  /tmp/cchkk89K.s 			page 9
+
+
+ 468              		@ frame_needed = 0, uses_anonymous_args = 0
+ 469 0000 0100     		movs	r1, r0
+ 470 0002 10B5     		push	{r4, lr}
+ 471 0004 0400     		movs	r4, r0
+ 472 0006 0748     		ldr	r0, .L159
+ 473 0008 FFF7FEFF 		bl	strcmp
+ 474 000c 0123     		movs	r3, #1
+ 475 000e 0028     		cmp	r0, #0
+ 476 0010 05D0     		beq	.L156
+ 477 0012 2100     		movs	r1, r4
+ 478 0014 0448     		ldr	r0, .L159+4
+ 479 0016 FFF7FEFF 		bl	strcmp
+ 480 001a 4342     		rsbs	r3, r0, #0
+ 481 001c 4341     		adcs	r3, r3, r0
+ 482              	.L156:
+ 483              		@ sp needed
+ 484 001e 1800     		movs	r0, r3
+ 485 0020 10BD     		pop	{r4, pc}
+ 486              	.L160:
+ 487 0022 C046     		.align	2
+ 488              	.L159:
+ 489 0024 00000000 		.word	.LC0
+ 490 0028 07000000 		.word	.LC2
+ 492              		.section	.text.ral_lr11xx_reset,"ax",%progbits
+ 493              		.align	1
+ 494              		.global	ral_lr11xx_reset
+ 495              		.syntax unified
+ 496              		.code	16
+ 497              		.thumb_func
+ 498              		.fpu softvfp
+ 500              	ral_lr11xx_reset:
+ 501              		@ args = 0, pretend = 0, frame = 0
+ 502              		@ frame_needed = 0, uses_anonymous_args = 0
+ 503 0000 10B5     		push	{r4, lr}
+ 504 0002 FFF7FEFF 		bl	lr11xx_system_reset
+ 505              		@ sp needed
+ 506 0006 10BD     		pop	{r4, pc}
+ 508              		.section	.text.ral_lr11xx_init,"ax",%progbits
+ 509              		.align	1
+ 510              		.global	ral_lr11xx_init
+ 511              		.syntax unified
+ 512              		.code	16
+ 513              		.thumb_func
+ 514              		.fpu softvfp
+ 516              	ral_lr11xx_init:
+ 517              		@ args = 0, pretend = 0, frame = 16
+ 518              		@ frame_needed = 0, uses_anonymous_args = 0
+ 519 0000 30B5     		push	{r4, r5, lr}
+ 520 0002 85B0     		sub	sp, sp, #20
+ 521 0004 0500     		movs	r5, r0
+ 522 0006 0822     		movs	r2, #8
+ 523 0008 0021     		movs	r1, #0
+ 524 000a 02A8     		add	r0, sp, #8
+ 525 000c FFF7FEFF 		bl	memset
+ 526 0010 6A46     		mov	r2, sp
+ 527 0012 0023     		movs	r3, #0
+ 528 0014 2800     		movs	r0, r5
+ARM GAS  /tmp/cchkk89K.s 			page 10
+
+
+ 529 0016 D11C     		adds	r1, r2, #3
+ 530 0018 9370     		strb	r3, [r2, #2]
+ 531 001a D370     		strb	r3, [r2, #3]
+ 532 001c 0193     		str	r3, [sp, #4]
+ 533 001e FFF7FEFF 		bl	ral_lr11xx_bsp_get_crc_state
+ 534 0022 6B46     		mov	r3, sp
+ 535 0024 DB78     		ldrb	r3, [r3, #3]
+ 536 0026 002B     		cmp	r3, #0
+ 537 0028 2ED1     		bne	.L163
+ 538              	.L166:
+ 539 002a 6B46     		mov	r3, sp
+ 540 002c 5C1C     		adds	r4, r3, #1
+ 541 002e 2100     		movs	r1, r4
+ 542 0030 2800     		movs	r0, r5
+ 543 0032 FFF7FEFF 		bl	ral_lr11xx_bsp_get_reg_mode
+ 544 0036 2178     		ldrb	r1, [r4]
+ 545 0038 2800     		movs	r0, r5
+ 546 003a FFF7FEFF 		bl	lr11xx_system_set_reg_mode
+ 547 003e 041E     		subs	r4, r0, #0
+ 548 0040 28D1     		bne	.L164
+ 549 0042 2800     		movs	r0, r5
+ 550 0044 02A9     		add	r1, sp, #8
+ 551 0046 FFF7FEFF 		bl	ral_lr11xx_bsp_get_rf_switch_cfg
+ 552 004a 2800     		movs	r0, r5
+ 553 004c 02A9     		add	r1, sp, #8
+ 554 004e FFF7FEFF 		bl	lr11xx_system_set_dio_as_rf_switch
+ 555 0052 041E     		subs	r4, r0, #0
+ 556 0054 1ED1     		bne	.L164
+ 557 0056 6946     		mov	r1, sp
+ 558 0058 01AB     		add	r3, sp, #4
+ 559 005a 6A46     		mov	r2, sp
+ 560 005c 2800     		movs	r0, r5
+ 561 005e 0231     		adds	r1, r1, #2
+ 562 0060 FFF7FEFF 		bl	ral_lr11xx_bsp_get_xosc_cfg
+ 563 0064 6B46     		mov	r3, sp
+ 564 0066 9B78     		ldrb	r3, [r3, #2]
+ 565 0068 002B     		cmp	r3, #0
+ 566 006a 13D0     		beq	.L164
+ 567 006c 6B46     		mov	r3, sp
+ 568 006e 2800     		movs	r0, r5
+ 569 0070 1978     		ldrb	r1, [r3]
+ 570 0072 019A     		ldr	r2, [sp, #4]
+ 571 0074 FFF7FEFF 		bl	lr11xx_system_set_tcxo_mode
+ 572 0078 041E     		subs	r4, r0, #0
+ 573 007a 0BD1     		bne	.L164
+ 574 007c 3F21     		movs	r1, #63
+ 575 007e 2800     		movs	r0, r5
+ 576 0080 FFF7FEFF 		bl	lr11xx_system_calibrate
+ 577 0084 0400     		movs	r4, r0
+ 578 0086 05E0     		b	.L164
+ 579              	.L163:
+ 580 0088 0121     		movs	r1, #1
+ 581 008a 2800     		movs	r0, r5
+ 582 008c FFF7FEFF 		bl	lr11xx_system_enable_spi_crc
+ 583 0090 041E     		subs	r4, r0, #0
+ 584 0092 CAD0     		beq	.L166
+ 585              	.L164:
+ARM GAS  /tmp/cchkk89K.s 			page 11
+
+
+ 586 0094 2000     		movs	r0, r4
+ 587 0096 05B0     		add	sp, sp, #20
+ 588              		@ sp needed
+ 589 0098 30BD     		pop	{r4, r5, pc}
+ 591              		.section	.text.ral_lr11xx_wakeup,"ax",%progbits
+ 592              		.align	1
+ 593              		.global	ral_lr11xx_wakeup
+ 594              		.syntax unified
+ 595              		.code	16
+ 596              		.thumb_func
+ 597              		.fpu softvfp
+ 599              	ral_lr11xx_wakeup:
+ 600              		@ args = 0, pretend = 0, frame = 0
+ 601              		@ frame_needed = 0, uses_anonymous_args = 0
+ 602 0000 10B5     		push	{r4, lr}
+ 603 0002 FFF7FEFF 		bl	lr11xx_system_wakeup
+ 604              		@ sp needed
+ 605 0006 10BD     		pop	{r4, pc}
+ 607              		.section	.text.ral_lr11xx_set_sleep,"ax",%progbits
+ 608              		.align	1
+ 609              		.global	ral_lr11xx_set_sleep
+ 610              		.syntax unified
+ 611              		.code	16
+ 612              		.thumb_func
+ 613              		.fpu softvfp
+ 615              	ral_lr11xx_set_sleep:
+ 616              		@ args = 0, pretend = 0, frame = 8
+ 617              		@ frame_needed = 0, uses_anonymous_args = 0
+ 618 0000 13B5     		push	{r0, r1, r4, lr}
+ 619 0002 01AB     		add	r3, sp, #4
+ 620 0004 1970     		strb	r1, [r3]
+ 621 0006 0021     		movs	r1, #0
+ 622 0008 0122     		movs	r2, #1
+ 623 000a 0400     		movs	r4, r0
+ 624 000c 5970     		strb	r1, [r3, #1]
+ 625 000e FFF7FEFF 		bl	lr11xx_system_cfg_lfclk
+ 626 0012 0028     		cmp	r0, #0
+ 627 0014 04D1     		bne	.L173
+ 628 0016 0200     		movs	r2, r0
+ 629 0018 0199     		ldr	r1, [sp, #4]
+ 630 001a 2000     		movs	r0, r4
+ 631 001c FFF7FEFF 		bl	lr11xx_system_set_sleep
+ 632              	.L173:
+ 633              		@ sp needed
+ 634 0020 16BD     		pop	{r1, r2, r4, pc}
+ 636              		.section	.text.ral_lr11xx_set_standby,"ax",%progbits
+ 637              		.align	1
+ 638              		.global	ral_lr11xx_set_standby
+ 639              		.syntax unified
+ 640              		.code	16
+ 641              		.thumb_func
+ 642              		.fpu softvfp
+ 644              	ral_lr11xx_set_standby:
+ 645              		@ args = 0, pretend = 0, frame = 0
+ 646              		@ frame_needed = 0, uses_anonymous_args = 0
+ 647 0000 0300     		movs	r3, r0
+ 648 0002 10B5     		push	{r4, lr}
+ARM GAS  /tmp/cchkk89K.s 			page 12
+
+
+ 649 0004 0029     		cmp	r1, #0
+ 650 0006 02D0     		beq	.L175
+ 651 0008 0220     		movs	r0, #2
+ 652 000a 0129     		cmp	r1, #1
+ 653 000c 02D1     		bne	.L176
+ 654              	.L175:
+ 655 000e 1800     		movs	r0, r3
+ 656 0010 FFF7FEFF 		bl	lr11xx_system_set_standby
+ 657              	.L176:
+ 658              		@ sp needed
+ 659 0014 10BD     		pop	{r4, pc}
+ 661              		.section	.text.ral_lr11xx_set_fs,"ax",%progbits
+ 662              		.align	1
+ 663              		.global	ral_lr11xx_set_fs
+ 664              		.syntax unified
+ 665              		.code	16
+ 666              		.thumb_func
+ 667              		.fpu softvfp
+ 669              	ral_lr11xx_set_fs:
+ 670              		@ args = 0, pretend = 0, frame = 0
+ 671              		@ frame_needed = 0, uses_anonymous_args = 0
+ 672 0000 10B5     		push	{r4, lr}
+ 673 0002 FFF7FEFF 		bl	lr11xx_system_set_fs
+ 674              		@ sp needed
+ 675 0006 10BD     		pop	{r4, pc}
+ 677              		.section	.text.ral_lr11xx_set_tx,"ax",%progbits
+ 678              		.align	1
+ 679              		.global	ral_lr11xx_set_tx
+ 680              		.syntax unified
+ 681              		.code	16
+ 682              		.thumb_func
+ 683              		.fpu softvfp
+ 685              	ral_lr11xx_set_tx:
+ 686              		@ args = 0, pretend = 0, frame = 0
+ 687              		@ frame_needed = 0, uses_anonymous_args = 0
+ 688 0000 10B5     		push	{r4, lr}
+ 689 0002 0021     		movs	r1, #0
+ 690              		@ sp needed
+ 691 0004 FFF7FEFF 		bl	lr11xx_radio_set_tx
+ 692 0008 10BD     		pop	{r4, pc}
+ 694              		.section	.text.ral_lr11xx_set_rx,"ax",%progbits
+ 695              		.align	1
+ 696              		.global	ral_lr11xx_set_rx
+ 697              		.syntax unified
+ 698              		.code	16
+ 699              		.thumb_func
+ 700              		.fpu softvfp
+ 702              	ral_lr11xx_set_rx:
+ 703              		@ args = 0, pretend = 0, frame = 0
+ 704              		@ frame_needed = 0, uses_anonymous_args = 0
+ 705 0000 10B5     		push	{r4, lr}
+ 706 0002 4B1C     		adds	r3, r1, #1
+ 707 0004 05D1     		bne	.L184
+ 708 0006 0749     		ldr	r1, .L188
+ 709 0008 FFF7FEFF 		bl	lr11xx_radio_set_rx_with_timeout_in_rtc_step
+ 710              	.L187:
+ 711 000c 0300     		movs	r3, r0
+ARM GAS  /tmp/cchkk89K.s 			page 13
+
+
+ 712              	.L185:
+ 713              		@ sp needed
+ 714 000e 1800     		movs	r0, r3
+ 715 0010 10BD     		pop	{r4, pc}
+ 716              	.L184:
+ 717 0012 FA22     		movs	r2, #250
+ 718 0014 0323     		movs	r3, #3
+ 719 0016 D202     		lsls	r2, r2, #11
+ 720 0018 9142     		cmp	r1, r2
+ 721 001a F8D2     		bcs	.L185
+ 722 001c FFF7FEFF 		bl	lr11xx_radio_set_rx
+ 723 0020 F4E7     		b	.L187
+ 724              	.L189:
+ 725 0022 C046     		.align	2
+ 726              	.L188:
+ 727 0024 FFFFFF00 		.word	16777215
+ 729              		.section	.text.ral_lr11xx_cfg_rx_boosted,"ax",%progbits
+ 730              		.align	1
+ 731              		.global	ral_lr11xx_cfg_rx_boosted
+ 732              		.syntax unified
+ 733              		.code	16
+ 734              		.thumb_func
+ 735              		.fpu softvfp
+ 737              	ral_lr11xx_cfg_rx_boosted:
+ 738              		@ args = 0, pretend = 0, frame = 0
+ 739              		@ frame_needed = 0, uses_anonymous_args = 0
+ 740 0000 10B5     		push	{r4, lr}
+ 741 0002 FFF7FEFF 		bl	lr11xx_radio_cfg_rx_boosted
+ 742              		@ sp needed
+ 743 0006 10BD     		pop	{r4, pc}
+ 745              		.section	.text.ral_lr11xx_set_rx_tx_fallback_mode,"ax",%progbits
+ 746              		.align	1
+ 747              		.global	ral_lr11xx_set_rx_tx_fallback_mode
+ 748              		.syntax unified
+ 749              		.code	16
+ 750              		.thumb_func
+ 751              		.fpu softvfp
+ 753              	ral_lr11xx_set_rx_tx_fallback_mode:
+ 754              		@ args = 0, pretend = 0, frame = 0
+ 755              		@ frame_needed = 0, uses_anonymous_args = 0
+ 756 0000 0300     		movs	r3, r0
+ 757 0002 0220     		movs	r0, #2
+ 758 0004 10B5     		push	{r4, lr}
+ 759 0006 8142     		cmp	r1, r0
+ 760 0008 04D8     		bhi	.L192
+ 761 000a 0131     		adds	r1, r1, #1
+ 762 000c 1800     		movs	r0, r3
+ 763 000e C9B2     		uxtb	r1, r1
+ 764 0010 FFF7FEFF 		bl	lr11xx_radio_set_rx_tx_fallback_mode
+ 765              	.L192:
+ 766              		@ sp needed
+ 767 0014 10BD     		pop	{r4, pc}
+ 769              		.section	.text.ral_lr11xx_stop_timer_on_preamble,"ax",%progbits
+ 770              		.align	1
+ 771              		.global	ral_lr11xx_stop_timer_on_preamble
+ 772              		.syntax unified
+ 773              		.code	16
+ARM GAS  /tmp/cchkk89K.s 			page 14
+
+
+ 774              		.thumb_func
+ 775              		.fpu softvfp
+ 777              	ral_lr11xx_stop_timer_on_preamble:
+ 778              		@ args = 0, pretend = 0, frame = 0
+ 779              		@ frame_needed = 0, uses_anonymous_args = 0
+ 780 0000 10B5     		push	{r4, lr}
+ 781 0002 FFF7FEFF 		bl	lr11xx_radio_stop_timeout_on_preamble
+ 782              		@ sp needed
+ 783 0006 10BD     		pop	{r4, pc}
+ 785              		.section	.text.ral_lr11xx_set_rx_duty_cycle,"ax",%progbits
+ 786              		.align	1
+ 787              		.global	ral_lr11xx_set_rx_duty_cycle
+ 788              		.syntax unified
+ 789              		.code	16
+ 790              		.thumb_func
+ 791              		.fpu softvfp
+ 793              	ral_lr11xx_set_rx_duty_cycle:
+ 794              		@ args = 0, pretend = 0, frame = 0
+ 795              		@ frame_needed = 0, uses_anonymous_args = 0
+ 796 0000 10B5     		push	{r4, lr}
+ 797 0002 0023     		movs	r3, #0
+ 798              		@ sp needed
+ 799 0004 FFF7FEFF 		bl	lr11xx_radio_set_rx_duty_cycle
+ 800 0008 10BD     		pop	{r4, pc}
+ 802              		.section	.text.ral_lr11xx_set_lora_cad,"ax",%progbits
+ 803              		.align	1
+ 804              		.global	ral_lr11xx_set_lora_cad
+ 805              		.syntax unified
+ 806              		.code	16
+ 807              		.thumb_func
+ 808              		.fpu softvfp
+ 810              	ral_lr11xx_set_lora_cad:
+ 811              		@ args = 0, pretend = 0, frame = 0
+ 812              		@ frame_needed = 0, uses_anonymous_args = 0
+ 813 0000 10B5     		push	{r4, lr}
+ 814 0002 FFF7FEFF 		bl	lr11xx_radio_set_cad
+ 815              		@ sp needed
+ 816 0006 10BD     		pop	{r4, pc}
+ 818              		.section	.text.ral_lr11xx_set_tx_cw,"ax",%progbits
+ 819              		.align	1
+ 820              		.global	ral_lr11xx_set_tx_cw
+ 821              		.syntax unified
+ 822              		.code	16
+ 823              		.thumb_func
+ 824              		.fpu softvfp
+ 826              	ral_lr11xx_set_tx_cw:
+ 827              		@ args = 0, pretend = 0, frame = 0
+ 828              		@ frame_needed = 0, uses_anonymous_args = 0
+ 829 0000 10B5     		push	{r4, lr}
+ 830 0002 FFF7FEFF 		bl	lr11xx_radio_set_tx_cw
+ 831              		@ sp needed
+ 832 0006 10BD     		pop	{r4, pc}
+ 834              		.section	.text.ral_lr11xx_set_tx_infinite_preamble,"ax",%progbits
+ 835              		.align	1
+ 836              		.global	ral_lr11xx_set_tx_infinite_preamble
+ 837              		.syntax unified
+ 838              		.code	16
+ARM GAS  /tmp/cchkk89K.s 			page 15
+
+
+ 839              		.thumb_func
+ 840              		.fpu softvfp
+ 842              	ral_lr11xx_set_tx_infinite_preamble:
+ 843              		@ args = 0, pretend = 0, frame = 0
+ 844              		@ frame_needed = 0, uses_anonymous_args = 0
+ 845 0000 10B5     		push	{r4, lr}
+ 846 0002 FFF7FEFF 		bl	lr11xx_radio_set_tx_infinite_preamble
+ 847              		@ sp needed
+ 848 0006 10BD     		pop	{r4, pc}
+ 850              		.section	.text.ral_lr11xx_cal_img,"ax",%progbits
+ 851              		.align	1
+ 852              		.global	ral_lr11xx_cal_img
+ 853              		.syntax unified
+ 854              		.code	16
+ 855              		.thumb_func
+ 856              		.fpu softvfp
+ 858              	ral_lr11xx_cal_img:
+ 859              		@ args = 0, pretend = 0, frame = 0
+ 860              		@ frame_needed = 0, uses_anonymous_args = 0
+ 861 0000 10B5     		push	{r4, lr}
+ 862 0002 FFF7FEFF 		bl	lr11xx_system_calibrate_image_in_mhz
+ 863              		@ sp needed
+ 864 0006 10BD     		pop	{r4, pc}
+ 866              		.section	.text.ral_lr11xx_set_tx_cfg,"ax",%progbits
+ 867              		.align	1
+ 868              		.global	ral_lr11xx_set_tx_cfg
+ 869              		.syntax unified
+ 870              		.code	16
+ 871              		.thumb_func
+ 872              		.fpu softvfp
+ 874              	ral_lr11xx_set_tx_cfg:
+ 875              		@ args = 0, pretend = 0, frame = 16
+ 876              		@ frame_needed = 0, uses_anonymous_args = 0
+ 877 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 878 0002 0400     		movs	r4, r0
+ 879 0004 02AB     		add	r3, sp, #8
+ 880 0006 1970     		strb	r1, [r3]
+ 881 0008 0392     		str	r2, [sp, #12]
+ 882 000a 1900     		movs	r1, r3
+ 883 000c 6A46     		mov	r2, sp
+ 884 000e FFF7FEFF 		bl	ral_lr11xx_bsp_get_tx_cfg
+ 885 0012 6946     		mov	r1, sp
+ 886 0014 2000     		movs	r0, r4
+ 887 0016 FFF7FEFF 		bl	lr11xx_radio_set_pa_cfg
+ 888 001a 0028     		cmp	r0, #0
+ 889 001c 06D1     		bne	.L201
+ 890 001e 6B46     		mov	r3, sp
+ 891 0020 0521     		movs	r1, #5
+ 892 0022 2000     		movs	r0, r4
+ 893 0024 1A79     		ldrb	r2, [r3, #4]
+ 894 0026 5956     		ldrsb	r1, [r3, r1]
+ 895 0028 FFF7FEFF 		bl	lr11xx_radio_set_tx_params
+ 896              	.L201:
+ 897 002c 04B0     		add	sp, sp, #16
+ 898              		@ sp needed
+ 899 002e 10BD     		pop	{r4, pc}
+ 901              		.section	.text.ral_lr11xx_set_pkt_payload,"ax",%progbits
+ARM GAS  /tmp/cchkk89K.s 			page 16
+
+
+ 902              		.align	1
+ 903              		.global	ral_lr11xx_set_pkt_payload
+ 904              		.syntax unified
+ 905              		.code	16
+ 906              		.thumb_func
+ 907              		.fpu softvfp
+ 909              	ral_lr11xx_set_pkt_payload:
+ 910              		@ args = 0, pretend = 0, frame = 0
+ 911              		@ frame_needed = 0, uses_anonymous_args = 0
+ 912 0000 10B5     		push	{r4, lr}
+ 913 0002 D2B2     		uxtb	r2, r2
+ 914 0004 FFF7FEFF 		bl	lr11xx_regmem_write_buffer8
+ 915              		@ sp needed
+ 916 0008 10BD     		pop	{r4, pc}
+ 918              		.section	.text.ral_lr11xx_get_pkt_payload,"ax",%progbits
+ 919              		.align	1
+ 920              		.global	ral_lr11xx_get_pkt_payload
+ 921              		.syntax unified
+ 922              		.code	16
+ 923              		.thumb_func
+ 924              		.fpu softvfp
+ 926              	ral_lr11xx_get_pkt_payload:
+ 927              		@ args = 0, pretend = 0, frame = 16
+ 928              		@ frame_needed = 0, uses_anonymous_args = 0
+ 929 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 930 0002 1E00     		movs	r6, r3
+ 931 0004 0023     		movs	r3, #0
+ 932 0006 85B0     		sub	sp, sp, #20
+ 933 0008 03AD     		add	r5, sp, #12
+ 934 000a 0191     		str	r1, [sp, #4]
+ 935 000c 2900     		movs	r1, r5
+ 936 000e 0400     		movs	r4, r0
+ 937 0010 1700     		movs	r7, r2
+ 938 0012 2B80     		strh	r3, [r5]
+ 939 0014 FFF7FEFF 		bl	lr11xx_radio_get_rx_buffer_status
+ 940 0018 0028     		cmp	r0, #0
+ 941 001a 0DD1     		bne	.L204
+ 942 001c 2B78     		ldrb	r3, [r5]
+ 943 001e 9AB2     		uxth	r2, r3
+ 944 0020 002E     		cmp	r6, #0
+ 945 0022 00D0     		beq	.L205
+ 946 0024 3280     		strh	r2, [r6]
+ 947              	.L205:
+ 948 0026 0199     		ldr	r1, [sp, #4]
+ 949 0028 0320     		movs	r0, #3
+ 950 002a 9142     		cmp	r1, r2
+ 951 002c 04D3     		bcc	.L204
+ 952 002e 3900     		movs	r1, r7
+ 953 0030 2000     		movs	r0, r4
+ 954 0032 6A78     		ldrb	r2, [r5, #1]
+ 955 0034 FFF7FEFF 		bl	lr11xx_regmem_read_buffer8
+ 956              	.L204:
+ 957 0038 05B0     		add	sp, sp, #20
+ 958              		@ sp needed
+ 959 003a F0BD     		pop	{r4, r5, r6, r7, pc}
+ 961              		.section	.text.ral_lr11xx_get_irq_status,"ax",%progbits
+ 962              		.align	1
+ARM GAS  /tmp/cchkk89K.s 			page 17
+
+
+ 963              		.global	ral_lr11xx_get_irq_status
+ 964              		.syntax unified
+ 965              		.code	16
+ 966              		.thumb_func
+ 967              		.fpu softvfp
+ 969              	ral_lr11xx_get_irq_status:
+ 970              		@ args = 0, pretend = 0, frame = 8
+ 971              		@ frame_needed = 0, uses_anonymous_args = 0
+ 972 0000 37B5     		push	{r0, r1, r2, r4, r5, lr}
+ 973 0002 0D00     		movs	r5, r1
+ 974 0004 0021     		movs	r1, #0
+ 975 0006 01AB     		add	r3, sp, #4
+ 976 0008 0A00     		movs	r2, r1
+ 977 000a 0191     		str	r1, [sp, #4]
+ 978 000c FFF7FEFF 		bl	lr11xx_system_get_status
+ 979 0010 041E     		subs	r4, r0, #0
+ 980 0012 03D1     		bne	.L211
+ 981 0014 0198     		ldr	r0, [sp, #4]
+ 982 0016 FFF7FEFF 		bl	ral_lr11xx_convert_irq_flags_to_ral
+ 983 001a 2880     		strh	r0, [r5]
+ 984              	.L211:
+ 985 001c 2000     		movs	r0, r4
+ 986              		@ sp needed
+ 987 001e 3EBD     		pop	{r1, r2, r3, r4, r5, pc}
+ 989              		.section	.text.ral_lr11xx_clear_irq_status,"ax",%progbits
+ 990              		.align	1
+ 991              		.global	ral_lr11xx_clear_irq_status
+ 992              		.syntax unified
+ 993              		.code	16
+ 994              		.thumb_func
+ 995              		.fpu softvfp
+ 997              	ral_lr11xx_clear_irq_status:
+ 998              		@ args = 0, pretend = 0, frame = 0
+ 999              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1000 0000 10B5     		push	{r4, lr}
+ 1001 0002 0400     		movs	r4, r0
+ 1002              		@ sp needed
+ 1003 0004 0800     		movs	r0, r1
+ 1004 0006 FFF7FEFF 		bl	ral_lr11xx_convert_irq_flags_from_ral
+ 1005 000a 0100     		movs	r1, r0
+ 1006 000c 2000     		movs	r0, r4
+ 1007 000e FFF7FEFF 		bl	lr11xx_system_clear_irq_status
+ 1008 0012 10BD     		pop	{r4, pc}
+ 1010              		.section	.text.ral_lr11xx_get_and_clear_irq_status,"ax",%progbits
+ 1011              		.align	1
+ 1012              		.global	ral_lr11xx_get_and_clear_irq_status
+ 1013              		.syntax unified
+ 1014              		.code	16
+ 1015              		.thumb_func
+ 1016              		.fpu softvfp
+ 1018              	ral_lr11xx_get_and_clear_irq_status:
+ 1019              		@ args = 0, pretend = 0, frame = 8
+ 1020              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1021 0000 0023     		movs	r3, #0
+ 1022 0002 37B5     		push	{r0, r1, r2, r4, r5, lr}
+ 1023 0004 0D00     		movs	r5, r1
+ 1024 0006 01A9     		add	r1, sp, #4
+ARM GAS  /tmp/cchkk89K.s 			page 18
+
+
+ 1025 0008 0193     		str	r3, [sp, #4]
+ 1026 000a FFF7FEFF 		bl	lr11xx_system_get_and_clear_irq_status
+ 1027 000e 041E     		subs	r4, r0, #0
+ 1028 0010 05D1     		bne	.L214
+ 1029 0012 002D     		cmp	r5, #0
+ 1030 0014 03D0     		beq	.L214
+ 1031 0016 0198     		ldr	r0, [sp, #4]
+ 1032 0018 FFF7FEFF 		bl	ral_lr11xx_convert_irq_flags_to_ral
+ 1033 001c 2880     		strh	r0, [r5]
+ 1034              	.L214:
+ 1035 001e 2000     		movs	r0, r4
+ 1036              		@ sp needed
+ 1037 0020 3EBD     		pop	{r1, r2, r3, r4, r5, pc}
+ 1039              		.section	.text.ral_lr11xx_set_dio_irq_params,"ax",%progbits
+ 1040              		.align	1
+ 1041              		.global	ral_lr11xx_set_dio_irq_params
+ 1042              		.syntax unified
+ 1043              		.code	16
+ 1044              		.thumb_func
+ 1045              		.fpu softvfp
+ 1047              	ral_lr11xx_set_dio_irq_params:
+ 1048              		@ args = 0, pretend = 0, frame = 0
+ 1049              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1050 0000 10B5     		push	{r4, lr}
+ 1051 0002 0400     		movs	r4, r0
+ 1052              		@ sp needed
+ 1053 0004 0800     		movs	r0, r1
+ 1054 0006 FFF7FEFF 		bl	ral_lr11xx_convert_irq_flags_from_ral
+ 1055 000a 0022     		movs	r2, #0
+ 1056 000c 0100     		movs	r1, r0
+ 1057 000e 2000     		movs	r0, r4
+ 1058 0010 FFF7FEFF 		bl	lr11xx_system_set_dio_irq_params
+ 1059 0014 10BD     		pop	{r4, pc}
+ 1061              		.section	.text.ral_lr11xx_set_rf_freq,"ax",%progbits
+ 1062              		.align	1
+ 1063              		.global	ral_lr11xx_set_rf_freq
+ 1064              		.syntax unified
+ 1065              		.code	16
+ 1066              		.thumb_func
+ 1067              		.fpu softvfp
+ 1069              	ral_lr11xx_set_rf_freq:
+ 1070              		@ args = 0, pretend = 0, frame = 24
+ 1071              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1072 0000 30B5     		push	{r4, r5, lr}
+ 1073 0002 87B0     		sub	sp, sp, #28
+ 1074 0004 0400     		movs	r4, r0
+ 1075 0006 0D00     		movs	r5, r1
+ 1076 0008 FFF7FEFF 		bl	lr11xx_radio_set_rf_freq
+ 1077 000c 0028     		cmp	r0, #0
+ 1078 000e 08D1     		bne	.L220
+ 1079 0010 2900     		movs	r1, r5
+ 1080 0012 2000     		movs	r0, r4
+ 1081 0014 01AA     		add	r2, sp, #4
+ 1082 0016 FFF7FEFF 		bl	ral_lr11xx_bsp_get_rssi_calibration_table
+ 1083 001a 2000     		movs	r0, r4
+ 1084 001c 01A9     		add	r1, sp, #4
+ 1085 001e FFF7FEFF 		bl	lr11xx_radio_set_rssi_calibration
+ARM GAS  /tmp/cchkk89K.s 			page 19
+
+
+ 1086              	.L220:
+ 1087 0022 07B0     		add	sp, sp, #28
+ 1088              		@ sp needed
+ 1089 0024 30BD     		pop	{r4, r5, pc}
+ 1091              		.section	.text.ral_lr11xx_set_pkt_type,"ax",%progbits
+ 1092              		.align	1
+ 1093              		.global	ral_lr11xx_set_pkt_type
+ 1094              		.syntax unified
+ 1095              		.code	16
+ 1096              		.thumb_func
+ 1097              		.fpu softvfp
+ 1099              	ral_lr11xx_set_pkt_type:
+ 1100              		@ args = 0, pretend = 0, frame = 0
+ 1101              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1102 0000 0300     		movs	r3, r0
+ 1103 0002 10B5     		push	{r4, lr}
+ 1104 0004 0029     		cmp	r1, #0
+ 1105 0006 07D0     		beq	.L224
+ 1106 0008 0220     		movs	r0, #2
+ 1107 000a 0129     		cmp	r1, #1
+ 1108 000c 03D1     		bne	.L223
+ 1109 000e 0100     		movs	r1, r0
+ 1110              	.L222:
+ 1111 0010 1800     		movs	r0, r3
+ 1112 0012 FFF7FEFF 		bl	lr11xx_radio_set_pkt_type
+ 1113              	.L223:
+ 1114              		@ sp needed
+ 1115 0016 10BD     		pop	{r4, pc}
+ 1116              	.L224:
+ 1117 0018 0121     		movs	r1, #1
+ 1118 001a F9E7     		b	.L222
+ 1120              		.section	.text.ral_lr11xx_get_pkt_type,"ax",%progbits
+ 1121              		.align	1
+ 1122              		.global	ral_lr11xx_get_pkt_type
+ 1123              		.syntax unified
+ 1124              		.code	16
+ 1125              		.thumb_func
+ 1126              		.fpu softvfp
+ 1128              	ral_lr11xx_get_pkt_type:
+ 1129              		@ args = 0, pretend = 0, frame = 8
+ 1130              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1131 0000 37B5     		push	{r0, r1, r2, r4, r5, lr}
+ 1132 0002 6B46     		mov	r3, sp
+ 1133 0004 DD1D     		adds	r5, r3, #7
+ 1134 0006 0C00     		movs	r4, r1
+ 1135 0008 2900     		movs	r1, r5
+ 1136 000a FFF7FEFF 		bl	lr11xx_radio_get_pkt_type
+ 1137 000e 0028     		cmp	r0, #0
+ 1138 0010 05D1     		bne	.L227
+ 1139 0012 2B78     		ldrb	r3, [r5]
+ 1140 0014 012B     		cmp	r3, #1
+ 1141 0016 03D0     		beq	.L228
+ 1142 0018 022B     		cmp	r3, #2
+ 1143 001a 03D0     		beq	.L229
+ 1144 001c 0230     		adds	r0, r0, #2
+ 1145              	.L227:
+ 1146              		@ sp needed
+ARM GAS  /tmp/cchkk89K.s 			page 20
+
+
+ 1147 001e 3EBD     		pop	{r1, r2, r3, r4, r5, pc}
+ 1148              	.L228:
+ 1149 0020 2070     		strb	r0, [r4]
+ 1150 0022 FCE7     		b	.L227
+ 1151              	.L229:
+ 1152 0024 0123     		movs	r3, #1
+ 1153 0026 2370     		strb	r3, [r4]
+ 1154 0028 F9E7     		b	.L227
+ 1156              		.section	.text.ral_lr11xx_set_gfsk_mod_params,"ax",%progbits
+ 1157              		.align	1
+ 1158              		.global	ral_lr11xx_set_gfsk_mod_params
+ 1159              		.syntax unified
+ 1160              		.code	16
+ 1161              		.thumb_func
+ 1162              		.fpu softvfp
+ 1164              	ral_lr11xx_set_gfsk_mod_params:
+ 1165              		@ args = 0, pretend = 0, frame = 16
+ 1166              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1167 0000 30B5     		push	{r4, r5, lr}
+ 1168 0002 0D00     		movs	r5, r1
+ 1169 0004 85B0     		sub	sp, sp, #20
+ 1170 0006 0021     		movs	r1, #0
+ 1171 0008 0400     		movs	r4, r0
+ 1172 000a 0C22     		movs	r2, #12
+ 1173 000c 01A8     		add	r0, sp, #4
+ 1174 000e FFF7FEFF 		bl	memset
+ 1175 0012 2800     		movs	r0, r5
+ 1176 0014 01A9     		add	r1, sp, #4
+ 1177 0016 FFF7FEFF 		bl	ral_lr11xx_convert_gfsk_mod_params_from_ral
+ 1178 001a 0028     		cmp	r0, #0
+ 1179 001c 03D1     		bne	.L231
+ 1180 001e 2000     		movs	r0, r4
+ 1181 0020 01A9     		add	r1, sp, #4
+ 1182 0022 FFF7FEFF 		bl	lr11xx_radio_set_gfsk_mod_params
+ 1183              	.L231:
+ 1184 0026 05B0     		add	sp, sp, #20
+ 1185              		@ sp needed
+ 1186 0028 30BD     		pop	{r4, r5, pc}
+ 1188              		.section	.text.ral_lr11xx_set_gfsk_pkt_params,"ax",%progbits
+ 1189              		.align	1
+ 1190              		.global	ral_lr11xx_set_gfsk_pkt_params
+ 1191              		.syntax unified
+ 1192              		.code	16
+ 1193              		.thumb_func
+ 1194              		.fpu softvfp
+ 1196              	ral_lr11xx_set_gfsk_pkt_params:
+ 1197              		@ args = 0, pretend = 0, frame = 16
+ 1198              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1199 0000 30B5     		push	{r4, r5, lr}
+ 1200 0002 0D00     		movs	r5, r1
+ 1201 0004 85B0     		sub	sp, sp, #20
+ 1202 0006 0021     		movs	r1, #0
+ 1203 0008 0400     		movs	r4, r0
+ 1204 000a 0A22     		movs	r2, #10
+ 1205 000c 01A8     		add	r0, sp, #4
+ 1206 000e FFF7FEFF 		bl	memset
+ 1207 0012 2800     		movs	r0, r5
+ARM GAS  /tmp/cchkk89K.s 			page 21
+
+
+ 1208 0014 01A9     		add	r1, sp, #4
+ 1209 0016 FFF7FEFF 		bl	ral_lr11xx_convert_gfsk_pkt_params_from_ral
+ 1210 001a 0028     		cmp	r0, #0
+ 1211 001c 03D1     		bne	.L233
+ 1212 001e 2000     		movs	r0, r4
+ 1213 0020 01A9     		add	r1, sp, #4
+ 1214 0022 FFF7FEFF 		bl	lr11xx_radio_set_gfsk_pkt_params
+ 1215              	.L233:
+ 1216 0026 05B0     		add	sp, sp, #20
+ 1217              		@ sp needed
+ 1218 0028 30BD     		pop	{r4, r5, pc}
+ 1220              		.section	.text.ral_lr11xx_set_lora_mod_params,"ax",%progbits
+ 1221              		.align	1
+ 1222              		.global	ral_lr11xx_set_lora_mod_params
+ 1223              		.syntax unified
+ 1224              		.code	16
+ 1225              		.thumb_func
+ 1226              		.fpu softvfp
+ 1228              	ral_lr11xx_set_lora_mod_params:
+ 1229              		@ args = 0, pretend = 0, frame = 8
+ 1230              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1231 0000 13B5     		push	{r0, r1, r4, lr}
+ 1232 0002 0400     		movs	r4, r0
+ 1233 0004 0800     		movs	r0, r1
+ 1234 0006 01A9     		add	r1, sp, #4
+ 1235 0008 FFF7FEFF 		bl	ral_lr11xx_convert_lora_mod_params_from_ral
+ 1236 000c 0028     		cmp	r0, #0
+ 1237 000e 03D1     		bne	.L235
+ 1238 0010 2000     		movs	r0, r4
+ 1239 0012 01A9     		add	r1, sp, #4
+ 1240 0014 FFF7FEFF 		bl	lr11xx_radio_set_lora_mod_params
+ 1241              	.L235:
+ 1242              		@ sp needed
+ 1243 0018 16BD     		pop	{r1, r2, r4, pc}
+ 1245              		.section	.text.ral_lr11xx_set_lora_pkt_params,"ax",%progbits
+ 1246              		.align	1
+ 1247              		.global	ral_lr11xx_set_lora_pkt_params
+ 1248              		.syntax unified
+ 1249              		.code	16
+ 1250              		.thumb_func
+ 1251              		.fpu softvfp
+ 1253              	ral_lr11xx_set_lora_pkt_params:
+ 1254              		@ args = 0, pretend = 0, frame = 8
+ 1255              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1256 0000 37B5     		push	{r0, r1, r2, r4, r5, lr}
+ 1257 0002 0D00     		movs	r5, r1
+ 1258 0004 0400     		movs	r4, r0
+ 1259 0006 0021     		movs	r1, #0
+ 1260 0008 0622     		movs	r2, #6
+ 1261 000a 6846     		mov	r0, sp
+ 1262 000c FFF7FEFF 		bl	memset
+ 1263 0010 6946     		mov	r1, sp
+ 1264 0012 2800     		movs	r0, r5
+ 1265 0014 FFF7FEFF 		bl	ral_lr11xx_convert_lora_pkt_params_from_ral
+ 1266 0018 0028     		cmp	r0, #0
+ 1267 001a 03D1     		bne	.L237
+ 1268 001c 6946     		mov	r1, sp
+ARM GAS  /tmp/cchkk89K.s 			page 22
+
+
+ 1269 001e 2000     		movs	r0, r4
+ 1270 0020 FFF7FEFF 		bl	lr11xx_radio_set_lora_pkt_params
+ 1271              	.L237:
+ 1272              		@ sp needed
+ 1273 0024 3EBD     		pop	{r1, r2, r3, r4, r5, pc}
+ 1275              		.section	.text.ral_lr11xx_set_lora_cad_params,"ax",%progbits
+ 1276              		.align	1
+ 1277              		.global	ral_lr11xx_set_lora_cad_params
+ 1278              		.syntax unified
+ 1279              		.code	16
+ 1280              		.thumb_func
+ 1281              		.fpu softvfp
+ 1283              	ral_lr11xx_set_lora_cad_params:
+ 1284              		@ args = 0, pretend = 0, frame = 8
+ 1285              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1286 0000 13B5     		push	{r0, r1, r4, lr}
+ 1287 0002 0400     		movs	r4, r0
+ 1288 0004 0878     		ldrb	r0, [r1]
+ 1289 0006 0428     		cmp	r0, #4
+ 1290 0008 04D8     		bhi	.L239
+ 1291 000a FFF7FEFF 		bl	__gnu_thumb1_case_uqi
+ 1292              	.L241:
+ 1293 000e 05       		.byte	(.L245-.L241)/2
+ 1294 000f 1E       		.byte	(.L244-.L241)/2
+ 1295 0010 20       		.byte	(.L243-.L241)/2
+ 1296 0011 22       		.byte	(.L242-.L241)/2
+ 1297 0012 24       		.byte	(.L240-.L241)/2
+ 1298 0013 00       		.p2align 1
+ 1299              	.L239:
+ 1300 0014 0220     		movs	r0, #2
+ 1301              	.L246:
+ 1302              		@ sp needed
+ 1303 0016 16BD     		pop	{r1, r2, r4, pc}
+ 1304              	.L245:
+ 1305 0018 0123     		movs	r3, #1
+ 1306              	.L251:
+ 1307 001a 6A46     		mov	r2, sp
+ 1308 001c 1370     		strb	r3, [r2]
+ 1309 001e 6A46     		mov	r2, sp
+ 1310 0020 4B78     		ldrb	r3, [r1, #1]
+ 1311 0022 5370     		strb	r3, [r2, #1]
+ 1312 0024 8B78     		ldrb	r3, [r1, #2]
+ 1313 0026 9370     		strb	r3, [r2, #2]
+ 1314 0028 CB78     		ldrb	r3, [r1, #3]
+ 1315 002a 012B     		cmp	r3, #1
+ 1316 002c 16D0     		beq	.L253
+ 1317 002e 022B     		cmp	r3, #2
+ 1318 0030 13D0     		beq	.L249
+ 1319 0032 002B     		cmp	r3, #0
+ 1320 0034 EED1     		bne	.L239
+ 1321              	.L252:
+ 1322 0036 4868     		ldr	r0, [r1, #4]
+ 1323 0038 D370     		strb	r3, [r2, #3]
+ 1324 003a FFF7FEFF 		bl	lr11xx_radio_convert_time_in_ms_to_rtc_step
+ 1325 003e 6946     		mov	r1, sp
+ 1326 0040 0190     		str	r0, [sp, #4]
+ 1327 0042 2000     		movs	r0, r4
+ARM GAS  /tmp/cchkk89K.s 			page 23
+
+
+ 1328 0044 FFF7FEFF 		bl	lr11xx_radio_set_cad_params
+ 1329 0048 E5E7     		b	.L246
+ 1330              	.L244:
+ 1331 004a 0223     		movs	r3, #2
+ 1332 004c E5E7     		b	.L251
+ 1333              	.L243:
+ 1334 004e 0423     		movs	r3, #4
+ 1335 0050 E3E7     		b	.L251
+ 1336              	.L242:
+ 1337 0052 0823     		movs	r3, #8
+ 1338 0054 E1E7     		b	.L251
+ 1339              	.L240:
+ 1340 0056 1023     		movs	r3, #16
+ 1341 0058 DFE7     		b	.L251
+ 1342              	.L249:
+ 1343 005a 1023     		movs	r3, #16
+ 1344              	.L253:
+ 1345 005c 6A46     		mov	r2, sp
+ 1346 005e EAE7     		b	.L252
+ 1348              		.section	.text.ral_lr11xx_set_lora_symb_nb_timeout,"ax",%progbits
+ 1349              		.align	1
+ 1350              		.global	ral_lr11xx_set_lora_symb_nb_timeout
+ 1351              		.syntax unified
+ 1352              		.code	16
+ 1353              		.thumb_func
+ 1354              		.fpu softvfp
+ 1356              	ral_lr11xx_set_lora_symb_nb_timeout:
+ 1357              		@ args = 0, pretend = 0, frame = 0
+ 1358              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1359 0000 10B5     		push	{r4, lr}
+ 1360 0002 FFF7FEFF 		bl	lr11xx_radio_set_lora_sync_timeout
+ 1361              		@ sp needed
+ 1362 0006 10BD     		pop	{r4, pc}
+ 1364              		.section	.text.ral_lr11xx_set_flrc_mod_params,"ax",%progbits
+ 1365              		.align	1
+ 1366              		.global	ral_lr11xx_set_flrc_mod_params
+ 1367              		.syntax unified
+ 1368              		.code	16
+ 1369              		.thumb_func
+ 1370              		.fpu softvfp
+ 1372              	ral_lr11xx_set_flrc_mod_params:
+ 1373              		@ args = 0, pretend = 0, frame = 0
+ 1374              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1375              		@ link register save eliminated.
+ 1376 0000 0120     		movs	r0, #1
+ 1377              		@ sp needed
+ 1378 0002 7047     		bx	lr
+ 1380              		.section	.text.ral_lr11xx_set_flrc_pkt_params,"ax",%progbits
+ 1381              		.align	1
+ 1382              		.global	ral_lr11xx_set_flrc_pkt_params
+ 1383              		.syntax unified
+ 1384              		.code	16
+ 1385              		.thumb_func
+ 1386              		.fpu softvfp
+ 1388              	ral_lr11xx_set_flrc_pkt_params:
+ 1389              		@ args = 0, pretend = 0, frame = 0
+ 1390              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  /tmp/cchkk89K.s 			page 24
+
+
+ 1391              		@ link register save eliminated.
+ 1392 0000 0120     		movs	r0, #1
+ 1393              		@ sp needed
+ 1394 0002 7047     		bx	lr
+ 1396              		.section	.text.ral_lr11xx_get_gfsk_rx_pkt_status,"ax",%progbits
+ 1397              		.align	1
+ 1398              		.global	ral_lr11xx_get_gfsk_rx_pkt_status
+ 1399              		.syntax unified
+ 1400              		.code	16
+ 1401              		.thumb_func
+ 1402              		.fpu softvfp
+ 1404              	ral_lr11xx_get_gfsk_rx_pkt_status:
+ 1405              		@ args = 0, pretend = 0, frame = 16
+ 1406              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1407 0000 30B5     		push	{r4, r5, lr}
+ 1408 0002 85B0     		sub	sp, sp, #20
+ 1409 0004 01AC     		add	r4, sp, #4
+ 1410 0006 0D00     		movs	r5, r1
+ 1411 0008 2100     		movs	r1, r4
+ 1412 000a FFF7FEFF 		bl	lr11xx_radio_get_gfsk_pkt_status
+ 1413 000e 0028     		cmp	r0, #0
+ 1414 0010 21D1     		bne	.L258
+ 1415 0012 E279     		ldrb	r2, [r4, #7]
+ 1416 0014 0823     		movs	r3, #8
+ 1417 0016 511E     		subs	r1, r2, #1
+ 1418 0018 8A41     		sbcs	r2, r2, r1
+ 1419 001a E356     		ldrsb	r3, [r4, r3]
+ 1420 001c 5200     		lsls	r2, r2, #1
+ 1421 001e 1343     		orrs	r3, r2
+ 1422 0020 A279     		ldrb	r2, [r4, #6]
+ 1423 0022 511E     		subs	r1, r2, #1
+ 1424 0024 8A41     		sbcs	r2, r2, r1
+ 1425 0026 9200     		lsls	r2, r2, #2
+ 1426 0028 1343     		orrs	r3, r2
+ 1427 002a 6279     		ldrb	r2, [r4, #5]
+ 1428 002c 511E     		subs	r1, r2, #1
+ 1429 002e 8A41     		sbcs	r2, r2, r1
+ 1430 0030 D200     		lsls	r2, r2, #3
+ 1431 0032 1343     		orrs	r3, r2
+ 1432 0034 2279     		ldrb	r2, [r4, #4]
+ 1433 0036 511E     		subs	r1, r2, #1
+ 1434 0038 8A41     		sbcs	r2, r2, r1
+ 1435 003a 1201     		lsls	r2, r2, #4
+ 1436 003c 1343     		orrs	r3, r2
+ 1437 003e E278     		ldrb	r2, [r4, #3]
+ 1438 0040 511E     		subs	r1, r2, #1
+ 1439 0042 8A41     		sbcs	r2, r2, r1
+ 1440 0044 5201     		lsls	r2, r2, #5
+ 1441 0046 1343     		orrs	r3, r2
+ 1442 0048 2B80     		strh	r3, [r5]
+ 1443 004a 0023     		movs	r3, #0
+ 1444 004c E356     		ldrsb	r3, [r4, r3]
+ 1445 004e 6B80     		strh	r3, [r5, #2]
+ 1446 0050 0123     		movs	r3, #1
+ 1447 0052 E356     		ldrsb	r3, [r4, r3]
+ 1448 0054 AB80     		strh	r3, [r5, #4]
+ 1449              	.L258:
+ARM GAS  /tmp/cchkk89K.s 			page 25
+
+
+ 1450 0056 05B0     		add	sp, sp, #20
+ 1451              		@ sp needed
+ 1452 0058 30BD     		pop	{r4, r5, pc}
+ 1454              		.section	.text.ral_lr11xx_get_lora_rx_pkt_status,"ax",%progbits
+ 1455              		.align	1
+ 1456              		.global	ral_lr11xx_get_lora_rx_pkt_status
+ 1457              		.syntax unified
+ 1458              		.code	16
+ 1459              		.thumb_func
+ 1460              		.fpu softvfp
+ 1462              	ral_lr11xx_get_lora_rx_pkt_status:
+ 1463              		@ args = 0, pretend = 0, frame = 8
+ 1464              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1465 0000 37B5     		push	{r0, r1, r2, r4, r5, lr}
+ 1466 0002 01AD     		add	r5, sp, #4
+ 1467 0004 0C00     		movs	r4, r1
+ 1468 0006 2900     		movs	r1, r5
+ 1469 0008 FFF7FEFF 		bl	lr11xx_radio_get_lora_pkt_status
+ 1470 000c 0028     		cmp	r0, #0
+ 1471 000e 08D1     		bne	.L270
+ 1472 0010 0023     		movs	r3, #0
+ 1473 0012 EB56     		ldrsb	r3, [r5, r3]
+ 1474 0014 2380     		strh	r3, [r4]
+ 1475 0016 0123     		movs	r3, #1
+ 1476 0018 EB56     		ldrsb	r3, [r5, r3]
+ 1477 001a 6380     		strh	r3, [r4, #2]
+ 1478 001c 0223     		movs	r3, #2
+ 1479 001e EB56     		ldrsb	r3, [r5, r3]
+ 1480 0020 A380     		strh	r3, [r4, #4]
+ 1481              	.L270:
+ 1482              		@ sp needed
+ 1483 0022 3EBD     		pop	{r1, r2, r3, r4, r5, pc}
+ 1485              		.section	.text.ral_lr11xx_get_flrc_rx_pkt_status,"ax",%progbits
+ 1486              		.align	1
+ 1487              		.global	ral_lr11xx_get_flrc_rx_pkt_status
+ 1488              		.syntax unified
+ 1489              		.code	16
+ 1490              		.thumb_func
+ 1491              		.fpu softvfp
+ 1493              	ral_lr11xx_get_flrc_rx_pkt_status:
+ 1494              		@ args = 0, pretend = 0, frame = 0
+ 1495              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1496              		@ link register save eliminated.
+ 1497 0000 0120     		movs	r0, #1
+ 1498              		@ sp needed
+ 1499 0002 7047     		bx	lr
+ 1501              		.section	.text.ral_lr11xx_get_rssi_inst,"ax",%progbits
+ 1502              		.align	1
+ 1503              		.global	ral_lr11xx_get_rssi_inst
+ 1504              		.syntax unified
+ 1505              		.code	16
+ 1506              		.thumb_func
+ 1507              		.fpu softvfp
+ 1509              	ral_lr11xx_get_rssi_inst:
+ 1510              		@ args = 0, pretend = 0, frame = 8
+ 1511              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1512 0000 37B5     		push	{r0, r1, r2, r4, r5, lr}
+ARM GAS  /tmp/cchkk89K.s 			page 26
+
+
+ 1513 0002 6B46     		mov	r3, sp
+ 1514              		@ sp needed
+ 1515 0004 DD1D     		adds	r5, r3, #7
+ 1516 0006 0C00     		movs	r4, r1
+ 1517 0008 2900     		movs	r1, r5
+ 1518 000a FFF7FEFF 		bl	lr11xx_radio_get_rssi_inst
+ 1519 000e 0023     		movs	r3, #0
+ 1520 0010 EB56     		ldrsb	r3, [r5, r3]
+ 1521 0012 2380     		strh	r3, [r4]
+ 1522 0014 3EBD     		pop	{r1, r2, r3, r4, r5, pc}
+ 1524              		.section	.text.ral_lr11xx_get_lora_time_on_air_in_ms,"ax",%progbits
+ 1525              		.align	1
+ 1526              		.global	ral_lr11xx_get_lora_time_on_air_in_ms
+ 1527              		.syntax unified
+ 1528              		.code	16
+ 1529              		.thumb_func
+ 1530              		.fpu softvfp
+ 1532              	ral_lr11xx_get_lora_time_on_air_in_ms:
+ 1533              		@ args = 0, pretend = 0, frame = 16
+ 1534              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1535 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 1536 0002 0400     		movs	r4, r0
+ 1537 0004 0800     		movs	r0, r1
+ 1538 0006 01A9     		add	r1, sp, #4
+ 1539 0008 FFF7FEFF 		bl	ral_lr11xx_convert_lora_mod_params_from_ral
+ 1540 000c 02A9     		add	r1, sp, #8
+ 1541 000e 2000     		movs	r0, r4
+ 1542 0010 FFF7FEFF 		bl	ral_lr11xx_convert_lora_pkt_params_from_ral
+ 1543 0014 01A9     		add	r1, sp, #4
+ 1544 0016 02A8     		add	r0, sp, #8
+ 1545 0018 FFF7FEFF 		bl	lr11xx_radio_get_lora_time_on_air_in_ms
+ 1546 001c 04B0     		add	sp, sp, #16
+ 1547              		@ sp needed
+ 1548 001e 10BD     		pop	{r4, pc}
+ 1550              		.section	.text.ral_lr11xx_get_gfsk_time_on_air_in_ms,"ax",%progbits
+ 1551              		.align	1
+ 1552              		.global	ral_lr11xx_get_gfsk_time_on_air_in_ms
+ 1553              		.syntax unified
+ 1554              		.code	16
+ 1555              		.thumb_func
+ 1556              		.fpu softvfp
+ 1558              	ral_lr11xx_get_gfsk_time_on_air_in_ms:
+ 1559              		@ args = 0, pretend = 0, frame = 24
+ 1560              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1561 0000 10B5     		push	{r4, lr}
+ 1562 0002 0400     		movs	r4, r0
+ 1563 0004 86B0     		sub	sp, sp, #24
+ 1564 0006 0800     		movs	r0, r1
+ 1565 0008 03A9     		add	r1, sp, #12
+ 1566 000a FFF7FEFF 		bl	ral_lr11xx_convert_gfsk_mod_params_from_ral
+ 1567 000e 6946     		mov	r1, sp
+ 1568 0010 2000     		movs	r0, r4
+ 1569 0012 FFF7FEFF 		bl	ral_lr11xx_convert_gfsk_pkt_params_from_ral
+ 1570 0016 6846     		mov	r0, sp
+ 1571 0018 03A9     		add	r1, sp, #12
+ 1572 001a FFF7FEFF 		bl	lr11xx_radio_get_gfsk_time_on_air_in_ms
+ 1573 001e 06B0     		add	sp, sp, #24
+ARM GAS  /tmp/cchkk89K.s 			page 27
+
+
+ 1574              		@ sp needed
+ 1575 0020 10BD     		pop	{r4, pc}
+ 1577              		.section	.text.ral_lr11xx_get_flrc_time_on_air_in_ms,"ax",%progbits
+ 1578              		.align	1
+ 1579              		.global	ral_lr11xx_get_flrc_time_on_air_in_ms
+ 1580              		.syntax unified
+ 1581              		.code	16
+ 1582              		.thumb_func
+ 1583              		.fpu softvfp
+ 1585              	ral_lr11xx_get_flrc_time_on_air_in_ms:
+ 1586              		@ args = 0, pretend = 0, frame = 0
+ 1587              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1588              		@ link register save eliminated.
+ 1589 0000 0120     		movs	r0, #1
+ 1590              		@ sp needed
+ 1591 0002 7047     		bx	lr
+ 1593              		.section	.text.ral_lr11xx_set_gfsk_sync_word,"ax",%progbits
+ 1594              		.align	1
+ 1595              		.global	ral_lr11xx_set_gfsk_sync_word
+ 1596              		.syntax unified
+ 1597              		.code	16
+ 1598              		.thumb_func
+ 1599              		.fpu softvfp
+ 1601              	ral_lr11xx_set_gfsk_sync_word:
+ 1602              		@ args = 0, pretend = 0, frame = 8
+ 1603              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1604 0000 0023     		movs	r3, #0
+ 1605 0002 37B5     		push	{r0, r1, r2, r4, r5, lr}
+ 1606 0004 0093     		str	r3, [sp]
+ 1607 0006 0193     		str	r3, [sp, #4]
+ 1608              	.L277:
+ 1609 0008 DCB2     		uxtb	r4, r3
+ 1610 000a A242     		cmp	r2, r4
+ 1611 000c 03D8     		bhi	.L278
+ 1612              		@ sp needed
+ 1613 000e 6946     		mov	r1, sp
+ 1614 0010 FFF7FEFF 		bl	lr11xx_radio_set_gfsk_sync_word
+ 1615 0014 3EBD     		pop	{r1, r2, r3, r4, r5, pc}
+ 1616              	.L278:
+ 1617 0016 6D46     		mov	r5, sp
+ 1618 0018 CC5C     		ldrb	r4, [r1, r3]
+ 1619 001a EC54     		strb	r4, [r5, r3]
+ 1620 001c 0133     		adds	r3, r3, #1
+ 1621 001e F3E7     		b	.L277
+ 1623              		.section	.text.ral_lr11xx_set_lora_sync_word,"ax",%progbits
+ 1624              		.align	1
+ 1625              		.global	ral_lr11xx_set_lora_sync_word
+ 1626              		.syntax unified
+ 1627              		.code	16
+ 1628              		.thumb_func
+ 1629              		.fpu softvfp
+ 1631              	ral_lr11xx_set_lora_sync_word:
+ 1632              		@ args = 0, pretend = 0, frame = 0
+ 1633              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1634 0000 10B5     		push	{r4, lr}
+ 1635 0002 FFF7FEFF 		bl	lr11xx_radio_set_lora_sync_word
+ 1636              		@ sp needed
+ARM GAS  /tmp/cchkk89K.s 			page 28
+
+
+ 1637 0006 10BD     		pop	{r4, pc}
+ 1639              		.section	.text.ral_lr11xx_set_flrc_sync_word,"ax",%progbits
+ 1640              		.align	1
+ 1641              		.global	ral_lr11xx_set_flrc_sync_word
+ 1642              		.syntax unified
+ 1643              		.code	16
+ 1644              		.thumb_func
+ 1645              		.fpu softvfp
+ 1647              	ral_lr11xx_set_flrc_sync_word:
+ 1648              		@ args = 0, pretend = 0, frame = 0
+ 1649              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1650              		@ link register save eliminated.
+ 1651 0000 0120     		movs	r0, #1
+ 1652              		@ sp needed
+ 1653 0002 7047     		bx	lr
+ 1655              		.section	.text.ral_lr11xx_set_gfsk_crc_params,"ax",%progbits
+ 1656              		.align	1
+ 1657              		.global	ral_lr11xx_set_gfsk_crc_params
+ 1658              		.syntax unified
+ 1659              		.code	16
+ 1660              		.thumb_func
+ 1661              		.fpu softvfp
+ 1663              	ral_lr11xx_set_gfsk_crc_params:
+ 1664              		@ args = 0, pretend = 0, frame = 0
+ 1665              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1666 0000 10B5     		push	{r4, lr}
+ 1667 0002 FFF7FEFF 		bl	lr11xx_radio_set_gfsk_crc_params
+ 1668              		@ sp needed
+ 1669 0006 10BD     		pop	{r4, pc}
+ 1671              		.section	.text.ral_lr11xx_set_flrc_crc_params,"ax",%progbits
+ 1672              		.align	1
+ 1673              		.global	ral_lr11xx_set_flrc_crc_params
+ 1674              		.syntax unified
+ 1675              		.code	16
+ 1676              		.thumb_func
+ 1677              		.fpu softvfp
+ 1679              	ral_lr11xx_set_flrc_crc_params:
+ 1680              		@ args = 0, pretend = 0, frame = 0
+ 1681              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1682              		@ link register save eliminated.
+ 1683 0000 0120     		movs	r0, #1
+ 1684              		@ sp needed
+ 1685 0002 7047     		bx	lr
+ 1687              		.section	.text.ral_lr11xx_set_gfsk_whitening_seed,"ax",%progbits
+ 1688              		.align	1
+ 1689              		.global	ral_lr11xx_set_gfsk_whitening_seed
+ 1690              		.syntax unified
+ 1691              		.code	16
+ 1692              		.thumb_func
+ 1693              		.fpu softvfp
+ 1695              	ral_lr11xx_set_gfsk_whitening_seed:
+ 1696              		@ args = 0, pretend = 0, frame = 0
+ 1697              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1698 0000 10B5     		push	{r4, lr}
+ 1699 0002 FFF7FEFF 		bl	lr11xx_radio_set_gfsk_whitening_seed
+ 1700              		@ sp needed
+ 1701 0006 10BD     		pop	{r4, pc}
+ARM GAS  /tmp/cchkk89K.s 			page 29
+
+
+ 1703              		.section	.text.ral_lr11xx_lr_fhss_init,"ax",%progbits
+ 1704              		.align	1
+ 1705              		.global	ral_lr11xx_lr_fhss_init
+ 1706              		.syntax unified
+ 1707              		.code	16
+ 1708              		.thumb_func
+ 1709              		.fpu softvfp
+ 1711              	ral_lr11xx_lr_fhss_init:
+ 1712              		@ args = 0, pretend = 0, frame = 0
+ 1713              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1714 0000 10B5     		push	{r4, lr}
+ 1715 0002 FFF7FEFF 		bl	lr11xx_lr_fhss_init
+ 1716              		@ sp needed
+ 1717 0006 10BD     		pop	{r4, pc}
+ 1719              		.section	.text.ral_lr11xx_lr_fhss_build_frame,"ax",%progbits
+ 1720              		.align	1
+ 1721              		.global	ral_lr11xx_lr_fhss_build_frame
+ 1722              		.syntax unified
+ 1723              		.code	16
+ 1724              		.thumb_func
+ 1725              		.fpu softvfp
+ 1727              	ral_lr11xx_lr_fhss_build_frame:
+ 1728              		@ args = 8, pretend = 0, frame = 40
+ 1729              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1730 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 1731 0002 8DB0     		sub	sp, sp, #52
+ 1732 0004 0393     		str	r3, [sp, #12]
+ 1733 0006 12AB     		add	r3, sp, #72
+ 1734 0008 04CB     		ldmia	r3!, {r2}
+ 1735 000a 08AC     		add	r4, sp, #32
+ 1736 000c 1B88     		ldrh	r3, [r3]
+ 1737 000e 0492     		str	r2, [sp, #16]
+ 1738 0010 0593     		str	r3, [sp, #20]
+ 1739 0012 1023     		movs	r3, #16
+ 1740 0014 CB56     		ldrsb	r3, [r1, r3]
+ 1741 0016 0500     		movs	r5, r0
+ 1742 0018 9C46     		mov	ip, r3
+ 1743 001a 0800     		movs	r0, r1
+ 1744 001c 2200     		movs	r2, r4
+ 1745 001e C8C8     		ldmia	r0!, {r3, r6, r7}
+ 1746 0020 C8C2     		stmia	r2!, {r3, r6, r7}
+ 1747 0022 6346     		mov	r3, ip
+ 1748 0024 2800     		movs	r0, r5
+ 1749 0026 C968     		ldr	r1, [r1, #12]
+ 1750 0028 2373     		strb	r3, [r4, #12]
+ 1751 002a FFF7FEFF 		bl	lr11xx_radio_set_rf_freq
+ 1752 002e 0028     		cmp	r0, #0
+ 1753 0030 17D1     		bne	.L286
+ 1754 0032 6B46     		mov	r3, sp
+ 1755 0034 1B7D     		ldrb	r3, [r3, #20]
+ 1756 0036 2100     		movs	r1, r4
+ 1757 0038 0093     		str	r3, [sp]
+ 1758 003a 2800     		movs	r0, r5
+ 1759 003c 049B     		ldr	r3, [sp, #16]
+ 1760 003e 039A     		ldr	r2, [sp, #12]
+ 1761 0040 FFF7FEFF 		bl	lr11xx_lr_fhss_build_frame
+ 1762 0044 0028     		cmp	r0, #0
+ARM GAS  /tmp/cchkk89K.s 			page 30
+
+
+ 1763 0046 0CD1     		bne	.L286
+ 1764 0048 07AC     		add	r4, sp, #28
+ 1765 004a 0300     		movs	r3, r0
+ 1766 004c 0200     		movs	r2, r0
+ 1767 004e 2100     		movs	r1, r4
+ 1768 0050 2800     		movs	r0, r5
+ 1769 0052 FFF7FEFF 		bl	lr11xx_system_get_status
+ 1770 0056 0028     		cmp	r0, #0
+ 1771 0058 03D1     		bne	.L286
+ 1772 005a 2378     		ldrb	r3, [r4]
+ 1773 005c 022B     		cmp	r3, #2
+ 1774 005e 00D0     		beq	.L286
+ 1775 0060 0330     		adds	r0, r0, #3
+ 1776              	.L286:
+ 1777 0062 0DB0     		add	sp, sp, #52
+ 1778              		@ sp needed
+ 1779 0064 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 1781              		.section	.text.ral_lr11xx_lr_fhss_handle_hop,"ax",%progbits
+ 1782              		.align	1
+ 1783              		.global	ral_lr11xx_lr_fhss_handle_hop
+ 1784              		.syntax unified
+ 1785              		.code	16
+ 1786              		.thumb_func
+ 1787              		.fpu softvfp
+ 1789              	ral_lr11xx_lr_fhss_handle_hop:
+ 1790              		@ args = 0, pretend = 0, frame = 0
+ 1791              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1792              		@ link register save eliminated.
+ 1793 0000 0020     		movs	r0, #0
+ 1794              		@ sp needed
+ 1795 0002 7047     		bx	lr
+ 1797              		.section	.text.ral_lr11xx_lr_fhss_handle_tx_done,"ax",%progbits
+ 1798              		.align	1
+ 1799              		.global	ral_lr11xx_lr_fhss_handle_tx_done
+ 1800              		.syntax unified
+ 1801              		.code	16
+ 1802              		.thumb_func
+ 1803              		.fpu softvfp
+ 1805              	ral_lr11xx_lr_fhss_handle_tx_done:
+ 1806              		@ args = 0, pretend = 0, frame = 0
+ 1807              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1808              		@ link register save eliminated.
+ 1809 0000 0020     		movs	r0, #0
+ 1810              		@ sp needed
+ 1811 0002 7047     		bx	lr
+ 1813              		.section	.text.ral_lr11xx_lr_fhss_get_time_on_air_in_ms,"ax",%progbits
+ 1814              		.align	1
+ 1815              		.global	ral_lr11xx_lr_fhss_get_time_on_air_in_ms
+ 1816              		.syntax unified
+ 1817              		.code	16
+ 1818              		.thumb_func
+ 1819              		.fpu softvfp
+ 1821              	ral_lr11xx_lr_fhss_get_time_on_air_in_ms:
+ 1822              		@ args = 0, pretend = 0, frame = 16
+ 1823              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1824 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 1825 0002 0C00     		movs	r4, r1
+ARM GAS  /tmp/cchkk89K.s 			page 31
+
+
+ 1826 0004 1D00     		movs	r5, r3
+ 1827 0006 1023     		movs	r3, #16
+ 1828 0008 85B0     		sub	sp, sp, #20
+ 1829 000a 6846     		mov	r0, sp
+ 1830 000c E356     		ldrsb	r3, [r4, r3]
+ 1831 000e 1100     		movs	r1, r2
+ 1832 0010 9C46     		mov	ip, r3
+ 1833 0012 0200     		movs	r2, r0
+ 1834 0014 C8CC     		ldmia	r4!, {r3, r6, r7}
+ 1835 0016 C8C2     		stmia	r2!, {r3, r6, r7}
+ 1836 0018 6346     		mov	r3, ip
+ 1837 001a 0373     		strb	r3, [r0, #12]
+ 1838 001c FFF7FEFF 		bl	lr11xx_lr_fhss_get_time_on_air_in_ms
+ 1839 0020 2860     		str	r0, [r5]
+ 1840 0022 0020     		movs	r0, #0
+ 1841 0024 05B0     		add	sp, sp, #20
+ 1842              		@ sp needed
+ 1843 0026 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 1845              		.section	.text.ral_lr11xx_lr_fhss_get_hop_sequence_count,"ax",%progbits
+ 1846              		.align	1
+ 1847              		.global	ral_lr11xx_lr_fhss_get_hop_sequence_count
+ 1848              		.syntax unified
+ 1849              		.code	16
+ 1850              		.thumb_func
+ 1851              		.fpu softvfp
+ 1853              	ral_lr11xx_lr_fhss_get_hop_sequence_count:
+ 1854              		@ args = 0, pretend = 0, frame = 16
+ 1855              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1856 0000 7FB5     		push	{r0, r1, r2, r3, r4, r5, r6, lr}
+ 1857 0002 6846     		mov	r0, sp
+ 1858 0004 1023     		movs	r3, #16
+ 1859 0006 0200     		movs	r2, r0
+ 1860 0008 CB56     		ldrsb	r3, [r1, r3]
+ 1861 000a 70C9     		ldmia	r1!, {r4, r5, r6}
+ 1862 000c 70C2     		stmia	r2!, {r4, r5, r6}
+ 1863 000e 0373     		strb	r3, [r0, #12]
+ 1864 0010 FFF7FEFF 		bl	lr11xx_lr_fhss_get_hop_sequence_count
+ 1865 0014 C0B2     		uxtb	r0, r0
+ 1866 0016 04B0     		add	sp, sp, #16
+ 1867              		@ sp needed
+ 1868 0018 70BD     		pop	{r4, r5, r6, pc}
+ 1870              		.section	.text.ral_lr11xx_get_lora_rx_pkt_cr_crc,"ax",%progbits
+ 1871              		.align	1
+ 1872              		.global	ral_lr11xx_get_lora_rx_pkt_cr_crc
+ 1873              		.syntax unified
+ 1874              		.code	16
+ 1875              		.thumb_func
+ 1876              		.fpu softvfp
+ 1878              	ral_lr11xx_get_lora_rx_pkt_cr_crc:
+ 1879              		@ args = 0, pretend = 0, frame = 0
+ 1880              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1881              		@ link register save eliminated.
+ 1882 0000 0120     		movs	r0, #1
+ 1883              		@ sp needed
+ 1884 0002 7047     		bx	lr
+ 1886              		.section	.text.ral_lr11xx_get_tx_consumption_in_ua,"ax",%progbits
+ 1887              		.align	1
+ARM GAS  /tmp/cchkk89K.s 			page 32
+
+
+ 1888              		.global	ral_lr11xx_get_tx_consumption_in_ua
+ 1889              		.syntax unified
+ 1890              		.code	16
+ 1891              		.thumb_func
+ 1892              		.fpu softvfp
+ 1894              	ral_lr11xx_get_tx_consumption_in_ua:
+ 1895              		@ args = 0, pretend = 0, frame = 24
+ 1896              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1897 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 1898 0002 87B0     		sub	sp, sp, #28
+ 1899 0004 02AC     		add	r4, sp, #8
+ 1900 0006 1D00     		movs	r5, r3
+ 1901 0008 04AB     		add	r3, sp, #16
+ 1902 000a 1970     		strb	r1, [r3]
+ 1903 000c 0592     		str	r2, [sp, #20]
+ 1904 000e 1900     		movs	r1, r3
+ 1905 0010 2200     		movs	r2, r4
+ 1906 0012 0700     		movs	r7, r0
+ 1907 0014 FFF7FEFF 		bl	ral_lr11xx_bsp_get_tx_cfg
+ 1908 0018 6B46     		mov	r3, sp
+ 1909 001a DE1D     		adds	r6, r3, #7
+ 1910 001c 3800     		movs	r0, r7
+ 1911 001e 3100     		movs	r1, r6
+ 1912 0020 FFF7FEFF 		bl	ral_lr11xx_bsp_get_reg_mode
+ 1913 0024 2078     		ldrb	r0, [r4]
+ 1914 0026 0028     		cmp	r0, #0
+ 1915 0028 18D1     		bne	.L296
+ 1916 002a 6078     		ldrb	r0, [r4, #1]
+ 1917 002c 0028     		cmp	r0, #0
+ 1918 002e 48D1     		bne	.L313
+ 1919 0030 0622     		movs	r2, #6
+ 1920 0032 A256     		ldrsb	r2, [r4, r2]
+ 1921 0034 2023     		movs	r3, #32
+ 1922 0036 0F2A     		cmp	r2, #15
+ 1923 0038 05DC     		bgt	.L298
+ 1924 003a 1100     		movs	r1, r2
+ 1925 003c 0300     		movs	r3, r0
+ 1926 003e 1131     		adds	r1, r1, #17
+ 1927 0040 01DB     		blt	.L298
+ 1928 0042 1132     		adds	r2, r2, #17
+ 1929 0044 D3B2     		uxtb	r3, r2
+ 1930              	.L298:
+ 1931 0046 3278     		ldrb	r2, [r6]
+ 1932 0048 9B00     		lsls	r3, r3, #2
+ 1933 004a 012A     		cmp	r2, #1
+ 1934 004c 04D1     		bne	.L299
+ 1935 004e 1E4A     		ldr	r2, .L316
+ 1936              	.L314:
+ 1937 0050 D358     		ldr	r3, [r2, r3]
+ 1938 0052 2B60     		str	r3, [r5]
+ 1939              	.L297:
+ 1940 0054 07B0     		add	sp, sp, #28
+ 1941              		@ sp needed
+ 1942 0056 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 1943              	.L299:
+ 1944 0058 1C4A     		ldr	r2, .L316+4
+ 1945 005a F9E7     		b	.L314
+ARM GAS  /tmp/cchkk89K.s 			page 33
+
+
+ 1946              	.L296:
+ 1947 005c 0128     		cmp	r0, #1
+ 1948 005e 18D1     		bne	.L300
+ 1949 0060 6378     		ldrb	r3, [r4, #1]
+ 1950 0062 012B     		cmp	r3, #1
+ 1951 0064 F6D1     		bne	.L297
+ 1952 0066 0622     		movs	r2, #6
+ 1953 0068 A256     		ldrsb	r2, [r4, r2]
+ 1954 006a 1E33     		adds	r3, r3, #30
+ 1955 006c 162A     		cmp	r2, #22
+ 1956 006e 05DC     		bgt	.L301
+ 1957 0070 1100     		movs	r1, r2
+ 1958 0072 0023     		movs	r3, #0
+ 1959 0074 0931     		adds	r1, r1, #9
+ 1960 0076 01DB     		blt	.L301
+ 1961 0078 0932     		adds	r2, r2, #9
+ 1962 007a D3B2     		uxtb	r3, r2
+ 1963              	.L301:
+ 1964 007c 3278     		ldrb	r2, [r6]
+ 1965 007e 9B00     		lsls	r3, r3, #2
+ 1966 0080 012A     		cmp	r2, #1
+ 1967 0082 04D1     		bne	.L302
+ 1968 0084 124A     		ldr	r2, .L316+8
+ 1969              	.L315:
+ 1970 0086 D358     		ldr	r3, [r2, r3]
+ 1971 0088 0020     		movs	r0, #0
+ 1972 008a 2B60     		str	r3, [r5]
+ 1973 008c E2E7     		b	.L297
+ 1974              	.L302:
+ 1975 008e 114A     		ldr	r2, .L316+12
+ 1976 0090 F9E7     		b	.L315
+ 1977              	.L300:
+ 1978 0092 0228     		cmp	r0, #2
+ 1979 0094 13D1     		bne	.L309
+ 1980 0096 6078     		ldrb	r0, [r4, #1]
+ 1981 0098 0028     		cmp	r0, #0
+ 1982 009a 12D1     		bne	.L313
+ 1983 009c 0622     		movs	r2, #6
+ 1984 009e A256     		ldrsb	r2, [r4, r2]
+ 1985 00a0 1E23     		movs	r3, #30
+ 1986 00a2 0D2A     		cmp	r2, #13
+ 1987 00a4 05DC     		bgt	.L303
+ 1988 00a6 1100     		movs	r1, r2
+ 1989 00a8 0300     		movs	r3, r0
+ 1990 00aa 1131     		adds	r1, r1, #17
+ 1991 00ac 01DB     		blt	.L303
+ 1992 00ae 1132     		adds	r2, r2, #17
+ 1993 00b0 D3B2     		uxtb	r3, r2
+ 1994              	.L303:
+ 1995 00b2 3278     		ldrb	r2, [r6]
+ 1996 00b4 012A     		cmp	r2, #1
+ 1997 00b6 04D1     		bne	.L313
+ 1998 00b8 074A     		ldr	r2, .L316+16
+ 1999 00ba 9B00     		lsls	r3, r3, #2
+ 2000 00bc C8E7     		b	.L314
+ 2001              	.L309:
+ 2002 00be 0220     		movs	r0, #2
+ARM GAS  /tmp/cchkk89K.s 			page 34
+
+
+ 2003 00c0 C8E7     		b	.L297
+ 2004              	.L313:
+ 2005 00c2 0120     		movs	r0, #1
+ 2006 00c4 C6E7     		b	.L297
+ 2007              	.L317:
+ 2008 00c6 C046     		.align	2
+ 2009              	.L316:
+ 2010 00c8 00000000 		.word	ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_lp_vreg
+ 2011 00cc 00000000 		.word	ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_ldo_lp_vreg
+ 2012 00d0 00000000 		.word	ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_hp_vbat
+ 2013 00d4 00000000 		.word	ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_ldo_hp_vbat
+ 2014 00d8 00000000 		.word	.LANCHOR0
+ 2016              		.section	.text.ral_lr11xx_get_gfsk_rx_consumption_in_ua,"ax",%progbits
+ 2017              		.align	1
+ 2018              		.global	ral_lr11xx_get_gfsk_rx_consumption_in_ua
+ 2019              		.syntax unified
+ 2020              		.code	16
+ 2021              		.thumb_func
+ 2022              		.fpu softvfp
+ 2024              	ral_lr11xx_get_gfsk_rx_consumption_in_ua:
+ 2025              		@ args = 4, pretend = 0, frame = 8
+ 2026              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2027 0000 73B5     		push	{r0, r1, r4, r5, r6, lr}
+ 2028 0002 1D00     		movs	r5, r3
+ 2029              		@ sp needed
+ 2030 0004 6B46     		mov	r3, sp
+ 2031 0006 6A1E     		subs	r2, r5, #1
+ 2032 0008 9541     		sbcs	r5, r5, r2
+ 2033 000a DE1D     		adds	r6, r3, #7
+ 2034 000c 3100     		movs	r1, r6
+ 2035 000e 069C     		ldr	r4, [sp, #24]
+ 2036 0010 FFF7FEFF 		bl	ral_lr11xx_bsp_get_reg_mode
+ 2037 0014 034A     		ldr	r2, .L325
+ 2038 0016 6B42     		rsbs	r3, r5, #0
+ 2039 0018 1340     		ands	r3, r2
+ 2040 001a 034A     		ldr	r2, .L325+4
+ 2041 001c 0020     		movs	r0, #0
+ 2042 001e 9B18     		adds	r3, r3, r2
+ 2043 0020 2360     		str	r3, [r4]
+ 2044 0022 76BD     		pop	{r1, r2, r4, r5, r6, pc}
+ 2045              	.L326:
+ 2046              		.align	2
+ 2047              	.L325:
+ 2048 0024 34080000 		.word	2100
+ 2049 0028 18150000 		.word	5400
+ 2051              		.section	.text.ral_lr11xx_get_lora_rx_consumption_in_ua,"ax",%progbits
+ 2052              		.align	1
+ 2053              		.global	ral_lr11xx_get_lora_rx_consumption_in_ua
+ 2054              		.syntax unified
+ 2055              		.code	16
+ 2056              		.thumb_func
+ 2057              		.fpu softvfp
+ 2059              	ral_lr11xx_get_lora_rx_consumption_in_ua:
+ 2060              		@ args = 0, pretend = 0, frame = 8
+ 2061              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2062 0000 73B5     		push	{r0, r1, r4, r5, r6, lr}
+ 2063 0002 1500     		movs	r5, r2
+ARM GAS  /tmp/cchkk89K.s 			page 35
+
+
+ 2064              		@ sp needed
+ 2065 0004 1C00     		movs	r4, r3
+ 2066 0006 6B46     		mov	r3, sp
+ 2067 0008 DE1D     		adds	r6, r3, #7
+ 2068 000a 6B1E     		subs	r3, r5, #1
+ 2069 000c 9D41     		sbcs	r5, r5, r3
+ 2070 000e 3100     		movs	r1, r6
+ 2071 0010 FFF7FEFF 		bl	ral_lr11xx_bsp_get_reg_mode
+ 2072 0014 034B     		ldr	r3, .L334
+ 2073 0016 6A42     		rsbs	r2, r5, #0
+ 2074 0018 1A40     		ands	r2, r3
+ 2075 001a 034B     		ldr	r3, .L334+4
+ 2076 001c 0020     		movs	r0, #0
+ 2077 001e D218     		adds	r2, r2, r3
+ 2078 0020 2260     		str	r2, [r4]
+ 2079 0022 76BD     		pop	{r1, r2, r4, r5, r6, pc}
+ 2080              	.L335:
+ 2081              		.align	2
+ 2082              	.L334:
+ 2083 0024 34080000 		.word	2100
+ 2084 0028 44160000 		.word	5700
+ 2086              		.section	.text.ral_lr11xx_get_random_numbers,"ax",%progbits
+ 2087              		.align	1
+ 2088              		.global	ral_lr11xx_get_random_numbers
+ 2089              		.syntax unified
+ 2090              		.code	16
+ 2091              		.thumb_func
+ 2092              		.fpu softvfp
+ 2094              	ral_lr11xx_get_random_numbers:
+ 2095              		@ args = 0, pretend = 0, frame = 0
+ 2096              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2097 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 2098 0002 0600     		movs	r6, r0
+ 2099 0004 0F00     		movs	r7, r1
+ 2100 0006 1500     		movs	r5, r2
+ 2101 0008 0024     		movs	r4, #0
+ 2102 000a 0320     		movs	r0, #3
+ 2103              	.L337:
+ 2104 000c AC42     		cmp	r4, r5
+ 2105 000e 00D1     		bne	.L339
+ 2106              	.L338:
+ 2107              		@ sp needed
+ 2108 0010 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 2109              	.L339:
+ 2110 0012 A100     		lsls	r1, r4, #2
+ 2111 0014 3000     		movs	r0, r6
+ 2112 0016 7918     		adds	r1, r7, r1
+ 2113 0018 FFF7FEFF 		bl	lr11xx_system_get_random_number
+ 2114 001c 0028     		cmp	r0, #0
+ 2115 001e F7D1     		bne	.L338
+ 2116 0020 0134     		adds	r4, r4, #1
+ 2117 0022 F3E7     		b	.L337
+ 2119              		.section	.rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_hf_vreg,"a"
+ 2120              		.align	2
+ 2121              		.set	.LANCHOR0,. + 0
+ 2124              	ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_hf_vreg:
+ 2125 0000 182E0000 		.word	11800
+ARM GAS  /tmp/cchkk89K.s 			page 36
+
+
+ 2126 0004 182E0000 		.word	11800
+ 2127 0008 7C2E0000 		.word	11900
+ 2128 000c F42E0000 		.word	12020
+ 2129 0010 582F0000 		.word	12120
+ 2130 0014 C62F0000 		.word	12230
+ 2131 0018 66300000 		.word	12390
+ 2132 001c FC300000 		.word	12540
+ 2133 0020 C4310000 		.word	12740
+ 2134 0024 A0320000 		.word	12960
+ 2135 0028 5E330000 		.word	13150
+ 2136 002c 94340000 		.word	13460
+ 2137 0030 CA350000 		.word	13770
+ 2138 0034 F6360000 		.word	14070
+ 2139 0038 7C380000 		.word	14460
+ 2140 003c B63A0000 		.word	15030
+ 2141 0040 503C0000 		.word	15440
+ 2142 0044 9E3E0000 		.word	16030
+ 2143 0048 54420000 		.word	16980
+ 2144 004c B6440000 		.word	17590
+ 2145 0050 5E470000 		.word	18270
+ 2146 0054 744A0000 		.word	19060
+ 2147 0058 BC4D0000 		.word	19900
+ 2148 005c 04510000 		.word	20740
+ 2149 0060 6A540000 		.word	21610
+ 2150 0064 80570000 		.word	22400
+ 2151 0068 4A5B0000 		.word	23370
+ 2152 006c 1C610000 		.word	24860
+ 2153 0070 2A670000 		.word	26410
+ 2154 0074 3E670000 		.word	26430
+ 2155 0078 F26C0000 		.word	27890
+ 2156              		.section	.rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_hp_vbat,"a"
+ 2157              		.align	2
+ 2160              	ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_hp_vbat:
+ 2161 0000 666C0000 		.word	27750
+ 2162 0004 AC710000 		.word	29100
+ 2163 0008 70760000 		.word	30320
+ 2164 000c A27B0000 		.word	31650
+ 2165 0010 CA850000 		.word	34250
+ 2166 0014 DE8A0000 		.word	35550
+ 2167 0018 A28F0000 		.word	36770
+ 2168 001c 52990000 		.word	39250
+ 2169 0020 08A20000 		.word	41480
+ 2170 0024 2CAB0000 		.word	43820
+ 2171 0028 B0B30000 		.word	46000
+ 2172 002c 7CBF0000 		.word	49020
+ 2173 0030 D4C60000 		.word	50900
+ 2174 0034 B8D30000 		.word	54200
+ 2175 0038 0ADC0000 		.word	56330
+ 2176 003c AAE60000 		.word	59050
+ 2177 0040 02F30000 		.word	62210
+ 2178 0044 F6FE0000 		.word	65270
+ 2179 0048 F80B0100 		.word	68600
+ 2180 004c F0180100 		.word	71920
+ 2181 0050 EC260100 		.word	75500
+ 2182 0054 8C360100 		.word	79500
+ 2183 0058 A2480100 		.word	84130
+ 2184 005c 96590100 		.word	88470
+ARM GAS  /tmp/cchkk89K.s 			page 37
+
+
+ 2185 0060 28680100 		.word	92200
+ 2186 0064 84700100 		.word	94340
+ 2187 0068 68780100 		.word	96360
+ 2188 006c 9A820100 		.word	98970
+ 2189 0070 4C8F0100 		.word	102220
+ 2190 0074 0A9F0100 		.word	106250
+ 2191 0078 C4B20100 		.word	111300
+ 2192 007c 90B90100 		.word	113040
+ 2193              		.section	.rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_lp_vreg,"a"
+ 2194              		.align	2
+ 2197              	ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_lp_vreg:
+ 2198 0000 442A0000 		.word	10820
+ 2199 0004 E42A0000 		.word	10980
+ 2200 0008 342B0000 		.word	11060
+ 2201 000c 982B0000 		.word	11160
+ 2202 0010 242C0000 		.word	11300
+ 2203 0014 A62C0000 		.word	11430
+ 2204 0018 1E2D0000 		.word	11550
+ 2205 001c A02D0000 		.word	11680
+ 2206 0020 9A2E0000 		.word	11930
+ 2207 0024 8A2F0000 		.word	12170
+ 2208 0028 84300000 		.word	12420
+ 2209 002c 6A310000 		.word	12650
+ 2210 0030 64320000 		.word	12900
+ 2211 0034 E0330000 		.word	13280
+ 2212 0038 20350000 		.word	13600
+ 2213 003c 28370000 		.word	14120
+ 2214 0040 08390000 		.word	14600
+ 2215 0044 F23A0000 		.word	15090
+ 2216 0048 A43D0000 		.word	15780
+ 2217 004c 6A400000 		.word	16490
+ 2218 0050 62430000 		.word	17250
+ 2219 0054 BA450000 		.word	17850
+ 2220 0058 20490000 		.word	18720
+ 2221 005c B84C0000 		.word	19640
+ 2222 0060 50500000 		.word	20560
+ 2223 0064 98530000 		.word	21400
+ 2224 0068 5C580000 		.word	22620
+ 2225 006c A85C0000 		.word	23720
+ 2226 0070 DA610000 		.word	25050
+ 2227 0074 EE660000 		.word	26350
+ 2228 0078 DE6C0000 		.word	27870
+ 2229 007c AE6F0000 		.word	28590
+ 2230 0080 BC930000 		.word	37820
+ 2231              		.section	.rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_ldo_hp_vbat,"a"
+ 2232              		.align	2
+ 2235              	ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_ldo_hp_vbat:
+ 2236 0000 4E7A0000 		.word	31310
+ 2237 0004 BC7F0000 		.word	32700
+ 2238 0008 B2840000 		.word	33970
+ 2239 000c C6890000 		.word	35270
+ 2240 0010 0C940000 		.word	37900
+ 2241 0014 E4980000 		.word	39140
+ 2242 0018 BC9D0000 		.word	40380
+ 2243 001c 6CA70000 		.word	42860
+ 2244 0020 5EB00000 		.word	45150
+ 2245 0024 28B90000 		.word	47400
+ARM GAS  /tmp/cchkk89K.s 			page 38
+
+
+ 2246 0028 C0C10000 		.word	49600
+ 2247 002c 78CD0000 		.word	52600
+ 2248 0030 BCD40000 		.word	54460
+ 2249 0034 5AE10000 		.word	57690
+ 2250 0038 C0E90000 		.word	59840
+ 2251 003c 56F40000 		.word	62550
+ 2252 0040 D6000100 		.word	65750
+ 2253 0044 A80B0100 		.word	68520
+ 2254 0048 C2190100 		.word	72130
+ 2255 004c DE250100 		.word	75230
+ 2256 0050 08330100 		.word	78600
+ 2257 0054 52430100 		.word	82770
+ 2258 0058 9A550100 		.word	87450
+ 2259 005c 34660100 		.word	91700
+ 2260 0060 62740100 		.word	95330
+ 2261 0064 F07C0100 		.word	97520
+ 2262 0068 C0840100 		.word	99520
+ 2263 006c C08E0100 		.word	102080
+ 2264 0070 B49A0100 		.word	105140
+ 2265 0074 F4AA0100 		.word	109300
+ 2266 0078 1CBF0100 		.word	114460
+ 2267 007c 32C70100 		.word	116530
+ 2268              		.section	.rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_ldo_lp_vreg,"a"
+ 2269              		.align	2
+ 2272              	ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_ldo_lp_vreg:
+ 2273 0000 663A0000 		.word	14950
+ 2274 0004 B03B0000 		.word	15280
+ 2275 0008 AA3C0000 		.word	15530
+ 2276 000c 9A3D0000 		.word	15770
+ 2277 0010 943E0000 		.word	16020
+ 2278 0014 A23F0000 		.word	16290
+ 2279 0018 A6400000 		.word	16550
+ 2280 001c 78410000 		.word	16760
+ 2281 0020 80430000 		.word	17280
+ 2282 0024 6A450000 		.word	17770
+ 2283 0028 4A470000 		.word	18250
+ 2284 002c 3E490000 		.word	18750
+ 2285 0030 324B0000 		.word	19250
+ 2286 0034 F84D0000 		.word	19960
+ 2287 0038 E6500000 		.word	20710
+ 2288 003c 74540000 		.word	21620
+ 2289 0040 2A580000 		.word	22570
+ 2290 0044 125C0000 		.word	23570
+ 2291 0048 9E610000 		.word	24990
+ 2292 004c D0660000 		.word	26320
+ 2293 0050 B66C0000 		.word	27830
+ 2294 0054 8E710000 		.word	29070
+ 2295 0058 C4770000 		.word	30660
+ 2296 005c EA7E0000 		.word	32490
+ 2297 0060 AC850000 		.word	34220
+ 2298 0064 EC8B0000 		.word	35820
+ 2299 0068 24950000 		.word	38180
+ 2300 006c 1C9D0000 		.word	40220
+ 2301 0070 30A70000 		.word	42800
+ 2302 0074 E6AF0000 		.word	45030
+ 2303 0078 1CBB0000 		.word	47900
+ 2304 007c 14C80000 		.word	51220
+ARM GAS  /tmp/cchkk89K.s 			page 39
+
+
+ 2305 0080 0C020100 		.word	66060
+ 2306              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/cchkk89K.s 			page 40
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 ral_lr11xx.c
+     /tmp/cchkk89K.s:12     .text.ral_lr11xx_convert_irq_flags_to_ral:0000000000000000 $t
+     /tmp/cchkk89K.s:19     .text.ral_lr11xx_convert_irq_flags_to_ral:0000000000000000 ral_lr11xx_convert_irq_flags_to_ral
+     /tmp/cchkk89K.s:93     .text.ral_lr11xx_convert_irq_flags_from_ral:0000000000000000 $t
+     /tmp/cchkk89K.s:99     .text.ral_lr11xx_convert_irq_flags_from_ral:0000000000000000 ral_lr11xx_convert_irq_flags_from_ral
+     /tmp/cchkk89K.s:172    .text.ral_lr11xx_convert_gfsk_pkt_params_from_ral:0000000000000000 $t
+     /tmp/cchkk89K.s:178    .text.ral_lr11xx_convert_gfsk_pkt_params_from_ral:0000000000000000 ral_lr11xx_convert_gfsk_pkt_params_from_ral
+     /tmp/cchkk89K.s:190    .text.ral_lr11xx_convert_gfsk_pkt_params_from_ral:0000000000000012 $d
+     /tmp/cchkk89K.s:242    .text.ral_lr11xx_convert_gfsk_pkt_params_from_ral:000000000000005e $d
+     /tmp/cchkk89K.s:277    .text.ral_lr11xx_convert_lora_mod_params_from_ral:0000000000000000 $t
+     /tmp/cchkk89K.s:283    .text.ral_lr11xx_convert_lora_mod_params_from_ral:0000000000000000 ral_lr11xx_convert_lora_mod_params_from_ral
+     /tmp/cchkk89K.s:298    .text.ral_lr11xx_convert_lora_mod_params_from_ral:0000000000000018 $d
+     /tmp/cchkk89K.s:310    .text.ral_lr11xx_convert_lora_mod_params_from_ral:0000000000000024 $t
+     /tmp/cchkk89K.s:358    .text.ral_lr11xx_convert_gfsk_mod_params_from_ral:0000000000000000 $t
+     /tmp/cchkk89K.s:364    .text.ral_lr11xx_convert_gfsk_mod_params_from_ral:0000000000000000 ral_lr11xx_convert_gfsk_mod_params_from_ral
+     /tmp/cchkk89K.s:388    .text.ral_lr11xx_convert_gfsk_mod_params_from_ral:000000000000002c $d
+     /tmp/cchkk89K.s:421    .text.ral_lr11xx_convert_lora_pkt_params_from_ral:0000000000000000 $t
+     /tmp/cchkk89K.s:427    .text.ral_lr11xx_convert_lora_pkt_params_from_ral:0000000000000000 ral_lr11xx_convert_lora_pkt_params_from_ral
+     /tmp/cchkk89K.s:459    .text.ral_lr11xx_handles_part:0000000000000000 $t
+     /tmp/cchkk89K.s:466    .text.ral_lr11xx_handles_part:0000000000000000 ral_lr11xx_handles_part
+     /tmp/cchkk89K.s:489    .text.ral_lr11xx_handles_part:0000000000000024 $d
+     /tmp/cchkk89K.s:493    .text.ral_lr11xx_reset:0000000000000000 $t
+     /tmp/cchkk89K.s:500    .text.ral_lr11xx_reset:0000000000000000 ral_lr11xx_reset
+     /tmp/cchkk89K.s:509    .text.ral_lr11xx_init:0000000000000000 $t
+     /tmp/cchkk89K.s:516    .text.ral_lr11xx_init:0000000000000000 ral_lr11xx_init
+     /tmp/cchkk89K.s:592    .text.ral_lr11xx_wakeup:0000000000000000 $t
+     /tmp/cchkk89K.s:599    .text.ral_lr11xx_wakeup:0000000000000000 ral_lr11xx_wakeup
+     /tmp/cchkk89K.s:608    .text.ral_lr11xx_set_sleep:0000000000000000 $t
+     /tmp/cchkk89K.s:615    .text.ral_lr11xx_set_sleep:0000000000000000 ral_lr11xx_set_sleep
+     /tmp/cchkk89K.s:637    .text.ral_lr11xx_set_standby:0000000000000000 $t
+     /tmp/cchkk89K.s:644    .text.ral_lr11xx_set_standby:0000000000000000 ral_lr11xx_set_standby
+     /tmp/cchkk89K.s:662    .text.ral_lr11xx_set_fs:0000000000000000 $t
+     /tmp/cchkk89K.s:669    .text.ral_lr11xx_set_fs:0000000000000000 ral_lr11xx_set_fs
+     /tmp/cchkk89K.s:678    .text.ral_lr11xx_set_tx:0000000000000000 $t
+     /tmp/cchkk89K.s:685    .text.ral_lr11xx_set_tx:0000000000000000 ral_lr11xx_set_tx
+     /tmp/cchkk89K.s:695    .text.ral_lr11xx_set_rx:0000000000000000 $t
+     /tmp/cchkk89K.s:702    .text.ral_lr11xx_set_rx:0000000000000000 ral_lr11xx_set_rx
+     /tmp/cchkk89K.s:727    .text.ral_lr11xx_set_rx:0000000000000024 $d
+     /tmp/cchkk89K.s:730    .text.ral_lr11xx_cfg_rx_boosted:0000000000000000 $t
+     /tmp/cchkk89K.s:737    .text.ral_lr11xx_cfg_rx_boosted:0000000000000000 ral_lr11xx_cfg_rx_boosted
+     /tmp/cchkk89K.s:746    .text.ral_lr11xx_set_rx_tx_fallback_mode:0000000000000000 $t
+     /tmp/cchkk89K.s:753    .text.ral_lr11xx_set_rx_tx_fallback_mode:0000000000000000 ral_lr11xx_set_rx_tx_fallback_mode
+     /tmp/cchkk89K.s:770    .text.ral_lr11xx_stop_timer_on_preamble:0000000000000000 $t
+     /tmp/cchkk89K.s:777    .text.ral_lr11xx_stop_timer_on_preamble:0000000000000000 ral_lr11xx_stop_timer_on_preamble
+     /tmp/cchkk89K.s:786    .text.ral_lr11xx_set_rx_duty_cycle:0000000000000000 $t
+     /tmp/cchkk89K.s:793    .text.ral_lr11xx_set_rx_duty_cycle:0000000000000000 ral_lr11xx_set_rx_duty_cycle
+     /tmp/cchkk89K.s:803    .text.ral_lr11xx_set_lora_cad:0000000000000000 $t
+     /tmp/cchkk89K.s:810    .text.ral_lr11xx_set_lora_cad:0000000000000000 ral_lr11xx_set_lora_cad
+     /tmp/cchkk89K.s:819    .text.ral_lr11xx_set_tx_cw:0000000000000000 $t
+     /tmp/cchkk89K.s:826    .text.ral_lr11xx_set_tx_cw:0000000000000000 ral_lr11xx_set_tx_cw
+     /tmp/cchkk89K.s:835    .text.ral_lr11xx_set_tx_infinite_preamble:0000000000000000 $t
+     /tmp/cchkk89K.s:842    .text.ral_lr11xx_set_tx_infinite_preamble:0000000000000000 ral_lr11xx_set_tx_infinite_preamble
+     /tmp/cchkk89K.s:851    .text.ral_lr11xx_cal_img:0000000000000000 $t
+     /tmp/cchkk89K.s:858    .text.ral_lr11xx_cal_img:0000000000000000 ral_lr11xx_cal_img
+     /tmp/cchkk89K.s:867    .text.ral_lr11xx_set_tx_cfg:0000000000000000 $t
+     /tmp/cchkk89K.s:874    .text.ral_lr11xx_set_tx_cfg:0000000000000000 ral_lr11xx_set_tx_cfg
+ARM GAS  /tmp/cchkk89K.s 			page 41
+
+
+     /tmp/cchkk89K.s:902    .text.ral_lr11xx_set_pkt_payload:0000000000000000 $t
+     /tmp/cchkk89K.s:909    .text.ral_lr11xx_set_pkt_payload:0000000000000000 ral_lr11xx_set_pkt_payload
+     /tmp/cchkk89K.s:919    .text.ral_lr11xx_get_pkt_payload:0000000000000000 $t
+     /tmp/cchkk89K.s:926    .text.ral_lr11xx_get_pkt_payload:0000000000000000 ral_lr11xx_get_pkt_payload
+     /tmp/cchkk89K.s:962    .text.ral_lr11xx_get_irq_status:0000000000000000 $t
+     /tmp/cchkk89K.s:969    .text.ral_lr11xx_get_irq_status:0000000000000000 ral_lr11xx_get_irq_status
+     /tmp/cchkk89K.s:990    .text.ral_lr11xx_clear_irq_status:0000000000000000 $t
+     /tmp/cchkk89K.s:997    .text.ral_lr11xx_clear_irq_status:0000000000000000 ral_lr11xx_clear_irq_status
+     /tmp/cchkk89K.s:1011   .text.ral_lr11xx_get_and_clear_irq_status:0000000000000000 $t
+     /tmp/cchkk89K.s:1018   .text.ral_lr11xx_get_and_clear_irq_status:0000000000000000 ral_lr11xx_get_and_clear_irq_status
+     /tmp/cchkk89K.s:1040   .text.ral_lr11xx_set_dio_irq_params:0000000000000000 $t
+     /tmp/cchkk89K.s:1047   .text.ral_lr11xx_set_dio_irq_params:0000000000000000 ral_lr11xx_set_dio_irq_params
+     /tmp/cchkk89K.s:1062   .text.ral_lr11xx_set_rf_freq:0000000000000000 $t
+     /tmp/cchkk89K.s:1069   .text.ral_lr11xx_set_rf_freq:0000000000000000 ral_lr11xx_set_rf_freq
+     /tmp/cchkk89K.s:1092   .text.ral_lr11xx_set_pkt_type:0000000000000000 $t
+     /tmp/cchkk89K.s:1099   .text.ral_lr11xx_set_pkt_type:0000000000000000 ral_lr11xx_set_pkt_type
+     /tmp/cchkk89K.s:1121   .text.ral_lr11xx_get_pkt_type:0000000000000000 $t
+     /tmp/cchkk89K.s:1128   .text.ral_lr11xx_get_pkt_type:0000000000000000 ral_lr11xx_get_pkt_type
+     /tmp/cchkk89K.s:1157   .text.ral_lr11xx_set_gfsk_mod_params:0000000000000000 $t
+     /tmp/cchkk89K.s:1164   .text.ral_lr11xx_set_gfsk_mod_params:0000000000000000 ral_lr11xx_set_gfsk_mod_params
+     /tmp/cchkk89K.s:1189   .text.ral_lr11xx_set_gfsk_pkt_params:0000000000000000 $t
+     /tmp/cchkk89K.s:1196   .text.ral_lr11xx_set_gfsk_pkt_params:0000000000000000 ral_lr11xx_set_gfsk_pkt_params
+     /tmp/cchkk89K.s:1221   .text.ral_lr11xx_set_lora_mod_params:0000000000000000 $t
+     /tmp/cchkk89K.s:1228   .text.ral_lr11xx_set_lora_mod_params:0000000000000000 ral_lr11xx_set_lora_mod_params
+     /tmp/cchkk89K.s:1246   .text.ral_lr11xx_set_lora_pkt_params:0000000000000000 $t
+     /tmp/cchkk89K.s:1253   .text.ral_lr11xx_set_lora_pkt_params:0000000000000000 ral_lr11xx_set_lora_pkt_params
+     /tmp/cchkk89K.s:1276   .text.ral_lr11xx_set_lora_cad_params:0000000000000000 $t
+     /tmp/cchkk89K.s:1283   .text.ral_lr11xx_set_lora_cad_params:0000000000000000 ral_lr11xx_set_lora_cad_params
+     /tmp/cchkk89K.s:1293   .text.ral_lr11xx_set_lora_cad_params:000000000000000e $d
+     /tmp/cchkk89K.s:1349   .text.ral_lr11xx_set_lora_symb_nb_timeout:0000000000000000 $t
+     /tmp/cchkk89K.s:1356   .text.ral_lr11xx_set_lora_symb_nb_timeout:0000000000000000 ral_lr11xx_set_lora_symb_nb_timeout
+     /tmp/cchkk89K.s:1365   .text.ral_lr11xx_set_flrc_mod_params:0000000000000000 $t
+     /tmp/cchkk89K.s:1372   .text.ral_lr11xx_set_flrc_mod_params:0000000000000000 ral_lr11xx_set_flrc_mod_params
+     /tmp/cchkk89K.s:1381   .text.ral_lr11xx_set_flrc_pkt_params:0000000000000000 $t
+     /tmp/cchkk89K.s:1388   .text.ral_lr11xx_set_flrc_pkt_params:0000000000000000 ral_lr11xx_set_flrc_pkt_params
+     /tmp/cchkk89K.s:1397   .text.ral_lr11xx_get_gfsk_rx_pkt_status:0000000000000000 $t
+     /tmp/cchkk89K.s:1404   .text.ral_lr11xx_get_gfsk_rx_pkt_status:0000000000000000 ral_lr11xx_get_gfsk_rx_pkt_status
+     /tmp/cchkk89K.s:1455   .text.ral_lr11xx_get_lora_rx_pkt_status:0000000000000000 $t
+     /tmp/cchkk89K.s:1462   .text.ral_lr11xx_get_lora_rx_pkt_status:0000000000000000 ral_lr11xx_get_lora_rx_pkt_status
+     /tmp/cchkk89K.s:1486   .text.ral_lr11xx_get_flrc_rx_pkt_status:0000000000000000 $t
+     /tmp/cchkk89K.s:1493   .text.ral_lr11xx_get_flrc_rx_pkt_status:0000000000000000 ral_lr11xx_get_flrc_rx_pkt_status
+     /tmp/cchkk89K.s:1502   .text.ral_lr11xx_get_rssi_inst:0000000000000000 $t
+     /tmp/cchkk89K.s:1509   .text.ral_lr11xx_get_rssi_inst:0000000000000000 ral_lr11xx_get_rssi_inst
+     /tmp/cchkk89K.s:1525   .text.ral_lr11xx_get_lora_time_on_air_in_ms:0000000000000000 $t
+     /tmp/cchkk89K.s:1532   .text.ral_lr11xx_get_lora_time_on_air_in_ms:0000000000000000 ral_lr11xx_get_lora_time_on_air_in_ms
+     /tmp/cchkk89K.s:1551   .text.ral_lr11xx_get_gfsk_time_on_air_in_ms:0000000000000000 $t
+     /tmp/cchkk89K.s:1558   .text.ral_lr11xx_get_gfsk_time_on_air_in_ms:0000000000000000 ral_lr11xx_get_gfsk_time_on_air_in_ms
+     /tmp/cchkk89K.s:1578   .text.ral_lr11xx_get_flrc_time_on_air_in_ms:0000000000000000 $t
+     /tmp/cchkk89K.s:1585   .text.ral_lr11xx_get_flrc_time_on_air_in_ms:0000000000000000 ral_lr11xx_get_flrc_time_on_air_in_ms
+     /tmp/cchkk89K.s:1594   .text.ral_lr11xx_set_gfsk_sync_word:0000000000000000 $t
+     /tmp/cchkk89K.s:1601   .text.ral_lr11xx_set_gfsk_sync_word:0000000000000000 ral_lr11xx_set_gfsk_sync_word
+     /tmp/cchkk89K.s:1624   .text.ral_lr11xx_set_lora_sync_word:0000000000000000 $t
+     /tmp/cchkk89K.s:1631   .text.ral_lr11xx_set_lora_sync_word:0000000000000000 ral_lr11xx_set_lora_sync_word
+     /tmp/cchkk89K.s:1640   .text.ral_lr11xx_set_flrc_sync_word:0000000000000000 $t
+     /tmp/cchkk89K.s:1647   .text.ral_lr11xx_set_flrc_sync_word:0000000000000000 ral_lr11xx_set_flrc_sync_word
+     /tmp/cchkk89K.s:1656   .text.ral_lr11xx_set_gfsk_crc_params:0000000000000000 $t
+     /tmp/cchkk89K.s:1663   .text.ral_lr11xx_set_gfsk_crc_params:0000000000000000 ral_lr11xx_set_gfsk_crc_params
+ARM GAS  /tmp/cchkk89K.s 			page 42
+
+
+     /tmp/cchkk89K.s:1672   .text.ral_lr11xx_set_flrc_crc_params:0000000000000000 $t
+     /tmp/cchkk89K.s:1679   .text.ral_lr11xx_set_flrc_crc_params:0000000000000000 ral_lr11xx_set_flrc_crc_params
+     /tmp/cchkk89K.s:1688   .text.ral_lr11xx_set_gfsk_whitening_seed:0000000000000000 $t
+     /tmp/cchkk89K.s:1695   .text.ral_lr11xx_set_gfsk_whitening_seed:0000000000000000 ral_lr11xx_set_gfsk_whitening_seed
+     /tmp/cchkk89K.s:1704   .text.ral_lr11xx_lr_fhss_init:0000000000000000 $t
+     /tmp/cchkk89K.s:1711   .text.ral_lr11xx_lr_fhss_init:0000000000000000 ral_lr11xx_lr_fhss_init
+     /tmp/cchkk89K.s:1720   .text.ral_lr11xx_lr_fhss_build_frame:0000000000000000 $t
+     /tmp/cchkk89K.s:1727   .text.ral_lr11xx_lr_fhss_build_frame:0000000000000000 ral_lr11xx_lr_fhss_build_frame
+     /tmp/cchkk89K.s:1782   .text.ral_lr11xx_lr_fhss_handle_hop:0000000000000000 $t
+     /tmp/cchkk89K.s:1789   .text.ral_lr11xx_lr_fhss_handle_hop:0000000000000000 ral_lr11xx_lr_fhss_handle_hop
+     /tmp/cchkk89K.s:1798   .text.ral_lr11xx_lr_fhss_handle_tx_done:0000000000000000 $t
+     /tmp/cchkk89K.s:1805   .text.ral_lr11xx_lr_fhss_handle_tx_done:0000000000000000 ral_lr11xx_lr_fhss_handle_tx_done
+     /tmp/cchkk89K.s:1814   .text.ral_lr11xx_lr_fhss_get_time_on_air_in_ms:0000000000000000 $t
+     /tmp/cchkk89K.s:1821   .text.ral_lr11xx_lr_fhss_get_time_on_air_in_ms:0000000000000000 ral_lr11xx_lr_fhss_get_time_on_air_in_ms
+     /tmp/cchkk89K.s:1846   .text.ral_lr11xx_lr_fhss_get_hop_sequence_count:0000000000000000 $t
+     /tmp/cchkk89K.s:1853   .text.ral_lr11xx_lr_fhss_get_hop_sequence_count:0000000000000000 ral_lr11xx_lr_fhss_get_hop_sequence_count
+     /tmp/cchkk89K.s:1871   .text.ral_lr11xx_get_lora_rx_pkt_cr_crc:0000000000000000 $t
+     /tmp/cchkk89K.s:1878   .text.ral_lr11xx_get_lora_rx_pkt_cr_crc:0000000000000000 ral_lr11xx_get_lora_rx_pkt_cr_crc
+     /tmp/cchkk89K.s:1887   .text.ral_lr11xx_get_tx_consumption_in_ua:0000000000000000 $t
+     /tmp/cchkk89K.s:1894   .text.ral_lr11xx_get_tx_consumption_in_ua:0000000000000000 ral_lr11xx_get_tx_consumption_in_ua
+     /tmp/cchkk89K.s:2010   .text.ral_lr11xx_get_tx_consumption_in_ua:00000000000000c8 $d
+     /tmp/cchkk89K.s:2197   .rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_lp_vreg:0000000000000000 ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_lp_vreg
+     /tmp/cchkk89K.s:2272   .rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_ldo_lp_vreg:0000000000000000 ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_ldo_lp_vreg
+     /tmp/cchkk89K.s:2160   .rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_hp_vbat:0000000000000000 ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_hp_vbat
+     /tmp/cchkk89K.s:2235   .rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_ldo_hp_vbat:0000000000000000 ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_ldo_hp_vbat
+     /tmp/cchkk89K.s:2017   .text.ral_lr11xx_get_gfsk_rx_consumption_in_ua:0000000000000000 $t
+     /tmp/cchkk89K.s:2024   .text.ral_lr11xx_get_gfsk_rx_consumption_in_ua:0000000000000000 ral_lr11xx_get_gfsk_rx_consumption_in_ua
+     /tmp/cchkk89K.s:2048   .text.ral_lr11xx_get_gfsk_rx_consumption_in_ua:0000000000000024 $d
+     /tmp/cchkk89K.s:2052   .text.ral_lr11xx_get_lora_rx_consumption_in_ua:0000000000000000 $t
+     /tmp/cchkk89K.s:2059   .text.ral_lr11xx_get_lora_rx_consumption_in_ua:0000000000000000 ral_lr11xx_get_lora_rx_consumption_in_ua
+     /tmp/cchkk89K.s:2083   .text.ral_lr11xx_get_lora_rx_consumption_in_ua:0000000000000024 $d
+     /tmp/cchkk89K.s:2087   .text.ral_lr11xx_get_random_numbers:0000000000000000 $t
+     /tmp/cchkk89K.s:2094   .text.ral_lr11xx_get_random_numbers:0000000000000000 ral_lr11xx_get_random_numbers
+     /tmp/cchkk89K.s:2120   .rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_hf_vreg:0000000000000000 $d
+     /tmp/cchkk89K.s:2124   .rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_hf_vreg:0000000000000000 ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_hf_vreg
+     /tmp/cchkk89K.s:2157   .rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_hp_vbat:0000000000000000 $d
+     /tmp/cchkk89K.s:2194   .rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_lp_vreg:0000000000000000 $d
+     /tmp/cchkk89K.s:2232   .rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_ldo_hp_vbat:0000000000000000 $d
+     /tmp/cchkk89K.s:2269   .rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_ldo_lp_vreg:0000000000000000 $d
+     /tmp/cchkk89K.s:195    .text.ral_lr11xx_convert_gfsk_pkt_params_from_ral:0000000000000017 $d
+     /tmp/cchkk89K.s:195    .text.ral_lr11xx_convert_gfsk_pkt_params_from_ral:0000000000000018 $t
+     /tmp/cchkk89K.s:247    .text.ral_lr11xx_convert_gfsk_pkt_params_from_ral:0000000000000063 $d
+     /tmp/cchkk89K.s:247    .text.ral_lr11xx_convert_gfsk_pkt_params_from_ral:0000000000000064 $t
+     /tmp/cchkk89K.s:393    .text.ral_lr11xx_convert_gfsk_mod_params_from_ral:0000000000000031 $d
+     /tmp/cchkk89K.s:393    .text.ral_lr11xx_convert_gfsk_mod_params_from_ral:0000000000000032 $t
+     /tmp/cchkk89K.s:1298   .text.ral_lr11xx_set_lora_cad_params:0000000000000013 $d
+     /tmp/cchkk89K.s:1298   .text.ral_lr11xx_set_lora_cad_params:0000000000000014 $t
+
+UNDEFINED SYMBOLS
+__gnu_thumb1_case_uqi
+lr11xx_radio_get_gfsk_rx_bandwidth
+strcmp
+lr11xx_system_reset
+memset
+ral_lr11xx_bsp_get_crc_state
+ral_lr11xx_bsp_get_reg_mode
+lr11xx_system_set_reg_mode
+ARM GAS  /tmp/cchkk89K.s 			page 43
+
+
+ral_lr11xx_bsp_get_rf_switch_cfg
+lr11xx_system_set_dio_as_rf_switch
+ral_lr11xx_bsp_get_xosc_cfg
+lr11xx_system_set_tcxo_mode
+lr11xx_system_calibrate
+lr11xx_system_enable_spi_crc
+lr11xx_system_wakeup
+lr11xx_system_cfg_lfclk
+lr11xx_system_set_sleep
+lr11xx_system_set_standby
+lr11xx_system_set_fs
+lr11xx_radio_set_tx
+lr11xx_radio_set_rx_with_timeout_in_rtc_step
+lr11xx_radio_set_rx
+lr11xx_radio_cfg_rx_boosted
+lr11xx_radio_set_rx_tx_fallback_mode
+lr11xx_radio_stop_timeout_on_preamble
+lr11xx_radio_set_rx_duty_cycle
+lr11xx_radio_set_cad
+lr11xx_radio_set_tx_cw
+lr11xx_radio_set_tx_infinite_preamble
+lr11xx_system_calibrate_image_in_mhz
+ral_lr11xx_bsp_get_tx_cfg
+lr11xx_radio_set_pa_cfg
+lr11xx_radio_set_tx_params
+lr11xx_regmem_write_buffer8
+lr11xx_radio_get_rx_buffer_status
+lr11xx_regmem_read_buffer8
+lr11xx_system_get_status
+lr11xx_system_clear_irq_status
+lr11xx_system_get_and_clear_irq_status
+lr11xx_system_set_dio_irq_params
+lr11xx_radio_set_rf_freq
+ral_lr11xx_bsp_get_rssi_calibration_table
+lr11xx_radio_set_rssi_calibration
+lr11xx_radio_set_pkt_type
+lr11xx_radio_get_pkt_type
+lr11xx_radio_set_gfsk_mod_params
+lr11xx_radio_set_gfsk_pkt_params
+lr11xx_radio_set_lora_mod_params
+lr11xx_radio_set_lora_pkt_params
+lr11xx_radio_convert_time_in_ms_to_rtc_step
+lr11xx_radio_set_cad_params
+lr11xx_radio_set_lora_sync_timeout
+lr11xx_radio_get_gfsk_pkt_status
+lr11xx_radio_get_lora_pkt_status
+lr11xx_radio_get_rssi_inst
+lr11xx_radio_get_lora_time_on_air_in_ms
+lr11xx_radio_get_gfsk_time_on_air_in_ms
+lr11xx_radio_set_gfsk_sync_word
+lr11xx_radio_set_lora_sync_word
+lr11xx_radio_set_gfsk_crc_params
+lr11xx_radio_set_gfsk_whitening_seed
+lr11xx_lr_fhss_init
+lr11xx_lr_fhss_build_frame
+lr11xx_lr_fhss_get_time_on_air_in_ms
+lr11xx_lr_fhss_get_hop_sequence_count
+ARM GAS  /tmp/cchkk89K.s 			page 44
+
+
+lr11xx_system_get_random_number

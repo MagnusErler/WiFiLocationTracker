@@ -1,0 +1,2268 @@
+ARM GAS  /tmp/ccLkx9JN.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.eabi_attribute 23, 1
+   3              		.eabi_attribute 24, 1
+   4              		.eabi_attribute 25, 1
+   5              		.eabi_attribute 26, 1
+   6              		.eabi_attribute 30, 4
+   7              		.eabi_attribute 34, 0
+   8              		.eabi_attribute 18, 4
+   9              		.file	"smtc_beacon_sniff.c"
+  10              		.text
+  11              		.section	.text.crc16_beacon.part.0,"ax",%progbits
+  12              		.align	1
+  13              		.arch armv6s-m
+  14              		.syntax unified
+  15              		.code	16
+  16              		.thumb_func
+  17              		.fpu softvfp
+  19              	crc16_beacon.part.0:
+  20              		@ args = 0, pretend = 0, frame = 0
+  21              		@ frame_needed = 0, uses_anonymous_args = 0
+  22 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+  23 0002 0400     		movs	r4, r0
+  24 0004 0020     		movs	r0, #0
+  25 0006 0827     		movs	r7, #8
+  26 0008 0200     		movs	r2, r0
+  27 000a 0B4E     		ldr	r6, .L8
+  28              	.L4:
+  29 000c A35C     		ldrb	r3, [r4, r2]
+  30 000e 1B02     		lsls	r3, r3, #8
+  31 0010 5840     		eors	r0, r3
+  32 0012 3B00     		movs	r3, r7
+  33              	.L3:
+  34 0014 4500     		lsls	r5, r0, #1
+  35 0016 00B2     		sxth	r0, r0
+  36 0018 8446     		mov	ip, r0
+  37 001a ADB2     		uxth	r5, r5
+  38 001c 2800     		movs	r0, r5
+  39 001e 6546     		mov	r5, ip
+  40 0020 002D     		cmp	r5, #0
+  41 0022 00DA     		bge	.L2
+  42 0024 7040     		eors	r0, r6
+  43              	.L2:
+  44 0026 013B     		subs	r3, r3, #1
+  45 0028 DBB2     		uxtb	r3, r3
+  46 002a 002B     		cmp	r3, #0
+  47 002c F2D1     		bne	.L3
+  48 002e 0132     		adds	r2, r2, #1
+  49 0030 8A42     		cmp	r2, r1
+  50 0032 EBD3     		bcc	.L4
+  51              		@ sp needed
+  52 0034 F0BD     		pop	{r4, r5, r6, r7, pc}
+  53              	.L9:
+  54 0036 C046     		.align	2
+  55              	.L8:
+  56 0038 21100000 		.word	4129
+  58              		.section	.rodata.get_beacon_length.str1.1,"aMS",%progbits,1
+  59              	.LC2:
+ARM GAS  /tmp/ccLkx9JN.s 			page 2
+
+
+  60 0000 1B5B303B 		.ascii	"\033[0;31mERROR: crash log :%s\012\000"
+  60      33316D45 
+  60      52524F52 
+  60      3A206372 
+  60      61736820 
+  61              	.LC4:
+  62 001d 1B5B306D 		.ascii	"\033[0m\000"
+  62      00
+  63              	.LC6:
+  64 0022 1B5B303B 		.ascii	"\033[0;31mERROR: ->  invalid beacon sf \000"
+  64      33316D45 
+  64      52524F52 
+  64      3A202D3E 
+  64      2020696E 
+  65              		.section	.text.get_beacon_length,"ax",%progbits
+  66              		.align	1
+  67              		.syntax unified
+  68              		.code	16
+  69              		.thumb_func
+  70              		.fpu softvfp
+  72              	get_beacon_length:
+  73              		@ args = 0, pretend = 0, frame = 0
+  74              		@ frame_needed = 0, uses_anonymous_args = 0
+  75 0000 0838     		subs	r0, r0, #8
+  76 0002 C0B2     		uxtb	r0, r0
+  77 0004 10B5     		push	{r4, lr}
+  78 0006 0428     		cmp	r0, #4
+  79 0008 02D8     		bhi	.L11
+  80 000a 0E4B     		ldr	r3, .L13
+  81 000c 185C     		ldrb	r0, [r3, r0]
+  82              	.L12:
+  83              		@ sp needed
+  84 000e 10BD     		pop	{r4, pc}
+  85              	.L11:
+  86 0010 0D4C     		ldr	r4, .L13+4
+  87 0012 2000     		movs	r0, r4
+  88 0014 FFF7FEFF 		bl	smtc_modem_hal_store_crashlog
+  89 0018 0120     		movs	r0, #1
+  90 001a FFF7FEFF 		bl	smtc_modem_hal_set_crashlog_status
+  91 001e 2100     		movs	r1, r4
+  92 0020 0A48     		ldr	r0, .L13+8
+  93 0022 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+  94 0026 0A4C     		ldr	r4, .L13+12
+  95 0028 2000     		movs	r0, r4
+  96 002a FFF7FEFF 		bl	smtc_modem_hal_print_trace
+  97 002e 0948     		ldr	r0, .L13+16
+  98 0030 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+  99 0034 2000     		movs	r0, r4
+ 100 0036 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 101 003a FFF7FEFF 		bl	smtc_modem_hal_reset_mcu
+ 102 003e 0020     		movs	r0, #0
+ 103 0040 E5E7     		b	.L12
+ 104              	.L14:
+ 105 0042 C046     		.align	2
+ 106              	.L13:
+ 107 0044 00000000 		.word	.LANCHOR0
+ 108 0048 00000000 		.word	.LANCHOR1
+ARM GAS  /tmp/ccLkx9JN.s 			page 3
+
+
+ 109 004c 00000000 		.word	.LC2
+ 110 0050 1D000000 		.word	.LC4
+ 111 0054 22000000 		.word	.LC6
+ 113              		.section	.rodata.smtc_beacon_sniff_launch_callback_for_rp.str1.1,"aMS",%progbits,1
+ 114              	.LC8:
+ 115 0000 646F6573 		.ascii	"doesn't listen this beacon , jump it to save power "
+ 115      6E277420 
+ 115      6C697374 
+ 115      656E2074 
+ 115      68697320 
+ 116 0033 0A00     		.ascii	"\012\000"
+ 117              		.section	.text.smtc_beacon_sniff_launch_callback_for_rp,"ax",%progbits
+ 118              		.align	1
+ 119              		.syntax unified
+ 120              		.code	16
+ 121              		.thumb_func
+ 122              		.fpu softvfp
+ 124              	smtc_beacon_sniff_launch_callback_for_rp:
+ 125              		@ args = 0, pretend = 0, frame = 0
+ 126              		@ frame_needed = 0, uses_anonymous_args = 0
+ 127 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 128 0002 2B4B     		ldr	r3, .L32
+ 129 0004 2B4A     		ldr	r2, .L32+4
+ 130 0006 C65C     		ldrb	r6, [r0, r3]
+ 131 0008 1C23     		movs	r3, #28
+ 132 000a 7343     		muls	r3, r6
+ 133 000c C318     		adds	r3, r0, r3
+ 134 000e 9B18     		adds	r3, r3, r2
+ 135 0010 1B78     		ldrb	r3, [r3]
+ 136 0012 0400     		movs	r4, r0
+ 137 0014 0E2B     		cmp	r3, #14
+ 138 0016 07D1     		bne	.L16
+ 139 0018 2748     		ldr	r0, .L32+8
+ 140 001a FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 141 001e 3100     		movs	r1, r6
+ 142 0020 2000     		movs	r0, r4
+ 143 0022 FFF7FEFF 		bl	rp_task_abort
+ 144              	.L15:
+ 145              		@ sp needed
+ 146 0026 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 147              	.L16:
+ 148 0028 FFF7FEFF 		bl	smtc_modem_hal_start_radio_tcxo
+ 149 002c 8421     		movs	r1, #132
+ 150 002e 9C25     		movs	r5, #156
+ 151 0030 7143     		muls	r1, r6
+ 152 0032 2D01     		lsls	r5, r5, #4
+ 153 0034 6359     		ldr	r3, [r4, r5]
+ 154 0036 4C31     		adds	r1, r1, #76
+ 155 0038 F433     		adds	r3, r3, #244
+ 156 003a 1B68     		ldr	r3, [r3]
+ 157 003c 6059     		ldr	r0, [r4, r5]
+ 158 003e 6118     		adds	r1, r4, r1
+ 159 0040 9847     		blx	r3
+ 160 0042 0028     		cmp	r0, #0
+ 161 0044 04D0     		beq	.L18
+ 162 0046 6E21     		movs	r1, #110
+ 163 0048 1C48     		ldr	r0, .L32+12
+ARM GAS  /tmp/ccLkx9JN.s 			page 4
+
+
+ 164 004a FF31     		adds	r1, r1, #255
+ 165 004c FFF7FEFF 		bl	smtc_modem_hal_assert_fail
+ 166              	.L18:
+ 167 0050 6359     		ldr	r3, [r4, r5]
+ 168 0052 CC21     		movs	r1, #204
+ 169 0054 1A6E     		ldr	r2, [r3, #96]
+ 170 0056 1868     		ldr	r0, [r3]
+ 171 0058 9047     		blx	r2
+ 172 005a 0028     		cmp	r0, #0
+ 173 005c 04D0     		beq	.L19
+ 174 005e B721     		movs	r1, #183
+ 175 0060 1648     		ldr	r0, .L32+12
+ 176 0062 4900     		lsls	r1, r1, #1
+ 177 0064 FFF7FEFF 		bl	smtc_modem_hal_assert_fail
+ 178              	.L19:
+ 179 0068 1C25     		movs	r5, #28
+ 180 006a 7543     		muls	r5, r6
+ 181 006c 144B     		ldr	r3, .L32+16
+ 182 006e 6519     		adds	r5, r4, r5
+ 183 0070 ED18     		adds	r5, r5, r3
+ 184              	.L20:
+ 185 0072 2F68     		ldr	r7, [r5]
+ 186 0074 FFF7FEFF 		bl	smtc_modem_hal_get_time_in_ms
+ 187 0078 3F1A     		subs	r7, r7, r0
+ 188 007a 002F     		cmp	r7, #0
+ 189 007c F9DC     		bgt	.L20
+ 190 007e 9C23     		movs	r3, #156
+ 191 0080 1B01     		lsls	r3, r3, #4
+ 192 0082 E258     		ldr	r2, [r4, r3]
+ 193 0084 8423     		movs	r3, #132
+ 194 0086 5E43     		muls	r6, r3
+ 195 0088 A619     		adds	r6, r4, r6
+ 196 008a 536A     		ldr	r3, [r2, #36]
+ 197 008c B16F     		ldr	r1, [r6, #120]
+ 198 008e 1068     		ldr	r0, [r2]
+ 199 0090 9847     		blx	r3
+ 200 0092 0028     		cmp	r0, #0
+ 201 0094 04D0     		beq	.L21
+ 202 0096 7621     		movs	r1, #118
+ 203 0098 0848     		ldr	r0, .L32+12
+ 204 009a FF31     		adds	r1, r1, #255
+ 205 009c FFF7FEFF 		bl	smtc_modem_hal_assert_fail
+ 206              	.L21:
+ 207 00a0 FFF7FEFF 		bl	smtc_modem_hal_get_time_in_ms
+ 208 00a4 8F23     		movs	r3, #143
+ 209 00a6 1B01     		lsls	r3, r3, #4
+ 210 00a8 E418     		adds	r4, r4, r3
+ 211 00aa 6065     		str	r0, [r4, #84]
+ 212 00ac BBE7     		b	.L15
+ 213              	.L33:
+ 214 00ae C046     		.align	2
+ 215              	.L32:
+ 216 00b0 84090000 		.word	2436
+ 217 00b4 C9050000 		.word	1481
+ 218 00b8 00000000 		.word	.LC8
+ 219 00bc 00000000 		.word	.LANCHOR2
+ 220 00c0 D4050000 		.word	1492
+ARM GAS  /tmp/ccLkx9JN.s 			page 5
+
+
+ 222              		.global	__aeabi_uidivmod
+ 223              		.global	__aeabi_uidiv
+ 224              		.section	.text.beacon_rp_request,"ax",%progbits
+ 225              		.align	1
+ 226              		.syntax unified
+ 227              		.code	16
+ 228              		.thumb_func
+ 229              		.fpu softvfp
+ 231              	beacon_rp_request:
+ 232              		@ args = 0, pretend = 0, frame = 192
+ 233              		@ frame_needed = 0, uses_anonymous_args = 0
+ 234 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 235 0002 0400     		movs	r4, r0
+ 236 0004 B3B0     		sub	sp, sp, #204
+ 237 0006 0AAE     		add	r6, sp, #40
+ 238 0008 1C22     		movs	r2, #28
+ 239 000a 0021     		movs	r1, #0
+ 240 000c 3000     		movs	r0, r6
+ 241 000e FFF7FEFF 		bl	memset
+ 242 0012 1422     		movs	r2, #20
+ 243 0014 0021     		movs	r1, #0
+ 244 0016 05A8     		add	r0, sp, #20
+ 245 0018 FFF7FEFF 		bl	memset
+ 246 001c E36D     		ldr	r3, [r4, #92]
+ 247 001e A26D     		ldr	r2, [r4, #88]
+ 248 0020 9818     		adds	r0, r3, r2
+ 249 0022 2300     		movs	r3, r4
+ 250 0024 4C33     		adds	r3, r3, #76
+ 251 0026 1978     		ldrb	r1, [r3]
+ 252 0028 FFF7FEFF 		bl	__aeabi_uidivmod
+ 253 002c 0B1E     		subs	r3, r1, #0
+ 254 002e 05D0     		beq	.L35
+ 255 0030 2300     		movs	r3, r4
+ 256 0032 2A33     		adds	r3, r3, #42
+ 257 0034 1B78     		ldrb	r3, [r3]
+ 258 0036 002B     		cmp	r3, #0
+ 259 0038 00D0     		beq	.L35
+ 260 003a 0E23     		movs	r3, #14
+ 261              	.L35:
+ 262 003c 7370     		strb	r3, [r6, #1]
+ 263 003e 237B     		ldrb	r3, [r4, #12]
+ 264 0040 3370     		strb	r3, [r6]
+ 265 0042 0023     		movs	r3, #0
+ 266 0044 B372     		strb	r3, [r6, #10]
+ 267 0046 FFF7FEFF 		bl	smtc_modem_hal_get_radio_tcxo_startup_delay_ms
+ 268 004a 0500     		movs	r5, r0
+ 269 004c FFF7FEFF 		bl	smtc_modem_hal_get_board_delay_ms
+ 270 0050 A768     		ldr	r7, [r4, #8]
+ 271 0052 0390     		str	r0, [sp, #12]
+ 272 0054 3800     		movs	r0, r7
+ 273 0056 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 274 005a 039A     		ldr	r2, [sp, #12]
+ 275 005c 0100     		movs	r1, r0
+ 276 005e AD18     		adds	r5, r5, r2
+ 277 0060 11A8     		add	r0, sp, #68
+ 278 0062 6AB2     		sxtb	r2, r5
+ 279 0064 238E     		ldrh	r3, [r4, #48]
+ARM GAS  /tmp/ccLkx9JN.s 			page 6
+
+
+ 280 0066 0090     		str	r0, [sp]
+ 281 0068 3800     		movs	r0, r7
+ 282 006a FFF7FEFF 		bl	smtc_real_get_rx_start_time_offset_ms
+ 283 006e 0A21     		movs	r1, #10
+ 284 0070 A06C     		ldr	r0, [r4, #72]
+ 285 0072 FFF7FEFF 		bl	__aeabi_uidiv
+ 286 0076 119B     		ldr	r3, [sp, #68]
+ 287 0078 A568     		ldr	r5, [r4, #8]
+ 288 007a C018     		adds	r0, r0, r3
+ 289 007c F060     		str	r0, [r6, #12]
+ 290 007e 2800     		movs	r0, r5
+ 291 0080 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 292 0084 0100     		movs	r1, r0
+ 293 0086 2800     		movs	r0, r5
+ 294 0088 FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 295 008c FA25     		movs	r5, #250
+ 296 008e 0123     		movs	r3, #1
+ 297 0090 AD00     		lsls	r5, r5, #2
+ 298 0092 A842     		cmp	r0, r5
+ 299 0094 0BD3     		bcc	.L36
+ 300 0096 A768     		ldr	r7, [r4, #8]
+ 301 0098 3800     		movs	r0, r7
+ 302 009a FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 303 009e 0100     		movs	r1, r0
+ 304 00a0 3800     		movs	r0, r7
+ 305 00a2 FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 306 00a6 2900     		movs	r1, r5
+ 307 00a8 FFF7FEFF 		bl	__aeabi_uidiv
+ 308 00ac 0300     		movs	r3, r0
+ 309              	.L36:
+ 310 00ae 278E     		ldrh	r7, [r4, #48]
+ 311 00b0 0021     		movs	r1, #0
+ 312 00b2 7B43     		muls	r3, r7
+ 313 00b4 B361     		str	r3, [r6, #24]
+ 314 00b6 4F4B     		ldr	r3, .L56
+ 315 00b8 8422     		movs	r2, #132
+ 316 00ba 11A8     		add	r0, sp, #68
+ 317 00bc 7360     		str	r3, [r6, #4]
+ 318 00be FFF7FEFF 		bl	memset
+ 319 00c2 3C22     		movs	r2, #60
+ 320 00c4 02AB     		add	r3, sp, #8
+ 321 00c6 9A18     		adds	r2, r3, r2
+ 322 00c8 0123     		movs	r3, #1
+ 323 00ca 05AD     		add	r5, sp, #20
+ 324 00cc 1370     		strb	r3, [r2]
+ 325 00ce A068     		ldr	r0, [r4, #8]
+ 326 00d0 AF74     		strb	r7, [r5, #18]
+ 327 00d2 FFF7FEFF 		bl	smtc_real_get_sync_word
+ 328 00d6 6874     		strb	r0, [r5, #17]
+ 329 00d8 A068     		ldr	r0, [r4, #8]
+ 330 00da FFF7FEFF 		bl	smtc_real_get_coding_rate
+ 331 00de 0123     		movs	r3, #1
+ 332 00e0 AB71     		strb	r3, [r5, #6]
+ 333 00e2 A368     		ldr	r3, [r4, #8]
+ 334 00e4 A870     		strb	r0, [r5, #2]
+ 335 00e6 1800     		movs	r0, r3
+ 336 00e8 0393     		str	r3, [sp, #12]
+ARM GAS  /tmp/ccLkx9JN.s 			page 7
+
+
+ 337 00ea 0B27     		movs	r7, #11
+ 338 00ec FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 339 00f0 0A22     		movs	r2, #10
+ 340 00f2 02AB     		add	r3, sp, #8
+ 341 00f4 0100     		movs	r1, r0
+ 342 00f6 FF18     		adds	r7, r7, r3
+ 343 00f8 02A8     		add	r0, sp, #8
+ 344 00fa 1218     		adds	r2, r2, r0
+ 345 00fc 3B00     		movs	r3, r7
+ 346 00fe 0398     		ldr	r0, [sp, #12]
+ 347 0100 FFF7FEFF 		bl	smtc_real_lora_dr_to_sf_bw
+ 348 0104 02AB     		add	r3, sp, #8
+ 349 0106 987A     		ldrb	r0, [r3, #10]
+ 350 0108 FFF7FEFF 		bl	get_beacon_length
+ 351 010c 0023     		movs	r3, #0
+ 352 010e 2B81     		strh	r3, [r5, #8]
+ 353 0110 A368     		ldr	r3, [r4, #8]
+ 354 0112 E871     		strb	r0, [r5, #7]
+ 355 0114 1800     		movs	r0, r3
+ 356 0116 0393     		str	r3, [sp, #12]
+ 357 0118 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 358 011c 0A22     		movs	r2, #10
+ 359 011e 0100     		movs	r1, r0
+ 360 0120 02A8     		add	r0, sp, #8
+ 361 0122 1218     		adds	r2, r2, r0
+ 362 0124 3B00     		movs	r3, r7
+ 363 0126 0398     		ldr	r0, [sp, #12]
+ 364 0128 FFF7FEFF 		bl	smtc_real_lora_dr_to_sf_bw
+ 365 012c 02AB     		add	r3, sp, #8
+ 366 012e 9B7A     		ldrb	r3, [r3, #10]
+ 367 0130 2B70     		strb	r3, [r5]
+ 368 0132 A368     		ldr	r3, [r4, #8]
+ 369 0134 1800     		movs	r0, r3
+ 370 0136 0393     		str	r3, [sp, #12]
+ 371 0138 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 372 013c 0A22     		movs	r2, #10
+ 373 013e 0100     		movs	r1, r0
+ 374 0140 02A8     		add	r0, sp, #8
+ 375 0142 1218     		adds	r2, r2, r0
+ 376 0144 3B00     		movs	r3, r7
+ 377 0146 0398     		ldr	r0, [sp, #12]
+ 378 0148 FFF7FEFF 		bl	smtc_real_lora_dr_to_sf_bw
+ 379 014c 3B78     		ldrb	r3, [r7]
+ 380 014e E16A     		ldr	r1, [r4, #44]
+ 381 0150 A068     		ldr	r0, [r4, #8]
+ 382 0152 6B70     		strb	r3, [r5, #1]
+ 383 0154 FFF7FEFF 		bl	smtc_real_get_beacon_frequency
+ 384 0158 E860     		str	r0, [r5, #12]
+ 385 015a 6878     		ldrb	r0, [r5, #1]
+ 386 015c 2B78     		ldrb	r3, [r5]
+ 387 015e 0C28     		cmp	r0, #12
+ 388 0160 46D8     		bhi	.L47
+ 389 0162 FFF7FEFF 		bl	__gnu_thumb1_case_uqi
+ 390              	.L39:
+ 391 0166 07       		.byte	(.L43-.L39)/2
+ 392 0167 07       		.byte	(.L43-.L39)/2
+ 393 0168 07       		.byte	(.L43-.L39)/2
+ARM GAS  /tmp/ccLkx9JN.s 			page 8
+
+
+ 394 0169 07       		.byte	(.L43-.L39)/2
+ 395 016a 07       		.byte	(.L43-.L39)/2
+ 396 016b 40       		.byte	(.L42-.L39)/2
+ 397 016c 3B       		.byte	(.L41-.L39)/2
+ 398 016d 34       		.byte	(.L38-.L39)/2
+ 399 016e 34       		.byte	(.L38-.L39)/2
+ 400 016f 2F       		.byte	(.L40-.L39)/2
+ 401 0170 34       		.byte	(.L38-.L39)/2
+ 402 0171 45       		.byte	(.L47-.L39)/2
+ 403 0172 34       		.byte	(.L38-.L39)/2
+ 404 0173 00       		.p2align 1
+ 405              	.L43:
+ 406 0174 0123     		movs	r3, #1
+ 407              	.L37:
+ 408 0176 EB70     		strb	r3, [r5, #3]
+ 409 0178 0A23     		movs	r3, #10
+ 410 017a 2A00     		movs	r2, r5
+ 411 017c AB80     		strh	r3, [r5, #4]
+ 412 017e 1DAB     		add	r3, sp, #116
+ 413 0180 83CA     		ldmia	r2!, {r0, r1, r7}
+ 414 0182 83C3     		stmia	r3!, {r0, r1, r7}
+ 415 0184 03CA     		ldmia	r2!, {r0, r1}
+ 416 0186 03C3     		stmia	r3!, {r0, r1}
+ 417 0188 1B4B     		ldr	r3, .L56+4
+ 418 018a 6268     		ldr	r2, [r4, #4]
+ 419 018c 2893     		str	r3, [sp, #160]
+ 420 018e F93B     		subs	r3, r3, #249
+ 421 0190 FF3B     		subs	r3, r3, #255
+ 422 0192 D358     		ldr	r3, [r2, r3]
+ 423 0194 2900     		movs	r1, r5
+ 424 0196 A033     		adds	r3, r3, #160
+ 425 0198 1B68     		ldr	r3, [r3]
+ 426 019a 06A8     		add	r0, sp, #24
+ 427 019c 9847     		blx	r3
+ 428 019e 2200     		movs	r2, r4
+ 429 01a0 11AB     		add	r3, sp, #68
+ 430 01a2 6063     		str	r0, [r4, #52]
+ 431 01a4 0093     		str	r3, [sp]
+ 432 01a6 3100     		movs	r1, r6
+ 433 01a8 1923     		movs	r3, #25
+ 434 01aa 6068     		ldr	r0, [r4, #4]
+ 435 01ac 1032     		adds	r2, r2, #16
+ 436 01ae FFF7FEFF 		bl	rp_task_enqueue
+ 437 01b2 0028     		cmp	r0, #0
+ 438 01b4 04D0     		beq	.L34
+ 439 01b6 AE21     		movs	r1, #174
+ 440 01b8 1048     		ldr	r0, .L56+8
+ 441 01ba 4900     		lsls	r1, r1, #1
+ 442 01bc FFF7FEFF 		bl	smtc_modem_hal_assert_fail
+ 443              	.L34:
+ 444 01c0 33B0     		add	sp, sp, #204
+ 445              		@ sp needed
+ 446 01c2 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 447              	.L40:
+ 448 01c4 0C3B     		subs	r3, r3, #12
+ 449 01c6 5A42     		rsbs	r2, r3, #0
+ 450 01c8 5341     		adcs	r3, r3, r2
+ARM GAS  /tmp/ccLkx9JN.s 			page 9
+
+
+ 451              	.L55:
+ 452 01ca DBB2     		uxtb	r3, r3
+ 453 01cc D3E7     		b	.L37
+ 454              	.L38:
+ 455 01ce 0B3B     		subs	r3, r3, #11
+ 456 01d0 DAB2     		uxtb	r2, r3
+ 457 01d2 0121     		movs	r1, #1
+ 458 01d4 0023     		movs	r3, #0
+ 459              	.L54:
+ 460 01d6 9142     		cmp	r1, r2
+ 461 01d8 5B41     		adcs	r3, r3, r3
+ 462 01da F6E7     		b	.L55
+ 463              	.L41:
+ 464 01dc 0A3B     		subs	r3, r3, #10
+ 465 01de DAB2     		uxtb	r2, r3
+ 466 01e0 0221     		movs	r1, #2
+ 467 01e2 0023     		movs	r3, #0
+ 468 01e4 F7E7     		b	.L54
+ 469              	.L42:
+ 470 01e6 093B     		subs	r3, r3, #9
+ 471 01e8 DAB2     		uxtb	r2, r3
+ 472 01ea 0321     		movs	r1, #3
+ 473 01ec 0023     		movs	r3, #0
+ 474 01ee F2E7     		b	.L54
+ 475              	.L47:
+ 476 01f0 0023     		movs	r3, #0
+ 477 01f2 C0E7     		b	.L37
+ 478              	.L57:
+ 479              		.align	2
+ 480              	.L56:
+ 481 01f4 00000000 		.word	smtc_beacon_sniff_launch_callback_for_rp
+ 482 01f8 B80B0000 		.word	3000
+ 483 01fc 00000000 		.word	.LANCHOR3
+ 485              		.section	.text.smtc_beacon_sniff_init,"ax",%progbits
+ 486              		.align	1
+ 487              		.global	smtc_beacon_sniff_init
+ 488              		.syntax unified
+ 489              		.code	16
+ 490              		.thumb_func
+ 491              		.fpu softvfp
+ 493              	smtc_beacon_sniff_init:
+ 494              		@ args = 12, pretend = 0, frame = 8
+ 495              		@ frame_needed = 0, uses_anonymous_args = 0
+ 496 0000 F7B5     		push	{r0, r1, r2, r4, r5, r6, r7, lr}
+ 497 0002 0400     		movs	r4, r0
+ 498              		@ sp needed
+ 499 0004 1D00     		movs	r5, r3
+ 500 0006 0E00     		movs	r6, r1
+ 501 0008 08AB     		add	r3, sp, #32
+ 502 000a 0192     		str	r2, [sp, #4]
+ 503 000c 0021     		movs	r1, #0
+ 504 000e 8422     		movs	r2, #132
+ 505 0010 1F78     		ldrb	r7, [r3]
+ 506 0012 FFF7FEFF 		bl	memset
+ 507 0016 019B     		ldr	r3, [sp, #4]
+ 508 0018 2200     		movs	r2, r4
+ 509 001a A360     		str	r3, [r4, #8]
+ARM GAS  /tmp/ccLkx9JN.s 			page 10
+
+
+ 510 001c 0023     		movs	r3, #0
+ 511 001e 2A32     		adds	r2, r2, #42
+ 512 0020 6560     		str	r5, [r4, #4]
+ 513 0022 2773     		strb	r7, [r4, #12]
+ 514 0024 2660     		str	r6, [r4]
+ 515 0026 6373     		strb	r3, [r4, #13]
+ 516 0028 E381     		strh	r3, [r4, #14]
+ 517 002a 1370     		strb	r3, [r2]
+ 518 002c 099B     		ldr	r3, [sp, #36]
+ 519 002e 0122     		movs	r2, #1
+ 520 0030 2365     		str	r3, [r4, #80]
+ 521 0032 0A9B     		ldr	r3, [sp, #40]
+ 522 0034 3900     		movs	r1, r7
+ 523 0036 6365     		str	r3, [r4, #84]
+ 524 0038 074B     		ldr	r3, .L59
+ 525 003a 2800     		movs	r0, r5
+ 526 003c 6364     		str	r3, [r4, #68]
+ 527 003e 2300     		movs	r3, r4
+ 528 0040 4C33     		adds	r3, r3, #76
+ 529 0042 1A70     		strb	r2, [r3]
+ 530 0044 FFF7FEFF 		bl	rp_release_hook
+ 531 0048 2300     		movs	r3, r4
+ 532 004a 217B     		ldrb	r1, [r4, #12]
+ 533 004c 034A     		ldr	r2, .L59+4
+ 534 004e 6068     		ldr	r0, [r4, #4]
+ 535 0050 FFF7FEFF 		bl	rp_hook_init
+ 536 0054 F7BD     		pop	{r0, r1, r2, r4, r5, r6, r7, pc}
+ 537              	.L60:
+ 538 0056 C046     		.align	2
+ 539              	.L59:
+ 540 0058 00881300 		.word	1280000
+ 541 005c 00000000 		.word	smtc_beacon_sniff_rp_callback
+ 543              		.section	.text.smtc_beacon_sniff_stop,"ax",%progbits
+ 544              		.align	1
+ 545              		.global	smtc_beacon_sniff_stop
+ 546              		.syntax unified
+ 547              		.code	16
+ 548              		.thumb_func
+ 549              		.fpu softvfp
+ 551              	smtc_beacon_sniff_stop:
+ 552              		@ args = 0, pretend = 0, frame = 0
+ 553              		@ frame_needed = 0, uses_anonymous_args = 0
+ 554 0000 10B5     		push	{r4, lr}
+ 555 0002 837B     		ldrb	r3, [r0, #14]
+ 556 0004 0400     		movs	r4, r0
+ 557 0006 002B     		cmp	r3, #0
+ 558 0008 08D0     		beq	.L61
+ 559 000a 0023     		movs	r3, #0
+ 560 000c 017B     		ldrb	r1, [r0, #12]
+ 561 000e C373     		strb	r3, [r0, #15]
+ 562 0010 4068     		ldr	r0, [r0, #4]
+ 563 0012 FFF7FEFF 		bl	rp_task_abort
+ 564 0016 2068     		ldr	r0, [r4]
+ 565 0018 FFF7FEFF 		bl	smtc_ping_slot_stop
+ 566              	.L61:
+ 567              		@ sp needed
+ 568 001c 10BD     		pop	{r4, pc}
+ARM GAS  /tmp/ccLkx9JN.s 			page 11
+
+
+ 570              		.section	.text.smtc_beacon_class_b_enable_service,"ax",%progbits
+ 571              		.align	1
+ 572              		.global	smtc_beacon_class_b_enable_service
+ 573              		.syntax unified
+ 574              		.code	16
+ 575              		.thumb_func
+ 576              		.fpu softvfp
+ 578              	smtc_beacon_class_b_enable_service:
+ 579              		@ args = 0, pretend = 0, frame = 0
+ 580              		@ frame_needed = 0, uses_anonymous_args = 0
+ 581 0000 70B5     		push	{r4, r5, r6, lr}
+ 582 0002 0400     		movs	r4, r0
+ 583 0004 0D1E     		subs	r5, r1, #0
+ 584 0006 01D1     		bne	.L67
+ 585 0008 FFF7FEFF 		bl	smtc_beacon_sniff_stop
+ 586              	.L67:
+ 587              		@ sp needed
+ 588 000c A573     		strb	r5, [r4, #14]
+ 589 000e 70BD     		pop	{r4, r5, r6, pc}
+ 591              		.section	.rodata.smtc_beacon_sniff_start.str1.1,"aMS",%progbits,1
+ 592              	.LC15:
+ 593 0000 636C6173 		.ascii	"class_b_obj disabled\012\000"
+ 593      735F625F 
+ 593      6F626A20 
+ 593      64697361 
+ 593      626C6564 
+ 594              	.LC17:
+ 595 0016 62656163 		.ascii	"beacon sniff not started, time is not sync\012\000"
+ 595      6F6E2073 
+ 595      6E696666 
+ 595      206E6F74 
+ 595      20737461 
+ 596              		.global	__aeabi_idiv
+ 597              	.LC19:
+ 598 0042 21212121 		.ascii	"!!!!! seconds_since_epoch %u, fractional_second %u "
+ 598      21207365 
+ 598      636F6E64 
+ 598      735F7369 
+ 598      6E63655F 
+ 599 0075 6D730A00 		.ascii	"ms\012\000"
+ 600              	.LC21:
+ 601 0079 4E657874 		.ascii	"Next beacon in %u ms at %u\012\000"
+ 601      20626561 
+ 601      636F6E20 
+ 601      696E2025 
+ 601      75206D73 
+ 602              		.section	.text.smtc_beacon_sniff_start,"ax",%progbits
+ 603              		.align	1
+ 604              		.global	smtc_beacon_sniff_start
+ 605              		.syntax unified
+ 606              		.code	16
+ 607              		.thumb_func
+ 608              		.fpu softvfp
+ 610              	smtc_beacon_sniff_start:
+ 611              		@ args = 0, pretend = 0, frame = 24
+ 612              		@ frame_needed = 0, uses_anonymous_args = 0
+ 613 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ARM GAS  /tmp/ccLkx9JN.s 			page 12
+
+
+ 614 0002 87B0     		sub	sp, sp, #28
+ 615 0004 0400     		movs	r4, r0
+ 616 0006 FFF7FEFF 		bl	smtc_modem_hal_get_time_in_ms
+ 617 000a 0026     		movs	r6, #0
+ 618 000c 02AB     		add	r3, sp, #8
+ 619 000e DF1D     		adds	r7, r3, #7
+ 620 0010 3A00     		movs	r2, r7
+ 621 0012 0500     		movs	r5, r0
+ 622 0014 2100     		movs	r1, r4
+ 623 0016 6068     		ldr	r0, [r4, #4]
+ 624 0018 0496     		str	r6, [sp, #16]
+ 625 001a 0596     		str	r6, [sp, #20]
+ 626 001c FFF7FEFF 		bl	rp_hook_get_id
+ 627 0020 2300     		movs	r3, r4
+ 628 0022 2A33     		adds	r3, r3, #42
+ 629 0024 1E70     		strb	r6, [r3]
+ 630 0026 227B     		ldrb	r2, [r4, #12]
+ 631 0028 3B78     		ldrb	r3, [r7]
+ 632 002a 9A42     		cmp	r2, r3
+ 633 002c 04D0     		beq	.L69
+ 634 002e 1821     		movs	r1, #24
+ 635 0030 4448     		ldr	r0, .L78
+ 636 0032 FF31     		adds	r1, r1, #255
+ 637 0034 FFF7FEFF 		bl	smtc_modem_hal_assert_fail
+ 638              	.L69:
+ 639 0038 A37B     		ldrb	r3, [r4, #14]
+ 640 003a 002B     		cmp	r3, #0
+ 641 003c 05D1     		bne	.L70
+ 642 003e 4248     		ldr	r0, .L78+4
+ 643 0040 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 644 0044 0120     		movs	r0, #1
+ 645              	.L71:
+ 646 0046 07B0     		add	sp, sp, #28
+ 647              		@ sp needed
+ 648 0048 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 649              	.L70:
+ 650 004a FA23     		movs	r3, #250
+ 651 004c 9B00     		lsls	r3, r3, #2
+ 652 004e EB18     		adds	r3, r5, r3
+ 653 0050 0193     		str	r3, [sp, #4]
+ 654 0052 0199     		ldr	r1, [sp, #4]
+ 655 0054 A068     		ldr	r0, [r4, #8]
+ 656 0056 05AB     		add	r3, sp, #20
+ 657 0058 04AA     		add	r2, sp, #16
+ 658 005a FFF7FEFF 		bl	lr1mac_core_convert_rtc_to_gps_epoch_time
+ 659 005e 0028     		cmp	r0, #0
+ 660 0060 04D1     		bne	.L72
+ 661 0062 3A48     		ldr	r0, .L78+8
+ 662 0064 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 663 0068 0320     		movs	r0, #3
+ 664 006a ECE7     		b	.L71
+ 665              	.L72:
+ 666 006c 7F23     		movs	r3, #127
+ 667 006e 049A     		ldr	r2, [sp, #16]
+ 668 0070 374D     		ldr	r5, .L78+12
+ 669 0072 1340     		ands	r3, r2
+ 670 0074 5D43     		muls	r5, r3
+ARM GAS  /tmp/ccLkx9JN.s 			page 13
+
+
+ 671 0076 059B     		ldr	r3, [sp, #20]
+ 672 0078 A668     		ldr	r6, [r4, #8]
+ 673 007a ED1A     		subs	r5, r5, r3
+ 674 007c FA23     		movs	r3, #250
+ 675 007e 5B02     		lsls	r3, r3, #9
+ 676 0080 ED18     		adds	r5, r5, r3
+ 677 0082 019B     		ldr	r3, [sp, #4]
+ 678 0084 3000     		movs	r0, r6
+ 679 0086 ED18     		adds	r5, r5, r3
+ 680 0088 0A23     		movs	r3, #10
+ 681 008a 6B43     		muls	r3, r5
+ 682 008c A364     		str	r3, [r4, #72]
+ 683 008e FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 684 0092 0100     		movs	r1, r0
+ 685 0094 3000     		movs	r0, r6
+ 686 0096 FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 687 009a FA26     		movs	r6, #250
+ 688 009c B600     		lsls	r6, r6, #2
+ 689 009e B042     		cmp	r0, r6
+ 690 00a0 20D2     		bcs	.L73
+ 691              	.L75:
+ 692 00a2 FF20     		movs	r0, #255
+ 693              	.L74:
+ 694 00a4 0123     		movs	r3, #1
+ 695 00a6 2086     		strh	r0, [r4, #48]
+ 696 00a8 E373     		strb	r3, [r4, #15]
+ 697 00aa 2900     		movs	r1, r5
+ 698 00ac A068     		ldr	r0, [r4, #8]
+ 699 00ae 05AB     		add	r3, sp, #20
+ 700 00b0 04AA     		add	r2, sp, #16
+ 701 00b2 FFF7FEFF 		bl	lr1mac_core_convert_rtc_to_gps_epoch_time
+ 702 00b6 049B     		ldr	r3, [sp, #16]
+ 703 00b8 059A     		ldr	r2, [sp, #20]
+ 704 00ba 1900     		movs	r1, r3
+ 705 00bc E362     		str	r3, [r4, #44]
+ 706 00be 2548     		ldr	r0, .L78+16
+ 707 00c0 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 708 00c4 2000     		movs	r0, r4
+ 709 00c6 FFF7FEFF 		bl	beacon_rp_request
+ 710 00ca A46C     		ldr	r4, [r4, #72]
+ 711 00cc 0A21     		movs	r1, #10
+ 712 00ce 2000     		movs	r0, r4
+ 713 00d0 FFF7FEFF 		bl	__aeabi_uidiv
+ 714 00d4 019B     		ldr	r3, [sp, #4]
+ 715 00d6 2200     		movs	r2, r4
+ 716 00d8 C11A     		subs	r1, r0, r3
+ 717 00da 1F48     		ldr	r0, .L78+20
+ 718 00dc FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 719 00e0 0020     		movs	r0, #0
+ 720 00e2 B0E7     		b	.L71
+ 721              	.L73:
+ 722 00e4 A768     		ldr	r7, [r4, #8]
+ 723 00e6 3800     		movs	r0, r7
+ 724 00e8 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 725 00ec 0100     		movs	r1, r0
+ 726 00ee 3800     		movs	r0, r7
+ 727 00f0 FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ARM GAS  /tmp/ccLkx9JN.s 			page 14
+
+
+ 728 00f4 3100     		movs	r1, r6
+ 729 00f6 FFF7FEFF 		bl	__aeabi_uidiv
+ 730 00fa 0100     		movs	r1, r0
+ 731 00fc FA20     		movs	r0, #250
+ 732 00fe C000     		lsls	r0, r0, #3
+ 733 0100 FFF7FEFF 		bl	__aeabi_uidiv
+ 734 0104 FE28     		cmp	r0, #254
+ 735 0106 CCD8     		bhi	.L75
+ 736 0108 A768     		ldr	r7, [r4, #8]
+ 737 010a 3800     		movs	r0, r7
+ 738 010c FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 739 0110 0100     		movs	r1, r0
+ 740 0112 3800     		movs	r0, r7
+ 741 0114 FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 742 0118 0121     		movs	r1, #1
+ 743 011a B042     		cmp	r0, r6
+ 744 011c 0BD3     		bcc	.L76
+ 745 011e A768     		ldr	r7, [r4, #8]
+ 746 0120 3800     		movs	r0, r7
+ 747 0122 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 748 0126 0100     		movs	r1, r0
+ 749 0128 3800     		movs	r0, r7
+ 750 012a FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 751 012e 3100     		movs	r1, r6
+ 752 0130 FFF7FEFF 		bl	__aeabi_uidiv
+ 753 0134 0100     		movs	r1, r0
+ 754              	.L76:
+ 755 0136 FA20     		movs	r0, #250
+ 756 0138 C000     		lsls	r0, r0, #3
+ 757 013a FFF7FEFF 		bl	__aeabi_uidiv
+ 758 013e 80B2     		uxth	r0, r0
+ 759 0140 B0E7     		b	.L74
+ 760              	.L79:
+ 761 0142 C046     		.align	2
+ 762              	.L78:
+ 763 0144 00000000 		.word	.LANCHOR4
+ 764 0148 00000000 		.word	.LC15
+ 765 014c 16000000 		.word	.LC17
+ 766 0150 18FCFFFF 		.word	-1000
+ 767 0154 42000000 		.word	.LC19
+ 768 0158 79000000 		.word	.LC21
+ 770              		.section	.text.smtc_beacon_sniff_get_metadata,"ax",%progbits
+ 771              		.align	1
+ 772              		.global	smtc_beacon_sniff_get_metadata
+ 773              		.syntax unified
+ 774              		.code	16
+ 775              		.thumb_func
+ 776              		.fpu softvfp
+ 778              	smtc_beacon_sniff_get_metadata:
+ 779              		@ args = 0, pretend = 0, frame = 0
+ 780              		@ frame_needed = 0, uses_anonymous_args = 0
+ 781 0000 0300     		movs	r3, r0
+ 782 0002 10B5     		push	{r4, lr}
+ 783 0004 5833     		adds	r3, r3, #88
+ 784 0006 0800     		movs	r0, r1
+ 785              		@ sp needed
+ 786 0008 1900     		movs	r1, r3
+ARM GAS  /tmp/ccLkx9JN.s 			page 15
+
+
+ 787 000a 2C22     		movs	r2, #44
+ 788 000c FFF7FEFF 		bl	memcpy
+ 789 0010 10BD     		pop	{r4, pc}
+ 791              		.section	.rodata.smtc_decode_beacon_epoch_time.str1.1,"aMS",%progbits,1
+ 792              	.LC23:
+ 793 0000 494E5641 		.ascii	"INVALID CRC  \012\000"
+ 793      4C494420 
+ 793      43524320 
+ 793      200A00
+ 794              		.section	.text.smtc_decode_beacon_epoch_time,"ax",%progbits
+ 795              		.align	1
+ 796              		.global	smtc_decode_beacon_epoch_time
+ 797              		.syntax unified
+ 798              		.code	16
+ 799              		.thumb_func
+ 800              		.fpu softvfp
+ 802              	smtc_decode_beacon_epoch_time:
+ 803              		@ args = 0, pretend = 0, frame = 0
+ 804              		@ frame_needed = 0, uses_anonymous_args = 0
+ 805 0000 70B5     		push	{r4, r5, r6, lr}
+ 806 0002 4418     		adds	r4, r0, r1
+ 807 0004 A31E     		subs	r3, r4, #2
+ 808 0006 1B78     		ldrb	r3, [r3]
+ 809 0008 E21E     		subs	r2, r4, #3
+ 810 000a 1578     		ldrb	r5, [r2]
+ 811 000c 1B02     		lsls	r3, r3, #8
+ 812 000e 0339     		subs	r1, r1, #3
+ 813 0010 ED18     		adds	r5, r5, r3
+ 814 0012 89B2     		uxth	r1, r1
+ 815 0014 ADB2     		uxth	r5, r5
+ 816 0016 0029     		cmp	r1, #0
+ 817 0018 02D0     		beq	.L82
+ 818 001a FFF7FEFF 		bl	crc16_beacon.part.0
+ 819 001e 0100     		movs	r1, r0
+ 820              	.L82:
+ 821 0020 8D42     		cmp	r5, r1
+ 822 0022 04D0     		beq	.L83
+ 823 0024 0948     		ldr	r0, .L88
+ 824 0026 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 825 002a 0020     		movs	r0, #0
+ 826              	.L81:
+ 827              		@ sp needed
+ 828 002c 70BD     		pop	{r4, r5, r6, pc}
+ 829              	.L83:
+ 830 002e A31F     		subs	r3, r4, #6
+ 831 0030 1878     		ldrb	r0, [r3]
+ 832 0032 E31F     		subs	r3, r4, #7
+ 833 0034 1B78     		ldrb	r3, [r3]
+ 834 0036 0002     		lsls	r0, r0, #8
+ 835 0038 C018     		adds	r0, r0, r3
+ 836 003a 631F     		subs	r3, r4, #5
+ 837 003c 1B78     		ldrb	r3, [r3]
+ 838 003e 043C     		subs	r4, r4, #4
+ 839 0040 1B04     		lsls	r3, r3, #16
+ 840 0042 C018     		adds	r0, r0, r3
+ 841 0044 2378     		ldrb	r3, [r4]
+ 842 0046 1B06     		lsls	r3, r3, #24
+ARM GAS  /tmp/ccLkx9JN.s 			page 16
+
+
+ 843 0048 C018     		adds	r0, r0, r3
+ 844 004a EFE7     		b	.L81
+ 845              	.L89:
+ 846              		.align	2
+ 847              	.L88:
+ 848 004c 00000000 		.word	.LC23
+ 850              		.section	.rodata.smtc_beacon_sniff_rp_callback.str1.1,"aMS",%progbits,1
+ 851              	.LC25:
+ 852 0000 20626561 		.ascii	" beacon_timestamp_us = %u us\012\000"
+ 852      636F6E5F 
+ 852      74696D65 
+ 852      7374616D 
+ 852      705F7573 
+ 853              	.LC27:
+ 854 001e 20626561 		.ascii	" beacon_time - network time = %d ms\012\000"
+ 854      636F6E5F 
+ 854      74696D65 
+ 854      202D206E 
+ 854      6574776F 
+ 855              	.LC29:
+ 856 0043 1B5B303B 		.ascii	"\033[0;31mERROR: device no more synchronized\012\000"
+ 856      33316D45 
+ 856      52524F52 
+ 856      3A206465 
+ 856      76696365 
+ 857              	.LC32:
+ 858 006e 74696D65 		.ascii	"time error on first beacon = %d (100us resolution) "
+ 858      20657272 
+ 858      6F72206F 
+ 858      6E206669 
+ 858      72737420 
+ 859 00a1 200A00   		.ascii	" \012\000"
+ 860              	.LC34:
+ 861 00a4 72782064 		.ascii	"rx delay = %d ms\012\000"
+ 861      656C6179 
+ 861      203D2025 
+ 861      64206D73 
+ 861      0A00
+ 862              	.LC36:
+ 863 00b6 42656163 		.ascii	"Beacon Payload \000"
+ 863      6F6E2050 
+ 863      61796C6F 
+ 863      61642000 
+ 864              	.LC38:
+ 865 00c6 2573202D 		.ascii	"%s - (%lu bytes):\012\000"
+ 865      2028256C 
+ 865      75206279 
+ 865      74657329 
+ 865      3A0A00
+ 866              	.LC40:
+ 867 00d9 0A00     		.ascii	"\012\000"
+ 868              	.LC42:
+ 869 00db 20253032 		.ascii	" %02X\000"
+ 869      5800
+ 870              	.LC44:
+ 871 00e1 2D2D3E20 		.ascii	"--> PLL INFO ppl_phase =%d, pll_error_100us= %d  pl"
+ 871      504C4C20 
+ARM GAS  /tmp/ccLkx9JN.s 			page 17
+
+
+ 871      494E464F 
+ 871      2070706C 
+ 871      5F706861 
+ 872 0114 6C5F6672 		.ascii	"l_frequency_100us = %d \012\000"
+ 872      65717565 
+ 872      6E63795F 
+ 872      31303075 
+ 872      73203D20 
+ 873              	.LC46:
+ 874 012d 0A2A2A2A 		.ascii	"\012********************************************\012"
+ 874      2A2A2A2A 
+ 874      2A2A2A2A 
+ 874      2A2A2A2A 
+ 874      2A2A2A2A 
+ 875 015b 00       		.ascii	"\000"
+ 876              	.LC48:
+ 877 015c 2D2D3E42 		.ascii	"-->BEACON STATUS \012 received = %d\012 missed = %d"
+ 877      4541434F 
+ 877      4E205354 
+ 877      41545553 
+ 877      200A2072 
+ 878 0189 0A207265 		.ascii	"\012 received_consecutively = %d\012 lost_consecuti"
+ 878      63656976 
+ 878      65645F63 
+ 878      6F6E7365 
+ 878      63757469 
+ 879 01b6 76656C79 		.ascii	"vely =%d\012 four_last_beacon_rx_statistic = %d\012"
+ 879      203D2564 
+ 879      0A20666F 
+ 879      75725F6C 
+ 879      6173745F 
+ 880 01e3 206E6578 		.ascii	" next beacon rx_nb_symb = %d\012\000"
+ 880      74206265 
+ 880      61636F6E 
+ 880      2072785F 
+ 880      6E625F73 
+ 881              	.LC50:
+ 882 0201 2A2A2A2A 		.ascii	"*********************************************\012 \000"
+ 882      2A2A2A2A 
+ 882      2A2A2A2A 
+ 882      2A2A2A2A 
+ 882      2A2A2A2A 
+ 883              	.LC52:
+ 884 0231 62656163 		.ascii	"beacon stop ping slot\012\000"
+ 884      6F6E2073 
+ 884      746F7020 
+ 884      70696E67 
+ 884      20736C6F 
+ 885              		.section	.text.smtc_beacon_sniff_rp_callback,"ax",%progbits
+ 886              		.align	1
+ 887              		.global	smtc_beacon_sniff_rp_callback
+ 888              		.syntax unified
+ 889              		.code	16
+ 890              		.thumb_func
+ 891              		.fpu softvfp
+ 893              	smtc_beacon_sniff_rp_callback:
+ 894              		@ args = 0, pretend = 0, frame = 24
+ARM GAS  /tmp/ccLkx9JN.s 			page 18
+
+
+ 895              		@ frame_needed = 0, uses_anonymous_args = 0
+ 896 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 897 0002 C37B     		ldrb	r3, [r0, #15]
+ 898 0004 0400     		movs	r4, r0
+ 899 0006 8BB0     		sub	sp, sp, #44
+ 900 0008 002B     		cmp	r3, #0
+ 901 000a 00D1     		bne	.LCB897
+ 902 000c A6E3     		b	.L90	@long jump
+ 903              	.LCB897:
+ 904 000e 4168     		ldr	r1, [r0, #4]
+ 905 0010 037B     		ldrb	r3, [r0, #12]
+ 906 0012 EF20     		movs	r0, #239
+ 907 0014 CA18     		adds	r2, r1, r3
+ 908 0016 A768     		ldr	r7, [r4, #8]
+ 909 0018 F333     		adds	r3, r3, #243
+ 910 001a C000     		lsls	r0, r0, #3
+ 911 001c FF33     		adds	r3, r3, #255
+ 912 001e 1218     		adds	r2, r2, r0
+ 913 0020 9B00     		lsls	r3, r3, #2
+ 914 0022 3800     		movs	r0, r7
+ 915 0024 5E58     		ldr	r6, [r3, r1]
+ 916 0026 1578     		ldrb	r5, [r2]
+ 917 0028 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 918 002c 0100     		movs	r1, r0
+ 919 002e 3800     		movs	r0, r7
+ 920 0030 FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 921 0034 6421     		movs	r1, #100
+ 922 0036 4008     		lsrs	r0, r0, #1
+ 923 0038 FFF7FEFF 		bl	__aeabi_uidiv
+ 924 003c 6421     		movs	r1, #100
+ 925 003e 361A     		subs	r6, r6, r0
+ 926 0040 7143     		muls	r1, r6
+ 927 0042 D748     		ldr	r0, .L196
+ 928 0044 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 929 0048 0023     		movs	r3, #0
+ 930 004a 6373     		strb	r3, [r4, #13]
+ 931 004c 042D     		cmp	r5, #4
+ 932 004e 7AD1     		bne	.L94
+ 933 0050 A568     		ldr	r5, [r4, #8]
+ 934 0052 2800     		movs	r0, r5
+ 935 0054 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 936 0058 0100     		movs	r1, r0
+ 937 005a 2800     		movs	r0, r5
+ 938 005c 2500     		movs	r5, r4
+ 939 005e 08AA     		add	r2, sp, #32
+ 940 0060 09AB     		add	r3, sp, #36
+ 941 0062 FFF7FEFF 		bl	smtc_real_lora_dr_to_sf_bw
+ 942 0066 1035     		adds	r5, r5, #16
+ 943 0068 04AB     		add	r3, sp, #16
+ 944 006a 197C     		ldrb	r1, [r3, #16]
+ 945 006c 2800     		movs	r0, r5
+ 946 006e FFF7FEFF 		bl	smtc_decode_beacon_epoch_time
+ 947 0072 A768     		ldr	r7, [r4, #8]
+ 948 0074 3800     		movs	r0, r7
+ 949 0076 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 950 007a 08AA     		add	r2, sp, #32
+ 951 007c 0100     		movs	r1, r0
+ARM GAS  /tmp/ccLkx9JN.s 			page 19
+
+
+ 952 007e 09AB     		add	r3, sp, #36
+ 953 0080 3800     		movs	r0, r7
+ 954 0082 FFF7FEFF 		bl	smtc_real_lora_dr_to_sf_bw
+ 955 0086 04AB     		add	r3, sp, #16
+ 956 0088 197C     		ldrb	r1, [r3, #16]
+ 957 008a 2800     		movs	r0, r5
+ 958 008c FFF7FEFF 		bl	smtc_decode_beacon_epoch_time
+ 959 0090 0A21     		movs	r1, #10
+ 960 0092 0500     		movs	r5, r0
+ 961 0094 3000     		movs	r0, r6
+ 962 0096 FFF7FEFF 		bl	__aeabi_uidiv
+ 963 009a 636B     		ldr	r3, [r4, #52]
+ 964 009c 08AA     		add	r2, sp, #32
+ 965 009e C11A     		subs	r1, r0, r3
+ 966 00a0 A068     		ldr	r0, [r4, #8]
+ 967 00a2 09AB     		add	r3, sp, #36
+ 968 00a4 FFF7FEFF 		bl	lr1mac_core_convert_rtc_to_gps_epoch_time
+ 969 00a8 0028     		cmp	r0, #0
+ 970 00aa 00D1     		bne	.LCB971
+ 971 00ac CFE0     		b	.L95	@long jump
+ 972              	.LCB971:
+ 973 00ae FA21     		movs	r1, #250
+ 974 00b0 089B     		ldr	r3, [sp, #32]
+ 975 00b2 8900     		lsls	r1, r1, #2
+ 976 00b4 ED1A     		subs	r5, r5, r3
+ 977 00b6 6943     		muls	r1, r5
+ 978 00b8 099B     		ldr	r3, [sp, #36]
+ 979 00ba BA48     		ldr	r0, .L196+4
+ 980 00bc C91A     		subs	r1, r1, r3
+ 981 00be FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 982              	.L96:
+ 983 00c2 0123     		movs	r3, #1
+ 984 00c4 E522     		movs	r2, #229
+ 985 00c6 6373     		strb	r3, [r4, #13]
+ 986 00c8 237B     		ldrb	r3, [r4, #12]
+ 987 00ca 9200     		lsls	r2, r2, #2
+ 988 00cc 9B18     		adds	r3, r3, r2
+ 989 00ce 6268     		ldr	r2, [r4, #4]
+ 990 00d0 5B00     		lsls	r3, r3, #1
+ 991 00d2 9A5A     		ldrh	r2, [r3, r2]
+ 992 00d4 2300     		movs	r3, r4
+ 993 00d6 2933     		adds	r3, r3, #41
+ 994 00d8 1A70     		strb	r2, [r3]
+ 995 00da 0133     		adds	r3, r3, #1
+ 996 00dc 0593     		str	r3, [sp, #20]
+ 997 00de 1D78     		ldrb	r5, [r3]
+ 998 00e0 002D     		cmp	r5, #0
+ 999 00e2 11D1     		bne	.L97
+ 1000 00e4 0A27     		movs	r7, #10
+ 1001 00e6 616B     		ldr	r1, [r4, #52]
+ 1002 00e8 A36C     		ldr	r3, [r4, #72]
+ 1003 00ea 7943     		muls	r1, r7
+ 1004 00ec C918     		adds	r1, r1, r3
+ 1005 00ee AE48     		ldr	r0, .L196+8
+ 1006 00f0 711A     		subs	r1, r6, r1
+ 1007 00f2 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 1008 00f6 AD4B     		ldr	r3, .L196+12
+ARM GAS  /tmp/ccLkx9JN.s 			page 20
+
+
+ 1009 00f8 E563     		str	r5, [r4, #60]
+ 1010 00fa 6364     		str	r3, [r4, #68]
+ 1011 00fc 636B     		ldr	r3, [r4, #52]
+ 1012 00fe A563     		str	r5, [r4, #56]
+ 1013 0100 5F43     		muls	r7, r3
+ 1014 0102 F71B     		subs	r7, r6, r7
+ 1015 0104 2564     		str	r5, [r4, #64]
+ 1016 0106 A764     		str	r7, [r4, #72]
+ 1017              	.L97:
+ 1018 0108 059B     		ldr	r3, [sp, #20]
+ 1019 010a 1B78     		ldrb	r3, [r3]
+ 1020 010c 012B     		cmp	r3, #1
+ 1021 010e 1AD1     		bne	.L94
+ 1022 0110 0A22     		movs	r2, #10
+ 1023 0112 0720     		movs	r0, #7
+ 1024 0114 636B     		ldr	r3, [r4, #52]
+ 1025 0116 616C     		ldr	r1, [r4, #68]
+ 1026 0118 5A43     		muls	r2, r3
+ 1027 011a A36C     		ldr	r3, [r4, #72]
+ 1028 011c D218     		adds	r2, r2, r3
+ 1029 011e E36B     		ldr	r3, [r4, #60]
+ 1030 0120 B21A     		subs	r2, r6, r2
+ 1031 0122 4343     		muls	r3, r0
+ 1032 0124 A263     		str	r2, [r4, #56]
+ 1033 0126 9A18     		adds	r2, r3, r2
+ 1034 0128 D317     		asrs	r3, r2, #31
+ 1035 012a 0340     		ands	r3, r0
+ 1036 012c 9B18     		adds	r3, r3, r2
+ 1037 012e 226C     		ldr	r2, [r4, #64]
+ 1038 0130 DB10     		asrs	r3, r3, #3
+ 1039 0132 E363     		str	r3, [r4, #60]
+ 1040 0134 9B18     		adds	r3, r3, r2
+ 1041 0136 2364     		str	r3, [r4, #64]
+ 1042 0138 0022     		movs	r2, #0
+ 1043 013a 202B     		cmp	r3, #32
+ 1044 013c 00DC     		bgt	.LCB1055
+ 1045 013e 8DE0     		b	.L99	@long jump
+ 1046              	.LCB1055:
+ 1047 0140 0131     		adds	r1, r1, #1
+ 1048              	.L186:
+ 1049 0142 6164     		str	r1, [r4, #68]
+ 1050 0144 2264     		str	r2, [r4, #64]
+ 1051              	.L94:
+ 1052 0146 E36B     		ldr	r3, [r4, #60]
+ 1053 0148 A26C     		ldr	r2, [r4, #72]
+ 1054 014a DD17     		asrs	r5, r3, #31
+ 1055 014c 5819     		adds	r0, r3, r5
+ 1056 014e 616C     		ldr	r1, [r4, #68]
+ 1057 0150 6840     		eors	r0, r5
+ 1058 0152 6428     		cmp	r0, #100
+ 1059 0154 03DD     		ble	.L101
+ 1060 0156 C720     		movs	r0, #199
+ 1061 0158 DB17     		asrs	r3, r3, #31
+ 1062 015a 8343     		bics	r3, r0
+ 1063 015c 6433     		adds	r3, r3, #100
+ 1064              	.L101:
+ 1065 015e 5218     		adds	r2, r2, r1
+ARM GAS  /tmp/ccLkx9JN.s 			page 21
+
+
+ 1066 0160 D318     		adds	r3, r2, r3
+ 1067 0162 A364     		str	r3, [r4, #72]
+ 1068 0164 637B     		ldrb	r3, [r4, #13]
+ 1069 0166 0125     		movs	r5, #1
+ 1070 0168 002B     		cmp	r3, #0
+ 1071 016a 17D1     		bne	.L102
+ 1072 016c A768     		ldr	r7, [r4, #8]
+ 1073 016e 238E     		ldrh	r3, [r4, #48]
+ 1074 0170 3800     		movs	r0, r7
+ 1075 0172 0693     		str	r3, [sp, #24]
+ 1076 0174 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1077 0178 0100     		movs	r1, r0
+ 1078 017a 3800     		movs	r0, r7
+ 1079 017c FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1080 0180 FA27     		movs	r7, #250
+ 1081 0182 BF00     		lsls	r7, r7, #2
+ 1082 0184 B842     		cmp	r0, r7
+ 1083 0186 6ED2     		bcs	.L103
+ 1084              	.L105:
+ 1085 0188 FF20     		movs	r0, #255
+ 1086              	.L104:
+ 1087 018a 069B     		ldr	r3, [sp, #24]
+ 1088 018c 0025     		movs	r5, #0
+ 1089 018e 8342     		cmp	r3, r0
+ 1090 0190 04D2     		bcs	.L102
+ 1091 0192 3823     		movs	r3, #56
+ 1092 0194 626E     		ldr	r2, [r4, #100]
+ 1093 0196 9342     		cmp	r3, r2
+ 1094 0198 6D41     		adcs	r5, r5, r5
+ 1095 019a EDB2     		uxtb	r5, r5
+ 1096              	.L102:
+ 1097 019c 2700     		movs	r7, r4
+ 1098 019e 2300     		movs	r3, r4
+ 1099 01a0 2A37     		adds	r7, r7, #42
+ 1100 01a2 3D70     		strb	r5, [r7]
+ 1101 01a4 0025     		movs	r5, #0
+ 1102 01a6 7A33     		adds	r3, r3, #122
+ 1103 01a8 1D70     		strb	r5, [r3]
+ 1104 01aa 023B     		subs	r3, r3, #2
+ 1105 01ac 1D70     		strb	r5, [r3]
+ 1106 01ae 6368     		ldr	r3, [r4, #4]
+ 1107 01b0 627B     		ldrb	r2, [r4, #13]
+ 1108 01b2 0693     		str	r3, [sp, #24]
+ 1109 01b4 237B     		ldrb	r3, [r4, #12]
+ 1110 01b6 0593     		str	r3, [sp, #20]
+ 1111 01b8 AA42     		cmp	r2, r5
+ 1112 01ba 00D1     		bne	.LCB1128
+ 1113 01bc 84E0     		b	.L107	@long jump
+ 1114              	.LCB1128:
+ 1115 01be 0A21     		movs	r1, #10
+ 1116 01c0 3000     		movs	r0, r6
+ 1117 01c2 FFF7FEFF 		bl	__aeabi_uidiv
+ 1118 01c6 8423     		movs	r3, #132
+ 1119 01c8 059A     		ldr	r2, [sp, #20]
+ 1120 01ca 2067     		str	r0, [r4, #112]
+ 1121 01cc 5343     		muls	r3, r2
+ 1122 01ce 069A     		ldr	r2, [sp, #24]
+ARM GAS  /tmp/ccLkx9JN.s 			page 22
+
+
+ 1123 01d0 0600     		movs	r6, r0
+ 1124 01d2 D318     		adds	r3, r2, r3
+ 1125 01d4 1A00     		movs	r2, r3
+ 1126 01d6 7E32     		adds	r2, r2, #126
+ 1127 01d8 1188     		ldrh	r1, [r2]
+ 1128 01da 2200     		movs	r2, r4
+ 1129 01dc 7C33     		adds	r3, r3, #124
+ 1130 01de 7432     		adds	r2, r2, #116
+ 1131 01e0 1180     		strh	r1, [r2]
+ 1132 01e2 1A88     		ldrh	r2, [r3]
+ 1133 01e4 2300     		movs	r3, r4
+ 1134 01e6 7633     		adds	r3, r3, #118
+ 1135 01e8 1A80     		strh	r2, [r3]
+ 1136 01ea A068     		ldr	r0, [r4, #8]
+ 1137 01ec FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1138 01f0 2300     		movs	r3, r4
+ 1139 01f2 8033     		adds	r3, r3, #128
+ 1140 01f4 1870     		strb	r0, [r3]
+ 1141 01f6 E16A     		ldr	r1, [r4, #44]
+ 1142 01f8 A068     		ldr	r0, [r4, #8]
+ 1143 01fa FFF7FEFF 		bl	smtc_real_get_beacon_frequency
+ 1144 01fe D423     		movs	r3, #212
+ 1145 0200 2268     		ldr	r2, [r4]
+ 1146 0202 5B00     		lsls	r3, r3, #1
+ 1147 0204 E067     		str	r0, [r4, #124]
+ 1148 0206 A666     		str	r6, [r4, #104]
+ 1149 0208 D650     		str	r6, [r2, r3]
+ 1150 020a 2200     		movs	r2, r4
+ 1151 020c A36D     		ldr	r3, [r4, #88]
+ 1152 020e 6566     		str	r5, [r4, #100]
+ 1153 0210 0133     		adds	r3, r3, #1
+ 1154 0212 A365     		str	r3, [r4, #88]
+ 1155 0214 236E     		ldr	r3, [r4, #96]
+ 1156 0216 6C32     		adds	r2, r2, #108
+ 1157 0218 0133     		adds	r3, r3, #1
+ 1158 021a 2366     		str	r3, [r4, #96]
+ 1159 021c 1178     		ldrb	r1, [r2]
+ 1160 021e 0B1C     		adds	r3, r1, #0
+ 1161 0220 0329     		cmp	r1, #3
+ 1162 0222 00D9     		bls	.L108
+ 1163 0224 0323     		movs	r3, #3
+ 1164              	.L108:
+ 1165 0226 0133     		adds	r3, r3, #1
+ 1166              	.L187:
+ 1167 0228 1370     		strb	r3, [r2]
+ 1168              	.L109:
+ 1169 022a 3B78     		ldrb	r3, [r7]
+ 1170 022c 002B     		cmp	r3, #0
+ 1171 022e 63D1     		bne	.L110
+ 1172 0230 A568     		ldr	r5, [r4, #8]
+ 1173 0232 2800     		movs	r0, r5
+ 1174 0234 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1175 0238 0100     		movs	r1, r0
+ 1176 023a 2800     		movs	r0, r5
+ 1177 023c FA25     		movs	r5, #250
+ 1178 023e FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1179 0242 AD00     		lsls	r5, r5, #2
+ARM GAS  /tmp/ccLkx9JN.s 			page 23
+
+
+ 1180              	.L195:
+ 1181 0244 A842     		cmp	r0, r5
+ 1182 0246 00D3     		bcc	.LCB1208
+ 1183 0248 92E2     		b	.L151	@long jump
+ 1184              	.LCB1208:
+ 1185              	.L152:
+ 1186 024a FF20     		movs	r0, #255
+ 1187 024c 35E2     		b	.L136
+ 1188              	.L95:
+ 1189 024e 5848     		ldr	r0, .L196+16
+ 1190 0250 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 1191 0254 5748     		ldr	r0, .L196+20
+ 1192 0256 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 1193 025a 32E7     		b	.L96
+ 1194              	.L99:
+ 1195 025c 2033     		adds	r3, r3, #32
+ 1196 025e 00DB     		blt	.LCB1224
+ 1197 0260 71E7     		b	.L94	@long jump
+ 1198              	.LCB1224:
+ 1199 0262 0139     		subs	r1, r1, #1
+ 1200 0264 6DE7     		b	.L186
+ 1201              	.L103:
+ 1202 0266 A368     		ldr	r3, [r4, #8]
+ 1203 0268 1800     		movs	r0, r3
+ 1204 026a 0593     		str	r3, [sp, #20]
+ 1205 026c FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1206 0270 0100     		movs	r1, r0
+ 1207 0272 0598     		ldr	r0, [sp, #20]
+ 1208 0274 FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1209 0278 3900     		movs	r1, r7
+ 1210 027a FFF7FEFF 		bl	__aeabi_uidiv
+ 1211 027e 0100     		movs	r1, r0
+ 1212 0280 FA20     		movs	r0, #250
+ 1213 0282 C000     		lsls	r0, r0, #3
+ 1214 0284 FFF7FEFF 		bl	__aeabi_uidiv
+ 1215 0288 FE28     		cmp	r0, #254
+ 1216 028a 00D9     		bls	.LCB1245
+ 1217 028c 7CE7     		b	.L105	@long jump
+ 1218              	.LCB1245:
+ 1219 028e A368     		ldr	r3, [r4, #8]
+ 1220 0290 1800     		movs	r0, r3
+ 1221 0292 0593     		str	r3, [sp, #20]
+ 1222 0294 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1223 0298 0100     		movs	r1, r0
+ 1224 029a 0598     		ldr	r0, [sp, #20]
+ 1225 029c FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1226 02a0 2900     		movs	r1, r5
+ 1227 02a2 B842     		cmp	r0, r7
+ 1228 02a4 0BD3     		bcc	.L106
+ 1229 02a6 A568     		ldr	r5, [r4, #8]
+ 1230 02a8 2800     		movs	r0, r5
+ 1231 02aa FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1232 02ae 0100     		movs	r1, r0
+ 1233 02b0 2800     		movs	r0, r5
+ 1234 02b2 FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1235 02b6 3900     		movs	r1, r7
+ 1236 02b8 FFF7FEFF 		bl	__aeabi_uidiv
+ARM GAS  /tmp/ccLkx9JN.s 			page 24
+
+
+ 1237 02bc 0100     		movs	r1, r0
+ 1238              	.L106:
+ 1239 02be FA20     		movs	r0, #250
+ 1240 02c0 C000     		lsls	r0, r0, #3
+ 1241 02c2 FFF7FEFF 		bl	__aeabi_uidiv
+ 1242 02c6 60E7     		b	.L104
+ 1243              	.L107:
+ 1244 02c8 E36D     		ldr	r3, [r4, #92]
+ 1245 02ca 2266     		str	r2, [r4, #96]
+ 1246 02cc 0133     		adds	r3, r3, #1
+ 1247 02ce E365     		str	r3, [r4, #92]
+ 1248 02d0 636E     		ldr	r3, [r4, #100]
+ 1249 02d2 059A     		ldr	r2, [sp, #20]
+ 1250 02d4 0133     		adds	r3, r3, #1
+ 1251 02d6 6366     		str	r3, [r4, #100]
+ 1252 02d8 1C23     		movs	r3, #28
+ 1253 02da 5343     		muls	r3, r2
+ 1254 02dc 069A     		ldr	r2, [sp, #24]
+ 1255 02de D318     		adds	r3, r2, r3
+ 1256 02e0 354A     		ldr	r2, .L196+24
+ 1257 02e2 9B18     		adds	r3, r3, r2
+ 1258 02e4 1B78     		ldrb	r3, [r3]
+ 1259 02e6 0E2B     		cmp	r3, #14
+ 1260 02e8 9FD0     		beq	.L109
+ 1261 02ea 2200     		movs	r2, r4
+ 1262 02ec 6C32     		adds	r2, r2, #108
+ 1263 02ee 1378     		ldrb	r3, [r2]
+ 1264 02f0 002B     		cmp	r3, #0
+ 1265 02f2 9AD0     		beq	.L109
+ 1266 02f4 013B     		subs	r3, r3, #1
+ 1267 02f6 97E7     		b	.L187
+ 1268              	.L110:
+ 1269 02f8 0A21     		movs	r1, #10
+ 1270 02fa A06C     		ldr	r0, [r4, #72]
+ 1271 02fc FFF7FEFF 		bl	__aeabi_uidiv
+ 1272 0300 0500     		movs	r5, r0
+ 1273 0302 A36E     		ldr	r3, [r4, #104]
+ 1274 0304 C11A     		subs	r1, r0, r3
+ 1275 0306 2D48     		ldr	r0, .L196+28
+ 1276 0308 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 1277 030c A668     		ldr	r6, [r4, #8]
+ 1278 030e 3000     		movs	r0, r6
+ 1279 0310 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1280 0314 A36E     		ldr	r3, [r4, #104]
+ 1281 0316 0100     		movs	r1, r0
+ 1282 0318 EA1A     		subs	r2, r5, r3
+ 1283 031a 0023     		movs	r3, #0
+ 1284 031c 0293     		str	r3, [sp, #8]
+ 1285 031e 09AB     		add	r3, sp, #36
+ 1286 0320 0193     		str	r3, [sp, #4]
+ 1287 0322 08AB     		add	r3, sp, #32
+ 1288 0324 0093     		str	r3, [sp]
+ 1289 0326 2300     		movs	r3, r4
+ 1290 0328 3000     		movs	r0, r6
+ 1291 032a 3033     		adds	r3, r3, #48
+ 1292 032c FFF7FEFF 		bl	smtc_real_get_rx_window_parameters
+ 1293 0330 636E     		ldr	r3, [r4, #100]
+ARM GAS  /tmp/ccLkx9JN.s 			page 25
+
+
+ 1294 0332 002B     		cmp	r3, #0
+ 1295 0334 00D0     		beq	.LCB1334
+ 1296 0336 C1E1     		b	.L115	@long jump
+ 1297              	.LCB1334:
+ 1298 0338 2300     		movs	r3, r4
+ 1299 033a 6C33     		adds	r3, r3, #108
+ 1300 033c 0693     		str	r3, [sp, #24]
+ 1301 033e 1A78     		ldrb	r2, [r3]
+ 1302 0340 0523     		movs	r3, #5
+ 1303 0342 9B1A     		subs	r3, r3, r2
+ 1304 0344 228E     		ldrh	r2, [r4, #48]
+ 1305 0346 A568     		ldr	r5, [r4, #8]
+ 1306 0348 5A43     		muls	r2, r3
+ 1307 034a 2800     		movs	r0, r5
+ 1308 034c 0792     		str	r2, [sp, #28]
+ 1309 034e FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1310 0352 0100     		movs	r1, r0
+ 1311 0354 2800     		movs	r0, r5
+ 1312 0356 FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1313 035a FA25     		movs	r5, #250
+ 1314 035c AD00     		lsls	r5, r5, #2
+ 1315 035e A842     		cmp	r0, r5
+ 1316 0360 2ED2     		bcs	.L117
+ 1317              	.L120:
+ 1318 0362 A568     		ldr	r5, [r4, #8]
+ 1319 0364 2800     		movs	r0, r5
+ 1320 0366 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1321 036a 0100     		movs	r1, r0
+ 1322 036c 2800     		movs	r0, r5
+ 1323 036e FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1324 0372 FA25     		movs	r5, #250
+ 1325 0374 0121     		movs	r1, #1
+ 1326 0376 AD00     		lsls	r5, r5, #2
+ 1327 0378 A842     		cmp	r0, r5
+ 1328 037a 0BD3     		bcc	.L119
+ 1329 037c A668     		ldr	r6, [r4, #8]
+ 1330 037e 3000     		movs	r0, r6
+ 1331 0380 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1332 0384 0100     		movs	r1, r0
+ 1333 0386 3000     		movs	r0, r6
+ 1334 0388 FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1335 038c 2900     		movs	r1, r5
+ 1336 038e FFF7FEFF 		bl	__aeabi_uidiv
+ 1337 0392 0100     		movs	r1, r0
+ 1338              	.L119:
+ 1339 0394 FA20     		movs	r0, #250
+ 1340 0396 C000     		lsls	r0, r0, #3
+ 1341 0398 FFF7FEFF 		bl	__aeabi_uidiv
+ 1342 039c 0590     		str	r0, [sp, #20]
+ 1343 039e 23E0     		b	.L121
+ 1344              	.L197:
+ 1345              		.align	2
+ 1346              	.L196:
+ 1347 03a0 00000000 		.word	.LC25
+ 1348 03a4 1E000000 		.word	.LC27
+ 1349 03a8 6E000000 		.word	.LC32
+ 1350 03ac 00881300 		.word	1280000
+ARM GAS  /tmp/ccLkx9JN.s 			page 26
+
+
+ 1351 03b0 43000000 		.word	.LC29
+ 1352 03b4 1D000000 		.word	.LC4
+ 1353 03b8 C9050000 		.word	1481
+ 1354 03bc A4000000 		.word	.LC34
+ 1355              	.L117:
+ 1356 03c0 A668     		ldr	r6, [r4, #8]
+ 1357 03c2 3000     		movs	r0, r6
+ 1358 03c4 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1359 03c8 0100     		movs	r1, r0
+ 1360 03ca 3000     		movs	r0, r6
+ 1361 03cc FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1362 03d0 2900     		movs	r1, r5
+ 1363 03d2 FFF7FEFF 		bl	__aeabi_uidiv
+ 1364 03d6 0100     		movs	r1, r0
+ 1365 03d8 FA20     		movs	r0, #250
+ 1366 03da C000     		lsls	r0, r0, #3
+ 1367 03dc FFF7FEFF 		bl	__aeabi_uidiv
+ 1368 03e0 0628     		cmp	r0, #6
+ 1369 03e2 BED8     		bhi	.L120
+ 1370 03e4 0623     		movs	r3, #6
+ 1371 03e6 0593     		str	r3, [sp, #20]
+ 1372              	.L121:
+ 1373 03e8 A568     		ldr	r5, [r4, #8]
+ 1374 03ea 2800     		movs	r0, r5
+ 1375 03ec FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1376 03f0 0100     		movs	r1, r0
+ 1377 03f2 2800     		movs	r0, r5
+ 1378 03f4 FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1379 03f8 FA25     		movs	r5, #250
+ 1380 03fa AD00     		lsls	r5, r5, #2
+ 1381 03fc A842     		cmp	r0, r5
+ 1382 03fe 2AD2     		bcs	.L122
+ 1383              	.L124:
+ 1384 0400 FF20     		movs	r0, #255
+ 1385              	.L123:
+ 1386 0402 FA25     		movs	r5, #250
+ 1387 0404 059B     		ldr	r3, [sp, #20]
+ 1388 0406 A668     		ldr	r6, [r4, #8]
+ 1389 0408 AD00     		lsls	r5, r5, #2
+ 1390 040a 8342     		cmp	r3, r0
+ 1391 040c 6FD2     		bcs	.L126
+ 1392 040e 3000     		movs	r0, r6
+ 1393 0410 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1394 0414 0100     		movs	r1, r0
+ 1395 0416 3000     		movs	r0, r6
+ 1396 0418 FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1397 041c A842     		cmp	r0, r5
+ 1398 041e 48D2     		bcs	.L127
+ 1399              	.L130:
+ 1400 0420 A568     		ldr	r5, [r4, #8]
+ 1401 0422 2800     		movs	r0, r5
+ 1402 0424 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1403 0428 0100     		movs	r1, r0
+ 1404 042a 2800     		movs	r0, r5
+ 1405 042c FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1406 0430 FA25     		movs	r5, #250
+ 1407 0432 0121     		movs	r1, #1
+ARM GAS  /tmp/ccLkx9JN.s 			page 27
+
+
+ 1408 0434 AD00     		lsls	r5, r5, #2
+ 1409 0436 A842     		cmp	r0, r5
+ 1410 0438 00D2     		bcs	.LCB1460
+ 1411 043a 81E0     		b	.L134	@long jump
+ 1412              	.LCB1460:
+ 1413              	.L189:
+ 1414 043c A668     		ldr	r6, [r4, #8]
+ 1415 043e 3000     		movs	r0, r6
+ 1416 0440 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1417 0444 0100     		movs	r1, r0
+ 1418 0446 3000     		movs	r0, r6
+ 1419 0448 FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1420 044c 2900     		movs	r1, r5
+ 1421 044e FFF7FEFF 		bl	__aeabi_uidiv
+ 1422 0452 0100     		movs	r1, r0
+ 1423 0454 74E0     		b	.L134
+ 1424              	.L122:
+ 1425 0456 A668     		ldr	r6, [r4, #8]
+ 1426 0458 3000     		movs	r0, r6
+ 1427 045a FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1428 045e 0100     		movs	r1, r0
+ 1429 0460 3000     		movs	r0, r6
+ 1430 0462 FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1431 0466 2900     		movs	r1, r5
+ 1432 0468 FFF7FEFF 		bl	__aeabi_uidiv
+ 1433 046c 0100     		movs	r1, r0
+ 1434 046e FA20     		movs	r0, #250
+ 1435 0470 C000     		lsls	r0, r0, #3
+ 1436 0472 FFF7FEFF 		bl	__aeabi_uidiv
+ 1437 0476 FE28     		cmp	r0, #254
+ 1438 0478 C2D8     		bhi	.L124
+ 1439 047a A668     		ldr	r6, [r4, #8]
+ 1440 047c 3000     		movs	r0, r6
+ 1441 047e FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1442 0482 0100     		movs	r1, r0
+ 1443 0484 3000     		movs	r0, r6
+ 1444 0486 FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1445 048a 0121     		movs	r1, #1
+ 1446 048c A842     		cmp	r0, r5
+ 1447 048e 0BD3     		bcc	.L125
+ 1448 0490 A668     		ldr	r6, [r4, #8]
+ 1449 0492 3000     		movs	r0, r6
+ 1450 0494 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1451 0498 0100     		movs	r1, r0
+ 1452 049a 3000     		movs	r0, r6
+ 1453 049c FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1454 04a0 2900     		movs	r1, r5
+ 1455 04a2 FFF7FEFF 		bl	__aeabi_uidiv
+ 1456 04a6 0100     		movs	r1, r0
+ 1457              	.L125:
+ 1458 04a8 FA20     		movs	r0, #250
+ 1459 04aa C000     		lsls	r0, r0, #3
+ 1460 04ac FFF7FEFF 		bl	__aeabi_uidiv
+ 1461 04b0 A7E7     		b	.L123
+ 1462              	.L127:
+ 1463 04b2 A668     		ldr	r6, [r4, #8]
+ 1464 04b4 3000     		movs	r0, r6
+ARM GAS  /tmp/ccLkx9JN.s 			page 28
+
+
+ 1465 04b6 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1466 04ba 0100     		movs	r1, r0
+ 1467 04bc 3000     		movs	r0, r6
+ 1468 04be FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1469 04c2 2900     		movs	r1, r5
+ 1470 04c4 FFF7FEFF 		bl	__aeabi_uidiv
+ 1471 04c8 0100     		movs	r1, r0
+ 1472 04ca FA20     		movs	r0, #250
+ 1473 04cc C000     		lsls	r0, r0, #3
+ 1474 04ce FFF7FEFF 		bl	__aeabi_uidiv
+ 1475 04d2 0628     		cmp	r0, #6
+ 1476 04d4 A4D8     		bhi	.L130
+ 1477 04d6 0620     		movs	r0, #6
+ 1478              	.L131:
+ 1479 04d8 079B     		ldr	r3, [sp, #28]
+ 1480 04da 8342     		cmp	r3, r0
+ 1481 04dc 35D2     		bcs	.L135
+ 1482 04de 0520     		movs	r0, #5
+ 1483 04e0 069B     		ldr	r3, [sp, #24]
+ 1484 04e2 1B78     		ldrb	r3, [r3]
+ 1485 04e4 C01A     		subs	r0, r0, r3
+ 1486 04e6 238E     		ldrh	r3, [r4, #48]
+ 1487 04e8 5843     		muls	r0, r3
+ 1488              	.L188:
+ 1489 04ea 80B2     		uxth	r0, r0
+ 1490 04ec E5E0     		b	.L136
+ 1491              	.L126:
+ 1492 04ee 3000     		movs	r0, r6
+ 1493 04f0 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1494 04f4 0100     		movs	r1, r0
+ 1495 04f6 3000     		movs	r0, r6
+ 1496 04f8 FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1497 04fc A842     		cmp	r0, r5
+ 1498 04fe 01D2     		bcs	.L132
+ 1499              	.L133:
+ 1500 0500 FF20     		movs	r0, #255
+ 1501 0502 E9E7     		b	.L131
+ 1502              	.L132:
+ 1503 0504 A668     		ldr	r6, [r4, #8]
+ 1504 0506 3000     		movs	r0, r6
+ 1505 0508 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1506 050c 0100     		movs	r1, r0
+ 1507 050e 3000     		movs	r0, r6
+ 1508 0510 FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1509 0514 2900     		movs	r1, r5
+ 1510 0516 FFF7FEFF 		bl	__aeabi_uidiv
+ 1511 051a 0100     		movs	r1, r0
+ 1512 051c FA20     		movs	r0, #250
+ 1513 051e C000     		lsls	r0, r0, #3
+ 1514 0520 FFF7FEFF 		bl	__aeabi_uidiv
+ 1515 0524 FE28     		cmp	r0, #254
+ 1516 0526 EBD8     		bhi	.L133
+ 1517 0528 A668     		ldr	r6, [r4, #8]
+ 1518 052a 3000     		movs	r0, r6
+ 1519 052c FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1520 0530 0100     		movs	r1, r0
+ 1521 0532 3000     		movs	r0, r6
+ARM GAS  /tmp/ccLkx9JN.s 			page 29
+
+
+ 1522 0534 FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1523 0538 0121     		movs	r1, #1
+ 1524 053a A842     		cmp	r0, r5
+ 1525 053c 00D3     		bcc	.LCB1591
+ 1526 053e 7DE7     		b	.L189	@long jump
+ 1527              	.LCB1591:
+ 1528              	.L134:
+ 1529 0540 FA20     		movs	r0, #250
+ 1530 0542 C000     		lsls	r0, r0, #3
+ 1531 0544 FFF7FEFF 		bl	__aeabi_uidiv
+ 1532 0548 C6E7     		b	.L131
+ 1533              	.L135:
+ 1534 054a A568     		ldr	r5, [r4, #8]
+ 1535 054c 2800     		movs	r0, r5
+ 1536 054e FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1537 0552 0100     		movs	r1, r0
+ 1538 0554 2800     		movs	r0, r5
+ 1539 0556 FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1540 055a FA25     		movs	r5, #250
+ 1541 055c AD00     		lsls	r5, r5, #2
+ 1542 055e A842     		cmp	r0, r5
+ 1543 0560 1ED2     		bcs	.L137
+ 1544              	.L140:
+ 1545 0562 A568     		ldr	r5, [r4, #8]
+ 1546 0564 2800     		movs	r0, r5
+ 1547 0566 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1548 056a 0100     		movs	r1, r0
+ 1549 056c 2800     		movs	r0, r5
+ 1550 056e FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1551 0572 FA25     		movs	r5, #250
+ 1552 0574 0121     		movs	r1, #1
+ 1553 0576 AD00     		lsls	r5, r5, #2
+ 1554 0578 A842     		cmp	r0, r5
+ 1555 057a 0BD3     		bcc	.L139
+ 1556 057c A668     		ldr	r6, [r4, #8]
+ 1557 057e 3000     		movs	r0, r6
+ 1558 0580 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1559 0584 0100     		movs	r1, r0
+ 1560 0586 3000     		movs	r0, r6
+ 1561 0588 FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1562 058c 2900     		movs	r1, r5
+ 1563 058e FFF7FEFF 		bl	__aeabi_uidiv
+ 1564 0592 0100     		movs	r1, r0
+ 1565              	.L139:
+ 1566 0594 FA20     		movs	r0, #250
+ 1567 0596 C000     		lsls	r0, r0, #3
+ 1568 0598 FFF7FEFF 		bl	__aeabi_uidiv
+ 1569 059c 0590     		str	r0, [sp, #20]
+ 1570 059e 13E0     		b	.L141
+ 1571              	.L137:
+ 1572 05a0 A668     		ldr	r6, [r4, #8]
+ 1573 05a2 3000     		movs	r0, r6
+ 1574 05a4 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1575 05a8 0100     		movs	r1, r0
+ 1576 05aa 3000     		movs	r0, r6
+ 1577 05ac FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1578 05b0 2900     		movs	r1, r5
+ARM GAS  /tmp/ccLkx9JN.s 			page 30
+
+
+ 1579 05b2 FFF7FEFF 		bl	__aeabi_uidiv
+ 1580 05b6 0100     		movs	r1, r0
+ 1581 05b8 FA20     		movs	r0, #250
+ 1582 05ba C000     		lsls	r0, r0, #3
+ 1583 05bc FFF7FEFF 		bl	__aeabi_uidiv
+ 1584 05c0 0628     		cmp	r0, #6
+ 1585 05c2 CED8     		bhi	.L140
+ 1586 05c4 0623     		movs	r3, #6
+ 1587 05c6 0593     		str	r3, [sp, #20]
+ 1588              	.L141:
+ 1589 05c8 A568     		ldr	r5, [r4, #8]
+ 1590 05ca 2800     		movs	r0, r5
+ 1591 05cc FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1592 05d0 0100     		movs	r1, r0
+ 1593 05d2 2800     		movs	r0, r5
+ 1594 05d4 FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1595 05d8 FA25     		movs	r5, #250
+ 1596 05da AD00     		lsls	r5, r5, #2
+ 1597 05dc A842     		cmp	r0, r5
+ 1598 05de 2BD2     		bcs	.L142
+ 1599              	.L144:
+ 1600 05e0 FF20     		movs	r0, #255
+ 1601              	.L143:
+ 1602 05e2 FA25     		movs	r5, #250
+ 1603 05e4 059B     		ldr	r3, [sp, #20]
+ 1604 05e6 A668     		ldr	r6, [r4, #8]
+ 1605 05e8 AD00     		lsls	r5, r5, #2
+ 1606 05ea 8342     		cmp	r3, r0
+ 1607 05ec 00D3     		bcc	.LCB1682
+ 1608 05ee B7E0     		b	.L146	@long jump
+ 1609              	.LCB1682:
+ 1610 05f0 3000     		movs	r0, r6
+ 1611 05f2 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1612 05f6 0100     		movs	r1, r0
+ 1613 05f8 3000     		movs	r0, r6
+ 1614 05fa FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1615 05fe A842     		cmp	r0, r5
+ 1616 0600 48D2     		bcs	.L147
+ 1617              	.L150:
+ 1618 0602 A568     		ldr	r5, [r4, #8]
+ 1619 0604 2800     		movs	r0, r5
+ 1620 0606 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1621 060a 0100     		movs	r1, r0
+ 1622 060c 2800     		movs	r0, r5
+ 1623 060e FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1624 0612 FA25     		movs	r5, #250
+ 1625 0614 0121     		movs	r1, #1
+ 1626 0616 AD00     		lsls	r5, r5, #2
+ 1627 0618 A842     		cmp	r0, r5
+ 1628 061a 00D2     		bcs	.LCB1703
+ 1629 061c C7E0     		b	.L153	@long jump
+ 1630              	.LCB1703:
+ 1631              	.L190:
+ 1632 061e A668     		ldr	r6, [r4, #8]
+ 1633 0620 3000     		movs	r0, r6
+ 1634 0622 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1635 0626 0100     		movs	r1, r0
+ARM GAS  /tmp/ccLkx9JN.s 			page 31
+
+
+ 1636 0628 3000     		movs	r0, r6
+ 1637 062a FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1638 062e 2900     		movs	r1, r5
+ 1639 0630 FFF7FEFF 		bl	__aeabi_uidiv
+ 1640 0634 0100     		movs	r1, r0
+ 1641 0636 BAE0     		b	.L153
+ 1642              	.L142:
+ 1643 0638 A668     		ldr	r6, [r4, #8]
+ 1644 063a 3000     		movs	r0, r6
+ 1645 063c FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1646 0640 0100     		movs	r1, r0
+ 1647 0642 3000     		movs	r0, r6
+ 1648 0644 FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1649 0648 2900     		movs	r1, r5
+ 1650 064a FFF7FEFF 		bl	__aeabi_uidiv
+ 1651 064e 0100     		movs	r1, r0
+ 1652 0650 FA20     		movs	r0, #250
+ 1653 0652 C000     		lsls	r0, r0, #3
+ 1654 0654 FFF7FEFF 		bl	__aeabi_uidiv
+ 1655 0658 FE28     		cmp	r0, #254
+ 1656 065a C1D8     		bhi	.L144
+ 1657 065c A668     		ldr	r6, [r4, #8]
+ 1658 065e 3000     		movs	r0, r6
+ 1659 0660 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1660 0664 0100     		movs	r1, r0
+ 1661 0666 3000     		movs	r0, r6
+ 1662 0668 FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1663 066c 0121     		movs	r1, #1
+ 1664 066e A842     		cmp	r0, r5
+ 1665 0670 0BD3     		bcc	.L145
+ 1666 0672 A668     		ldr	r6, [r4, #8]
+ 1667 0674 3000     		movs	r0, r6
+ 1668 0676 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1669 067a 0100     		movs	r1, r0
+ 1670 067c 3000     		movs	r0, r6
+ 1671 067e FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1672 0682 2900     		movs	r1, r5
+ 1673 0684 FFF7FEFF 		bl	__aeabi_uidiv
+ 1674 0688 0100     		movs	r1, r0
+ 1675              	.L145:
+ 1676 068a FA20     		movs	r0, #250
+ 1677 068c C000     		lsls	r0, r0, #3
+ 1678 068e FFF7FEFF 		bl	__aeabi_uidiv
+ 1679 0692 A6E7     		b	.L143
+ 1680              	.L147:
+ 1681 0694 A668     		ldr	r6, [r4, #8]
+ 1682 0696 3000     		movs	r0, r6
+ 1683 0698 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1684 069c 0100     		movs	r1, r0
+ 1685 069e 3000     		movs	r0, r6
+ 1686 06a0 FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1687 06a4 2900     		movs	r1, r5
+ 1688 06a6 FFF7FEFF 		bl	__aeabi_uidiv
+ 1689 06aa 0100     		movs	r1, r0
+ 1690 06ac FA20     		movs	r0, #250
+ 1691 06ae C000     		lsls	r0, r0, #3
+ 1692 06b0 FFF7FEFF 		bl	__aeabi_uidiv
+ARM GAS  /tmp/ccLkx9JN.s 			page 32
+
+
+ 1693 06b4 0628     		cmp	r0, #6
+ 1694 06b6 A4D8     		bhi	.L150
+ 1695 06b8 0620     		movs	r0, #6
+ 1696              	.L136:
+ 1697 06ba 2086     		strh	r0, [r4, #48]
+ 1698              	.L115:
+ 1699 06bc 637B     		ldrb	r3, [r4, #13]
+ 1700 06be 002B     		cmp	r3, #0
+ 1701 06c0 0ED0     		beq	.L154
+ 1702 06c2 2600     		movs	r6, r4
+ 1703 06c4 2936     		adds	r6, r6, #41
+ 1704 06c6 3278     		ldrb	r2, [r6]
+ 1705 06c8 4E49     		ldr	r1, .L198
+ 1706 06ca 4F48     		ldr	r0, .L198+4
+ 1707 06cc FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 1708 06d0 0025     		movs	r5, #0
+ 1709              	.L155:
+ 1710 06d2 3378     		ldrb	r3, [r6]
+ 1711 06d4 9D42     		cmp	r5, r3
+ 1712 06d6 00D2     		bcs	.LCB1797
+ 1713 06d8 6EE0     		b	.L157	@long jump
+ 1714              	.LCB1797:
+ 1715 06da 4C48     		ldr	r0, .L198+8
+ 1716 06dc FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 1717              	.L154:
+ 1718 06e0 636C     		ldr	r3, [r4, #68]
+ 1719 06e2 E26B     		ldr	r2, [r4, #60]
+ 1720 06e4 A16C     		ldr	r1, [r4, #72]
+ 1721 06e6 4A48     		ldr	r0, .L198+12
+ 1722 06e8 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 1723 06ec 4948     		ldr	r0, .L198+16
+ 1724 06ee FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 1725 06f2 238E     		ldrh	r3, [r4, #48]
+ 1726 06f4 E26D     		ldr	r2, [r4, #92]
+ 1727 06f6 0293     		str	r3, [sp, #8]
+ 1728 06f8 2300     		movs	r3, r4
+ 1729 06fa 6C33     		adds	r3, r3, #108
+ 1730 06fc 1B78     		ldrb	r3, [r3]
+ 1731 06fe A16D     		ldr	r1, [r4, #88]
+ 1732 0700 0193     		str	r3, [sp, #4]
+ 1733 0702 636E     		ldr	r3, [r4, #100]
+ 1734 0704 4448     		ldr	r0, .L198+20
+ 1735 0706 0093     		str	r3, [sp]
+ 1736 0708 236E     		ldr	r3, [r4, #96]
+ 1737 070a FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 1738 070e 4348     		ldr	r0, .L198+24
+ 1739 0710 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 1740 0714 3B78     		ldrb	r3, [r7]
+ 1741 0716 012B     		cmp	r3, #1
+ 1742 0718 5ED1     		bne	.L158
+ 1743 071a 414B     		ldr	r3, .L198+28
+ 1744 071c A268     		ldr	r2, [r4, #8]
+ 1745 071e D35C     		ldrb	r3, [r2, r3]
+ 1746 0720 032B     		cmp	r3, #3
+ 1747 0722 59D1     		bne	.L158
+ 1748 0724 A56C     		ldr	r5, [r4, #72]
+ 1749 0726 0A21     		movs	r1, #10
+ARM GAS  /tmp/ccLkx9JN.s 			page 33
+
+
+ 1750 0728 2800     		movs	r0, r5
+ 1751 072a FFF7FEFF 		bl	__aeabi_uidiv
+ 1752 072e 636C     		ldr	r3, [r4, #68]
+ 1753 0730 0200     		movs	r2, r0
+ 1754 0732 E91A     		subs	r1, r5, r3
+ 1755 0734 E36A     		ldr	r3, [r4, #44]
+ 1756 0736 2068     		ldr	r0, [r4]
+ 1757 0738 0193     		str	r3, [sp, #4]
+ 1758 073a 3A4B     		ldr	r3, .L198+32
+ 1759 073c 0093     		str	r3, [sp]
+ 1760 073e 3A4B     		ldr	r3, .L198+36
+ 1761 0740 FFF7FEFF 		bl	smtc_ping_slot_init_after_beacon
+ 1762 0744 2068     		ldr	r0, [r4]
+ 1763 0746 FFF7FEFF 		bl	smtc_ping_slot_start
+ 1764              	.L159:
+ 1765 074a E36A     		ldr	r3, [r4, #44]
+ 1766 074c 2000     		movs	r0, r4
+ 1767 074e 8033     		adds	r3, r3, #128
+ 1768 0750 E362     		str	r3, [r4, #44]
+ 1769 0752 3B78     		ldrb	r3, [r7]
+ 1770 0754 002B     		cmp	r3, #0
+ 1771 0756 46D1     		bne	.L160
+ 1772 0758 FFF7FEFF 		bl	smtc_beacon_sniff_start
+ 1773              	.L90:
+ 1774 075c 0BB0     		add	sp, sp, #44
+ 1775              		@ sp needed
+ 1776 075e F0BD     		pop	{r4, r5, r6, r7, pc}
+ 1777              	.L146:
+ 1778 0760 3000     		movs	r0, r6
+ 1779 0762 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1780 0766 0100     		movs	r1, r0
+ 1781 0768 3000     		movs	r0, r6
+ 1782 076a FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1783 076e 69E5     		b	.L195
+ 1784              	.L151:
+ 1785 0770 A668     		ldr	r6, [r4, #8]
+ 1786 0772 3000     		movs	r0, r6
+ 1787 0774 FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1788 0778 0100     		movs	r1, r0
+ 1789 077a 3000     		movs	r0, r6
+ 1790 077c FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ 1791 0780 2900     		movs	r1, r5
+ 1792 0782 FFF7FEFF 		bl	__aeabi_uidiv
+ 1793 0786 0100     		movs	r1, r0
+ 1794 0788 FA20     		movs	r0, #250
+ 1795 078a C000     		lsls	r0, r0, #3
+ 1796 078c FFF7FEFF 		bl	__aeabi_uidiv
+ 1797 0790 FE28     		cmp	r0, #254
+ 1798 0792 00D9     		bls	.LCB1900
+ 1799 0794 59E5     		b	.L152	@long jump
+ 1800              	.LCB1900:
+ 1801 0796 A668     		ldr	r6, [r4, #8]
+ 1802 0798 3000     		movs	r0, r6
+ 1803 079a FFF7FEFF 		bl	smtc_real_get_beacon_dr
+ 1804 079e 0100     		movs	r1, r0
+ 1805 07a0 3000     		movs	r0, r6
+ 1806 07a2 FFF7FEFF 		bl	smtc_real_get_symbol_duration_us
+ARM GAS  /tmp/ccLkx9JN.s 			page 34
+
+
+ 1807 07a6 0121     		movs	r1, #1
+ 1808 07a8 A842     		cmp	r0, r5
+ 1809 07aa 00D3     		bcc	.LCB1910
+ 1810 07ac 37E7     		b	.L190	@long jump
+ 1811              	.LCB1910:
+ 1812              	.L153:
+ 1813 07ae FA20     		movs	r0, #250
+ 1814 07b0 C000     		lsls	r0, r0, #3
+ 1815 07b2 FFF7FEFF 		bl	__aeabi_uidiv
+ 1816 07b6 98E6     		b	.L188
+ 1817              	.L157:
+ 1818 07b8 0F23     		movs	r3, #15
+ 1819 07ba 1D42     		tst	r5, r3
+ 1820 07bc 04D1     		bne	.L156
+ 1821 07be 002D     		cmp	r5, #0
+ 1822 07c0 02D0     		beq	.L156
+ 1823 07c2 1248     		ldr	r0, .L198+8
+ 1824 07c4 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 1825              	.L156:
+ 1826 07c8 2300     		movs	r3, r4
+ 1827 07ca 1033     		adds	r3, r3, #16
+ 1828 07cc 595D     		ldrb	r1, [r3, r5]
+ 1829 07ce 1748     		ldr	r0, .L198+40
+ 1830 07d0 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 1831 07d4 0135     		adds	r5, r5, #1
+ 1832 07d6 7CE7     		b	.L155
+ 1833              	.L158:
+ 1834 07d8 1548     		ldr	r0, .L198+44
+ 1835 07da FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 1836 07de 2068     		ldr	r0, [r4]
+ 1837 07e0 FFF7FEFF 		bl	smtc_ping_slot_stop
+ 1838 07e4 B1E7     		b	.L159
+ 1839              	.L160:
+ 1840 07e6 FFF7FEFF 		bl	beacon_rp_request
+ 1841 07ea A068     		ldr	r0, [r4, #8]
+ 1842 07ec FFF7FEFF 		bl	lr1mac_core_get_status_push_network_downlink_to_user
+ 1843 07f0 0028     		cmp	r0, #0
+ 1844 07f2 B3D0     		beq	.L90
+ 1845 07f4 2300     		movs	r3, r4
+ 1846 07f6 0D22     		movs	r2, #13
+ 1847 07f8 7933     		adds	r3, r3, #121
+ 1848 07fa 1A70     		strb	r2, [r3]
+ 1849 07fc 236D     		ldr	r3, [r4, #80]
+ 1850 07fe 606D     		ldr	r0, [r4, #84]
+ 1851 0800 9847     		blx	r3
+ 1852 0802 ABE7     		b	.L90
+ 1853              	.L199:
+ 1854              		.align	2
+ 1855              	.L198:
+ 1856 0804 B6000000 		.word	.LC36
+ 1857 0808 C6000000 		.word	.LC38
+ 1858 080c D9000000 		.word	.LC40
+ 1859 0810 E1000000 		.word	.LC44
+ 1860 0814 2D010000 		.word	.LC46
+ 1861 0818 5C010000 		.word	.LC48
+ 1862 081c 01020000 		.word	.LC50
+ 1863 0820 46050000 		.word	1350
+ARM GAS  /tmp/ccLkx9JN.s 			page 35
+
+
+ 1864 0824 B80B0000 		.word	3000
+ 1865 0828 48080000 		.word	2120
+ 1866 082c DB000000 		.word	.LC42
+ 1867 0830 31020000 		.word	.LC52
+ 1869              		.section	.text.smtc_decode_beacon_param,"ax",%progbits
+ 1870              		.align	1
+ 1871              		.global	smtc_decode_beacon_param
+ 1872              		.syntax unified
+ 1873              		.code	16
+ 1874              		.thumb_func
+ 1875              		.fpu softvfp
+ 1877              	smtc_decode_beacon_param:
+ 1878              		@ args = 0, pretend = 0, frame = 0
+ 1879              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1880              		@ link register save eliminated.
+ 1881 0000 4018     		adds	r0, r0, r1
+ 1882 0002 0838     		subs	r0, r0, #8
+ 1883 0004 0078     		ldrb	r0, [r0]
+ 1884              		@ sp needed
+ 1885 0006 7047     		bx	lr
+ 1887              		.section	.rodata.smtc_decode_beacon_gw_specific.str1.1,"aMS",%progbits,1
+ 1888              	.LC54:
+ 1889 0000 494E5641 		.ascii	"INVALID CRC GwSpecific\012\000"
+ 1889      4C494420 
+ 1889      43524320 
+ 1889      47775370 
+ 1889      65636966 
+ 1890              		.section	.text.smtc_decode_beacon_gw_specific,"ax",%progbits
+ 1891              		.align	1
+ 1892              		.global	smtc_decode_beacon_gw_specific
+ 1893              		.syntax unified
+ 1894              		.code	16
+ 1895              		.thumb_func
+ 1896              		.fpu softvfp
+ 1898              	smtc_decode_beacon_gw_specific:
+ 1899              		@ args = 0, pretend = 0, frame = 0
+ 1900              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1901 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 1902 0002 0400     		movs	r4, r0
+ 1903 0004 0800     		movs	r0, r1
+ 1904 0006 0F00     		movs	r7, r1
+ 1905 0008 1600     		movs	r6, r2
+ 1906 000a FFF7FEFF 		bl	get_beacon_length
+ 1907 000e 2018     		adds	r0, r4, r0
+ 1908 0010 0238     		subs	r0, r0, #2
+ 1909 0012 0578     		ldrb	r5, [r0]
+ 1910 0014 3800     		movs	r0, r7
+ 1911 0016 FFF7FEFF 		bl	get_beacon_length
+ 1912 001a 2018     		adds	r0, r4, r0
+ 1913 001c 0138     		subs	r0, r0, #1
+ 1914 001e 0378     		ldrb	r3, [r0]
+ 1915 0020 781E     		subs	r0, r7, #1
+ 1916 0022 1B02     		lsls	r3, r3, #8
+ 1917 0024 2418     		adds	r4, r4, r0
+ 1918 0026 3800     		movs	r0, r7
+ 1919 0028 ED18     		adds	r5, r5, r3
+ 1920 002a FFF7FEFF 		bl	get_beacon_length
+ARM GAS  /tmp/ccLkx9JN.s 			page 36
+
+
+ 1921 002e C11B     		subs	r1, r0, r7
+ 1922 0030 0131     		adds	r1, r1, #1
+ 1923 0032 89B2     		uxth	r1, r1
+ 1924 0034 ADB2     		uxth	r5, r5
+ 1925 0036 0029     		cmp	r1, #0
+ 1926 0038 03D0     		beq	.L202
+ 1927 003a 2000     		movs	r0, r4
+ 1928 003c FFF7FEFF 		bl	crc16_beacon.part.0
+ 1929 0040 0100     		movs	r1, r0
+ 1930              	.L202:
+ 1931 0042 8D42     		cmp	r5, r1
+ 1932 0044 09D0     		beq	.L203
+ 1933 0046 0848     		ldr	r0, .L208
+ 1934 0048 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 1935 004c 0722     		movs	r2, #7
+ 1936 004e 0021     		movs	r1, #0
+ 1937 0050 3000     		movs	r0, r6
+ 1938 0052 FFF7FEFF 		bl	memset
+ 1939 0056 0020     		movs	r0, #0
+ 1940              	.L204:
+ 1941              		@ sp needed
+ 1942 0058 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 1943              	.L203:
+ 1944 005a 0722     		movs	r2, #7
+ 1945 005c 2100     		movs	r1, r4
+ 1946 005e 3000     		movs	r0, r6
+ 1947 0060 FFF7FEFF 		bl	memcpy
+ 1948 0064 0120     		movs	r0, #1
+ 1949 0066 F7E7     		b	.L204
+ 1950              	.L209:
+ 1951              		.align	2
+ 1952              	.L208:
+ 1953 0068 00000000 		.word	.LC54
+ 1955              		.section	.rodata.CSWTCH.65,"a"
+ 1956              		.set	.LANCHOR0,. + 0
+ 1959              	CSWTCH.65:
+ 1960 0000 13       		.byte	19
+ 1961 0001 11       		.byte	17
+ 1962 0002 13       		.byte	19
+ 1963 0003 15       		.byte	21
+ 1964 0004 17       		.byte	23
+ 1965              		.section	.rodata.__func__.0,"a"
+ 1966              		.set	.LANCHOR1,. + 0
+ 1969              	__func__.0:
+ 1970 0000 6765745F 		.ascii	"get_beacon_length\000"
+ 1970      62656163 
+ 1970      6F6E5F6C 
+ 1970      656E6774 
+ 1970      6800
+ 1971              		.section	.rodata.__func__.1,"a"
+ 1972              		.set	.LANCHOR2,. + 0
+ 1975              	__func__.1:
+ 1976 0000 736D7463 		.ascii	"smtc_beacon_sniff_launch_callback_for_rp\000"
+ 1976      5F626561 
+ 1976      636F6E5F 
+ 1976      736E6966 
+ 1976      665F6C61 
+ARM GAS  /tmp/ccLkx9JN.s 			page 37
+
+
+ 1977              		.section	.rodata.__func__.2,"a"
+ 1978              		.set	.LANCHOR3,. + 0
+ 1981              	__func__.2:
+ 1982 0000 62656163 		.ascii	"beacon_rp_request\000"
+ 1982      6F6E5F72 
+ 1982      705F7265 
+ 1982      71756573 
+ 1982      7400
+ 1983              		.section	.rodata.__func__.3,"a"
+ 1984              		.set	.LANCHOR4,. + 0
+ 1987              	__func__.3:
+ 1988 0000 736D7463 		.ascii	"smtc_beacon_sniff_start\000"
+ 1988      5F626561 
+ 1988      636F6E5F 
+ 1988      736E6966 
+ 1988      665F7374 
+ 1989              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccLkx9JN.s 			page 38
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 smtc_beacon_sniff.c
+     /tmp/ccLkx9JN.s:12     .text.crc16_beacon.part.0:0000000000000000 $t
+     /tmp/ccLkx9JN.s:19     .text.crc16_beacon.part.0:0000000000000000 crc16_beacon.part.0
+     /tmp/ccLkx9JN.s:56     .text.crc16_beacon.part.0:0000000000000038 $d
+     /tmp/ccLkx9JN.s:66     .text.get_beacon_length:0000000000000000 $t
+     /tmp/ccLkx9JN.s:72     .text.get_beacon_length:0000000000000000 get_beacon_length
+     /tmp/ccLkx9JN.s:107    .text.get_beacon_length:0000000000000044 $d
+     /tmp/ccLkx9JN.s:118    .text.smtc_beacon_sniff_launch_callback_for_rp:0000000000000000 $t
+     /tmp/ccLkx9JN.s:124    .text.smtc_beacon_sniff_launch_callback_for_rp:0000000000000000 smtc_beacon_sniff_launch_callback_for_rp
+     /tmp/ccLkx9JN.s:216    .text.smtc_beacon_sniff_launch_callback_for_rp:00000000000000b0 $d
+     /tmp/ccLkx9JN.s:225    .text.beacon_rp_request:0000000000000000 $t
+     /tmp/ccLkx9JN.s:231    .text.beacon_rp_request:0000000000000000 beacon_rp_request
+     /tmp/ccLkx9JN.s:391    .text.beacon_rp_request:0000000000000166 $d
+     /tmp/ccLkx9JN.s:481    .text.beacon_rp_request:00000000000001f4 $d
+     /tmp/ccLkx9JN.s:486    .text.smtc_beacon_sniff_init:0000000000000000 $t
+     /tmp/ccLkx9JN.s:493    .text.smtc_beacon_sniff_init:0000000000000000 smtc_beacon_sniff_init
+     /tmp/ccLkx9JN.s:540    .text.smtc_beacon_sniff_init:0000000000000058 $d
+     /tmp/ccLkx9JN.s:893    .text.smtc_beacon_sniff_rp_callback:0000000000000000 smtc_beacon_sniff_rp_callback
+     /tmp/ccLkx9JN.s:544    .text.smtc_beacon_sniff_stop:0000000000000000 $t
+     /tmp/ccLkx9JN.s:551    .text.smtc_beacon_sniff_stop:0000000000000000 smtc_beacon_sniff_stop
+     /tmp/ccLkx9JN.s:571    .text.smtc_beacon_class_b_enable_service:0000000000000000 $t
+     /tmp/ccLkx9JN.s:578    .text.smtc_beacon_class_b_enable_service:0000000000000000 smtc_beacon_class_b_enable_service
+     /tmp/ccLkx9JN.s:603    .text.smtc_beacon_sniff_start:0000000000000000 $t
+     /tmp/ccLkx9JN.s:610    .text.smtc_beacon_sniff_start:0000000000000000 smtc_beacon_sniff_start
+     /tmp/ccLkx9JN.s:763    .text.smtc_beacon_sniff_start:0000000000000144 $d
+     /tmp/ccLkx9JN.s:771    .text.smtc_beacon_sniff_get_metadata:0000000000000000 $t
+     /tmp/ccLkx9JN.s:778    .text.smtc_beacon_sniff_get_metadata:0000000000000000 smtc_beacon_sniff_get_metadata
+     /tmp/ccLkx9JN.s:795    .text.smtc_decode_beacon_epoch_time:0000000000000000 $t
+     /tmp/ccLkx9JN.s:802    .text.smtc_decode_beacon_epoch_time:0000000000000000 smtc_decode_beacon_epoch_time
+     /tmp/ccLkx9JN.s:848    .text.smtc_decode_beacon_epoch_time:000000000000004c $d
+     /tmp/ccLkx9JN.s:886    .text.smtc_beacon_sniff_rp_callback:0000000000000000 $t
+     /tmp/ccLkx9JN.s:1347   .text.smtc_beacon_sniff_rp_callback:00000000000003a0 $d
+     /tmp/ccLkx9JN.s:1356   .text.smtc_beacon_sniff_rp_callback:00000000000003c0 $t
+     /tmp/ccLkx9JN.s:1856   .text.smtc_beacon_sniff_rp_callback:0000000000000804 $d
+     /tmp/ccLkx9JN.s:1870   .text.smtc_decode_beacon_param:0000000000000000 $t
+     /tmp/ccLkx9JN.s:1877   .text.smtc_decode_beacon_param:0000000000000000 smtc_decode_beacon_param
+     /tmp/ccLkx9JN.s:1891   .text.smtc_decode_beacon_gw_specific:0000000000000000 $t
+     /tmp/ccLkx9JN.s:1898   .text.smtc_decode_beacon_gw_specific:0000000000000000 smtc_decode_beacon_gw_specific
+     /tmp/ccLkx9JN.s:1953   .text.smtc_decode_beacon_gw_specific:0000000000000068 $d
+     /tmp/ccLkx9JN.s:1959   .rodata.CSWTCH.65:0000000000000000 CSWTCH.65
+     /tmp/ccLkx9JN.s:1969   .rodata.__func__.0:0000000000000000 __func__.0
+     /tmp/ccLkx9JN.s:1975   .rodata.__func__.1:0000000000000000 __func__.1
+     /tmp/ccLkx9JN.s:1981   .rodata.__func__.2:0000000000000000 __func__.2
+     /tmp/ccLkx9JN.s:1987   .rodata.__func__.3:0000000000000000 __func__.3
+     /tmp/ccLkx9JN.s:404    .text.beacon_rp_request:0000000000000173 $d
+     /tmp/ccLkx9JN.s:404    .text.beacon_rp_request:0000000000000174 $t
+
+UNDEFINED SYMBOLS
+smtc_modem_hal_store_crashlog
+smtc_modem_hal_set_crashlog_status
+smtc_modem_hal_print_trace
+smtc_modem_hal_reset_mcu
+rp_task_abort
+smtc_modem_hal_start_radio_tcxo
+smtc_modem_hal_assert_fail
+smtc_modem_hal_get_time_in_ms
+ARM GAS  /tmp/ccLkx9JN.s 			page 39
+
+
+__aeabi_uidivmod
+__aeabi_uidiv
+memset
+smtc_modem_hal_get_radio_tcxo_startup_delay_ms
+smtc_modem_hal_get_board_delay_ms
+smtc_real_get_beacon_dr
+smtc_real_get_rx_start_time_offset_ms
+smtc_real_get_symbol_duration_us
+smtc_real_get_sync_word
+smtc_real_get_coding_rate
+smtc_real_lora_dr_to_sf_bw
+smtc_real_get_beacon_frequency
+__gnu_thumb1_case_uqi
+rp_task_enqueue
+rp_release_hook
+rp_hook_init
+smtc_ping_slot_stop
+__aeabi_idiv
+rp_hook_get_id
+lr1mac_core_convert_rtc_to_gps_epoch_time
+memcpy
+smtc_real_get_rx_window_parameters
+smtc_ping_slot_init_after_beacon
+smtc_ping_slot_start
+lr1mac_core_get_status_push_network_downlink_to_user

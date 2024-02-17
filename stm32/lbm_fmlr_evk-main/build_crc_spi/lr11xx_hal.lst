@@ -1,0 +1,459 @@
+ARM GAS  /tmp/ccTEmior.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.eabi_attribute 23, 1
+   3              		.eabi_attribute 24, 1
+   4              		.eabi_attribute 25, 1
+   5              		.eabi_attribute 26, 1
+   6              		.eabi_attribute 30, 4
+   7              		.eabi_attribute 34, 0
+   8              		.eabi_attribute 18, 4
+   9              		.file	"lr11xx_hal.c"
+  10              		.text
+  11              		.section	.text.lr11xx_hal_compute_crc,"ax",%progbits
+  12              		.align	1
+  13              		.arch armv6s-m
+  14              		.syntax unified
+  15              		.code	16
+  16              		.thumb_func
+  17              		.fpu softvfp
+  19              	lr11xx_hal_compute_crc:
+  20              		@ args = 0, pretend = 0, frame = 8
+  21              		@ frame_needed = 0, uses_anonymous_args = 0
+  22 0000 F7B5     		push	{r0, r1, r2, r4, r5, r6, r7, lr}
+  23 0002 0126     		movs	r6, #1
+  24 0004 0192     		str	r2, [sp, #4]
+  25 0006 6527     		movs	r7, #101
+  26 0008 0022     		movs	r2, #0
+  27              	.L2:
+  28 000a 019C     		ldr	r4, [sp, #4]
+  29 000c 93B2     		uxth	r3, r2
+  30 000e 9C42     		cmp	r4, r3
+  31 0010 00D8     		bhi	.L5
+  32              		@ sp needed
+  33 0012 FEBD     		pop	{r1, r2, r3, r4, r5, r6, r7, pc}
+  34              	.L5:
+  35 0014 0823     		movs	r3, #8
+  36 0016 8C5C     		ldrb	r4, [r1, r2]
+  37              	.L4:
+  38 0018 2500     		movs	r5, r4
+  39 001a 4540     		eors	r5, r0
+  40 001c 4008     		lsrs	r0, r0, #1
+  41 001e 3542     		tst	r5, r6
+  42 0020 01D0     		beq	.L3
+  43 0022 7840     		eors	r0, r7
+  44 0024 C0B2     		uxtb	r0, r0
+  45              	.L3:
+  46 0026 013B     		subs	r3, r3, #1
+  47 0028 DBB2     		uxtb	r3, r3
+  48 002a 6408     		lsrs	r4, r4, #1
+  49 002c 002B     		cmp	r3, #0
+  50 002e F3D1     		bne	.L4
+  51 0030 0132     		adds	r2, r2, #1
+  52 0032 EAE7     		b	.L2
+  54              		.section	.text.lr11xx_hal_reset,"ax",%progbits
+  55              		.align	1
+  56              		.global	lr11xx_hal_reset
+  57              		.syntax unified
+  58              		.code	16
+  59              		.thumb_func
+ARM GAS  /tmp/ccTEmior.s 			page 2
+
+
+  60              		.fpu softvfp
+  62              	lr11xx_hal_reset:
+  63              		@ args = 0, pretend = 0, frame = 0
+  64              		@ frame_needed = 0, uses_anonymous_args = 0
+  65 0000 10B5     		push	{r4, lr}
+  66 0002 0B4C     		ldr	r4, .L11
+  67 0004 0021     		movs	r1, #0
+  68              		@ sp needed
+  69 0006 2220     		movs	r0, #34
+  70 0008 FFF7FEFF 		bl	hal_gpio_set_value
+  71 000c 2000     		movs	r0, r4
+  72 000e FFF7FEFF 		bl	hal_mcu_wait_us
+  73 0012 0121     		movs	r1, #1
+  74 0014 2220     		movs	r0, #34
+  75 0016 FFF7FEFF 		bl	hal_gpio_set_value
+  76 001a 2000     		movs	r0, r4
+  77 001c FFF7FEFF 		bl	hal_mcu_wait_us
+  78 0020 0448     		ldr	r0, .L11+4
+  79 0022 FFF7FEFF 		bl	hal_mcu_wait_us
+  80 0026 0122     		movs	r2, #1
+  81 0028 034B     		ldr	r3, .L11+8
+  82 002a 0020     		movs	r0, #0
+  83 002c 1A70     		strb	r2, [r3]
+  84 002e 10BD     		pop	{r4, pc}
+  85              	.L12:
+  86              		.align	2
+  87              	.L11:
+  88 0030 88130000 		.word	5000
+  89 0034 400D0300 		.word	200000
+  90 0038 00000000 		.word	.LANCHOR0
+  92              		.section	.text.lr11xx_hal_wait_on_busy,"ax",%progbits
+  93              		.align	1
+  94              		.global	lr11xx_hal_wait_on_busy
+  95              		.syntax unified
+  96              		.code	16
+  97              		.thumb_func
+  98              		.fpu softvfp
+ 100              	lr11xx_hal_wait_on_busy:
+ 101              		@ args = 0, pretend = 0, frame = 0
+ 102              		@ frame_needed = 0, uses_anonymous_args = 0
+ 103 0000 10B5     		push	{r4, lr}
+ 104              	.L14:
+ 105 0002 0720     		movs	r0, #7
+ 106 0004 FFF7FEFF 		bl	hal_gpio_get_value
+ 107 0008 0128     		cmp	r0, #1
+ 108 000a FAD0     		beq	.L14
+ 109              		@ sp needed
+ 110 000c 10BD     		pop	{r4, pc}
+ 112              		.section	.text.lr11xx_hal_check_device_ready,"ax",%progbits
+ 113              		.align	1
+ 114              		.global	lr11xx_hal_check_device_ready
+ 115              		.syntax unified
+ 116              		.code	16
+ 117              		.thumb_func
+ 118              		.fpu softvfp
+ 120              	lr11xx_hal_check_device_ready:
+ 121              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  /tmp/ccTEmior.s 			page 3
+
+
+ 122              		@ frame_needed = 0, uses_anonymous_args = 0
+ 123 0000 10B5     		push	{r4, lr}
+ 124 0002 0A4C     		ldr	r4, .L20
+ 125 0004 2378     		ldrb	r3, [r4]
+ 126 0006 D9B2     		uxtb	r1, r3
+ 127 0008 002B     		cmp	r3, #0
+ 128 000a 02D0     		beq	.L18
+ 129 000c FFF7FEFF 		bl	lr11xx_hal_wait_on_busy
+ 130              	.L17:
+ 131              		@ sp needed
+ 132 0010 10BD     		pop	{r4, pc}
+ 133              	.L18:
+ 134 0012 0420     		movs	r0, #4
+ 135 0014 FFF7FEFF 		bl	hal_gpio_set_value
+ 136 0018 0121     		movs	r1, #1
+ 137 001a 0420     		movs	r0, #4
+ 138 001c FFF7FEFF 		bl	hal_gpio_set_value
+ 139 0020 FFF7FEFF 		bl	lr11xx_hal_wait_on_busy
+ 140 0024 0123     		movs	r3, #1
+ 141 0026 2370     		strb	r3, [r4]
+ 142 0028 F2E7     		b	.L17
+ 143              	.L21:
+ 144 002a C046     		.align	2
+ 145              	.L20:
+ 146 002c 00000000 		.word	.LANCHOR0
+ 148              		.section	.text.lr11xx_hal_write,"ax",%progbits
+ 149              		.align	1
+ 150              		.global	lr11xx_hal_write
+ 151              		.syntax unified
+ 152              		.code	16
+ 153              		.thumb_func
+ 154              		.fpu softvfp
+ 156              	lr11xx_hal_write:
+ 157              		@ args = 4, pretend = 0, frame = 8
+ 158              		@ frame_needed = 0, uses_anonymous_args = 0
+ 159 0000 F7B5     		push	{r0, r1, r2, r4, r5, r6, r7, lr}
+ 160 0002 1C00     		movs	r4, r3
+ 161 0004 08AB     		add	r3, sp, #32
+ 162 0006 1B88     		ldrh	r3, [r3]
+ 163 0008 FF20     		movs	r0, #255
+ 164 000a 0D00     		movs	r5, r1
+ 165 000c 0093     		str	r3, [sp]
+ 166 000e 1600     		movs	r6, r2
+ 167 0010 FFF7FEFF 		bl	lr11xx_hal_compute_crc
+ 168 0014 2100     		movs	r1, r4
+ 169 0016 009A     		ldr	r2, [sp]
+ 170 0018 FFF7FEFF 		bl	lr11xx_hal_compute_crc
+ 171 001c 0190     		str	r0, [sp, #4]
+ 172 001e FFF7FEFF 		bl	lr11xx_hal_check_device_ready
+ 173 0022 0021     		movs	r1, #0
+ 174 0024 0420     		movs	r0, #4
+ 175 0026 FFF7FEFF 		bl	hal_gpio_set_value
+ 176 002a 2F00     		movs	r7, r5
+ 177 002c 7619     		adds	r6, r6, r5
+ 178              	.L23:
+ 179 002e B742     		cmp	r7, r6
+ 180 0030 1BD1     		bne	.L24
+ARM GAS  /tmp/ccTEmior.s 			page 4
+
+
+ 181 0032 009B     		ldr	r3, [sp]
+ 182 0034 E618     		adds	r6, r4, r3
+ 183              	.L25:
+ 184 0036 B442     		cmp	r4, r6
+ 185 0038 1DD1     		bne	.L26
+ 186 003a 6B46     		mov	r3, sp
+ 187 003c 0220     		movs	r0, #2
+ 188 003e 9988     		ldrh	r1, [r3, #4]
+ 189 0040 FFF7FEFF 		bl	hal_spi_in_out
+ 190 0044 0121     		movs	r1, #1
+ 191 0046 0420     		movs	r0, #4
+ 192 0048 FFF7FEFF 		bl	hal_gpio_set_value
+ 193 004c 2B78     		ldrb	r3, [r5]
+ 194 004e 012B     		cmp	r3, #1
+ 195 0050 09D1     		bne	.L27
+ 196 0052 6B78     		ldrb	r3, [r5, #1]
+ 197 0054 1B2B     		cmp	r3, #27
+ 198 0056 06D1     		bne	.L27
+ 199 0058 FA20     		movs	r0, #250
+ 200 005a 0022     		movs	r2, #0
+ 201 005c 094B     		ldr	r3, .L28
+ 202 005e 4000     		lsls	r0, r0, #1
+ 203 0060 1A70     		strb	r2, [r3]
+ 204 0062 FFF7FEFF 		bl	hal_mcu_wait_us
+ 205              	.L27:
+ 206              		@ sp needed
+ 207 0066 0020     		movs	r0, #0
+ 208 0068 FEBD     		pop	{r1, r2, r3, r4, r5, r6, r7, pc}
+ 209              	.L24:
+ 210 006a 3978     		ldrb	r1, [r7]
+ 211 006c 0220     		movs	r0, #2
+ 212 006e FFF7FEFF 		bl	hal_spi_in_out
+ 213 0072 0137     		adds	r7, r7, #1
+ 214 0074 DBE7     		b	.L23
+ 215              	.L26:
+ 216 0076 2178     		ldrb	r1, [r4]
+ 217 0078 0220     		movs	r0, #2
+ 218 007a FFF7FEFF 		bl	hal_spi_in_out
+ 219 007e 0134     		adds	r4, r4, #1
+ 220 0080 D9E7     		b	.L25
+ 221              	.L29:
+ 222 0082 C046     		.align	2
+ 223              	.L28:
+ 224 0084 00000000 		.word	.LANCHOR0
+ 226              		.section	.rodata.lr11xx_hal_read.str1.1,"aMS",%progbits,1
+ 227              	.LC3:
+ 228 0000 4552524F 		.ascii	"ERROR: \033[0;31mERROR: lr11xx read function - erro"
+ 228      523A201B 
+ 228      5B303B33 
+ 228      316D4552 
+ 228      524F523A 
+ 229 0030 72206F6E 		.ascii	"r on received crc\012\000"
+ 229      20726563 
+ 229      65697665 
+ 229      64206372 
+ 229      630A00
+ 230              	.LC5:
+ARM GAS  /tmp/ccTEmior.s 			page 5
+
+
+ 231 0043 00       		.ascii	"\000"
+ 232              		.section	.text.lr11xx_hal_read,"ax",%progbits
+ 233              		.align	1
+ 234              		.global	lr11xx_hal_read
+ 235              		.syntax unified
+ 236              		.code	16
+ 237              		.thumb_func
+ 238              		.fpu softvfp
+ 240              	lr11xx_hal_read:
+ 241              		@ args = 4, pretend = 0, frame = 16
+ 242              		@ frame_needed = 0, uses_anonymous_args = 0
+ 243 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 244 0002 85B0     		sub	sp, sp, #20
+ 245 0004 1E00     		movs	r6, r3
+ 246 0006 FF20     		movs	r0, #255
+ 247 0008 0AAB     		add	r3, sp, #40
+ 248 000a 0C00     		movs	r4, r1
+ 249 000c 1500     		movs	r5, r2
+ 250 000e 1F88     		ldrh	r7, [r3]
+ 251 0010 FFF7FEFF 		bl	lr11xx_hal_compute_crc
+ 252 0014 0190     		str	r0, [sp, #4]
+ 253 0016 FFF7FEFF 		bl	lr11xx_hal_check_device_ready
+ 254 001a 0021     		movs	r1, #0
+ 255 001c 0420     		movs	r0, #4
+ 256 001e FFF7FEFF 		bl	hal_gpio_set_value
+ 257 0022 6519     		adds	r5, r4, r5
+ 258              	.L31:
+ 259 0024 AC42     		cmp	r4, r5
+ 260 0026 41D1     		bne	.L32
+ 261 0028 6B46     		mov	r3, sp
+ 262 002a 0024     		movs	r4, #0
+ 263 002c 9988     		ldrh	r1, [r3, #4]
+ 264 002e 0220     		movs	r0, #2
+ 265 0030 FFF7FEFF 		bl	hal_spi_in_out
+ 266 0034 0121     		movs	r1, #1
+ 267 0036 0420     		movs	r0, #4
+ 268 0038 FFF7FEFF 		bl	hal_gpio_set_value
+ 269 003c A742     		cmp	r7, r4
+ 270 003e 32D0     		beq	.L33
+ 271 0040 FFF7FEFF 		bl	lr11xx_hal_check_device_ready
+ 272 0044 2100     		movs	r1, r4
+ 273 0046 0420     		movs	r0, #4
+ 274 0048 FFF7FEFF 		bl	hal_gpio_set_value
+ 275 004c 2100     		movs	r1, r4
+ 276 004e 0220     		movs	r0, #2
+ 277 0050 FFF7FEFF 		bl	hal_spi_in_out
+ 278 0054 02AB     		add	r3, sp, #8
+ 279 0056 DD1D     		adds	r5, r3, #7
+ 280 0058 2870     		strb	r0, [r5]
+ 281              	.L34:
+ 282 005a 0021     		movs	r1, #0
+ 283 005c 0220     		movs	r0, #2
+ 284 005e FFF7FEFF 		bl	hal_spi_in_out
+ 285 0062 3055     		strb	r0, [r6, r4]
+ 286 0064 0134     		adds	r4, r4, #1
+ 287 0066 A3B2     		uxth	r3, r4
+ 288 0068 9F42     		cmp	r7, r3
+ARM GAS  /tmp/ccTEmior.s 			page 6
+
+
+ 289 006a F6D8     		bhi	.L34
+ 290 006c 0021     		movs	r1, #0
+ 291 006e 0220     		movs	r0, #2
+ 292 0070 FFF7FEFF 		bl	hal_spi_in_out
+ 293 0074 0121     		movs	r1, #1
+ 294 0076 0400     		movs	r4, r0
+ 295 0078 0420     		movs	r0, #4
+ 296 007a FFF7FEFF 		bl	hal_gpio_set_value
+ 297 007e 0122     		movs	r2, #1
+ 298 0080 2900     		movs	r1, r5
+ 299 0082 FF20     		movs	r0, #255
+ 300 0084 FFF7FEFF 		bl	lr11xx_hal_compute_crc
+ 301 0088 3A00     		movs	r2, r7
+ 302 008a 3100     		movs	r1, r6
+ 303 008c FFF7FEFF 		bl	lr11xx_hal_compute_crc
+ 304 0090 E3B2     		uxtb	r3, r4
+ 305 0092 0024     		movs	r4, #0
+ 306 0094 8342     		cmp	r3, r0
+ 307 0096 06D0     		beq	.L33
+ 308 0098 0748     		ldr	r0, .L39
+ 309 009a FFF7FEFF 		bl	hal_trace_print_var
+ 310 009e 0748     		ldr	r0, .L39+4
+ 311 00a0 FFF7FEFF 		bl	hal_trace_print_var
+ 312 00a4 0334     		adds	r4, r4, #3
+ 313              	.L33:
+ 314 00a6 2000     		movs	r0, r4
+ 315 00a8 05B0     		add	sp, sp, #20
+ 316              		@ sp needed
+ 317 00aa F0BD     		pop	{r4, r5, r6, r7, pc}
+ 318              	.L32:
+ 319 00ac 2178     		ldrb	r1, [r4]
+ 320 00ae 0220     		movs	r0, #2
+ 321 00b0 FFF7FEFF 		bl	hal_spi_in_out
+ 322 00b4 0134     		adds	r4, r4, #1
+ 323 00b6 B5E7     		b	.L31
+ 324              	.L40:
+ 325              		.align	2
+ 326              	.L39:
+ 327 00b8 00000000 		.word	.LC3
+ 328 00bc 43000000 		.word	.LC5
+ 330              		.section	.text.lr11xx_hal_direct_read,"ax",%progbits
+ 331              		.align	1
+ 332              		.global	lr11xx_hal_direct_read
+ 333              		.syntax unified
+ 334              		.code	16
+ 335              		.thumb_func
+ 336              		.fpu softvfp
+ 338              	lr11xx_hal_direct_read:
+ 339              		@ args = 0, pretend = 0, frame = 0
+ 340              		@ frame_needed = 0, uses_anonymous_args = 0
+ 341 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 342 0002 0D00     		movs	r5, r1
+ 343 0004 1600     		movs	r6, r2
+ 344 0006 FFF7FEFF 		bl	lr11xx_hal_check_device_ready
+ 345 000a 0021     		movs	r1, #0
+ 346 000c 0420     		movs	r0, #4
+ 347 000e FFF7FEFF 		bl	hal_gpio_set_value
+ARM GAS  /tmp/ccTEmior.s 			page 7
+
+
+ 348 0012 2C00     		movs	r4, r5
+ 349 0014 7719     		adds	r7, r6, r5
+ 350              	.L42:
+ 351 0016 0021     		movs	r1, #0
+ 352 0018 0220     		movs	r0, #2
+ 353 001a BC42     		cmp	r4, r7
+ 354 001c 18D1     		bne	.L43
+ 355 001e FFF7FEFF 		bl	hal_spi_in_out
+ 356 0022 0121     		movs	r1, #1
+ 357 0024 0400     		movs	r4, r0
+ 358 0026 0420     		movs	r0, #4
+ 359 0028 FFF7FEFF 		bl	hal_gpio_set_value
+ 360 002c 3200     		movs	r2, r6
+ 361 002e 2900     		movs	r1, r5
+ 362 0030 FF20     		movs	r0, #255
+ 363 0032 FFF7FEFF 		bl	lr11xx_hal_compute_crc
+ 364 0036 E4B2     		uxtb	r4, r4
+ 365 0038 0023     		movs	r3, #0
+ 366 003a 8442     		cmp	r4, r0
+ 367 003c 06D0     		beq	.L44
+ 368 003e 0748     		ldr	r0, .L46
+ 369 0040 FFF7FEFF 		bl	hal_trace_print_var
+ 370 0044 0648     		ldr	r0, .L46+4
+ 371 0046 FFF7FEFF 		bl	hal_trace_print_var
+ 372 004a 0323     		movs	r3, #3
+ 373              	.L44:
+ 374              		@ sp needed
+ 375 004c 1800     		movs	r0, r3
+ 376 004e F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 377              	.L43:
+ 378 0050 FFF7FEFF 		bl	hal_spi_in_out
+ 379 0054 2070     		strb	r0, [r4]
+ 380 0056 0134     		adds	r4, r4, #1
+ 381 0058 DDE7     		b	.L42
+ 382              	.L47:
+ 383 005a C046     		.align	2
+ 384              	.L46:
+ 385 005c 00000000 		.word	.LC3
+ 386 0060 43000000 		.word	.LC5
+ 388              		.section	.text.lr11xx_hal_wakeup,"ax",%progbits
+ 389              		.align	1
+ 390              		.global	lr11xx_hal_wakeup
+ 391              		.syntax unified
+ 392              		.code	16
+ 393              		.thumb_func
+ 394              		.fpu softvfp
+ 396              	lr11xx_hal_wakeup:
+ 397              		@ args = 0, pretend = 0, frame = 0
+ 398              		@ frame_needed = 0, uses_anonymous_args = 0
+ 399 0000 10B5     		push	{r4, lr}
+ 400 0002 FFF7FEFF 		bl	lr11xx_hal_check_device_ready
+ 401              		@ sp needed
+ 402 0006 0020     		movs	r0, #0
+ 403 0008 10BD     		pop	{r4, pc}
+ 405              		.section	.data.radio_mode,"aw"
+ 406              		.set	.LANCHOR0,. + 0
+ 409              	radio_mode:
+ARM GAS  /tmp/ccTEmior.s 			page 8
+
+
+ 410 0000 01       		.byte	1
+ 411              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccTEmior.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 lr11xx_hal.c
+     /tmp/ccTEmior.s:12     .text.lr11xx_hal_compute_crc:0000000000000000 $t
+     /tmp/ccTEmior.s:19     .text.lr11xx_hal_compute_crc:0000000000000000 lr11xx_hal_compute_crc
+     /tmp/ccTEmior.s:55     .text.lr11xx_hal_reset:0000000000000000 $t
+     /tmp/ccTEmior.s:62     .text.lr11xx_hal_reset:0000000000000000 lr11xx_hal_reset
+     /tmp/ccTEmior.s:88     .text.lr11xx_hal_reset:0000000000000030 $d
+     /tmp/ccTEmior.s:93     .text.lr11xx_hal_wait_on_busy:0000000000000000 $t
+     /tmp/ccTEmior.s:100    .text.lr11xx_hal_wait_on_busy:0000000000000000 lr11xx_hal_wait_on_busy
+     /tmp/ccTEmior.s:113    .text.lr11xx_hal_check_device_ready:0000000000000000 $t
+     /tmp/ccTEmior.s:120    .text.lr11xx_hal_check_device_ready:0000000000000000 lr11xx_hal_check_device_ready
+     /tmp/ccTEmior.s:146    .text.lr11xx_hal_check_device_ready:000000000000002c $d
+     /tmp/ccTEmior.s:149    .text.lr11xx_hal_write:0000000000000000 $t
+     /tmp/ccTEmior.s:156    .text.lr11xx_hal_write:0000000000000000 lr11xx_hal_write
+     /tmp/ccTEmior.s:224    .text.lr11xx_hal_write:0000000000000084 $d
+     /tmp/ccTEmior.s:233    .text.lr11xx_hal_read:0000000000000000 $t
+     /tmp/ccTEmior.s:240    .text.lr11xx_hal_read:0000000000000000 lr11xx_hal_read
+     /tmp/ccTEmior.s:327    .text.lr11xx_hal_read:00000000000000b8 $d
+     /tmp/ccTEmior.s:331    .text.lr11xx_hal_direct_read:0000000000000000 $t
+     /tmp/ccTEmior.s:338    .text.lr11xx_hal_direct_read:0000000000000000 lr11xx_hal_direct_read
+     /tmp/ccTEmior.s:385    .text.lr11xx_hal_direct_read:000000000000005c $d
+     /tmp/ccTEmior.s:389    .text.lr11xx_hal_wakeup:0000000000000000 $t
+     /tmp/ccTEmior.s:396    .text.lr11xx_hal_wakeup:0000000000000000 lr11xx_hal_wakeup
+     /tmp/ccTEmior.s:409    .data.radio_mode:0000000000000000 radio_mode
+
+UNDEFINED SYMBOLS
+hal_gpio_set_value
+hal_mcu_wait_us
+hal_gpio_get_value
+hal_spi_in_out
+hal_trace_print_var

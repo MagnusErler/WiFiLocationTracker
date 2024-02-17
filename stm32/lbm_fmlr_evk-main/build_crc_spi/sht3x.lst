@@ -1,0 +1,233 @@
+ARM GAS  /tmp/ccqHRahP.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.eabi_attribute 23, 1
+   3              		.eabi_attribute 24, 1
+   4              		.eabi_attribute 25, 1
+   5              		.eabi_attribute 26, 1
+   6              		.eabi_attribute 30, 4
+   7              		.eabi_attribute 34, 0
+   8              		.eabi_attribute 18, 4
+   9              		.file	"sht3x.c"
+  10              		.text
+  11              		.section	.text.sht3x_check_crc.constprop.0,"ax",%progbits
+  12              		.align	1
+  13              		.arch armv6s-m
+  14              		.syntax unified
+  15              		.code	16
+  16              		.thumb_func
+  17              		.fpu softvfp
+  19              	sht3x_check_crc.constprop.0:
+  20              		@ args = 0, pretend = 0, frame = 0
+  21              		@ frame_needed = 0, uses_anonymous_args = 0
+  22 0000 30B5     		push	{r4, r5, lr}
+  23 0002 0378     		ldrb	r3, [r0]
+  24 0004 0822     		movs	r2, #8
+  25 0006 DB43     		mvns	r3, r3
+  26 0008 3124     		movs	r4, #49
+  27 000a DBB2     		uxtb	r3, r3
+  28              	.L4:
+  29 000c 5900     		lsls	r1, r3, #1
+  30 000e 5DB2     		sxtb	r5, r3
+  31 0010 2300     		movs	r3, r4
+  32 0012 4B40     		eors	r3, r1
+  33 0014 DBB2     		uxtb	r3, r3
+  34 0016 002D     		cmp	r5, #0
+  35 0018 00DB     		blt	.L3
+  36 001a CBB2     		uxtb	r3, r1
+  37              	.L3:
+  38 001c 013A     		subs	r2, r2, #1
+  39 001e D2B2     		uxtb	r2, r2
+  40 0020 002A     		cmp	r2, #0
+  41 0022 F3D1     		bne	.L4
+  42 0024 4278     		ldrb	r2, [r0, #1]
+  43 0026 3124     		movs	r4, #49
+  44 0028 5340     		eors	r3, r2
+  45 002a 0822     		movs	r2, #8
+  46              	.L7:
+  47 002c 5900     		lsls	r1, r3, #1
+  48 002e 5DB2     		sxtb	r5, r3
+  49 0030 2300     		movs	r3, r4
+  50 0032 4B40     		eors	r3, r1
+  51 0034 DBB2     		uxtb	r3, r3
+  52 0036 002D     		cmp	r5, #0
+  53 0038 00DB     		blt	.L6
+  54 003a CBB2     		uxtb	r3, r1
+  55              	.L6:
+  56 003c 013A     		subs	r2, r2, #1
+  57 003e D2B2     		uxtb	r2, r2
+  58 0040 002A     		cmp	r2, #0
+ARM GAS  /tmp/ccqHRahP.s 			page 2
+
+
+  59 0042 F3D1     		bne	.L7
+  60              		@ sp needed
+  61 0044 8078     		ldrb	r0, [r0, #2]
+  62 0046 C01A     		subs	r0, r0, r3
+  63 0048 4242     		rsbs	r2, r0, #0
+  64 004a 5041     		adcs	r0, r0, r2
+  65 004c C0B2     		uxtb	r0, r0
+  66 004e 30BD     		pop	{r4, r5, pc}
+  68              		.section	.text.sht3x_init,"ax",%progbits
+  69              		.align	1
+  70              		.global	sht3x_init
+  71              		.syntax unified
+  72              		.code	16
+  73              		.thumb_func
+  74              		.fpu softvfp
+  76              	sht3x_init:
+  77              		@ args = 0, pretend = 0, frame = 8
+  78              		@ frame_needed = 0, uses_anonymous_args = 0
+  79 0000 30B5     		push	{r4, r5, lr}
+  80 0002 0F4C     		ldr	r4, .L11
+  81 0004 0F4D     		ldr	r5, .L11+4
+  82 0006 85B0     		sub	sp, sp, #20
+  83 0008 2060     		str	r0, [r4]
+  84 000a 0120     		movs	r0, #1
+  85 000c 2970     		strb	r1, [r5]
+  86 000e FFF7FEFF 		bl	hal_i2c_set_addr_size
+  87 0012 0222     		movs	r2, #2
+  88 0014 0C49     		ldr	r1, .L11+8
+  89 0016 03A8     		add	r0, sp, #12
+  90 0018 FFF7FEFF 		bl	memcpy
+  91 001c 0E23     		movs	r3, #14
+  92 001e 0022     		movs	r2, #0
+  93 0020 6B44     		add	r3, r3, sp
+  94 0022 1A70     		strb	r2, [r3]
+  95 0024 0323     		movs	r3, #3
+  96 0026 2978     		ldrb	r1, [r5]
+  97 0028 0093     		str	r3, [sp]
+  98 002a 084A     		ldr	r2, .L11+12
+  99 002c 03AB     		add	r3, sp, #12
+ 100 002e 2068     		ldr	r0, [r4]
+ 101 0030 FFF7FEFF 		bl	hal_i2c_read_buffer
+ 102 0034 03A8     		add	r0, sp, #12
+ 103 0036 FFF7FEFF 		bl	sht3x_check_crc.constprop.0
+ 104 003a 05B0     		add	sp, sp, #20
+ 105              		@ sp needed
+ 106 003c 30BD     		pop	{r4, r5, pc}
+ 107              	.L12:
+ 108 003e C046     		.align	2
+ 109              	.L11:
+ 110 0040 00000000 		.word	.LANCHOR0
+ 111 0044 00000000 		.word	.LANCHOR1
+ 112 0048 00000000 		.word	.LANCHOR2
+ 113 004c 2DF30000 		.word	62253
+ 115              		.section	.text.sht3x_read_temp,"ax",%progbits
+ 116              		.align	1
+ 117              		.global	sht3x_read_temp
+ 118              		.syntax unified
+ARM GAS  /tmp/ccqHRahP.s 			page 3
+
+
+ 119              		.code	16
+ 120              		.thumb_func
+ 121              		.fpu softvfp
+ 123              	sht3x_read_temp:
+ 124              		@ args = 0, pretend = 0, frame = 8
+ 125              		@ frame_needed = 0, uses_anonymous_args = 0
+ 126 0000 30B5     		push	{r4, r5, lr}
+ 127 0002 0500     		movs	r5, r0
+ 128 0004 85B0     		sub	sp, sp, #20
+ 129 0006 0120     		movs	r0, #1
+ 130 0008 0C00     		movs	r4, r1
+ 131 000a FFF7FEFF 		bl	hal_i2c_set_addr_size
+ 132 000e 0023     		movs	r3, #0
+ 133 0010 6A46     		mov	r2, sp
+ 134 0012 0293     		str	r3, [sp, #8]
+ 135 0014 9381     		strh	r3, [r2, #12]
+ 136 0016 164B     		ldr	r3, .L21
+ 137 0018 1648     		ldr	r0, .L21+4
+ 138 001a 1978     		ldrb	r1, [r3]
+ 139 001c 0623     		movs	r3, #6
+ 140 001e 0093     		str	r3, [sp]
+ 141 0020 154A     		ldr	r2, .L21+8
+ 142 0022 0068     		ldr	r0, [r0]
+ 143 0024 02AB     		add	r3, sp, #8
+ 144 0026 FFF7FEFF 		bl	hal_i2c_read_buffer
+ 145 002a 02A8     		add	r0, sp, #8
+ 146 002c FFF7FEFF 		bl	sht3x_check_crc.constprop.0
+ 147 0030 0028     		cmp	r0, #0
+ 148 0032 1BD0     		beq	.L14
+ 149 0034 0B23     		movs	r3, #11
+ 150 0036 6B44     		add	r3, r3, sp
+ 151 0038 1800     		movs	r0, r3
+ 152 003a FFF7FEFF 		bl	sht3x_check_crc.constprop.0
+ 153 003e 0028     		cmp	r0, #0
+ 154 0040 14D0     		beq	.L14
+ 155 0042 6B46     		mov	r3, sp
+ 156 0044 6A46     		mov	r2, sp
+ 157 0046 D97A     		ldrb	r1, [r3, #11]
+ 158 0048 1289     		ldrh	r2, [r2, #8]
+ 159 004a 1B7B     		ldrb	r3, [r3, #12]
+ 160 004c 52BA     		rev16	r2, r2
+ 161 004e 1B02     		lsls	r3, r3, #8
+ 162 0050 0B43     		orrs	r3, r1
+ 163 0052 91B2     		uxth	r1, r2
+ 164 0054 094A     		ldr	r2, .L21+12
+ 165 0056 5BBA     		rev16	r3, r3
+ 166 0058 4A43     		muls	r2, r1
+ 167 005a 0949     		ldr	r1, .L21+16
+ 168 005c 5213     		asrs	r2, r2, #13
+ 169 005e 5218     		adds	r2, r2, r1
+ 170 0060 2A60     		str	r2, [r5]
+ 171 0062 084A     		ldr	r2, .L21+20
+ 172 0064 9BB2     		uxth	r3, r3
+ 173 0066 5343     		muls	r3, r2
+ 174 0068 5B13     		asrs	r3, r3, #13
+ 175 006a 2360     		str	r3, [r4]
+ 176              	.L14:
+ARM GAS  /tmp/ccqHRahP.s 			page 4
+
+
+ 177 006c 05B0     		add	sp, sp, #20
+ 178              		@ sp needed
+ 179 006e 30BD     		pop	{r4, r5, pc}
+ 180              	.L22:
+ 181              		.align	2
+ 182              	.L21:
+ 183 0070 00000000 		.word	.LANCHOR1
+ 184 0074 00000000 		.word	.LANCHOR0
+ 185 0078 062C0000 		.word	11270
+ 186 007c 73550000 		.word	21875
+ 187 0080 3850FFFF 		.word	-45000
+ 188 0084 D4300000 		.word	12500
+ 190              		.section	.rodata
+ 191              		.set	.LANCHOR2,. + 0
+ 192              	.LC2:
+ 193 0000 0000     		.ascii	"\000\000"
+ 194 0002 00       		.space	1
+ 195              		.section	.bss.address,"aw",%nobits
+ 196              		.set	.LANCHOR1,. + 0
+ 199              	address:
+ 200 0000 00       		.space	1
+ 201              		.section	.bss.i2c,"aw",%nobits
+ 202              		.align	2
+ 203              		.set	.LANCHOR0,. + 0
+ 206              	i2c:
+ 207 0000 00000000 		.space	4
+ 208              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccqHRahP.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 sht3x.c
+     /tmp/ccqHRahP.s:12     .text.sht3x_check_crc.constprop.0:0000000000000000 $t
+     /tmp/ccqHRahP.s:19     .text.sht3x_check_crc.constprop.0:0000000000000000 sht3x_check_crc.constprop.0
+     /tmp/ccqHRahP.s:69     .text.sht3x_init:0000000000000000 $t
+     /tmp/ccqHRahP.s:76     .text.sht3x_init:0000000000000000 sht3x_init
+     /tmp/ccqHRahP.s:110    .text.sht3x_init:0000000000000040 $d
+     /tmp/ccqHRahP.s:116    .text.sht3x_read_temp:0000000000000000 $t
+     /tmp/ccqHRahP.s:123    .text.sht3x_read_temp:0000000000000000 sht3x_read_temp
+     /tmp/ccqHRahP.s:183    .text.sht3x_read_temp:0000000000000070 $d
+     /tmp/ccqHRahP.s:194    .rodata:0000000000000002 $d
+     /tmp/ccqHRahP.s:199    .bss.address:0000000000000000 address
+     /tmp/ccqHRahP.s:200    .bss.address:0000000000000000 $d
+     /tmp/ccqHRahP.s:202    .bss.i2c:0000000000000000 $d
+     /tmp/ccqHRahP.s:206    .bss.i2c:0000000000000000 i2c
+
+UNDEFINED SYMBOLS
+hal_i2c_set_addr_size
+memcpy
+hal_i2c_read_buffer
