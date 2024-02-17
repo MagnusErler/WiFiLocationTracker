@@ -24,7 +24,7 @@
 
 #include "spi.h"
 
-#include "smtc_hal_rtc.h"
+#include "rtc.h"
 
 #include <stdlib.h>  // used for malloc function
 #include <string.h>  // used for strlen function

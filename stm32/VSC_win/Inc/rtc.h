@@ -1,5 +1,5 @@
 /*!
- * @file      smtc_hal_rtc.h
+ * @file      rtc.h
  *
  * @brief     Board specific package RTC API definition.
  *

@@ -9,7 +9,7 @@
 
 #include "main.h"
 
-#include "smtc_hal_rtc.h"
+#include "rtc.h"
 
 radio_t1* radio;
 
