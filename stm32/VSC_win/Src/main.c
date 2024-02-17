@@ -25,7 +25,9 @@
 #include "spi.h"
 #include "uart.h"
 
-#include "smtc_hal.h"
+#include "smtc_hal_dbg_trace.h"
+#include "smtc_hal_gpio_pin_names.h"
+#include "smtc_hal_rtc.h"
 
 #include <stdlib.h>   // used for malloc function
 

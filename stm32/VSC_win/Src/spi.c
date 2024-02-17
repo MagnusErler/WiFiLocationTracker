@@ -11,7 +11,9 @@
 
 //#include "configuration.h"
 
-#include "smtc_hal.h"     // for HAL_DBG_TRACE_ERROR
+#include "smtc_hal_dbg_trace.h"
+#include "smtc_hal_gpio_pin_names.h"
+#include "smtc_hal_rtc.h"
 
 radio_t1* radio;
 

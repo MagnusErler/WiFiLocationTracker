@@ -51,8 +51,8 @@
  * --- PRIVATE CONSTANTS -------------------------------------------------------
  */
 
-/* MCU Wake Up Time */
-#define MIN_ALARM_DELAY_IN_TICKS       3U              // in ticks
+// /* MCU Wake Up Time */
+// #define MIN_ALARM_DELAY_IN_TICKS       3U              // in ticks
 
 /* sub-second number of bits */
 #define N_PREDIV_S                     10U
@@ -66,13 +66,13 @@
 /* Sub-second mask definition */
 #define ALARM_SUBSECOND_MASK           ( N_PREDIV_S << RTC_ALRMASSR_MASKSS_Pos )
 
-/* RTC Time base in us */
-#define USEC_NUMBER                    1000000U
-#define MSEC_NUMBER                    ( USEC_NUMBER / 1000 )
+// /* RTC Time base in us */
+// #define USEC_NUMBER                    1000000U
+// #define MSEC_NUMBER                    ( USEC_NUMBER / 1000 )
 
-#define COMMON_FACTOR                  3U
-#define CONV_NUMER                     ( MSEC_NUMBER >> COMMON_FACTOR )
-#define CONV_DENOM                     ( 1U << ( N_PREDIV_S - COMMON_FACTOR ) )
+// #define COMMON_FACTOR                  3U
+// // #define CONV_NUMER                     ( MSEC_NUMBER >> COMMON_FACTOR )
+// #define CONV_DENOM                     ( 1U << ( N_PREDIV_S - COMMON_FACTOR ) )
 
 /*!
  * @brief Days, Hours, Minutes and seconds
