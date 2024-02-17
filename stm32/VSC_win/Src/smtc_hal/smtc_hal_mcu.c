@@ -77,22 +77,22 @@
 //lr1110_t lr1110;
 
 /*!
- * @brief Low Power options
- */
-typedef enum low_power_mode_e
-{
-    LOW_POWER_ENABLE,
-    LOW_POWER_DISABLE,
-    LOW_POWER_DISABLE_ONCE
-} low_power_mode_t;
+//  * @brief Low Power options
+//  */
+// typedef enum low_power_mode_e
+// {
+//     LOW_POWER_ENABLE,
+//     LOW_POWER_DISABLE,
+//     LOW_POWER_DISABLE_ONCE
+// } low_power_mode_t;
 
 /*
  * -----------------------------------------------------------------------------
  * --- PRIVATE VARIABLES -------------------------------------------------------
  */
 
-static volatile bool             hal_exit_wait        = false;
-static volatile low_power_mode_t hal_lp_current_mode  = LOW_POWER_ENABLE;
+// static volatile bool             hal_exit_wait        = false;
+// static volatile low_power_mode_t hal_lp_current_mode  = LOW_POWER_ENABLE;
 //static bool                      partial_sleep_enable = false;
 
 // /*!
@@ -104,6 +104,22 @@ static volatile low_power_mode_t hal_lp_current_mode  = LOW_POWER_ENABLE;
  * -----------------------------------------------------------------------------
  * --- PRIVATE FUNCTIONS DECLARATION -------------------------------------------
  */
+
+void hal_mcu_trace_print( const char* fmt, ... )
+{
+#if HAL_DBG_TRACE == HAL_FEATURE_ON
+    va_list argp;
+    va_start( argp, fmt );
+
+    char string[255];
+    if( 0 < vsprintf( string, fmt, argp ) )  // build string
+    {
+        hal_uart_tx( 2, ( uint8_t* ) string, strlen( string ) );
+    }
+
+    va_end( argp );
+#endif
+}
 
 // /*!
 //  * @brief init the MCU clock tree
@@ -154,12 +170,12 @@ static volatile low_power_mode_t hal_lp_current_mode  = LOW_POWER_ENABLE;
 //  */
 // static void hal_mcu_deinit_periph( void );
 
-#if( HAL_DBG_TRACE == HAL_FEATURE_ON )
-/*!
- * @brief printf
- */
-static void vprint( const char* fmt, va_list argp );
-#endif
+// #if( HAL_DBG_TRACE == HAL_FEATURE_ON )
+// /*!
+//  * @brief printf
+//  */
+// static void vprint( const char* fmt, va_list argp );
+// #endif
 
 // /*!
 //  * @brief Function executed on software watchdog event
@@ -171,13 +187,26 @@ static void vprint( const char* fmt, va_list argp );
  * --- PUBLIC FUNCTIONS DEFINITION ---------------------------------------------
  */
 
-void hal_mcu_critical_section_begin( uint32_t* mask )
-{
-    *mask = __get_PRIMASK( );
-    __disable_irq( );
-}
+// void hal_mcu_critical_section_begin( uint32_t* mask )
+// {
+//     *mask = __get_PRIMASK( );
+//     __disable_irq( );
+// }
 
-void hal_mcu_critical_section_end( uint32_t* mask ) { __set_PRIMASK( *mask ); }
+// void hal_mcu_critical_section_end( uint32_t* mask ) { __set_PRIMASK( *mask ); }
+
+
+
+// #if( HAL_DBG_TRACE == HAL_FEATURE_ON )
+// static void vprint( const char* fmt, va_list argp )
+// {
+//     char string[255];
+//     if( 0 < vsprintf( string, fmt, argp ) )  // build string
+//     {
+//         hal_uart_tx( 2, ( uint8_t* ) string, strlen( string ) );
+//     }
+// }
+// #endif
 
 // void hal_mcu_init_periph( void )
 // {
@@ -332,26 +361,7 @@ void hal_mcu_critical_section_end( uint32_t* mask ) { __set_PRIMASK( *mask ); }
 //     hal_lp_current_mode = LOW_POWER_DISABLE_ONCE;
 // }
 
-void hal_mcu_trace_print( const char* fmt, ... )
-{
-#if HAL_DBG_TRACE == HAL_FEATURE_ON
-    va_list argp;
-    va_start( argp, fmt );
-    vprint( fmt, argp );
-    va_end( argp );
-#endif
-}
 
-#if( HAL_DBG_TRACE == HAL_FEATURE_ON )
-static void vprint( const char* fmt, va_list argp )
-{
-    char string[255];
-    if( 0 < vsprintf( string, fmt, argp ) )  // build string
-    {
-        hal_uart_tx( 2, ( uint8_t* ) string, strlen( string ) );
-    }
-}
-#endif
 
 // #ifdef USE_FULL_ASSERT
 // /*

@@ -43,53 +43,60 @@ extern "C" {
 #include <stdint.h>   // C99 types
 #include <stdbool.h>  // bool type
 
-/*
- * -----------------------------------------------------------------------------
- * --- PUBLIC MACROS -----------------------------------------------------------
- */
+// /*
+//  * -----------------------------------------------------------------------------
+//  * --- PUBLIC MACROS -----------------------------------------------------------
+//  */
+
+// /*!
+//  * @brief Begins critical section \note this call adds a mask variable in the context
+//  */
+// #define CRITICAL_SECTION_BEGIN( ) \
+//     uint32_t mask;                \
+//     hal_mcu_critical_section_begin( &mask )
+
+// /*!
+//  * @brief Ends critical section \note this shall be called in the same context as previous CRITICAL_SECTION_BEGIN( )
+//  */
+// #define CRITICAL_SECTION_END( ) hal_mcu_critical_section_end( &mask )
+
+// /*
+//  * -----------------------------------------------------------------------------
+//  * --- PUBLIC CONSTANTS --------------------------------------------------------
+//  */
+
+// #define ACCELEROMETER_MOUNTED 1
+
+// /*
+//  * -----------------------------------------------------------------------------
+//  * --- PUBLIC TYPES ------------------------------------------------------------
+//  */
+
+// /*
+//  * -----------------------------------------------------------------------------
+//  * --- PUBLIC FUNCTIONS PROTOTYPES ---------------------------------------------
+//  */
+
+// /*!
+//  * @brief Disable interrupts, begins critical section
+//  *
+//  * @param [in] mask Pointer to a variable where to store the CPU IRQ mask
+//  */
+// void hal_mcu_critical_section_begin( uint32_t* mask );
+
+// /*!
+//  * @brief Ends critical section
+//  *
+//  * @param [in] mask Pointer to a variable where the CPU IRQ mask was stored
+//  */
+// void hal_mcu_critical_section_end( uint32_t* mask );
 
 /*!
- * @brief Begins critical section \note this call adds a mask variable in the context
- */
-#define CRITICAL_SECTION_BEGIN( ) \
-    uint32_t mask;                \
-    hal_mcu_critical_section_begin( &mask )
-
-/*!
- * @brief Ends critical section \note this shall be called in the same context as previous CRITICAL_SECTION_BEGIN( )
- */
-#define CRITICAL_SECTION_END( ) hal_mcu_critical_section_end( &mask )
-
-/*
- * -----------------------------------------------------------------------------
- * --- PUBLIC CONSTANTS --------------------------------------------------------
- */
-
-#define ACCELEROMETER_MOUNTED 1
-
-/*
- * -----------------------------------------------------------------------------
- * --- PUBLIC TYPES ------------------------------------------------------------
- */
-
-/*
- * -----------------------------------------------------------------------------
- * --- PUBLIC FUNCTIONS PROTOTYPES ---------------------------------------------
- */
-
-/*!
- * @brief Disable interrupts, begins critical section
+ * @brief Prints debug trace
  *
- * @param [in] mask Pointer to a variable where to store the CPU IRQ mask
+ * @param variadics arguments
  */
-void hal_mcu_critical_section_begin( uint32_t* mask );
-
-/*!
- * @brief Ends critical section
- *
- * @param [in] mask Pointer to a variable where the CPU IRQ mask was stored
- */
-void hal_mcu_critical_section_end( uint32_t* mask );
+void hal_mcu_trace_print( const char* fmt, ... );
 
 // /*!
 //  * @brief Initializes HAL used MCU
@@ -157,12 +164,7 @@ void hal_mcu_critical_section_end( uint32_t* mask );
 //  */
 // int16_t hal_mcu_get_temperature( void );
 
-/*!
- * @brief Prints debug trace
- *
- * @param variadics arguments
- */
-void hal_mcu_trace_print( const char* fmt, ... );
+
 
 // /*!
 //  * @brief Suspend low power process and avoid looping on it

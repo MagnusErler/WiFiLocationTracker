@@ -68,12 +68,12 @@ extern "C" {
 #define HAL_HW_DEBUG_PROBE HAL_FEATURE_OFF
 
 #define HAL_USE_PRINTF_UART HAL_FEATURE_ON
-#define HAL_PRINTF_UART_ID 2
-#define HAL_PRINT_BUFFER_SIZE 255
+// #define HAL_PRINTF_UART_ID 2
+// #define HAL_PRINT_BUFFER_SIZE 255
 
-#define HAL_RADIO_SPI_ID 1
+// #define HAL_RADIO_SPI_ID 1
 
-#define HAL_I2C_ID 1
+// #define HAL_I2C_ID 1
 
 /* HAL_FEATURE_OFF to not use watchdog */
 #define HAL_USE_WATCHDOG HAL_FEATURE_ON
