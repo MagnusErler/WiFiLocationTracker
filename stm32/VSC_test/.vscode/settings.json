@@ -43,6 +43,10 @@
     "stdlib.h": "c",
     "_locale.h": "c",
     "lr1110_bootloader.h": "c",
-    "lr1110_bootloader_types.h": "c"
+    "lr1110_bootloader_types.h": "c",
+    "lr1110.h": "c",
+    "lr1110_modem_common.h": "c",
+    "leds.h": "c",
+    "board-config.h": "c"
   }
 }
