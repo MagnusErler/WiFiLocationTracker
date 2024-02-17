@@ -42,8 +42,7 @@ build_crc_spi/smtc_hal_mcu.o: bsp_l0/smtc_hal/smtc_hal_mcu.c \
  bsp_l0/smtc_hal/smtc_hal_uart.h bsp_l0/smtc_hal/smtc_hal_rtc.h \
  bsp_l0/smtc_hal/smtc_hal_spi.h bsp_l0/smtc_hal/smtc_hal_gpio.h \
  bsp_l0/smtc_hal/smtc_hal_gpio_pin_names.h \
- bsp_l0/smtc_hal/smtc_hal_lp_timer.h bsp_l0/smtc_hal/smtc_hal_watchdog.h \
- bsp_l0/smtc_hal/smtc_hal_rng.h bsp_l0/smtc_hal/smtc_hal_i2c.h \
+ bsp_l0/smtc_hal/smtc_hal_lp_timer.h bsp_l0/smtc_hal/smtc_hal_rng.h \
  extensions/drivers/common/timer.h
 bsp_l0/smtc_hal/smtc_hal_mcu.h:
 bsp_l0/smtc_hal/smtc_hal_dbg_trace.h:
@@ -93,7 +92,5 @@ bsp_l0/smtc_hal/smtc_hal_spi.h:
 bsp_l0/smtc_hal/smtc_hal_gpio.h:
 bsp_l0/smtc_hal/smtc_hal_gpio_pin_names.h:
 bsp_l0/smtc_hal/smtc_hal_lp_timer.h:
-bsp_l0/smtc_hal/smtc_hal_watchdog.h:
 bsp_l0/smtc_hal/smtc_hal_rng.h:
-bsp_l0/smtc_hal/smtc_hal_i2c.h:
 extensions/drivers/common/timer.h:

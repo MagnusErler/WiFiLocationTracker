@@ -50,9 +50,7 @@
 #include "smtc_hal_rtc.h"
 #include "smtc_hal_spi.h"
 #include "smtc_hal_lp_timer.h"
-#include "smtc_hal_watchdog.h"
 #include "smtc_hal_rng.h"
-#include "smtc_hal_i2c.h"
 
 #include "timer.h"
 
@@ -113,14 +111,10 @@ static void system_clock_config( void );
 static void mcu_gpio_init( void );
 
 #if( LOW_POWER_MODE == 1 )
-static void lpm_mcu_deinit( void );
 static void lpm_mcu_reinit( void );
 static void lpm_enter_stop_mode( void );
 static void lpm_exit_stop_mode( void );
-static void lpm_handler( void );
 static void wut_cb( void* context );
-#else
-static bool no_low_power_wait( const int32_t milliseconds );
 #endif
 
 /*
@@ -128,22 +122,6 @@ static bool no_low_power_wait( const int32_t milliseconds );
  * --- PUBLIC FUNCTIONS DEFINITION ---------------------------------------------
  */
 
-void hal_mcu_critical_section_begin( uint32_t* mask ) {
-    *mask = __get_PRIMASK( );
-    __disable_irq( );
-}
-
-void hal_mcu_critical_section_end( uint32_t* mask ) {
-    __set_PRIMASK( *mask );
-}
-
-void hal_mcu_disable_irq( void ) {
-    __disable_irq( );
-}
-
-void hal_mcu_enable_irq( void ) {
-    __enable_irq( );
-}
 
 void hal_mcu_init( void ) {
     HAL_Init( );             // Initialize MCU HAL library
@@ -172,107 +150,7 @@ void __attribute__( ( optimize( "O0" ) ) ) hal_mcu_wait_us( const int32_t micros
     }
 }
 
-void hal_mcu_set_sleep_for_ms( const int32_t milliseconds ) {
-    bool last_sleep_loop = false;
 
-    if( milliseconds <= 0 ) {
-        return;
-    }
-
-    if( lp_current_mode == LOW_POWER_DISABLE_ONCE ) {
-        lp_current_mode = LOW_POWER_ENABLE;
-        return;
-    }
-
-    int32_t time_counter = milliseconds;
-
-    watchdog_reload( );
-
-#if( LOW_POWER_MODE == 1 )
-
-    if( lp_current_mode == LOW_POWER_ENABLE ) {
-        do {
-            if( ( time_counter > ( WATCHDOG_RELOAD_PERIOD_SECONDS * 1000 ) ) ) {
-                time_counter -= WATCHDOG_RELOAD_PERIOD_SECONDS * 1000;
-                TimerSetValue( &wut,  WATCHDOG_RELOAD_PERIOD_SECONDS * 1000 );
-            } else {
-                TimerSetValue( &wut, time_counter );
-                // if the sleep time is less than the wdog reload period, this is the last sleep loop
-                last_sleep_loop = true;
-            }
-
-            wut_flag = false;
-            TimerStart( &wut );
-            lpm_handler( );
-            watchdog_reload( );
-        } while( ( wut_flag == true ) && ( last_sleep_loop == false ) );
-
-        if( wut_flag == false ) {
-            // in case sleep mode is interrupted by an other irq than the wake up timer, stop it and exit
-            TimerStop( &wut );
-        }
-    }
-
-#else
-
-    while( ( time_counter > ( WATCHDOG_RELOAD_PERIOD_SECONDS * 1000 ) ) && ( lp_current_mode == LOW_POWER_ENABLE ) ) {
-        time_counter -= WATCHDOG_RELOAD_PERIOD_SECONDS * 1000;
-
-        if( ( no_low_power_wait( WATCHDOG_RELOAD_PERIOD_SECONDS * 1000 ) == true ) ||
-                ( lp_current_mode != LOW_POWER_ENABLE ) ) {
-            // wait function was interrupted, inturrupt here also
-            watchdog_reload( );
-            return;
-        }
-
-        watchdog_reload( );
-    }
-
-    if( lp_current_mode == LOW_POWER_ENABLE ) {
-        no_low_power_wait( time_counter );
-        watchdog_reload( );
-    }
-
-#endif
-}
-
-void hal_mcu_disable_low_power_wait( void ) {
-    exit_wait       = true;
-    lp_current_mode = LOW_POWER_DISABLE;
-}
-
-void hal_mcu_enable_low_power_wait( void ) {
-    exit_wait       = false;
-    lp_current_mode = LOW_POWER_ENABLE;
-}
-
-void hal_mcu_disable_once_low_power_wait( void ) {
-    exit_wait       = true;
-    lp_current_mode = LOW_POWER_DISABLE_ONCE;
-}
-
-#ifdef USE_FULL_ASSERT
-/*
- * Function Name  : assert_failed
- * Description    : Reports the name of the source file and the source line
- * number where the assert_param error has occurred. Input          : - file:
- * pointer to the source file name
- *                  - line: assert_param error line source number
- * Output         : None
- * Return         : None
- */
-void assert_failed( uint8_t* file, uint32_t line ) {
-    // User can add his own implementation to report the file name and line
-    // number,
-    // ex: printf("Wrong parameters value: file %s on line %lu\r\n", file, line)
-
-    SMTC_HAL_TRACE_PRINTF( "Wrong parameters value: file %s on line %lu\r\n", ( const char* ) file, line );
-
-    // Infinite loop
-    while( 1 ) {
-    }
-}
-#endif
 
 void SysTick_Handler( void ) {
     HAL_IncTick( );
@@ -416,46 +294,6 @@ static void lpm_exit_stop_mode( void ) {
     CRITICAL_SECTION_END( );
 }
 
-/**
- * @brief Low power handler
- *
- */
-static void lpm_handler( void ) {
-    // stop systick to avoid getting pending irq while going in stop mode
-    // Systick is automatically restart when going out of sleep
-    HAL_SuspendTick( );
-
-    __disable_irq( );
-    // If an interrupt has occurred after __disable_irq( ), it is kept pending
-    // and cortex will not enter low power anyway
-
-    lpm_enter_stop_mode( );
-    lpm_exit_stop_mode( );
-
-    __enable_irq( );
-    HAL_ResumeTick( );
-}
-
-/**
- * @brief De-init periph begore going in sleep mode
- *
- */
-static void lpm_mcu_deinit( void ) {
-    hal_spi_de_init( RADIO_SPI_ID );
-
-#if defined( HW_MODEM_ENABLED )
-    uart4_deinit( );
-#endif
-#if( MODEM_HAL_DBG_TRACE == MODEM_HAL_FEATURE_ON )
-    uart1_deinit( );
-#endif
-#ifdef I2C1_ENABLED
-    hal_i2c_deinit( 1 );
-#endif
-#ifdef SPI1_ENABLED
-    hal_spi_de_init( 1 );
-#endif
-}
 
 /**
  * @brief Re-init MCU clock after a wait in stop mode 2
@@ -513,31 +351,6 @@ static void wut_cb( void* context ) {
     wut_flag = true;
 }
 
-#else  // ie LOW_POWER_MODE == 0
-
-/**
- * @brief Fake a wait but doesn't go in sleep mode
- *
- * @param milliseconds number of ms to wait
- * @return true If wait has been interrupt
- * @return false if wait has not been interrupt
- */
-static bool no_low_power_wait( const int32_t milliseconds ) {
-    uint32_t start_time = smtc_modem_hal_get_time_in_ms( );
-
-    while( smtc_modem_hal_get_time_in_ms( ) < ( start_time + milliseconds ) ) {
-        // interruptible wait for 10ms
-        HAL_Delay( 10 );
-
-        if( exit_wait == true ) {
-            // stop wait/lp function and return immediatly
-            exit_wait = false;
-            return true;
-        }
-    }
-
-    return false;
-}
 #endif
 
 void hal_mcu_delay_ms( const uint32_t milliseconds ) {

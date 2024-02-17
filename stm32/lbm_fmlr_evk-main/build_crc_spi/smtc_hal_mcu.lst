@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc5omehg.s 			page 1
+ARM GAS  /tmp/ccwMQfK4.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -45,7 +45,7 @@ ARM GAS  /tmp/cc5omehg.s 			page 1
   43 0026 03E0     		b	.L2
   44              	.L3:
   45              		.syntax divided
-  46              	@ 171 "bsp_l0/smtc_hal/smtc_hal_mcu.c" 1
+  46              	@ 149 "bsp_l0/smtc_hal/smtc_hal_mcu.c" 1
   47 0028 C046     		nop
   48              	@ 0 "" 2
   49              		.thumb
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cc5omehg.s 			page 1
   56 0032 BB68     		ldr	r3, [r7, #8]
   57 0034 9A42     		cmp	r2, r3
   58 0036 F7D3     		bcc	.L3
-ARM GAS  /tmp/cc5omehg.s 			page 2
+ARM GAS  /tmp/ccwMQfK4.s 			page 2
 
 
   59 0038 C046     		nop
@@ -67,774 +67,367 @@ ARM GAS  /tmp/cc5omehg.s 			page 1
   62 003e 04B0     		add	sp, sp, #16
   63              		@ sp needed
   64 0040 80BD     		pop	{r7, pc}
-  66 0042 C046     		.section	.text.hal_mcu_critical_section_begin,"ax",%progbits
+  66 0042 C046     		.section	.text.hal_mcu_reset,"ax",%progbits
   67              		.align	1
-  68              		.global	hal_mcu_critical_section_begin
+  68              		.global	hal_mcu_reset
   69              		.syntax unified
   70              		.code	16
   71              		.thumb_func
   72              		.fpu softvfp
-  74              	hal_mcu_critical_section_begin:
-  75              		@ args = 0, pretend = 0, frame = 0
-  76              		@ frame_needed = 0, uses_anonymous_args = 0
-  77              		@ link register save eliminated.
-  78              		.syntax divided
-  79              	@ 453 "bsp_l0/mcu_drivers/cmsis/Core/Include/cmsis_gcc.h" 1
-  80 0000 EFF31083 		MRS r3, primask
-  81              	@ 0 "" 2
-  82              		.thumb
-  83              		.syntax unified
-  84 0004 0360     		str	r3, [r0]
-  85              		.syntax divided
-  86              	@ 209 "bsp_l0/mcu_drivers/cmsis/Core/Include/cmsis_gcc.h" 1
-  87 0006 72B6     		cpsid i
-  88              	@ 0 "" 2
-  89              		.thumb
-  90              		.syntax unified
-  91              		@ sp needed
-  92 0008 7047     		bx	lr
-  94              		.section	.text.hal_mcu_critical_section_end,"ax",%progbits
-  95              		.align	1
-  96              		.global	hal_mcu_critical_section_end
-  97              		.syntax unified
-  98              		.code	16
-  99              		.thumb_func
- 100              		.fpu softvfp
- 102              	hal_mcu_critical_section_end:
- 103              		@ args = 0, pretend = 0, frame = 0
- 104              		@ frame_needed = 0, uses_anonymous_args = 0
- 105              		@ link register save eliminated.
- 106 0000 0368     		ldr	r3, [r0]
- 107              		.syntax divided
- 108              	@ 481 "bsp_l0/mcu_drivers/cmsis/Core/Include/cmsis_gcc.h" 1
- 109 0002 83F31088 		MSR primask, r3
- 110              	@ 0 "" 2
- 111              		.thumb
- 112              		.syntax unified
- 113              		@ sp needed
- 114 0006 7047     		bx	lr
- 116              		.section	.text.hal_mcu_disable_irq,"ax",%progbits
- 117              		.align	1
- 118              		.global	hal_mcu_disable_irq
- 119              		.syntax unified
- 120              		.code	16
-ARM GAS  /tmp/cc5omehg.s 			page 3
+  74              	hal_mcu_reset:
+  75              		@ Volatile: function does not return.
+  76              		@ args = 0, pretend = 0, frame = 0
+  77              		@ frame_needed = 0, uses_anonymous_args = 0
+  78              		@ link register save eliminated.
+  79              		.syntax divided
+  80              	@ 209 "bsp_l0/mcu_drivers/cmsis/Core/Include/cmsis_gcc.h" 1
+  81 0000 72B6     		cpsid i
+  82              	@ 0 "" 2
+  83              	@ 946 "bsp_l0/mcu_drivers/cmsis/Core/Include/cmsis_gcc.h" 1
+  84 0002 BFF34F8F 		dsb 0xF
+  85              	@ 0 "" 2
+  86              		.thumb
+  87              		.syntax unified
+  88 0006 034B     		ldr	r3, .L6
+  89 0008 034A     		ldr	r2, .L6+4
+  90 000a DA60     		str	r2, [r3, #12]
+  91              		.syntax divided
+  92              	@ 946 "bsp_l0/mcu_drivers/cmsis/Core/Include/cmsis_gcc.h" 1
+  93 000c BFF34F8F 		dsb 0xF
+  94              	@ 0 "" 2
+  95              		.thumb
+  96              		.syntax unified
+  97              	.L5:
+  98              		.syntax divided
+  99              	@ 995 "bsp_l0/mcu_drivers/cmsis/Core/Include/core_cm0plus.h" 1
+ 100 0010 C046     		nop
+ 101              	@ 0 "" 2
+ 102              		.thumb
+ 103              		.syntax unified
+ 104 0012 FDE7     		b	.L5
+ 105              	.L7:
+ 106              		.align	2
+ 107              	.L6:
+ 108 0014 00ED00E0 		.word	-536810240
+ 109 0018 0400FA05 		.word	100270084
+ 111              		.section	.text.hal_mcu_init,"ax",%progbits
+ 112              		.align	1
+ 113              		.global	hal_mcu_init
+ 114              		.syntax unified
+ 115              		.code	16
+ 116              		.thumb_func
+ 117              		.fpu softvfp
+ 119              	hal_mcu_init:
+ARM GAS  /tmp/ccwMQfK4.s 			page 3
 
 
- 121              		.thumb_func
- 122              		.fpu softvfp
- 124              	hal_mcu_disable_irq:
- 125              		@ args = 0, pretend = 0, frame = 0
- 126              		@ frame_needed = 0, uses_anonymous_args = 0
- 127              		@ link register save eliminated.
- 128              		.syntax divided
- 129              	@ 209 "bsp_l0/mcu_drivers/cmsis/Core/Include/cmsis_gcc.h" 1
- 130 0000 72B6     		cpsid i
- 131              	@ 0 "" 2
- 132              		.thumb
- 133              		.syntax unified
- 134              		@ sp needed
- 135 0002 7047     		bx	lr
- 137              		.section	.text.hal_mcu_enable_irq,"ax",%progbits
- 138              		.align	1
- 139              		.global	hal_mcu_enable_irq
- 140              		.syntax unified
- 141              		.code	16
- 142              		.thumb_func
- 143              		.fpu softvfp
- 145              	hal_mcu_enable_irq:
- 146              		@ args = 0, pretend = 0, frame = 0
- 147              		@ frame_needed = 0, uses_anonymous_args = 0
- 148              		@ link register save eliminated.
- 149              		.syntax divided
- 150              	@ 198 "bsp_l0/mcu_drivers/cmsis/Core/Include/cmsis_gcc.h" 1
- 151 0000 62B6     		cpsie i
- 152              	@ 0 "" 2
- 153              		.thumb
- 154              		.syntax unified
- 155              		@ sp needed
- 156 0002 7047     		bx	lr
- 158              		.section	.text.hal_mcu_reset,"ax",%progbits
- 159              		.align	1
- 160              		.global	hal_mcu_reset
- 161              		.syntax unified
- 162              		.code	16
- 163              		.thumb_func
- 164              		.fpu softvfp
- 166              	hal_mcu_reset:
- 167              		@ Volatile: function does not return.
- 168              		@ args = 0, pretend = 0, frame = 0
- 169              		@ frame_needed = 0, uses_anonymous_args = 0
- 170              		@ link register save eliminated.
- 171              		.syntax divided
- 172              	@ 209 "bsp_l0/mcu_drivers/cmsis/Core/Include/cmsis_gcc.h" 1
- 173 0000 72B6     		cpsid i
- 174              	@ 0 "" 2
- 175              	@ 946 "bsp_l0/mcu_drivers/cmsis/Core/Include/cmsis_gcc.h" 1
- 176 0002 BFF34F8F 		dsb 0xF
- 177              	@ 0 "" 2
- 178              		.thumb
- 179              		.syntax unified
- 180 0006 034B     		ldr	r3, .L10
- 181 0008 034A     		ldr	r2, .L10+4
- 182 000a DA60     		str	r2, [r3, #12]
-ARM GAS  /tmp/cc5omehg.s 			page 4
+ 120              		@ args = 0, pretend = 0, frame = 112
+ 121              		@ frame_needed = 0, uses_anonymous_args = 0
+ 122 0000 70B5     		push	{r4, r5, r6, lr}
+ 123 0002 9CB0     		sub	sp, sp, #112
+ 124 0004 FFF7FEFF 		bl	HAL_Init
+ 125 0008 3422     		movs	r2, #52
+ 126 000a 0021     		movs	r1, #0
+ 127 000c 0EA8     		add	r0, sp, #56
+ 128 000e FFF7FEFF 		bl	memset
+ 129 0012 434C     		ldr	r4, .L11
+ 130 0014 1422     		movs	r2, #20
+ 131 0016 0021     		movs	r1, #0
+ 132 0018 6846     		mov	r0, sp
+ 133 001a FFF7FEFF 		bl	memset
+ 134 001e 2022     		movs	r2, #32
+ 135 0020 0021     		movs	r1, #0
+ 136 0022 06A8     		add	r0, sp, #24
+ 137 0024 FFF7FEFF 		bl	memset
+ 138 0028 FFF7FEFF 		bl	HAL_PWR_EnableBkUpAccess
+ 139 002c 236D     		ldr	r3, [r4, #80]
+ 140 002e 3D4A     		ldr	r2, .L11+4
+ 141 0030 0EA8     		add	r0, sp, #56
+ 142 0032 1340     		ands	r3, r2
+ 143 0034 2365     		str	r3, [r4, #80]
+ 144 0036 0E23     		movs	r3, #14
+ 145 0038 8022     		movs	r2, #128
+ 146 003a 0E93     		str	r3, [sp, #56]
+ 147 003c 0123     		movs	r3, #1
+ 148 003e 5200     		lsls	r2, r2, #1
+ 149 0040 1092     		str	r2, [sp, #64]
+ 150 0042 1193     		str	r3, [sp, #68]
+ 151 0044 0123     		movs	r3, #1
+ 152 0046 1022     		movs	r2, #16
+ 153 0048 1292     		str	r2, [sp, #72]
+ 154 004a 1393     		str	r3, [sp, #76]
+ 155 004c 0223     		movs	r3, #2
+ 156 004e 1793     		str	r3, [sp, #92]
+ 157 0050 0023     		movs	r3, #0
+ 158 0052 1893     		str	r3, [sp, #96]
+ 159 0054 8023     		movs	r3, #128
+ 160 0056 1B03     		lsls	r3, r3, #12
+ 161 0058 1993     		str	r3, [sp, #100]
+ 162 005a 8023     		movs	r3, #128
+ 163 005c 1B04     		lsls	r3, r3, #16
+ 164 005e 1A93     		str	r3, [sp, #104]
+ 165 0060 FFF7FEFF 		bl	HAL_RCC_OscConfig
+ 166 0064 0028     		cmp	r0, #0
+ 167 0066 12D0     		beq	.L9
+ 168              	.L10:
+ 169 0068 2F4C     		ldr	r4, .L11+8
+ 170 006a 3049     		ldr	r1, .L11+12
+ 171 006c 2500     		movs	r5, r4
+ 172 006e 2000     		movs	r0, r4
+ 173 0070 1535     		adds	r5, r5, #21
+ 174 0072 FFF7FEFF 		bl	hal_trace_print_var
+ 175 0076 2800     		movs	r0, r5
+ 176 0078 FFF7FEFF 		bl	hal_trace_print_var
+ARM GAS  /tmp/ccwMQfK4.s 			page 4
 
 
- 183              		.syntax divided
- 184              	@ 946 "bsp_l0/mcu_drivers/cmsis/Core/Include/cmsis_gcc.h" 1
- 185 000c BFF34F8F 		dsb 0xF
- 186              	@ 0 "" 2
- 187              		.thumb
- 188              		.syntax unified
- 189              	.L9:
- 190              		.syntax divided
- 191              	@ 995 "bsp_l0/mcu_drivers/cmsis/Core/Include/core_cm0plus.h" 1
- 192 0010 C046     		nop
- 193              	@ 0 "" 2
- 194              		.thumb
- 195              		.syntax unified
- 196 0012 FDE7     		b	.L9
- 197              	.L11:
- 198              		.align	2
- 199              	.L10:
- 200 0014 00ED00E0 		.word	-536810240
- 201 0018 0400FA05 		.word	100270084
- 203              		.section	.text.hal_mcu_init,"ax",%progbits
- 204              		.align	1
- 205              		.global	hal_mcu_init
- 206              		.syntax unified
- 207              		.code	16
- 208              		.thumb_func
- 209              		.fpu softvfp
- 211              	hal_mcu_init:
- 212              		@ args = 0, pretend = 0, frame = 112
- 213              		@ frame_needed = 0, uses_anonymous_args = 0
- 214 0000 70B5     		push	{r4, r5, r6, lr}
- 215 0002 9CB0     		sub	sp, sp, #112
- 216 0004 FFF7FEFF 		bl	HAL_Init
- 217 0008 3422     		movs	r2, #52
- 218 000a 0021     		movs	r1, #0
- 219 000c 0EA8     		add	r0, sp, #56
- 220 000e FFF7FEFF 		bl	memset
- 221 0012 434C     		ldr	r4, .L15
- 222 0014 1422     		movs	r2, #20
- 223 0016 0021     		movs	r1, #0
- 224 0018 6846     		mov	r0, sp
- 225 001a FFF7FEFF 		bl	memset
- 226 001e 2022     		movs	r2, #32
- 227 0020 0021     		movs	r1, #0
- 228 0022 06A8     		add	r0, sp, #24
- 229 0024 FFF7FEFF 		bl	memset
- 230 0028 FFF7FEFF 		bl	HAL_PWR_EnableBkUpAccess
- 231 002c 236D     		ldr	r3, [r4, #80]
- 232 002e 3D4A     		ldr	r2, .L15+4
- 233 0030 0EA8     		add	r0, sp, #56
- 234 0032 1340     		ands	r3, r2
- 235 0034 2365     		str	r3, [r4, #80]
- 236 0036 0E23     		movs	r3, #14
- 237 0038 8022     		movs	r2, #128
- 238 003a 0E93     		str	r3, [sp, #56]
- 239 003c 0123     		movs	r3, #1
- 240 003e 5200     		lsls	r2, r2, #1
- 241 0040 1092     		str	r2, [sp, #64]
-ARM GAS  /tmp/cc5omehg.s 			page 5
+ 177 007c 2000     		movs	r0, r4
+ 178 007e 1630     		adds	r0, r0, #22
+ 179 0080 FFF7FEFF 		bl	hal_trace_print_var
+ 180 0084 2800     		movs	r0, r5
+ 181 0086 FFF7FEFF 		bl	hal_trace_print_var
+ 182 008a FFF7FEFF 		bl	hal_mcu_reset
+ 183              	.L9:
+ 184 008e 0F22     		movs	r2, #15
+ 185 0090 0323     		movs	r3, #3
+ 186 0092 0025     		movs	r5, #0
+ 187 0094 0026     		movs	r6, #0
+ 188 0096 0490     		str	r0, [sp, #16]
+ 189 0098 0121     		movs	r1, #1
+ 190 009a 6846     		mov	r0, sp
+ 191 009c 0092     		str	r2, [sp]
+ 192 009e 0193     		str	r3, [sp, #4]
+ 193 00a0 0295     		str	r5, [sp, #8]
+ 194 00a2 0396     		str	r6, [sp, #12]
+ 195 00a4 FFF7FEFF 		bl	HAL_RCC_ClockConfig
+ 196 00a8 0028     		cmp	r0, #0
+ 197 00aa DDD1     		bne	.L10
+ 198 00ac C023     		movs	r3, #192
+ 199 00ae 1B03     		lsls	r3, r3, #12
+ 200 00b0 0D93     		str	r3, [sp, #52]
+ 201 00b2 8023     		movs	r3, #128
+ 202 00b4 AB22     		movs	r2, #171
+ 203 00b6 5B02     		lsls	r3, r3, #9
+ 204 00b8 0B90     		str	r0, [sp, #44]
+ 205 00ba 06A8     		add	r0, sp, #24
+ 206 00bc 0895     		str	r5, [sp, #32]
+ 207 00be 0996     		str	r6, [sp, #36]
+ 208 00c0 0692     		str	r2, [sp, #24]
+ 209 00c2 0793     		str	r3, [sp, #28]
+ 210 00c4 FFF7FEFF 		bl	HAL_RCCEx_PeriphCLKConfig
+ 211 00c8 061E     		subs	r6, r0, #0
+ 212 00ca CDD1     		bne	.L10
+ 213 00cc 8023     		movs	r3, #128
+ 214 00ce A26B     		ldr	r2, [r4, #56]
+ 215 00d0 5B05     		lsls	r3, r3, #21
+ 216 00d2 1343     		orrs	r3, r2
+ 217 00d4 A363     		str	r3, [r4, #56]
+ 218 00d6 8023     		movs	r3, #128
+ 219 00d8 E268     		ldr	r2, [r4, #12]
+ 220 00da 1B02     		lsls	r3, r3, #8
+ 221 00dc 1343     		orrs	r3, r2
+ 222 00de E360     		str	r3, [r4, #12]
+ 223 00e0 0121     		movs	r1, #1
+ 224 00e2 0420     		movs	r0, #4
+ 225 00e4 FFF7FEFF 		bl	hal_gpio_init_out
+ 226 00e8 3300     		movs	r3, r6
+ 227 00ea 3200     		movs	r2, r6
+ 228 00ec 3100     		movs	r1, r6
+ 229 00ee 0720     		movs	r0, #7
+ 230 00f0 FFF7FEFF 		bl	hal_gpio_init_in
+ 231 00f4 0122     		movs	r2, #1
+ 232 00f6 3300     		movs	r3, r6
+ 233 00f8 1000     		movs	r0, r2
+ARM GAS  /tmp/ccwMQfK4.s 			page 5
 
 
- 242 0042 1193     		str	r3, [sp, #68]
- 243 0044 0123     		movs	r3, #1
- 244 0046 1022     		movs	r2, #16
- 245 0048 1292     		str	r2, [sp, #72]
- 246 004a 1393     		str	r3, [sp, #76]
- 247 004c 0223     		movs	r3, #2
- 248 004e 1793     		str	r3, [sp, #92]
- 249 0050 0023     		movs	r3, #0
- 250 0052 1893     		str	r3, [sp, #96]
- 251 0054 8023     		movs	r3, #128
- 252 0056 1B03     		lsls	r3, r3, #12
- 253 0058 1993     		str	r3, [sp, #100]
- 254 005a 8023     		movs	r3, #128
- 255 005c 1B04     		lsls	r3, r3, #16
- 256 005e 1A93     		str	r3, [sp, #104]
- 257 0060 FFF7FEFF 		bl	HAL_RCC_OscConfig
- 258 0064 0028     		cmp	r0, #0
- 259 0066 12D0     		beq	.L13
- 260              	.L14:
- 261 0068 2F4C     		ldr	r4, .L15+8
- 262 006a 3049     		ldr	r1, .L15+12
- 263 006c 2500     		movs	r5, r4
- 264 006e 2000     		movs	r0, r4
- 265 0070 1535     		adds	r5, r5, #21
- 266 0072 FFF7FEFF 		bl	hal_trace_print_var
- 267 0076 2800     		movs	r0, r5
- 268 0078 FFF7FEFF 		bl	hal_trace_print_var
- 269 007c 2000     		movs	r0, r4
- 270 007e 1630     		adds	r0, r0, #22
- 271 0080 FFF7FEFF 		bl	hal_trace_print_var
- 272 0084 2800     		movs	r0, r5
- 273 0086 FFF7FEFF 		bl	hal_trace_print_var
- 274 008a FFF7FEFF 		bl	hal_mcu_reset
- 275              	.L13:
- 276 008e 0F22     		movs	r2, #15
- 277 0090 0323     		movs	r3, #3
- 278 0092 0025     		movs	r5, #0
- 279 0094 0026     		movs	r6, #0
- 280 0096 0490     		str	r0, [sp, #16]
- 281 0098 0121     		movs	r1, #1
- 282 009a 6846     		mov	r0, sp
- 283 009c 0092     		str	r2, [sp]
- 284 009e 0193     		str	r3, [sp, #4]
- 285 00a0 0295     		str	r5, [sp, #8]
- 286 00a2 0396     		str	r6, [sp, #12]
- 287 00a4 FFF7FEFF 		bl	HAL_RCC_ClockConfig
- 288 00a8 0028     		cmp	r0, #0
- 289 00aa DDD1     		bne	.L14
- 290 00ac C023     		movs	r3, #192
- 291 00ae 1B03     		lsls	r3, r3, #12
- 292 00b0 0D93     		str	r3, [sp, #52]
- 293 00b2 8023     		movs	r3, #128
- 294 00b4 AB22     		movs	r2, #171
- 295 00b6 5B02     		lsls	r3, r3, #9
- 296 00b8 0B90     		str	r0, [sp, #44]
- 297 00ba 06A8     		add	r0, sp, #24
- 298 00bc 0895     		str	r5, [sp, #32]
-ARM GAS  /tmp/cc5omehg.s 			page 6
+ 234 00fa 0221     		movs	r1, #2
+ 235 00fc FFF7FEFF 		bl	hal_gpio_init_in
+ 236 0100 0121     		movs	r1, #1
+ 237 0102 2220     		movs	r0, #34
+ 238 0104 FFF7FEFF 		bl	hal_gpio_init_out
+ 239 0108 FFF7FEFF 		bl	uart1_init
+ 240 010c 1A23     		movs	r3, #26
+ 241 010e 1E22     		movs	r2, #30
+ 242 0110 1F21     		movs	r1, #31
+ 243 0112 0220     		movs	r0, #2
+ 244 0114 FFF7FEFF 		bl	hal_spi_init
+ 245 0118 FFF7FEFF 		bl	hal_rtc_init
+ 246 011c 1CB0     		add	sp, sp, #112
+ 247              		@ sp needed
+ 248 011e 70BD     		pop	{r4, r5, r6, pc}
+ 249              	.L12:
+ 250              		.align	2
+ 251              	.L11:
+ 252 0120 00100240 		.word	1073876992
+ 253 0124 FFE7FFFF 		.word	-6145
+ 254 0128 00000000 		.word	.LANCHOR1
+ 255 012c 00000000 		.word	.LANCHOR0
+ 257              		.section	.text.SysTick_Handler,"ax",%progbits
+ 258              		.align	1
+ 259              		.global	SysTick_Handler
+ 260              		.syntax unified
+ 261              		.code	16
+ 262              		.thumb_func
+ 263              		.fpu softvfp
+ 265              	SysTick_Handler:
+ 266              		@ args = 0, pretend = 0, frame = 0
+ 267              		@ frame_needed = 0, uses_anonymous_args = 0
+ 268 0000 10B5     		push	{r4, lr}
+ 269 0002 FFF7FEFF 		bl	HAL_IncTick
+ 270              		@ sp needed
+ 271 0006 FFF7FEFF 		bl	HAL_SYSTICK_IRQHandler
+ 272 000a 10BD     		pop	{r4, pc}
+ 274              		.section	.text.HAL_MspInit,"ax",%progbits
+ 275              		.align	1
+ 276              		.global	HAL_MspInit
+ 277              		.syntax unified
+ 278              		.code	16
+ 279              		.thumb_func
+ 280              		.fpu softvfp
+ 282              	HAL_MspInit:
+ 283              		@ args = 0, pretend = 0, frame = 0
+ 284              		@ frame_needed = 0, uses_anonymous_args = 0
+ 285 0000 0022     		movs	r2, #0
+ 286 0002 0120     		movs	r0, #1
+ 287 0004 10B5     		push	{r4, lr}
+ 288 0006 1100     		movs	r1, r2
+ 289              		@ sp needed
+ 290 0008 4042     		rsbs	r0, r0, #0
+ 291 000a FFF7FEFF 		bl	HAL_NVIC_SetPriority
+ 292 000e 10BD     		pop	{r4, pc}
+ 294              		.section	.text.hal_mcu_delay_ms,"ax",%progbits
+ 295              		.align	1
+ARM GAS  /tmp/ccwMQfK4.s 			page 6
 
 
- 299 00be 0996     		str	r6, [sp, #36]
- 300 00c0 0692     		str	r2, [sp, #24]
- 301 00c2 0793     		str	r3, [sp, #28]
- 302 00c4 FFF7FEFF 		bl	HAL_RCCEx_PeriphCLKConfig
- 303 00c8 061E     		subs	r6, r0, #0
- 304 00ca CDD1     		bne	.L14
- 305 00cc 8023     		movs	r3, #128
- 306 00ce A26B     		ldr	r2, [r4, #56]
- 307 00d0 5B05     		lsls	r3, r3, #21
- 308 00d2 1343     		orrs	r3, r2
- 309 00d4 A363     		str	r3, [r4, #56]
- 310 00d6 8023     		movs	r3, #128
- 311 00d8 E268     		ldr	r2, [r4, #12]
- 312 00da 1B02     		lsls	r3, r3, #8
- 313 00dc 1343     		orrs	r3, r2
- 314 00de E360     		str	r3, [r4, #12]
- 315 00e0 0121     		movs	r1, #1
- 316 00e2 0420     		movs	r0, #4
- 317 00e4 FFF7FEFF 		bl	hal_gpio_init_out
- 318 00e8 3300     		movs	r3, r6
- 319 00ea 3200     		movs	r2, r6
- 320 00ec 3100     		movs	r1, r6
- 321 00ee 0720     		movs	r0, #7
- 322 00f0 FFF7FEFF 		bl	hal_gpio_init_in
- 323 00f4 0122     		movs	r2, #1
- 324 00f6 3300     		movs	r3, r6
- 325 00f8 1000     		movs	r0, r2
- 326 00fa 0221     		movs	r1, #2
- 327 00fc FFF7FEFF 		bl	hal_gpio_init_in
- 328 0100 0121     		movs	r1, #1
- 329 0102 2220     		movs	r0, #34
- 330 0104 FFF7FEFF 		bl	hal_gpio_init_out
- 331 0108 FFF7FEFF 		bl	uart1_init
- 332 010c 1A23     		movs	r3, #26
- 333 010e 1E22     		movs	r2, #30
- 334 0110 1F21     		movs	r1, #31
- 335 0112 0220     		movs	r0, #2
- 336 0114 FFF7FEFF 		bl	hal_spi_init
- 337 0118 FFF7FEFF 		bl	hal_rtc_init
- 338 011c 1CB0     		add	sp, sp, #112
- 339              		@ sp needed
- 340 011e 70BD     		pop	{r4, r5, r6, pc}
- 341              	.L16:
- 342              		.align	2
- 343              	.L15:
- 344 0120 00100240 		.word	1073876992
- 345 0124 FFE7FFFF 		.word	-6145
- 346 0128 00000000 		.word	.LANCHOR1
- 347 012c 00000000 		.word	.LANCHOR0
- 349              		.section	.text.hal_mcu_set_sleep_for_ms,"ax",%progbits
- 350              		.align	1
- 351              		.global	hal_mcu_set_sleep_for_ms
- 352              		.syntax unified
- 353              		.code	16
- 354              		.thumb_func
- 355              		.fpu softvfp
- 357              	hal_mcu_set_sleep_for_ms:
-ARM GAS  /tmp/cc5omehg.s 			page 7
+ 296              		.global	hal_mcu_delay_ms
+ 297              		.syntax unified
+ 298              		.code	16
+ 299              		.thumb_func
+ 300              		.fpu softvfp
+ 302              	hal_mcu_delay_ms:
+ 303              		@ args = 0, pretend = 0, frame = 0
+ 304              		@ frame_needed = 0, uses_anonymous_args = 0
+ 305 0000 10B5     		push	{r4, lr}
+ 306 0002 FFF7FEFF 		bl	HAL_Delay
+ 307              		@ sp needed
+ 308 0006 10BD     		pop	{r4, pc}
+ 310              		.section	.text.HardFault_Handler,"ax",%progbits
+ 311              		.align	1
+ 312              		.global	HardFault_Handler
+ 313              		.syntax unified
+ 314              		.code	16
+ 315              		.thumb_func
+ 316              		.fpu softvfp
+ 318              	HardFault_Handler:
+ 319              		@ Volatile: function does not return.
+ 320              		@ args = 0, pretend = 0, frame = 0
+ 321              		@ frame_needed = 0, uses_anonymous_args = 0
+ 322 0000 70B5     		push	{r4, r5, r6, lr}
+ 323 0002 0C4C     		ldr	r4, .L18
+ 324 0004 2000     		movs	r0, r4
+ 325 0006 2500     		movs	r5, r4
+ 326 0008 2130     		adds	r0, r0, #33
+ 327 000a 1535     		adds	r5, r5, #21
+ 328 000c FFF7FEFF 		bl	hal_trace_print_var
+ 329 0010 2800     		movs	r0, r5
+ 330 0012 FFF7FEFF 		bl	hal_trace_print_var
+ 331 0016 2000     		movs	r0, r4
+ 332 0018 3030     		adds	r0, r0, #48
+ 333 001a FFF7FEFF 		bl	hal_trace_print_var
+ 334 001e 2800     		movs	r0, r5
+ 335 0020 FFF7FEFF 		bl	hal_trace_print_var
+ 336 0024 2000     		movs	r0, r4
+ 337 0026 4A30     		adds	r0, r0, #74
+ 338 0028 FFF7FEFF 		bl	hal_trace_print_var
+ 339 002c 2800     		movs	r0, r5
+ 340 002e FFF7FEFF 		bl	hal_trace_print_var
+ 341              	.L17:
+ 342 0032 FEE7     		b	.L17
+ 343              	.L19:
+ 344              		.align	2
+ 345              	.L18:
+ 346 0034 00000000 		.word	.LANCHOR1
+ 348              		.section	.rodata
+ 349              		.set	.LANCHOR1,. + 0
+ 350              	.LC1:
+ 351 0000 4552524F 		.ascii	"ERROR: mcu_panic:%s\012\000"
+ 351      523A206D 
+ 351      63755F70 
+ 351      616E6963 
+ 351      3A25730A 
+ 352              	.LC3:
+ARM GAS  /tmp/ccwMQfK4.s 			page 7
 
 
- 358              		@ args = 0, pretend = 0, frame = 88
- 359              		@ frame_needed = 0, uses_anonymous_args = 0
- 360 0000 70B5     		push	{r4, r5, r6, lr}
- 361 0002 0600     		movs	r6, r0
- 362 0004 96B0     		sub	sp, sp, #88
- 363 0006 0028     		cmp	r0, #0
- 364 0008 05DD     		ble	.L17
- 365 000a 544C     		ldr	r4, .L33
- 366 000c 2378     		ldrb	r3, [r4]
- 367 000e 022B     		cmp	r3, #2
- 368 0010 03D1     		bne	.L20
- 369 0012 0023     		movs	r3, #0
- 370 0014 2370     		strb	r3, [r4]
- 371              	.L17:
- 372 0016 16B0     		add	sp, sp, #88
- 373              		@ sp needed
- 374 0018 70BD     		pop	{r4, r5, r6, pc}
- 375              	.L20:
- 376 001a FFF7FEFF 		bl	watchdog_reload
- 377 001e 2378     		ldrb	r3, [r4]
- 378 0020 002B     		cmp	r3, #0
- 379 0022 F8D1     		bne	.L17
- 380 0024 0124     		movs	r4, #1
- 381              	.L27:
- 382 0026 4E49     		ldr	r1, .L33+4
- 383 0028 8E42     		cmp	r6, r1
- 384 002a 56DD     		ble	.L22
- 385 002c 4D4B     		ldr	r3, .L33+8
- 386 002e 4E48     		ldr	r0, .L33+12
- 387 0030 F618     		adds	r6, r6, r3
- 388 0032 FFF7FEFF 		bl	TimerSetValue
- 389 0036 0023     		movs	r3, #0
- 390 0038 0193     		str	r3, [sp, #4]
- 391              	.L23:
- 392 003a 0025     		movs	r5, #0
- 393 003c 4B4B     		ldr	r3, .L33+16
- 394 003e 4A48     		ldr	r0, .L33+12
- 395 0040 1D70     		strb	r5, [r3]
- 396 0042 FFF7FEFF 		bl	TimerStart
- 397 0046 FFF7FEFF 		bl	HAL_SuspendTick
- 398              		.syntax divided
- 399              	@ 209 "bsp_l0/mcu_drivers/cmsis/Core/Include/cmsis_gcc.h" 1
- 400 004a 72B6     		cpsid i
- 401              	@ 0 "" 2
- 402              		.thumb
- 403              		.syntax unified
- 404 004c 09A8     		add	r0, sp, #36
- 405 004e FFF7FEFF 		bl	hal_mcu_critical_section_begin
- 406 0052 0220     		movs	r0, #2
- 407 0054 FFF7FEFF 		bl	hal_spi_de_init
- 408 0058 FFF7FEFF 		bl	uart1_deinit
- 409 005c 2000     		movs	r0, r4
- 410 005e FFF7FEFF 		bl	hal_i2c_deinit
- 411 0062 2000     		movs	r0, r4
- 412 0064 FFF7FEFF 		bl	hal_spi_de_init
- 413 0068 2100     		movs	r1, r4
- 414 006a 2000     		movs	r0, r4
-ARM GAS  /tmp/cc5omehg.s 			page 8
-
-
- 415 006c FFF7FEFF 		bl	HAL_PWR_EnterSTOPMode
- 416 0070 099B     		ldr	r3, [sp, #36]
- 417              		.syntax divided
- 418              	@ 481 "bsp_l0/mcu_drivers/cmsis/Core/Include/cmsis_gcc.h" 1
- 419 0072 83F31088 		MSR primask, r3
- 420              	@ 0 "" 2
- 421              		.thumb
- 422              		.syntax unified
- 423 0076 02A8     		add	r0, sp, #8
- 424 0078 FFF7FEFF 		bl	hal_mcu_critical_section_begin
- 425 007c 2900     		movs	r1, r5
- 426 007e 1422     		movs	r2, #20
- 427 0080 04A8     		add	r0, sp, #16
- 428 0082 FFF7FEFF 		bl	memset
- 429 0086 2900     		movs	r1, r5
- 430 0088 3422     		movs	r2, #52
- 431 008a 09A8     		add	r0, sp, #36
- 432 008c FFF7FEFF 		bl	memset
- 433 0090 8023     		movs	r3, #128
- 434 0092 374A     		ldr	r2, .L33+20
- 435 0094 0395     		str	r5, [sp, #12]
- 436 0096 916B     		ldr	r1, [r2, #56]
- 437 0098 5B05     		lsls	r3, r3, #21
- 438 009a 0B43     		orrs	r3, r1
- 439 009c 09A8     		add	r0, sp, #36
- 440 009e 9363     		str	r3, [r2, #56]
- 441 00a0 FFF7FEFF 		bl	HAL_RCC_GetOscConfig
- 442 00a4 0995     		str	r5, [sp, #36]
- 443 00a6 09A8     		add	r0, sp, #36
- 444 00a8 0235     		adds	r5, r5, #2
- 445 00aa 1295     		str	r5, [sp, #72]
- 446 00ac FFF7FEFF 		bl	HAL_RCC_OscConfig
- 447 00b0 0028     		cmp	r0, #0
- 448 00b2 18D0     		beq	.L24
- 449              	.L25:
- 450 00b4 2F4C     		ldr	r4, .L33+24
- 451 00b6 3049     		ldr	r1, .L33+28
- 452 00b8 2500     		movs	r5, r4
- 453 00ba 2000     		movs	r0, r4
- 454 00bc 1535     		adds	r5, r5, #21
- 455 00be FFF7FEFF 		bl	hal_trace_print_var
- 456 00c2 2800     		movs	r0, r5
- 457 00c4 FFF7FEFF 		bl	hal_trace_print_var
- 458 00c8 2000     		movs	r0, r4
- 459 00ca 1630     		adds	r0, r0, #22
- 460 00cc FFF7FEFF 		bl	hal_trace_print_var
- 461 00d0 2800     		movs	r0, r5
- 462 00d2 FFF7FEFF 		bl	hal_trace_print_var
- 463 00d6 FFF7FEFF 		bl	hal_mcu_reset
- 464              	.L22:
- 465 00da 3100     		movs	r1, r6
- 466 00dc 2248     		ldr	r0, .L33+12
- 467 00de FFF7FEFF 		bl	TimerSetValue
- 468 00e2 0194     		str	r4, [sp, #4]
- 469 00e4 A9E7     		b	.L23
- 470              	.L24:
- 471 00e6 03A9     		add	r1, sp, #12
-ARM GAS  /tmp/cc5omehg.s 			page 9
-
-
- 472 00e8 04A8     		add	r0, sp, #16
- 473 00ea FFF7FEFF 		bl	HAL_RCC_GetClockConfig
- 474 00ee 0122     		movs	r2, #1
- 475 00f0 0323     		movs	r3, #3
- 476 00f2 0399     		ldr	r1, [sp, #12]
- 477 00f4 04A8     		add	r0, sp, #16
- 478 00f6 0492     		str	r2, [sp, #16]
- 479 00f8 0593     		str	r3, [sp, #20]
- 480 00fa FFF7FEFF 		bl	HAL_RCC_ClockConfig
- 481 00fe 0028     		cmp	r0, #0
- 482 0100 D8D1     		bne	.L25
- 483 0102 FFF7FEFF 		bl	uart1_init
- 484 0106 2000     		movs	r0, r4
- 485 0108 1622     		movs	r2, #22
- 486 010a 1921     		movs	r1, #25
- 487 010c FFF7FEFF 		bl	hal_i2c_init
- 488 0110 2000     		movs	r0, r4
- 489 0112 1323     		movs	r3, #19
- 490 0114 1422     		movs	r2, #20
- 491 0116 1521     		movs	r1, #21
- 492 0118 FFF7FEFF 		bl	hal_spi_init
- 493 011c 1A23     		movs	r3, #26
- 494 011e 1E22     		movs	r2, #30
- 495 0120 1F21     		movs	r1, #31
- 496 0122 2800     		movs	r0, r5
- 497 0124 FFF7FEFF 		bl	hal_spi_init
- 498 0128 029B     		ldr	r3, [sp, #8]
- 499              		.syntax divided
- 500              	@ 481 "bsp_l0/mcu_drivers/cmsis/Core/Include/cmsis_gcc.h" 1
- 501 012a 83F31088 		MSR primask, r3
- 502              	@ 0 "" 2
- 503              	@ 198 "bsp_l0/mcu_drivers/cmsis/Core/Include/cmsis_gcc.h" 1
- 504 012e 62B6     		cpsie i
- 505              	@ 0 "" 2
- 506              		.thumb
- 507              		.syntax unified
- 508 0130 FFF7FEFF 		bl	HAL_ResumeTick
- 509 0134 FFF7FEFF 		bl	watchdog_reload
- 510 0138 0C4B     		ldr	r3, .L33+16
- 511 013a 1B78     		ldrb	r3, [r3]
- 512 013c 002B     		cmp	r3, #0
- 513 013e 03D0     		beq	.L26
- 514 0140 019B     		ldr	r3, [sp, #4]
- 515 0142 002B     		cmp	r3, #0
- 516 0144 00D1     		bne	.LCB432
- 517 0146 6EE7     		b	.L27	@long jump
- 518              	.LCB432:
- 519              	.L26:
- 520 0148 084B     		ldr	r3, .L33+16
- 521 014a 1B78     		ldrb	r3, [r3]
- 522 014c 002B     		cmp	r3, #0
- 523 014e 00D0     		beq	.LCB438
- 524 0150 61E7     		b	.L17	@long jump
- 525              	.LCB438:
- 526 0152 0548     		ldr	r0, .L33+12
- 527 0154 FFF7FEFF 		bl	TimerStop
- 528 0158 5DE7     		b	.L17
-ARM GAS  /tmp/cc5omehg.s 			page 10
-
-
- 529              	.L34:
- 530 015a C046     		.align	2
- 531              	.L33:
- 532 015c 00000000 		.word	.LANCHOR2
- 533 0160 204E0000 		.word	20000
- 534 0164 E0B1FFFF 		.word	-20000
- 535 0168 00000000 		.word	.LANCHOR3
- 536 016c 00000000 		.word	.LANCHOR4
- 537 0170 00100240 		.word	1073876992
- 538 0174 00000000 		.word	.LANCHOR1
- 539 0178 00000000 		.word	.LANCHOR5
- 541              		.section	.text.hal_mcu_disable_low_power_wait,"ax",%progbits
- 542              		.align	1
- 543              		.global	hal_mcu_disable_low_power_wait
- 544              		.syntax unified
- 545              		.code	16
- 546              		.thumb_func
- 547              		.fpu softvfp
- 549              	hal_mcu_disable_low_power_wait:
- 550              		@ args = 0, pretend = 0, frame = 0
- 551              		@ frame_needed = 0, uses_anonymous_args = 0
- 552              		@ link register save eliminated.
- 553 0000 0123     		movs	r3, #1
- 554              		@ sp needed
- 555 0002 024A     		ldr	r2, .L36
- 556 0004 1370     		strb	r3, [r2]
- 557 0006 024A     		ldr	r2, .L36+4
- 558 0008 1370     		strb	r3, [r2]
- 559 000a 7047     		bx	lr
- 560              	.L37:
- 561              		.align	2
- 562              	.L36:
- 563 000c 00000000 		.word	.LANCHOR6
- 564 0010 00000000 		.word	.LANCHOR2
- 566              		.section	.text.hal_mcu_enable_low_power_wait,"ax",%progbits
- 567              		.align	1
- 568              		.global	hal_mcu_enable_low_power_wait
- 569              		.syntax unified
- 570              		.code	16
- 571              		.thumb_func
- 572              		.fpu softvfp
- 574              	hal_mcu_enable_low_power_wait:
- 575              		@ args = 0, pretend = 0, frame = 0
- 576              		@ frame_needed = 0, uses_anonymous_args = 0
- 577              		@ link register save eliminated.
- 578 0000 0023     		movs	r3, #0
- 579              		@ sp needed
- 580 0002 024A     		ldr	r2, .L39
- 581 0004 1370     		strb	r3, [r2]
- 582 0006 024A     		ldr	r2, .L39+4
- 583 0008 1370     		strb	r3, [r2]
- 584 000a 7047     		bx	lr
- 585              	.L40:
- 586              		.align	2
- 587              	.L39:
- 588 000c 00000000 		.word	.LANCHOR6
- 589 0010 00000000 		.word	.LANCHOR2
-ARM GAS  /tmp/cc5omehg.s 			page 11
-
-
- 591              		.section	.text.hal_mcu_disable_once_low_power_wait,"ax",%progbits
- 592              		.align	1
- 593              		.global	hal_mcu_disable_once_low_power_wait
- 594              		.syntax unified
- 595              		.code	16
- 596              		.thumb_func
- 597              		.fpu softvfp
- 599              	hal_mcu_disable_once_low_power_wait:
- 600              		@ args = 0, pretend = 0, frame = 0
- 601              		@ frame_needed = 0, uses_anonymous_args = 0
- 602              		@ link register save eliminated.
- 603 0000 0122     		movs	r2, #1
- 604              		@ sp needed
- 605 0002 034B     		ldr	r3, .L42
- 606 0004 1A70     		strb	r2, [r3]
- 607 0006 034B     		ldr	r3, .L42+4
- 608 0008 9218     		adds	r2, r2, r2
- 609 000a 1A70     		strb	r2, [r3]
- 610 000c 7047     		bx	lr
- 611              	.L43:
- 612 000e C046     		.align	2
- 613              	.L42:
- 614 0010 00000000 		.word	.LANCHOR6
- 615 0014 00000000 		.word	.LANCHOR2
- 617              		.section	.text.SysTick_Handler,"ax",%progbits
- 618              		.align	1
- 619              		.global	SysTick_Handler
- 620              		.syntax unified
- 621              		.code	16
- 622              		.thumb_func
- 623              		.fpu softvfp
- 625              	SysTick_Handler:
- 626              		@ args = 0, pretend = 0, frame = 0
- 627              		@ frame_needed = 0, uses_anonymous_args = 0
- 628 0000 10B5     		push	{r4, lr}
- 629 0002 FFF7FEFF 		bl	HAL_IncTick
- 630              		@ sp needed
- 631 0006 FFF7FEFF 		bl	HAL_SYSTICK_IRQHandler
- 632 000a 10BD     		pop	{r4, pc}
- 634              		.section	.text.HAL_MspInit,"ax",%progbits
- 635              		.align	1
- 636              		.global	HAL_MspInit
- 637              		.syntax unified
- 638              		.code	16
- 639              		.thumb_func
- 640              		.fpu softvfp
- 642              	HAL_MspInit:
- 643              		@ args = 0, pretend = 0, frame = 0
- 644              		@ frame_needed = 0, uses_anonymous_args = 0
- 645 0000 0022     		movs	r2, #0
- 646 0002 0120     		movs	r0, #1
- 647 0004 10B5     		push	{r4, lr}
- 648 0006 1100     		movs	r1, r2
- 649              		@ sp needed
- 650 0008 4042     		rsbs	r0, r0, #0
- 651 000a FFF7FEFF 		bl	HAL_NVIC_SetPriority
- 652 000e 10BD     		pop	{r4, pc}
-ARM GAS  /tmp/cc5omehg.s 			page 12
-
-
- 654              		.section	.text.hal_mcu_delay_ms,"ax",%progbits
- 655              		.align	1
- 656              		.global	hal_mcu_delay_ms
- 657              		.syntax unified
- 658              		.code	16
- 659              		.thumb_func
- 660              		.fpu softvfp
- 662              	hal_mcu_delay_ms:
- 663              		@ args = 0, pretend = 0, frame = 0
- 664              		@ frame_needed = 0, uses_anonymous_args = 0
- 665 0000 10B5     		push	{r4, lr}
- 666 0002 FFF7FEFF 		bl	HAL_Delay
- 667              		@ sp needed
- 668 0006 10BD     		pop	{r4, pc}
- 670              		.section	.text.HardFault_Handler,"ax",%progbits
- 671              		.align	1
- 672              		.global	HardFault_Handler
- 673              		.syntax unified
- 674              		.code	16
- 675              		.thumb_func
- 676              		.fpu softvfp
- 678              	HardFault_Handler:
- 679              		@ Volatile: function does not return.
- 680              		@ args = 0, pretend = 0, frame = 0
- 681              		@ frame_needed = 0, uses_anonymous_args = 0
- 682 0000 70B5     		push	{r4, r5, r6, lr}
- 683 0002 0C4C     		ldr	r4, .L49
- 684 0004 2000     		movs	r0, r4
- 685 0006 2500     		movs	r5, r4
- 686 0008 2130     		adds	r0, r0, #33
- 687 000a 1535     		adds	r5, r5, #21
- 688 000c FFF7FEFF 		bl	hal_trace_print_var
- 689 0010 2800     		movs	r0, r5
- 690 0012 FFF7FEFF 		bl	hal_trace_print_var
- 691 0016 2000     		movs	r0, r4
- 692 0018 3030     		adds	r0, r0, #48
- 693 001a FFF7FEFF 		bl	hal_trace_print_var
- 694 001e 2800     		movs	r0, r5
- 695 0020 FFF7FEFF 		bl	hal_trace_print_var
- 696 0024 2000     		movs	r0, r4
- 697 0026 4A30     		adds	r0, r0, #74
- 698 0028 FFF7FEFF 		bl	hal_trace_print_var
- 699 002c 2800     		movs	r0, r5
- 700 002e FFF7FEFF 		bl	hal_trace_print_var
- 701              	.L48:
- 702 0032 FEE7     		b	.L48
- 703              	.L50:
- 704              		.align	2
- 705              	.L49:
- 706 0034 00000000 		.word	.LANCHOR1
- 708              		.section	.rodata
- 709              		.set	.LANCHOR1,. + 0
- 710              	.LC1:
- 711 0000 4552524F 		.ascii	"ERROR: mcu_panic:%s\012\000"
- 711      523A206D 
- 711      63755F70 
- 711      616E6963 
-ARM GAS  /tmp/cc5omehg.s 			page 13
-
-
- 711      3A25730A 
- 712              	.LC3:
- 713 0015 00       		.ascii	"\000"
- 714              	.LC4:
- 715 0016 4552524F 		.ascii	"ERROR: -> \000"
- 715      523A202D 
- 715      3E2000
- 716              	.LC20:
- 717 0021 4552524F 		.ascii	"ERROR: \033[0;31m\000"
- 717      523A201B 
- 717      5B303B33 
- 717      316D00
- 718              	.LC22:
- 719 0030 4552524F 		.ascii	"ERROR: HARDFAULT_Handler\012\000"
- 719      523A2048 
- 719      41524446 
- 719      41554C54 
- 719      5F48616E 
- 720              	.LC23:
- 721 004a 4552524F 		.ascii	"ERROR: \033[0m\000"
- 721      523A201B 
- 721      5B306D00 
- 722              		.section	.bss.exit_wait,"aw",%nobits
- 723              		.set	.LANCHOR6,. + 0
- 726              	exit_wait:
- 727 0000 00       		.space	1
- 728              		.section	.bss.lp_current_mode,"aw",%nobits
- 729              		.set	.LANCHOR2,. + 0
- 732              	lp_current_mode:
- 733 0000 00       		.space	1
- 734              		.section	.bss.wut,"aw",%nobits
- 735              		.align	2
- 736              		.set	.LANCHOR3,. + 0
- 739              	wut:
- 740 0000 00000000 		.space	24
- 740      00000000 
- 740      00000000 
- 740      00000000 
- 740      00000000 
- 741              		.section	.bss.wut_flag,"aw",%nobits
- 742              		.set	.LANCHOR4,. + 0
- 745              	wut_flag:
- 746 0000 00       		.space	1
- 747              		.section	.rodata.__func__.0,"a"
- 748              		.set	.LANCHOR5,. + 0
- 751              	__func__.0:
- 752 0000 6C706D5F 		.ascii	"lpm_mcu_reinit\000"
- 752      6D63755F 
- 752      7265696E 
- 752      697400
- 753              		.section	.rodata.__func__.1,"a"
- 754              		.set	.LANCHOR0,. + 0
- 757              	__func__.1:
- 758 0000 73797374 		.ascii	"system_clock_config\000"
- 758      656D5F63 
- 758      6C6F636B 
- 758      5F636F6E 
-ARM GAS  /tmp/cc5omehg.s 			page 14
-
-
- 758      66696700 
- 759              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/cc5omehg.s 			page 15
+ 353 0015 00       		.ascii	"\000"
+ 354              	.LC4:
+ 355 0016 4552524F 		.ascii	"ERROR: -> \000"
+ 355      523A202D 
+ 355      3E2000
+ 356              	.LC7:
+ 357 0021 4552524F 		.ascii	"ERROR: \033[0;31m\000"
+ 357      523A201B 
+ 357      5B303B33 
+ 357      316D00
+ 358              	.LC9:
+ 359 0030 4552524F 		.ascii	"ERROR: HARDFAULT_Handler\012\000"
+ 359      523A2048 
+ 359      41524446 
+ 359      41554C54 
+ 359      5F48616E 
+ 360              	.LC10:
+ 361 004a 4552524F 		.ascii	"ERROR: \033[0m\000"
+ 361      523A201B 
+ 361      5B306D00 
+ 362              		.section	.bss.exit_wait,"aw",%nobits
+ 365              	exit_wait:
+ 366 0000 00       		.space	1
+ 367              		.section	.bss.lp_current_mode,"aw",%nobits
+ 370              	lp_current_mode:
+ 371 0000 00       		.space	1
+ 372              		.section	.bss.wut_flag,"aw",%nobits
+ 375              	wut_flag:
+ 376 0000 00       		.space	1
+ 377              		.section	.rodata.__func__.0,"a"
+ 378              		.set	.LANCHOR0,. + 0
+ 381              	__func__.0:
+ 382 0000 73797374 		.ascii	"system_clock_config\000"
+ 382      656D5F63 
+ 382      6C6F636B 
+ 382      5F636F6E 
+ 382      66696700 
+ 383              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccwMQfK4.s 			page 8
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 smtc_hal_mcu.c
-     /tmp/cc5omehg.s:13     .text.hal_mcu_wait_us:0000000000000000 $t
-     /tmp/cc5omehg.s:22     .text.hal_mcu_wait_us:0000000000000000 hal_mcu_wait_us
-     /tmp/cc5omehg.s:67     .text.hal_mcu_critical_section_begin:0000000000000000 $t
-     /tmp/cc5omehg.s:74     .text.hal_mcu_critical_section_begin:0000000000000000 hal_mcu_critical_section_begin
-     /tmp/cc5omehg.s:95     .text.hal_mcu_critical_section_end:0000000000000000 $t
-     /tmp/cc5omehg.s:102    .text.hal_mcu_critical_section_end:0000000000000000 hal_mcu_critical_section_end
-     /tmp/cc5omehg.s:117    .text.hal_mcu_disable_irq:0000000000000000 $t
-     /tmp/cc5omehg.s:124    .text.hal_mcu_disable_irq:0000000000000000 hal_mcu_disable_irq
-     /tmp/cc5omehg.s:138    .text.hal_mcu_enable_irq:0000000000000000 $t
-     /tmp/cc5omehg.s:145    .text.hal_mcu_enable_irq:0000000000000000 hal_mcu_enable_irq
-     /tmp/cc5omehg.s:159    .text.hal_mcu_reset:0000000000000000 $t
-     /tmp/cc5omehg.s:166    .text.hal_mcu_reset:0000000000000000 hal_mcu_reset
-     /tmp/cc5omehg.s:200    .text.hal_mcu_reset:0000000000000014 $d
-     /tmp/cc5omehg.s:204    .text.hal_mcu_init:0000000000000000 $t
-     /tmp/cc5omehg.s:211    .text.hal_mcu_init:0000000000000000 hal_mcu_init
-     /tmp/cc5omehg.s:344    .text.hal_mcu_init:0000000000000120 $d
-     /tmp/cc5omehg.s:350    .text.hal_mcu_set_sleep_for_ms:0000000000000000 $t
-     /tmp/cc5omehg.s:357    .text.hal_mcu_set_sleep_for_ms:0000000000000000 hal_mcu_set_sleep_for_ms
-     /tmp/cc5omehg.s:532    .text.hal_mcu_set_sleep_for_ms:000000000000015c $d
-     /tmp/cc5omehg.s:542    .text.hal_mcu_disable_low_power_wait:0000000000000000 $t
-     /tmp/cc5omehg.s:549    .text.hal_mcu_disable_low_power_wait:0000000000000000 hal_mcu_disable_low_power_wait
-     /tmp/cc5omehg.s:563    .text.hal_mcu_disable_low_power_wait:000000000000000c $d
-     /tmp/cc5omehg.s:567    .text.hal_mcu_enable_low_power_wait:0000000000000000 $t
-     /tmp/cc5omehg.s:574    .text.hal_mcu_enable_low_power_wait:0000000000000000 hal_mcu_enable_low_power_wait
-     /tmp/cc5omehg.s:588    .text.hal_mcu_enable_low_power_wait:000000000000000c $d
-     /tmp/cc5omehg.s:592    .text.hal_mcu_disable_once_low_power_wait:0000000000000000 $t
-     /tmp/cc5omehg.s:599    .text.hal_mcu_disable_once_low_power_wait:0000000000000000 hal_mcu_disable_once_low_power_wait
-     /tmp/cc5omehg.s:614    .text.hal_mcu_disable_once_low_power_wait:0000000000000010 $d
-     /tmp/cc5omehg.s:618    .text.SysTick_Handler:0000000000000000 $t
-     /tmp/cc5omehg.s:625    .text.SysTick_Handler:0000000000000000 SysTick_Handler
-     /tmp/cc5omehg.s:635    .text.HAL_MspInit:0000000000000000 $t
-     /tmp/cc5omehg.s:642    .text.HAL_MspInit:0000000000000000 HAL_MspInit
-     /tmp/cc5omehg.s:655    .text.hal_mcu_delay_ms:0000000000000000 $t
-     /tmp/cc5omehg.s:662    .text.hal_mcu_delay_ms:0000000000000000 hal_mcu_delay_ms
-     /tmp/cc5omehg.s:671    .text.HardFault_Handler:0000000000000000 $t
-     /tmp/cc5omehg.s:678    .text.HardFault_Handler:0000000000000000 HardFault_Handler
-     /tmp/cc5omehg.s:706    .text.HardFault_Handler:0000000000000034 $d
-     /tmp/cc5omehg.s:726    .bss.exit_wait:0000000000000000 exit_wait
-     /tmp/cc5omehg.s:727    .bss.exit_wait:0000000000000000 $d
-     /tmp/cc5omehg.s:732    .bss.lp_current_mode:0000000000000000 lp_current_mode
-     /tmp/cc5omehg.s:733    .bss.lp_current_mode:0000000000000000 $d
-     /tmp/cc5omehg.s:735    .bss.wut:0000000000000000 $d
-     /tmp/cc5omehg.s:739    .bss.wut:0000000000000000 wut
-     /tmp/cc5omehg.s:745    .bss.wut_flag:0000000000000000 wut_flag
-     /tmp/cc5omehg.s:746    .bss.wut_flag:0000000000000000 $d
-     /tmp/cc5omehg.s:751    .rodata.__func__.0:0000000000000000 __func__.0
-     /tmp/cc5omehg.s:757    .rodata.__func__.1:0000000000000000 __func__.1
+     /tmp/ccwMQfK4.s:13     .text.hal_mcu_wait_us:0000000000000000 $t
+     /tmp/ccwMQfK4.s:22     .text.hal_mcu_wait_us:0000000000000000 hal_mcu_wait_us
+     /tmp/ccwMQfK4.s:67     .text.hal_mcu_reset:0000000000000000 $t
+     /tmp/ccwMQfK4.s:74     .text.hal_mcu_reset:0000000000000000 hal_mcu_reset
+     /tmp/ccwMQfK4.s:108    .text.hal_mcu_reset:0000000000000014 $d
+     /tmp/ccwMQfK4.s:112    .text.hal_mcu_init:0000000000000000 $t
+     /tmp/ccwMQfK4.s:119    .text.hal_mcu_init:0000000000000000 hal_mcu_init
+     /tmp/ccwMQfK4.s:252    .text.hal_mcu_init:0000000000000120 $d
+     /tmp/ccwMQfK4.s:258    .text.SysTick_Handler:0000000000000000 $t
+     /tmp/ccwMQfK4.s:265    .text.SysTick_Handler:0000000000000000 SysTick_Handler
+     /tmp/ccwMQfK4.s:275    .text.HAL_MspInit:0000000000000000 $t
+     /tmp/ccwMQfK4.s:282    .text.HAL_MspInit:0000000000000000 HAL_MspInit
+     /tmp/ccwMQfK4.s:295    .text.hal_mcu_delay_ms:0000000000000000 $t
+     /tmp/ccwMQfK4.s:302    .text.hal_mcu_delay_ms:0000000000000000 hal_mcu_delay_ms
+     /tmp/ccwMQfK4.s:311    .text.HardFault_Handler:0000000000000000 $t
+     /tmp/ccwMQfK4.s:318    .text.HardFault_Handler:0000000000000000 HardFault_Handler
+     /tmp/ccwMQfK4.s:346    .text.HardFault_Handler:0000000000000034 $d
+     /tmp/ccwMQfK4.s:365    .bss.exit_wait:0000000000000000 exit_wait
+     /tmp/ccwMQfK4.s:366    .bss.exit_wait:0000000000000000 $d
+     /tmp/ccwMQfK4.s:370    .bss.lp_current_mode:0000000000000000 lp_current_mode
+     /tmp/ccwMQfK4.s:371    .bss.lp_current_mode:0000000000000000 $d
+     /tmp/ccwMQfK4.s:375    .bss.wut_flag:0000000000000000 wut_flag
+     /tmp/ccwMQfK4.s:376    .bss.wut_flag:0000000000000000 $d
+     /tmp/ccwMQfK4.s:381    .rodata.__func__.0:0000000000000000 __func__.0
 
 UNDEFINED SYMBOLS
 __aeabi_idiv
@@ -843,9 +436,6 @@ memset
 HAL_PWR_EnableBkUpAccess
 HAL_RCC_OscConfig
 hal_trace_print_var
-ARM GAS  /tmp/cc5omehg.s 			page 16
-
-
 HAL_RCC_ClockConfig
 HAL_RCCEx_PeriphCLKConfig
 hal_gpio_init_out
@@ -853,19 +443,6 @@ hal_gpio_init_in
 uart1_init
 hal_spi_init
 hal_rtc_init
-watchdog_reload
-TimerSetValue
-TimerStart
-HAL_SuspendTick
-hal_spi_de_init
-uart1_deinit
-hal_i2c_deinit
-HAL_PWR_EnterSTOPMode
-HAL_RCC_GetOscConfig
-HAL_RCC_GetClockConfig
-hal_i2c_init
-HAL_ResumeTick
-TimerStop
 HAL_IncTick
 HAL_SYSTICK_IRQHandler
 HAL_NVIC_SetPriority
