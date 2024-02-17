@@ -73,12 +73,12 @@ extern "C" {
  */
 void hal_uart_init( const uint32_t id, const hal_gpio_pin_names_t uart_tx, const hal_gpio_pin_names_t uart_rx );
 
-/*!
- * @brief Deinitializes the MCU UART peripheral
- *
- * @param [in] id UART interface id [1:N]
- */
-void hal_uart_deinit( const uint32_t id );
+// /*!
+//  * @brief Deinitializes the MCU UART peripheral
+//  *
+//  * @param [in] id UART interface id [1:N]
+//  */
+// void hal_uart_deinit( const uint32_t id );
 
 /*!
  * @brief Send an amount on data on the UART bus
@@ -89,14 +89,14 @@ void hal_uart_deinit( const uint32_t id );
  */
 void hal_uart_tx( const uint32_t id, uint8_t* buff, uint16_t len );
 
-/*!
- * @brief Receive an amount on data on the UART bus
- *
- * @param [in] id UART interface id [1:N]
- * @param [in] rx_buffer buffer receiving data
- * @param [in] len data length to receive
- */
-void hal_uart_rx( const uint32_t id, uint8_t* rx_buffer, uint8_t len );
+// /*!
+//  * @brief Receive an amount on data on the UART bus
+//  *
+//  * @param [in] id UART interface id [1:N]
+//  * @param [in] rx_buffer buffer receiving data
+//  * @param [in] len data length to receive
+//  */
+// void hal_uart_rx( const uint32_t id, uint8_t* rx_buffer, uint8_t len );
 
 #ifdef __cplusplus
 }

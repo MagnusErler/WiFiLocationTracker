@@ -164,62 +164,62 @@ static uint32_t hal_rtc_get_calendar_time( uint16_t* milliseconds );
  */
 static uint64_t rtc_get_timestamp_in_ticks( RTC_DateTypeDef* date, RTC_TimeTypeDef* time );
 
-void hal_rtc_init( void )
-{
-    RTC_TimeTypeDef time;
-    RTC_DateTypeDef date;
+// void hal_rtc_init( void )
+// {
+//     RTC_TimeTypeDef time;
+//     RTC_DateTypeDef date;
 
-    __HAL_RCC_RTC_ENABLE( );
+//     __HAL_RCC_RTC_ENABLE( );
 
-    hal_rtc.handle.Instance            = RTC;
-    hal_rtc.handle.Init.HourFormat     = RTC_HOURFORMAT_24;
-    hal_rtc.handle.Init.AsynchPrediv   = PREDIV_A;
-    hal_rtc.handle.Init.SynchPrediv    = PREDIV_S;
-    hal_rtc.handle.Init.OutPut         = RTC_OUTPUT_DISABLE;
-    hal_rtc.handle.Init.OutPutRemap    = RTC_OUTPUT_REMAP_NONE;
-    hal_rtc.handle.Init.OutPutPolarity = RTC_OUTPUT_POLARITY_HIGH;
-    hal_rtc.handle.Init.OutPutType     = RTC_OUTPUT_TYPE_OPENDRAIN;
+//     hal_rtc.handle.Instance            = RTC;
+//     hal_rtc.handle.Init.HourFormat     = RTC_HOURFORMAT_24;
+//     hal_rtc.handle.Init.AsynchPrediv   = PREDIV_A;
+//     hal_rtc.handle.Init.SynchPrediv    = PREDIV_S;
+//     hal_rtc.handle.Init.OutPut         = RTC_OUTPUT_DISABLE;
+//     hal_rtc.handle.Init.OutPutRemap    = RTC_OUTPUT_REMAP_NONE;
+//     hal_rtc.handle.Init.OutPutPolarity = RTC_OUTPUT_POLARITY_HIGH;
+//     hal_rtc.handle.Init.OutPutType     = RTC_OUTPUT_TYPE_OPENDRAIN;
 
-    if( HAL_RTC_Init( &hal_rtc.handle ) != HAL_OK )
-    {
-        hal_mcu_panic( );
-    }
+//     if( HAL_RTC_Init( &hal_rtc.handle ) != HAL_OK )
+//     {
+//         //hal_mcu_panic( );
+//     }
 
-    /* Initialize RTC counter to 0 */
-    date.Year    = 0;
-    date.Month   = RTC_MONTH_JANUARY;
-    date.Date    = 1;
-    date.WeekDay = RTC_WEEKDAY_MONDAY;
-    HAL_RTC_SetDate( &hal_rtc.handle, &date, RTC_FORMAT_BIN );
+//     /* Initialize RTC counter to 0 */
+//     date.Year    = 0;
+//     date.Month   = RTC_MONTH_JANUARY;
+//     date.Date    = 1;
+//     date.WeekDay = RTC_WEEKDAY_MONDAY;
+//     HAL_RTC_SetDate( &hal_rtc.handle, &date, RTC_FORMAT_BIN );
 
-    /*at 0:0:0*/
-    time.Hours          = 0;
-    time.Minutes        = 0;
-    time.Seconds        = 0;
-    time.SubSeconds     = 0;
-    time.TimeFormat     = 0;
-    time.StoreOperation = RTC_DAYLIGHTSAVING_NONE;
-    time.DayLightSaving = RTC_STOREOPERATION_RESET;
-    HAL_RTC_SetTime( &hal_rtc.handle, &time, RTC_FORMAT_BIN );
+//     /*at 0:0:0*/
+//     time.Hours          = 0;
+//     time.Minutes        = 0;
+//     time.Seconds        = 0;
+//     time.SubSeconds     = 0;
+//     time.TimeFormat     = 0;
+//     time.StoreOperation = RTC_DAYLIGHTSAVING_NONE;
+//     time.DayLightSaving = RTC_STOREOPERATION_RESET;
+//     HAL_RTC_SetTime( &hal_rtc.handle, &time, RTC_FORMAT_BIN );
 
-    /* Enable Direct Read of the calendar registers (not through Shadow
-       registers) */
-    HAL_RTCEx_EnableBypassShadow( &hal_rtc.handle );
+//     /* Enable Direct Read of the calendar registers (not through Shadow
+//        registers) */
+//     HAL_RTCEx_EnableBypassShadow( &hal_rtc.handle );
 
-    HAL_NVIC_SetPriority( RTC_Alarm_IRQn, 1, 0 );
-    HAL_NVIC_EnableIRQ( RTC_Alarm_IRQn );
+//     HAL_NVIC_SetPriority( RTC_Alarm_IRQn, 1, 0 );
+//     HAL_NVIC_EnableIRQ( RTC_Alarm_IRQn );
 
-    /* Init alarm. */
-    HAL_RTC_DeactivateAlarm( &hal_rtc.handle, RTC_ALARM_A );
+//     /* Init alarm. */
+//     HAL_RTC_DeactivateAlarm( &hal_rtc.handle, RTC_ALARM_A );
 
-    hal_rtc_set_time_ref_in_ticks( );
-}
+//     hal_rtc_set_time_ref_in_ticks( );
+// }
 
-uint32_t hal_rtc_get_time_s( void )
-{
-    uint16_t milliseconds = 0;
-    return hal_rtc_get_calendar_time( &milliseconds );
-}
+// uint32_t hal_rtc_get_time_s( void )
+// {
+//     uint16_t milliseconds = 0;
+//     return hal_rtc_get_calendar_time( &milliseconds );
+// }
 
 uint32_t hal_rtc_get_time_ms( void )
 {
@@ -405,7 +405,7 @@ uint32_t hal_rtc_get_time_ms( void )
 //     HAL_RTCEx_SetWakeUpTimer_IT( &hal_rtc.handle, delay_ms_2_tick, RTC_WAKEUPCLOCK_RTCCLK_DIV16 );
 // }
 
-void hal_rtc_stop_timer( void ) { HAL_RTCEx_DeactivateWakeUpTimer( &hal_rtc.handle ); }
+//void hal_rtc_stop_timer( void ) { HAL_RTCEx_DeactivateWakeUpTimer( &hal_rtc.handle ); }
 
 uint32_t hal_rtc_set_time_ref_in_ticks( void )
 {
@@ -414,7 +414,7 @@ uint32_t hal_rtc_set_time_ref_in_ticks( void )
     return hal_rtc.context.time_ref_in_ticks;
 }
 
-uint32_t hal_rtc_get_time_ref_in_ticks( void ) { return hal_rtc.context.time_ref_in_ticks; }
+//uint32_t hal_rtc_get_time_ref_in_ticks( void ) { return hal_rtc.context.time_ref_in_ticks; }
 
 // uint32_t hal_rtc_ms_2_tick( const uint32_t milliseconds )
 // {

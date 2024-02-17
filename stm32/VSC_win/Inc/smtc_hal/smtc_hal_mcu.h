@@ -91,71 +91,71 @@ void hal_mcu_critical_section_begin( uint32_t* mask );
  */
 void hal_mcu_critical_section_end( uint32_t* mask );
 
-/*!
- * @brief Initializes HAL used MCU
- */
-void hal_mcu_init( void );
+// /*!
+//  * @brief Initializes HAL used MCU
+//  */
+// void hal_mcu_init( void );
+
+// // /*!
+// //  * @brief Initializes HAL used Peripherals
+// //  */
+// // void hal_mcu_init_periph( void );
 
 // /*!
-//  * @brief Initializes HAL used Peripherals
+//  * @brief Disable irq at core side
 //  */
-// void hal_mcu_init_periph( void );
+// void hal_mcu_disable_irq( void );
 
-/*!
- * @brief Disable irq at core side
- */
-void hal_mcu_disable_irq( void );
+// /*!
+//  * @brief Enable irq at core side
+//  */
+// void hal_mcu_enable_irq( void );
 
-/*!
- * @brief Enable irq at core side
- */
-void hal_mcu_enable_irq( void );
+// // /*!
+// //  * @brief Resets the MCU
+// //  */
+// // void hal_mcu_reset( void );
 
-/*!
- * @brief Resets the MCU
- */
-void hal_mcu_reset( void );
+// /*!
+//  * @brief To be called in case of panic on mcu side
+//  */
+// void hal_mcu_panic( void );
 
-/*!
- * @brief To be called in case of panic on mcu side
- */
-void hal_mcu_panic( void );
+// /*!
+//  * @brief Initializes HAL used MCU radio pins
+//  *
+//  * @param [in] context Pointer to a variable holding the communication interface
+//  *                     id as well as the radio pins assignment.
+//  */
+// void hal_mcu_init_radio( const void* context );
 
-/*!
- * @brief Initializes HAL used MCU radio pins
- *
- * @param [in] context Pointer to a variable holding the communication interface
- *                     id as well as the radio pins assignment.
- */
-void hal_mcu_init_radio( const void* context );
+// /*!
+//  * @brief Sets the MCU in sleep mode for the given number of seconds.
+//  *
+//  * @param [in] seconds Number of seconds to stay in sleep mode
+//  */
+// void hal_mcu_set_sleep_for_s( const int32_t seconds );
 
-/*!
- * @brief Sets the MCU in sleep mode for the given number of seconds.
- *
- * @param [in] seconds Number of seconds to stay in sleep mode
- */
-void hal_mcu_set_sleep_for_s( const int32_t seconds );
+// /*!
+//  * @brief Waits for delay microseconds
+//  *
+//  * @param [in] microseconds Delay to wait in microseconds
+//  */
+// void hal_mcu_wait_us( const int32_t microseconds );
 
-/*!
- * @brief Waits for delay microseconds
- *
- * @param [in] microseconds Delay to wait in microseconds
- */
-void hal_mcu_wait_us( const int32_t microseconds );
+// /*!
+//  * @brief Get Vref intern from the MCU in mV
+//  *
+//  * @returns Vref In in mV.
+//  */
+// uint16_t hal_mcu_get_vref_level( void );
 
-/*!
- * @brief Get Vref intern from the MCU in mV
- *
- * @returns Vref In in mV.
- */
-uint16_t hal_mcu_get_vref_level( void );
-
-/*!
- * @brief Get Temperature intern from the MCU in Celsius degree
- *
- * @returns Temperature in Celsius degree.
- */
-int16_t hal_mcu_get_temperature( void );
+// /*!
+//  * @brief Get Temperature intern from the MCU in Celsius degree
+//  *
+//  * @returns Temperature in Celsius degree.
+//  */
+// int16_t hal_mcu_get_temperature( void );
 
 /*!
  * @brief Prints debug trace
@@ -164,25 +164,25 @@ int16_t hal_mcu_get_temperature( void );
  */
 void hal_mcu_trace_print( const char* fmt, ... );
 
-/*!
- * @brief Suspend low power process and avoid looping on it
- */
-void hal_mcu_disable_low_power_wait( void );
+// /*!
+//  * @brief Suspend low power process and avoid looping on it
+//  */
+// void hal_mcu_disable_low_power_wait( void );
 
-/*!
- * @brief Enable low power process
- */
-void hal_mcu_enable_low_power_wait( void );
+// /*!
+//  * @brief Enable low power process
+//  */
+// void hal_mcu_enable_low_power_wait( void );
 
-/*!
- * @brief Suspend once low power process and avoid looping on it once
- */
-void hal_mcu_disable_once_low_power_wait( void );
+// /*!
+//  * @brief Suspend once low power process and avoid looping on it once
+//  */
+// void hal_mcu_disable_once_low_power_wait( void );
 
-/*!
- * @brief Enable/Disable partial sleep
- */
-void hal_mcu_partial_sleep_enable( bool enable );
+// /*!
+//  * @brief Enable/Disable partial sleep
+//  */
+// void hal_mcu_partial_sleep_enable( bool enable );
 
 // /*!
 //  * @brief Enter in low power state

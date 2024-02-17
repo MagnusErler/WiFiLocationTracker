@@ -116,9 +116,9 @@ uint8_t uart_rx_done = false;
  * --- PRIVATE FUNCTIONS DECLARATION -------------------------------------------
  */
 
-void USART1_IRQHandler(void);
-void USART2_IRQHandler(void);
-void USART3_IRQHandler(void);
+// void USART1_IRQHandler(void);
+// void USART2_IRQHandler(void);
+// void USART3_IRQHandler(void);
 
 /*
  * -----------------------------------------------------------------------------
@@ -146,18 +146,18 @@ void hal_uart_init( const uint32_t id, const hal_gpio_pin_names_t uart_tx, const
 
     if( HAL_UART_Init( &hal_uart[local_id].handle ) != HAL_OK )
     {
-        hal_mcu_panic( );
+        //hal_mcu_panic( );
     }
     __HAL_UART_ENABLE( &hal_uart[local_id].handle );
 }
 
-void hal_uart_deinit( const uint32_t id )
-{
-    assert_param( ( id > 0 ) && ( ( id - 1 ) < sizeof( hal_uart ) ) );
-    uint32_t local_id = id - 1;
+// void hal_uart_deinit( const uint32_t id )
+// {
+//     assert_param( ( id > 0 ) && ( ( id - 1 ) < sizeof( hal_uart ) ) );
+//     uint32_t local_id = id - 1;
 
-    HAL_UART_DeInit( &hal_uart[local_id].handle );
-}
+//     HAL_UART_DeInit( &hal_uart[local_id].handle );
+// }
 
 void hal_uart_tx( const uint32_t id, uint8_t* buff, uint16_t len )
 {
@@ -167,52 +167,52 @@ void hal_uart_tx( const uint32_t id, uint8_t* buff, uint16_t len )
     HAL_UART_Transmit( &hal_uart[local_id].handle, ( uint8_t* ) buff, len, 0xffffff );
 }
 
-void hal_uart_rx( const uint32_t id, uint8_t* rx_buffer, uint8_t len )
-{
-    assert_param( ( id > 0 ) && ( ( id - 1 ) < sizeof( hal_uart ) ) );
-    uint32_t local_id = id - 1;
+// void hal_uart_rx( const uint32_t id, uint8_t* rx_buffer, uint8_t len )
+// {
+//     assert_param( ( id > 0 ) && ( ( id - 1 ) < sizeof( hal_uart ) ) );
+//     uint32_t local_id = id - 1;
 
-    HAL_UART_Receive_IT( &hal_uart[local_id].handle, rx_buffer, len );
+//     HAL_UART_Receive_IT( &hal_uart[local_id].handle, rx_buffer, len );
 
-    while( uart_rx_done != true )
-        ;
+//     while( uart_rx_done != true )
+//         ;
 
-    uart_rx_done = false;
-}
+//     uart_rx_done = false;
+// }
 
 /*
  * -----------------------------------------------------------------------------
  * --- PRIVATE FUNCTIONS DEFINITION --------------------------------------------
  */
 
-/**
- * @brief  This function handles USART1 interrupt request.
- */
-void USART1_IRQHandler( void ) { HAL_UART_IRQHandler( &hal_uart[0].handle ); }
+// /**
+//  * @brief  This function handles USART1 interrupt request.
+//  */
+// void USART1_IRQHandler( void ) { HAL_UART_IRQHandler( &hal_uart[0].handle ); }
 
-/**
-  * @brief  This function handles USART2 interrupt request.
-  */
-void USART2_IRQHandler(void)
-{
-  HAL_UART_IRQHandler(&hal_uart[1].handle);
-}
+// /**
+//   * @brief  This function handles USART2 interrupt request.
+//   */
+// void USART2_IRQHandler(void)
+// {
+//   HAL_UART_IRQHandler(&hal_uart[1].handle);
+// }
 
-/**
-  * @brief  This function handles USART3 interrupt request.
-  */
-void USART3_IRQHandler(void)
-{
-  HAL_UART_IRQHandler(&hal_uart[2].handle);
-}
+// /**
+//   * @brief  This function handles USART3 interrupt request.
+//   */
+// void USART3_IRQHandler(void)
+// {
+//   HAL_UART_IRQHandler(&hal_uart[2].handle);
+// }
 
-/**
- * @brief  Rx Transfer completed callback
- * @param  UartHandle: UART handle
- * @note   This example shows a simple way to report end of DMA Rx transfer, and
- *         you can add your own implementation.
- * @retval None
- */
-void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle ) { uart_rx_done = true; }
+// /**
+//  * @brief  Rx Transfer completed callback
+//  * @param  UartHandle: UART handle
+//  * @note   This example shows a simple way to report end of DMA Rx transfer, and
+//  *         you can add your own implementation.
+//  * @retval None
+//  */
+// void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle ) { uart_rx_done = true; }
 
 /* --- EOF ------------------------------------------------------------------ */

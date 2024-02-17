@@ -806,8 +806,6 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
 
-  CRITICAL_SECTION_BEGIN( );
-
   HAL_DBG_TRACE_ERROR( "%s\n", __func__ );
   HAL_DBG_TRACE_ERROR( "PANIC" );
 
