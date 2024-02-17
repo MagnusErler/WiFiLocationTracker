@@ -158,24 +158,24 @@ typedef enum
     LR1110_TCXO_CTRL_3_3V = 0x07,  //!< Supply voltage = 3.3v
 } lr1110_tcxo_supply_voltage_t;
 
-typedef struct configuration1
+typedef struct configuration
 {
     GPIO_TypeDef* port;
     uint32_t      pin;
-} gpio_t1;
+} gpio_t;
 
-typedef struct hal_gpio_irq_s2
+typedef struct hal_gpio_irq_s
 {
-    gpio_t1 irq1;
+    gpio_t irq1;
     void*                context;
     void ( *callback )( void* context );
-} hal_gpio_irq_t2;
+} hal_gpio_irq_t;
 
 typedef struct
 {
     SPI_TypeDef*    spi;
-    gpio_t1          nss;
-    gpio_t1          reset;
-    hal_gpio_irq_t2  event;
-    gpio_t1          busy;
-} radio_t1;
+    gpio_t          nss;
+    gpio_t          reset;
+    hal_gpio_irq_t  event;
+    gpio_t          busy;
+} radio_t;
