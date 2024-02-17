@@ -95,10 +95,10 @@ static volatile bool             hal_exit_wait        = false;
 static volatile low_power_mode_t hal_lp_current_mode  = LOW_POWER_ENABLE;
 static bool                      partial_sleep_enable = false;
 
-/*!
- * @brief Timer to handle the software watchdog
- */
-static timer_event_t soft_watchdog;
+// /*!
+//  * @brief Timer to handle the software watchdog
+//  */
+// static timer_event_t soft_watchdog;
 
 /*
  * -----------------------------------------------------------------------------
@@ -161,10 +161,10 @@ static void hal_mcu_pvd_config( void );
 static void vprint( const char* fmt, va_list argp );
 #endif
 
-/*!
- * @brief Function executed on software watchdog event
- */
-static void on_soft_watchdog_event( void* context );
+// /*!
+//  * @brief Function executed on software watchdog event
+//  */
+// static void on_soft_watchdog_event( void* context );
 
 /*
  * -----------------------------------------------------------------------------
@@ -223,7 +223,7 @@ void hal_mcu_init( void )
     hal_mcu_gpio_init( );
 
     /* Initialize low power timer */
-    hal_tmr_init( );
+    //hal_tmr_init( );
 
     /* Initialize the user flash */
     //flash_init( );
@@ -280,35 +280,35 @@ void hal_mcu_wait_us( const int32_t microseconds )
     }
 }
 
-void hal_mcu_init_software_watchdog( uint32_t value )
-{
-#if HAL_USE_WATCHDOG == HAL_FEATURE_ON
-    timer_init( &soft_watchdog, on_soft_watchdog_event );
-    timer_set_value( &soft_watchdog, value );
-    timer_start( &soft_watchdog );
-#endif
-}
+// void hal_mcu_init_software_watchdog( uint32_t value )
+// {
+// #if HAL_USE_WATCHDOG == HAL_FEATURE_ON
+//     timer_init( &soft_watchdog, on_soft_watchdog_event );
+//     timer_set_value( &soft_watchdog, value );
+//     timer_start( &soft_watchdog );
+// #endif
+// }
 
-void hal_mcu_set_software_watchdog_value( uint32_t value )
-{
-#if HAL_USE_WATCHDOG == HAL_FEATURE_ON
-    timer_set_value( &soft_watchdog, value );
-#endif
-}
+// void hal_mcu_set_software_watchdog_value( uint32_t value )
+// {
+// #if HAL_USE_WATCHDOG == HAL_FEATURE_ON
+//     timer_set_value( &soft_watchdog, value );
+// #endif
+// }
 
-void hal_mcu_start_software_watchdog( void )
-{
-#if HAL_USE_WATCHDOG == HAL_FEATURE_ON
-    timer_start( &soft_watchdog );
-#endif
-}
+// void hal_mcu_start_software_watchdog( void )
+// {
+// #if HAL_USE_WATCHDOG == HAL_FEATURE_ON
+//     timer_start( &soft_watchdog );
+// #endif
+// }
 
-void hal_mcu_reset_software_watchdog( void )
-{
-#if HAL_USE_WATCHDOG == HAL_FEATURE_ON
-    timer_reset( &soft_watchdog );
-#endif
-}
+// void hal_mcu_reset_software_watchdog( void )
+// {
+// #if HAL_USE_WATCHDOG == HAL_FEATURE_ON
+//     timer_reset( &soft_watchdog );
+// #endif
+// }
 
 uint16_t hal_mcu_get_vref_level( void ) { return 0; }
 
@@ -637,30 +637,30 @@ static void hal_mcu_gpio_deinit( void )
 //     }
 // }
 
-#if( HAL_LOW_POWER_MODE == HAL_FEATURE_OFF )
-static bool hal_mcu_no_low_power_wait( const int32_t milliseconds )
-{
-    uint32_t start_time = hal_rtc_get_time_ms( );
+// #if( HAL_LOW_POWER_MODE == HAL_FEATURE_OFF )
+// static bool hal_mcu_no_low_power_wait( const int32_t milliseconds )
+// {
+//     uint32_t start_time = hal_rtc_get_time_ms( );
 
-    while( hal_rtc_get_time_ms( ) < ( start_time + milliseconds ) )
-    {
-        /* interruptible wait for 100ms */
-        HAL_Delay( 100 );
-        if( hal_exit_wait == true )
-        {
-            /* stop wait/lp function and return immediatly */
-            hal_exit_wait = false;
-            return true;
-        }
-    }
-    return false;
-}
-#endif
+//     while( hal_rtc_get_time_ms( ) < ( start_time + milliseconds ) )
+//     {
+//         /* interruptible wait for 100ms */
+//         HAL_Delay( 100 );
+//         if( hal_exit_wait == true )
+//         {
+//             /* stop wait/lp function and return immediatly */
+//             hal_exit_wait = false;
+//             return true;
+//         }
+//     }
+//     return false;
+// }
+// #endif
 
 #if( HAL_DBG_TRACE == HAL_FEATURE_ON )
 static void vprint( const char* fmt, va_list argp )
 {
-    char string[HAL_PRINT_BUFFER_SIZE];
+    char string[255];
     if( 0 < vsprintf( string, fmt, argp ) )  // build string
     {
         hal_uart_tx( 2, ( uint8_t* ) string, strlen( string ) );
@@ -668,12 +668,12 @@ static void vprint( const char* fmt, va_list argp )
 }
 #endif
 
-static void on_soft_watchdog_event( void* context )
-{
-    HAL_DBG_TRACE_INFO( "###### ===== WATCHDOG RESET ==== ######\r\n\r\n" );
-    /* System reset */
-    hal_mcu_reset( );
-}
+// static void on_soft_watchdog_event( void* context )
+// {
+//     HAL_DBG_TRACE_INFO( "###### ===== WATCHDOG RESET ==== ######\r\n\r\n" );
+//     /* System reset */
+//     hal_mcu_reset( );
+// }
 
 /*!
  * @brief  This function handles PVD interrupt request.

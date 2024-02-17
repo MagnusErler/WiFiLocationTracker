@@ -41,7 +41,7 @@ extern "C" {
  */
 
 #include "stm32l4xx_hal.h"
-#include "smtc_utilities.h"
+//#include "smtc_utilities.h"
 #include "smtc_hal_gpio_pin_names.h"
 
 /*

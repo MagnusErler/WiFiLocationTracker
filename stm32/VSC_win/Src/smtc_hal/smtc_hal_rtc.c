@@ -40,7 +40,7 @@
 #include "stm32l4xx_ll_rtc.h"
 #include "smtc_hal_mcu.h"
 #include "smtc_hal_rtc.h"
-#include "smtc_hal_tmr_list.h"
+//#include "smtc_hal_tmr_list.h"
 
 /*
  * -----------------------------------------------------------------------------
