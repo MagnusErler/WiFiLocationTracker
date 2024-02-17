@@ -105,10 +105,10 @@ void timer_init( timer_event_t* obj, void ( *callback )( void* context ) );
  */
 void timer_set_context( timer_event_t* obj, void* context );
 
-/*!
- * @brief Timer IRQ event handler
- */
-void timer_irq_handler( void );
+// /*!
+//  * @brief Timer IRQ event handler
+//  */
+// void timer_irq_handler( void );
 
 /*!
  * @brief Check if a timer is running

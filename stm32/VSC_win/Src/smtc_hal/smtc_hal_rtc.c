@@ -488,12 +488,12 @@ void RTC_Alarm_IRQHandler( void )
     }
 }
 
-/*!
- * @brief  Alarm A callback.
- *
- * @param [in] hrtc RTC handle
- */
-void HAL_RTC_AlarmAEventCallback( RTC_HandleTypeDef* hrtc ) { timer_irq_handler( ); }
+// /*!
+//  * @brief  Alarm A callback.
+//  *
+//  * @param [in] hrtc RTC handle
+//  */
+// void HAL_RTC_AlarmAEventCallback( RTC_HandleTypeDef* hrtc ) { timer_irq_handler( ); }
 
 static uint64_t rtc_get_timestamp_in_ticks( RTC_DateTypeDef* date, RTC_TimeTypeDef* time )
 {

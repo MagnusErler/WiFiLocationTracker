@@ -221,8 +221,6 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 
-  hal_mcu_init();
-
   hal_uart_init( HAL_PRINTF_UART_ID, UART_TX, UART_RX );
 
   HAL_DBG_TRACE_MSG("-----------------------------\r\n\r\n");
@@ -232,8 +230,7 @@ int main(void)
 
   setupTCXO(lr1110_context);
 
-  HAL_Delay(5000);
-
+  getLR1110_Bootloader_Version(lr1110_context);   // First call to this function is always returning 0.0 no matter if calling for bootloader og wifi version
   getLR1110_Bootloader_Version(lr1110_context);
   getLR1110_WiFi_Version(lr1110_context);
   getLR1110_Chip_EUI(lr1110_context);
@@ -306,7 +303,6 @@ int main(void)
     HAL_DBG_TRACE_PRINTF("2a = %d\r\n", a++);
 
     getLR1110_Bootloader_Version(lr1110_context);
-    getLR1110_WiFi_Version(lr1110_context);
 
     getLR1110_Temperature(lr1110_context);
 
