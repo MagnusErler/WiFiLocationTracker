@@ -51,7 +51,7 @@ extern "C" {
 //#include "smtc_hal_watchdog.h"
 //#include "smtc_hal_rng.h"
 //#include "smtc_hal_spi.h"
-#include "smtc_hal_uart.h"
+//#include "smtc_hal_uart.h"
 //#include "smtc_hal_flash.h"
 //magnus #include "smtc_hal_i2c.h"
 

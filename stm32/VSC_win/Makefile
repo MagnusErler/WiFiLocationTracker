@@ -60,7 +60,6 @@ Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c \
 Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart_ex.c \
 Src/main.c \
 Src/smtc_hal/smtc_hal_rtc.c \
-Src/smtc_hal/smtc_hal_uart.c \
 Src/spi.c \
 Src/stm32l4xx_it.c \
 Src/stm32l4xx_hal_msp.c \
