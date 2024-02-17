@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc2eRfJO.s 			page 1
+ARM GAS  /tmp/ccJi1W18.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -11,377 +11,269 @@ ARM GAS  /tmp/cc2eRfJO.s 			page 1
    8              		.eabi_attribute 18, 4
    9              		.file	"main.c"
   10              		.text
-  11              		.section	.text.get_event,"ax",%progbits
-  12              		.align	1
-  13              		.arch armv6s-m
-  14              		.syntax unified
-  15              		.code	16
-  16              		.thumb_func
-  17              		.fpu softvfp
-  19              	get_event:
-  20              		@ args = 0, pretend = 0, frame = 0
-  21              		@ frame_needed = 0, uses_anonymous_args = 0
-  22              		@ link register save eliminated.
-  23              		@ sp needed
-  24 0000 7047     		bx	lr
-  26              		.section	.rodata.periodic_timer_cb.str1.1,"aMS",%progbits,1
-  27              	.LC0:
-  28 0000 70657269 		.ascii	"periodic_timer_cb\015\012\000"
-  28      6F646963 
-  28      5F74696D 
-  28      65725F63 
-  28      620D0A00 
-  29              		.section	.text.periodic_timer_cb,"ax",%progbits
-  30              		.align	1
-  31              		.syntax unified
-  32              		.code	16
-  33              		.thumb_func
-  34              		.fpu softvfp
-  36              	periodic_timer_cb:
-  37              		@ args = 0, pretend = 0, frame = 0
-  38              		@ frame_needed = 0, uses_anonymous_args = 0
-  39 0000 10B5     		push	{r4, lr}
-  40 0002 0348     		ldr	r0, .L3
-  41 0004 FFF7FEFF 		bl	hal_trace_print_var
-  42              		@ sp needed
-  43 0008 0248     		ldr	r0, .L3+4
-  44 000a FFF7FEFF 		bl	TimerStart
-  45 000e 10BD     		pop	{r4, pc}
-  46              	.L4:
-  47              		.align	2
-  48              	.L3:
-  49 0010 00000000 		.word	.LC0
-  50 0014 00000000 		.word	.LANCHOR0
-  52              		.section	.rodata.main.str1.1,"aMS",%progbits,1
-  53              	.LC3:
-  54 0000 5F5F5F5F 		.ascii	"___________________________________________________"
-  54      5F5F5F5F 
-  54      5F5F5F5F 
-  54      5F5F5F5F 
-ARM GAS  /tmp/cc2eRfJO.s 			page 2
+  11              		.section	.rodata.main.str1.1,"aMS",%progbits,1
+  12              	.LC0:
+  13 0000 5F5F5F5F 		.ascii	"___________________________________________________"
+  13      5F5F5F5F 
+  13      5F5F5F5F 
+  13      5F5F5F5F 
+  13      5F5F5F5F 
+  14 0033 5F5F5F5F 		.ascii	"____________________________\015\012\000"
+  14      5F5F5F5F 
+  14      5F5F5F5F 
+  14      5F5F5F5F 
+  14      5F5F5F5F 
+  15              	.LC2:
+  16 0052 0D0A2D2D 		.ascii	"\015\012-----------------WIFI Scan-----------------"
+  16      2D2D2D2D 
+  16      2D2D2D2D 
+  16      2D2D2D2D 
+  16      2D2D2D57 
+  17 007f 0D0A00   		.ascii	"\015\012\000"
+  18              	.LC4:
+  19 0082 57494649 		.ascii	"WIFI scan error\015\012\000"
+  19      20736361 
+  19      6E206572 
+  19      726F720D 
+  19      0A00
+  20              	.LC6:
+  21 0094 4C697374 		.ascii	"Listing WIFI networks: %d\015\012\000"
+  21      696E6720 
+  21      57494649 
+  21      206E6574 
+  21      776F726B 
+  22              	.LC8:
+  23 00b0 4E6F2057 		.ascii	"No WIFI networks found: %d\015\012\000"
+  23      49464920 
+  23      6E657477 
+  23      6F726B73 
+  23      20666F75 
+  24              	.LC10:
+  25 00cd 77696669 		.ascii	"wifi %d: SSID: %s, \000"
+  25      2025643A 
+  25      20535349 
+  25      443A2025 
+  25      732C2000 
+  26              	.LC12:
+  27 00e1 6D61633A 		.ascii	"mac: %02x:%02x:%02x:%02x:%02x:%02x, rssi: %d\015\012"
+  27      20253032 
+  27      783A2530 
+ARM GAS  /tmp/ccJi1W18.s 			page 2
 
 
-  54      5F5F5F5F 
-  55 0033 5F5F5F5F 		.ascii	"____________________________\015\012\000"
-  55      5F5F5F5F 
-  55      5F5F5F5F 
-  55      5F5F5F5F 
-  55      5F5F5F5F 
-  56              	.LC9:
-  57 0052 0D0A2D2D 		.ascii	"\015\012-----------------WIFI Scan-----------------"
-  57      2D2D2D2D 
-  57      2D2D2D2D 
-  57      2D2D2D2D 
-  57      2D2D2D57 
-  58 007f 0D0A00   		.ascii	"\015\012\000"
-  59              	.LC11:
-  60 0082 57494649 		.ascii	"WIFI scan error\015\012\000"
-  60      20736361 
-  60      6E206572 
-  60      726F720D 
-  60      0A00
-  61              	.LC13:
-  62 0094 4C697374 		.ascii	"Listing WIFI networks: %d\015\012\000"
-  62      696E6720 
-  62      57494649 
-  62      206E6574 
-  62      776F726B 
-  63              	.LC15:
-  64 00b0 4E6F2057 		.ascii	"No WIFI networks found: %d\015\012\000"
-  64      49464920 
-  64      6E657477 
-  64      6F726B73 
-  64      20666F75 
-  65              	.LC17:
-  66 00cd 77696669 		.ascii	"wifi %d: SSID: %s, \000"
-  66      2025643A 
-  66      20535349 
-  66      443A2025 
-  66      732C2000 
-  67              	.LC19:
-  68 00e1 6D61633A 		.ascii	"mac: %02x:%02x:%02x:%02x:%02x:%02x, rssi: %d\015\012"
-  68      20253032 
-  68      783A2530 
-  68      32783A25 
-  68      3032783A 
-  69 010f 00       		.ascii	"\000"
-  70              	.LC21:
-  71 0110 4C523131 		.ascii	"LR1110 ERROR \015\012\000"
-  71      31302045 
-  71      52524F52 
-  71      200D0A00 
-  72              		.section	.text.startup.main,"ax",%progbits
-  73              		.align	1
-  74              		.global	main
-  75              		.syntax unified
-  76              		.code	16
-  77              		.thumb_func
-  78              		.fpu softvfp
-  80              	main:
-ARM GAS  /tmp/cc2eRfJO.s 			page 3
+  27      32783A25 
+  27      3032783A 
+  28 010f 00       		.ascii	"\000"
+  29              	.LC14:
+  30 0110 4C523131 		.ascii	"LR1110 ERROR \015\012\000"
+  30      31302045 
+  30      52524F52 
+  30      200D0A00 
+  31              		.section	.text.startup.main,"ax",%progbits
+  32              		.align	1
+  33              		.global	main
+  34              		.arch armv6s-m
+  35              		.syntax unified
+  36              		.code	16
+  37              		.thumb_func
+  38              		.fpu softvfp
+  40              	main:
+  41              		@ Volatile: function does not return.
+  42              		@ args = 0, pretend = 0, frame = 96
+  43              		@ frame_needed = 0, uses_anonymous_args = 0
+  44 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+  45 0002 9DB0     		sub	sp, sp, #116
+  46 0004 FFF7FEFF 		bl	hal_mcu_disable_irq
+  47 0008 FFF7FEFF 		bl	hal_mcu_init
+  48 000c 2D48     		ldr	r0, .L16
+  49 000e FFF7FEFF 		bl	hal_trace_print_var
+  50 0012 0127     		movs	r7, #1
+  51 0014 FFF7FEFF 		bl	hal_mcu_enable_irq
+  52              	.L8:
+  53 0018 2B48     		ldr	r0, .L16+4
+  54 001a FFF7FEFF 		bl	hal_trace_print_var
+  55 001e 0323     		movs	r3, #3
+  56 0020 6E25     		movs	r5, #110
+  57 0022 0193     		str	r3, [sp, #4]
+  58 0024 0933     		adds	r3, r3, #9
+  59 0026 0093     		str	r3, [sp]
+  60 0028 0421     		movs	r1, #4
+  61 002a 0020     		movs	r0, #0
+  62 002c 274A     		ldr	r2, .L16+8
+  63 002e 0397     		str	r7, [sp, #12]
+  64 0030 0295     		str	r5, [sp, #8]
+  65 0032 073B     		subs	r3, r3, #7
+  66 0034 FFF7FEFF 		bl	lr11xx_wifi_scan
+  67 0038 0400     		movs	r4, r0
+  68 003a 2800     		movs	r0, r5
+  69 003c FFF7FEFF 		bl	hal_mcu_delay_ms
+  70 0040 002C     		cmp	r4, #0
+  71 0042 02D0     		beq	.L2
+  72 0044 2248     		ldr	r0, .L16+12
+  73 0046 FFF7FEFF 		bl	hal_trace_print_var
+  74              	.L2:
+  75 004a 1723     		movs	r3, #23
+  76 004c 6B44     		add	r3, r3, sp
+  77 004e 1900     		movs	r1, r3
+  78 0050 0020     		movs	r0, #0
+  79 0052 FFF7FEFF 		bl	lr11xx_wifi_get_nb_results
+  80 0056 6B46     		mov	r3, sp
+ARM GAS  /tmp/ccJi1W18.s 			page 3
 
 
-  81              		@ Volatile: function does not return.
-  82              		@ args = 0, pretend = 0, frame = 96
-  83              		@ frame_needed = 0, uses_anonymous_args = 0
-  84 0000 F0B5     		push	{r4, r5, r6, r7, lr}
-  85 0002 9DB0     		sub	sp, sp, #116
-  86 0004 FFF7FEFF 		bl	hal_mcu_disable_irq
-  87 0008 FFF7FEFF 		bl	hal_mcu_init
-  88 000c 3948     		ldr	r0, .L20
-  89 000e FFF7FEFF 		bl	hal_trace_print_var
-  90 0012 3949     		ldr	r1, .L20+4
-  91 0014 3948     		ldr	r0, .L20+8
-  92 0016 FFF7FEFF 		bl	smtc_modem_init
-  93 001a 05A8     		add	r0, sp, #20
-  94 001c FFF7FEFF 		bl	smtc_modem_get_modem_version
-  95 0020 FFF7FEFF 		bl	hal_mcu_enable_irq
-  96 0024 FFF7FEFF 		bl	settings_init
-  97 0028 354C     		ldr	r4, .L20+12
-  98 002a 3649     		ldr	r1, .L20+16
-  99 002c 2000     		movs	r0, r4
- 100 002e FFF7FEFF 		bl	TimerInit
- 101 0032 2000     		movs	r0, r4
- 102 0034 3449     		ldr	r1, .L20+20
- 103 0036 FFF7FEFF 		bl	TimerSetValue
- 104 003a 0021     		movs	r1, #0
- 105 003c 2000     		movs	r0, r4
- 106 003e FFF7FEFF 		bl	TimerSetContext
- 107 0042 2000     		movs	r0, r4
- 108 0044 FFF7FEFF 		bl	TimerStart
- 109 0048 0127     		movs	r7, #1
- 110              	.L12:
- 111 004a 3048     		ldr	r0, .L20+24
- 112 004c FFF7FEFF 		bl	hal_trace_print_var
- 113 0050 0323     		movs	r3, #3
- 114 0052 6E25     		movs	r5, #110
- 115 0054 0193     		str	r3, [sp, #4]
- 116 0056 0933     		adds	r3, r3, #9
- 117 0058 0093     		str	r3, [sp]
- 118 005a 0421     		movs	r1, #4
- 119 005c 0020     		movs	r0, #0
- 120 005e 2C4A     		ldr	r2, .L20+28
- 121 0060 0397     		str	r7, [sp, #12]
- 122 0062 0295     		str	r5, [sp, #8]
- 123 0064 073B     		subs	r3, r3, #7
- 124 0066 FFF7FEFF 		bl	lr11xx_wifi_scan
- 125 006a 0400     		movs	r4, r0
- 126 006c 2800     		movs	r0, r5
- 127 006e FFF7FEFF 		bl	hal_mcu_delay_ms
- 128 0072 002C     		cmp	r4, #0
- 129 0074 02D0     		beq	.L6
- 130 0076 2748     		ldr	r0, .L20+32
- 131 0078 FFF7FEFF 		bl	hal_trace_print_var
- 132              	.L6:
- 133 007c 1323     		movs	r3, #19
- 134 007e 6B44     		add	r3, r3, sp
- 135 0080 1900     		movs	r1, r3
- 136 0082 0020     		movs	r0, #0
- 137 0084 FFF7FEFF 		bl	lr11xx_wifi_get_nb_results
-ARM GAS  /tmp/cc2eRfJO.s 			page 4
+  81 0058 D97D     		ldrb	r1, [r3, #23]
+  82 005a 0500     		movs	r5, r0
+  83 005c 1D48     		ldr	r0, .L16+16
+  84 005e 0029     		cmp	r1, #0
+  85 0060 00D1     		bne	.L15
+  86 0062 1D48     		ldr	r0, .L16+20
+  87              	.L15:
+  88 0064 FFF7FEFF 		bl	hal_trace_print_var
+  89 0068 0026     		movs	r6, #0
+  90              	.L5:
+  91 006a 6B46     		mov	r3, sp
+  92 006c DB7D     		ldrb	r3, [r3, #23]
+  93 006e 9E42     		cmp	r6, r3
+  94 0070 09D3     		bcc	.L6
+  95 0072 002D     		cmp	r5, #0
+  96 0074 02D0     		beq	.L7
+  97 0076 1948     		ldr	r0, .L16+24
+  98 0078 FFF7FEFF 		bl	hal_trace_print_var
+  99              	.L7:
+ 100 007c FA20     		movs	r0, #250
+ 101 007e C000     		lsls	r0, r0, #3
+ 102 0080 FFF7FEFF 		bl	hal_mcu_delay_ms
+ 103 0084 C8E7     		b	.L8
+ 104              	.L6:
+ 105 0086 06AC     		add	r4, sp, #24
+ 106 0088 2300     		movs	r3, r4
+ 107 008a F1B2     		uxtb	r1, r6
+ 108 008c 3A00     		movs	r2, r7
+ 109 008e 0020     		movs	r0, #0
+ 110 0090 FFF7FEFF 		bl	lr11xx_wifi_read_extended_full_results
+ 111 0094 3100     		movs	r1, r6
+ 112 0096 11AA     		add	r2, sp, #68
+ 113 0098 0500     		movs	r5, r0
+ 114 009a 1148     		ldr	r0, .L16+28
+ 115 009c FFF7FEFF 		bl	hal_trace_print_var
+ 116 00a0 0220     		movs	r0, #2
+ 117 00a2 2056     		ldrsb	r0, [r4, r0]
+ 118 00a4 237E     		ldrb	r3, [r4, #24]
+ 119 00a6 E27D     		ldrb	r2, [r4, #23]
+ 120 00a8 A17D     		ldrb	r1, [r4, #22]
+ 121 00aa 0390     		str	r0, [sp, #12]
+ 122 00ac E07E     		ldrb	r0, [r4, #27]
+ 123 00ae 0136     		adds	r6, r6, #1
+ 124 00b0 0290     		str	r0, [sp, #8]
+ 125 00b2 A07E     		ldrb	r0, [r4, #26]
+ 126 00b4 0190     		str	r0, [sp, #4]
+ 127 00b6 607E     		ldrb	r0, [r4, #25]
+ 128 00b8 0090     		str	r0, [sp]
+ 129 00ba 0A48     		ldr	r0, .L16+32
+ 130 00bc FFF7FEFF 		bl	hal_trace_print_var
+ 131 00c0 D3E7     		b	.L5
+ 132              	.L17:
+ 133 00c2 C046     		.align	2
+ 134              	.L16:
+ 135 00c4 00000000 		.word	.LC0
+ 136 00c8 52000000 		.word	.LC2
+ 137 00cc FF3F0000 		.word	16383
+ARM GAS  /tmp/ccJi1W18.s 			page 4
 
 
- 138 0088 6B46     		mov	r3, sp
- 139 008a D97C     		ldrb	r1, [r3, #19]
- 140 008c 0500     		movs	r5, r0
- 141 008e 2248     		ldr	r0, .L20+36
- 142 0090 0029     		cmp	r1, #0
- 143 0092 00D1     		bne	.L19
- 144 0094 2148     		ldr	r0, .L20+40
- 145              	.L19:
- 146 0096 FFF7FEFF 		bl	hal_trace_print_var
- 147 009a 0026     		movs	r6, #0
- 148              	.L9:
- 149 009c 6B46     		mov	r3, sp
- 150 009e DB7C     		ldrb	r3, [r3, #19]
- 151 00a0 9E42     		cmp	r6, r3
- 152 00a2 09D3     		bcc	.L10
- 153 00a4 002D     		cmp	r5, #0
- 154 00a6 02D0     		beq	.L11
- 155 00a8 1D48     		ldr	r0, .L20+44
- 156 00aa FFF7FEFF 		bl	hal_trace_print_var
- 157              	.L11:
- 158 00ae FA20     		movs	r0, #250
- 159 00b0 C000     		lsls	r0, r0, #3
- 160 00b2 FFF7FEFF 		bl	hal_mcu_delay_ms
- 161 00b6 C8E7     		b	.L12
- 162              	.L10:
- 163 00b8 06AC     		add	r4, sp, #24
- 164 00ba 2300     		movs	r3, r4
- 165 00bc F1B2     		uxtb	r1, r6
- 166 00be 3A00     		movs	r2, r7
- 167 00c0 0020     		movs	r0, #0
- 168 00c2 FFF7FEFF 		bl	lr11xx_wifi_read_extended_full_results
- 169 00c6 3100     		movs	r1, r6
- 170 00c8 11AA     		add	r2, sp, #68
- 171 00ca 0500     		movs	r5, r0
- 172 00cc 1548     		ldr	r0, .L20+48
- 173 00ce FFF7FEFF 		bl	hal_trace_print_var
- 174 00d2 0220     		movs	r0, #2
- 175 00d4 2056     		ldrsb	r0, [r4, r0]
- 176 00d6 237E     		ldrb	r3, [r4, #24]
- 177 00d8 E27D     		ldrb	r2, [r4, #23]
- 178 00da A17D     		ldrb	r1, [r4, #22]
- 179 00dc 0390     		str	r0, [sp, #12]
- 180 00de E07E     		ldrb	r0, [r4, #27]
- 181 00e0 0136     		adds	r6, r6, #1
- 182 00e2 0290     		str	r0, [sp, #8]
- 183 00e4 A07E     		ldrb	r0, [r4, #26]
- 184 00e6 0190     		str	r0, [sp, #4]
- 185 00e8 607E     		ldrb	r0, [r4, #25]
- 186 00ea 0090     		str	r0, [sp]
- 187 00ec 0E48     		ldr	r0, .L20+52
- 188 00ee FFF7FEFF 		bl	hal_trace_print_var
- 189 00f2 D3E7     		b	.L9
- 190              	.L21:
- 191              		.align	2
- 192              	.L20:
- 193 00f4 00000000 		.word	.LC3
- 194 00f8 00000000 		.word	get_event
-ARM GAS  /tmp/cc2eRfJO.s 			page 5
+ 138 00d0 82000000 		.word	.LC4
+ 139 00d4 94000000 		.word	.LC6
+ 140 00d8 B0000000 		.word	.LC8
+ 141 00dc 10010000 		.word	.LC14
+ 142 00e0 CD000000 		.word	.LC10
+ 143 00e4 E1000000 		.word	.LC12
+ 145              		.global	modem_radio
+ 146              		.section	.rodata.modem_radio,"a"
+ 147              		.align	2
+ 150              	modem_radio:
+ 151 0000 00000000 		.word	0
+ 152 0004 00000000 		.word	ral_lr11xx_handles_part
+ 153 0008 00000000 		.word	ral_lr11xx_reset
+ 154 000c 00000000 		.word	ral_lr11xx_init
+ 155 0010 00000000 		.word	ral_lr11xx_wakeup
+ 156 0014 00000000 		.word	ral_lr11xx_set_sleep
+ 157 0018 00000000 		.word	ral_lr11xx_set_standby
+ 158 001c 00000000 		.word	ral_lr11xx_set_fs
+ 159 0020 00000000 		.word	ral_lr11xx_set_tx
+ 160 0024 00000000 		.word	ral_lr11xx_set_rx
+ 161 0028 00000000 		.word	ral_lr11xx_cfg_rx_boosted
+ 162 002c 00000000 		.word	ral_lr11xx_set_rx_tx_fallback_mode
+ 163 0030 00000000 		.word	ral_lr11xx_stop_timer_on_preamble
+ 164 0034 00000000 		.word	ral_lr11xx_set_rx_duty_cycle
+ 165 0038 00000000 		.word	ral_lr11xx_set_lora_cad
+ 166 003c 00000000 		.word	ral_lr11xx_set_tx_cw
+ 167 0040 00000000 		.word	ral_lr11xx_set_tx_infinite_preamble
+ 168 0044 00000000 		.word	ral_lr11xx_cal_img
+ 169 0048 00000000 		.word	ral_lr11xx_set_tx_cfg
+ 170 004c 00000000 		.word	ral_lr11xx_set_pkt_payload
+ 171 0050 00000000 		.word	ral_lr11xx_get_pkt_payload
+ 172 0054 00000000 		.word	ral_lr11xx_get_irq_status
+ 173 0058 00000000 		.word	ral_lr11xx_clear_irq_status
+ 174 005c 00000000 		.word	ral_lr11xx_get_and_clear_irq_status
+ 175 0060 00000000 		.word	ral_lr11xx_set_dio_irq_params
+ 176 0064 00000000 		.word	ral_lr11xx_set_rf_freq
+ 177 0068 00000000 		.word	ral_lr11xx_set_pkt_type
+ 178 006c 00000000 		.word	ral_lr11xx_get_pkt_type
+ 179 0070 00000000 		.word	ral_lr11xx_set_gfsk_mod_params
+ 180 0074 00000000 		.word	ral_lr11xx_set_gfsk_pkt_params
+ 181 0078 00000000 		.word	ral_lr11xx_set_lora_mod_params
+ 182 007c 00000000 		.word	ral_lr11xx_set_lora_pkt_params
+ 183 0080 00000000 		.word	ral_lr11xx_set_lora_cad_params
+ 184 0084 00000000 		.word	ral_lr11xx_set_lora_symb_nb_timeout
+ 185 0088 00000000 		.word	ral_lr11xx_set_flrc_mod_params
+ 186 008c 00000000 		.word	ral_lr11xx_set_flrc_pkt_params
+ 187 0090 00000000 		.word	ral_lr11xx_get_gfsk_rx_pkt_status
+ 188 0094 00000000 		.word	ral_lr11xx_get_lora_rx_pkt_status
+ 189 0098 00000000 		.word	ral_lr11xx_get_flrc_rx_pkt_status
+ 190 009c 00000000 		.word	ral_lr11xx_get_rssi_inst
+ 191 00a0 00000000 		.word	ral_lr11xx_get_lora_time_on_air_in_ms
+ 192 00a4 00000000 		.word	ral_lr11xx_get_gfsk_time_on_air_in_ms
+ 193 00a8 00000000 		.word	ral_lr11xx_get_flrc_time_on_air_in_ms
+ 194 00ac 00000000 		.word	ral_lr11xx_set_gfsk_sync_word
+ 195 00b0 00000000 		.word	ral_lr11xx_set_lora_sync_word
+ 196 00b4 00000000 		.word	ral_lr11xx_set_flrc_sync_word
+ 197 00b8 00000000 		.word	ral_lr11xx_set_gfsk_crc_params
+ARM GAS  /tmp/ccJi1W18.s 			page 5
 
 
- 195 00fc 00000000 		.word	modem_radio
- 196 0100 00000000 		.word	.LANCHOR0
- 197 0104 00000000 		.word	periodic_timer_cb
- 198 0108 204E0000 		.word	20000
- 199 010c 52000000 		.word	.LC9
- 200 0110 FF3F0000 		.word	16383
- 201 0114 82000000 		.word	.LC11
- 202 0118 94000000 		.word	.LC13
- 203 011c B0000000 		.word	.LC15
- 204 0120 10010000 		.word	.LC21
- 205 0124 CD000000 		.word	.LC17
- 206 0128 E1000000 		.word	.LC19
- 208              		.global	link_check_attempts
- 209              		.global	txdone_counter
- 210              		.global	modem_radio
- 211              		.section	.bss.link_check_attempts,"aw",%nobits
- 212              		.align	2
- 215              	link_check_attempts:
- 216 0000 00000000 		.space	4
- 217              		.section	.bss.periodic_timer,"aw",%nobits
- 218              		.align	2
- 219              		.set	.LANCHOR0,. + 0
- 222              	periodic_timer:
- 223 0000 00000000 		.space	24
- 223      00000000 
- 223      00000000 
- 223      00000000 
- 223      00000000 
- 224              		.section	.bss.txdone_counter,"aw",%nobits
- 225              		.align	2
- 228              	txdone_counter:
- 229 0000 00000000 		.space	4
- 230              		.section	.bss.user_button_is_press,"aw",%nobits
- 233              	user_button_is_press:
- 234 0000 00       		.space	1
- 235              		.section	.rodata.modem_radio,"a"
- 236              		.align	2
- 239              	modem_radio:
- 240 0000 00000000 		.word	0
- 241 0004 00000000 		.word	ral_lr11xx_handles_part
- 242 0008 00000000 		.word	ral_lr11xx_reset
- 243 000c 00000000 		.word	ral_lr11xx_init
- 244 0010 00000000 		.word	ral_lr11xx_wakeup
- 245 0014 00000000 		.word	ral_lr11xx_set_sleep
- 246 0018 00000000 		.word	ral_lr11xx_set_standby
- 247 001c 00000000 		.word	ral_lr11xx_set_fs
- 248 0020 00000000 		.word	ral_lr11xx_set_tx
- 249 0024 00000000 		.word	ral_lr11xx_set_rx
- 250 0028 00000000 		.word	ral_lr11xx_cfg_rx_boosted
- 251 002c 00000000 		.word	ral_lr11xx_set_rx_tx_fallback_mode
- 252 0030 00000000 		.word	ral_lr11xx_stop_timer_on_preamble
- 253 0034 00000000 		.word	ral_lr11xx_set_rx_duty_cycle
- 254 0038 00000000 		.word	ral_lr11xx_set_lora_cad
- 255 003c 00000000 		.word	ral_lr11xx_set_tx_cw
- 256 0040 00000000 		.word	ral_lr11xx_set_tx_infinite_preamble
- 257 0044 00000000 		.word	ral_lr11xx_cal_img
- 258 0048 00000000 		.word	ral_lr11xx_set_tx_cfg
-ARM GAS  /tmp/cc2eRfJO.s 			page 6
-
-
- 259 004c 00000000 		.word	ral_lr11xx_set_pkt_payload
- 260 0050 00000000 		.word	ral_lr11xx_get_pkt_payload
- 261 0054 00000000 		.word	ral_lr11xx_get_irq_status
- 262 0058 00000000 		.word	ral_lr11xx_clear_irq_status
- 263 005c 00000000 		.word	ral_lr11xx_get_and_clear_irq_status
- 264 0060 00000000 		.word	ral_lr11xx_set_dio_irq_params
- 265 0064 00000000 		.word	ral_lr11xx_set_rf_freq
- 266 0068 00000000 		.word	ral_lr11xx_set_pkt_type
- 267 006c 00000000 		.word	ral_lr11xx_get_pkt_type
- 268 0070 00000000 		.word	ral_lr11xx_set_gfsk_mod_params
- 269 0074 00000000 		.word	ral_lr11xx_set_gfsk_pkt_params
- 270 0078 00000000 		.word	ral_lr11xx_set_lora_mod_params
- 271 007c 00000000 		.word	ral_lr11xx_set_lora_pkt_params
- 272 0080 00000000 		.word	ral_lr11xx_set_lora_cad_params
- 273 0084 00000000 		.word	ral_lr11xx_set_lora_symb_nb_timeout
- 274 0088 00000000 		.word	ral_lr11xx_set_flrc_mod_params
- 275 008c 00000000 		.word	ral_lr11xx_set_flrc_pkt_params
- 276 0090 00000000 		.word	ral_lr11xx_get_gfsk_rx_pkt_status
- 277 0094 00000000 		.word	ral_lr11xx_get_lora_rx_pkt_status
- 278 0098 00000000 		.word	ral_lr11xx_get_flrc_rx_pkt_status
- 279 009c 00000000 		.word	ral_lr11xx_get_rssi_inst
- 280 00a0 00000000 		.word	ral_lr11xx_get_lora_time_on_air_in_ms
- 281 00a4 00000000 		.word	ral_lr11xx_get_gfsk_time_on_air_in_ms
- 282 00a8 00000000 		.word	ral_lr11xx_get_flrc_time_on_air_in_ms
- 283 00ac 00000000 		.word	ral_lr11xx_set_gfsk_sync_word
- 284 00b0 00000000 		.word	ral_lr11xx_set_lora_sync_word
- 285 00b4 00000000 		.word	ral_lr11xx_set_flrc_sync_word
- 286 00b8 00000000 		.word	ral_lr11xx_set_gfsk_crc_params
- 287 00bc 00000000 		.word	ral_lr11xx_set_flrc_crc_params
- 288 00c0 00000000 		.word	ral_lr11xx_set_gfsk_whitening_seed
- 289 00c4 00000000 		.word	ral_lr11xx_lr_fhss_init
- 290 00c8 00000000 		.word	ral_lr11xx_lr_fhss_build_frame
- 291 00cc 00000000 		.word	ral_lr11xx_lr_fhss_handle_hop
- 292 00d0 00000000 		.word	ral_lr11xx_lr_fhss_handle_tx_done
- 293 00d4 00000000 		.word	ral_lr11xx_lr_fhss_get_time_on_air_in_ms
- 294 00d8 00000000 		.word	ral_lr11xx_lr_fhss_get_hop_sequence_count
- 295 00dc 00000000 		.word	ral_lr11xx_get_lora_rx_pkt_cr_crc
- 296 00e0 00000000 		.word	ral_lr11xx_get_tx_consumption_in_ua
- 297 00e4 00000000 		.word	ral_lr11xx_get_gfsk_rx_consumption_in_ua
- 298 00e8 00000000 		.word	ral_lr11xx_get_lora_rx_consumption_in_ua
- 299 00ec 00000000 		.word	ral_lr11xx_get_random_numbers
- 300 00f0 00000000 		.word	ralf_lr11xx_setup_gfsk
- 301 00f4 00000000 		.word	ralf_lr11xx_setup_lora
- 302 00f8 00000000 		.word	ralf_lr11xx_setup_flrc
- 303              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/cc2eRfJO.s 			page 7
+ 198 00bc 00000000 		.word	ral_lr11xx_set_flrc_crc_params
+ 199 00c0 00000000 		.word	ral_lr11xx_set_gfsk_whitening_seed
+ 200 00c4 00000000 		.word	ral_lr11xx_lr_fhss_init
+ 201 00c8 00000000 		.word	ral_lr11xx_lr_fhss_build_frame
+ 202 00cc 00000000 		.word	ral_lr11xx_lr_fhss_handle_hop
+ 203 00d0 00000000 		.word	ral_lr11xx_lr_fhss_handle_tx_done
+ 204 00d4 00000000 		.word	ral_lr11xx_lr_fhss_get_time_on_air_in_ms
+ 205 00d8 00000000 		.word	ral_lr11xx_lr_fhss_get_hop_sequence_count
+ 206 00dc 00000000 		.word	ral_lr11xx_get_lora_rx_pkt_cr_crc
+ 207 00e0 00000000 		.word	ral_lr11xx_get_tx_consumption_in_ua
+ 208 00e4 00000000 		.word	ral_lr11xx_get_gfsk_rx_consumption_in_ua
+ 209 00e8 00000000 		.word	ral_lr11xx_get_lora_rx_consumption_in_ua
+ 210 00ec 00000000 		.word	ral_lr11xx_get_random_numbers
+ 211 00f0 00000000 		.word	ralf_lr11xx_setup_gfsk
+ 212 00f4 00000000 		.word	ralf_lr11xx_setup_lora
+ 213 00f8 00000000 		.word	ralf_lr11xx_setup_flrc
+ 214              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccJi1W18.s 			page 6
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 main.c
-     /tmp/cc2eRfJO.s:12     .text.get_event:0000000000000000 $t
-     /tmp/cc2eRfJO.s:19     .text.get_event:0000000000000000 get_event
-     /tmp/cc2eRfJO.s:30     .text.periodic_timer_cb:0000000000000000 $t
-     /tmp/cc2eRfJO.s:36     .text.periodic_timer_cb:0000000000000000 periodic_timer_cb
-     /tmp/cc2eRfJO.s:49     .text.periodic_timer_cb:0000000000000010 $d
-     /tmp/cc2eRfJO.s:73     .text.startup.main:0000000000000000 $t
-     /tmp/cc2eRfJO.s:80     .text.startup.main:0000000000000000 main
-     /tmp/cc2eRfJO.s:193    .text.startup.main:00000000000000f4 $d
-     /tmp/cc2eRfJO.s:239    .rodata.modem_radio:0000000000000000 modem_radio
-     /tmp/cc2eRfJO.s:215    .bss.link_check_attempts:0000000000000000 link_check_attempts
-     /tmp/cc2eRfJO.s:228    .bss.txdone_counter:0000000000000000 txdone_counter
-     /tmp/cc2eRfJO.s:212    .bss.link_check_attempts:0000000000000000 $d
-     /tmp/cc2eRfJO.s:218    .bss.periodic_timer:0000000000000000 $d
-     /tmp/cc2eRfJO.s:222    .bss.periodic_timer:0000000000000000 periodic_timer
-     /tmp/cc2eRfJO.s:225    .bss.txdone_counter:0000000000000000 $d
-     /tmp/cc2eRfJO.s:233    .bss.user_button_is_press:0000000000000000 user_button_is_press
-     /tmp/cc2eRfJO.s:234    .bss.user_button_is_press:0000000000000000 $d
-     /tmp/cc2eRfJO.s:236    .rodata.modem_radio:0000000000000000 $d
+     /tmp/ccJi1W18.s:32     .text.startup.main:0000000000000000 $t
+     /tmp/ccJi1W18.s:40     .text.startup.main:0000000000000000 main
+     /tmp/ccJi1W18.s:135    .text.startup.main:00000000000000c4 $d
+     /tmp/ccJi1W18.s:150    .rodata.modem_radio:0000000000000000 modem_radio
+     /tmp/ccJi1W18.s:147    .rodata.modem_radio:0000000000000000 $d
 
 UNDEFINED SYMBOLS
-hal_trace_print_var
-TimerStart
 hal_mcu_disable_irq
 hal_mcu_init
-smtc_modem_init
-smtc_modem_get_modem_version
+hal_trace_print_var
 hal_mcu_enable_irq
-settings_init
-TimerInit
-TimerSetValue
-TimerSetContext
 lr11xx_wifi_scan
 hal_mcu_delay_ms
 lr11xx_wifi_get_nb_results
@@ -406,9 +298,6 @@ ral_lr11xx_cal_img
 ral_lr11xx_set_tx_cfg
 ral_lr11xx_set_pkt_payload
 ral_lr11xx_get_pkt_payload
-ARM GAS  /tmp/cc2eRfJO.s 			page 8
-
-
 ral_lr11xx_get_irq_status
 ral_lr11xx_clear_irq_status
 ral_lr11xx_get_and_clear_irq_status
@@ -429,6 +318,9 @@ ral_lr11xx_get_lora_rx_pkt_status
 ral_lr11xx_get_flrc_rx_pkt_status
 ral_lr11xx_get_rssi_inst
 ral_lr11xx_get_lora_time_on_air_in_ms
+ARM GAS  /tmp/ccJi1W18.s 			page 7
+
+
 ral_lr11xx_get_gfsk_time_on_air_in_ms
 ral_lr11xx_get_flrc_time_on_air_in_ms
 ral_lr11xx_set_gfsk_sync_word

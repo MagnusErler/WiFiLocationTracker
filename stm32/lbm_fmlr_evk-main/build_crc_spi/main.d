@@ -58,12 +58,7 @@ build_crc_spi/main.o: application/main.c \
  lbm/smtc_modem_core/radio_drivers/lr11xx_driver/src/lr11xx_types.h \
  lbm/smtc_modem_core/radio_drivers/lr11xx_driver/src/lr11xx_wifi_types.h \
  lbm/smtc_modem_core/radio_drivers/lr11xx_driver/src/lr11xx_system_types.h \
- lbm/smtc_modem_core/radio_drivers/lr11xx_driver/src/lr11xx_gnss.h \
- lbm/smtc_modem_core/radio_drivers/lr11xx_driver/src/lr11xx_gnss_types.h \
- bsp_l0/common/settings.h extensions/drivers/led/led.h \
- extensions/drivers/common/timer.h extensions/drivers/button/button.h \
- extensions/drivers/sht3x/sht3x.h bsp_l0/smtc_hal/smtc_hal_i2c.h \
- extensions/drivers/lis2dw/lis2dw.h
+ bsp_l0/common/settings.h
 lbm/smtc_modem_api/smtc_modem_api.h:
 lbm/smtc_modem_api/smtc_modem_utilities.h:
 lbm/smtc_modem_api/smtc_modem_api.h:
@@ -127,12 +122,4 @@ lbm/smtc_modem_core/radio_drivers/lr11xx_driver/src/lr11xx_regmem.h:
 lbm/smtc_modem_core/radio_drivers/lr11xx_driver/src/lr11xx_types.h:
 lbm/smtc_modem_core/radio_drivers/lr11xx_driver/src/lr11xx_wifi_types.h:
 lbm/smtc_modem_core/radio_drivers/lr11xx_driver/src/lr11xx_system_types.h:
-lbm/smtc_modem_core/radio_drivers/lr11xx_driver/src/lr11xx_gnss.h:
-lbm/smtc_modem_core/radio_drivers/lr11xx_driver/src/lr11xx_gnss_types.h:
 bsp_l0/common/settings.h:
-extensions/drivers/led/led.h:
-extensions/drivers/common/timer.h:
-extensions/drivers/button/button.h:
-extensions/drivers/sht3x/sht3x.h:
-bsp_l0/smtc_hal/smtc_hal_i2c.h:
-extensions/drivers/lis2dw/lis2dw.h:

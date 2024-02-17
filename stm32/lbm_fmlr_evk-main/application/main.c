@@ -13,32 +13,15 @@
 
 #include "ralf_lr11xx.h"
 #include "lr11xx_wifi.h"
-#include "lr11xx_gnss.h"
 
 #include "string.h"
 
 #include "settings.h"
-#include "led.h"
-#include "button.h"
-#include "sht3x.h"
-#include "lis2dw.h"
 /*
  * -----------------------------------------------------------------------------
  * --- PRIVATE CONSTANTS -------------------------------------------------------
  */
 
-#define DEFAULT_UL_PORT         7
-#define DEFAULT_DL_PORT         100
-
-#define PERIODIC_TIMER_PERIOD 20000
-
-#define LINK_CHECK_RATIO_THRESHOLD 50
-#define LINK_CHECK_ATTEMPTS_THRESHOLD 10
-
-/**
- * Stack id value (multistacks modem is not yet available)
- */
-#define STACK_ID 0
 
 const ralf_t modem_radio = RALF_LR11XX_INSTANTIATE( NULL );
 #define RADIO   "LR11XX"
@@ -52,33 +35,13 @@ const ralf_t modem_radio = RALF_LR11XX_INSTANTIATE( NULL );
  * -----------------------------------------------------------------------------
  * --- PRIVATE VARIABLES -------------------------------------------------------
  */
-static volatile bool user_button_is_press = false;  // Flag for button status
-static bool          periodic_message_flag;
-static uint8_t       rx_payload[255]      = { 0 };  // Buffer for rx payload
-static uint8_t       rx_payload_size      = 0;      // Size of the payload in the rx_payload buffer
-extern settings_t    settings;
-uint32_t txdone_counter = 0;
-uint32_t link_check_attempts = 0;
-static LedHandle_t led_fmlr, led_r, led_g, led_b;
-static ButtonHandle_t button_handle;
-static uint32_t user_button_state, tx_pending;
-static int32_t  temp, rh;
-static uint8_t wifi_count, gnss_count;
-static int16_t acc_axes[3];
+
+static uint8_t wifi_count;
 /*
  * -----------------------------------------------------------------------------
  * --- PRIVATE FUNCTIONS DECLARATION -------------------------------------------
  */
-static void get_event( void );
 static void wifi_scan( void );
-static void init_func();
-
-static TimerEvent_t periodic_timer;
-static void periodic_timer_cb( void* context ) {
-    SMTC_HAL_TRACE_PRINTF( "periodic_timer_cb\r\n" );
-    periodic_message_flag = true;
-    TimerStart( &periodic_timer );
-}
 
 /*
  * -----------------------------------------------------------------------------
@@ -98,23 +61,7 @@ int main( void ) {
     hal_mcu_init( );
     SMTC_HAL_TRACE_PRINTF("_______________________________________________________________________________\r\n");
 
-    // Init the modem and use get_event as event callback, please note that the callback will be
-    // called immediately after the first call to smtc_modem_run_engine because of the reset detection
-//    SMTC_HAL_TRACE_PRINTF("calling: smtc_modem_init\n");
-    smtc_modem_init( &modem_radio, &get_event );
-    smtc_modem_version_t version;
-    smtc_modem_get_modem_version( &version );
-
     hal_mcu_enable_irq( );
-    init_func();
-
-
-
-    //periodic timer example
-    TimerInit( &periodic_timer, &periodic_timer_cb );
-    TimerSetValue( &periodic_timer, PERIODIC_TIMER_PERIOD );
-    TimerSetContext( &periodic_timer, NULL );
-    TimerStart(&periodic_timer);
 
     while( 1 ) {
         wifi_scan();
@@ -127,16 +74,6 @@ int main( void ) {
  * -----------------------------------------------------------------------------
  * --- PRIVATE FUNCTIONS DEFINITION --------------------------------------------
  */
-
-/**
- * @brief User callback for modem event
- *
- *  This callback is called every time an event ( see smtc_modem_event_t ) appears in the modem.
- *  Several events may have to be read from the modem when this callback is called.
- */
-static void get_event( void ) {
-    
-}
 
 /**
  * @brief Wi-Fi scanning function
@@ -176,8 +113,4 @@ static void wifi_scan( void ) {
 
     wifi_counter = nb_results;
     wifi_count = nb_results;
-}
-
-static void init_func() {
-    settings_init();
 }
