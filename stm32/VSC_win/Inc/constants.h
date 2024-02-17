@@ -144,17 +144,6 @@ typedef enum
 } lr1110_api_group_id_t;
 
 /*!
- * @brief LR1110 modem bootloader version structure
- */
-typedef struct lr1110_bootloader_version_s1
-{
-    uint8_t hw;         //<! Hardware verion
-    uint8_t type;       //!< Type version
-    uint8_t fw_major;   //!< Firmware major version
-    uint8_t fw_minor;   //!< Firmware minor version
-} lr1110_bootloader_version_t1;
-
-/*!
  * @brief TCXO supply voltage values
  */
 typedef enum
