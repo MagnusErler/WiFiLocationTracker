@@ -43,7 +43,7 @@ extern "C" {
 
 #include "smtc_hal_options.h"
 #include "smtc_hal_dbg_trace.h"
-#include "smtc_hal_gpio.h"
+//#include "smtc_hal_gpio.h"
 #include "smtc_hal_gpio_pin_names.h"
 #include "smtc_hal_mcu.h"
 #include "smtc_hal_rtc.h"
@@ -56,7 +56,7 @@ extern "C" {
 //#include "smtc_hal_flash.h"
 //magnus #include "smtc_hal_i2c.h"
 
-#include "board-config.h"
+//#include "board-config.h"
 
 /* user peripheral */
 //magnus #include "lis2de12.h"

@@ -221,7 +221,7 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 
-  hal_uart_init( HAL_PRINTF_UART_ID, UART_TX, UART_RX );
+  hal_uart_init( HAL_PRINTF_UART_ID, PA_2, PA_3 );
 
   HAL_DBG_TRACE_MSG("-----------------------------\r\n\r\n");
   resetLR1110();

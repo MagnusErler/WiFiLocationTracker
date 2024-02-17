@@ -35,7 +35,7 @@
 #include "stm32l4xx_ll_gpio.h"
 #include "stm32l4xx_ll_spi.h"
 
-#include "smtc_hal_gpio.h"
+//#include "smtc_hal_gpio.h"
 
 typedef struct configuration
 {
@@ -43,20 +43,20 @@ typedef struct configuration
     uint32_t      pin;
 } gpio_t;
 
-typedef struct hal_gpio_irq_s1
-{
-    gpio_t irq1;
-    void*                context;
-    void ( *callback )( void* context );
-} hal_gpio_irq_t1;
+// typedef struct hal_gpio_irq_s1
+// {
+//     gpio_t irq1;
+//     void*                context;
+//     void ( *callback )( void* context );
+// } hal_gpio_irq_t1;
 
-typedef struct
-{
-    SPI_TypeDef*    spi;
-    gpio_t          nss;
-    gpio_t          reset;
-    hal_gpio_irq_t  event;
-    gpio_t          busy;
-} radio_t;
+// typedef struct
+// {
+//     SPI_TypeDef*    spi;
+//     gpio_t          nss;
+//     gpio_t          reset;
+//     hal_gpio_irq_t  event;
+//     gpio_t          busy;
+// } radio_t;
 
 #endif
