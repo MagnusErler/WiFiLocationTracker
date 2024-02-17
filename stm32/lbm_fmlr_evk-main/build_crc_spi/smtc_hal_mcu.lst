@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccNPiwx7.s 			page 1
+ARM GAS  /tmp/cc5omehg.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccNPiwx7.s 			page 1
   56 0032 BB68     		ldr	r3, [r7, #8]
   57 0034 9A42     		cmp	r2, r3
   58 0036 F7D3     		bcc	.L3
-ARM GAS  /tmp/ccNPiwx7.s 			page 2
+ARM GAS  /tmp/cc5omehg.s 			page 2
 
 
   59 0038 C046     		nop
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccNPiwx7.s 			page 1
  118              		.global	hal_mcu_disable_irq
  119              		.syntax unified
  120              		.code	16
-ARM GAS  /tmp/ccNPiwx7.s 			page 3
+ARM GAS  /tmp/cc5omehg.s 			page 3
 
 
  121              		.thumb_func
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccNPiwx7.s 			page 1
  180 0006 034B     		ldr	r3, .L10
  181 0008 034A     		ldr	r2, .L10+4
  182 000a DA60     		str	r2, [r3, #12]
-ARM GAS  /tmp/ccNPiwx7.s 			page 4
+ARM GAS  /tmp/cc5omehg.s 			page 4
 
 
  183              		.syntax divided
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccNPiwx7.s 			page 1
  239 003c 0123     		movs	r3, #1
  240 003e 5200     		lsls	r2, r2, #1
  241 0040 1092     		str	r2, [sp, #64]
-ARM GAS  /tmp/ccNPiwx7.s 			page 5
+ARM GAS  /tmp/cc5omehg.s 			page 5
 
 
  242 0042 1193     		str	r3, [sp, #68]
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccNPiwx7.s 			page 1
  296 00b8 0B90     		str	r0, [sp, #44]
  297 00ba 06A8     		add	r0, sp, #24
  298 00bc 0895     		str	r5, [sp, #32]
-ARM GAS  /tmp/ccNPiwx7.s 			page 6
+ARM GAS  /tmp/cc5omehg.s 			page 6
 
 
  299 00be 0996     		str	r6, [sp, #36]
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccNPiwx7.s 			page 1
  354              		.thumb_func
  355              		.fpu softvfp
  357              	hal_mcu_set_sleep_for_ms:
-ARM GAS  /tmp/ccNPiwx7.s 			page 7
+ARM GAS  /tmp/cc5omehg.s 			page 7
 
 
  358              		@ args = 0, pretend = 0, frame = 88
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccNPiwx7.s 			page 1
  412 0064 FFF7FEFF 		bl	hal_spi_de_init
  413 0068 2100     		movs	r1, r4
  414 006a 2000     		movs	r0, r4
-ARM GAS  /tmp/ccNPiwx7.s 			page 8
+ARM GAS  /tmp/cc5omehg.s 			page 8
 
 
  415 006c FFF7FEFF 		bl	HAL_PWR_EnterSTOPMode
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccNPiwx7.s 			page 1
  469 00e4 A9E7     		b	.L23
  470              	.L24:
  471 00e6 03A9     		add	r1, sp, #12
-ARM GAS  /tmp/ccNPiwx7.s 			page 9
+ARM GAS  /tmp/cc5omehg.s 			page 9
 
 
  472 00e8 04A8     		add	r0, sp, #16
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccNPiwx7.s 			page 1
  526 0152 0548     		ldr	r0, .L33+12
  527 0154 FFF7FEFF 		bl	TimerStop
  528 0158 5DE7     		b	.L17
-ARM GAS  /tmp/ccNPiwx7.s 			page 10
+ARM GAS  /tmp/cc5omehg.s 			page 10
 
 
  529              	.L34:
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccNPiwx7.s 			page 1
  587              	.L39:
  588 000c 00000000 		.word	.LANCHOR6
  589 0010 00000000 		.word	.LANCHOR2
-ARM GAS  /tmp/ccNPiwx7.s 			page 11
+ARM GAS  /tmp/cc5omehg.s 			page 11
 
 
  591              		.section	.text.hal_mcu_disable_once_low_power_wait,"ax",%progbits
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccNPiwx7.s 			page 1
  650 0008 4042     		rsbs	r0, r0, #0
  651 000a FFF7FEFF 		bl	HAL_NVIC_SetPriority
  652 000e 10BD     		pop	{r4, pc}
-ARM GAS  /tmp/ccNPiwx7.s 			page 12
+ARM GAS  /tmp/cc5omehg.s 			page 12
 
 
  654              		.section	.text.hal_mcu_delay_ms,"ax",%progbits
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccNPiwx7.s 			page 1
  711      523A206D 
  711      63755F70 
  711      616E6963 
-ARM GAS  /tmp/ccNPiwx7.s 			page 13
+ARM GAS  /tmp/cc5omehg.s 			page 13
 
 
  711      3A25730A 
@@ -778,63 +778,63 @@ ARM GAS  /tmp/ccNPiwx7.s 			page 1
  758      656D5F63 
  758      6C6F636B 
  758      5F636F6E 
-ARM GAS  /tmp/ccNPiwx7.s 			page 14
+ARM GAS  /tmp/cc5omehg.s 			page 14
 
 
  758      66696700 
  759              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/ccNPiwx7.s 			page 15
+ARM GAS  /tmp/cc5omehg.s 			page 15
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 smtc_hal_mcu.c
-     /tmp/ccNPiwx7.s:13     .text.hal_mcu_wait_us:0000000000000000 $t
-     /tmp/ccNPiwx7.s:22     .text.hal_mcu_wait_us:0000000000000000 hal_mcu_wait_us
-     /tmp/ccNPiwx7.s:67     .text.hal_mcu_critical_section_begin:0000000000000000 $t
-     /tmp/ccNPiwx7.s:74     .text.hal_mcu_critical_section_begin:0000000000000000 hal_mcu_critical_section_begin
-     /tmp/ccNPiwx7.s:95     .text.hal_mcu_critical_section_end:0000000000000000 $t
-     /tmp/ccNPiwx7.s:102    .text.hal_mcu_critical_section_end:0000000000000000 hal_mcu_critical_section_end
-     /tmp/ccNPiwx7.s:117    .text.hal_mcu_disable_irq:0000000000000000 $t
-     /tmp/ccNPiwx7.s:124    .text.hal_mcu_disable_irq:0000000000000000 hal_mcu_disable_irq
-     /tmp/ccNPiwx7.s:138    .text.hal_mcu_enable_irq:0000000000000000 $t
-     /tmp/ccNPiwx7.s:145    .text.hal_mcu_enable_irq:0000000000000000 hal_mcu_enable_irq
-     /tmp/ccNPiwx7.s:159    .text.hal_mcu_reset:0000000000000000 $t
-     /tmp/ccNPiwx7.s:166    .text.hal_mcu_reset:0000000000000000 hal_mcu_reset
-     /tmp/ccNPiwx7.s:200    .text.hal_mcu_reset:0000000000000014 $d
-     /tmp/ccNPiwx7.s:204    .text.hal_mcu_init:0000000000000000 $t
-     /tmp/ccNPiwx7.s:211    .text.hal_mcu_init:0000000000000000 hal_mcu_init
-     /tmp/ccNPiwx7.s:344    .text.hal_mcu_init:0000000000000120 $d
-     /tmp/ccNPiwx7.s:350    .text.hal_mcu_set_sleep_for_ms:0000000000000000 $t
-     /tmp/ccNPiwx7.s:357    .text.hal_mcu_set_sleep_for_ms:0000000000000000 hal_mcu_set_sleep_for_ms
-     /tmp/ccNPiwx7.s:532    .text.hal_mcu_set_sleep_for_ms:000000000000015c $d
-     /tmp/ccNPiwx7.s:542    .text.hal_mcu_disable_low_power_wait:0000000000000000 $t
-     /tmp/ccNPiwx7.s:549    .text.hal_mcu_disable_low_power_wait:0000000000000000 hal_mcu_disable_low_power_wait
-     /tmp/ccNPiwx7.s:563    .text.hal_mcu_disable_low_power_wait:000000000000000c $d
-     /tmp/ccNPiwx7.s:567    .text.hal_mcu_enable_low_power_wait:0000000000000000 $t
-     /tmp/ccNPiwx7.s:574    .text.hal_mcu_enable_low_power_wait:0000000000000000 hal_mcu_enable_low_power_wait
-     /tmp/ccNPiwx7.s:588    .text.hal_mcu_enable_low_power_wait:000000000000000c $d
-     /tmp/ccNPiwx7.s:592    .text.hal_mcu_disable_once_low_power_wait:0000000000000000 $t
-     /tmp/ccNPiwx7.s:599    .text.hal_mcu_disable_once_low_power_wait:0000000000000000 hal_mcu_disable_once_low_power_wait
-     /tmp/ccNPiwx7.s:614    .text.hal_mcu_disable_once_low_power_wait:0000000000000010 $d
-     /tmp/ccNPiwx7.s:618    .text.SysTick_Handler:0000000000000000 $t
-     /tmp/ccNPiwx7.s:625    .text.SysTick_Handler:0000000000000000 SysTick_Handler
-     /tmp/ccNPiwx7.s:635    .text.HAL_MspInit:0000000000000000 $t
-     /tmp/ccNPiwx7.s:642    .text.HAL_MspInit:0000000000000000 HAL_MspInit
-     /tmp/ccNPiwx7.s:655    .text.hal_mcu_delay_ms:0000000000000000 $t
-     /tmp/ccNPiwx7.s:662    .text.hal_mcu_delay_ms:0000000000000000 hal_mcu_delay_ms
-     /tmp/ccNPiwx7.s:671    .text.HardFault_Handler:0000000000000000 $t
-     /tmp/ccNPiwx7.s:678    .text.HardFault_Handler:0000000000000000 HardFault_Handler
-     /tmp/ccNPiwx7.s:706    .text.HardFault_Handler:0000000000000034 $d
-     /tmp/ccNPiwx7.s:726    .bss.exit_wait:0000000000000000 exit_wait
-     /tmp/ccNPiwx7.s:727    .bss.exit_wait:0000000000000000 $d
-     /tmp/ccNPiwx7.s:732    .bss.lp_current_mode:0000000000000000 lp_current_mode
-     /tmp/ccNPiwx7.s:733    .bss.lp_current_mode:0000000000000000 $d
-     /tmp/ccNPiwx7.s:735    .bss.wut:0000000000000000 $d
-     /tmp/ccNPiwx7.s:739    .bss.wut:0000000000000000 wut
-     /tmp/ccNPiwx7.s:745    .bss.wut_flag:0000000000000000 wut_flag
-     /tmp/ccNPiwx7.s:746    .bss.wut_flag:0000000000000000 $d
-     /tmp/ccNPiwx7.s:751    .rodata.__func__.0:0000000000000000 __func__.0
-     /tmp/ccNPiwx7.s:757    .rodata.__func__.1:0000000000000000 __func__.1
+     /tmp/cc5omehg.s:13     .text.hal_mcu_wait_us:0000000000000000 $t
+     /tmp/cc5omehg.s:22     .text.hal_mcu_wait_us:0000000000000000 hal_mcu_wait_us
+     /tmp/cc5omehg.s:67     .text.hal_mcu_critical_section_begin:0000000000000000 $t
+     /tmp/cc5omehg.s:74     .text.hal_mcu_critical_section_begin:0000000000000000 hal_mcu_critical_section_begin
+     /tmp/cc5omehg.s:95     .text.hal_mcu_critical_section_end:0000000000000000 $t
+     /tmp/cc5omehg.s:102    .text.hal_mcu_critical_section_end:0000000000000000 hal_mcu_critical_section_end
+     /tmp/cc5omehg.s:117    .text.hal_mcu_disable_irq:0000000000000000 $t
+     /tmp/cc5omehg.s:124    .text.hal_mcu_disable_irq:0000000000000000 hal_mcu_disable_irq
+     /tmp/cc5omehg.s:138    .text.hal_mcu_enable_irq:0000000000000000 $t
+     /tmp/cc5omehg.s:145    .text.hal_mcu_enable_irq:0000000000000000 hal_mcu_enable_irq
+     /tmp/cc5omehg.s:159    .text.hal_mcu_reset:0000000000000000 $t
+     /tmp/cc5omehg.s:166    .text.hal_mcu_reset:0000000000000000 hal_mcu_reset
+     /tmp/cc5omehg.s:200    .text.hal_mcu_reset:0000000000000014 $d
+     /tmp/cc5omehg.s:204    .text.hal_mcu_init:0000000000000000 $t
+     /tmp/cc5omehg.s:211    .text.hal_mcu_init:0000000000000000 hal_mcu_init
+     /tmp/cc5omehg.s:344    .text.hal_mcu_init:0000000000000120 $d
+     /tmp/cc5omehg.s:350    .text.hal_mcu_set_sleep_for_ms:0000000000000000 $t
+     /tmp/cc5omehg.s:357    .text.hal_mcu_set_sleep_for_ms:0000000000000000 hal_mcu_set_sleep_for_ms
+     /tmp/cc5omehg.s:532    .text.hal_mcu_set_sleep_for_ms:000000000000015c $d
+     /tmp/cc5omehg.s:542    .text.hal_mcu_disable_low_power_wait:0000000000000000 $t
+     /tmp/cc5omehg.s:549    .text.hal_mcu_disable_low_power_wait:0000000000000000 hal_mcu_disable_low_power_wait
+     /tmp/cc5omehg.s:563    .text.hal_mcu_disable_low_power_wait:000000000000000c $d
+     /tmp/cc5omehg.s:567    .text.hal_mcu_enable_low_power_wait:0000000000000000 $t
+     /tmp/cc5omehg.s:574    .text.hal_mcu_enable_low_power_wait:0000000000000000 hal_mcu_enable_low_power_wait
+     /tmp/cc5omehg.s:588    .text.hal_mcu_enable_low_power_wait:000000000000000c $d
+     /tmp/cc5omehg.s:592    .text.hal_mcu_disable_once_low_power_wait:0000000000000000 $t
+     /tmp/cc5omehg.s:599    .text.hal_mcu_disable_once_low_power_wait:0000000000000000 hal_mcu_disable_once_low_power_wait
+     /tmp/cc5omehg.s:614    .text.hal_mcu_disable_once_low_power_wait:0000000000000010 $d
+     /tmp/cc5omehg.s:618    .text.SysTick_Handler:0000000000000000 $t
+     /tmp/cc5omehg.s:625    .text.SysTick_Handler:0000000000000000 SysTick_Handler
+     /tmp/cc5omehg.s:635    .text.HAL_MspInit:0000000000000000 $t
+     /tmp/cc5omehg.s:642    .text.HAL_MspInit:0000000000000000 HAL_MspInit
+     /tmp/cc5omehg.s:655    .text.hal_mcu_delay_ms:0000000000000000 $t
+     /tmp/cc5omehg.s:662    .text.hal_mcu_delay_ms:0000000000000000 hal_mcu_delay_ms
+     /tmp/cc5omehg.s:671    .text.HardFault_Handler:0000000000000000 $t
+     /tmp/cc5omehg.s:678    .text.HardFault_Handler:0000000000000000 HardFault_Handler
+     /tmp/cc5omehg.s:706    .text.HardFault_Handler:0000000000000034 $d
+     /tmp/cc5omehg.s:726    .bss.exit_wait:0000000000000000 exit_wait
+     /tmp/cc5omehg.s:727    .bss.exit_wait:0000000000000000 $d
+     /tmp/cc5omehg.s:732    .bss.lp_current_mode:0000000000000000 lp_current_mode
+     /tmp/cc5omehg.s:733    .bss.lp_current_mode:0000000000000000 $d
+     /tmp/cc5omehg.s:735    .bss.wut:0000000000000000 $d
+     /tmp/cc5omehg.s:739    .bss.wut:0000000000000000 wut
+     /tmp/cc5omehg.s:745    .bss.wut_flag:0000000000000000 wut_flag
+     /tmp/cc5omehg.s:746    .bss.wut_flag:0000000000000000 $d
+     /tmp/cc5omehg.s:751    .rodata.__func__.0:0000000000000000 __func__.0
+     /tmp/cc5omehg.s:757    .rodata.__func__.1:0000000000000000 __func__.1
 
 UNDEFINED SYMBOLS
 __aeabi_idiv
@@ -843,7 +843,7 @@ memset
 HAL_PWR_EnableBkUpAccess
 HAL_RCC_OscConfig
 hal_trace_print_var
-ARM GAS  /tmp/ccNPiwx7.s 			page 16
+ARM GAS  /tmp/cc5omehg.s 			page 16
 
 
 HAL_RCC_ClockConfig

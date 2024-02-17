@@ -1694,48 +1694,6 @@ Discarded input sections
  .text          0x0000000000000000        0x0 lbm/build/basic_modem.a(lr11xx_wifi.o)
  .data          0x0000000000000000        0x0 lbm/build/basic_modem.a(lr11xx_wifi.o)
  .bss           0x0000000000000000        0x0 lbm/build/basic_modem.a(lr11xx_wifi.o)
- .text.lr11xx_wifi_search_country_code
-                0x0000000000000000       0x38 lbm/build/basic_modem.a(lr11xx_wifi.o)
- .text.lr11xx_wifi_scan_time_limit
-                0x0000000000000000       0x46 lbm/build/basic_modem.a(lr11xx_wifi.o)
- .text.lr11xx_wifi_search_country_code_time_limit
-                0x0000000000000000       0x34 lbm/build/basic_modem.a(lr11xx_wifi.o)
- .text.lr11xx_wifi_read_basic_complete_results
-                0x0000000000000000       0x40 lbm/build/basic_modem.a(lr11xx_wifi.o)
- .text.lr11xx_wifi_read_basic_mac_type_channel_results
-                0x0000000000000000       0x34 lbm/build/basic_modem.a(lr11xx_wifi.o)
- .text.lr11xx_wifi_reset_cumulative_timing
-                0x0000000000000000       0x1c lbm/build/basic_modem.a(lr11xx_wifi.o)
- .text.lr11xx_wifi_read_cumulative_timing
-                0x0000000000000000       0x90 lbm/build/basic_modem.a(lr11xx_wifi.o)
- .rodata.lr11xx_wifi_get_nb_country_code_results.str1.1
-                0x0000000000000000        0x1 lbm/build/basic_modem.a(lr11xx_wifi.o)
- .text.lr11xx_wifi_get_nb_country_code_results
-                0x0000000000000000       0x34 lbm/build/basic_modem.a(lr11xx_wifi.o)
- .text.lr11xx_wifi_read_country_code_results
-                0x0000000000000000       0x7e lbm/build/basic_modem.a(lr11xx_wifi.o)
- .text.lr11xx_wifi_cfg_timestamp_ap_phone
-                0x0000000000000000       0x2a lbm/build/basic_modem.a(lr11xx_wifi.o)
- .text.lr11xx_wifi_read_version
-                0x0000000000000000       0x30 lbm/build/basic_modem.a(lr11xx_wifi.o)
- .text.lr11xx_wifi_get_nb_results_max_per_chunk
-                0x0000000000000000        0x4 lbm/build/basic_modem.a(lr11xx_wifi.o)
- .text.lr11xx_wifi_parse_channel_info
-                0x0000000000000000       0x18 lbm/build/basic_modem.a(lr11xx_wifi.o)
- .text.lr11xx_wifi_extract_channel_from_info_byte
-                0x0000000000000000        0x6 lbm/build/basic_modem.a(lr11xx_wifi.o)
- .text.lr11xx_wifi_parse_frame_type_info
-                0x0000000000000000       0x1c lbm/build/basic_modem.a(lr11xx_wifi.o)
- .text.lr11xx_wifi_parse_data_rate_info
-                0x0000000000000000        0xc lbm/build/basic_modem.a(lr11xx_wifi.o)
- .text.lr11xx_wifi_extract_signal_type_from_data_rate_info
-                0x0000000000000000        0x6 lbm/build/basic_modem.a(lr11xx_wifi.o)
- .text.lr11xx_wifi_get_consumption
-                0x0000000000000000       0x50 lbm/build/basic_modem.a(lr11xx_wifi.o)
- .text.lr11xx_wifi_is_well_formed_utf8_byte_sequence
-                0x0000000000000000      0x10e lbm/build/basic_modem.a(lr11xx_wifi.o)
- .text.lr11xx_wifi_are_scan_mode_result_format_compatible
-                0x0000000000000000       0x28 lbm/build/basic_modem.a(lr11xx_wifi.o)
  .text          0x0000000000000000        0x0 lbm/build/basic_modem.a(ral_lr11xx.o)
  .data          0x0000000000000000        0x0 lbm/build/basic_modem.a(ral_lr11xx.o)
  .bss           0x0000000000000000        0x0 lbm/build/basic_modem.a(ral_lr11xx.o)
@@ -5583,7 +5541,7 @@ LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtn.o
                 0x0000000008000000                g_pfnVectors
                 0x00000000080000c0                . = ALIGN (0x4)
 
-.text           0x00000000080000c0     0x458c
+.text           0x00000000080000c0     0x4488
                 0x00000000080000c0                . = ALIGN (0x4)
  *(.text)
  .text          0x00000000080000c0       0x98 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtbegin.o
@@ -6022,143 +5980,134 @@ LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtn.o
                 0x0000000008004254                USART1_IRQHandler
  .text.uint16_from_array
                 0x0000000008004256       0x10 lbm/build/basic_modem.a(lr11xx_wifi.o)
- .text.uint64_from_array
-                0x0000000008004266       0x68 lbm/build/basic_modem.a(lr11xx_wifi.o)
  .text.lr11xx_wifi_read_mac_address_from_buffer
-                0x00000000080042ce       0x10 lbm/build/basic_modem.a(lr11xx_wifi.o)
- *fill*         0x00000000080042de        0x2 
- .text.fetch_and_aggregate_all_results
-                0x00000000080042e0      0x2ac lbm/build/basic_modem.a(lr11xx_wifi.o)
+                0x0000000008004266       0x10 lbm/build/basic_modem.a(lr11xx_wifi.o)
  .text.lr11xx_wifi_scan
-                0x000000000800458c       0x4a lbm/build/basic_modem.a(lr11xx_wifi.o)
-                0x000000000800458c                lr11xx_wifi_scan
- *fill*         0x00000000080045d6        0x2 
+                0x0000000008004276       0x4a lbm/build/basic_modem.a(lr11xx_wifi.o)
+                0x0000000008004276                lr11xx_wifi_scan
  .text.lr11xx_wifi_get_nb_results
-                0x00000000080045d8       0x1c lbm/build/basic_modem.a(lr11xx_wifi.o)
-                0x00000000080045d8                lr11xx_wifi_get_nb_results
+                0x00000000080042c0       0x1c lbm/build/basic_modem.a(lr11xx_wifi.o)
+                0x00000000080042c0                lr11xx_wifi_get_nb_results
  .text.lr11xx_wifi_read_extended_full_results
-                0x00000000080045f4       0x40 lbm/build/basic_modem.a(lr11xx_wifi.o)
-                0x00000000080045f4                lr11xx_wifi_read_extended_full_results
+                0x00000000080042dc      0x254 lbm/build/basic_modem.a(lr11xx_wifi.o)
+                0x00000000080042dc                lr11xx_wifi_read_extended_full_results
  *(.glue_7)
- .glue_7        0x0000000008004634        0x0 linker stubs
+ .glue_7        0x0000000008004530        0x0 linker stubs
  *(.glue_7t)
- .glue_7t       0x0000000008004634        0x0 linker stubs
+ .glue_7t       0x0000000008004530        0x0 linker stubs
  *(.eh_frame)
- .eh_frame      0x0000000008004634        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtbegin.o
+ .eh_frame      0x0000000008004530        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtbegin.o
  *(.init)
- .init          0x0000000008004634        0x4 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crti.o
-                0x0000000008004634                _init
- .init          0x0000000008004638        0x8 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtn.o
+ .init          0x0000000008004530        0x4 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crti.o
+                0x0000000008004530                _init
+ .init          0x0000000008004534        0x8 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtn.o
  *(.fini)
- .fini          0x0000000008004640        0x4 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crti.o
-                0x0000000008004640                _fini
- .fini          0x0000000008004644        0x8 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtn.o
-                0x000000000800464c                . = ALIGN (0x4)
-                0x000000000800464c                _etext = .
+ .fini          0x000000000800453c        0x4 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crti.o
+                0x000000000800453c                _fini
+ .fini          0x0000000008004540        0x8 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtn.o
+                0x0000000008004548                . = ALIGN (0x4)
+                0x0000000008004548                _etext = .
 
-.vfp11_veneer   0x000000000800464c        0x0
- .vfp11_veneer  0x000000000800464c        0x0 linker stubs
+.vfp11_veneer   0x0000000008004548        0x0
+ .vfp11_veneer  0x0000000008004548        0x0 linker stubs
 
-.v4_bx          0x000000000800464c        0x0
- .v4_bx         0x000000000800464c        0x0 linker stubs
+.v4_bx          0x0000000008004548        0x0
+ .v4_bx         0x0000000008004548        0x0 linker stubs
 
-.iplt           0x000000000800464c        0x0
- .iplt          0x000000000800464c        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtbegin.o
+.iplt           0x0000000008004548        0x0
+ .iplt          0x0000000008004548        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtbegin.o
 
-.rodata         0x000000000800464c      0x3a8
-                0x000000000800464c                . = ALIGN (0x4)
+.rodata         0x0000000008004548      0x3a4
+                0x0000000008004548                . = ALIGN (0x4)
  *(.rodata)
- .rodata        0x000000000800464c       0x1c build_crc_spi/smtc_hal_gpio.o
- .rodata        0x0000000008004668       0x56 build_crc_spi/smtc_hal_mcu.o
- *fill*         0x00000000080046be        0x2 
- .rodata        0x00000000080046c0       0x84 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf_i.o)
- .rodata        0x0000000008004744       0x60 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
-                0x0000000008004744                __sf_fake_stderr
-                0x0000000008004764                __sf_fake_stdout
-                0x0000000008004784                __sf_fake_stdin
+ .rodata        0x0000000008004548       0x1c build_crc_spi/smtc_hal_gpio.o
+ .rodata        0x0000000008004564       0x56 build_crc_spi/smtc_hal_mcu.o
+ *fill*         0x00000000080045ba        0x2 
+ .rodata        0x00000000080045bc       0x84 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf_i.o)
+ .rodata        0x0000000008004640       0x60 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
+                0x0000000008004640                __sf_fake_stderr
+                0x0000000008004660                __sf_fake_stdout
+                0x0000000008004680                __sf_fake_stdin
  *(.rodata*)
  .rodata.main.str1.1
-                0x00000000080047a4      0x120 build_crc_spi/main.o
+                0x00000000080046a0      0x120 build_crc_spi/main.o
  .rodata.CSWTCH.59
-                0x00000000080048c4        0x3 build_crc_spi/stm32l0xx_hal_uart.o
+                0x00000000080047c0        0x3 build_crc_spi/stm32l0xx_hal_uart.o
  .rodata.CSWTCH.60
-                0x00000000080048c7        0xd build_crc_spi/stm32l0xx_hal_uart.o
+                0x00000000080047c3        0xd build_crc_spi/stm32l0xx_hal_uart.o
  .rodata.AHBPrescTable
-                0x00000000080048d4       0x10 build_crc_spi/system_stm32l0xx.o
-                0x00000000080048d4                AHBPrescTable
+                0x00000000080047d0       0x10 build_crc_spi/system_stm32l0xx.o
+                0x00000000080047d0                AHBPrescTable
  .rodata.APBPrescTable
-                0x00000000080048e4        0x8 build_crc_spi/system_stm32l0xx.o
-                0x00000000080048e4                APBPrescTable
+                0x00000000080047e0        0x8 build_crc_spi/system_stm32l0xx.o
+                0x00000000080047e0                APBPrescTable
  .rodata.PLLMulTable
-                0x00000000080048ec        0x9 build_crc_spi/system_stm32l0xx.o
-                0x00000000080048ec                PLLMulTable
+                0x00000000080047e8        0x9 build_crc_spi/system_stm32l0xx.o
+                0x00000000080047e8                PLLMulTable
  .rodata.__func__.1
-                0x00000000080048f5       0x14 build_crc_spi/smtc_hal_mcu.o
+                0x00000000080047f1       0x14 build_crc_spi/smtc_hal_mcu.o
  .rodata.hal_rtc_init.str1.1
-                0x0000000008004909       0x20 build_crc_spi/smtc_hal_rtc.o
+                0x0000000008004805       0x20 build_crc_spi/smtc_hal_rtc.o
                                          0x21 (size before relaxing)
  .rodata.__func__.0
-                0x0000000008004929        0xd build_crc_spi/smtc_hal_rtc.o
+                0x0000000008004825        0xd build_crc_spi/smtc_hal_rtc.o
  .rodata.hal_spi_init.str1.1
-                0x0000000008004936       0x21 build_crc_spi/smtc_hal_spi.o
+                0x0000000008004832       0x21 build_crc_spi/smtc_hal_spi.o
  .rodata.__func__.1
-                0x0000000008004936       0x10 build_crc_spi/smtc_hal_spi.o
+                0x0000000008004832       0x10 build_crc_spi/smtc_hal_spi.o
  .rodata.__func__.2
-                0x0000000008004946        0xd build_crc_spi/smtc_hal_spi.o
+                0x0000000008004842        0xd build_crc_spi/smtc_hal_spi.o
  .rodata.uart1_init.str1.1
-                0x0000000008004953       0x21 build_crc_spi/smtc_hal_uart.o
+                0x000000000800484f       0x21 build_crc_spi/smtc_hal_uart.o
  .rodata.__func__.0
-                0x0000000008004953       0x11 build_crc_spi/smtc_hal_uart.o
+                0x000000000800484f       0x11 build_crc_spi/smtc_hal_uart.o
  .rodata.__func__.2
-                0x0000000008004964        0xb build_crc_spi/smtc_hal_uart.o
+                0x0000000008004860        0xb build_crc_spi/smtc_hal_uart.o
  .rodata.lr11xx_hal_read.str1.1
-                0x000000000800496f       0x43 build_crc_spi/lr11xx_hal.o
+                0x000000000800486b       0x43 build_crc_spi/lr11xx_hal.o
                                          0x44 (size before relaxing)
- .rodata.CSWTCH.15
-                0x00000000080049b2        0x3 lbm/build/basic_modem.a(lr11xx_wifi.o)
- .rodata.CSWTCH.17
-                0x00000000080049b5        0x3 lbm/build/basic_modem.a(lr11xx_wifi.o)
+ *fill*         0x00000000080048ae        0x2 
  .rodata.str1.4
-                0x00000000080049b8       0x13 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-svfprintf.o)
- *fill*         0x00000000080049cb        0x1 
+                0x00000000080048b0       0x13 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-svfprintf.o)
+ *fill*         0x00000000080048c3        0x1 
  .rodata.str1.4
-                0x00000000080049cc       0x25 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf_i.o)
-                0x00000000080049f4                . = ALIGN (0x4)
- *fill*         0x00000000080049f1        0x3 
+                0x00000000080048c4       0x25 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf_i.o)
+                0x00000000080048ec                . = ALIGN (0x4)
+ *fill*         0x00000000080048e9        0x3 
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
 
-.ARM            0x00000000080049f4        0x8
-                0x00000000080049f4                __exidx_start = .
+.ARM            0x00000000080048ec        0x8
+                0x00000000080048ec                __exidx_start = .
  *(.ARM.exidx*)
- .ARM.exidx     0x00000000080049f4        0x8 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/libgcc.a(_udivmoddi4.o)
-                0x00000000080049fc                __exidx_end = .
+ .ARM.exidx     0x00000000080048ec        0x8 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/libgcc.a(_udivmoddi4.o)
+                0x00000000080048f4                __exidx_end = .
 
-.rel.dyn        0x00000000080049fc        0x0
- .rel.iplt      0x00000000080049fc        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtbegin.o
+.rel.dyn        0x00000000080048f4        0x0
+ .rel.iplt      0x00000000080048f4        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtbegin.o
 
-.preinit_array  0x00000000080049fc        0x0
-                0x00000000080049fc                PROVIDE (__preinit_array_start = .)
+.preinit_array  0x00000000080048f4        0x0
+                0x00000000080048f4                PROVIDE (__preinit_array_start = .)
  *(.preinit_array*)
-                0x00000000080049fc                PROVIDE (__preinit_array_end = .)
+                0x00000000080048f4                PROVIDE (__preinit_array_end = .)
 
-.init_array     0x00000000080049fc        0x4
-                0x00000000080049fc                PROVIDE (__init_array_start = .)
+.init_array     0x00000000080048f4        0x4
+                0x00000000080048f4                PROVIDE (__init_array_start = .)
  *(SORT_BY_NAME(.init_array.*))
  *(.init_array*)
- .init_array    0x00000000080049fc        0x4 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtbegin.o
-                0x0000000008004a00                PROVIDE (__init_array_end = .)
+ .init_array    0x00000000080048f4        0x4 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtbegin.o
+                0x00000000080048f8                PROVIDE (__init_array_end = .)
 
-.fini_array     0x0000000008004a00        0x4
-                0x0000000008004a00                PROVIDE (__fini_array_start = .)
+.fini_array     0x00000000080048f8        0x4
+                0x00000000080048f8                PROVIDE (__fini_array_start = .)
  *(SORT_BY_NAME(.fini_array.*))
  *(.fini_array*)
- .fini_array    0x0000000008004a00        0x4 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtbegin.o
-                0x0000000008004a04                PROVIDE (__fini_array_end = .)
-                0x0000000008004a04                _sidata = LOADADDR (.data)
+ .fini_array    0x00000000080048f8        0x4 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtbegin.o
+                0x00000000080048fc                PROVIDE (__fini_array_end = .)
+                0x00000000080048fc                _sidata = LOADADDR (.data)
 
-.data           0x0000000020000000      0x134 load address 0x0000000008004a04
+.data           0x0000000020000000      0x134 load address 0x00000000080048fc
                 0x0000000020000000                . = ALIGN (0x4)
                 0x0000000020000000                _sdata = .
  *(.data)
@@ -6184,17 +6133,17 @@ LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtn.o
                 0x0000000020000134                _edata = .
 
 .tm_clone_table
-                0x0000000020000134        0x0 load address 0x0000000008004b38
+                0x0000000020000134        0x0 load address 0x0000000008004a30
  .tm_clone_table
                 0x0000000020000134        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtbegin.o
  .tm_clone_table
                 0x0000000020000134        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtend.o
 
-.igot.plt       0x0000000020000134        0x0 load address 0x0000000008004b38
+.igot.plt       0x0000000020000134        0x0 load address 0x0000000008004a30
  .igot.plt      0x0000000020000134        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtbegin.o
                 0x0000000020000134                . = ALIGN (0x4)
 
-.bss            0x0000000020000138      0x248 load address 0x0000000008004b38
+.bss            0x0000000020000138      0x248 load address 0x0000000008004a30
                 0x0000000020000138                _sbss = .
                 0x0000000020000138                __bss_start__ = _sbss
  *(.bss)
@@ -6232,7 +6181,7 @@ LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtn.o
                 0x0000000020000380                __bss_end__ = _ebss
 
 ._user_heap_stack
-                0x0000000020000380      0x600 load address 0x0000000008004b38
+                0x0000000020000380      0x600 load address 0x0000000008004a30
                 0x0000000020000380                . = ALIGN (0x4)
                 0x0000000020000380                PROVIDE (end = .)
                 [!provide]                        PROVIDE (_end = .)
@@ -7400,7 +7349,6 @@ __aeabi_idiv                                      /usr/lib/gcc/arm-none-eabi/10.
                                                   lbm/build/basic_modem.a(smtc_duty_cycle.o)
                                                   lbm/build/basic_modem.a(smtc_real.o)
                                                   lbm/build/basic_modem.a(rose.o)
-                                                  lbm/build/basic_modem.a(lr11xx_wifi.o)
                                                   build_crc_spi/smtc_hal_mcu.o
                                                   build_crc_spi/smtc_hal_adc.o
                                                   build_crc_spi/system_stm32l0xx.o
@@ -7442,7 +7390,6 @@ __aeabi_uidiv                                     /usr/lib/gcc/arm-none-eabi/10.
                                                   lbm/build/basic_modem.a(lr1mac_utilities.o)
                                                   lbm/build/basic_modem.a(lr1_stack_mac_layer.o)
                                                   lbm/build/basic_modem.a(rose.o)
-                                                  lbm/build/basic_modem.a(lr11xx_wifi.o)
                                                   build_crc_spi/smtc_hal_rtc.o
                                                   build_crc_spi/smtc_hal_adc.o
                                                   build_crc_spi/system_stm32l0xx.o
@@ -7469,7 +7416,6 @@ __aeabi_uidivmod                                  /usr/lib/gcc/arm-none-eabi/10.
                                                   build_crc_spi/smtc_hal_rng.o
                                                   build_crc_spi/smtc_hal_rtc.o
 __aeabi_uldivmod                                  /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/libgcc.a(_aeabi_uldivmod.o)
-                                                  lbm/build/basic_modem.a(lr11xx_wifi.o)
                                                   build_crc_spi/smtc_hal_lp_timer.o
                                                   build_crc_spi/smtc_hal_rtc.o
                                                   build_crc_spi/stm32l0xx_hal_rcc.o
@@ -8610,32 +8556,12 @@ lr11xx_system_set_tcxo_mode                       lbm/build/basic_modem.a(lr11xx
 lr11xx_system_wakeup                              lbm/build/basic_modem.a(lr11xx_system.o)
                                                   lbm/build/basic_modem.a(ral_lr11xx.o)
 lr11xx_system_write_infopage                      lbm/build/basic_modem.a(lr11xx_system.o)
-lr11xx_wifi_are_scan_mode_result_format_compatible lbm/build/basic_modem.a(lr11xx_wifi.o)
-lr11xx_wifi_cfg_timestamp_ap_phone                lbm/build/basic_modem.a(lr11xx_wifi.o)
-lr11xx_wifi_extract_channel_from_info_byte        lbm/build/basic_modem.a(lr11xx_wifi.o)
-lr11xx_wifi_extract_signal_type_from_data_rate_info lbm/build/basic_modem.a(lr11xx_wifi.o)
-lr11xx_wifi_get_consumption                       lbm/build/basic_modem.a(lr11xx_wifi.o)
-lr11xx_wifi_get_nb_country_code_results           lbm/build/basic_modem.a(lr11xx_wifi.o)
 lr11xx_wifi_get_nb_results                        lbm/build/basic_modem.a(lr11xx_wifi.o)
                                                   build_crc_spi/main.o
-lr11xx_wifi_get_nb_results_max_per_chunk          lbm/build/basic_modem.a(lr11xx_wifi.o)
-lr11xx_wifi_is_well_formed_utf8_byte_sequence     lbm/build/basic_modem.a(lr11xx_wifi.o)
-lr11xx_wifi_parse_channel_info                    lbm/build/basic_modem.a(lr11xx_wifi.o)
-lr11xx_wifi_parse_data_rate_info                  lbm/build/basic_modem.a(lr11xx_wifi.o)
-lr11xx_wifi_parse_frame_type_info                 lbm/build/basic_modem.a(lr11xx_wifi.o)
-lr11xx_wifi_read_basic_complete_results           lbm/build/basic_modem.a(lr11xx_wifi.o)
-lr11xx_wifi_read_basic_mac_type_channel_results   lbm/build/basic_modem.a(lr11xx_wifi.o)
-lr11xx_wifi_read_country_code_results             lbm/build/basic_modem.a(lr11xx_wifi.o)
-lr11xx_wifi_read_cumulative_timing                lbm/build/basic_modem.a(lr11xx_wifi.o)
 lr11xx_wifi_read_extended_full_results            lbm/build/basic_modem.a(lr11xx_wifi.o)
                                                   build_crc_spi/main.o
-lr11xx_wifi_read_version                          lbm/build/basic_modem.a(lr11xx_wifi.o)
-lr11xx_wifi_reset_cumulative_timing               lbm/build/basic_modem.a(lr11xx_wifi.o)
 lr11xx_wifi_scan                                  lbm/build/basic_modem.a(lr11xx_wifi.o)
                                                   build_crc_spi/main.o
-lr11xx_wifi_scan_time_limit                       lbm/build/basic_modem.a(lr11xx_wifi.o)
-lr11xx_wifi_search_country_code                   lbm/build/basic_modem.a(lr11xx_wifi.o)
-lr11xx_wifi_search_country_code_time_limit        lbm/build/basic_modem.a(lr11xx_wifi.o)
 lr1_mac_core_get_device_time_invalid_delay_s      lbm/build/basic_modem.a(lr1mac_core.o)
                                                   lbm/build/basic_modem.a(lorawan_api.o)
 lr1_mac_core_get_device_time_req_status           lbm/build/basic_modem.a(lr1mac_core.o)
