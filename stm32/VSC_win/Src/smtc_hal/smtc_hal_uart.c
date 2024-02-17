@@ -40,7 +40,6 @@
 #include "stm32l4xx_hal.h"
 #include "smtc_hal_gpio_pin_names.h"
 #include "smtc_hal_uart.h"
-#include "smtc_hal_mcu.h"
 
 /*
  * -----------------------------------------------------------------------------

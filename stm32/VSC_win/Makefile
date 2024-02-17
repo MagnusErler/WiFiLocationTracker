@@ -59,13 +59,13 @@ Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c \
 Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c \
 Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart_ex.c \
 Src/main.c \
-Src/smtc_hal/smtc_hal_mcu.c \
 Src/smtc_hal/smtc_hal_rtc.c \
 Src/smtc_hal/smtc_hal_uart.c \
 Src/spi.c \
 Src/stm32l4xx_it.c \
 Src/stm32l4xx_hal_msp.c \
-Src/system_stm32l4xx.c
+Src/system_stm32l4xx.c \
+Src/uart.c
 
 # ASM sources
 ASM_SOURCES =  \

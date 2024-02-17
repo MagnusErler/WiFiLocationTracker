@@ -45,7 +45,6 @@ extern "C" {
 #include "smtc_hal_dbg_trace.h"
 //#include "smtc_hal_gpio.h"
 #include "smtc_hal_gpio_pin_names.h"
-#include "smtc_hal_mcu.h"
 #include "smtc_hal_rtc.h"
 //#include "smtc_hal_tmr.h"
 //#include "smtc_hal_tmr_list.h"

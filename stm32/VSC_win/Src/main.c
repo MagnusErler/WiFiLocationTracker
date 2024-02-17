@@ -23,6 +23,7 @@
 /* USER CODE BEGIN Includes */
 
 #include "spi.h"
+#include "uart.h"
 
 #include "smtc_hal.h"
 

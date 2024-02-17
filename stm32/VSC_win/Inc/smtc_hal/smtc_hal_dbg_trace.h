@@ -46,7 +46,7 @@ extern "C" {
 #include <stdbool.h>  // bool type
 
 #include "smtc_hal_options.h"
-#include "smtc_hal_mcu.h"
+#include "uart.h"
 
 /*
  * -----------------------------------------------------------------------------
