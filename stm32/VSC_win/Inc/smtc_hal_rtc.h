@@ -132,20 +132,20 @@ typedef struct hal_rtc_s
  */
 uint32_t hal_rtc_get_time_ms( void );
 
-/*!
- * @brief Set the RTC time reference in ticks
- *
- * @returns time_ref_in_ticks RTC time reference in ticks
- */
-uint32_t hal_rtc_set_time_ref_in_ticks( void );
+// /*!
+//  * @brief Set the RTC time reference in ticks
+//  *
+//  * @returns time_ref_in_ticks RTC time reference in ticks
+//  */
+// uint32_t hal_rtc_set_time_ref_in_ticks( void );
 
-/*!
- * @brief Converts time in ticks to time in ms
- *
- * @param [in] tick Time in timer ticks
- * @returns tick Time in milliseconds
- */
-uint32_t hal_rtc_tick_2_ms( const uint32_t tick );
+// /*!
+//  * @brief Converts time in ticks to time in ms
+//  *
+//  * @param [in] tick Time in timer ticks
+//  * @returns tick Time in milliseconds
+//  */
+// uint32_t hal_rtc_tick_2_ms( const uint32_t tick );
 
 // /*!
 //  * @brief Waits delay milliseconds by polling RTC

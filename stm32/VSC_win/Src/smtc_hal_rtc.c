@@ -173,20 +173,7 @@ uint32_t hal_rtc_get_time_ms( void )
     return seconds * 1000 + milliseconds;
 }
 
-uint32_t hal_rtc_set_time_ref_in_ticks( void )
-{
-    hal_rtc.context.time_ref_in_ticks =
-        ( uint32_t ) rtc_get_timestamp_in_ticks( &hal_rtc.context.calendar_date, &hal_rtc.context.calendar_time );
-    return hal_rtc.context.time_ref_in_ticks;
-}
 
-uint32_t hal_rtc_tick_2_ms( const uint32_t tick )
-{
-    uint32_t seconds    = tick >> N_PREDIV_S;
-    uint32_t local_tick = tick & PREDIV_S;
-
-    return ( uint32_t )( ( seconds * 1000 ) + ( ( local_tick * 1000 ) >> N_PREDIV_S ) );
-}
 
 static uint32_t hal_rtc_get_calendar_time( uint16_t* milliseconds )
 {
@@ -200,7 +187,10 @@ static uint32_t hal_rtc_get_calendar_time( uint16_t* milliseconds )
 
     ticks = ( uint32_t ) timestamp_in_ticks & PREDIV_S;
 
-    *milliseconds = hal_rtc_tick_2_ms( ticks );
+    uint32_t second    = ticks >> N_PREDIV_S;
+    uint32_t local_tick = ticks & PREDIV_S;
+
+    *milliseconds = ( second * 1000 ) + ( ( local_tick * 1000 ) >> N_PREDIV_S );
 
     return seconds;
 }
@@ -241,6 +231,13 @@ static uint64_t rtc_get_timestamp_in_ticks( RTC_DateTypeDef* date, RTC_TimeTypeD
 
     return timestamp_in_ticks;
 }
+
+// uint32_t hal_rtc_set_time_ref_in_ticks( void )
+// {
+//     hal_rtc.context.time_ref_in_ticks =
+//         ( uint32_t ) rtc_get_timestamp_in_ticks( &hal_rtc.context.calendar_date, &hal_rtc.context.calendar_time );
+//     return hal_rtc.context.time_ref_in_ticks;
+// }
 
 // void hal_rtc_init( void )
 // {
