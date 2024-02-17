@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cca7o28J.s 			page 1
+ARM GAS  /tmp/ccyFSiq4.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cca7o28J.s 			page 1
   56 0042 9BB2     		uxth	r3, r3
   57 0044 D943     		mvns	r1, r3
   58 0046 0904     		lsls	r1, r1, #16
-ARM GAS  /tmp/cca7o28J.s 			page 2
+ARM GAS  /tmp/ccyFSiq4.s 			page 2
 
 
   59 0048 0B43     		orrs	r3, r1
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cca7o28J.s 			page 1
  114              		.align	1
  115              		.global	HAL_FLASHEx_OBProgram
  116              		.syntax unified
-ARM GAS  /tmp/cca7o28J.s 			page 3
+ARM GAS  /tmp/ccyFSiq4.s 			page 3
 
 
  117              		.code	16
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cca7o28J.s 			page 1
  172 005c FFF7FEFF 		bl	FLASH_WaitForLastOperation
  173 0060 0028     		cmp	r0, #0
  174 0062 E0D1     		bne	.L35
-ARM GAS  /tmp/cca7o28J.s 			page 4
+ARM GAS  /tmp/ccyFSiq4.s 			page 4
 
 
  175              	.L29:
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cca7o28J.s 			page 1
  229 00d2 DB06     		lsls	r3, r3, #27
  230 00d4 A7D5     		bpl	.L35
  231 00d6 0B4F     		ldr	r7, .L63+4
-ARM GAS  /tmp/cca7o28J.s 			page 5
+ARM GAS  /tmp/ccyFSiq4.s 			page 5
 
 
  232 00d8 0B48     		ldr	r0, .L63+8
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cca7o28J.s 			page 1
  288 001e 7021     		movs	r1, #112
  289 0020 0374     		strb	r3, [r0, #16]
  290 0022 D369     		ldr	r3, [r2, #28]
-ARM GAS  /tmp/cca7o28J.s 			page 6
+ARM GAS  /tmp/ccyFSiq4.s 			page 6
 
 
  291 0024 1B0C     		lsrs	r3, r3, #16
@@ -358,7 +358,7 @@ ARM GAS  /tmp/cca7o28J.s 			page 1
  347 003a 1204     		lsls	r2, r2, #16
  348 003c 1343     		orrs	r3, r2
  349 003e 0348     		ldr	r0, .L81+4
-ARM GAS  /tmp/cca7o28J.s 			page 7
+ARM GAS  /tmp/ccyFSiq4.s 			page 7
 
 
  350 0040 6360     		str	r3, [r4, #4]
@@ -418,7 +418,7 @@ ARM GAS  /tmp/cca7o28J.s 			page 1
  408              		@ args = 0, pretend = 0, frame = 0
  409              		@ frame_needed = 0, uses_anonymous_args = 0
  410 0000 10B5     		push	{r4, lr}
-ARM GAS  /tmp/cca7o28J.s 			page 8
+ARM GAS  /tmp/ccyFSiq4.s 			page 8
 
 
  411 0002 0A48     		ldr	r0, .L88
@@ -478,7 +478,7 @@ ARM GAS  /tmp/cca7o28J.s 			page 1
  467              		@ sp needed
  468 0024 10BD     		pop	{r4, pc}
  469              	.L93:
-ARM GAS  /tmp/cca7o28J.s 			page 9
+ARM GAS  /tmp/ccyFSiq4.s 			page 9
 
 
  470 0026 C046     		.align	2
@@ -538,7 +538,7 @@ ARM GAS  /tmp/cca7o28J.s 			page 1
  527              		.global	HAL_FLASHEx_DATAEEPROM_Lock
  528              		.syntax unified
  529              		.code	16
-ARM GAS  /tmp/cca7o28J.s 			page 10
+ARM GAS  /tmp/ccyFSiq4.s 			page 10
 
 
  530              		.thumb_func
@@ -598,7 +598,7 @@ ARM GAS  /tmp/cca7o28J.s 			page 1
  589              	HAL_FLASHEx_DATAEEPROM_Program:
  590              		@ args = 0, pretend = 0, frame = 0
  591              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  /tmp/cca7o28J.s 			page 11
+ARM GAS  /tmp/ccyFSiq4.s 			page 11
 
 
  592 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
@@ -658,7 +658,7 @@ ARM GAS  /tmp/cca7o28J.s 			page 1
  648              		@ args = 0, pretend = 0, frame = 0
  649              		@ frame_needed = 0, uses_anonymous_args = 0
  650              		@ link register save eliminated.
-ARM GAS  /tmp/cca7o28J.s 			page 12
+ARM GAS  /tmp/ccyFSiq4.s 			page 12
 
 
  651 0000 8023     		movs	r3, #128
@@ -718,7 +718,7 @@ ARM GAS  /tmp/cca7o28J.s 			page 1
  709 0010 2243     		orrs	r2, r4
  710 0012 5A60     		str	r2, [r3, #4]
  711 0014 0822     		movs	r2, #8
-ARM GAS  /tmp/cca7o28J.s 			page 13
+ARM GAS  /tmp/ccyFSiq4.s 			page 13
 
 
  712 0016 5C68     		ldr	r4, [r3, #4]
@@ -778,7 +778,7 @@ ARM GAS  /tmp/cca7o28J.s 			page 1
  768 0044 5A68     		ldr	r2, [r3, #4]
  769 0046 8A43     		bics	r2, r1
  770 0048 5A60     		str	r2, [r3, #4]
-ARM GAS  /tmp/cca7o28J.s 			page 14
+ARM GAS  /tmp/ccyFSiq4.s 			page 14
 
 
  771 004a 5A68     		ldr	r2, [r3, #4]
@@ -838,7 +838,7 @@ ARM GAS  /tmp/cca7o28J.s 			page 1
  827 0026 0ED1     		bne	.L136
  828 0028 C023     		movs	r3, #192
  829 002a 0A4A     		ldr	r2, .L139+8
-ARM GAS  /tmp/cca7o28J.s 			page 15
+ARM GAS  /tmp/ccyFSiq4.s 			page 15
 
 
  830 002c 9B02     		lsls	r3, r3, #10
@@ -866,59 +866,59 @@ ARM GAS  /tmp/cca7o28J.s 			page 1
  852 0050 50C30000 		.word	50000
  853 0054 00200240 		.word	1073881088
  855              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/cca7o28J.s 			page 16
+ARM GAS  /tmp/ccyFSiq4.s 			page 16
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 stm32l0xx_hal_flash_ex.c
-     /tmp/cca7o28J.s:12     .text.FLASH_OB_ProtectedSectorsConfig:0000000000000000 $t
-     /tmp/cca7o28J.s:19     .text.FLASH_OB_ProtectedSectorsConfig:0000000000000000 FLASH_OB_ProtectedSectorsConfig
-     /tmp/cca7o28J.s:109    .text.FLASH_OB_ProtectedSectorsConfig:000000000000009c $d
-     /tmp/cca7o28J.s:114    .text.HAL_FLASHEx_OBProgram:0000000000000000 $t
-     /tmp/cca7o28J.s:121    .text.HAL_FLASHEx_OBProgram:0000000000000000 HAL_FLASHEx_OBProgram
-     /tmp/cca7o28J.s:253    .text.HAL_FLASHEx_OBProgram:0000000000000100 $d
-     /tmp/cca7o28J.s:260    .text.HAL_FLASHEx_OBGetConfig:0000000000000000 $t
-     /tmp/cca7o28J.s:267    .text.HAL_FLASHEx_OBGetConfig:0000000000000000 HAL_FLASHEx_OBGetConfig
-     /tmp/cca7o28J.s:305    .text.HAL_FLASHEx_OBGetConfig:000000000000003c $d
-     /tmp/cca7o28J.s:309    .text.HAL_FLASHEx_AdvOBProgram:0000000000000000 $t
-     /tmp/cca7o28J.s:316    .text.HAL_FLASHEx_AdvOBProgram:0000000000000000 HAL_FLASHEx_AdvOBProgram
-     /tmp/cca7o28J.s:358    .text.HAL_FLASHEx_AdvOBProgram:0000000000000048 $d
-     /tmp/cca7o28J.s:364    .text.HAL_FLASHEx_AdvOBGetConfig:0000000000000000 $t
-     /tmp/cca7o28J.s:371    .text.HAL_FLASHEx_AdvOBGetConfig:0000000000000000 HAL_FLASHEx_AdvOBGetConfig
-     /tmp/cca7o28J.s:397    .text.HAL_FLASHEx_AdvOBGetConfig:0000000000000024 $d
-     /tmp/cca7o28J.s:400    .text.HAL_FLASHEx_OB_SelectPCROP:0000000000000000 $t
-     /tmp/cca7o28J.s:407    .text.HAL_FLASHEx_OB_SelectPCROP:0000000000000000 HAL_FLASHEx_OB_SelectPCROP
-     /tmp/cca7o28J.s:435    .text.HAL_FLASHEx_OB_SelectPCROP:000000000000002c $d
-     /tmp/cca7o28J.s:440    .text.HAL_FLASHEx_OB_DeSelectPCROP:0000000000000000 $t
-     /tmp/cca7o28J.s:447    .text.HAL_FLASHEx_OB_DeSelectPCROP:0000000000000000 HAL_FLASHEx_OB_DeSelectPCROP
-     /tmp/cca7o28J.s:472    .text.HAL_FLASHEx_OB_DeSelectPCROP:0000000000000028 $d
-     /tmp/cca7o28J.s:477    .text.HAL_FLASHEx_DATAEEPROM_Unlock:0000000000000000 $t
-     /tmp/cca7o28J.s:484    .text.HAL_FLASHEx_DATAEEPROM_Unlock:0000000000000000 HAL_FLASHEx_DATAEEPROM_Unlock
-     /tmp/cca7o28J.s:521    .text.HAL_FLASHEx_DATAEEPROM_Unlock:0000000000000024 $d
-     /tmp/cca7o28J.s:526    .text.HAL_FLASHEx_DATAEEPROM_Lock:0000000000000000 $t
-     /tmp/cca7o28J.s:533    .text.HAL_FLASHEx_DATAEEPROM_Lock:0000000000000000 HAL_FLASHEx_DATAEEPROM_Lock
-     /tmp/cca7o28J.s:548    .text.HAL_FLASHEx_DATAEEPROM_Lock:0000000000000010 $d
-     /tmp/cca7o28J.s:551    .text.HAL_FLASHEx_DATAEEPROM_Erase:0000000000000000 $t
-     /tmp/cca7o28J.s:558    .text.HAL_FLASHEx_DATAEEPROM_Erase:0000000000000000 HAL_FLASHEx_DATAEEPROM_Erase
-     /tmp/cca7o28J.s:578    .text.HAL_FLASHEx_DATAEEPROM_Erase:000000000000001c $d
-     /tmp/cca7o28J.s:582    .text.HAL_FLASHEx_DATAEEPROM_Program:0000000000000000 $t
-     /tmp/cca7o28J.s:589    .text.HAL_FLASHEx_DATAEEPROM_Program:0000000000000000 HAL_FLASHEx_DATAEEPROM_Program
-     /tmp/cca7o28J.s:636    .text.HAL_FLASHEx_DATAEEPROM_Program:000000000000004c $d
-     /tmp/cca7o28J.s:640    .text.HAL_FLASHEx_DATAEEPROM_EnableFixedTimeProgram:0000000000000000 $t
-     /tmp/cca7o28J.s:647    .text.HAL_FLASHEx_DATAEEPROM_EnableFixedTimeProgram:0000000000000000 HAL_FLASHEx_DATAEEPROM_EnableFixedTimeProgram
-     /tmp/cca7o28J.s:662    .text.HAL_FLASHEx_DATAEEPROM_EnableFixedTimeProgram:0000000000000010 $d
-     /tmp/cca7o28J.s:665    .text.HAL_FLASHEx_DATAEEPROM_DisableFixedTimeProgram:0000000000000000 $t
-     /tmp/cca7o28J.s:672    .text.HAL_FLASHEx_DATAEEPROM_DisableFixedTimeProgram:0000000000000000 HAL_FLASHEx_DATAEEPROM_DisableFixedTimeProgram
-     /tmp/cca7o28J.s:686    .text.HAL_FLASHEx_DATAEEPROM_DisableFixedTimeProgram:000000000000000c $d
-     /tmp/cca7o28J.s:690    .text.FLASH_PageErase:0000000000000000 $t
-     /tmp/cca7o28J.s:697    .text.FLASH_PageErase:0000000000000000 FLASH_PageErase
-     /tmp/cca7o28J.s:722    .text.FLASH_PageErase:0000000000000024 $d
-     /tmp/cca7o28J.s:726    .text.HAL_FLASHEx_Erase:0000000000000000 $t
-     /tmp/cca7o28J.s:733    .text.HAL_FLASHEx_Erase:0000000000000000 HAL_FLASHEx_Erase
-     /tmp/cca7o28J.s:793    .text.HAL_FLASHEx_Erase:0000000000000068 $d
-     /tmp/cca7o28J.s:799    .text.HAL_FLASHEx_Erase_IT:0000000000000000 $t
-     /tmp/cca7o28J.s:806    .text.HAL_FLASHEx_Erase_IT:0000000000000000 HAL_FLASHEx_Erase_IT
-     /tmp/cca7o28J.s:851    .text.HAL_FLASHEx_Erase_IT:000000000000004c $d
+     /tmp/ccyFSiq4.s:12     .text.FLASH_OB_ProtectedSectorsConfig:0000000000000000 $t
+     /tmp/ccyFSiq4.s:19     .text.FLASH_OB_ProtectedSectorsConfig:0000000000000000 FLASH_OB_ProtectedSectorsConfig
+     /tmp/ccyFSiq4.s:109    .text.FLASH_OB_ProtectedSectorsConfig:000000000000009c $d
+     /tmp/ccyFSiq4.s:114    .text.HAL_FLASHEx_OBProgram:0000000000000000 $t
+     /tmp/ccyFSiq4.s:121    .text.HAL_FLASHEx_OBProgram:0000000000000000 HAL_FLASHEx_OBProgram
+     /tmp/ccyFSiq4.s:253    .text.HAL_FLASHEx_OBProgram:0000000000000100 $d
+     /tmp/ccyFSiq4.s:260    .text.HAL_FLASHEx_OBGetConfig:0000000000000000 $t
+     /tmp/ccyFSiq4.s:267    .text.HAL_FLASHEx_OBGetConfig:0000000000000000 HAL_FLASHEx_OBGetConfig
+     /tmp/ccyFSiq4.s:305    .text.HAL_FLASHEx_OBGetConfig:000000000000003c $d
+     /tmp/ccyFSiq4.s:309    .text.HAL_FLASHEx_AdvOBProgram:0000000000000000 $t
+     /tmp/ccyFSiq4.s:316    .text.HAL_FLASHEx_AdvOBProgram:0000000000000000 HAL_FLASHEx_AdvOBProgram
+     /tmp/ccyFSiq4.s:358    .text.HAL_FLASHEx_AdvOBProgram:0000000000000048 $d
+     /tmp/ccyFSiq4.s:364    .text.HAL_FLASHEx_AdvOBGetConfig:0000000000000000 $t
+     /tmp/ccyFSiq4.s:371    .text.HAL_FLASHEx_AdvOBGetConfig:0000000000000000 HAL_FLASHEx_AdvOBGetConfig
+     /tmp/ccyFSiq4.s:397    .text.HAL_FLASHEx_AdvOBGetConfig:0000000000000024 $d
+     /tmp/ccyFSiq4.s:400    .text.HAL_FLASHEx_OB_SelectPCROP:0000000000000000 $t
+     /tmp/ccyFSiq4.s:407    .text.HAL_FLASHEx_OB_SelectPCROP:0000000000000000 HAL_FLASHEx_OB_SelectPCROP
+     /tmp/ccyFSiq4.s:435    .text.HAL_FLASHEx_OB_SelectPCROP:000000000000002c $d
+     /tmp/ccyFSiq4.s:440    .text.HAL_FLASHEx_OB_DeSelectPCROP:0000000000000000 $t
+     /tmp/ccyFSiq4.s:447    .text.HAL_FLASHEx_OB_DeSelectPCROP:0000000000000000 HAL_FLASHEx_OB_DeSelectPCROP
+     /tmp/ccyFSiq4.s:472    .text.HAL_FLASHEx_OB_DeSelectPCROP:0000000000000028 $d
+     /tmp/ccyFSiq4.s:477    .text.HAL_FLASHEx_DATAEEPROM_Unlock:0000000000000000 $t
+     /tmp/ccyFSiq4.s:484    .text.HAL_FLASHEx_DATAEEPROM_Unlock:0000000000000000 HAL_FLASHEx_DATAEEPROM_Unlock
+     /tmp/ccyFSiq4.s:521    .text.HAL_FLASHEx_DATAEEPROM_Unlock:0000000000000024 $d
+     /tmp/ccyFSiq4.s:526    .text.HAL_FLASHEx_DATAEEPROM_Lock:0000000000000000 $t
+     /tmp/ccyFSiq4.s:533    .text.HAL_FLASHEx_DATAEEPROM_Lock:0000000000000000 HAL_FLASHEx_DATAEEPROM_Lock
+     /tmp/ccyFSiq4.s:548    .text.HAL_FLASHEx_DATAEEPROM_Lock:0000000000000010 $d
+     /tmp/ccyFSiq4.s:551    .text.HAL_FLASHEx_DATAEEPROM_Erase:0000000000000000 $t
+     /tmp/ccyFSiq4.s:558    .text.HAL_FLASHEx_DATAEEPROM_Erase:0000000000000000 HAL_FLASHEx_DATAEEPROM_Erase
+     /tmp/ccyFSiq4.s:578    .text.HAL_FLASHEx_DATAEEPROM_Erase:000000000000001c $d
+     /tmp/ccyFSiq4.s:582    .text.HAL_FLASHEx_DATAEEPROM_Program:0000000000000000 $t
+     /tmp/ccyFSiq4.s:589    .text.HAL_FLASHEx_DATAEEPROM_Program:0000000000000000 HAL_FLASHEx_DATAEEPROM_Program
+     /tmp/ccyFSiq4.s:636    .text.HAL_FLASHEx_DATAEEPROM_Program:000000000000004c $d
+     /tmp/ccyFSiq4.s:640    .text.HAL_FLASHEx_DATAEEPROM_EnableFixedTimeProgram:0000000000000000 $t
+     /tmp/ccyFSiq4.s:647    .text.HAL_FLASHEx_DATAEEPROM_EnableFixedTimeProgram:0000000000000000 HAL_FLASHEx_DATAEEPROM_EnableFixedTimeProgram
+     /tmp/ccyFSiq4.s:662    .text.HAL_FLASHEx_DATAEEPROM_EnableFixedTimeProgram:0000000000000010 $d
+     /tmp/ccyFSiq4.s:665    .text.HAL_FLASHEx_DATAEEPROM_DisableFixedTimeProgram:0000000000000000 $t
+     /tmp/ccyFSiq4.s:672    .text.HAL_FLASHEx_DATAEEPROM_DisableFixedTimeProgram:0000000000000000 HAL_FLASHEx_DATAEEPROM_DisableFixedTimeProgram
+     /tmp/ccyFSiq4.s:686    .text.HAL_FLASHEx_DATAEEPROM_DisableFixedTimeProgram:000000000000000c $d
+     /tmp/ccyFSiq4.s:690    .text.FLASH_PageErase:0000000000000000 $t
+     /tmp/ccyFSiq4.s:697    .text.FLASH_PageErase:0000000000000000 FLASH_PageErase
+     /tmp/ccyFSiq4.s:722    .text.FLASH_PageErase:0000000000000024 $d
+     /tmp/ccyFSiq4.s:726    .text.HAL_FLASHEx_Erase:0000000000000000 $t
+     /tmp/ccyFSiq4.s:733    .text.HAL_FLASHEx_Erase:0000000000000000 HAL_FLASHEx_Erase
+     /tmp/ccyFSiq4.s:793    .text.HAL_FLASHEx_Erase:0000000000000068 $d
+     /tmp/ccyFSiq4.s:799    .text.HAL_FLASHEx_Erase_IT:0000000000000000 $t
+     /tmp/ccyFSiq4.s:806    .text.HAL_FLASHEx_Erase_IT:0000000000000000 HAL_FLASHEx_Erase_IT
+     /tmp/ccyFSiq4.s:851    .text.HAL_FLASHEx_Erase_IT:000000000000004c $d
 
 UNDEFINED SYMBOLS
 FLASH_WaitForLastOperation

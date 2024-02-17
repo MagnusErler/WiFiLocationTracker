@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc2rzIHB.s 			page 1
+ARM GAS  /tmp/ccoRsBme.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cc2rzIHB.s 			page 1
   59              		.section	.text.ral_lr11xx_bsp_get_xosc_cfg,"ax",%progbits
   60              		.align	1
   61              		.global	ral_lr11xx_bsp_get_xosc_cfg
-ARM GAS  /tmp/cc2rzIHB.s 			page 2
+ARM GAS  /tmp/ccoRsBme.s 			page 2
 
 
   62              		.syntax unified
@@ -77,726 +77,705 @@ ARM GAS  /tmp/cc2rzIHB.s 			page 1
   76 0008 A422     		movs	r2, #164
   77 000a 1A60     		str	r2, [r3]
   78 000c 7047     		bx	lr
-  80              		.section	.rodata.ral_lr11xx_bsp_get_crc_state.str1.1,"aMS",%progbits,1
-  81              	.LC0:
-  82 0000 494E464F 		.ascii	"INFO: LR11XX CRC over spi is activated\015\012\000"
-  82      3A204C52 
-  82      31315858 
-  82      20435243 
-  82      206F7665 
-  83              	.LC2:
-  84 0029 00       		.ascii	"\000"
-  85              		.section	.text.ral_lr11xx_bsp_get_crc_state,"ax",%progbits
-  86              		.align	1
-  87              		.global	ral_lr11xx_bsp_get_crc_state
-  88              		.syntax unified
-  89              		.code	16
-  90              		.thumb_func
-  91              		.fpu softvfp
-  93              	ral_lr11xx_bsp_get_crc_state:
-  94              		@ args = 0, pretend = 0, frame = 0
-  95              		@ frame_needed = 0, uses_anonymous_args = 0
-  96 0000 10B5     		push	{r4, lr}
-  97 0002 0548     		ldr	r0, .L5
-  98 0004 0C00     		movs	r4, r1
-  99              		@ sp needed
- 100 0006 FFF7FEFF 		bl	hal_trace_print_var
- 101 000a 0448     		ldr	r0, .L5+4
- 102 000c FFF7FEFF 		bl	hal_trace_print_var
- 103 0010 0123     		movs	r3, #1
- 104 0012 2370     		strb	r3, [r4]
- 105 0014 10BD     		pop	{r4, pc}
- 106              	.L6:
- 107 0016 C046     		.align	2
- 108              	.L5:
- 109 0018 00000000 		.word	.LC0
- 110 001c 29000000 		.word	.LC2
- 112              		.section	.text.ral_lr11xx_bsp_get_rssi_calibration_table,"ax",%progbits
- 113              		.align	1
- 114              		.global	ral_lr11xx_bsp_get_rssi_calibration_table
- 115              		.syntax unified
- 116              		.code	16
- 117              		.thumb_func
- 118              		.fpu softvfp
-ARM GAS  /tmp/cc2rzIHB.s 			page 3
+  80              		.section	.text.ral_lr11xx_bsp_get_crc_state,"ax",%progbits
+  81              		.align	1
+  82              		.global	ral_lr11xx_bsp_get_crc_state
+  83              		.syntax unified
+  84              		.code	16
+  85              		.thumb_func
+  86              		.fpu softvfp
+  88              	ral_lr11xx_bsp_get_crc_state:
+  89              		@ args = 0, pretend = 0, frame = 0
+  90              		@ frame_needed = 0, uses_anonymous_args = 0
+  91              		@ link register save eliminated.
+  92 0000 0123     		movs	r3, #1
+  93              		@ sp needed
+  94 0002 0B70     		strb	r3, [r1]
+  95 0004 7047     		bx	lr
+  97              		.section	.text.ral_lr11xx_bsp_get_rssi_calibration_table,"ax",%progbits
+  98              		.align	1
+  99              		.global	ral_lr11xx_bsp_get_rssi_calibration_table
+ 100              		.syntax unified
+ 101              		.code	16
+ 102              		.thumb_func
+ 103              		.fpu softvfp
+ 105              	ral_lr11xx_bsp_get_rssi_calibration_table:
+ 106              		@ args = 0, pretend = 0, frame = 0
+ 107              		@ frame_needed = 0, uses_anonymous_args = 0
+ 108 0000 1F4B     		ldr	r3, .L11
+ 109 0002 10B5     		push	{r4, lr}
+ 110 0004 9942     		cmp	r1, r3
+ 111 0006 12D8     		bhi	.L6
+ 112 0008 0023     		movs	r3, #0
+ 113 000a 5382     		strh	r3, [r2, #18]
+ 114 000c 1D4B     		ldr	r3, .L11+4
+ 115 000e 1380     		strh	r3, [r2]
+ 116 0010 0E23     		movs	r3, #14
+ 117 0012 5380     		strh	r3, [r2, #2]
+ 118 0014 1C4B     		ldr	r3, .L11+8
+ 119 0016 9380     		strh	r3, [r2, #4]
+ 120 0018 1C4B     		ldr	r3, .L11+12
+ 121 001a D380     		strh	r3, [r2, #6]
+ 122 001c 1C4B     		ldr	r3, .L11+16
+ 123 001e 1381     		strh	r3, [r2, #8]
+ARM GAS  /tmp/ccoRsBme.s 			page 3
 
 
- 120              	ral_lr11xx_bsp_get_rssi_calibration_table:
- 121              		@ args = 0, pretend = 0, frame = 0
- 122              		@ frame_needed = 0, uses_anonymous_args = 0
- 123 0000 1F4B     		ldr	r3, .L13
- 124 0002 10B5     		push	{r4, lr}
- 125 0004 9942     		cmp	r1, r3
- 126 0006 12D8     		bhi	.L8
- 127 0008 0023     		movs	r3, #0
- 128 000a 5382     		strh	r3, [r2, #18]
- 129 000c 1D4B     		ldr	r3, .L13+4
- 130 000e 1380     		strh	r3, [r2]
- 131 0010 0E23     		movs	r3, #14
- 132 0012 5380     		strh	r3, [r2, #2]
- 133 0014 1C4B     		ldr	r3, .L13+8
- 134 0016 9380     		strh	r3, [r2, #4]
- 135 0018 1C4B     		ldr	r3, .L13+12
- 136 001a D380     		strh	r3, [r2, #6]
- 137 001c 1C4B     		ldr	r3, .L13+16
- 138 001e 1381     		strh	r3, [r2, #8]
- 139 0020 1C4B     		ldr	r3, .L13+20
- 140 0022 5381     		strh	r3, [r2, #10]
- 141 0024 9381     		strh	r3, [r2, #12]
- 142 0026 D381     		strh	r3, [r2, #14]
- 143              	.L12:
- 144 0028 0623     		movs	r3, #6
- 145              	.L11:
- 146              		@ sp needed
- 147 002a 1374     		strb	r3, [r2, #16]
- 148 002c 10BD     		pop	{r4, pc}
- 149              	.L8:
- 150 002e 1A4B     		ldr	r3, .L13+24
- 151 0030 1A4C     		ldr	r4, .L13+28
- 152 0032 C918     		adds	r1, r1, r3
- 153 0034 1A48     		ldr	r0, .L13+32
- 154 0036 1B4B     		ldr	r3, .L13+36
- 155 0038 A142     		cmp	r1, r4
- 156 003a 10D8     		bhi	.L10
- 157 003c 0021     		movs	r1, #0
- 158 003e 9380     		strh	r3, [r2, #4]
- 159 0040 194B     		ldr	r3, .L13+40
- 160 0042 5182     		strh	r1, [r2, #18]
- 161 0044 D380     		strh	r3, [r2, #6]
- 162 0046 194B     		ldr	r3, .L13+44
- 163 0048 1949     		ldr	r1, .L13+48
- 164 004a 1381     		strh	r3, [r2, #8]
- 165 004c 194B     		ldr	r3, .L13+52
- 166 004e 1180     		strh	r1, [r2]
- 167 0050 5381     		strh	r3, [r2, #10]
- 168 0052 1949     		ldr	r1, .L13+56
- 169 0054 0F4B     		ldr	r3, .L13+20
- 170 0056 5180     		strh	r1, [r2, #2]
- 171 0058 9381     		strh	r3, [r2, #12]
- 172 005a D081     		strh	r0, [r2, #14]
- 173 005c E4E7     		b	.L12
- 174              	.L10:
- 175 005e 9380     		strh	r3, [r2, #4]
- 176 0060 164B     		ldr	r3, .L13+60
-ARM GAS  /tmp/cc2rzIHB.s 			page 4
+ 124 0020 1C4B     		ldr	r3, .L11+20
+ 125 0022 5381     		strh	r3, [r2, #10]
+ 126 0024 9381     		strh	r3, [r2, #12]
+ 127 0026 D381     		strh	r3, [r2, #14]
+ 128              	.L10:
+ 129 0028 0623     		movs	r3, #6
+ 130              	.L9:
+ 131              		@ sp needed
+ 132 002a 1374     		strb	r3, [r2, #16]
+ 133 002c 10BD     		pop	{r4, pc}
+ 134              	.L6:
+ 135 002e 1A4B     		ldr	r3, .L11+24
+ 136 0030 1A4C     		ldr	r4, .L11+28
+ 137 0032 C918     		adds	r1, r1, r3
+ 138 0034 1A48     		ldr	r0, .L11+32
+ 139 0036 1B4B     		ldr	r3, .L11+36
+ 140 0038 A142     		cmp	r1, r4
+ 141 003a 10D8     		bhi	.L8
+ 142 003c 0021     		movs	r1, #0
+ 143 003e 9380     		strh	r3, [r2, #4]
+ 144 0040 194B     		ldr	r3, .L11+40
+ 145 0042 5182     		strh	r1, [r2, #18]
+ 146 0044 D380     		strh	r3, [r2, #6]
+ 147 0046 194B     		ldr	r3, .L11+44
+ 148 0048 1949     		ldr	r1, .L11+48
+ 149 004a 1381     		strh	r3, [r2, #8]
+ 150 004c 194B     		ldr	r3, .L11+52
+ 151 004e 1180     		strh	r1, [r2]
+ 152 0050 5381     		strh	r3, [r2, #10]
+ 153 0052 1949     		ldr	r1, .L11+56
+ 154 0054 0F4B     		ldr	r3, .L11+20
+ 155 0056 5180     		strh	r1, [r2, #2]
+ 156 0058 9381     		strh	r3, [r2, #12]
+ 157 005a D081     		strh	r0, [r2, #14]
+ 158 005c E4E7     		b	.L10
+ 159              	.L8:
+ 160 005e 9380     		strh	r3, [r2, #4]
+ 161 0060 164B     		ldr	r3, .L11+60
+ 162 0062 1749     		ldr	r1, .L11+64
+ 163 0064 D380     		strh	r3, [r2, #6]
+ 164 0066 1381     		strh	r3, [r2, #8]
+ 165 0068 064B     		ldr	r3, .L11+4
+ 166 006a 5182     		strh	r1, [r2, #18]
+ 167 006c 5381     		strh	r3, [r2, #10]
+ 168 006e 154B     		ldr	r3, .L11+68
+ 169 0070 1549     		ldr	r1, .L11+72
+ 170 0072 9381     		strh	r3, [r2, #12]
+ 171 0074 154B     		ldr	r3, .L11+76
+ 172 0076 1080     		strh	r0, [r2]
+ 173 0078 D381     		strh	r3, [r2, #14]
+ 174 007a 5180     		strh	r1, [r2, #2]
+ 175 007c 0923     		movs	r3, #9
+ 176 007e D4E7     		b	.L9
+ 177              	.L12:
+ 178              		.align	2
+ 179              	.L11:
+ 180 0080 0046C323 		.word	600000000
+ARM GAS  /tmp/ccoRsBme.s 			page 4
 
 
- 177 0062 1749     		ldr	r1, .L13+64
- 178 0064 D380     		strh	r3, [r2, #6]
- 179 0066 1381     		strh	r3, [r2, #8]
- 180 0068 064B     		ldr	r3, .L13+4
- 181 006a 5182     		strh	r1, [r2, #18]
- 182 006c 5381     		strh	r3, [r2, #10]
- 183 006e 154B     		ldr	r3, .L13+68
- 184 0070 1549     		ldr	r1, .L13+72
- 185 0072 9381     		strh	r3, [r2, #12]
- 186 0074 154B     		ldr	r3, .L13+76
- 187 0076 1080     		strh	r0, [r2]
- 188 0078 D381     		strh	r3, [r2, #14]
- 189 007a 5180     		strh	r1, [r2, #2]
- 190 007c 0923     		movs	r3, #9
- 191 007e D4E7     		b	.L11
- 192              	.L14:
- 193              		.align	2
- 194              	.L13:
- 195 0080 0046C323 		.word	600000000
- 196 0084 0C0C0000 		.word	3084
- 197 0088 01030000 		.word	769
- 198 008c 04040000 		.word	1028
- 199 0090 03060000 		.word	1539
- 200 0094 06060000 		.word	1542
- 201 0098 00BA3CDC 		.word	-600000000
- 202 009c 004E7253 		.word	1400000000
- 203 00a0 06070000 		.word	1798
- 204 00a4 03040000 		.word	1027
- 205 00a8 05040000 		.word	1029
- 206 00ac 04060000 		.word	1540
- 207 00b0 02020000 		.word	514
- 208 00b4 05050000 		.word	1285
- 209 00b8 02030000 		.word	770
- 210 00bc 0E0C0000 		.word	3086
- 211 00c0 EE070000 		.word	2030
- 212 00c4 0C080000 		.word	2060
- 213 00c8 06040000 		.word	1030
- 214 00cc 08090000 		.word	2312
- 216              		.section	.rodata.lr11xx_get_tx_cfg.cst1,"aM",%progbits,1
- 217              	.LC7:
- 218 0000 EF       		.byte	-17
- 219              	.LC8:
- 220 0001 F7       		.byte	-9
- 221              	.LC9:
- 222 0002 EE       		.byte	-18
- 223              		.section	.text.lr11xx_get_tx_cfg,"ax",%progbits
- 224              		.align	1
- 225              		.global	lr11xx_get_tx_cfg
- 226              		.syntax unified
- 227              		.code	16
- 228              		.thumb_func
- 229              		.fpu softvfp
- 231              	lr11xx_get_tx_cfg:
- 232              		@ args = 0, pretend = 0, frame = 0
- 233              		@ frame_needed = 0, uses_anonymous_args = 0
- 234 0000 0223     		movs	r3, #2
- 235 0002 30B5     		push	{r4, r5, lr}
-ARM GAS  /tmp/cc2rzIHB.s 			page 5
+ 181 0084 0C0C0000 		.word	3084
+ 182 0088 01030000 		.word	769
+ 183 008c 04040000 		.word	1028
+ 184 0090 03060000 		.word	1539
+ 185 0094 06060000 		.word	1542
+ 186 0098 00BA3CDC 		.word	-600000000
+ 187 009c 004E7253 		.word	1400000000
+ 188 00a0 06070000 		.word	1798
+ 189 00a4 03040000 		.word	1027
+ 190 00a8 05040000 		.word	1029
+ 191 00ac 04060000 		.word	1540
+ 192 00b0 02020000 		.word	514
+ 193 00b4 05050000 		.word	1285
+ 194 00b8 02030000 		.word	770
+ 195 00bc 0E0C0000 		.word	3086
+ 196 00c0 EE070000 		.word	2030
+ 197 00c4 0C080000 		.word	2060
+ 198 00c8 06040000 		.word	1030
+ 199 00cc 08090000 		.word	2312
+ 201              		.section	.rodata.lr11xx_get_tx_cfg.cst1,"aM",%progbits,1
+ 202              	.LC3:
+ 203 0000 EF       		.byte	-17
+ 204              	.LC4:
+ 205 0001 F7       		.byte	-9
+ 206              	.LC5:
+ 207 0002 EE       		.byte	-18
+ 208              		.section	.text.lr11xx_get_tx_cfg,"ax",%progbits
+ 209              		.align	1
+ 210              		.global	lr11xx_get_tx_cfg
+ 211              		.syntax unified
+ 212              		.code	16
+ 213              		.thumb_func
+ 214              		.fpu softvfp
+ 216              	lr11xx_get_tx_cfg:
+ 217              		@ args = 0, pretend = 0, frame = 0
+ 218              		@ frame_needed = 0, uses_anonymous_args = 0
+ 219 0000 0223     		movs	r3, #2
+ 220 0002 30B5     		push	{r4, r5, lr}
+ 221 0004 1371     		strb	r3, [r2, #4]
+ 222 0006 0328     		cmp	r0, #3
+ 223 0008 37D8     		bhi	.L13
+ 224 000a FFF7FEFF 		bl	__gnu_thumb1_case_uqi
+ 225              	.L16:
+ 226 000e 02       		.byte	(.L19-.L16)/2
+ 227 000f 1E       		.byte	(.L18-.L16)/2
+ 228 0010 3D       		.byte	(.L17-.L16)/2
+ 229 0011 62       		.byte	(.L15-.L16)/2
+ 230              		.p2align 1
+ 231              	.L19:
+ 232 0012 0B1C     		adds	r3, r1, #0
+ 233 0014 0F29     		cmp	r1, #15
+ 234 0016 12DD     		ble	.L20
+ 235 0018 0F23     		movs	r3, #15
+ 236              	.L21:
+ 237 001a 1800     		movs	r0, r3
+ 238 001c 0021     		movs	r1, #0
+ 239 001e 1130     		adds	r0, r0, #17
+ARM GAS  /tmp/ccoRsBme.s 			page 5
 
 
- 236 0004 1371     		strb	r3, [r2, #4]
- 237 0006 0328     		cmp	r0, #3
- 238 0008 37D8     		bhi	.L15
- 239 000a FFF7FEFF 		bl	__gnu_thumb1_case_uqi
- 240              	.L18:
- 241 000e 02       		.byte	(.L21-.L18)/2
- 242 000f 1E       		.byte	(.L20-.L18)/2
- 243 0010 3D       		.byte	(.L19-.L18)/2
- 244 0011 62       		.byte	(.L17-.L18)/2
- 245              		.p2align 1
- 246              	.L21:
- 247 0012 0B1C     		adds	r3, r1, #0
- 248 0014 0F29     		cmp	r1, #15
- 249 0016 12DD     		ble	.L22
- 250 0018 0F23     		movs	r3, #15
- 251              	.L23:
- 252 001a 1800     		movs	r0, r3
- 253 001c 0021     		movs	r1, #0
- 254 001e 1130     		adds	r0, r0, #17
- 255 0020 354C     		ldr	r4, .L36
- 256 0022 1170     		strb	r1, [r2]
- 257 0024 5170     		strb	r1, [r2, #1]
- 258 0026 40B2     		sxtb	r0, r0
- 259              	.L34:
- 260 0028 0331     		adds	r1, r1, #3
- 261 002a 4143     		muls	r1, r0
- 262 002c 6018     		adds	r0, r4, r1
- 263 002e 4578     		ldrb	r5, [r0, #1]
- 264 0030 095D     		ldrb	r1, [r1, r4]
- 265 0032 8078     		ldrb	r0, [r0, #2]
- 266 0034 9570     		strb	r5, [r2, #2]
- 267 0036 D070     		strb	r0, [r2, #3]
- 268 0038 5171     		strb	r1, [r2, #5]
- 269 003a 9371     		strb	r3, [r2, #6]
- 270 003c 1DE0     		b	.L15
- 271              	.L22:
- 272 003e 49B2     		sxtb	r1, r1
- 273 0040 1131     		adds	r1, r1, #17
- 274 0042 EADA     		bge	.L23
- 275 0044 2D4B     		ldr	r3, .L36+4
- 276 0046 1B78     		ldrb	r3, [r3]
- 277 0048 E7E7     		b	.L23
- 278              	.L20:
- 279 004a 0C1C     		adds	r4, r1, #0
- 280 004c 1629     		cmp	r1, #22
- 281 004e 15DD     		ble	.L24
- 282 0050 1624     		movs	r4, #22
- 283              	.L25:
- 284 0052 0120     		movs	r0, #1
- 285 0054 63B2     		sxtb	r3, r4
- 286 0056 1070     		strb	r0, [r2]
- 287 0058 9471     		strb	r4, [r2, #6]
- 288 005a 0829     		cmp	r1, #8
- 289 005c 00DC     		bgt	.L26
- 290 005e 0020     		movs	r0, #0
- 291              	.L26:
- 292 0060 0321     		movs	r1, #3
-ARM GAS  /tmp/cc2rzIHB.s 			page 6
+ 240 0020 354C     		ldr	r4, .L34
+ 241 0022 1170     		strb	r1, [r2]
+ 242 0024 5170     		strb	r1, [r2, #1]
+ 243 0026 40B2     		sxtb	r0, r0
+ 244              	.L32:
+ 245 0028 0331     		adds	r1, r1, #3
+ 246 002a 4143     		muls	r1, r0
+ 247 002c 6018     		adds	r0, r4, r1
+ 248 002e 4578     		ldrb	r5, [r0, #1]
+ 249 0030 095D     		ldrb	r1, [r1, r4]
+ 250 0032 8078     		ldrb	r0, [r0, #2]
+ 251 0034 9570     		strb	r5, [r2, #2]
+ 252 0036 D070     		strb	r0, [r2, #3]
+ 253 0038 5171     		strb	r1, [r2, #5]
+ 254 003a 9371     		strb	r3, [r2, #6]
+ 255 003c 1DE0     		b	.L13
+ 256              	.L20:
+ 257 003e 49B2     		sxtb	r1, r1
+ 258 0040 1131     		adds	r1, r1, #17
+ 259 0042 EADA     		bge	.L21
+ 260 0044 2D4B     		ldr	r3, .L34+4
+ 261 0046 1B78     		ldrb	r3, [r3]
+ 262 0048 E7E7     		b	.L21
+ 263              	.L18:
+ 264 004a 0C1C     		adds	r4, r1, #0
+ 265 004c 1629     		cmp	r1, #22
+ 266 004e 15DD     		ble	.L22
+ 267 0050 1624     		movs	r4, #22
+ 268              	.L23:
+ 269 0052 0120     		movs	r0, #1
+ 270 0054 63B2     		sxtb	r3, r4
+ 271 0056 1070     		strb	r0, [r2]
+ 272 0058 9471     		strb	r4, [r2, #6]
+ 273 005a 0829     		cmp	r1, #8
+ 274 005c 00DC     		bgt	.L24
+ 275 005e 0020     		movs	r0, #0
+ 276              	.L24:
+ 277 0060 0321     		movs	r1, #3
+ 278 0062 0933     		adds	r3, r3, #9
+ 279 0064 5BB2     		sxtb	r3, r3
+ 280 0066 4B43     		muls	r3, r1
+ 281 0068 5070     		strb	r0, [r2, #1]
+ 282 006a 2548     		ldr	r0, .L34+8
+ 283 006c C118     		adds	r1, r0, r3
+ 284 006e 4C78     		ldrb	r4, [r1, #1]
+ 285 0070 8978     		ldrb	r1, [r1, #2]
+ 286 0072 1B5C     		ldrb	r3, [r3, r0]
+ 287 0074 9470     		strb	r4, [r2, #2]
+ 288 0076 D170     		strb	r1, [r2, #3]
+ 289              	.L33:
+ 290 0078 5371     		strb	r3, [r2, #5]
+ 291              	.L13:
+ 292              		@ sp needed
+ 293 007a 30BD     		pop	{r4, r5, pc}
+ 294              	.L22:
+ 295 007c 4BB2     		sxtb	r3, r1
+ 296 007e 0933     		adds	r3, r3, #9
+ARM GAS  /tmp/ccoRsBme.s 			page 6
 
 
- 293 0062 0933     		adds	r3, r3, #9
- 294 0064 5BB2     		sxtb	r3, r3
- 295 0066 4B43     		muls	r3, r1
- 296 0068 5070     		strb	r0, [r2, #1]
- 297 006a 2548     		ldr	r0, .L36+8
- 298 006c C118     		adds	r1, r0, r3
- 299 006e 4C78     		ldrb	r4, [r1, #1]
- 300 0070 8978     		ldrb	r1, [r1, #2]
- 301 0072 1B5C     		ldrb	r3, [r3, r0]
- 302 0074 9470     		strb	r4, [r2, #2]
- 303 0076 D170     		strb	r1, [r2, #3]
- 304              	.L35:
- 305 0078 5371     		strb	r3, [r2, #5]
- 306              	.L15:
- 307              		@ sp needed
- 308 007a 30BD     		pop	{r4, r5, pc}
- 309              	.L24:
- 310 007c 4BB2     		sxtb	r3, r1
- 311 007e 0933     		adds	r3, r3, #9
- 312 0080 E7DA     		bge	.L25
- 313 0082 204B     		ldr	r3, .L36+12
- 314 0084 1C78     		ldrb	r4, [r3]
- 315 0086 E4E7     		b	.L25
- 316              	.L19:
- 317 0088 0B00     		movs	r3, r1
- 318 008a 1133     		adds	r3, r3, #17
- 319 008c 12DA     		bge	.L27
- 320 008e EF23     		movs	r3, #239
- 321 0090 1121     		movs	r1, #17
- 322 0092 9371     		strb	r3, [r2, #6]
- 323 0094 4942     		rsbs	r1, r1, #0
- 324              	.L28:
- 325 0096 0023     		movs	r3, #0
- 326 0098 1131     		adds	r1, r1, #17
- 327 009a 1748     		ldr	r0, .L36
- 328 009c 1370     		strb	r3, [r2]
- 329 009e 5370     		strb	r3, [r2, #1]
- 330 00a0 4BB2     		sxtb	r3, r1
- 331              	.L33:
- 332 00a2 0321     		movs	r1, #3
- 333 00a4 5943     		muls	r1, r3
- 334 00a6 4318     		adds	r3, r0, r1
- 335 00a8 5C78     		ldrb	r4, [r3, #1]
- 336 00aa 9B78     		ldrb	r3, [r3, #2]
- 337 00ac 9470     		strb	r4, [r2, #2]
- 338 00ae D370     		strb	r3, [r2, #3]
- 339 00b0 0B5C     		ldrb	r3, [r1, r0]
- 340 00b2 E1E7     		b	.L35
- 341              	.L27:
- 342 00b4 1629     		cmp	r1, #22
- 343 00b6 08DD     		ble	.L29
- 344 00b8 1621     		movs	r1, #22
- 345 00ba 9171     		strb	r1, [r2, #6]
- 346              	.L30:
- 347 00bc 0123     		movs	r3, #1
- 348 00be 0931     		adds	r1, r1, #9
- 349 00c0 1370     		strb	r3, [r2]
-ARM GAS  /tmp/cc2rzIHB.s 			page 7
+ 297 0080 E7DA     		bge	.L23
+ 298 0082 204B     		ldr	r3, .L34+12
+ 299 0084 1C78     		ldrb	r4, [r3]
+ 300 0086 E4E7     		b	.L23
+ 301              	.L17:
+ 302 0088 0B00     		movs	r3, r1
+ 303 008a 1133     		adds	r3, r3, #17
+ 304 008c 12DA     		bge	.L25
+ 305 008e EF23     		movs	r3, #239
+ 306 0090 1121     		movs	r1, #17
+ 307 0092 9371     		strb	r3, [r2, #6]
+ 308 0094 4942     		rsbs	r1, r1, #0
+ 309              	.L26:
+ 310 0096 0023     		movs	r3, #0
+ 311 0098 1131     		adds	r1, r1, #17
+ 312 009a 1748     		ldr	r0, .L34
+ 313 009c 1370     		strb	r3, [r2]
+ 314 009e 5370     		strb	r3, [r2, #1]
+ 315 00a0 4BB2     		sxtb	r3, r1
+ 316              	.L31:
+ 317 00a2 0321     		movs	r1, #3
+ 318 00a4 5943     		muls	r1, r3
+ 319 00a6 4318     		adds	r3, r0, r1
+ 320 00a8 5C78     		ldrb	r4, [r3, #1]
+ 321 00aa 9B78     		ldrb	r3, [r3, #2]
+ 322 00ac 9470     		strb	r4, [r2, #2]
+ 323 00ae D370     		strb	r3, [r2, #3]
+ 324 00b0 0B5C     		ldrb	r3, [r1, r0]
+ 325 00b2 E1E7     		b	.L33
+ 326              	.L25:
+ 327 00b4 1629     		cmp	r1, #22
+ 328 00b6 08DD     		ble	.L27
+ 329 00b8 1621     		movs	r1, #22
+ 330 00ba 9171     		strb	r1, [r2, #6]
+ 331              	.L28:
+ 332 00bc 0123     		movs	r3, #1
+ 333 00be 0931     		adds	r1, r1, #9
+ 334 00c0 1370     		strb	r3, [r2]
+ 335 00c2 5370     		strb	r3, [r2, #1]
+ 336 00c4 0E48     		ldr	r0, .L34+8
+ 337 00c6 4BB2     		sxtb	r3, r1
+ 338 00c8 EBE7     		b	.L31
+ 339              	.L27:
+ 340 00ca 9171     		strb	r1, [r2, #6]
+ 341 00cc 0F29     		cmp	r1, #15
+ 342 00ce F5DC     		bgt	.L28
+ 343 00d0 E1E7     		b	.L26
+ 344              	.L15:
+ 345 00d2 0B1C     		adds	r3, r1, #0
+ 346 00d4 0D29     		cmp	r1, #13
+ 347 00d6 09DD     		ble	.L29
+ 348 00d8 0D23     		movs	r3, #13
+ 349              	.L30:
+ 350 00da 0221     		movs	r1, #2
+ 351 00dc 1800     		movs	r0, r3
+ 352 00de 1170     		strb	r1, [r2]
+ 353 00e0 0021     		movs	r1, #0
+ARM GAS  /tmp/ccoRsBme.s 			page 7
 
 
- 350 00c2 5370     		strb	r3, [r2, #1]
- 351 00c4 0E48     		ldr	r0, .L36+8
- 352 00c6 4BB2     		sxtb	r3, r1
- 353 00c8 EBE7     		b	.L33
- 354              	.L29:
- 355 00ca 9171     		strb	r1, [r2, #6]
- 356 00cc 0F29     		cmp	r1, #15
- 357 00ce F5DC     		bgt	.L30
- 358 00d0 E1E7     		b	.L28
- 359              	.L17:
- 360 00d2 0B1C     		adds	r3, r1, #0
- 361 00d4 0D29     		cmp	r1, #13
- 362 00d6 09DD     		ble	.L31
- 363 00d8 0D23     		movs	r3, #13
- 364              	.L32:
- 365 00da 0221     		movs	r1, #2
- 366 00dc 1800     		movs	r0, r3
- 367 00de 1170     		strb	r1, [r2]
- 368 00e0 0021     		movs	r1, #0
- 369 00e2 1230     		adds	r0, r0, #18
- 370 00e4 084C     		ldr	r4, .L36+16
- 371 00e6 5170     		strb	r1, [r2, #1]
- 372 00e8 40B2     		sxtb	r0, r0
- 373 00ea 9DE7     		b	.L34
- 374              	.L31:
- 375 00ec 49B2     		sxtb	r1, r1
- 376 00ee 1231     		adds	r1, r1, #18
- 377 00f0 F3DA     		bge	.L32
- 378 00f2 064B     		ldr	r3, .L36+20
- 379 00f4 1B78     		ldrb	r3, [r3]
- 380 00f6 F0E7     		b	.L32
- 381              	.L37:
- 382              		.align	2
- 383              	.L36:
- 384 00f8 00000000 		.word	.LANCHOR0
- 385 00fc 00000000 		.word	.LC7
- 386 0100 00000000 		.word	.LANCHOR1
- 387 0104 01000000 		.word	.LC8
- 388 0108 00000000 		.word	.LANCHOR2
- 389 010c 02000000 		.word	.LC9
- 391              		.section	.text.ral_lr11xx_bsp_get_tx_cfg,"ax",%progbits
- 392              		.align	1
- 393              		.global	ral_lr11xx_bsp_get_tx_cfg
- 394              		.syntax unified
- 395              		.code	16
- 396              		.thumb_func
- 397              		.fpu softvfp
- 399              	ral_lr11xx_bsp_get_tx_cfg:
- 400              		@ args = 0, pretend = 0, frame = 8
- 401              		@ frame_needed = 0, uses_anonymous_args = 0
- 402 0000 37B5     		push	{r0, r1, r2, r4, r5, lr}
- 403 0002 6B46     		mov	r3, sp
- 404 0004 0D00     		movs	r5, r1
- 405 0006 0020     		movs	r0, #0
- 406 0008 D91D     		adds	r1, r3, #7
- 407 000a 1400     		movs	r4, r2
- 408 000c FFF7FEFF 		bl	smtc_modem_get_tx_power_offset_db
-ARM GAS  /tmp/cc2rzIHB.s 			page 8
+ 354 00e2 1230     		adds	r0, r0, #18
+ 355 00e4 084C     		ldr	r4, .L34+16
+ 356 00e6 5170     		strb	r1, [r2, #1]
+ 357 00e8 40B2     		sxtb	r0, r0
+ 358 00ea 9DE7     		b	.L32
+ 359              	.L29:
+ 360 00ec 49B2     		sxtb	r1, r1
+ 361 00ee 1231     		adds	r1, r1, #18
+ 362 00f0 F3DA     		bge	.L30
+ 363 00f2 064B     		ldr	r3, .L34+20
+ 364 00f4 1B78     		ldrb	r3, [r3]
+ 365 00f6 F0E7     		b	.L30
+ 366              	.L35:
+ 367              		.align	2
+ 368              	.L34:
+ 369 00f8 00000000 		.word	.LANCHOR0
+ 370 00fc 00000000 		.word	.LC3
+ 371 0100 00000000 		.word	.LANCHOR1
+ 372 0104 01000000 		.word	.LC4
+ 373 0108 00000000 		.word	.LANCHOR2
+ 374 010c 02000000 		.word	.LC5
+ 376              		.section	.text.ral_lr11xx_bsp_get_tx_cfg,"ax",%progbits
+ 377              		.align	1
+ 378              		.global	ral_lr11xx_bsp_get_tx_cfg
+ 379              		.syntax unified
+ 380              		.code	16
+ 381              		.thumb_func
+ 382              		.fpu softvfp
+ 384              	ral_lr11xx_bsp_get_tx_cfg:
+ 385              		@ args = 0, pretend = 0, frame = 8
+ 386              		@ frame_needed = 0, uses_anonymous_args = 0
+ 387 0000 37B5     		push	{r0, r1, r2, r4, r5, lr}
+ 388 0002 6B46     		mov	r3, sp
+ 389 0004 0D00     		movs	r5, r1
+ 390 0006 0020     		movs	r0, #0
+ 391 0008 D91D     		adds	r1, r3, #7
+ 392 000a 1400     		movs	r4, r2
+ 393 000c FFF7FEFF 		bl	smtc_modem_get_tx_power_offset_db
+ 394 0010 0028     		cmp	r0, #0
+ 395 0012 02D0     		beq	.L37
+ 396 0014 0023     		movs	r3, #0
+ 397 0016 6A46     		mov	r2, sp
+ 398 0018 D371     		strb	r3, [r2, #7]
+ 399              	.L37:
+ 400 001a 6B46     		mov	r3, sp
+ 401              		@ sp needed
+ 402 001c 6A68     		ldr	r2, [r5, #4]
+ 403 001e 0021     		movs	r1, #0
+ 404 0020 0648     		ldr	r0, .L43
+ 405 0022 DB79     		ldrb	r3, [r3, #7]
+ 406 0024 9042     		cmp	r0, r2
+ 407 0026 8041     		sbcs	r0, r0, r0
+ 408 0028 6956     		ldrsb	r1, [r5, r1]
+ 409 002a 5BB2     		sxtb	r3, r3
+ 410 002c C918     		adds	r1, r1, r3
+ 411 002e 4042     		rsbs	r0, r0, #0
+ 412 0030 2200     		movs	r2, r4
+ARM GAS  /tmp/ccoRsBme.s 			page 8
 
 
- 409 0010 0028     		cmp	r0, #0
- 410 0012 02D0     		beq	.L39
- 411 0014 0023     		movs	r3, #0
- 412 0016 6A46     		mov	r2, sp
- 413 0018 D371     		strb	r3, [r2, #7]
- 414              	.L39:
- 415 001a 6B46     		mov	r3, sp
- 416              		@ sp needed
- 417 001c 6A68     		ldr	r2, [r5, #4]
- 418 001e 0021     		movs	r1, #0
- 419 0020 0648     		ldr	r0, .L45
- 420 0022 DB79     		ldrb	r3, [r3, #7]
- 421 0024 9042     		cmp	r0, r2
- 422 0026 8041     		sbcs	r0, r0, r0
- 423 0028 6956     		ldrsb	r1, [r5, r1]
- 424 002a 5BB2     		sxtb	r3, r3
- 425 002c C918     		adds	r1, r1, r3
- 426 002e 4042     		rsbs	r0, r0, #0
- 427 0030 2200     		movs	r2, r4
- 428 0032 0230     		adds	r0, r0, #2
- 429 0034 49B2     		sxtb	r1, r1
- 430 0036 FFF7FEFF 		bl	lr11xx_get_tx_cfg
- 431 003a 37BD     		pop	{r0, r1, r2, r4, r5, pc}
- 432              	.L46:
- 433              		.align	2
- 434              	.L45:
- 435 003c FF170D8F 		.word	-1894967297
- 437              		.global	pa_hf_cfg_table
- 438              		.global	pa_hp_cfg_table
- 439              		.global	pa_lp_cfg_table
- 440              		.section	.rodata.pa_hf_cfg_table,"a"
- 441              		.set	.LANCHOR2,. + 0
- 444              	pa_hf_cfg_table:
- 445 0000 EE       		.byte	-18
- 446 0001 04       		.byte	4
- 447 0002 00       		.byte	0
- 448 0003 EE       		.byte	-18
- 449 0004 04       		.byte	4
- 450 0005 00       		.byte	0
- 451 0006 EF       		.byte	-17
- 452 0007 04       		.byte	4
- 453 0008 00       		.byte	0
- 454 0009 F0       		.byte	-16
- 455 000a 04       		.byte	4
- 456 000b 00       		.byte	0
- 457 000c F1       		.byte	-15
- 458 000d 04       		.byte	4
- 459 000e 00       		.byte	0
- 460 000f F2       		.byte	-14
- 461 0010 04       		.byte	4
- 462 0011 00       		.byte	0
- 463 0012 F2       		.byte	-14
- 464 0013 04       		.byte	4
- 465 0014 00       		.byte	0
- 466 0015 F4       		.byte	-12
- 467 0016 04       		.byte	4
- 468 0017 00       		.byte	0
-ARM GAS  /tmp/cc2rzIHB.s 			page 9
+ 413 0032 0230     		adds	r0, r0, #2
+ 414 0034 49B2     		sxtb	r1, r1
+ 415 0036 FFF7FEFF 		bl	lr11xx_get_tx_cfg
+ 416 003a 37BD     		pop	{r0, r1, r2, r4, r5, pc}
+ 417              	.L44:
+ 418              		.align	2
+ 419              	.L43:
+ 420 003c FF170D8F 		.word	-1894967297
+ 422              		.global	pa_hf_cfg_table
+ 423              		.global	pa_hp_cfg_table
+ 424              		.global	pa_lp_cfg_table
+ 425              		.section	.rodata.pa_hf_cfg_table,"a"
+ 426              		.set	.LANCHOR2,. + 0
+ 429              	pa_hf_cfg_table:
+ 430 0000 EE       		.byte	-18
+ 431 0001 04       		.byte	4
+ 432 0002 00       		.byte	0
+ 433 0003 EE       		.byte	-18
+ 434 0004 04       		.byte	4
+ 435 0005 00       		.byte	0
+ 436 0006 EF       		.byte	-17
+ 437 0007 04       		.byte	4
+ 438 0008 00       		.byte	0
+ 439 0009 F0       		.byte	-16
+ 440 000a 04       		.byte	4
+ 441 000b 00       		.byte	0
+ 442 000c F1       		.byte	-15
+ 443 000d 04       		.byte	4
+ 444 000e 00       		.byte	0
+ 445 000f F2       		.byte	-14
+ 446 0010 04       		.byte	4
+ 447 0011 00       		.byte	0
+ 448 0012 F2       		.byte	-14
+ 449 0013 04       		.byte	4
+ 450 0014 00       		.byte	0
+ 451 0015 F4       		.byte	-12
+ 452 0016 04       		.byte	4
+ 453 0017 00       		.byte	0
+ 454 0018 F6       		.byte	-10
+ 455 0019 04       		.byte	4
+ 456 001a 00       		.byte	0
+ 457 001b F7       		.byte	-9
+ 458 001c 04       		.byte	4
+ 459 001d 00       		.byte	0
+ 460 001e F8       		.byte	-8
+ 461 001f 04       		.byte	4
+ 462 0020 00       		.byte	0
+ 463 0021 F9       		.byte	-7
+ 464 0022 04       		.byte	4
+ 465 0023 00       		.byte	0
+ 466 0024 FA       		.byte	-6
+ 467 0025 04       		.byte	4
+ 468 0026 00       		.byte	0
+ 469 0027 FB       		.byte	-5
+ 470 0028 04       		.byte	4
+ 471 0029 00       		.byte	0
+ 472 002a FC       		.byte	-4
+ARM GAS  /tmp/ccoRsBme.s 			page 9
 
 
- 469 0018 F6       		.byte	-10
- 470 0019 04       		.byte	4
- 471 001a 00       		.byte	0
- 472 001b F7       		.byte	-9
- 473 001c 04       		.byte	4
- 474 001d 00       		.byte	0
- 475 001e F8       		.byte	-8
- 476 001f 04       		.byte	4
- 477 0020 00       		.byte	0
- 478 0021 F9       		.byte	-7
- 479 0022 04       		.byte	4
- 480 0023 00       		.byte	0
- 481 0024 FA       		.byte	-6
- 482 0025 04       		.byte	4
- 483 0026 00       		.byte	0
- 484 0027 FB       		.byte	-5
- 485 0028 04       		.byte	4
- 486 0029 00       		.byte	0
- 487 002a FC       		.byte	-4
- 488 002b 04       		.byte	4
- 489 002c 00       		.byte	0
- 490 002d FD       		.byte	-3
- 491 002e 04       		.byte	4
- 492 002f 00       		.byte	0
- 493 0030 FE       		.byte	-2
- 494 0031 03       		.byte	3
- 495 0032 00       		.byte	0
- 496 0033 FF       		.byte	-1
- 497 0034 04       		.byte	4
- 498 0035 00       		.byte	0
- 499 0036 00       		.byte	0
- 500 0037 04       		.byte	4
- 501 0038 00       		.byte	0
- 502 0039 01       		.byte	1
- 503 003a 00       		.byte	0
- 504 003b 00       		.byte	0
- 505 003c 02       		.byte	2
- 506 003d 00       		.byte	0
- 507 003e 00       		.byte	0
- 508 003f 04       		.byte	4
- 509 0040 04       		.byte	4
- 510 0041 00       		.byte	0
- 511 0042 05       		.byte	5
- 512 0043 04       		.byte	4
- 513 0044 00       		.byte	0
- 514 0045 06       		.byte	6
- 515 0046 04       		.byte	4
- 516 0047 00       		.byte	0
- 517 0048 07       		.byte	7
- 518 0049 04       		.byte	4
- 519 004a 00       		.byte	0
- 520 004b 08       		.byte	8
- 521 004c 04       		.byte	4
- 522 004d 00       		.byte	0
- 523 004e 09       		.byte	9
- 524 004f 04       		.byte	4
- 525 0050 00       		.byte	0
-ARM GAS  /tmp/cc2rzIHB.s 			page 10
+ 473 002b 04       		.byte	4
+ 474 002c 00       		.byte	0
+ 475 002d FD       		.byte	-3
+ 476 002e 04       		.byte	4
+ 477 002f 00       		.byte	0
+ 478 0030 FE       		.byte	-2
+ 479 0031 03       		.byte	3
+ 480 0032 00       		.byte	0
+ 481 0033 FF       		.byte	-1
+ 482 0034 04       		.byte	4
+ 483 0035 00       		.byte	0
+ 484 0036 00       		.byte	0
+ 485 0037 04       		.byte	4
+ 486 0038 00       		.byte	0
+ 487 0039 01       		.byte	1
+ 488 003a 00       		.byte	0
+ 489 003b 00       		.byte	0
+ 490 003c 02       		.byte	2
+ 491 003d 00       		.byte	0
+ 492 003e 00       		.byte	0
+ 493 003f 04       		.byte	4
+ 494 0040 04       		.byte	4
+ 495 0041 00       		.byte	0
+ 496 0042 05       		.byte	5
+ 497 0043 04       		.byte	4
+ 498 0044 00       		.byte	0
+ 499 0045 06       		.byte	6
+ 500 0046 04       		.byte	4
+ 501 0047 00       		.byte	0
+ 502 0048 07       		.byte	7
+ 503 0049 04       		.byte	4
+ 504 004a 00       		.byte	0
+ 505 004b 08       		.byte	8
+ 506 004c 04       		.byte	4
+ 507 004d 00       		.byte	0
+ 508 004e 09       		.byte	9
+ 509 004f 04       		.byte	4
+ 510 0050 00       		.byte	0
+ 511 0051 0A       		.byte	10
+ 512 0052 04       		.byte	4
+ 513 0053 00       		.byte	0
+ 514 0054 0B       		.byte	11
+ 515 0055 04       		.byte	4
+ 516 0056 00       		.byte	0
+ 517 0057 0C       		.byte	12
+ 518 0058 03       		.byte	3
+ 519 0059 00       		.byte	0
+ 520 005a 0D       		.byte	13
+ 521 005b 04       		.byte	4
+ 522 005c 00       		.byte	0
+ 523 005d 0D       		.byte	13
+ 524 005e 00       		.byte	0
+ 525 005f 00       		.byte	0
+ 526              		.section	.rodata.pa_hp_cfg_table,"a"
+ 527              		.set	.LANCHOR1,. + 0
+ 530              	pa_hp_cfg_table:
+ 531 0000 09       		.byte	9
+ARM GAS  /tmp/ccoRsBme.s 			page 10
 
 
- 526 0051 0A       		.byte	10
- 527 0052 04       		.byte	4
- 528 0053 00       		.byte	0
- 529 0054 0B       		.byte	11
- 530 0055 04       		.byte	4
- 531 0056 00       		.byte	0
- 532 0057 0C       		.byte	12
- 533 0058 03       		.byte	3
- 534 0059 00       		.byte	0
- 535 005a 0D       		.byte	13
- 536 005b 04       		.byte	4
- 537 005c 00       		.byte	0
- 538 005d 0D       		.byte	13
- 539 005e 00       		.byte	0
- 540 005f 00       		.byte	0
- 541              		.section	.rodata.pa_hp_cfg_table,"a"
- 542              		.set	.LANCHOR1,. + 0
- 545              	pa_hp_cfg_table:
- 546 0000 09       		.byte	9
- 547 0001 00       		.byte	0
- 548 0002 00       		.byte	0
- 549 0003 0A       		.byte	10
- 550 0004 00       		.byte	0
- 551 0005 00       		.byte	0
- 552 0006 0B       		.byte	11
- 553 0007 00       		.byte	0
- 554 0008 00       		.byte	0
- 555 0009 0C       		.byte	12
- 556 000a 00       		.byte	0
- 557 000b 00       		.byte	0
- 558 000c 0D       		.byte	13
- 559 000d 00       		.byte	0
- 560 000e 00       		.byte	0
- 561 000f 0D       		.byte	13
- 562 0010 01       		.byte	1
- 563 0011 00       		.byte	0
- 564 0012 0D       		.byte	13
- 565 0013 02       		.byte	2
- 566 0014 00       		.byte	0
- 567 0015 11       		.byte	17
- 568 0016 02       		.byte	2
- 569 0017 00       		.byte	0
- 570 0018 0E       		.byte	14
- 571 0019 04       		.byte	4
- 572 001a 00       		.byte	0
- 573 001b 0C       		.byte	12
- 574 001c 00       		.byte	0
- 575 001d 01       		.byte	1
- 576 001e 0D       		.byte	13
- 577 001f 00       		.byte	0
- 578 0020 01       		.byte	1
- 579 0021 0D       		.byte	13
- 580 0022 01       		.byte	1
- 581 0023 01       		.byte	1
- 582 0024 0D       		.byte	13
- 583 0025 02       		.byte	2
- 584 0026 01       		.byte	1
-ARM GAS  /tmp/cc2rzIHB.s 			page 11
+ 532 0001 00       		.byte	0
+ 533 0002 00       		.byte	0
+ 534 0003 0A       		.byte	10
+ 535 0004 00       		.byte	0
+ 536 0005 00       		.byte	0
+ 537 0006 0B       		.byte	11
+ 538 0007 00       		.byte	0
+ 539 0008 00       		.byte	0
+ 540 0009 0C       		.byte	12
+ 541 000a 00       		.byte	0
+ 542 000b 00       		.byte	0
+ 543 000c 0D       		.byte	13
+ 544 000d 00       		.byte	0
+ 545 000e 00       		.byte	0
+ 546 000f 0D       		.byte	13
+ 547 0010 01       		.byte	1
+ 548 0011 00       		.byte	0
+ 549 0012 0D       		.byte	13
+ 550 0013 02       		.byte	2
+ 551 0014 00       		.byte	0
+ 552 0015 11       		.byte	17
+ 553 0016 02       		.byte	2
+ 554 0017 00       		.byte	0
+ 555 0018 0E       		.byte	14
+ 556 0019 04       		.byte	4
+ 557 001a 00       		.byte	0
+ 558 001b 0C       		.byte	12
+ 559 001c 00       		.byte	0
+ 560 001d 01       		.byte	1
+ 561 001e 0D       		.byte	13
+ 562 001f 00       		.byte	0
+ 563 0020 01       		.byte	1
+ 564 0021 0D       		.byte	13
+ 565 0022 01       		.byte	1
+ 566 0023 01       		.byte	1
+ 567 0024 0D       		.byte	13
+ 568 0025 02       		.byte	2
+ 569 0026 01       		.byte	1
+ 570 0027 0F       		.byte	15
+ 571 0028 00       		.byte	0
+ 572 0029 02       		.byte	2
+ 573 002a 0F       		.byte	15
+ 574 002b 04       		.byte	4
+ 575 002c 01       		.byte	1
+ 576 002d 0E       		.byte	14
+ 577 002e 02       		.byte	2
+ 578 002f 02       		.byte	2
+ 579 0030 0E       		.byte	14
+ 580 0031 01       		.byte	1
+ 581 0032 03       		.byte	3
+ 582 0033 11       		.byte	17
+ 583 0034 04       		.byte	4
+ 584 0035 02       		.byte	2
+ 585 0036 16       		.byte	22
+ 586 0037 00       		.byte	0
+ 587 0038 01       		.byte	1
+ 588 0039 16       		.byte	22
+ARM GAS  /tmp/ccoRsBme.s 			page 11
 
 
- 585 0027 0F       		.byte	15
- 586 0028 00       		.byte	0
- 587 0029 02       		.byte	2
- 588 002a 0F       		.byte	15
- 589 002b 04       		.byte	4
- 590 002c 01       		.byte	1
- 591 002d 0E       		.byte	14
- 592 002e 02       		.byte	2
- 593 002f 02       		.byte	2
- 594 0030 0E       		.byte	14
- 595 0031 01       		.byte	1
- 596 0032 03       		.byte	3
- 597 0033 11       		.byte	17
- 598 0034 04       		.byte	4
- 599 0035 02       		.byte	2
- 600 0036 16       		.byte	22
- 601 0037 00       		.byte	0
- 602 0038 01       		.byte	1
- 603 0039 16       		.byte	22
- 604 003a 01       		.byte	1
- 605 003b 01       		.byte	1
- 606 003c 16       		.byte	22
- 607 003d 02       		.byte	2
- 608 003e 01       		.byte	1
- 609 003f 16       		.byte	22
- 610 0040 03       		.byte	3
- 611 0041 01       		.byte	1
- 612 0042 16       		.byte	22
- 613 0043 00       		.byte	0
- 614 0044 03       		.byte	3
- 615 0045 16       		.byte	22
- 616 0046 01       		.byte	1
- 617 0047 03       		.byte	3
- 618 0048 16       		.byte	22
- 619 0049 04       		.byte	4
- 620 004a 02       		.byte	2
- 621 004b 16       		.byte	22
- 622 004c 01       		.byte	1
- 623 004d 04       		.byte	4
- 624 004e 16       		.byte	22
- 625 004f 02       		.byte	2
- 626 0050 04       		.byte	4
- 627 0051 16       		.byte	22
- 628 0052 01       		.byte	1
- 629 0053 06       		.byte	6
- 630 0054 16       		.byte	22
- 631 0055 03       		.byte	3
- 632 0056 05       		.byte	5
- 633 0057 16       		.byte	22
- 634 0058 03       		.byte	3
- 635 0059 07       		.byte	7
- 636 005a 16       		.byte	22
- 637 005b 04       		.byte	4
- 638 005c 06       		.byte	6
- 639 005d 16       		.byte	22
- 640 005e 04       		.byte	4
- 641 005f 07       		.byte	7
-ARM GAS  /tmp/cc2rzIHB.s 			page 12
+ 589 003a 01       		.byte	1
+ 590 003b 01       		.byte	1
+ 591 003c 16       		.byte	22
+ 592 003d 02       		.byte	2
+ 593 003e 01       		.byte	1
+ 594 003f 16       		.byte	22
+ 595 0040 03       		.byte	3
+ 596 0041 01       		.byte	1
+ 597 0042 16       		.byte	22
+ 598 0043 00       		.byte	0
+ 599 0044 03       		.byte	3
+ 600 0045 16       		.byte	22
+ 601 0046 01       		.byte	1
+ 602 0047 03       		.byte	3
+ 603 0048 16       		.byte	22
+ 604 0049 04       		.byte	4
+ 605 004a 02       		.byte	2
+ 606 004b 16       		.byte	22
+ 607 004c 01       		.byte	1
+ 608 004d 04       		.byte	4
+ 609 004e 16       		.byte	22
+ 610 004f 02       		.byte	2
+ 611 0050 04       		.byte	4
+ 612 0051 16       		.byte	22
+ 613 0052 01       		.byte	1
+ 614 0053 06       		.byte	6
+ 615 0054 16       		.byte	22
+ 616 0055 03       		.byte	3
+ 617 0056 05       		.byte	5
+ 618 0057 16       		.byte	22
+ 619 0058 03       		.byte	3
+ 620 0059 07       		.byte	7
+ 621 005a 16       		.byte	22
+ 622 005b 04       		.byte	4
+ 623 005c 06       		.byte	6
+ 624 005d 16       		.byte	22
+ 625 005e 04       		.byte	4
+ 626 005f 07       		.byte	7
+ 627              		.section	.rodata.pa_lp_cfg_table,"a"
+ 628              		.set	.LANCHOR0,. + 0
+ 631              	pa_lp_cfg_table:
+ 632 0000 F1       		.byte	-15
+ 633 0001 00       		.byte	0
+ 634 0002 00       		.byte	0
+ 635 0003 F2       		.byte	-14
+ 636 0004 00       		.byte	0
+ 637 0005 00       		.byte	0
+ 638 0006 F3       		.byte	-13
+ 639 0007 00       		.byte	0
+ 640 0008 00       		.byte	0
+ 641 0009 F4       		.byte	-12
+ 642 000a 00       		.byte	0
+ 643 000b 00       		.byte	0
+ 644 000c F5       		.byte	-11
+ 645 000d 00       		.byte	0
+ 646 000e 00       		.byte	0
+ 647 000f F7       		.byte	-9
+ARM GAS  /tmp/ccoRsBme.s 			page 12
 
 
- 642              		.section	.rodata.pa_lp_cfg_table,"a"
- 643              		.set	.LANCHOR0,. + 0
- 646              	pa_lp_cfg_table:
- 647 0000 F1       		.byte	-15
- 648 0001 00       		.byte	0
- 649 0002 00       		.byte	0
- 650 0003 F2       		.byte	-14
- 651 0004 00       		.byte	0
- 652 0005 00       		.byte	0
- 653 0006 F3       		.byte	-13
- 654 0007 00       		.byte	0
- 655 0008 00       		.byte	0
- 656 0009 F4       		.byte	-12
- 657 000a 00       		.byte	0
- 658 000b 00       		.byte	0
- 659 000c F5       		.byte	-11
- 660 000d 00       		.byte	0
- 661 000e 00       		.byte	0
- 662 000f F7       		.byte	-9
- 663 0010 00       		.byte	0
- 664 0011 00       		.byte	0
- 665 0012 F8       		.byte	-8
- 666 0013 00       		.byte	0
- 667 0014 00       		.byte	0
- 668 0015 F9       		.byte	-7
- 669 0016 00       		.byte	0
- 670 0017 00       		.byte	0
- 671 0018 FA       		.byte	-6
- 672 0019 00       		.byte	0
- 673 001a 00       		.byte	0
- 674 001b FB       		.byte	-5
- 675 001c 00       		.byte	0
- 676 001d 00       		.byte	0
- 677 001e FC       		.byte	-4
- 678 001f 00       		.byte	0
- 679 0020 00       		.byte	0
- 680 0021 FD       		.byte	-3
- 681 0022 00       		.byte	0
- 682 0023 00       		.byte	0
- 683 0024 FE       		.byte	-2
- 684 0025 00       		.byte	0
- 685 0026 00       		.byte	0
- 686 0027 FF       		.byte	-1
- 687 0028 00       		.byte	0
- 688 0029 00       		.byte	0
- 689 002a 00       		.byte	0
- 690 002b 00       		.byte	0
- 691 002c 00       		.byte	0
- 692 002d 01       		.byte	1
- 693 002e 00       		.byte	0
- 694 002f 00       		.byte	0
- 695 0030 02       		.byte	2
- 696 0031 00       		.byte	0
- 697 0032 00       		.byte	0
- 698 0033 03       		.byte	3
- 699 0034 00       		.byte	0
- 700 0035 00       		.byte	0
-ARM GAS  /tmp/cc2rzIHB.s 			page 13
+ 648 0010 00       		.byte	0
+ 649 0011 00       		.byte	0
+ 650 0012 F8       		.byte	-8
+ 651 0013 00       		.byte	0
+ 652 0014 00       		.byte	0
+ 653 0015 F9       		.byte	-7
+ 654 0016 00       		.byte	0
+ 655 0017 00       		.byte	0
+ 656 0018 FA       		.byte	-6
+ 657 0019 00       		.byte	0
+ 658 001a 00       		.byte	0
+ 659 001b FB       		.byte	-5
+ 660 001c 00       		.byte	0
+ 661 001d 00       		.byte	0
+ 662 001e FC       		.byte	-4
+ 663 001f 00       		.byte	0
+ 664 0020 00       		.byte	0
+ 665 0021 FD       		.byte	-3
+ 666 0022 00       		.byte	0
+ 667 0023 00       		.byte	0
+ 668 0024 FE       		.byte	-2
+ 669 0025 00       		.byte	0
+ 670 0026 00       		.byte	0
+ 671 0027 FF       		.byte	-1
+ 672 0028 00       		.byte	0
+ 673 0029 00       		.byte	0
+ 674 002a 00       		.byte	0
+ 675 002b 00       		.byte	0
+ 676 002c 00       		.byte	0
+ 677 002d 01       		.byte	1
+ 678 002e 00       		.byte	0
+ 679 002f 00       		.byte	0
+ 680 0030 02       		.byte	2
+ 681 0031 00       		.byte	0
+ 682 0032 00       		.byte	0
+ 683 0033 03       		.byte	3
+ 684 0034 00       		.byte	0
+ 685 0035 00       		.byte	0
+ 686 0036 03       		.byte	3
+ 687 0037 01       		.byte	1
+ 688 0038 00       		.byte	0
+ 689 0039 04       		.byte	4
+ 690 003a 01       		.byte	1
+ 691 003b 00       		.byte	0
+ 692 003c 07       		.byte	7
+ 693 003d 00       		.byte	0
+ 694 003e 00       		.byte	0
+ 695 003f 08       		.byte	8
+ 696 0040 00       		.byte	0
+ 697 0041 00       		.byte	0
+ 698 0042 09       		.byte	9
+ 699 0043 00       		.byte	0
+ 700 0044 00       		.byte	0
+ 701 0045 0A       		.byte	10
+ 702 0046 00       		.byte	0
+ 703 0047 00       		.byte	0
+ 704 0048 0C       		.byte	12
+ARM GAS  /tmp/ccoRsBme.s 			page 13
 
 
- 701 0036 03       		.byte	3
- 702 0037 01       		.byte	1
- 703 0038 00       		.byte	0
- 704 0039 04       		.byte	4
- 705 003a 01       		.byte	1
- 706 003b 00       		.byte	0
- 707 003c 07       		.byte	7
- 708 003d 00       		.byte	0
- 709 003e 00       		.byte	0
- 710 003f 08       		.byte	8
- 711 0040 00       		.byte	0
- 712 0041 00       		.byte	0
- 713 0042 09       		.byte	9
- 714 0043 00       		.byte	0
- 715 0044 00       		.byte	0
- 716 0045 0A       		.byte	10
- 717 0046 00       		.byte	0
- 718 0047 00       		.byte	0
- 719 0048 0C       		.byte	12
- 720 0049 00       		.byte	0
- 721 004a 00       		.byte	0
- 722 004b 0D       		.byte	13
- 723 004c 00       		.byte	0
- 724 004d 00       		.byte	0
- 725 004e 0E       		.byte	14
- 726 004f 00       		.byte	0
- 727 0050 00       		.byte	0
- 728 0051 0D       		.byte	13
- 729 0052 01       		.byte	1
- 730 0053 00       		.byte	0
- 731 0054 0D       		.byte	13
- 732 0055 02       		.byte	2
- 733 0056 00       		.byte	0
- 734 0057 0E       		.byte	14
- 735 0058 02       		.byte	2
- 736 0059 00       		.byte	0
- 737 005a 0E       		.byte	14
- 738 005b 03       		.byte	3
- 739 005c 00       		.byte	0
- 740 005d 0E       		.byte	14
- 741 005e 04       		.byte	4
- 742 005f 00       		.byte	0
- 743 0060 0E       		.byte	14
- 744 0061 07       		.byte	7
- 745 0062 00       		.byte	0
- 746              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/cc2rzIHB.s 			page 14
+ 705 0049 00       		.byte	0
+ 706 004a 00       		.byte	0
+ 707 004b 0D       		.byte	13
+ 708 004c 00       		.byte	0
+ 709 004d 00       		.byte	0
+ 710 004e 0E       		.byte	14
+ 711 004f 00       		.byte	0
+ 712 0050 00       		.byte	0
+ 713 0051 0D       		.byte	13
+ 714 0052 01       		.byte	1
+ 715 0053 00       		.byte	0
+ 716 0054 0D       		.byte	13
+ 717 0055 02       		.byte	2
+ 718 0056 00       		.byte	0
+ 719 0057 0E       		.byte	14
+ 720 0058 02       		.byte	2
+ 721 0059 00       		.byte	0
+ 722 005a 0E       		.byte	14
+ 723 005b 03       		.byte	3
+ 724 005c 00       		.byte	0
+ 725 005d 0E       		.byte	14
+ 726 005e 04       		.byte	4
+ 727 005f 00       		.byte	0
+ 728 0060 0E       		.byte	14
+ 729 0061 07       		.byte	7
+ 730 0062 00       		.byte	0
+ 731              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccoRsBme.s 			page 14
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 ral_lr11xx_bsp.c
-     /tmp/cc2rzIHB.s:12     .text.ral_lr11xx_bsp_get_rf_switch_cfg:0000000000000000 $t
-     /tmp/cc2rzIHB.s:20     .text.ral_lr11xx_bsp_get_rf_switch_cfg:0000000000000000 ral_lr11xx_bsp_get_rf_switch_cfg
-     /tmp/cc2rzIHB.s:43     .text.ral_lr11xx_bsp_get_reg_mode:0000000000000000 $t
-     /tmp/cc2rzIHB.s:50     .text.ral_lr11xx_bsp_get_reg_mode:0000000000000000 ral_lr11xx_bsp_get_reg_mode
-     /tmp/cc2rzIHB.s:60     .text.ral_lr11xx_bsp_get_xosc_cfg:0000000000000000 $t
-     /tmp/cc2rzIHB.s:67     .text.ral_lr11xx_bsp_get_xosc_cfg:0000000000000000 ral_lr11xx_bsp_get_xosc_cfg
-     /tmp/cc2rzIHB.s:86     .text.ral_lr11xx_bsp_get_crc_state:0000000000000000 $t
-     /tmp/cc2rzIHB.s:93     .text.ral_lr11xx_bsp_get_crc_state:0000000000000000 ral_lr11xx_bsp_get_crc_state
-     /tmp/cc2rzIHB.s:109    .text.ral_lr11xx_bsp_get_crc_state:0000000000000018 $d
-     /tmp/cc2rzIHB.s:113    .text.ral_lr11xx_bsp_get_rssi_calibration_table:0000000000000000 $t
-     /tmp/cc2rzIHB.s:120    .text.ral_lr11xx_bsp_get_rssi_calibration_table:0000000000000000 ral_lr11xx_bsp_get_rssi_calibration_table
-     /tmp/cc2rzIHB.s:195    .text.ral_lr11xx_bsp_get_rssi_calibration_table:0000000000000080 $d
-     /tmp/cc2rzIHB.s:224    .text.lr11xx_get_tx_cfg:0000000000000000 $t
-     /tmp/cc2rzIHB.s:231    .text.lr11xx_get_tx_cfg:0000000000000000 lr11xx_get_tx_cfg
-     /tmp/cc2rzIHB.s:241    .text.lr11xx_get_tx_cfg:000000000000000e $d
-     /tmp/cc2rzIHB.s:245    .text.lr11xx_get_tx_cfg:0000000000000012 $t
-     /tmp/cc2rzIHB.s:384    .text.lr11xx_get_tx_cfg:00000000000000f8 $d
-     /tmp/cc2rzIHB.s:392    .text.ral_lr11xx_bsp_get_tx_cfg:0000000000000000 $t
-     /tmp/cc2rzIHB.s:399    .text.ral_lr11xx_bsp_get_tx_cfg:0000000000000000 ral_lr11xx_bsp_get_tx_cfg
-     /tmp/cc2rzIHB.s:435    .text.ral_lr11xx_bsp_get_tx_cfg:000000000000003c $d
-     /tmp/cc2rzIHB.s:444    .rodata.pa_hf_cfg_table:0000000000000000 pa_hf_cfg_table
-     /tmp/cc2rzIHB.s:545    .rodata.pa_hp_cfg_table:0000000000000000 pa_hp_cfg_table
-     /tmp/cc2rzIHB.s:646    .rodata.pa_lp_cfg_table:0000000000000000 pa_lp_cfg_table
+     /tmp/ccoRsBme.s:12     .text.ral_lr11xx_bsp_get_rf_switch_cfg:0000000000000000 $t
+     /tmp/ccoRsBme.s:20     .text.ral_lr11xx_bsp_get_rf_switch_cfg:0000000000000000 ral_lr11xx_bsp_get_rf_switch_cfg
+     /tmp/ccoRsBme.s:43     .text.ral_lr11xx_bsp_get_reg_mode:0000000000000000 $t
+     /tmp/ccoRsBme.s:50     .text.ral_lr11xx_bsp_get_reg_mode:0000000000000000 ral_lr11xx_bsp_get_reg_mode
+     /tmp/ccoRsBme.s:60     .text.ral_lr11xx_bsp_get_xosc_cfg:0000000000000000 $t
+     /tmp/ccoRsBme.s:67     .text.ral_lr11xx_bsp_get_xosc_cfg:0000000000000000 ral_lr11xx_bsp_get_xosc_cfg
+     /tmp/ccoRsBme.s:81     .text.ral_lr11xx_bsp_get_crc_state:0000000000000000 $t
+     /tmp/ccoRsBme.s:88     .text.ral_lr11xx_bsp_get_crc_state:0000000000000000 ral_lr11xx_bsp_get_crc_state
+     /tmp/ccoRsBme.s:98     .text.ral_lr11xx_bsp_get_rssi_calibration_table:0000000000000000 $t
+     /tmp/ccoRsBme.s:105    .text.ral_lr11xx_bsp_get_rssi_calibration_table:0000000000000000 ral_lr11xx_bsp_get_rssi_calibration_table
+     /tmp/ccoRsBme.s:180    .text.ral_lr11xx_bsp_get_rssi_calibration_table:0000000000000080 $d
+     /tmp/ccoRsBme.s:209    .text.lr11xx_get_tx_cfg:0000000000000000 $t
+     /tmp/ccoRsBme.s:216    .text.lr11xx_get_tx_cfg:0000000000000000 lr11xx_get_tx_cfg
+     /tmp/ccoRsBme.s:226    .text.lr11xx_get_tx_cfg:000000000000000e $d
+     /tmp/ccoRsBme.s:230    .text.lr11xx_get_tx_cfg:0000000000000012 $t
+     /tmp/ccoRsBme.s:369    .text.lr11xx_get_tx_cfg:00000000000000f8 $d
+     /tmp/ccoRsBme.s:377    .text.ral_lr11xx_bsp_get_tx_cfg:0000000000000000 $t
+     /tmp/ccoRsBme.s:384    .text.ral_lr11xx_bsp_get_tx_cfg:0000000000000000 ral_lr11xx_bsp_get_tx_cfg
+     /tmp/ccoRsBme.s:420    .text.ral_lr11xx_bsp_get_tx_cfg:000000000000003c $d
+     /tmp/ccoRsBme.s:429    .rodata.pa_hf_cfg_table:0000000000000000 pa_hf_cfg_table
+     /tmp/ccoRsBme.s:530    .rodata.pa_hp_cfg_table:0000000000000000 pa_hp_cfg_table
+     /tmp/ccoRsBme.s:631    .rodata.pa_lp_cfg_table:0000000000000000 pa_lp_cfg_table
 
 UNDEFINED SYMBOLS
-hal_trace_print_var
 __gnu_thumb1_case_uqi
 smtc_modem_get_tx_power_offset_db

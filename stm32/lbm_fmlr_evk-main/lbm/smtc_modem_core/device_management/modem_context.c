@@ -1666,38 +1666,6 @@ void modem_store_context( void )
 
     ctx.crc = crc( ( uint8_t* ) &ctx, sizeof( ctx ) - 4 );
     smtc_modem_hal_context_store( CONTEXT_MODEM, ( uint8_t* ) &ctx, sizeof( ctx ) );
-    modem_load_context( );
-}
-
-/*!
- * \brief    load modem context in non volatile memory
- * \remark
- * \retval void
- */
-void modem_load_context( void )
-{
-    modem_context_nvm_t ctx;
-
-    smtc_modem_hal_context_restore( CONTEXT_MODEM, ( uint8_t* ) &ctx, sizeof( ctx ) );
-
-    if( crc( ( uint8_t* ) &ctx, sizeof( ctx ) - 4 ) == ctx.crc )
-    {
-        modem_dm_port = ctx.dm_port;
-        // modem_dm_upload_sctr = ctx.dm_upload_sctr;
-        modem_appkey_status = ctx.appkey_crc_status;
-        modem_appkey_crc    = ctx.appkey_crc;
-
-        SMTC_MODEM_HAL_TRACE_PRINTF( "Modem Load Config :\r\n Port = %d\r\n", modem_dm_port );
-
-#if defined( ADD_SMTC_FILE_UPLOAD )
-        SMTC_MODEM_HAL_TRACE_PRINTF( "Upload_sctr = %d\r\n", modem_dm_upload_sctr );
-#endif  // ADD_SMTC_FILE_UPLOAD
-    }
-    else
-    {
-        SMTC_MODEM_HAL_TRACE_ERROR( "Restore Modem context fail => Factory Reset Modem\r\n" );
-        modem_context_factory_reset( );
-    }
 }
 
 void modem_context_factory_reset( void )

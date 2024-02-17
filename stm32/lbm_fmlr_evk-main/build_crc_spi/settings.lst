@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccwOABox.s 			page 1
+ARM GAS  /tmp/cch8vQfB.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccwOABox.s 			page 1
   54      67733A0A 
   54      00
   55              	.LC9:
-ARM GAS  /tmp/ccwOABox.s 			page 2
+ARM GAS  /tmp/cch8vQfB.s 			page 2
 
 
   56 0011 00       		.ascii	"\000"
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccwOABox.s 			page 1
   83 0006 FFF7FEFF 		bl	hal_trace_print_var
   84 000a 2D4D     		ldr	r5, .L5+4
   85 000c 2800     		movs	r0, r5
-ARM GAS  /tmp/ccwOABox.s 			page 3
+ARM GAS  /tmp/cch8vQfB.s 			page 3
 
 
   86 000e FFF7FEFF 		bl	hal_trace_print_var
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccwOABox.s 			page 1
  140 0084 E07D     		ldrb	r0, [r4, #23]
  141 0086 0590     		str	r0, [sp, #20]
  142 0088 A07D     		ldrb	r0, [r4, #22]
-ARM GAS  /tmp/ccwOABox.s 			page 4
+ARM GAS  /tmp/cch8vQfB.s 			page 4
 
 
  143 008a 0490     		str	r0, [sp, #16]
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccwOABox.s 			page 1
  199              		.set	.LANCHOR1,. + 0
  202              	settings:
  203 0000 00000000 		.space	65
-ARM GAS  /tmp/ccwOABox.s 			page 5
+ARM GAS  /tmp/cch8vQfB.s 			page 5
 
 
  203      00000000 
@@ -246,25 +246,25 @@ ARM GAS  /tmp/ccwOABox.s 			page 1
  203      00000000 
  203      00000000 
  204              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/ccwOABox.s 			page 6
+ARM GAS  /tmp/cch8vQfB.s 			page 6
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 settings.c
-     /tmp/ccwOABox.s:12     .text.settings_init:0000000000000000 $t
-     /tmp/ccwOABox.s:20     .text.settings_init:0000000000000000 settings_init
-     /tmp/ccwOABox.s:47     .text.settings_init:0000000000000030 $d
-     /tmp/ccwOABox.s:70     .text.settings_print:0000000000000000 $t
-     /tmp/ccwOABox.s:77     .text.settings_print:0000000000000000 settings_print
-     /tmp/ccwOABox.s:167    .text.settings_print:00000000000000bc $d
-     /tmp/ccwOABox.s:202    .bss.settings:0000000000000000 settings
-     /tmp/ccwOABox.s:177    .bss.deveui:0000000000000000 $d
-     /tmp/ccwOABox.s:181    .bss.deveui:0000000000000000 deveui
-     /tmp/ccwOABox.s:184    .bss.joineui:0000000000000000 $d
-     /tmp/ccwOABox.s:188    .bss.joineui:0000000000000000 joineui
-     /tmp/ccwOABox.s:191    .bss.nwkey:0000000000000000 $d
-     /tmp/ccwOABox.s:195    .bss.nwkey:0000000000000000 nwkey
-     /tmp/ccwOABox.s:198    .bss.settings:0000000000000000 $d
+     /tmp/cch8vQfB.s:12     .text.settings_init:0000000000000000 $t
+     /tmp/cch8vQfB.s:20     .text.settings_init:0000000000000000 settings_init
+     /tmp/cch8vQfB.s:47     .text.settings_init:0000000000000030 $d
+     /tmp/cch8vQfB.s:70     .text.settings_print:0000000000000000 $t
+     /tmp/cch8vQfB.s:77     .text.settings_print:0000000000000000 settings_print
+     /tmp/cch8vQfB.s:167    .text.settings_print:00000000000000bc $d
+     /tmp/cch8vQfB.s:202    .bss.settings:0000000000000000 settings
+     /tmp/cch8vQfB.s:177    .bss.deveui:0000000000000000 $d
+     /tmp/cch8vQfB.s:181    .bss.deveui:0000000000000000 deveui
+     /tmp/cch8vQfB.s:184    .bss.joineui:0000000000000000 $d
+     /tmp/cch8vQfB.s:188    .bss.joineui:0000000000000000 joineui
+     /tmp/cch8vQfB.s:191    .bss.nwkey:0000000000000000 $d
+     /tmp/cch8vQfB.s:195    .bss.nwkey:0000000000000000 nwkey
+     /tmp/cch8vQfB.s:198    .bss.settings:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 memcpy

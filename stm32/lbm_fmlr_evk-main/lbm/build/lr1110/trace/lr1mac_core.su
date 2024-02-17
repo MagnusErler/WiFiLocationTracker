@@ -19,7 +19,7 @@ smtc_modem_core/lr1mac/src/lr1mac_core.c:757:10:lr1mac_core_devnonce_get	0	stati
 smtc_modem_core/lr1mac/src/lr1mac_core.c:762:9:lr1mac_core_last_snr_get	0	static
 smtc_modem_core/lr1mac/src/lr1mac_core.c:767:9:lr1mac_core_last_rssi_get	0	static
 smtc_modem_core/lr1mac/src/lr1mac_core.c:772:18:lr1mac_core_context_load	8	static
-smtc_modem_core/lr1mac/src/lr1mac_core.c:98:6:lr1mac_core_init	168	static
+smtc_modem_core/lr1mac/src/lr1mac_core.c:98:6:lr1mac_core_init	152	static
 smtc_modem_core/lr1mac/src/lr1mac_core.c:791:15:lr1mac_core_rx_window_get	0	static
 smtc_modem_core/lr1mac/src/lr1mac_core.c:796:10:lr1mac_core_fcnt_up_get	0	static
 smtc_modem_core/lr1mac/src/lr1mac_core.c:801:10:lr1mac_core_next_join_time_second_get	0	static

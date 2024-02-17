@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccayoFF5.s 			page 1
+ARM GAS  /tmp/ccDE1P1u.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
   56 0042 9868     		ldr	r0, [r3, #8]
   57 0044 0901     		lsls	r1, r1, #4
   58 0046 0143     		orrs	r1, r0
-ARM GAS  /tmp/ccayoFF5.s 			page 2
+ARM GAS  /tmp/ccDE1P1u.s 			page 2
 
 
   59 0048 9960     		str	r1, [r3, #8]
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  115 003a 3243     		orrs	r2, r6
  116 003c DA60     		str	r2, [r3, #12]
  117 003e 8022     		movs	r2, #128
-ARM GAS  /tmp/ccayoFF5.s 			page 3
+ARM GAS  /tmp/ccDE1P1u.s 			page 3
 
 
  118 0040 9960     		str	r1, [r3, #8]
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  174 0014 1B68     		ldr	r3, [r3]
  175 0016 C832     		adds	r2, r2, #200
  176 0018 5A62     		str	r2, [r3, #36]
-ARM GAS  /tmp/ccayoFF5.s 			page 4
+ARM GAS  /tmp/ccDE1P1u.s 			page 4
 
 
  177 001a 773A     		subs	r2, r2, #119
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  233 0028 6346     		mov	r3, ip
  234 002a 4021     		movs	r1, #64
  235 002c 1940     		ands	r1, r3
-ARM GAS  /tmp/ccayoFF5.s 			page 5
+ARM GAS  /tmp/ccDE1P1u.s 			page 5
 
 
  236 002e 2870     		strb	r0, [r5]
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  291              		.thumb_func
  292              		.fpu softvfp
  294              	HAL_RTCEx_SetTamper:
-ARM GAS  /tmp/ccayoFF5.s 			page 6
+ARM GAS  /tmp/ccDE1P1u.s 			page 6
 
 
  295              		@ args = 0, pretend = 0, frame = 0
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  349 0060 0F61     		str	r7, [r1, #16]
  350              	.L32:
  351 0062 1307     		lsls	r3, r2, #28
-ARM GAS  /tmp/ccayoFF5.s 			page 7
+ARM GAS  /tmp/ccDE1P1u.s 			page 7
 
 
  352 0064 04D5     		bpl	.L33
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  406 00c4 8023     		movs	r3, #128
  407 00c6 DB02     		lsls	r3, r3, #11
  408 00c8 0B61     		str	r3, [r1, #16]
-ARM GAS  /tmp/ccayoFF5.s 			page 8
+ARM GAS  /tmp/ccDE1P1u.s 			page 8
 
 
  409 00ca CAE7     		b	.L32
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  465 0048 CF68     		ldr	r7, [r1, #12]
  466 004a 1B04     		lsls	r3, r3, #16
  467 004c 3B43     		orrs	r3, r7
-ARM GAS  /tmp/ccayoFF5.s 			page 9
+ARM GAS  /tmp/ccDE1P1u.s 			page 9
 
 
  468 004e CB60     		str	r3, [r1, #12]
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  522 00b2 1343     		orrs	r3, r2
  523 00b4 8022     		movs	r2, #128
  524 00b6 0B64     		str	r3, [r1, #64]
-ARM GAS  /tmp/ccayoFF5.s 			page 10
+ARM GAS  /tmp/ccDE1P1u.s 			page 10
 
 
  525 00b8 0B4B     		ldr	r3, .L84+4
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  581 001c CA07     		lsls	r2, r1, #31
  582 001e 03D5     		bpl	.L88
  583 0020 1A6C     		ldr	r2, [r3, #64]
-ARM GAS  /tmp/ccayoFF5.s 			page 11
+ARM GAS  /tmp/ccDE1P1u.s 			page 11
 
 
  584 0022 0A4D     		ldr	r5, .L101
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  642              		@ link register save eliminated.
  643              		@ sp needed
  644 0000 7047     		bx	lr
-ARM GAS  /tmp/ccayoFF5.s 			page 12
+ARM GAS  /tmp/ccDE1P1u.s 			page 12
 
 
  646              		.section	.text.HAL_RTCEx_Tamper2EventCallback,"ax",%progbits
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  705 0024 1D4A     		ldr	r2, .L136+4
  706 0026 196C     		ldr	r1, [r3, #64]
  707 0028 1142     		tst	r1, r2
-ARM GAS  /tmp/ccayoFF5.s 			page 13
+ARM GAS  /tmp/ccDE1P1u.s 			page 13
 
 
  708 002a 0BD0     		beq	.L109
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  762 0094 E377     		strb	r3, [r4, #31]
  763 0096 10BD     		pop	{r4, pc}
  764              	.L137:
-ARM GAS  /tmp/ccayoFF5.s 			page 14
+ARM GAS  /tmp/ccDE1P1u.s 			page 14
 
 
  765              		.align	2
@@ -838,7 +838,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  821              		@ sp needed
  822 003e F8BD     		pop	{r3, r4, r5, r6, r7, pc}
  823              	.L140:
-ARM GAS  /tmp/ccayoFF5.s 			page 15
+ARM GAS  /tmp/ccDE1P1u.s 			page 15
 
 
  824 0040 6A1C     		adds	r2, r5, #1
@@ -898,7 +898,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  880 0034 801B     		subs	r0, r0, r6
  881 0036 A842     		cmp	r0, r5
  882 0038 01D8     		bhi	.L153
-ARM GAS  /tmp/ccayoFF5.s 			page 16
+ARM GAS  /tmp/ccDE1P1u.s 			page 16
 
 
  883 003a 002D     		cmp	r5, #0
@@ -958,7 +958,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  939 003c E8D1     		bne	.L162
  940              	.L164:
  941 003e 0320     		movs	r0, #3
-ARM GAS  /tmp/ccayoFF5.s 			page 17
+ARM GAS  /tmp/ccDE1P1u.s 			page 17
 
 
  942 0040 0234     		adds	r4, r4, #2
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  998 0042 E077     		strb	r0, [r4, #31]
  999              	.L176:
  1000              		@ sp needed
-ARM GAS  /tmp/ccayoFF5.s 			page 18
+ARM GAS  /tmp/ccDE1P1u.s 			page 18
 
 
  1001 0044 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  1057 004c 2DD0     		beq	.L190
  1058 004e 0721     		movs	r1, #7
  1059 0050 9A68     		ldr	r2, [r3, #8]
-ARM GAS  /tmp/ccayoFF5.s 			page 19
+ARM GAS  /tmp/ccDE1P1u.s 			page 19
 
 
  1060 0052 0020     		movs	r0, #0
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  1114 00b8 C2D9     		bls	.L186
  1115 00ba FF22     		movs	r2, #255
  1116 00bc 0320     		movs	r0, #3
-ARM GAS  /tmp/ccayoFF5.s 			page 20
+ARM GAS  /tmp/ccDE1P1u.s 			page 20
 
 
  1117 00be 2368     		ldr	r3, [r4]
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  1173 0044 FFF7FEFF 		bl	HAL_GetTick
  1174 0048 0090     		str	r0, [sp]
  1175              	.L200:
-ARM GAS  /tmp/ccayoFF5.s 			page 21
+ARM GAS  /tmp/ccDE1P1u.s 			page 21
 
 
  1176 004a 2368     		ldr	r3, [r4]
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  1230 00b6 401B     		subs	r0, r0, r5
  1231 00b8 9B00     		lsls	r3, r3, #2
  1232 00ba 9842     		cmp	r0, r3
-ARM GAS  /tmp/ccayoFF5.s 			page 22
+ARM GAS  /tmp/ccDE1P1u.s 			page 22
 
 
  1233 00bc F3D9     		bls	.L201
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  1289 0014 EA77     		strb	r2, [r5, #31]
  1290 0016 F377     		strb	r3, [r6, #31]
  1291 0018 2368     		ldr	r3, [r4]
-ARM GAS  /tmp/ccayoFF5.s 			page 23
+ARM GAS  /tmp/ccDE1P1u.s 			page 23
 
 
  1292 001a C932     		adds	r2, r2, #201
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  1347              		.align	1
  1348              		.global	HAL_RTCEx_GetWakeUpTimer
  1349              		.syntax unified
-ARM GAS  /tmp/ccayoFF5.s 			page 24
+ARM GAS  /tmp/ccDE1P1u.s 			page 24
 
 
  1350              		.code	16
@@ -1438,7 +1438,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  1409 0024 0123     		movs	r3, #1
  1410 0026 0234     		adds	r4, r4, #2
  1411 0028 E377     		strb	r3, [r4, #31]
-ARM GAS  /tmp/ccayoFF5.s 			page 25
+ARM GAS  /tmp/ccDE1P1u.s 			page 25
 
 
  1412 002a 10BD     		pop	{r4, pc}
@@ -1498,7 +1498,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  1468 0044 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
  1469              	.L238:
  1470 0046 C046     		.align	2
-ARM GAS  /tmp/ccayoFF5.s 			page 26
+ARM GAS  /tmp/ccDE1P1u.s 			page 26
 
 
  1471              	.L237:
@@ -1558,7 +1558,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  1531 000c 0292     		str	r2, [sp, #8]
  1532 000e EA7F     		ldrb	r2, [r5, #31]
  1533 0010 0400     		movs	r4, r0
-ARM GAS  /tmp/ccayoFF5.s 			page 27
+ARM GAS  /tmp/ccDE1P1u.s 			page 27
 
 
  1534 0012 1800     		movs	r0, r3
@@ -1618,7 +1618,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  1588 0078 0023     		movs	r3, #0
  1589 007a F077     		strb	r0, [r6, #31]
  1590 007c EB77     		strb	r3, [r5, #31]
-ARM GAS  /tmp/ccayoFF5.s 			page 28
+ARM GAS  /tmp/ccDE1P1u.s 			page 28
 
 
  1591 007e E6E7     		b	.L242
@@ -1678,7 +1678,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  1647 0056 2000     		movs	r0, r4
  1648 0058 FFF7FEFF 		bl	HAL_RTC_WaitForSynchro
  1649 005c 0028     		cmp	r0, #0
-ARM GAS  /tmp/ccayoFF5.s 			page 29
+ARM GAS  /tmp/ccDE1P1u.s 			page 29
 
 
  1650 005e 1ED0     		beq	.L254
@@ -1738,7 +1738,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  1706              		@ frame_needed = 0, uses_anonymous_args = 0
  1707 0000 0A00     		movs	r2, r1
  1708 0002 0221     		movs	r1, #2
-ARM GAS  /tmp/ccayoFF5.s 			page 30
+ARM GAS  /tmp/ccDE1P1u.s 			page 30
 
 
  1709 0004 30B5     		push	{r4, r5, lr}
@@ -1798,7 +1798,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  1765 000a 1000     		movs	r0, r2
  1766 000c 012C     		cmp	r4, #1
  1767 000e 10D0     		beq	.L267
-ARM GAS  /tmp/ccayoFF5.s 			page 31
+ARM GAS  /tmp/ccDE1P1u.s 			page 31
 
 
  1768 0010 9818     		adds	r0, r3, r2
@@ -1858,7 +1858,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  1824 002a 0028     		cmp	r0, #0
  1825 002c 07D0     		beq	.L273
  1826 002e FF22     		movs	r2, #255
-ARM GAS  /tmp/ccayoFF5.s 			page 32
+ARM GAS  /tmp/ccDE1P1u.s 			page 32
 
 
  1827 0030 5A62     		str	r2, [r3, #36]
@@ -1918,7 +1918,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  1883 002c 07D0     		beq	.L277
  1884 002e FF22     		movs	r2, #255
  1885 0030 5A62     		str	r2, [r3, #36]
-ARM GAS  /tmp/ccayoFF5.s 			page 33
+ARM GAS  /tmp/ccDE1P1u.s 			page 33
 
 
  1886 0032 0423     		movs	r3, #4
@@ -1978,7 +1978,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  1942 002c C377     		strb	r3, [r0, #31]
  1943 002e 0020     		movs	r0, #0
  1944 0030 C877     		strb	r0, [r1, #31]
-ARM GAS  /tmp/ccayoFF5.s 			page 34
+ARM GAS  /tmp/ccDE1P1u.s 			page 34
 
 
  1945              	.L280:
@@ -2038,7 +2038,7 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  2004              		.section	.text.HAL_RTCEx_PollForAlarmBEvent,"ax",%progbits
  2005              		.align	1
  2006              		.global	HAL_RTCEx_PollForAlarmBEvent
-ARM GAS  /tmp/ccayoFF5.s 			page 35
+ARM GAS  /tmp/ccDE1P1u.s 			page 35
 
 
  2007              		.syntax unified
@@ -2092,104 +2092,104 @@ ARM GAS  /tmp/ccayoFF5.s 			page 1
  2056              	.L295:
  2057 0048 7FFDFFFF 		.word	-641
  2059              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/ccayoFF5.s 			page 36
+ARM GAS  /tmp/ccDE1P1u.s 			page 36
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 stm32l0xx_hal_rtc_ex.c
-     /tmp/ccayoFF5.s:12     .text.HAL_RTCEx_SetTimeStamp:0000000000000000 $t
-     /tmp/ccayoFF5.s:20     .text.HAL_RTCEx_SetTimeStamp:0000000000000000 HAL_RTCEx_SetTimeStamp
-     /tmp/ccayoFF5.s:71     .text.HAL_RTCEx_SetTimeStamp:0000000000000058 $d
-     /tmp/ccayoFF5.s:76     .text.HAL_RTCEx_SetTimeStamp_IT:0000000000000000 $t
-     /tmp/ccayoFF5.s:83     .text.HAL_RTCEx_SetTimeStamp_IT:0000000000000000 HAL_RTCEx_SetTimeStamp_IT
-     /tmp/ccayoFF5.s:148    .text.HAL_RTCEx_SetTimeStamp_IT:0000000000000074 $d
-     /tmp/ccayoFF5.s:154    .text.HAL_RTCEx_DeactivateTimeStamp:0000000000000000 $t
-     /tmp/ccayoFF5.s:161    .text.HAL_RTCEx_DeactivateTimeStamp:0000000000000000 HAL_RTCEx_DeactivateTimeStamp
-     /tmp/ccayoFF5.s:199    .text.HAL_RTCEx_DeactivateTimeStamp:000000000000003c $d
-     /tmp/ccayoFF5.s:203    .text.HAL_RTCEx_GetTimeStamp:0000000000000000 $t
-     /tmp/ccayoFF5.s:210    .text.HAL_RTCEx_GetTimeStamp:0000000000000000 HAL_RTCEx_GetTimeStamp
-     /tmp/ccayoFF5.s:282    .text.HAL_RTCEx_GetTimeStamp:000000000000008c $d
-     /tmp/ccayoFF5.s:287    .text.HAL_RTCEx_SetTamper:0000000000000000 $t
-     /tmp/ccayoFF5.s:294    .text.HAL_RTCEx_SetTamper:0000000000000000 HAL_RTCEx_SetTamper
-     /tmp/ccayoFF5.s:413    .text.HAL_RTCEx_SetTamper:00000000000000cc $d
-     /tmp/ccayoFF5.s:416    .text.HAL_RTCEx_SetTamper_IT:0000000000000000 $t
-     /tmp/ccayoFF5.s:423    .text.HAL_RTCEx_SetTamper_IT:0000000000000000 HAL_RTCEx_SetTamper_IT
-     /tmp/ccayoFF5.s:553    .text.HAL_RTCEx_SetTamper_IT:00000000000000e4 $d
-     /tmp/ccayoFF5.s:557    .text.HAL_RTCEx_DeactivateTamper:0000000000000000 $t
-     /tmp/ccayoFF5.s:564    .text.HAL_RTCEx_DeactivateTamper:0000000000000000 HAL_RTCEx_DeactivateTamper
-     /tmp/ccayoFF5.s:612    .text.HAL_RTCEx_DeactivateTamper:000000000000004c $d
-     /tmp/ccayoFF5.s:617    .text.HAL_RTCEx_TimeStampEventCallback:0000000000000000 $t
-     /tmp/ccayoFF5.s:624    .text.HAL_RTCEx_TimeStampEventCallback:0000000000000000 HAL_RTCEx_TimeStampEventCallback
-     /tmp/ccayoFF5.s:632    .text.HAL_RTCEx_Tamper1EventCallback:0000000000000000 $t
-     /tmp/ccayoFF5.s:639    .text.HAL_RTCEx_Tamper1EventCallback:0000000000000000 HAL_RTCEx_Tamper1EventCallback
-     /tmp/ccayoFF5.s:647    .text.HAL_RTCEx_Tamper2EventCallback:0000000000000000 $t
-     /tmp/ccayoFF5.s:654    .text.HAL_RTCEx_Tamper2EventCallback:0000000000000000 HAL_RTCEx_Tamper2EventCallback
-     /tmp/ccayoFF5.s:662    .text.HAL_RTCEx_Tamper3EventCallback:0000000000000000 $t
-     /tmp/ccayoFF5.s:669    .text.HAL_RTCEx_Tamper3EventCallback:0000000000000000 HAL_RTCEx_Tamper3EventCallback
-     /tmp/ccayoFF5.s:677    .text.HAL_RTCEx_TamperTimeStampIRQHandler:0000000000000000 $t
-     /tmp/ccayoFF5.s:684    .text.HAL_RTCEx_TamperTimeStampIRQHandler:0000000000000000 HAL_RTCEx_TamperTimeStampIRQHandler
-     /tmp/ccayoFF5.s:767    .text.HAL_RTCEx_TamperTimeStampIRQHandler:0000000000000098 $d
-     /tmp/ccayoFF5.s:777    .text.HAL_RTCEx_PollForTimeStampEvent:0000000000000000 $t
-     /tmp/ccayoFF5.s:784    .text.HAL_RTCEx_PollForTimeStampEvent:0000000000000000 HAL_RTCEx_PollForTimeStampEvent
-     /tmp/ccayoFF5.s:840    .text.HAL_RTCEx_PollForTimeStampEvent:000000000000005c $d
-     /tmp/ccayoFF5.s:843    .text.HAL_RTCEx_PollForTamper1Event:0000000000000000 $t
-     /tmp/ccayoFF5.s:850    .text.HAL_RTCEx_PollForTamper1Event:0000000000000000 HAL_RTCEx_PollForTamper1Event
-     /tmp/ccayoFF5.s:895    .text.HAL_RTCEx_PollForTamper1Event:0000000000000048 $d
-     /tmp/ccayoFF5.s:898    .text.HAL_RTCEx_PollForTamper2Event:0000000000000000 $t
-     /tmp/ccayoFF5.s:905    .text.HAL_RTCEx_PollForTamper2Event:0000000000000000 HAL_RTCEx_PollForTamper2Event
-     /tmp/ccayoFF5.s:950    .text.HAL_RTCEx_PollForTamper2Event:0000000000000048 $d
-     /tmp/ccayoFF5.s:953    .text.HAL_RTCEx_PollForTamper3Event:0000000000000000 $t
-     /tmp/ccayoFF5.s:960    .text.HAL_RTCEx_PollForTamper3Event:0000000000000000 HAL_RTCEx_PollForTamper3Event
-     /tmp/ccayoFF5.s:1005   .text.HAL_RTCEx_PollForTamper3Event:0000000000000048 $d
-     /tmp/ccayoFF5.s:1008   .text.HAL_RTCEx_SetWakeUpTimer:0000000000000000 $t
-     /tmp/ccayoFF5.s:1015   .text.HAL_RTCEx_SetWakeUpTimer:0000000000000000 HAL_RTCEx_SetWakeUpTimer
-     /tmp/ccayoFF5.s:1125   .text.HAL_RTCEx_SetWakeUpTimer:00000000000000c8 $d
-     /tmp/ccayoFF5.s:1128   .text.HAL_RTCEx_SetWakeUpTimer_IT:0000000000000000 $t
-     /tmp/ccayoFF5.s:1135   .text.HAL_RTCEx_SetWakeUpTimer_IT:0000000000000000 HAL_RTCEx_SetWakeUpTimer_IT
-     /tmp/ccayoFF5.s:1264   .text.HAL_RTCEx_SetWakeUpTimer_IT:00000000000000f0 $d
-     /tmp/ccayoFF5.s:1269   .text.HAL_RTCEx_DeactivateWakeUpTimer:0000000000000000 $t
-     /tmp/ccayoFF5.s:1276   .text.HAL_RTCEx_DeactivateWakeUpTimer:0000000000000000 HAL_RTCEx_DeactivateWakeUpTimer
-     /tmp/ccayoFF5.s:1343   .text.HAL_RTCEx_DeactivateWakeUpTimer:0000000000000078 $d
-     /tmp/ccayoFF5.s:1347   .text.HAL_RTCEx_GetWakeUpTimer:0000000000000000 $t
-     /tmp/ccayoFF5.s:1354   .text.HAL_RTCEx_GetWakeUpTimer:0000000000000000 HAL_RTCEx_GetWakeUpTimer
-ARM GAS  /tmp/ccayoFF5.s 			page 37
+     /tmp/ccDE1P1u.s:12     .text.HAL_RTCEx_SetTimeStamp:0000000000000000 $t
+     /tmp/ccDE1P1u.s:20     .text.HAL_RTCEx_SetTimeStamp:0000000000000000 HAL_RTCEx_SetTimeStamp
+     /tmp/ccDE1P1u.s:71     .text.HAL_RTCEx_SetTimeStamp:0000000000000058 $d
+     /tmp/ccDE1P1u.s:76     .text.HAL_RTCEx_SetTimeStamp_IT:0000000000000000 $t
+     /tmp/ccDE1P1u.s:83     .text.HAL_RTCEx_SetTimeStamp_IT:0000000000000000 HAL_RTCEx_SetTimeStamp_IT
+     /tmp/ccDE1P1u.s:148    .text.HAL_RTCEx_SetTimeStamp_IT:0000000000000074 $d
+     /tmp/ccDE1P1u.s:154    .text.HAL_RTCEx_DeactivateTimeStamp:0000000000000000 $t
+     /tmp/ccDE1P1u.s:161    .text.HAL_RTCEx_DeactivateTimeStamp:0000000000000000 HAL_RTCEx_DeactivateTimeStamp
+     /tmp/ccDE1P1u.s:199    .text.HAL_RTCEx_DeactivateTimeStamp:000000000000003c $d
+     /tmp/ccDE1P1u.s:203    .text.HAL_RTCEx_GetTimeStamp:0000000000000000 $t
+     /tmp/ccDE1P1u.s:210    .text.HAL_RTCEx_GetTimeStamp:0000000000000000 HAL_RTCEx_GetTimeStamp
+     /tmp/ccDE1P1u.s:282    .text.HAL_RTCEx_GetTimeStamp:000000000000008c $d
+     /tmp/ccDE1P1u.s:287    .text.HAL_RTCEx_SetTamper:0000000000000000 $t
+     /tmp/ccDE1P1u.s:294    .text.HAL_RTCEx_SetTamper:0000000000000000 HAL_RTCEx_SetTamper
+     /tmp/ccDE1P1u.s:413    .text.HAL_RTCEx_SetTamper:00000000000000cc $d
+     /tmp/ccDE1P1u.s:416    .text.HAL_RTCEx_SetTamper_IT:0000000000000000 $t
+     /tmp/ccDE1P1u.s:423    .text.HAL_RTCEx_SetTamper_IT:0000000000000000 HAL_RTCEx_SetTamper_IT
+     /tmp/ccDE1P1u.s:553    .text.HAL_RTCEx_SetTamper_IT:00000000000000e4 $d
+     /tmp/ccDE1P1u.s:557    .text.HAL_RTCEx_DeactivateTamper:0000000000000000 $t
+     /tmp/ccDE1P1u.s:564    .text.HAL_RTCEx_DeactivateTamper:0000000000000000 HAL_RTCEx_DeactivateTamper
+     /tmp/ccDE1P1u.s:612    .text.HAL_RTCEx_DeactivateTamper:000000000000004c $d
+     /tmp/ccDE1P1u.s:617    .text.HAL_RTCEx_TimeStampEventCallback:0000000000000000 $t
+     /tmp/ccDE1P1u.s:624    .text.HAL_RTCEx_TimeStampEventCallback:0000000000000000 HAL_RTCEx_TimeStampEventCallback
+     /tmp/ccDE1P1u.s:632    .text.HAL_RTCEx_Tamper1EventCallback:0000000000000000 $t
+     /tmp/ccDE1P1u.s:639    .text.HAL_RTCEx_Tamper1EventCallback:0000000000000000 HAL_RTCEx_Tamper1EventCallback
+     /tmp/ccDE1P1u.s:647    .text.HAL_RTCEx_Tamper2EventCallback:0000000000000000 $t
+     /tmp/ccDE1P1u.s:654    .text.HAL_RTCEx_Tamper2EventCallback:0000000000000000 HAL_RTCEx_Tamper2EventCallback
+     /tmp/ccDE1P1u.s:662    .text.HAL_RTCEx_Tamper3EventCallback:0000000000000000 $t
+     /tmp/ccDE1P1u.s:669    .text.HAL_RTCEx_Tamper3EventCallback:0000000000000000 HAL_RTCEx_Tamper3EventCallback
+     /tmp/ccDE1P1u.s:677    .text.HAL_RTCEx_TamperTimeStampIRQHandler:0000000000000000 $t
+     /tmp/ccDE1P1u.s:684    .text.HAL_RTCEx_TamperTimeStampIRQHandler:0000000000000000 HAL_RTCEx_TamperTimeStampIRQHandler
+     /tmp/ccDE1P1u.s:767    .text.HAL_RTCEx_TamperTimeStampIRQHandler:0000000000000098 $d
+     /tmp/ccDE1P1u.s:777    .text.HAL_RTCEx_PollForTimeStampEvent:0000000000000000 $t
+     /tmp/ccDE1P1u.s:784    .text.HAL_RTCEx_PollForTimeStampEvent:0000000000000000 HAL_RTCEx_PollForTimeStampEvent
+     /tmp/ccDE1P1u.s:840    .text.HAL_RTCEx_PollForTimeStampEvent:000000000000005c $d
+     /tmp/ccDE1P1u.s:843    .text.HAL_RTCEx_PollForTamper1Event:0000000000000000 $t
+     /tmp/ccDE1P1u.s:850    .text.HAL_RTCEx_PollForTamper1Event:0000000000000000 HAL_RTCEx_PollForTamper1Event
+     /tmp/ccDE1P1u.s:895    .text.HAL_RTCEx_PollForTamper1Event:0000000000000048 $d
+     /tmp/ccDE1P1u.s:898    .text.HAL_RTCEx_PollForTamper2Event:0000000000000000 $t
+     /tmp/ccDE1P1u.s:905    .text.HAL_RTCEx_PollForTamper2Event:0000000000000000 HAL_RTCEx_PollForTamper2Event
+     /tmp/ccDE1P1u.s:950    .text.HAL_RTCEx_PollForTamper2Event:0000000000000048 $d
+     /tmp/ccDE1P1u.s:953    .text.HAL_RTCEx_PollForTamper3Event:0000000000000000 $t
+     /tmp/ccDE1P1u.s:960    .text.HAL_RTCEx_PollForTamper3Event:0000000000000000 HAL_RTCEx_PollForTamper3Event
+     /tmp/ccDE1P1u.s:1005   .text.HAL_RTCEx_PollForTamper3Event:0000000000000048 $d
+     /tmp/ccDE1P1u.s:1008   .text.HAL_RTCEx_SetWakeUpTimer:0000000000000000 $t
+     /tmp/ccDE1P1u.s:1015   .text.HAL_RTCEx_SetWakeUpTimer:0000000000000000 HAL_RTCEx_SetWakeUpTimer
+     /tmp/ccDE1P1u.s:1125   .text.HAL_RTCEx_SetWakeUpTimer:00000000000000c8 $d
+     /tmp/ccDE1P1u.s:1128   .text.HAL_RTCEx_SetWakeUpTimer_IT:0000000000000000 $t
+     /tmp/ccDE1P1u.s:1135   .text.HAL_RTCEx_SetWakeUpTimer_IT:0000000000000000 HAL_RTCEx_SetWakeUpTimer_IT
+     /tmp/ccDE1P1u.s:1264   .text.HAL_RTCEx_SetWakeUpTimer_IT:00000000000000f0 $d
+     /tmp/ccDE1P1u.s:1269   .text.HAL_RTCEx_DeactivateWakeUpTimer:0000000000000000 $t
+     /tmp/ccDE1P1u.s:1276   .text.HAL_RTCEx_DeactivateWakeUpTimer:0000000000000000 HAL_RTCEx_DeactivateWakeUpTimer
+     /tmp/ccDE1P1u.s:1343   .text.HAL_RTCEx_DeactivateWakeUpTimer:0000000000000078 $d
+     /tmp/ccDE1P1u.s:1347   .text.HAL_RTCEx_GetWakeUpTimer:0000000000000000 $t
+     /tmp/ccDE1P1u.s:1354   .text.HAL_RTCEx_GetWakeUpTimer:0000000000000000 HAL_RTCEx_GetWakeUpTimer
+ARM GAS  /tmp/ccDE1P1u.s 			page 37
 
 
-     /tmp/ccayoFF5.s:1365   .text.HAL_RTCEx_WakeUpTimerEventCallback:0000000000000000 $t
-     /tmp/ccayoFF5.s:1372   .text.HAL_RTCEx_WakeUpTimerEventCallback:0000000000000000 HAL_RTCEx_WakeUpTimerEventCallback
-     /tmp/ccayoFF5.s:1380   .text.HAL_RTCEx_WakeUpTimerIRQHandler:0000000000000000 $t
-     /tmp/ccayoFF5.s:1387   .text.HAL_RTCEx_WakeUpTimerIRQHandler:0000000000000000 HAL_RTCEx_WakeUpTimerIRQHandler
-     /tmp/ccayoFF5.s:1416   .text.HAL_RTCEx_WakeUpTimerIRQHandler:000000000000002c $d
-     /tmp/ccayoFF5.s:1420   .text.HAL_RTCEx_PollForWakeUpTimerEvent:0000000000000000 $t
-     /tmp/ccayoFF5.s:1427   .text.HAL_RTCEx_PollForWakeUpTimerEvent:0000000000000000 HAL_RTCEx_PollForWakeUpTimerEvent
-     /tmp/ccayoFF5.s:1472   .text.HAL_RTCEx_PollForWakeUpTimerEvent:0000000000000048 $d
-     /tmp/ccayoFF5.s:1475   .text.HAL_RTCEx_BKUPWrite:0000000000000000 $t
-     /tmp/ccayoFF5.s:1482   .text.HAL_RTCEx_BKUPWrite:0000000000000000 HAL_RTCEx_BKUPWrite
-     /tmp/ccayoFF5.s:1495   .text.HAL_RTCEx_BKUPRead:0000000000000000 $t
-     /tmp/ccayoFF5.s:1502   .text.HAL_RTCEx_BKUPRead:0000000000000000 HAL_RTCEx_BKUPRead
-     /tmp/ccayoFF5.s:1515   .text.HAL_RTCEx_SetSmoothCalib:0000000000000000 $t
-     /tmp/ccayoFF5.s:1522   .text.HAL_RTCEx_SetSmoothCalib:0000000000000000 HAL_RTCEx_SetSmoothCalib
-     /tmp/ccayoFF5.s:1594   .text.HAL_RTCEx_SetSynchroShift:0000000000000000 $t
-     /tmp/ccayoFF5.s:1601   .text.HAL_RTCEx_SetSynchroShift:0000000000000000 HAL_RTCEx_SetSynchroShift
-     /tmp/ccayoFF5.s:1697   .text.HAL_RTCEx_SetCalibrationOutPut:0000000000000000 $t
-     /tmp/ccayoFF5.s:1704   .text.HAL_RTCEx_SetCalibrationOutPut:0000000000000000 HAL_RTCEx_SetCalibrationOutPut
-     /tmp/ccayoFF5.s:1747   .text.HAL_RTCEx_SetCalibrationOutPut:0000000000000048 $d
-     /tmp/ccayoFF5.s:1750   .text.HAL_RTCEx_DeactivateCalibrationOutPut:0000000000000000 $t
-     /tmp/ccayoFF5.s:1757   .text.HAL_RTCEx_DeactivateCalibrationOutPut:0000000000000000 HAL_RTCEx_DeactivateCalibrationOutPut
-     /tmp/ccayoFF5.s:1791   .text.HAL_RTCEx_DeactivateCalibrationOutPut:0000000000000034 $d
-     /tmp/ccayoFF5.s:1794   .text.HAL_RTCEx_SetRefClock:0000000000000000 $t
-     /tmp/ccayoFF5.s:1801   .text.HAL_RTCEx_SetRefClock:0000000000000000 HAL_RTCEx_SetRefClock
-     /tmp/ccayoFF5.s:1852   .text.HAL_RTCEx_DeactivateRefClock:0000000000000000 $t
-     /tmp/ccayoFF5.s:1859   .text.HAL_RTCEx_DeactivateRefClock:0000000000000000 HAL_RTCEx_DeactivateRefClock
-     /tmp/ccayoFF5.s:1910   .text.HAL_RTCEx_EnableBypassShadow:0000000000000000 $t
-     /tmp/ccayoFF5.s:1917   .text.HAL_RTCEx_EnableBypassShadow:0000000000000000 HAL_RTCEx_EnableBypassShadow
-     /tmp/ccayoFF5.s:1950   .text.HAL_RTCEx_DisableBypassShadow:0000000000000000 $t
-     /tmp/ccayoFF5.s:1957   .text.HAL_RTCEx_DisableBypassShadow:0000000000000000 HAL_RTCEx_DisableBypassShadow
-     /tmp/ccayoFF5.s:1990   .text.HAL_RTCEx_AlarmBEventCallback:0000000000000000 $t
-     /tmp/ccayoFF5.s:1997   .text.HAL_RTCEx_AlarmBEventCallback:0000000000000000 HAL_RTCEx_AlarmBEventCallback
-     /tmp/ccayoFF5.s:2005   .text.HAL_RTCEx_PollForAlarmBEvent:0000000000000000 $t
-     /tmp/ccayoFF5.s:2012   .text.HAL_RTCEx_PollForAlarmBEvent:0000000000000000 HAL_RTCEx_PollForAlarmBEvent
-     /tmp/ccayoFF5.s:2057   .text.HAL_RTCEx_PollForAlarmBEvent:0000000000000048 $d
+     /tmp/ccDE1P1u.s:1365   .text.HAL_RTCEx_WakeUpTimerEventCallback:0000000000000000 $t
+     /tmp/ccDE1P1u.s:1372   .text.HAL_RTCEx_WakeUpTimerEventCallback:0000000000000000 HAL_RTCEx_WakeUpTimerEventCallback
+     /tmp/ccDE1P1u.s:1380   .text.HAL_RTCEx_WakeUpTimerIRQHandler:0000000000000000 $t
+     /tmp/ccDE1P1u.s:1387   .text.HAL_RTCEx_WakeUpTimerIRQHandler:0000000000000000 HAL_RTCEx_WakeUpTimerIRQHandler
+     /tmp/ccDE1P1u.s:1416   .text.HAL_RTCEx_WakeUpTimerIRQHandler:000000000000002c $d
+     /tmp/ccDE1P1u.s:1420   .text.HAL_RTCEx_PollForWakeUpTimerEvent:0000000000000000 $t
+     /tmp/ccDE1P1u.s:1427   .text.HAL_RTCEx_PollForWakeUpTimerEvent:0000000000000000 HAL_RTCEx_PollForWakeUpTimerEvent
+     /tmp/ccDE1P1u.s:1472   .text.HAL_RTCEx_PollForWakeUpTimerEvent:0000000000000048 $d
+     /tmp/ccDE1P1u.s:1475   .text.HAL_RTCEx_BKUPWrite:0000000000000000 $t
+     /tmp/ccDE1P1u.s:1482   .text.HAL_RTCEx_BKUPWrite:0000000000000000 HAL_RTCEx_BKUPWrite
+     /tmp/ccDE1P1u.s:1495   .text.HAL_RTCEx_BKUPRead:0000000000000000 $t
+     /tmp/ccDE1P1u.s:1502   .text.HAL_RTCEx_BKUPRead:0000000000000000 HAL_RTCEx_BKUPRead
+     /tmp/ccDE1P1u.s:1515   .text.HAL_RTCEx_SetSmoothCalib:0000000000000000 $t
+     /tmp/ccDE1P1u.s:1522   .text.HAL_RTCEx_SetSmoothCalib:0000000000000000 HAL_RTCEx_SetSmoothCalib
+     /tmp/ccDE1P1u.s:1594   .text.HAL_RTCEx_SetSynchroShift:0000000000000000 $t
+     /tmp/ccDE1P1u.s:1601   .text.HAL_RTCEx_SetSynchroShift:0000000000000000 HAL_RTCEx_SetSynchroShift
+     /tmp/ccDE1P1u.s:1697   .text.HAL_RTCEx_SetCalibrationOutPut:0000000000000000 $t
+     /tmp/ccDE1P1u.s:1704   .text.HAL_RTCEx_SetCalibrationOutPut:0000000000000000 HAL_RTCEx_SetCalibrationOutPut
+     /tmp/ccDE1P1u.s:1747   .text.HAL_RTCEx_SetCalibrationOutPut:0000000000000048 $d
+     /tmp/ccDE1P1u.s:1750   .text.HAL_RTCEx_DeactivateCalibrationOutPut:0000000000000000 $t
+     /tmp/ccDE1P1u.s:1757   .text.HAL_RTCEx_DeactivateCalibrationOutPut:0000000000000000 HAL_RTCEx_DeactivateCalibrationOutPut
+     /tmp/ccDE1P1u.s:1791   .text.HAL_RTCEx_DeactivateCalibrationOutPut:0000000000000034 $d
+     /tmp/ccDE1P1u.s:1794   .text.HAL_RTCEx_SetRefClock:0000000000000000 $t
+     /tmp/ccDE1P1u.s:1801   .text.HAL_RTCEx_SetRefClock:0000000000000000 HAL_RTCEx_SetRefClock
+     /tmp/ccDE1P1u.s:1852   .text.HAL_RTCEx_DeactivateRefClock:0000000000000000 $t
+     /tmp/ccDE1P1u.s:1859   .text.HAL_RTCEx_DeactivateRefClock:0000000000000000 HAL_RTCEx_DeactivateRefClock
+     /tmp/ccDE1P1u.s:1910   .text.HAL_RTCEx_EnableBypassShadow:0000000000000000 $t
+     /tmp/ccDE1P1u.s:1917   .text.HAL_RTCEx_EnableBypassShadow:0000000000000000 HAL_RTCEx_EnableBypassShadow
+     /tmp/ccDE1P1u.s:1950   .text.HAL_RTCEx_DisableBypassShadow:0000000000000000 $t
+     /tmp/ccDE1P1u.s:1957   .text.HAL_RTCEx_DisableBypassShadow:0000000000000000 HAL_RTCEx_DisableBypassShadow
+     /tmp/ccDE1P1u.s:1990   .text.HAL_RTCEx_AlarmBEventCallback:0000000000000000 $t
+     /tmp/ccDE1P1u.s:1997   .text.HAL_RTCEx_AlarmBEventCallback:0000000000000000 HAL_RTCEx_AlarmBEventCallback
+     /tmp/ccDE1P1u.s:2005   .text.HAL_RTCEx_PollForAlarmBEvent:0000000000000000 $t
+     /tmp/ccDE1P1u.s:2012   .text.HAL_RTCEx_PollForAlarmBEvent:0000000000000000 HAL_RTCEx_PollForAlarmBEvent
+     /tmp/ccDE1P1u.s:2057   .text.HAL_RTCEx_PollForAlarmBEvent:0000000000000048 $d
 
 UNDEFINED SYMBOLS
 RTC_Bcd2ToByte

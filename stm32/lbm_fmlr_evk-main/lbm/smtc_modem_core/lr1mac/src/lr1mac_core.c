@@ -151,12 +151,12 @@ void lr1mac_core_init( lr1_stack_mac_t* lr1_mac_obj, smtc_real_t* real, smtc_lbt
     load_devnonce_reset( lr1_mac_obj );
     lr1_mac_obj->nb_of_reset += 1;  // increment reset counter when lr1mac_core_init is called, reset is saved when
                                     // devnonce is save (after a tx join)
-    SMTC_MODEM_HAL_TRACE_PRINTF( " DevNonce = %d\r\n", lr1_mac_obj->dev_nonce );
-    SMTC_MODEM_HAL_TRACE_PRINTF( " JoinNonce = 0x%02x %02x %02x, NetID = 0x%02x %02x %02x\r\n",
-                                 lr1_mac_obj->join_nonce[0], lr1_mac_obj->join_nonce[1], lr1_mac_obj->join_nonce[2],
-                                 lr1_mac_obj->join_nonce[3], lr1_mac_obj->join_nonce[4], lr1_mac_obj->join_nonce[5] );
-    SMTC_MODEM_HAL_TRACE_PRINTF( " NbOfReset = %d\r\n", lr1_mac_obj->nb_of_reset );
-    SMTC_MODEM_HAL_TRACE_PRINTF( " Region = %s\r\n", smtc_real_region_list_str[lr1_mac_obj->real->region_type] );
+    // SMTC_MODEM_HAL_TRACE_PRINTF( " DevNonce = %d\r\n", lr1_mac_obj->dev_nonce );
+    // SMTC_MODEM_HAL_TRACE_PRINTF( " JoinNonce = 0x%02x %02x %02x, NetID = 0x%02x %02x %02x\r\n",
+    //                              lr1_mac_obj->join_nonce[0], lr1_mac_obj->join_nonce[1], lr1_mac_obj->join_nonce[2],
+    //                              lr1_mac_obj->join_nonce[3], lr1_mac_obj->join_nonce[4], lr1_mac_obj->join_nonce[5] );
+    // SMTC_MODEM_HAL_TRACE_PRINTF( " NbOfReset = %d\r\n", lr1_mac_obj->nb_of_reset );
+    // SMTC_MODEM_HAL_TRACE_PRINTF( " Region = %s\r\n", smtc_real_region_list_str[lr1_mac_obj->real->region_type] );
 
     lr1_mac_obj->rp                           = rp;
     lr1_mac_obj->no_rx_packet_reset_threshold = LR1MAC_NO_RX_PACKET_RESET_THRESHOLD;

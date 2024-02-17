@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccpGK7M8.s 			page 1
+ARM GAS  /tmp/ccl6FuYN.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccpGK7M8.s 			page 1
   56 0042 3B43     		orrs	r3, r7
   57 0044 3343     		orrs	r3, r6
   58 0046 2B60     		str	r3, [r5]
-ARM GAS  /tmp/ccpGK7M8.s 			page 2
+ARM GAS  /tmp/ccl6FuYN.s 			page 2
 
 
   59 0048 8023     		movs	r3, #128
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccpGK7M8.s 			page 1
  115 0014 3360     		str	r3, [r6]
  116 0016 0F4B     		ldr	r3, .L10
  117 0018 F018     		adds	r0, r6, r3
-ARM GAS  /tmp/ccpGK7M8.s 			page 3
+ARM GAS  /tmp/ccl6FuYN.s 			page 3
 
 
  118 001a FFF7FEFF 		bl	__aeabi_uidiv
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccpGK7M8.s 			page 1
  174 0012 A71D     		adds	r7, r4, #6
  175 0014 EB77     		strb	r3, [r5, #31]
  176 0016 FB7F     		ldrb	r3, [r7, #31]
-ARM GAS  /tmp/ccpGK7M8.s 			page 4
+ARM GAS  /tmp/ccl6FuYN.s 			page 4
 
 
  177 0018 0026     		movs	r6, #0
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccpGK7M8.s 			page 1
  233 0002 451D     		adds	r5, r0, #5
  234 0004 0193     		str	r3, [sp, #4]
  235 0006 EB7F     		ldrb	r3, [r5, #31]
-ARM GAS  /tmp/ccpGK7M8.s 			page 5
+ARM GAS  /tmp/ccl6FuYN.s 			page 5
 
 
  236 0008 0400     		movs	r4, r0
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccpGK7M8.s 			page 1
  290 006a EFE7     		b	.L22
  291              	.L23:
  292 006c 0422     		movs	r2, #4
-ARM GAS  /tmp/ccpGK7M8.s 			page 6
+ARM GAS  /tmp/ccl6FuYN.s 			page 6
 
 
  293 006e 0368     		ldr	r3, [r0]
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccpGK7M8.s 			page 1
  349 003e EAE7     		b	.L29
  351              		.section	.text.HAL_DMA_Abort_IT,"ax",%progbits
  352              		.align	1
-ARM GAS  /tmp/ccpGK7M8.s 			page 7
+ARM GAS  /tmp/ccl6FuYN.s 			page 7
 
 
  353              		.global	HAL_DMA_Abort_IT
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccpGK7M8.s 			page 1
  409              		.fpu softvfp
  411              	HAL_DMA_PollForTransfer:
  412              		@ args = 0, pretend = 0, frame = 16
-ARM GAS  /tmp/ccpGK7M8.s 			page 8
+ARM GAS  /tmp/ccl6FuYN.s 			page 8
 
 
  413              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccpGK7M8.s 			page 1
  467 005c 8446     		mov	ip, r0
  468 005e 0D42     		tst	r5, r1
  469 0060 0DD0     		beq	.L44
-ARM GAS  /tmp/ccpGK7M8.s 			page 9
+ARM GAS  /tmp/ccl6FuYN.s 			page 9
 
 
  470 0062 0199     		ldr	r1, [sp, #4]
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccpGK7M8.s 			page 1
  524 00c2 D6E7     		b	.L46
  526              		.section	.text.HAL_DMA_IRQHandler,"ax",%progbits
  527              		.align	1
-ARM GAS  /tmp/ccpGK7M8.s 			page 10
+ARM GAS  /tmp/ccl6FuYN.s 			page 10
 
 
  528              		.global	HAL_DMA_IRQHandler
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccpGK7M8.s 			page 1
  583 0056 DA77     		strb	r2, [r3, #31]
  584              	.L59:
  585 0058 0022     		movs	r2, #0
-ARM GAS  /tmp/ccpGK7M8.s 			page 11
+ARM GAS  /tmp/ccl6FuYN.s 			page 11
 
 
  586 005a 431D     		adds	r3, r0, #5
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccpGK7M8.s 			page 1
  642 0014 012D     		cmp	r5, #1
  643 0016 11D1     		bne	.L97
  644 0018 0329     		cmp	r1, #3
-ARM GAS  /tmp/ccpGK7M8.s 			page 12
+ARM GAS  /tmp/ccl6FuYN.s 			page 12
 
 
  645 001a 05D8     		bhi	.L90
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccpGK7M8.s 			page 1
  701 001a 16D1     		bne	.L109
  702 001c 0429     		cmp	r1, #4
  703 001e 07D8     		bhi	.L101
-ARM GAS  /tmp/ccpGK7M8.s 			page 13
+ARM GAS  /tmp/ccl6FuYN.s 			page 13
 
 
  704 0020 0800     		movs	r0, r1
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccpGK7M8.s 			page 1
  761              		.global	HAL_DMA_GetError
  762              		.syntax unified
  763              		.code	16
-ARM GAS  /tmp/ccpGK7M8.s 			page 14
+ARM GAS  /tmp/ccl6FuYN.s 			page 14
 
 
  764              		.thumb_func
@@ -791,42 +791,42 @@ ARM GAS  /tmp/ccpGK7M8.s 			page 1
  772              		@ sp needed
  773 0002 7047     		bx	lr
  775              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/ccpGK7M8.s 			page 15
+ARM GAS  /tmp/ccl6FuYN.s 			page 15
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 stm32l0xx_hal_dma.c
-     /tmp/ccpGK7M8.s:13     .text.HAL_DMA_Init:0000000000000000 $t
-     /tmp/ccpGK7M8.s:21     .text.HAL_DMA_Init:0000000000000000 HAL_DMA_Init
-     /tmp/ccpGK7M8.s:89     .text.HAL_DMA_Init:0000000000000078 $d
-     /tmp/ccpGK7M8.s:95     .text.HAL_DMA_DeInit:0000000000000000 $t
-     /tmp/ccpGK7M8.s:102    .text.HAL_DMA_DeInit:0000000000000000 HAL_DMA_DeInit
-     /tmp/ccpGK7M8.s:150    .text.HAL_DMA_DeInit:0000000000000054 $d
-     /tmp/ccpGK7M8.s:155    .text.HAL_DMA_Start:0000000000000000 $t
-     /tmp/ccpGK7M8.s:162    .text.HAL_DMA_Start:0000000000000000 HAL_DMA_Start
-     /tmp/ccpGK7M8.s:222    .text.HAL_DMA_Start_IT:0000000000000000 $t
-     /tmp/ccpGK7M8.s:229    .text.HAL_DMA_Start_IT:0000000000000000 HAL_DMA_Start_IT
-     /tmp/ccpGK7M8.s:305    .text.HAL_DMA_Abort:0000000000000000 $t
-     /tmp/ccpGK7M8.s:312    .text.HAL_DMA_Abort:0000000000000000 HAL_DMA_Abort
-     /tmp/ccpGK7M8.s:352    .text.HAL_DMA_Abort_IT:0000000000000000 $t
-     /tmp/ccpGK7M8.s:359    .text.HAL_DMA_Abort_IT:0000000000000000 HAL_DMA_Abort_IT
-     /tmp/ccpGK7M8.s:404    .text.HAL_DMA_PollForTransfer:0000000000000000 $t
-     /tmp/ccpGK7M8.s:411    .text.HAL_DMA_PollForTransfer:0000000000000000 HAL_DMA_PollForTransfer
-     /tmp/ccpGK7M8.s:527    .text.HAL_DMA_IRQHandler:0000000000000000 $t
-     /tmp/ccpGK7M8.s:534    .text.HAL_DMA_IRQHandler:0000000000000000 HAL_DMA_IRQHandler
-     /tmp/ccpGK7M8.s:622    .text.HAL_DMA_RegisterCallback:0000000000000000 $t
-     /tmp/ccpGK7M8.s:629    .text.HAL_DMA_RegisterCallback:0000000000000000 HAL_DMA_RegisterCallback
-     /tmp/ccpGK7M8.s:649    .text.HAL_DMA_RegisterCallback:0000000000000022 $d
-     /tmp/ccpGK7M8.s:653    .text.HAL_DMA_RegisterCallback:0000000000000026 $t
-     /tmp/ccpGK7M8.s:678    .text.HAL_DMA_UnRegisterCallback:0000000000000000 $t
-     /tmp/ccpGK7M8.s:685    .text.HAL_DMA_UnRegisterCallback:0000000000000000 HAL_DMA_UnRegisterCallback
-     /tmp/ccpGK7M8.s:708    .text.HAL_DMA_UnRegisterCallback:0000000000000028 $d
-     /tmp/ccpGK7M8.s:742    .text.HAL_DMA_GetState:0000000000000000 $t
-     /tmp/ccpGK7M8.s:749    .text.HAL_DMA_GetState:0000000000000000 HAL_DMA_GetState
-     /tmp/ccpGK7M8.s:760    .text.HAL_DMA_GetError:0000000000000000 $t
-     /tmp/ccpGK7M8.s:767    .text.HAL_DMA_GetError:0000000000000000 HAL_DMA_GetError
-     /tmp/ccpGK7M8.s:713    .text.HAL_DMA_UnRegisterCallback:000000000000002d $d
-     /tmp/ccpGK7M8.s:713    .text.HAL_DMA_UnRegisterCallback:000000000000002e $t
+     /tmp/ccl6FuYN.s:13     .text.HAL_DMA_Init:0000000000000000 $t
+     /tmp/ccl6FuYN.s:21     .text.HAL_DMA_Init:0000000000000000 HAL_DMA_Init
+     /tmp/ccl6FuYN.s:89     .text.HAL_DMA_Init:0000000000000078 $d
+     /tmp/ccl6FuYN.s:95     .text.HAL_DMA_DeInit:0000000000000000 $t
+     /tmp/ccl6FuYN.s:102    .text.HAL_DMA_DeInit:0000000000000000 HAL_DMA_DeInit
+     /tmp/ccl6FuYN.s:150    .text.HAL_DMA_DeInit:0000000000000054 $d
+     /tmp/ccl6FuYN.s:155    .text.HAL_DMA_Start:0000000000000000 $t
+     /tmp/ccl6FuYN.s:162    .text.HAL_DMA_Start:0000000000000000 HAL_DMA_Start
+     /tmp/ccl6FuYN.s:222    .text.HAL_DMA_Start_IT:0000000000000000 $t
+     /tmp/ccl6FuYN.s:229    .text.HAL_DMA_Start_IT:0000000000000000 HAL_DMA_Start_IT
+     /tmp/ccl6FuYN.s:305    .text.HAL_DMA_Abort:0000000000000000 $t
+     /tmp/ccl6FuYN.s:312    .text.HAL_DMA_Abort:0000000000000000 HAL_DMA_Abort
+     /tmp/ccl6FuYN.s:352    .text.HAL_DMA_Abort_IT:0000000000000000 $t
+     /tmp/ccl6FuYN.s:359    .text.HAL_DMA_Abort_IT:0000000000000000 HAL_DMA_Abort_IT
+     /tmp/ccl6FuYN.s:404    .text.HAL_DMA_PollForTransfer:0000000000000000 $t
+     /tmp/ccl6FuYN.s:411    .text.HAL_DMA_PollForTransfer:0000000000000000 HAL_DMA_PollForTransfer
+     /tmp/ccl6FuYN.s:527    .text.HAL_DMA_IRQHandler:0000000000000000 $t
+     /tmp/ccl6FuYN.s:534    .text.HAL_DMA_IRQHandler:0000000000000000 HAL_DMA_IRQHandler
+     /tmp/ccl6FuYN.s:622    .text.HAL_DMA_RegisterCallback:0000000000000000 $t
+     /tmp/ccl6FuYN.s:629    .text.HAL_DMA_RegisterCallback:0000000000000000 HAL_DMA_RegisterCallback
+     /tmp/ccl6FuYN.s:649    .text.HAL_DMA_RegisterCallback:0000000000000022 $d
+     /tmp/ccl6FuYN.s:653    .text.HAL_DMA_RegisterCallback:0000000000000026 $t
+     /tmp/ccl6FuYN.s:678    .text.HAL_DMA_UnRegisterCallback:0000000000000000 $t
+     /tmp/ccl6FuYN.s:685    .text.HAL_DMA_UnRegisterCallback:0000000000000000 HAL_DMA_UnRegisterCallback
+     /tmp/ccl6FuYN.s:708    .text.HAL_DMA_UnRegisterCallback:0000000000000028 $d
+     /tmp/ccl6FuYN.s:742    .text.HAL_DMA_GetState:0000000000000000 $t
+     /tmp/ccl6FuYN.s:749    .text.HAL_DMA_GetState:0000000000000000 HAL_DMA_GetState
+     /tmp/ccl6FuYN.s:760    .text.HAL_DMA_GetError:0000000000000000 $t
+     /tmp/ccl6FuYN.s:767    .text.HAL_DMA_GetError:0000000000000000 HAL_DMA_GetError
+     /tmp/ccl6FuYN.s:713    .text.HAL_DMA_UnRegisterCallback:000000000000002d $d
+     /tmp/ccl6FuYN.s:713    .text.HAL_DMA_UnRegisterCallback:000000000000002e $t
 
 UNDEFINED SYMBOLS
 __aeabi_uidiv

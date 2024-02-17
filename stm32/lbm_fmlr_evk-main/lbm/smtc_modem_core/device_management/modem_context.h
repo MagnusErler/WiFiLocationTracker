@@ -810,13 +810,6 @@ void set_modem_start_time_s( uint32_t time );
 void modem_store_context( void );
 
 /*!
- * \brief    load modem context in non volatile memory
- * \remark
- * \retval   void
- */
-void modem_load_context( void );
-
-/*!
  * \brief    store the context factory of the modem in the non volatile memory
  * \retval   void
  */

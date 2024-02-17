@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccKGm7fF.s 			page 1
+ARM GAS  /tmp/ccW8hGJb.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccKGm7fF.s 			page 1
   56 0042 2670     		strb	r6, [r4]
   57 0044 2870     		strb	r0, [r5]
   58              	.L2:
-ARM GAS  /tmp/ccKGm7fF.s 			page 2
+ARM GAS  /tmp/ccW8hGJb.s 			page 2
 
 
   59              		@ sp needed
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccKGm7fF.s 			page 1
  115              	.L11:
  116 0044 FFF0FFFF 		.word	-3841
  118              		.section	.text.HAL_I2CEx_EnableWakeUp,"ax",%progbits
-ARM GAS  /tmp/ccKGm7fF.s 			page 3
+ARM GAS  /tmp/ccW8hGJb.s 			page 3
 
 
  119              		.align	1
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccKGm7fF.s 			page 1
  176 0000 0100     		movs	r1, r0
  177 0002 70B5     		push	{r4, r5, r6, lr}
  178 0004 4131     		adds	r1, r1, #65
-ARM GAS  /tmp/ccKGm7fF.s 			page 4
+ARM GAS  /tmp/ccW8hGJb.s 			page 4
 
 
  179 0006 0A78     		ldrb	r2, [r1]
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccKGm7fF.s 			page 1
  235 000e 0343     		orrs	r3, r0
  236 0010 5360     		str	r3, [r2, #4]
  237 0012 7047     		bx	lr
-ARM GAS  /tmp/ccKGm7fF.s 			page 5
+ARM GAS  /tmp/ccW8hGJb.s 			page 5
 
 
  238              	.L25:
@@ -274,27 +274,27 @@ ARM GAS  /tmp/ccKGm7fF.s 			page 1
  270 0014 00100240 		.word	1073876992
  271 0018 00000140 		.word	1073807360
  273              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/ccKGm7fF.s 			page 6
+ARM GAS  /tmp/ccW8hGJb.s 			page 6
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 stm32l0xx_hal_i2c_ex.c
-     /tmp/ccKGm7fF.s:12     .text.HAL_I2CEx_ConfigAnalogFilter:0000000000000000 $t
-     /tmp/ccKGm7fF.s:20     .text.HAL_I2CEx_ConfigAnalogFilter:0000000000000000 HAL_I2CEx_ConfigAnalogFilter
-     /tmp/ccKGm7fF.s:64     .text.HAL_I2CEx_ConfigAnalogFilter:0000000000000048 $d
-     /tmp/ccKGm7fF.s:67     .text.HAL_I2CEx_ConfigDigitalFilter:0000000000000000 $t
-     /tmp/ccKGm7fF.s:74     .text.HAL_I2CEx_ConfigDigitalFilter:0000000000000000 HAL_I2CEx_ConfigDigitalFilter
-     /tmp/ccKGm7fF.s:116    .text.HAL_I2CEx_ConfigDigitalFilter:0000000000000044 $d
-     /tmp/ccKGm7fF.s:119    .text.HAL_I2CEx_EnableWakeUp:0000000000000000 $t
-     /tmp/ccKGm7fF.s:126    .text.HAL_I2CEx_EnableWakeUp:0000000000000000 HAL_I2CEx_EnableWakeUp
-     /tmp/ccKGm7fF.s:166    .text.HAL_I2CEx_DisableWakeUp:0000000000000000 $t
-     /tmp/ccKGm7fF.s:173    .text.HAL_I2CEx_DisableWakeUp:0000000000000000 HAL_I2CEx_DisableWakeUp
-     /tmp/ccKGm7fF.s:213    .text.HAL_I2CEx_DisableWakeUp:0000000000000040 $d
-     /tmp/ccKGm7fF.s:216    .text.HAL_I2CEx_EnableFastModePlus:0000000000000000 $t
-     /tmp/ccKGm7fF.s:223    .text.HAL_I2CEx_EnableFastModePlus:0000000000000000 HAL_I2CEx_EnableFastModePlus
-     /tmp/ccKGm7fF.s:241    .text.HAL_I2CEx_EnableFastModePlus:0000000000000014 $d
-     /tmp/ccKGm7fF.s:245    .text.HAL_I2CEx_DisableFastModePlus:0000000000000000 $t
-     /tmp/ccKGm7fF.s:252    .text.HAL_I2CEx_DisableFastModePlus:0000000000000000 HAL_I2CEx_DisableFastModePlus
-     /tmp/ccKGm7fF.s:270    .text.HAL_I2CEx_DisableFastModePlus:0000000000000014 $d
+     /tmp/ccW8hGJb.s:12     .text.HAL_I2CEx_ConfigAnalogFilter:0000000000000000 $t
+     /tmp/ccW8hGJb.s:20     .text.HAL_I2CEx_ConfigAnalogFilter:0000000000000000 HAL_I2CEx_ConfigAnalogFilter
+     /tmp/ccW8hGJb.s:64     .text.HAL_I2CEx_ConfigAnalogFilter:0000000000000048 $d
+     /tmp/ccW8hGJb.s:67     .text.HAL_I2CEx_ConfigDigitalFilter:0000000000000000 $t
+     /tmp/ccW8hGJb.s:74     .text.HAL_I2CEx_ConfigDigitalFilter:0000000000000000 HAL_I2CEx_ConfigDigitalFilter
+     /tmp/ccW8hGJb.s:116    .text.HAL_I2CEx_ConfigDigitalFilter:0000000000000044 $d
+     /tmp/ccW8hGJb.s:119    .text.HAL_I2CEx_EnableWakeUp:0000000000000000 $t
+     /tmp/ccW8hGJb.s:126    .text.HAL_I2CEx_EnableWakeUp:0000000000000000 HAL_I2CEx_EnableWakeUp
+     /tmp/ccW8hGJb.s:166    .text.HAL_I2CEx_DisableWakeUp:0000000000000000 $t
+     /tmp/ccW8hGJb.s:173    .text.HAL_I2CEx_DisableWakeUp:0000000000000000 HAL_I2CEx_DisableWakeUp
+     /tmp/ccW8hGJb.s:213    .text.HAL_I2CEx_DisableWakeUp:0000000000000040 $d
+     /tmp/ccW8hGJb.s:216    .text.HAL_I2CEx_EnableFastModePlus:0000000000000000 $t
+     /tmp/ccW8hGJb.s:223    .text.HAL_I2CEx_EnableFastModePlus:0000000000000000 HAL_I2CEx_EnableFastModePlus
+     /tmp/ccW8hGJb.s:241    .text.HAL_I2CEx_EnableFastModePlus:0000000000000014 $d
+     /tmp/ccW8hGJb.s:245    .text.HAL_I2CEx_DisableFastModePlus:0000000000000000 $t
+     /tmp/ccW8hGJb.s:252    .text.HAL_I2CEx_DisableFastModePlus:0000000000000000 HAL_I2CEx_DisableFastModePlus
+     /tmp/ccW8hGJb.s:270    .text.HAL_I2CEx_DisableFastModePlus:0000000000000014 $d
 
 NO UNDEFINED SYMBOLS

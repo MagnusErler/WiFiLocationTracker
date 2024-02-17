@@ -255,7 +255,6 @@ void modem_supervisor_init( void ( *callback )( void ), radio_planner_t* rp,
     modem_context_init( );
     modem_event_init( );
     modem_supervisor_init_task( );
-    modem_load_context( );
 
 #if defined( ADD_SMTC_ALC_SYNC )
     alc_sync_init( alc_sync_context );

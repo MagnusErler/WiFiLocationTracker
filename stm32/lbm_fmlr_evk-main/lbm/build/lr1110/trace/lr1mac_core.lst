@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccoOjQhv.s 			page 1
+ARM GAS  /tmp/ccqGV7VH.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccoOjQhv.s 			page 1
   46              	.L9:
   47 001c FFF7FEFF 		bl	smtc_modem_hal_print_trace
   48 0020 2748     		ldr	r0, .L10+12
-ARM GAS  /tmp/ccoOjQhv.s 			page 2
+ARM GAS  /tmp/ccqGV7VH.s 			page 2
 
 
   49 0022 FFF7FEFF 		bl	smtc_modem_hal_print_trace
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccoOjQhv.s 			page 1
  103 009a 1870     		strb	r0, [r3]
  104 009c 9523     		movs	r3, #149
  105 009e DB00     		lsls	r3, r3, #3
-ARM GAS  /tmp/ccoOjQhv.s 			page 3
+ARM GAS  /tmp/ccqGV7VH.s 			page 3
 
 
  106 00a0 E358     		ldr	r3, [r4, r3]
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccoOjQhv.s 			page 1
  164 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
  165 0002 124E     		ldr	r6, .L20
  166 0004 0400     		movs	r4, r0
-ARM GAS  /tmp/ccoOjQhv.s 			page 4
+ARM GAS  /tmp/ccqGV7VH.s 			page 4
 
 
  167 0006 875D     		ldrb	r7, [r0, r6]
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccoOjQhv.s 			page 1
  223 0008 92040000 		.word	1170
  225              		.section	.text.lr1mac_core_devaddr_get,"ax",%progbits
  226              		.align	1
-ARM GAS  /tmp/ccoOjQhv.s 			page 5
+ARM GAS  /tmp/ccqGV7VH.s 			page 5
 
 
  227              		.global	lr1mac_core_devaddr_get
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccoOjQhv.s 			page 1
  288              		@ args = 0, pretend = 0, frame = 56
  289              		@ frame_needed = 0, uses_anonymous_args = 0
  290 0000 70B5     		push	{r4, r5, r6, lr}
-ARM GAS  /tmp/ccoOjQhv.s 			page 6
+ARM GAS  /tmp/ccqGV7VH.s 			page 6
 
 
  291 0002 0400     		movs	r4, r0
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccoOjQhv.s 			page 1
  346              		.fpu softvfp
  348              	lr1mac_core_dr_custom_set:
  349              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  /tmp/ccoOjQhv.s 			page 7
+ARM GAS  /tmp/ccqGV7VH.s 			page 7
 
 
  350              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccoOjQhv.s 			page 1
  408 0004 7047     		bx	lr
  410              		.section	.text.lr1mac_core_next_frequency_get,"ax",%progbits
  411              		.align	1
-ARM GAS  /tmp/ccoOjQhv.s 			page 8
+ARM GAS  /tmp/ccqGV7VH.s 			page 8
 
 
  412              		.global	lr1mac_core_next_frequency_get
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccoOjQhv.s 			page 1
  469 0042 FFF7FEFF 		bl	smtc_modem_hal_context_restore
  470 0046 0EB0     		add	sp, sp, #56
  471              		@ sp needed
-ARM GAS  /tmp/ccoOjQhv.s 			page 9
+ARM GAS  /tmp/ccqGV7VH.s 			page 9
 
 
  472 0048 10BD     		pop	{r4, pc}
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccoOjQhv.s 			page 1
  532 0008 BC040000 		.word	1212
  534              		.section	.text.lr1mac_core_nb_reset_get,"ax",%progbits
  535              		.align	1
-ARM GAS  /tmp/ccoOjQhv.s 			page 10
+ARM GAS  /tmp/ccqGV7VH.s 			page 10
 
 
  536              		.global	lr1mac_core_nb_reset_get
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccoOjQhv.s 			page 1
  596              		.fpu softvfp
  598              	lr1mac_core_last_rssi_get:
  599              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  /tmp/ccoOjQhv.s 			page 11
+ARM GAS  /tmp/ccqGV7VH.s 			page 11
 
 
  600              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccoOjQhv.s 			page 1
  656 003c 94040000 		.word	1172
  657 0040 1A050000 		.word	1306
  659              		.section	.rodata.lr1mac_core_init.str1.1,"aMS",%progbits,1
-ARM GAS  /tmp/ccoOjQhv.s 			page 12
+ARM GAS  /tmp/ccqGV7VH.s 			page 12
 
 
  660              	.LC7:
@@ -698,1872 +698,1785 @@ ARM GAS  /tmp/ccoOjQhv.s 			page 1
  671 00ce 6C742028 		.ascii	"lt (0)\015\012\000"
  671      30290D0A 
  671      00
- 672              	.LC18:
- 673 00d7 20446576 		.ascii	" DevNonce = %d\015\012\000"
- 673      4E6F6E63 
- 673      65203D20 
- 673      25640D0A 
- 673      00
- 674              	.LC20:
- 675 00e8 204A6F69 		.ascii	" JoinNonce = 0x%02x %02x %02x, NetID = 0x%02x %02x "
- 675      6E4E6F6E 
- 675      6365203D 
- 675      20307825 
- 675      30327820 
- 676 011b 25303278 		.ascii	"%02x\015\012\000"
- 676      0D0A00
- 677              	.LC22:
- 678 0122 204E624F 		.ascii	" NbOfReset = %d\015\012\000"
- 678      66526573 
- 678      6574203D 
- 678      2025640D 
- 678      0A00
-ARM GAS  /tmp/ccoOjQhv.s 			page 13
+ 672              		.section	.text.lr1mac_core_init,"ax",%progbits
+ 673              		.align	1
+ 674              		.global	lr1mac_core_init
+ 675              		.syntax unified
+ 676              		.code	16
+ 677              		.thumb_func
+ 678              		.fpu softvfp
+ 680              	lr1mac_core_init:
+ 681              		@ args = 20, pretend = 0, frame = 128
+ 682              		@ frame_needed = 0, uses_anonymous_args = 0
+ 683 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 684 0002 0400     		movs	r4, r0
+ 685 0004 A1B0     		sub	sp, sp, #132
+ 686 0006 0025     		movs	r5, #0
+ 687 0008 0393     		str	r3, [sp, #12]
+ 688 000a 26AB     		add	r3, sp, #152
+ 689 000c 0292     		str	r2, [sp, #8]
+ 690 000e 04CB     		ldmia	r3!, {r2}
+ 691 0010 0091     		str	r1, [sp]
+ 692 0012 1F78     		ldrb	r7, [r3]
+ARM GAS  /tmp/ccqGV7VH.s 			page 13
 
 
- 679              	.LC25:
- 680 0134 20526567 		.ascii	" Region = %s\015\012\000"
- 680      696F6E20 
- 680      3D202573 
- 680      0D0A00
- 681              		.section	.text.lr1mac_core_init,"ax",%progbits
- 682              		.align	1
- 683              		.global	lr1mac_core_init
- 684              		.syntax unified
- 685              		.code	16
- 686              		.thumb_func
- 687              		.fpu softvfp
- 689              	lr1mac_core_init:
- 690              		@ args = 20, pretend = 0, frame = 128
- 691              		@ frame_needed = 0, uses_anonymous_args = 0
- 692 0000 F0B5     		push	{r4, r5, r6, r7, lr}
- 693 0002 0400     		movs	r4, r0
- 694 0004 A5B0     		sub	sp, sp, #148
- 695 0006 0025     		movs	r5, #0
- 696 0008 0793     		str	r3, [sp, #28]
- 697 000a 2AAB     		add	r3, sp, #168
- 698 000c 0592     		str	r2, [sp, #20]
- 699 000e 04CB     		ldmia	r3!, {r2}
- 700 0010 0491     		str	r1, [sp, #16]
- 701 0012 1E78     		ldrb	r6, [r3]
- 702 0014 0021     		movs	r1, #0
- 703 0016 2CAB     		add	r3, sp, #176
- 704 0018 0692     		str	r2, [sp, #24]
- 705 001a 8E4A     		ldr	r2, .L83
- 706 001c 1F78     		ldrb	r7, [r3]
- 707 001e FFF7FEFF 		bl	memset
- 708 0022 0322     		movs	r2, #3
- 709 0024 8C4B     		ldr	r3, .L83+4
- 710 0026 3100     		movs	r1, r6
- 711 0028 E554     		strb	r5, [r4, r3]
- 712 002a 8C4B     		ldr	r3, .L83+8
- 713 002c 2000     		movs	r0, r4
- 714 002e E554     		strb	r5, [r4, r3]
- 715 0030 8B4B     		ldr	r3, .L83+12
- 716 0032 E554     		strb	r5, [r4, r3]
- 717 0034 193B     		subs	r3, r3, #25
- 718 0036 E254     		strb	r2, [r4, r3]
- 719 0038 049B     		ldr	r3, [sp, #16]
- 720 003a 0732     		adds	r2, r2, #7
- 721 003c A363     		str	r3, [r4, #56]
- 722 003e 059B     		ldr	r3, [sp, #20]
- 723 0040 2364     		str	r3, [r4, #64]
- 724 0042 079B     		ldr	r3, [sp, #28]
- 725 0044 E363     		str	r3, [r4, #60]
- 726 0046 A323     		movs	r3, #163
- 727 0048 DB00     		lsls	r3, r3, #3
- 728 004a E554     		strb	r5, [r4, r3]
- 729 004c 2D9B     		ldr	r3, [sp, #180]
- 730 004e 6364     		str	r3, [r4, #68]
- 731 0050 2E9B     		ldr	r3, [sp, #184]
- 732 0052 A364     		str	r3, [r4, #72]
- 733 0054 834B     		ldr	r3, .L83+16
-ARM GAS  /tmp/ccoOjQhv.s 			page 14
+ 693 0014 0021     		movs	r1, #0
+ 694 0016 28AB     		add	r3, sp, #160
+ 695 0018 0192     		str	r2, [sp, #4]
+ 696 001a 794A     		ldr	r2, .L83
+ 697 001c 1E78     		ldrb	r6, [r3]
+ 698 001e FFF7FEFF 		bl	memset
+ 699 0022 0322     		movs	r2, #3
+ 700 0024 774B     		ldr	r3, .L83+4
+ 701 0026 3900     		movs	r1, r7
+ 702 0028 E554     		strb	r5, [r4, r3]
+ 703 002a 774B     		ldr	r3, .L83+8
+ 704 002c 2000     		movs	r0, r4
+ 705 002e E554     		strb	r5, [r4, r3]
+ 706 0030 764B     		ldr	r3, .L83+12
+ 707 0032 2700     		movs	r7, r4
+ 708 0034 E554     		strb	r5, [r4, r3]
+ 709 0036 193B     		subs	r3, r3, #25
+ 710 0038 E254     		strb	r2, [r4, r3]
+ 711 003a 009B     		ldr	r3, [sp]
+ 712 003c 0732     		adds	r2, r2, #7
+ 713 003e A363     		str	r3, [r4, #56]
+ 714 0040 029B     		ldr	r3, [sp, #8]
+ 715 0042 4C37     		adds	r7, r7, #76
+ 716 0044 2364     		str	r3, [r4, #64]
+ 717 0046 039B     		ldr	r3, [sp, #12]
+ 718 0048 E363     		str	r3, [r4, #60]
+ 719 004a A323     		movs	r3, #163
+ 720 004c DB00     		lsls	r3, r3, #3
+ 721 004e E554     		strb	r5, [r4, r3]
+ 722 0050 299B     		ldr	r3, [sp, #164]
+ 723 0052 6364     		str	r3, [r4, #68]
+ 724 0054 2A9B     		ldr	r3, [sp, #168]
+ 725 0056 A364     		str	r3, [r4, #72]
+ 726 0058 6D4B     		ldr	r3, .L83+16
+ 727 005a E250     		str	r2, [r4, r3]
+ 728 005c 6D4A     		ldr	r2, .L83+20
+ 729 005e 2433     		adds	r3, r3, #36
+ 730 0060 E250     		str	r2, [r4, r3]
+ 731 0062 3200     		movs	r2, r6
+ 732 0064 FFF7FEFF 		bl	lr1_stack_mac_init
+ 733 0068 2000     		movs	r0, r4
+ 734 006a FFF7FEFF 		bl	lr1mac_core_context_load
+ 735 006e A842     		cmp	r0, r5
+ 736 0070 5DD1     		bne	.L63
+ 737              	.L68:
+ 738 0072 A36B     		ldr	r3, [r4, #56]
+ 739 0074 1878     		ldrb	r0, [r3]
+ 740 0076 FFF7FEFF 		bl	smtc_real_is_supported_region
+ 741 007a 0028     		cmp	r0, #0
+ 742 007c 12D0     		beq	.L70
+ 743              	.L65:
+ 744 007e 6648     		ldr	r0, .L83+24
+ 745 0080 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 746 0084 6548     		ldr	r0, .L83+28
+ 747 0086 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 748 008a 8022     		movs	r2, #128
+ 749 008c 644B     		ldr	r3, .L83+32
+ARM GAS  /tmp/ccqGV7VH.s 			page 14
 
 
- 734 0056 E250     		str	r2, [r4, r3]
- 735 0058 834A     		ldr	r2, .L83+20
- 736 005a 2433     		adds	r3, r3, #36
- 737 005c E250     		str	r2, [r4, r3]
- 738 005e 3A00     		movs	r2, r7
- 739 0060 FFF7FEFF 		bl	lr1_stack_mac_init
- 740 0064 2000     		movs	r0, r4
- 741 0066 2700     		movs	r7, r4
- 742 0068 FFF7FEFF 		bl	lr1mac_core_context_load
- 743 006c 4C37     		adds	r7, r7, #76
- 744 006e A842     		cmp	r0, r5
- 745 0070 00D0     		beq	.LCB711
- 746 0072 82E0     		b	.L63	@long jump
- 747              	.LCB711:
- 748              	.L68:
- 749 0074 A36B     		ldr	r3, [r4, #56]
- 750 0076 1878     		ldrb	r0, [r3]
- 751 0078 FFF7FEFF 		bl	smtc_real_is_supported_region
- 752 007c 0028     		cmp	r0, #0
- 753 007e 12D0     		beq	.L70
- 754              	.L65:
- 755 0080 7A48     		ldr	r0, .L83+24
- 756 0082 FFF7FEFF 		bl	smtc_modem_hal_print_trace
- 757 0086 7A48     		ldr	r0, .L83+28
- 758 0088 FFF7FEFF 		bl	smtc_modem_hal_print_trace
- 759 008c 8022     		movs	r2, #128
- 760 008e 794B     		ldr	r3, .L83+32
- 761 0090 5205     		lsls	r2, r2, #21
- 762 0092 E250     		str	r2, [r4, r3]
- 763 0094 0022     		movs	r2, #0
- 764 0096 0433     		adds	r3, r3, #4
- 765 0098 E250     		str	r2, [r4, r3]
- 766 009a 0123     		movs	r3, #1
- 767 009c A26B     		ldr	r2, [r4, #56]
- 768 009e 2000     		movs	r0, r4
- 769 00a0 1370     		strb	r3, [r2]
- 770 00a2 FFF7FEFF 		bl	lr1mac_core_context_save
- 771              	.L70:
- 772 00a6 2022     		movs	r2, #32
- 773 00a8 0021     		movs	r1, #0
- 774 00aa 18A8     		add	r0, sp, #96
- 775 00ac FFF7FEFF 		bl	memset
- 776 00b0 2022     		movs	r2, #32
- 777 00b2 0220     		movs	r0, #2
- 778 00b4 18A9     		add	r1, sp, #96
- 779 00b6 FFF7FEFF 		bl	smtc_modem_hal_context_restore
- 780 00ba 1C21     		movs	r1, #28
- 781 00bc 18A8     		add	r0, sp, #96
- 782 00be FFF7FEFF 		bl	lr1mac_utilities_crc
- 783 00c2 1F9B     		ldr	r3, [sp, #124]
- 784 00c4 0493     		str	r3, [sp, #16]
- 785 00c6 9842     		cmp	r0, r3
- 786 00c8 00D0     		beq	.LCB755
- 787 00ca BBE0     		b	.L71	@long jump
- 788              	.LCB755:
- 789 00cc 5022     		movs	r2, #80
- 790 00ce 04AB     		add	r3, sp, #16
-ARM GAS  /tmp/ccoOjQhv.s 			page 15
+ 750 008e 5205     		lsls	r2, r2, #21
+ 751 0090 E250     		str	r2, [r4, r3]
+ 752 0092 0022     		movs	r2, #0
+ 753 0094 0433     		adds	r3, r3, #4
+ 754 0096 E250     		str	r2, [r4, r3]
+ 755 0098 0123     		movs	r3, #1
+ 756 009a A26B     		ldr	r2, [r4, #56]
+ 757 009c 2000     		movs	r0, r4
+ 758 009e 1370     		strb	r3, [r2]
+ 759 00a0 FFF7FEFF 		bl	lr1mac_core_context_save
+ 760              	.L70:
+ 761 00a4 2022     		movs	r2, #32
+ 762 00a6 0021     		movs	r1, #0
+ 763 00a8 14A8     		add	r0, sp, #80
+ 764 00aa FFF7FEFF 		bl	memset
+ 765 00ae 2022     		movs	r2, #32
+ 766 00b0 0220     		movs	r0, #2
+ 767 00b2 14A9     		add	r1, sp, #80
+ 768 00b4 FFF7FEFF 		bl	smtc_modem_hal_context_restore
+ 769 00b8 1C21     		movs	r1, #28
+ 770 00ba 14A8     		add	r0, sp, #80
+ 771 00bc FFF7FEFF 		bl	lr1mac_utilities_crc
+ 772 00c0 1B9B     		ldr	r3, [sp, #108]
+ 773 00c2 0093     		str	r3, [sp]
+ 774 00c4 9842     		cmp	r0, r3
+ 775 00c6 00D0     		beq	.LCB755
+ 776 00c8 93E0     		b	.L71	@long jump
+ 777              	.LCB755:
+ 778 00ca 4022     		movs	r2, #64
+ 779 00cc 04AB     		add	r3, sp, #16
+ 780 00ce 9B18     		adds	r3, r3, r2
+ 781 00d0 1A88     		ldrh	r2, [r3]
+ 782 00d2 C723     		movs	r3, #199
+ 783 00d4 9B00     		lsls	r3, r3, #2
+ 784 00d6 E252     		strh	r2, [r4, r3]
+ 785 00d8 159B     		ldr	r3, [sp, #84]
+ 786 00da 0622     		movs	r2, #6
+ 787 00dc 3B80     		strh	r3, [r7]
+ 788 00de 514B     		ldr	r3, .L83+36
+ 789 00e0 16A9     		add	r1, sp, #88
+ 790 00e2 E018     		adds	r0, r4, r3
+ 791 00e4 FFF7FEFF 		bl	memcpy
+ 792              	.L72:
+ 793 00e8 3B88     		ldrh	r3, [r7]
+ 794 00ea 019A     		ldr	r2, [sp, #4]
+ 795 00ec 0133     		adds	r3, r3, #1
+ 796 00ee 3B80     		strh	r3, [r7]
+ 797 00f0 4D4B     		ldr	r3, .L83+40
+ 798 00f2 0198     		ldr	r0, [sp, #4]
+ 799 00f4 E250     		str	r2, [r4, r3]
+ 800 00f6 9622     		movs	r2, #150
+ 801 00f8 4C4B     		ldr	r3, .L83+44
+ 802 00fa 1201     		lsls	r2, r2, #4
+ 803 00fc E252     		strh	r2, [r4, r3]
+ 804 00fe 2433     		adds	r3, r3, #36
+ 805 0100 E15C     		ldrb	r1, [r4, r3]
+ 806 0102 4B4A     		ldr	r2, .L83+48
+ARM GAS  /tmp/ccqGV7VH.s 			page 15
 
 
- 791 00d0 9B18     		adds	r3, r3, r2
- 792 00d2 1A88     		ldrh	r2, [r3]
- 793 00d4 C723     		movs	r3, #199
- 794 00d6 9B00     		lsls	r3, r3, #2
- 795 00d8 E252     		strh	r2, [r4, r3]
- 796 00da 199B     		ldr	r3, [sp, #100]
- 797 00dc 0622     		movs	r2, #6
- 798 00de 3B80     		strh	r3, [r7]
- 799 00e0 654B     		ldr	r3, .L83+36
- 800 00e2 1AA9     		add	r1, sp, #104
- 801 00e4 E018     		adds	r0, r4, r3
- 802 00e6 FFF7FEFF 		bl	memcpy
- 803              	.L72:
- 804 00ea 3B88     		ldrh	r3, [r7]
- 805 00ec 6348     		ldr	r0, .L83+40
- 806 00ee 0133     		adds	r3, r3, #1
- 807 00f0 3B80     		strh	r3, [r7]
- 808 00f2 C723     		movs	r3, #199
- 809 00f4 9B00     		lsls	r3, r3, #2
- 810 00f6 E15A     		ldrh	r1, [r4, r3]
- 811 00f8 FFF7FEFF 		bl	smtc_modem_hal_print_trace
- 812 00fc C823     		movs	r3, #200
- 813 00fe 6048     		ldr	r0, .L83+44
- 814 0100 604A     		ldr	r2, .L83+48
- 815 0102 205C     		ldrb	r0, [r4, r0]
- 816 0104 5C49     		ldr	r1, .L83+36
- 817 0106 0290     		str	r0, [sp, #8]
- 818 0108 5F48     		ldr	r0, .L83+52
- 819 010a 9B00     		lsls	r3, r3, #2
- 820 010c 205C     		ldrb	r0, [r4, r0]
- 821 010e E35C     		ldrb	r3, [r4, r3]
- 822 0110 0190     		str	r0, [sp, #4]
- 823 0112 5E48     		ldr	r0, .L83+56
- 824 0114 A25C     		ldrb	r2, [r4, r2]
- 825 0116 205C     		ldrb	r0, [r4, r0]
- 826 0118 615C     		ldrb	r1, [r4, r1]
- 827 011a 0090     		str	r0, [sp]
- 828 011c 5C48     		ldr	r0, .L83+60
- 829 011e FFF7FEFF 		bl	smtc_modem_hal_print_trace
- 830 0122 3988     		ldrh	r1, [r7]
- 831 0124 5B48     		ldr	r0, .L83+64
- 832 0126 FFF7FEFF 		bl	smtc_modem_hal_print_trace
- 833 012a A36B     		ldr	r3, [r4, #56]
- 834 012c 5A4A     		ldr	r2, .L83+68
- 835 012e 1B78     		ldrb	r3, [r3]
- 836 0130 5A48     		ldr	r0, .L83+72
- 837 0132 9B00     		lsls	r3, r3, #2
- 838 0134 9958     		ldr	r1, [r3, r2]
- 839 0136 FFF7FEFF 		bl	smtc_modem_hal_print_trace
- 840 013a 069A     		ldr	r2, [sp, #24]
- 841 013c 584B     		ldr	r3, .L83+76
- 842 013e 0698     		ldr	r0, [sp, #24]
- 843 0140 E250     		str	r2, [r4, r3]
- 844 0142 9622     		movs	r2, #150
- 845 0144 574B     		ldr	r3, .L83+80
- 846 0146 1201     		lsls	r2, r2, #4
- 847 0148 E252     		strh	r2, [r4, r3]
-ARM GAS  /tmp/ccoOjQhv.s 			page 16
+ 807 0104 2300     		movs	r3, r4
+ 808 0106 FFF7FEFF 		bl	rp_hook_init
+ 809 010a 2000     		movs	r0, r4
+ 810 010c FFF7FEFF 		bl	smtc_real_config
+ 811 0110 2000     		movs	r0, r4
+ 812 0112 FFF7FEFF 		bl	smtc_real_init
+ 813 0116 2000     		movs	r0, r4
+ 814 0118 FFF7FEFF 		bl	smtc_real_get_adr_ack_limit
+ 815 011c 454B     		ldr	r3, .L83+52
+ 816 011e E054     		strb	r0, [r4, r3]
+ 817 0120 2000     		movs	r0, r4
+ 818 0122 FFF7FEFF 		bl	smtc_real_get_adr_ack_delay
+ 819 0126 444B     		ldr	r3, .L83+56
+ 820 0128 E054     		strb	r0, [r4, r3]
+ 821 012a 21B0     		add	sp, sp, #132
+ 822              		@ sp needed
+ 823 012c F0BD     		pop	{r4, r5, r6, r7, pc}
+ 824              	.L63:
+ 825 012e 4348     		ldr	r0, .L83+60
+ 826 0130 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 827 0134 3022     		movs	r2, #48
+ 828 0136 0120     		movs	r0, #1
+ 829 0138 14A9     		add	r1, sp, #80
+ 830 013a FFF7FEFF 		bl	smtc_modem_hal_context_restore
+ 831 013e 2C21     		movs	r1, #44
+ 832 0140 14A8     		add	r0, sp, #80
+ 833 0142 FFF7FEFF 		bl	lr1mac_utilities_crc
+ 834 0146 1F9B     		ldr	r3, [sp, #124]
+ 835 0148 0093     		str	r3, [sp]
+ 836 014a 9842     		cmp	r0, r3
+ 837 014c 4AD1     		bne	.L66
+ 838 014e 3C48     		ldr	r0, .L83+64
+ 839 0150 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 840 0154 6022     		movs	r2, #96
+ 841 0156 04AB     		add	r3, sp, #16
+ 842 0158 9B18     		adds	r3, r3, r2
+ 843 015a 1E88     		ldrh	r6, [r3]
+ 844 015c C723     		movs	r3, #199
+ 845 015e 0A36     		adds	r6, r6, #10
+ 846 0160 B6B2     		uxth	r6, r6
+ 847 0162 9B00     		lsls	r3, r3, #2
+ 848 0164 E652     		strh	r6, [r4, r3]
+ 849 0166 1D9B     		ldr	r3, [sp, #116]
+ 850 0168 2900     		movs	r1, r5
+ 851 016a 0093     		str	r3, [sp]
+ 852 016c 009A     		ldr	r2, [sp]
+ 853 016e 2C4B     		ldr	r3, .L83+32
+ 854 0170 04A8     		add	r0, sp, #16
+ 855 0172 E250     		str	r2, [r4, r3]
+ 856 0174 6222     		movs	r2, #98
+ 857 0176 04AB     		add	r3, sp, #16
+ 858 0178 9B18     		adds	r3, r3, r2
+ 859 017a 1B88     		ldrh	r3, [r3]
+ 860 017c A26B     		ldr	r2, [r4, #56]
+ 861 017e 3B80     		strh	r3, [r7]
+ 862 0180 0093     		str	r3, [sp]
+ 863 0182 1EAB     		add	r3, sp, #120
+ARM GAS  /tmp/ccqGV7VH.s 			page 16
 
 
- 848 014a 2433     		adds	r3, r3, #36
- 849 014c E15C     		ldrb	r1, [r4, r3]
- 850 014e 564A     		ldr	r2, .L83+84
- 851 0150 2300     		movs	r3, r4
- 852 0152 FFF7FEFF 		bl	rp_hook_init
- 853 0156 2000     		movs	r0, r4
- 854 0158 FFF7FEFF 		bl	smtc_real_config
- 855 015c 2000     		movs	r0, r4
- 856 015e FFF7FEFF 		bl	smtc_real_init
- 857 0162 2000     		movs	r0, r4
- 858 0164 FFF7FEFF 		bl	smtc_real_get_adr_ack_limit
- 859 0168 504B     		ldr	r3, .L83+88
- 860 016a E054     		strb	r0, [r4, r3]
- 861 016c 2000     		movs	r0, r4
- 862 016e FFF7FEFF 		bl	smtc_real_get_adr_ack_delay
- 863 0172 4F4B     		ldr	r3, .L83+92
- 864 0174 E054     		strb	r0, [r4, r3]
- 865 0176 25B0     		add	sp, sp, #148
- 866              		@ sp needed
- 867 0178 F0BD     		pop	{r4, r5, r6, r7, pc}
- 868              	.L63:
- 869 017a 4E48     		ldr	r0, .L83+96
- 870 017c FFF7FEFF 		bl	smtc_modem_hal_print_trace
- 871 0180 3022     		movs	r2, #48
- 872 0182 0120     		movs	r0, #1
- 873 0184 18A9     		add	r1, sp, #96
- 874 0186 FFF7FEFF 		bl	smtc_modem_hal_context_restore
- 875 018a 2C21     		movs	r1, #44
- 876 018c 18A8     		add	r0, sp, #96
- 877 018e FFF7FEFF 		bl	lr1mac_utilities_crc
- 878 0192 239B     		ldr	r3, [sp, #140]
- 879 0194 0493     		str	r3, [sp, #16]
- 880 0196 9842     		cmp	r0, r3
- 881 0198 4DD1     		bne	.L66
- 882 019a 4748     		ldr	r0, .L83+100
- 883 019c FFF7FEFF 		bl	smtc_modem_hal_print_trace
- 884 01a0 7022     		movs	r2, #112
- 885 01a2 04AB     		add	r3, sp, #16
- 886 01a4 9B18     		adds	r3, r3, r2
- 887 01a6 1B88     		ldrh	r3, [r3]
- 888 01a8 08AE     		add	r6, sp, #32
- 889 01aa 0A33     		adds	r3, r3, #10
- 890 01ac 9BB2     		uxth	r3, r3
- 891 01ae 0493     		str	r3, [sp, #16]
- 892 01b0 C723     		movs	r3, #199
- 893 01b2 049A     		ldr	r2, [sp, #16]
- 894 01b4 9B00     		lsls	r3, r3, #2
- 895 01b6 E252     		strh	r2, [r4, r3]
- 896 01b8 219B     		ldr	r3, [sp, #132]
- 897 01ba 2900     		movs	r1, r5
- 898 01bc 0593     		str	r3, [sp, #20]
- 899 01be 059A     		ldr	r2, [sp, #20]
- 900 01c0 2C4B     		ldr	r3, .L83+32
- 901 01c2 3000     		movs	r0, r6
- 902 01c4 E250     		str	r2, [r4, r3]
- 903 01c6 7222     		movs	r2, #114
- 904 01c8 04AB     		add	r3, sp, #16
-ARM GAS  /tmp/ccoOjQhv.s 			page 17
+ 864 0184 1B78     		ldrb	r3, [r3]
+ 865 0186 1370     		strb	r3, [r2]
+ 866 0188 2022     		movs	r2, #32
+ 867 018a FFF7FEFF 		bl	memset
+ 868 018e 04AB     		add	r3, sp, #16
+ 869 0190 1E80     		strh	r6, [r3]
+ 870 0192 009B     		ldr	r3, [sp]
+ 871 0194 0622     		movs	r2, #6
+ 872 0196 0593     		str	r3, [sp, #20]
+ 873 0198 224B     		ldr	r3, .L83+36
+ 874 019a 06A8     		add	r0, sp, #24
+ 875 019c E118     		adds	r1, r4, r3
+ 876 019e FFF7FEFF 		bl	memcpy
+ 877 01a2 1C21     		movs	r1, #28
+ 878 01a4 04A8     		add	r0, sp, #16
+ 879 01a6 FFF7FEFF 		bl	lr1mac_utilities_crc
+ 880 01aa 2022     		movs	r2, #32
+ 881 01ac 0B90     		str	r0, [sp, #44]
+ 882 01ae 04A9     		add	r1, sp, #16
+ 883 01b0 0220     		movs	r0, #2
+ 884 01b2 FFF7FEFF 		bl	smtc_modem_hal_context_store
+ 885 01b6 2022     		movs	r2, #32
+ 886 01b8 2900     		movs	r1, r5
+ 887 01ba 0CA8     		add	r0, sp, #48
+ 888 01bc FFF7FEFF 		bl	memset
+ 889 01c0 0220     		movs	r0, #2
+ 890 01c2 2022     		movs	r2, #32
+ 891 01c4 0CA9     		add	r1, sp, #48
+ 892 01c6 FFF7FEFF 		bl	smtc_modem_hal_context_restore
+ 893 01ca 2000     		movs	r0, r4
+ 894 01cc FFF7FEFF 		bl	lr1mac_core_context_save
+ 895              	.L67:
+ 896 01d0 2000     		movs	r0, r4
+ 897 01d2 FFF7FEFF 		bl	lr1mac_core_context_load
+ 898 01d6 0028     		cmp	r0, #0
+ 899 01d8 00D1     		bne	.LCB894
+ 900 01da 4AE7     		b	.L68	@long jump
+ 901              	.LCB894:
+ 902 01dc 431C     		adds	r3, r0, #1
+ 903 01de 00D0     		beq	.LCB896
+ 904 01e0 60E7     		b	.L70	@long jump
+ 905              	.LCB896:
+ 906 01e2 4CE7     		b	.L65
+ 907              	.L66:
+ 908 01e4 1748     		ldr	r0, .L83+68
+ 909 01e6 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 910 01ea 0C48     		ldr	r0, .L83+28
+ 911 01ec FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 912 01f0 EEE7     		b	.L67
+ 913              	.L71:
+ 914 01f2 1548     		ldr	r0, .L83+72
+ 915 01f4 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 916 01f8 0848     		ldr	r0, .L83+28
+ 917 01fa FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 918 01fe 73E7     		b	.L72
+ 919              	.L84:
+ 920              		.align	2
+ARM GAS  /tmp/ccqGV7VH.s 			page 17
 
 
- 905 01ca 9B18     		adds	r3, r3, r2
- 906 01cc 1B88     		ldrh	r3, [r3]
- 907 01ce A26B     		ldr	r2, [r4, #56]
- 908 01d0 3B80     		strh	r3, [r7]
- 909 01d2 0593     		str	r3, [sp, #20]
- 910 01d4 22AB     		add	r3, sp, #136
- 911 01d6 1B78     		ldrb	r3, [r3]
- 912 01d8 1370     		strb	r3, [r2]
- 913 01da 2022     		movs	r2, #32
- 914 01dc FFF7FEFF 		bl	memset
- 915 01e0 049B     		ldr	r3, [sp, #16]
- 916 01e2 0622     		movs	r2, #6
- 917 01e4 3380     		strh	r3, [r6]
- 918 01e6 059B     		ldr	r3, [sp, #20]
- 919 01e8 0AA8     		add	r0, sp, #40
- 920 01ea 0993     		str	r3, [sp, #36]
- 921 01ec 224B     		ldr	r3, .L83+36
- 922 01ee E118     		adds	r1, r4, r3
- 923 01f0 FFF7FEFF 		bl	memcpy
- 924 01f4 1C21     		movs	r1, #28
- 925 01f6 3000     		movs	r0, r6
- 926 01f8 FFF7FEFF 		bl	lr1mac_utilities_crc
- 927 01fc 2022     		movs	r2, #32
- 928 01fe 3100     		movs	r1, r6
- 929 0200 0F90     		str	r0, [sp, #60]
- 930 0202 0220     		movs	r0, #2
- 931 0204 FFF7FEFF 		bl	smtc_modem_hal_context_store
- 932 0208 2022     		movs	r2, #32
- 933 020a 2900     		movs	r1, r5
- 934 020c 10A8     		add	r0, sp, #64
- 935 020e FFF7FEFF 		bl	memset
- 936 0212 0220     		movs	r0, #2
- 937 0214 2022     		movs	r2, #32
- 938 0216 10A9     		add	r1, sp, #64
- 939 0218 FFF7FEFF 		bl	smtc_modem_hal_context_restore
- 940 021c 2000     		movs	r0, r4
- 941 021e FFF7FEFF 		bl	lr1mac_core_context_save
- 942              	.L67:
- 943 0222 2000     		movs	r0, r4
- 944 0224 FFF7FEFF 		bl	lr1mac_core_context_load
- 945 0228 0028     		cmp	r0, #0
- 946 022a 00D1     		bne	.LCB930
- 947 022c 22E7     		b	.L68	@long jump
- 948              	.LCB930:
- 949 022e 431C     		adds	r3, r0, #1
- 950 0230 00D0     		beq	.LCB932
- 951 0232 38E7     		b	.L70	@long jump
- 952              	.LCB932:
- 953 0234 24E7     		b	.L65
- 954              	.L66:
- 955 0236 2148     		ldr	r0, .L83+104
- 956 0238 FFF7FEFF 		bl	smtc_modem_hal_print_trace
- 957 023c 0C48     		ldr	r0, .L83+28
- 958 023e FFF7FEFF 		bl	smtc_modem_hal_print_trace
- 959 0242 EEE7     		b	.L67
- 960              	.L71:
- 961 0244 1E48     		ldr	r0, .L83+108
-ARM GAS  /tmp/ccoOjQhv.s 			page 18
+ 921              	.L83:
+ 922 0200 54050000 		.word	1364
+ 923 0204 12050000 		.word	1298
+ 924 0208 11030000 		.word	785
+ 925 020c D9040000 		.word	1241
+ 926 0210 1C050000 		.word	1308
+ 927 0214 80994000 		.word	4233600
+ 928 0218 61000000 		.word	.LC14
+ 929 021c 2B000000 		.word	.LC3
+ 930 0220 94040000 		.word	1172
+ 931 0224 1E030000 		.word	798
+ 932 0228 BC040000 		.word	1212
+ 933 022c 9C040000 		.word	1180
+ 934 0230 00000000 		.word	lr1_stack_mac_rp_callback
+ 935 0234 8D040000 		.word	1165
+ 936 0238 8C040000 		.word	1164
+ 937 023c 00000000 		.word	.LC7
+ 938 0240 23000000 		.word	.LC9
+ 939 0244 42000000 		.word	.LC11
+ 940 0248 9E000000 		.word	.LC16
+ 942              		.section	.text.lr1mac_core_rx_window_get,"ax",%progbits
+ 943              		.align	1
+ 944              		.global	lr1mac_core_rx_window_get
+ 945              		.syntax unified
+ 946              		.code	16
+ 947              		.thumb_func
+ 948              		.fpu softvfp
+ 950              	lr1mac_core_rx_window_get:
+ 951              		@ args = 0, pretend = 0, frame = 0
+ 952              		@ frame_needed = 0, uses_anonymous_args = 0
+ 953              		@ link register save eliminated.
+ 954 0000 014B     		ldr	r3, .L86
+ 955              		@ sp needed
+ 956 0002 C05C     		ldrb	r0, [r0, r3]
+ 957 0004 7047     		bx	lr
+ 958              	.L87:
+ 959 0006 C046     		.align	2
+ 960              	.L86:
+ 961 0008 D9040000 		.word	1241
+ 963              		.section	.text.lr1mac_core_fcnt_up_get,"ax",%progbits
+ 964              		.align	1
+ 965              		.global	lr1mac_core_fcnt_up_get
+ 966              		.syntax unified
+ 967              		.code	16
+ 968              		.thumb_func
+ 969              		.fpu softvfp
+ 971              	lr1mac_core_fcnt_up_get:
+ 972              		@ args = 0, pretend = 0, frame = 0
+ 973              		@ frame_needed = 0, uses_anonymous_args = 0
+ 974              		@ link register save eliminated.
+ 975 0000 406E     		ldr	r0, [r0, #100]
+ 976              		@ sp needed
+ 977 0002 7047     		bx	lr
+ 979              		.section	.text.lr1mac_core_next_join_time_second_get,"ax",%progbits
+ 980              		.align	1
+ 981              		.global	lr1mac_core_next_join_time_second_get
+ 982              		.syntax unified
+ARM GAS  /tmp/ccqGV7VH.s 			page 18
 
 
- 962 0246 FFF7FEFF 		bl	smtc_modem_hal_print_trace
- 963 024a 0948     		ldr	r0, .L83+28
- 964 024c FFF7FEFF 		bl	smtc_modem_hal_print_trace
- 965 0250 4BE7     		b	.L72
- 966              	.L84:
- 967 0252 C046     		.align	2
- 968              	.L83:
- 969 0254 54050000 		.word	1364
- 970 0258 12050000 		.word	1298
- 971 025c 11030000 		.word	785
- 972 0260 D9040000 		.word	1241
- 973 0264 1C050000 		.word	1308
- 974 0268 80994000 		.word	4233600
- 975 026c 61000000 		.word	.LC14
- 976 0270 2B000000 		.word	.LC3
- 977 0274 94040000 		.word	1172
- 978 0278 1E030000 		.word	798
- 979 027c D7000000 		.word	.LC18
- 980 0280 23030000 		.word	803
- 981 0284 1F030000 		.word	799
- 982 0288 22030000 		.word	802
- 983 028c 21030000 		.word	801
- 984 0290 E8000000 		.word	.LC20
- 985 0294 22010000 		.word	.LC22
- 986 0298 00000000 		.word	.LANCHOR0
- 987 029c 34010000 		.word	.LC25
- 988 02a0 BC040000 		.word	1212
- 989 02a4 9C040000 		.word	1180
- 990 02a8 00000000 		.word	lr1_stack_mac_rp_callback
- 991 02ac 8D040000 		.word	1165
- 992 02b0 8C040000 		.word	1164
- 993 02b4 00000000 		.word	.LC7
- 994 02b8 23000000 		.word	.LC9
- 995 02bc 42000000 		.word	.LC11
- 996 02c0 9E000000 		.word	.LC16
- 998              		.section	.text.lr1mac_core_rx_window_get,"ax",%progbits
- 999              		.align	1
- 1000              		.global	lr1mac_core_rx_window_get
- 1001              		.syntax unified
- 1002              		.code	16
- 1003              		.thumb_func
- 1004              		.fpu softvfp
- 1006              	lr1mac_core_rx_window_get:
- 1007              		@ args = 0, pretend = 0, frame = 0
- 1008              		@ frame_needed = 0, uses_anonymous_args = 0
- 1009              		@ link register save eliminated.
- 1010 0000 014B     		ldr	r3, .L86
- 1011              		@ sp needed
- 1012 0002 C05C     		ldrb	r0, [r0, r3]
- 1013 0004 7047     		bx	lr
- 1014              	.L87:
- 1015 0006 C046     		.align	2
- 1016              	.L86:
- 1017 0008 D9040000 		.word	1241
- 1019              		.section	.text.lr1mac_core_fcnt_up_get,"ax",%progbits
- 1020              		.align	1
- 1021              		.global	lr1mac_core_fcnt_up_get
-ARM GAS  /tmp/ccoOjQhv.s 			page 19
+ 983              		.code	16
+ 984              		.thumb_func
+ 985              		.fpu softvfp
+ 987              	lr1mac_core_next_join_time_second_get:
+ 988              		@ args = 0, pretend = 0, frame = 0
+ 989              		@ frame_needed = 0, uses_anonymous_args = 0
+ 990              		@ link register save eliminated.
+ 991 0000 014B     		ldr	r3, .L90
+ 992              		@ sp needed
+ 993 0002 C058     		ldr	r0, [r0, r3]
+ 994 0004 7047     		bx	lr
+ 995              	.L91:
+ 996 0006 C046     		.align	2
+ 997              	.L90:
+ 998 0008 A4040000 		.word	1188
+ 1000              		.section	.text.lr1mac_core_next_free_duty_cycle_ms_get,"ax",%progbits
+ 1001              		.align	1
+ 1002              		.global	lr1mac_core_next_free_duty_cycle_ms_get
+ 1003              		.syntax unified
+ 1004              		.code	16
+ 1005              		.thumb_func
+ 1006              		.fpu softvfp
+ 1008              	lr1mac_core_next_free_duty_cycle_ms_get:
+ 1009              		@ args = 0, pretend = 0, frame = 72
+ 1010              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1011 0000 30B5     		push	{r4, r5, lr}
+ 1012 0002 93B0     		sub	sp, sp, #76
+ 1013 0004 0400     		movs	r4, r0
+ 1014 0006 0021     		movs	r1, #0
+ 1015 0008 6B46     		mov	r3, sp
+ 1016 000a 4022     		movs	r2, #64
+ 1017 000c 02A8     		add	r0, sp, #8
+ 1018 000e D971     		strb	r1, [r3, #7]
+ 1019 0010 FFF7FEFF 		bl	memset
+ 1020 0014 2000     		movs	r0, r4
+ 1021 0016 FFF7FEFF 		bl	lr1_stack_network_next_free_duty_cycle_ms_get
+ 1022 001a 0500     		movs	r5, r0
+ 1023 001c 2000     		movs	r0, r4
+ 1024 001e FFF7FEFF 		bl	smtc_real_is_dtc_supported
+ 1025 0022 0028     		cmp	r0, #0
+ 1026 0024 07D1     		bne	.L93
+ 1027              	.L95:
+ 1028 0026 0020     		movs	r0, #0
+ 1029              	.L94:
+ 1030 0028 002D     		cmp	r5, #0
+ 1031 002a 02D0     		beq	.L92
+ 1032 002c A842     		cmp	r0, r5
+ 1033 002e 00DA     		bge	.L92
+ 1034 0030 2800     		movs	r0, r5
+ 1035              	.L92:
+ 1036 0032 13B0     		add	sp, sp, #76
+ 1037              		@ sp needed
+ 1038 0034 30BD     		pop	{r4, r5, pc}
+ 1039              	.L93:
+ 1040 0036 6946     		mov	r1, sp
+ 1041 0038 1023     		movs	r3, #16
+ 1042 003a 2000     		movs	r0, r4
+ARM GAS  /tmp/ccqGV7VH.s 			page 19
 
 
- 1022              		.syntax unified
- 1023              		.code	16
- 1024              		.thumb_func
- 1025              		.fpu softvfp
- 1027              	lr1mac_core_fcnt_up_get:
- 1028              		@ args = 0, pretend = 0, frame = 0
- 1029              		@ frame_needed = 0, uses_anonymous_args = 0
- 1030              		@ link register save eliminated.
- 1031 0000 406E     		ldr	r0, [r0, #100]
- 1032              		@ sp needed
- 1033 0002 7047     		bx	lr
- 1035              		.section	.text.lr1mac_core_next_join_time_second_get,"ax",%progbits
- 1036              		.align	1
- 1037              		.global	lr1mac_core_next_join_time_second_get
- 1038              		.syntax unified
- 1039              		.code	16
- 1040              		.thumb_func
- 1041              		.fpu softvfp
- 1043              	lr1mac_core_next_join_time_second_get:
- 1044              		@ args = 0, pretend = 0, frame = 0
- 1045              		@ frame_needed = 0, uses_anonymous_args = 0
- 1046              		@ link register save eliminated.
- 1047 0000 014B     		ldr	r3, .L90
- 1048              		@ sp needed
- 1049 0002 C058     		ldr	r0, [r0, r3]
- 1050 0004 7047     		bx	lr
- 1051              	.L91:
- 1052 0006 C046     		.align	2
- 1053              	.L90:
- 1054 0008 A4040000 		.word	1188
- 1056              		.section	.text.lr1mac_core_next_free_duty_cycle_ms_get,"ax",%progbits
- 1057              		.align	1
- 1058              		.global	lr1mac_core_next_free_duty_cycle_ms_get
- 1059              		.syntax unified
- 1060              		.code	16
- 1061              		.thumb_func
- 1062              		.fpu softvfp
- 1064              	lr1mac_core_next_free_duty_cycle_ms_get:
- 1065              		@ args = 0, pretend = 0, frame = 72
- 1066              		@ frame_needed = 0, uses_anonymous_args = 0
- 1067 0000 30B5     		push	{r4, r5, lr}
- 1068 0002 93B0     		sub	sp, sp, #76
- 1069 0004 0400     		movs	r4, r0
- 1070 0006 0021     		movs	r1, #0
- 1071 0008 6B46     		mov	r3, sp
- 1072 000a 4022     		movs	r2, #64
- 1073 000c 02A8     		add	r0, sp, #8
- 1074 000e D971     		strb	r1, [r3, #7]
- 1075 0010 FFF7FEFF 		bl	memset
- 1076 0014 2000     		movs	r0, r4
- 1077 0016 FFF7FEFF 		bl	lr1_stack_network_next_free_duty_cycle_ms_get
- 1078 001a 0500     		movs	r5, r0
- 1079 001c 2000     		movs	r0, r4
- 1080 001e FFF7FEFF 		bl	smtc_real_is_dtc_supported
- 1081 0022 0028     		cmp	r0, #0
- 1082 0024 07D1     		bne	.L93
- 1083              	.L95:
-ARM GAS  /tmp/ccoOjQhv.s 			page 20
+ 1043 003c 02AA     		add	r2, sp, #8
+ 1044 003e 0731     		adds	r1, r1, #7
+ 1045 0040 FFF7FEFF 		bl	smtc_real_get_current_enabled_frequency_list
+ 1046 0044 0128     		cmp	r0, #1
+ 1047 0046 EED1     		bne	.L95
+ 1048 0048 6B46     		mov	r3, sp
+ 1049 004a E06B     		ldr	r0, [r4, #60]
+ 1050 004c D979     		ldrb	r1, [r3, #7]
+ 1051 004e 02AA     		add	r2, sp, #8
+ 1052 0050 FFF7FEFF 		bl	smtc_duty_cycle_get_next_free_time_ms
+ 1053 0054 E8E7     		b	.L94
+ 1055              		.section	.rodata.lr1mac_core_payload_send.str1.1,"aMS",%progbits,1
+ 1056              	.LC19:
+ 1057 0000 1B5B303B 		.ascii	"\033[0;31mERROR: PAYLOAD SIZE TOO HIGH\015\012\000"
+ 1057      33316D45 
+ 1057      52524F52 
+ 1057      3A205041 
+ 1057      594C4F41 
+ 1058              	.LC22:
+ 1059 0026 1B5B303B 		.ascii	"\033[0;31mERROR: PAYLOAD PACKET TYPE INVALID\015\012"
+ 1059      33316D45 
+ 1059      52524F52 
+ 1059      3A205041 
+ 1059      594C4F41 
+ 1060 0051 00       		.ascii	"\000"
+ 1061              	.LC24:
+ 1062 0052 1B5B303B 		.ascii	"\033[0;31mERROR: OTAA DEVICE NOT JOINED YET\015\012"
+ 1062      33316D45 
+ 1062      52524F52 
+ 1062      3A204F54 
+ 1062      41412044 
+ 1063 007c 00       		.ascii	"\000"
+ 1064              	.LC27:
+ 1065 007d 1B5B303B 		.ascii	"\033[0;33mWARN: Duty Cycle is full\015\012\000"
+ 1065      33336D57 
+ 1065      41524E3A 
+ 1065      20447574 
+ 1065      79204379 
+ 1066              		.section	.text.lr1mac_core_payload_send,"ax",%progbits
+ 1067              		.align	1
+ 1068              		.global	lr1mac_core_payload_send
+ 1069              		.syntax unified
+ 1070              		.code	16
+ 1071              		.thumb_func
+ 1072              		.fpu softvfp
+ 1074              	lr1mac_core_payload_send:
+ 1075              		@ args = 12, pretend = 0, frame = 16
+ 1076              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1077 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 1078 0002 85B0     		sub	sp, sp, #20
+ 1079 0004 0393     		str	r3, [sp, #12]
+ 1080 0006 0AAB     		add	r3, sp, #40
+ 1081 0008 1F78     		ldrb	r7, [r3]
+ 1082 000a 0BAB     		add	r3, sp, #44
+ 1083 000c 1B78     		ldrb	r3, [r3]
+ 1084 000e 0192     		str	r2, [sp, #4]
+ 1085 0010 0293     		str	r3, [sp, #8]
+ARM GAS  /tmp/ccqGV7VH.s 			page 20
 
 
- 1084 0026 0020     		movs	r0, #0
- 1085              	.L94:
- 1086 0028 002D     		cmp	r5, #0
- 1087 002a 02D0     		beq	.L92
- 1088 002c A842     		cmp	r0, r5
- 1089 002e 00DA     		bge	.L92
- 1090 0030 2800     		movs	r0, r5
- 1091              	.L92:
- 1092 0032 13B0     		add	sp, sp, #76
- 1093              		@ sp needed
- 1094 0034 30BD     		pop	{r4, r5, pc}
- 1095              	.L93:
- 1096 0036 6946     		mov	r1, sp
- 1097 0038 1023     		movs	r3, #16
- 1098 003a 2000     		movs	r0, r4
- 1099 003c 02AA     		add	r2, sp, #8
- 1100 003e 0731     		adds	r1, r1, #7
- 1101 0040 FFF7FEFF 		bl	smtc_real_get_current_enabled_frequency_list
- 1102 0044 0128     		cmp	r0, #1
- 1103 0046 EED1     		bne	.L95
- 1104 0048 6B46     		mov	r3, sp
- 1105 004a E06B     		ldr	r0, [r4, #60]
- 1106 004c D979     		ldrb	r1, [r3, #7]
- 1107 004e 02AA     		add	r2, sp, #8
- 1108 0050 FFF7FEFF 		bl	smtc_duty_cycle_get_next_free_time_ms
- 1109 0054 E8E7     		b	.L94
- 1111              		.section	.rodata.lr1mac_core_payload_send.str1.1,"aMS",%progbits,1
- 1112              	.LC28:
- 1113 0000 1B5B303B 		.ascii	"\033[0;31mERROR: PAYLOAD SIZE TOO HIGH\015\012\000"
- 1113      33316D45 
- 1113      52524F52 
- 1113      3A205041 
- 1113      594C4F41 
- 1114              	.LC31:
- 1115 0026 1B5B303B 		.ascii	"\033[0;31mERROR: PAYLOAD PACKET TYPE INVALID\015\012"
- 1115      33316D45 
- 1115      52524F52 
- 1115      3A205041 
- 1115      594C4F41 
- 1116 0051 00       		.ascii	"\000"
- 1117              	.LC33:
- 1118 0052 1B5B303B 		.ascii	"\033[0;31mERROR: OTAA DEVICE NOT JOINED YET\015\012"
- 1118      33316D45 
- 1118      52524F52 
- 1118      3A204F54 
- 1118      41412044 
- 1119 007c 00       		.ascii	"\000"
- 1120              	.LC36:
- 1121 007d 1B5B303B 		.ascii	"\033[0;33mWARN: Duty Cycle is full\015\012\000"
- 1121      33336D57 
- 1121      41524E3A 
- 1121      20447574 
- 1121      79204379 
- 1122              		.section	.text.lr1mac_core_payload_send,"ax",%progbits
- 1123              		.align	1
- 1124              		.global	lr1mac_core_payload_send
- 1125              		.syntax unified
-ARM GAS  /tmp/ccoOjQhv.s 			page 21
+ 1086 0012 1300     		movs	r3, r2
+ 1087 0014 5A1E     		subs	r2, r3, #1
+ 1088 0016 9341     		sbcs	r3, r3, r2
+ 1089 0018 5B42     		rsbs	r3, r3, #0
+ 1090 001a 0200     		movs	r2, r0
+ 1091 001c 1F40     		ands	r7, r3
+ 1092 001e 0300     		movs	r3, r0
+ 1093 0020 4E32     		adds	r2, r2, #78
+ 1094 0022 5B33     		adds	r3, r3, #91
+ 1095 0024 0E00     		movs	r6, r1
+ 1096 0026 1B78     		ldrb	r3, [r3]
+ 1097 0028 1178     		ldrb	r1, [r2]
+ 1098 002a 3A00     		movs	r2, r7
+ 1099 002c 0400     		movs	r4, r0
+ 1100 002e FFF7FEFF 		bl	smtc_real_is_payload_size_valid
+ 1101 0032 0500     		movs	r5, r0
+ 1102 0034 431C     		adds	r3, r0, #1
+ 1103 0036 08D1     		bne	.L103
+ 1104 0038 3648     		ldr	r0, .L118
+ 1105 003a FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 1106 003e 3648     		ldr	r0, .L118+4
+ 1107 0040 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 1108              	.L104:
+ 1109 0044 2800     		movs	r0, r5
+ 1110 0046 05B0     		add	sp, sp, #20
+ 1111              		@ sp needed
+ 1112 0048 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 1113              	.L103:
+ 1114 004a FD22     		movs	r2, #253
+ 1115 004c 029B     		ldr	r3, [sp, #8]
+ 1116 004e 3348     		ldr	r0, .L118+8
+ 1117 0050 023B     		subs	r3, r3, #2
+ 1118 0052 1342     		tst	r3, r2
+ 1119 0054 09D1     		bne	.L117
+ 1120 0056 2300     		movs	r3, r4
+ 1121 0058 7033     		adds	r3, r3, #112
+ 1122 005a 1B78     		ldrb	r3, [r3]
+ 1123 005c 002B     		cmp	r3, #0
+ 1124 005e 0CD1     		bne	.L106
+ 1125 0060 2F4B     		ldr	r3, .L118+12
+ 1126 0062 E35C     		ldrb	r3, [r4, r3]
+ 1127 0064 022B     		cmp	r3, #2
+ 1128 0066 08D0     		beq	.L106
+ 1129 0068 2E48     		ldr	r0, .L118+16
+ 1130              	.L117:
+ 1131 006a FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 1132 006e 2A48     		ldr	r0, .L118+4
+ 1133 0070 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 1134              	.L110:
+ 1135 0074 0125     		movs	r5, #1
+ 1136 0076 6D42     		rsbs	r5, r5, #0
+ 1137 0078 E4E7     		b	.L104
+ 1138              	.L106:
+ 1139 007a 2B4B     		ldr	r3, .L118+20
+ 1140 007c 2B48     		ldr	r0, .L118+24
+ 1141 007e E35C     		ldrb	r3, [r4, r3]
+ 1142 0080 002B     		cmp	r3, #0
+ARM GAS  /tmp/ccqGV7VH.s 			page 21
 
 
- 1126              		.code	16
- 1127              		.thumb_func
- 1128              		.fpu softvfp
- 1130              	lr1mac_core_payload_send:
- 1131              		@ args = 12, pretend = 0, frame = 16
- 1132              		@ frame_needed = 0, uses_anonymous_args = 0
- 1133 0000 F0B5     		push	{r4, r5, r6, r7, lr}
- 1134 0002 85B0     		sub	sp, sp, #20
- 1135 0004 0393     		str	r3, [sp, #12]
- 1136 0006 0AAB     		add	r3, sp, #40
- 1137 0008 1F78     		ldrb	r7, [r3]
- 1138 000a 0BAB     		add	r3, sp, #44
- 1139 000c 1B78     		ldrb	r3, [r3]
- 1140 000e 0192     		str	r2, [sp, #4]
- 1141 0010 0293     		str	r3, [sp, #8]
- 1142 0012 1300     		movs	r3, r2
- 1143 0014 5A1E     		subs	r2, r3, #1
- 1144 0016 9341     		sbcs	r3, r3, r2
- 1145 0018 5B42     		rsbs	r3, r3, #0
- 1146 001a 0200     		movs	r2, r0
- 1147 001c 1F40     		ands	r7, r3
- 1148 001e 0300     		movs	r3, r0
- 1149 0020 4E32     		adds	r2, r2, #78
- 1150 0022 5B33     		adds	r3, r3, #91
- 1151 0024 0E00     		movs	r6, r1
- 1152 0026 1B78     		ldrb	r3, [r3]
- 1153 0028 1178     		ldrb	r1, [r2]
- 1154 002a 3A00     		movs	r2, r7
- 1155 002c 0400     		movs	r4, r0
- 1156 002e FFF7FEFF 		bl	smtc_real_is_payload_size_valid
- 1157 0032 0500     		movs	r5, r0
- 1158 0034 431C     		adds	r3, r0, #1
- 1159 0036 08D1     		bne	.L103
- 1160 0038 3648     		ldr	r0, .L118
- 1161 003a FFF7FEFF 		bl	smtc_modem_hal_print_trace
- 1162 003e 3648     		ldr	r0, .L118+4
- 1163 0040 FFF7FEFF 		bl	smtc_modem_hal_print_trace
- 1164              	.L104:
- 1165 0044 2800     		movs	r0, r5
- 1166 0046 05B0     		add	sp, sp, #20
- 1167              		@ sp needed
- 1168 0048 F0BD     		pop	{r4, r5, r6, r7, pc}
- 1169              	.L103:
- 1170 004a FD22     		movs	r2, #253
- 1171 004c 029B     		ldr	r3, [sp, #8]
- 1172 004e 3348     		ldr	r0, .L118+8
- 1173 0050 023B     		subs	r3, r3, #2
- 1174 0052 1342     		tst	r3, r2
- 1175 0054 09D1     		bne	.L117
- 1176 0056 2300     		movs	r3, r4
- 1177 0058 7033     		adds	r3, r3, #112
- 1178 005a 1B78     		ldrb	r3, [r3]
- 1179 005c 002B     		cmp	r3, #0
- 1180 005e 0CD1     		bne	.L106
- 1181 0060 2F4B     		ldr	r3, .L118+12
- 1182 0062 E35C     		ldrb	r3, [r4, r3]
- 1183 0064 022B     		cmp	r3, #2
-ARM GAS  /tmp/ccoOjQhv.s 			page 22
+ 1143 0082 F2D1     		bne	.L117
+ 1144 0084 E06B     		ldr	r0, [r4, #60]
+ 1145 0086 FFF7FEFF 		bl	smtc_duty_cycle_update
+ 1146 008a 2000     		movs	r0, r4
+ 1147 008c FFF7FEFF 		bl	smtc_real_get_next_channel
+ 1148 0090 051E     		subs	r5, r0, #0
+ 1149 0092 EFD1     		bne	.L110
+ 1150 0094 2000     		movs	r0, r4
+ 1151 0096 FFF7FEFF 		bl	lr1mac_core_next_free_duty_cycle_ms_get
+ 1152 009a 0028     		cmp	r0, #0
+ 1153 009c 07DD     		ble	.L108
+ 1154 009e 2448     		ldr	r0, .L118+28
+ 1155 00a0 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 1156 00a4 1C48     		ldr	r0, .L118+4
+ 1157 00a6 FFF7FEFF 		bl	smtc_modem_hal_print_trace
+ 1158 00aa 013D     		subs	r5, r5, #1
+ 1159 00ac CAE7     		b	.L104
+ 1160              	.L108:
+ 1161 00ae FFF7FEFF 		bl	smtc_modem_hal_get_time_in_s
+ 1162 00b2 204B     		ldr	r3, .L118+32
+ 1163 00b4 0C9A     		ldr	r2, [sp, #48]
+ 1164 00b6 E050     		str	r0, [r4, r3]
+ 1165 00b8 1F4B     		ldr	r3, .L118+36
+ 1166 00ba E250     		str	r2, [r4, r3]
+ 1167 00bc 2300     		movs	r3, r4
+ 1168 00be 019A     		ldr	r2, [sp, #4]
+ 1169 00c0 7833     		adds	r3, r3, #120
+ 1170 00c2 1F70     		strb	r7, [r3]
+ 1171 00c4 073B     		subs	r3, r3, #7
+ 1172 00c6 5A70     		strb	r2, [r3, #1]
+ 1173 00c8 029A     		ldr	r2, [sp, #8]
+ 1174 00ca 1E70     		strb	r6, [r3]
+ 1175 00cc 9A70     		strb	r2, [r3, #2]
+ 1176 00ce FE23     		movs	r3, #254
+ 1177 00d0 FF33     		adds	r3, r3, #255
+ 1178 00d2 E554     		strb	r5, [r4, r3]
+ 1179 00d4 002E     		cmp	r6, #0
+ 1180 00d6 01D0     		beq	.L109
+ 1181 00d8 133B     		subs	r3, r3, #19
+ 1182 00da E65C     		ldrb	r6, [r4, r3]
+ 1183              	.L109:
+ 1184 00dc 019B     		ldr	r3, [sp, #4]
+ 1185 00de BAB2     		uxth	r2, r7
+ 1186 00e0 F018     		adds	r0, r6, r3
+ 1187 00e2 8230     		adds	r0, r0, #130
+ 1188 00e4 0399     		ldr	r1, [sp, #12]
+ 1189 00e6 2018     		adds	r0, r4, r0
+ 1190 00e8 FFF7FEFF 		bl	memcpy1
+ 1191 00ec 2000     		movs	r0, r4
+ 1192 00ee FFF7FEFF 		bl	lr1_stack_mac_tx_frame_build
+ 1193 00f2 2000     		movs	r0, r4
+ 1194 00f4 FFF7FEFF 		bl	lr1_stack_mac_tx_frame_encrypt
+ 1195 00f8 0022     		movs	r2, #0
+ 1196 00fa 104B     		ldr	r3, .L118+40
+ 1197 00fc E254     		strb	r2, [r4, r3]
+ 1198 00fe 2200     		movs	r2, r4
+ 1199 0100 2300     		movs	r3, r4
+ARM GAS  /tmp/ccqGV7VH.s 			page 22
 
 
- 1184 0066 08D0     		beq	.L106
- 1185 0068 2E48     		ldr	r0, .L118+16
- 1186              	.L117:
- 1187 006a FFF7FEFF 		bl	smtc_modem_hal_print_trace
- 1188 006e 2A48     		ldr	r0, .L118+4
- 1189 0070 FFF7FEFF 		bl	smtc_modem_hal_print_trace
- 1190              	.L110:
- 1191 0074 0125     		movs	r5, #1
- 1192 0076 6D42     		rsbs	r5, r5, #0
- 1193 0078 E4E7     		b	.L104
- 1194              	.L106:
- 1195 007a 2B4B     		ldr	r3, .L118+20
- 1196 007c 2B48     		ldr	r0, .L118+24
- 1197 007e E35C     		ldrb	r3, [r4, r3]
- 1198 0080 002B     		cmp	r3, #0
- 1199 0082 F2D1     		bne	.L117
- 1200 0084 E06B     		ldr	r0, [r4, #60]
- 1201 0086 FFF7FEFF 		bl	smtc_duty_cycle_update
- 1202 008a 2000     		movs	r0, r4
- 1203 008c FFF7FEFF 		bl	smtc_real_get_next_channel
- 1204 0090 051E     		subs	r5, r0, #0
- 1205 0092 EFD1     		bne	.L110
- 1206 0094 2000     		movs	r0, r4
- 1207 0096 FFF7FEFF 		bl	lr1mac_core_next_free_duty_cycle_ms_get
- 1208 009a 0028     		cmp	r0, #0
- 1209 009c 07DD     		ble	.L108
- 1210 009e 2448     		ldr	r0, .L118+28
- 1211 00a0 FFF7FEFF 		bl	smtc_modem_hal_print_trace
- 1212 00a4 1C48     		ldr	r0, .L118+4
- 1213 00a6 FFF7FEFF 		bl	smtc_modem_hal_print_trace
- 1214 00aa 013D     		subs	r5, r5, #1
- 1215 00ac CAE7     		b	.L104
- 1216              	.L108:
- 1217 00ae FFF7FEFF 		bl	smtc_modem_hal_get_time_in_s
- 1218 00b2 204B     		ldr	r3, .L118+32
- 1219 00b4 0C9A     		ldr	r2, [sp, #48]
- 1220 00b6 E050     		str	r0, [r4, r3]
- 1221 00b8 1F4B     		ldr	r3, .L118+36
- 1222 00ba E250     		str	r2, [r4, r3]
- 1223 00bc 2300     		movs	r3, r4
- 1224 00be 019A     		ldr	r2, [sp, #4]
- 1225 00c0 7833     		adds	r3, r3, #120
- 1226 00c2 1F70     		strb	r7, [r3]
- 1227 00c4 073B     		subs	r3, r3, #7
- 1228 00c6 5A70     		strb	r2, [r3, #1]
- 1229 00c8 029A     		ldr	r2, [sp, #8]
- 1230 00ca 1E70     		strb	r6, [r3]
- 1231 00cc 9A70     		strb	r2, [r3, #2]
- 1232 00ce FE23     		movs	r3, #254
- 1233 00d0 FF33     		adds	r3, r3, #255
- 1234 00d2 E554     		strb	r5, [r4, r3]
- 1235 00d4 002E     		cmp	r6, #0
- 1236 00d6 01D0     		beq	.L109
- 1237 00d8 133B     		subs	r3, r3, #19
- 1238 00da E65C     		ldrb	r6, [r4, r3]
- 1239              	.L109:
- 1240 00dc 019B     		ldr	r3, [sp, #4]
-ARM GAS  /tmp/ccoOjQhv.s 			page 23
+ 1200 0102 5132     		adds	r2, r2, #81
+ 1201 0104 1278     		ldrb	r2, [r2]
+ 1202 0106 5233     		adds	r3, r3, #82
+ 1203 0108 1A70     		strb	r2, [r3]
+ 1204 010a 0123     		movs	r3, #1
+ 1205 010c 064A     		ldr	r2, .L118+20
+ 1206 010e A354     		strb	r3, [r4, r2]
+ 1207 0110 98E7     		b	.L104
+ 1208              	.L119:
+ 1209 0112 C046     		.align	2
+ 1210              	.L118:
+ 1211 0114 00000000 		.word	.LC19
+ 1212 0118 2B000000 		.word	.LC3
+ 1213 011c 26000000 		.word	.LC22
+ 1214 0120 CE040000 		.word	1230
+ 1215 0124 52000000 		.word	.LC24
+ 1216 0128 12050000 		.word	1298
+ 1217 012c 00000000 		.word	.LC1
+ 1218 0130 7D000000 		.word	.LC27
+ 1219 0134 0C050000 		.word	1292
+ 1220 0138 14050000 		.word	1300
+ 1221 013c D9040000 		.word	1241
+ 1223              		.section	.text.lr1mac_core_send_stack_cid_req,"ax",%progbits
+ 1224              		.align	1
+ 1225              		.global	lr1mac_core_send_stack_cid_req
+ 1226              		.syntax unified
+ 1227              		.code	16
+ 1228              		.thumb_func
+ 1229              		.fpu softvfp
+ 1231              	lr1mac_core_send_stack_cid_req:
+ 1232              		@ args = 0, pretend = 0, frame = 256
+ 1233              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1234 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 1235 0002 C5B0     		sub	sp, sp, #276
+ 1236 0004 0500     		movs	r5, r0
+ 1237 0006 0E00     		movs	r6, r1
+ 1238 0008 FFF7FEFF 		bl	smtc_modem_hal_get_time_in_ms
+ 1239 000c 0321     		movs	r1, #3
+ 1240 000e 0400     		movs	r4, r0
+ 1241 0010 0120     		movs	r0, #1
+ 1242 0012 FFF7FEFF 		bl	smtc_modem_hal_get_random_nb_in_range
+ 1243 0016 FA23     		movs	r3, #250
+ 1244 0018 9B00     		lsls	r3, r3, #2
+ 1245 001a 4343     		muls	r3, r0
+ 1246 001c 2D4F     		ldr	r7, .L143
+ 1247 001e 1B19     		adds	r3, r3, r4
+ 1248 0020 0593     		str	r3, [sp, #20]
+ 1249 0022 EB5D     		ldrb	r3, [r5, r7]
+ 1250 0024 0024     		movs	r4, #0
+ 1251 0026 012B     		cmp	r3, #1
+ 1252 0028 13D0     		beq	.L121
+ 1253 002a 2B4B     		ldr	r3, .L143+4
+ 1254 002c EB5C     		ldrb	r3, [r5, r3]
+ 1255 002e 012B     		cmp	r3, #1
+ 1256 0030 0FD0     		beq	.L121
+ 1257 0032 2A4B     		ldr	r3, .L143+8
+ 1258 0034 EB5C     		ldrb	r3, [r5, r3]
+ARM GAS  /tmp/ccqGV7VH.s 			page 23
 
 
- 1241 00de BAB2     		uxth	r2, r7
- 1242 00e0 F018     		adds	r0, r6, r3
- 1243 00e2 8230     		adds	r0, r0, #130
- 1244 00e4 0399     		ldr	r1, [sp, #12]
- 1245 00e6 2018     		adds	r0, r4, r0
- 1246 00e8 FFF7FEFF 		bl	memcpy1
- 1247 00ec 2000     		movs	r0, r4
- 1248 00ee FFF7FEFF 		bl	lr1_stack_mac_tx_frame_build
- 1249 00f2 2000     		movs	r0, r4
- 1250 00f4 FFF7FEFF 		bl	lr1_stack_mac_tx_frame_encrypt
- 1251 00f8 0022     		movs	r2, #0
- 1252 00fa 104B     		ldr	r3, .L118+40
- 1253 00fc E254     		strb	r2, [r4, r3]
- 1254 00fe 2200     		movs	r2, r4
- 1255 0100 2300     		movs	r3, r4
- 1256 0102 5132     		adds	r2, r2, #81
- 1257 0104 1278     		ldrb	r2, [r2]
- 1258 0106 5233     		adds	r3, r3, #82
- 1259 0108 1A70     		strb	r2, [r3]
- 1260 010a 0123     		movs	r3, #1
- 1261 010c 064A     		ldr	r2, .L118+20
- 1262 010e A354     		strb	r3, [r4, r2]
- 1263 0110 98E7     		b	.L104
- 1264              	.L119:
- 1265 0112 C046     		.align	2
- 1266              	.L118:
- 1267 0114 00000000 		.word	.LC28
- 1268 0118 2B000000 		.word	.LC3
- 1269 011c 26000000 		.word	.LC31
- 1270 0120 CE040000 		.word	1230
- 1271 0124 52000000 		.word	.LC33
- 1272 0128 12050000 		.word	1298
- 1273 012c 00000000 		.word	.LC1
- 1274 0130 7D000000 		.word	.LC36
- 1275 0134 0C050000 		.word	1292
- 1276 0138 14050000 		.word	1300
- 1277 013c D9040000 		.word	1241
- 1279              		.section	.text.lr1mac_core_send_stack_cid_req,"ax",%progbits
- 1280              		.align	1
- 1281              		.global	lr1mac_core_send_stack_cid_req
- 1282              		.syntax unified
- 1283              		.code	16
- 1284              		.thumb_func
- 1285              		.fpu softvfp
- 1287              	lr1mac_core_send_stack_cid_req:
- 1288              		@ args = 0, pretend = 0, frame = 256
- 1289              		@ frame_needed = 0, uses_anonymous_args = 0
- 1290 0000 F0B5     		push	{r4, r5, r6, r7, lr}
- 1291 0002 C5B0     		sub	sp, sp, #276
- 1292 0004 0500     		movs	r5, r0
- 1293 0006 0E00     		movs	r6, r1
- 1294 0008 FFF7FEFF 		bl	smtc_modem_hal_get_time_in_ms
- 1295 000c 0321     		movs	r1, #3
- 1296 000e 0400     		movs	r4, r0
- 1297 0010 0120     		movs	r0, #1
- 1298 0012 FFF7FEFF 		bl	smtc_modem_hal_get_random_nb_in_range
- 1299 0016 FA23     		movs	r3, #250
-ARM GAS  /tmp/ccoOjQhv.s 			page 24
+ 1259 0036 012B     		cmp	r3, #1
+ 1260 0038 0BD0     		beq	.L121
+ 1261 003a F523     		movs	r3, #245
+ 1262 003c 5B00     		lsls	r3, r3, #1
+ 1263 003e EC5C     		ldrb	r4, [r5, r3]
+ 1264 0040 002C     		cmp	r4, #0
+ 1265 0042 06D0     		beq	.L121
+ 1266 0044 2900     		movs	r1, r5
+ 1267 0046 EC31     		adds	r1, r1, #236
+ 1268 0048 A2B2     		uxth	r2, r4
+ 1269 004a FF31     		adds	r1, r1, #255
+ 1270 004c 07A8     		add	r0, sp, #28
+ 1271 004e FFF7FEFF 		bl	memcpy1
+ 1272              	.L121:
+ 1273 0052 0D2E     		cmp	r6, #13
+ 1274 0054 1DD0     		beq	.L122
+ 1275 0056 102E     		cmp	r6, #16
+ 1276 0058 23D0     		beq	.L123
+ 1277 005a 022E     		cmp	r6, #2
+ 1278 005c 37D1     		bne	.L129
+ 1279 005e EB5D     		ldrb	r3, [r5, r7]
+ 1280 0060 012B     		cmp	r3, #1
+ 1281 0062 09D0     		beq	.L125
+ 1282 0064 0123     		movs	r3, #1
+ 1283 0066 EB55     		strb	r3, [r5, r7]
+ 1284 0068 A423     		movs	r3, #164
+ 1285 006a 0022     		movs	r2, #0
+ 1286 006c DB00     		lsls	r3, r3, #3
+ 1287 006e EA52     		strh	r2, [r5, r3]
+ 1288 0070 631C     		adds	r3, r4, #1
+ 1289              	.L142:
+ 1290 0072 07AA     		add	r2, sp, #28
+ 1291 0074 1655     		strb	r6, [r2, r4]
+ 1292 0076 DCB2     		uxtb	r4, r3
+ 1293              	.L125:
+ 1294 0078 059B     		ldr	r3, [sp, #20]
+ 1295 007a 0122     		movs	r2, #1
+ 1296 007c 0293     		str	r3, [sp, #8]
+ 1297 007e 0223     		movs	r3, #2
+ 1298 0080 0021     		movs	r1, #0
+ 1299 0082 0193     		str	r3, [sp, #4]
+ 1300 0084 2800     		movs	r0, r5
+ 1301 0086 0094     		str	r4, [sp]
+ 1302 0088 07AB     		add	r3, sp, #28
+ 1303 008a FFF7FEFF 		bl	lr1mac_core_payload_send
+ 1304              	.L124:
+ 1305 008e 45B0     		add	sp, sp, #276
+ 1306              		@ sp needed
+ 1307 0090 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 1308              	.L122:
+ 1309 0092 114B     		ldr	r3, .L143+4
+ 1310 0094 EA5C     		ldrb	r2, [r5, r3]
+ 1311 0096 012A     		cmp	r2, #1
+ 1312 0098 EED0     		beq	.L125
+ 1313 009a 0122     		movs	r2, #1
+ 1314 009c EA54     		strb	r2, [r5, r3]
+ 1315 009e A318     		adds	r3, r4, r2
+ARM GAS  /tmp/ccqGV7VH.s 			page 24
 
 
- 1300 0018 9B00     		lsls	r3, r3, #2
- 1301 001a 4343     		muls	r3, r0
- 1302 001c 2D4F     		ldr	r7, .L143
- 1303 001e 1B19     		adds	r3, r3, r4
- 1304 0020 0593     		str	r3, [sp, #20]
- 1305 0022 EB5D     		ldrb	r3, [r5, r7]
- 1306 0024 0024     		movs	r4, #0
- 1307 0026 012B     		cmp	r3, #1
- 1308 0028 13D0     		beq	.L121
- 1309 002a 2B4B     		ldr	r3, .L143+4
- 1310 002c EB5C     		ldrb	r3, [r5, r3]
- 1311 002e 012B     		cmp	r3, #1
- 1312 0030 0FD0     		beq	.L121
- 1313 0032 2A4B     		ldr	r3, .L143+8
- 1314 0034 EB5C     		ldrb	r3, [r5, r3]
- 1315 0036 012B     		cmp	r3, #1
- 1316 0038 0BD0     		beq	.L121
- 1317 003a F523     		movs	r3, #245
- 1318 003c 5B00     		lsls	r3, r3, #1
- 1319 003e EC5C     		ldrb	r4, [r5, r3]
- 1320 0040 002C     		cmp	r4, #0
- 1321 0042 06D0     		beq	.L121
- 1322 0044 2900     		movs	r1, r5
- 1323 0046 EC31     		adds	r1, r1, #236
- 1324 0048 A2B2     		uxth	r2, r4
- 1325 004a FF31     		adds	r1, r1, #255
- 1326 004c 07A8     		add	r0, sp, #28
- 1327 004e FFF7FEFF 		bl	memcpy1
- 1328              	.L121:
- 1329 0052 0D2E     		cmp	r6, #13
- 1330 0054 1DD0     		beq	.L122
- 1331 0056 102E     		cmp	r6, #16
- 1332 0058 23D0     		beq	.L123
- 1333 005a 022E     		cmp	r6, #2
- 1334 005c 37D1     		bne	.L129
- 1335 005e EB5D     		ldrb	r3, [r5, r7]
- 1336 0060 012B     		cmp	r3, #1
- 1337 0062 09D0     		beq	.L125
- 1338 0064 0123     		movs	r3, #1
- 1339 0066 EB55     		strb	r3, [r5, r7]
- 1340 0068 A423     		movs	r3, #164
- 1341 006a 0022     		movs	r2, #0
- 1342 006c DB00     		lsls	r3, r3, #3
- 1343 006e EA52     		strh	r2, [r5, r3]
- 1344 0070 631C     		adds	r3, r4, #1
- 1345              	.L142:
- 1346 0072 07AA     		add	r2, sp, #28
- 1347 0074 1655     		strb	r6, [r2, r4]
- 1348 0076 DCB2     		uxtb	r4, r3
- 1349              	.L125:
- 1350 0078 059B     		ldr	r3, [sp, #20]
- 1351 007a 0122     		movs	r2, #1
- 1352 007c 0293     		str	r3, [sp, #8]
- 1353 007e 0223     		movs	r3, #2
- 1354 0080 0021     		movs	r1, #0
- 1355 0082 0193     		str	r3, [sp, #4]
- 1356 0084 2800     		movs	r0, r5
-ARM GAS  /tmp/ccoOjQhv.s 			page 25
+ 1316 00a0 E7E7     		b	.L142
+ 1317              	.L123:
+ 1318 00a2 0E4B     		ldr	r3, .L143+8
+ 1319 00a4 EA5C     		ldrb	r2, [r5, r3]
+ 1320 00a6 012A     		cmp	r2, #1
+ 1321 00a8 E6D0     		beq	.L125
+ 1322 00aa 0122     		movs	r2, #1
+ 1323 00ac 0720     		movs	r0, #7
+ 1324 00ae EA54     		strb	r2, [r5, r3]
+ 1325 00b0 07A9     		add	r1, sp, #28
+ 1326 00b2 A318     		adds	r3, r4, r2
+ 1327 00b4 0A4A     		ldr	r2, .L143+12
+ 1328 00b6 0E55     		strb	r6, [r1, r4]
+ 1329 00b8 AA5C     		ldrb	r2, [r5, r2]
+ 1330 00ba DBB2     		uxtb	r3, r3
+ 1331 00bc 0240     		ands	r2, r0
+ 1332 00be CA54     		strb	r2, [r1, r3]
+ 1333 00c0 2B00     		movs	r3, r5
+ 1334 00c2 0022     		movs	r2, #0
+ 1335 00c4 0234     		adds	r4, r4, #2
+ 1336 00c6 7733     		adds	r3, r3, #119
+ 1337 00c8 E4B2     		uxtb	r4, r4
+ 1338 00ca 1A70     		strb	r2, [r3]
+ 1339 00cc D4E7     		b	.L125
+ 1340              	.L129:
+ 1341 00ce 0120     		movs	r0, #1
+ 1342 00d0 4042     		rsbs	r0, r0, #0
+ 1343 00d2 DCE7     		b	.L124
+ 1344              	.L144:
+ 1345              		.align	2
+ 1346              	.L143:
+ 1347 00d4 44050000 		.word	1348
+ 1348 00d8 45050000 		.word	1349
+ 1349 00dc 46050000 		.word	1350
+ 1350 00e0 51050000 		.word	1361
+ 1352              		.section	.text.lr1mac_core_payload_send_at_time,"ax",%progbits
+ 1353              		.align	1
+ 1354              		.global	lr1mac_core_payload_send_at_time
+ 1355              		.syntax unified
+ 1356              		.code	16
+ 1357              		.thumb_func
+ 1358              		.fpu softvfp
+ 1360              	lr1mac_core_payload_send_at_time:
+ 1361              		@ args = 12, pretend = 0, frame = 0
+ 1362              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1363 0000 7FB5     		push	{r0, r1, r2, r3, r4, r5, r6, lr}
+ 1364 0002 0400     		movs	r4, r0
+ 1365 0004 09AD     		add	r5, sp, #36
+ 1366 0006 08A8     		add	r0, sp, #32
+ 1367 0008 0078     		ldrb	r0, [r0]
+ 1368 000a 2D78     		ldrb	r5, [r5]
+ 1369 000c 0A9E     		ldr	r6, [sp, #40]
+ 1370 000e 0090     		str	r0, [sp]
+ 1371 0010 0296     		str	r6, [sp, #8]
+ 1372 0012 2000     		movs	r0, r4
+ 1373 0014 0195     		str	r5, [sp, #4]
+ 1374 0016 FFF7FEFF 		bl	lr1mac_core_payload_send
+ARM GAS  /tmp/ccqGV7VH.s 			page 25
 
 
- 1357 0086 0094     		str	r4, [sp]
- 1358 0088 07AB     		add	r3, sp, #28
- 1359 008a FFF7FEFF 		bl	lr1mac_core_payload_send
- 1360              	.L124:
- 1361 008e 45B0     		add	sp, sp, #276
- 1362              		@ sp needed
- 1363 0090 F0BD     		pop	{r4, r5, r6, r7, pc}
- 1364              	.L122:
- 1365 0092 114B     		ldr	r3, .L143+4
- 1366 0094 EA5C     		ldrb	r2, [r5, r3]
- 1367 0096 012A     		cmp	r2, #1
- 1368 0098 EED0     		beq	.L125
- 1369 009a 0122     		movs	r2, #1
- 1370 009c EA54     		strb	r2, [r5, r3]
- 1371 009e A318     		adds	r3, r4, r2
- 1372 00a0 E7E7     		b	.L142
- 1373              	.L123:
- 1374 00a2 0E4B     		ldr	r3, .L143+8
- 1375 00a4 EA5C     		ldrb	r2, [r5, r3]
- 1376 00a6 012A     		cmp	r2, #1
- 1377 00a8 E6D0     		beq	.L125
- 1378 00aa 0122     		movs	r2, #1
- 1379 00ac 0720     		movs	r0, #7
- 1380 00ae EA54     		strb	r2, [r5, r3]
- 1381 00b0 07A9     		add	r1, sp, #28
- 1382 00b2 A318     		adds	r3, r4, r2
- 1383 00b4 0A4A     		ldr	r2, .L143+12
- 1384 00b6 0E55     		strb	r6, [r1, r4]
- 1385 00b8 AA5C     		ldrb	r2, [r5, r2]
- 1386 00ba DBB2     		uxtb	r3, r3
- 1387 00bc 0240     		ands	r2, r0
- 1388 00be CA54     		strb	r2, [r1, r3]
- 1389 00c0 2B00     		movs	r3, r5
- 1390 00c2 0022     		movs	r2, #0
- 1391 00c4 0234     		adds	r4, r4, #2
- 1392 00c6 7733     		adds	r3, r3, #119
- 1393 00c8 E4B2     		uxtb	r4, r4
- 1394 00ca 1A70     		strb	r2, [r3]
- 1395 00cc D4E7     		b	.L125
- 1396              	.L129:
- 1397 00ce 0120     		movs	r0, #1
- 1398 00d0 4042     		rsbs	r0, r0, #0
- 1399 00d2 DCE7     		b	.L124
- 1400              	.L144:
- 1401              		.align	2
- 1402              	.L143:
- 1403 00d4 44050000 		.word	1348
- 1404 00d8 45050000 		.word	1349
- 1405 00dc 46050000 		.word	1350
- 1406 00e0 51050000 		.word	1361
- 1408              		.section	.text.lr1mac_core_payload_send_at_time,"ax",%progbits
- 1409              		.align	1
- 1410              		.global	lr1mac_core_payload_send_at_time
- 1411              		.syntax unified
- 1412              		.code	16
- 1413              		.thumb_func
- 1414              		.fpu softvfp
-ARM GAS  /tmp/ccoOjQhv.s 			page 26
+ 1375 001a 0028     		cmp	r0, #0
+ 1376 001c 05D1     		bne	.L146
+ 1377 001e A322     		movs	r2, #163
+ 1378 0020 0123     		movs	r3, #1
+ 1379 0022 D200     		lsls	r2, r2, #3
+ 1380 0024 A354     		strb	r3, [r4, r2]
+ 1381 0026 5234     		adds	r4, r4, #82
+ 1382 0028 2370     		strb	r3, [r4]
+ 1383              	.L146:
+ 1384 002a 04B0     		add	sp, sp, #16
+ 1385              		@ sp needed
+ 1386 002c 70BD     		pop	{r4, r5, r6, pc}
+ 1388              		.section	.text.lr1mac_core_rx_ack_bit_get,"ax",%progbits
+ 1389              		.align	1
+ 1390              		.global	lr1mac_core_rx_ack_bit_get
+ 1391              		.syntax unified
+ 1392              		.code	16
+ 1393              		.thumb_func
+ 1394              		.fpu softvfp
+ 1396              	lr1mac_core_rx_ack_bit_get:
+ 1397              		@ args = 0, pretend = 0, frame = 0
+ 1398              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1399              		@ link register save eliminated.
+ 1400 0000 FE23     		movs	r3, #254
+ 1401              		@ sp needed
+ 1402 0002 FF33     		adds	r3, r3, #255
+ 1403 0004 C05C     		ldrb	r0, [r0, r3]
+ 1404 0006 7047     		bx	lr
+ 1406              		.section	.text.lr1mac_core_rx_fpending_bit_get,"ax",%progbits
+ 1407              		.align	1
+ 1408              		.global	lr1mac_core_rx_fpending_bit_get
+ 1409              		.syntax unified
+ 1410              		.code	16
+ 1411              		.thumb_func
+ 1412              		.fpu softvfp
+ 1414              	lr1mac_core_rx_fpending_bit_get:
+ 1415              		@ args = 0, pretend = 0, frame = 0
+ 1416              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1417              		@ link register save eliminated.
+ 1418 0000 FF23     		movs	r3, #255
+ 1419              		@ sp needed
+ 1420 0002 5B00     		lsls	r3, r3, #1
+ 1421 0004 C05C     		ldrb	r0, [r0, r3]
+ 1422 0006 7047     		bx	lr
+ 1424              		.section	.text.lr1mac_core_get_region,"ax",%progbits
+ 1425              		.align	1
+ 1426              		.global	lr1mac_core_get_region
+ 1427              		.syntax unified
+ 1428              		.code	16
+ 1429              		.thumb_func
+ 1430              		.fpu softvfp
+ 1432              	lr1mac_core_get_region:
+ 1433              		@ args = 0, pretend = 0, frame = 0
+ 1434              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1435              		@ link register save eliminated.
+ 1436 0000 836B     		ldr	r3, [r0, #56]
+ 1437              		@ sp needed
+ARM GAS  /tmp/ccqGV7VH.s 			page 26
 
 
- 1416              	lr1mac_core_payload_send_at_time:
- 1417              		@ args = 12, pretend = 0, frame = 0
- 1418              		@ frame_needed = 0, uses_anonymous_args = 0
- 1419 0000 7FB5     		push	{r0, r1, r2, r3, r4, r5, r6, lr}
- 1420 0002 0400     		movs	r4, r0
- 1421 0004 09AD     		add	r5, sp, #36
- 1422 0006 08A8     		add	r0, sp, #32
- 1423 0008 0078     		ldrb	r0, [r0]
- 1424 000a 2D78     		ldrb	r5, [r5]
- 1425 000c 0A9E     		ldr	r6, [sp, #40]
- 1426 000e 0090     		str	r0, [sp]
- 1427 0010 0296     		str	r6, [sp, #8]
- 1428 0012 2000     		movs	r0, r4
- 1429 0014 0195     		str	r5, [sp, #4]
- 1430 0016 FFF7FEFF 		bl	lr1mac_core_payload_send
- 1431 001a 0028     		cmp	r0, #0
- 1432 001c 05D1     		bne	.L146
- 1433 001e A322     		movs	r2, #163
- 1434 0020 0123     		movs	r3, #1
- 1435 0022 D200     		lsls	r2, r2, #3
- 1436 0024 A354     		strb	r3, [r4, r2]
- 1437 0026 5234     		adds	r4, r4, #82
- 1438 0028 2370     		strb	r3, [r4]
- 1439              	.L146:
- 1440 002a 04B0     		add	sp, sp, #16
- 1441              		@ sp needed
- 1442 002c 70BD     		pop	{r4, r5, r6, pc}
- 1444              		.section	.text.lr1mac_core_rx_ack_bit_get,"ax",%progbits
- 1445              		.align	1
- 1446              		.global	lr1mac_core_rx_ack_bit_get
- 1447              		.syntax unified
- 1448              		.code	16
- 1449              		.thumb_func
- 1450              		.fpu softvfp
- 1452              	lr1mac_core_rx_ack_bit_get:
- 1453              		@ args = 0, pretend = 0, frame = 0
- 1454              		@ frame_needed = 0, uses_anonymous_args = 0
- 1455              		@ link register save eliminated.
- 1456 0000 FE23     		movs	r3, #254
- 1457              		@ sp needed
- 1458 0002 FF33     		adds	r3, r3, #255
- 1459 0004 C05C     		ldrb	r0, [r0, r3]
- 1460 0006 7047     		bx	lr
- 1462              		.section	.text.lr1mac_core_rx_fpending_bit_get,"ax",%progbits
- 1463              		.align	1
- 1464              		.global	lr1mac_core_rx_fpending_bit_get
- 1465              		.syntax unified
- 1466              		.code	16
- 1467              		.thumb_func
- 1468              		.fpu softvfp
- 1470              	lr1mac_core_rx_fpending_bit_get:
- 1471              		@ args = 0, pretend = 0, frame = 0
- 1472              		@ frame_needed = 0, uses_anonymous_args = 0
- 1473              		@ link register save eliminated.
- 1474 0000 FF23     		movs	r3, #255
- 1475              		@ sp needed
- 1476 0002 5B00     		lsls	r3, r3, #1
-ARM GAS  /tmp/ccoOjQhv.s 			page 27
+ 1438 0002 1878     		ldrb	r0, [r3]
+ 1439 0004 7047     		bx	lr
+ 1441              		.section	.text.lr1mac_core_set_region,"ax",%progbits
+ 1442              		.align	1
+ 1443              		.global	lr1mac_core_set_region
+ 1444              		.syntax unified
+ 1445              		.code	16
+ 1446              		.thumb_func
+ 1447              		.fpu softvfp
+ 1449              	lr1mac_core_set_region:
+ 1450              		@ args = 0, pretend = 0, frame = 0
+ 1451              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1452 0000 70B5     		push	{r4, r5, r6, lr}
+ 1453 0002 0500     		movs	r5, r0
+ 1454 0004 0800     		movs	r0, r1
+ 1455 0006 0E00     		movs	r6, r1
+ 1456 0008 FFF7FEFF 		bl	smtc_real_is_supported_region
+ 1457 000c 041E     		subs	r4, r0, #0
+ 1458 000e 0FD1     		bne	.L152
+ 1459 0010 AB6B     		ldr	r3, [r5, #56]
+ 1460 0012 2800     		movs	r0, r5
+ 1461 0014 1E70     		strb	r6, [r3]
+ 1462 0016 FFF7FEFF 		bl	lr1mac_core_context_save
+ 1463 001a 2800     		movs	r0, r5
+ 1464 001c FFF7FEFF 		bl	smtc_real_config
+ 1465 0020 2800     		movs	r0, r5
+ 1466 0022 FFF7FEFF 		bl	smtc_real_init
+ 1467 0026 9523     		movs	r3, #149
+ 1468 0028 2000     		movs	r0, r4
+ 1469 002a DB00     		lsls	r3, r3, #3
+ 1470 002c EC50     		str	r4, [r5, r3]
+ 1471              	.L151:
+ 1472              		@ sp needed
+ 1473 002e 70BD     		pop	{r4, r5, r6, pc}
+ 1474              	.L152:
+ 1475 0030 0120     		movs	r0, #1
+ 1476 0032 4042     		rsbs	r0, r0, #0
+ 1477 0034 FBE7     		b	.L151
+ 1479              		.section	.text.lr1mac_core_set_no_rx_packet_threshold,"ax",%progbits
+ 1480              		.align	1
+ 1481              		.global	lr1mac_core_set_no_rx_packet_threshold
+ 1482              		.syntax unified
+ 1483              		.code	16
+ 1484              		.thumb_func
+ 1485              		.fpu softvfp
+ 1487              	lr1mac_core_set_no_rx_packet_threshold:
+ 1488              		@ args = 0, pretend = 0, frame = 0
+ 1489              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1490              		@ link register save eliminated.
+ 1491 0000 014B     		ldr	r3, .L154
+ 1492              		@ sp needed
+ 1493 0002 C152     		strh	r1, [r0, r3]
+ 1494 0004 7047     		bx	lr
+ 1495              	.L155:
+ 1496 0006 C046     		.align	2
+ 1497              	.L154:
+ 1498 0008 9C040000 		.word	1180
+ARM GAS  /tmp/ccqGV7VH.s 			page 27
 
 
- 1477 0004 C05C     		ldrb	r0, [r0, r3]
- 1478 0006 7047     		bx	lr
- 1480              		.section	.text.lr1mac_core_get_region,"ax",%progbits
- 1481              		.align	1
- 1482              		.global	lr1mac_core_get_region
- 1483              		.syntax unified
- 1484              		.code	16
- 1485              		.thumb_func
- 1486              		.fpu softvfp
- 1488              	lr1mac_core_get_region:
- 1489              		@ args = 0, pretend = 0, frame = 0
- 1490              		@ frame_needed = 0, uses_anonymous_args = 0
- 1491              		@ link register save eliminated.
- 1492 0000 836B     		ldr	r3, [r0, #56]
- 1493              		@ sp needed
- 1494 0002 1878     		ldrb	r0, [r3]
- 1495 0004 7047     		bx	lr
- 1497              		.section	.text.lr1mac_core_set_region,"ax",%progbits
- 1498              		.align	1
- 1499              		.global	lr1mac_core_set_region
- 1500              		.syntax unified
- 1501              		.code	16
- 1502              		.thumb_func
- 1503              		.fpu softvfp
- 1505              	lr1mac_core_set_region:
- 1506              		@ args = 0, pretend = 0, frame = 0
- 1507              		@ frame_needed = 0, uses_anonymous_args = 0
- 1508 0000 70B5     		push	{r4, r5, r6, lr}
- 1509 0002 0500     		movs	r5, r0
- 1510 0004 0800     		movs	r0, r1
- 1511 0006 0E00     		movs	r6, r1
- 1512 0008 FFF7FEFF 		bl	smtc_real_is_supported_region
- 1513 000c 041E     		subs	r4, r0, #0
- 1514 000e 0FD1     		bne	.L152
- 1515 0010 AB6B     		ldr	r3, [r5, #56]
- 1516 0012 2800     		movs	r0, r5
- 1517 0014 1E70     		strb	r6, [r3]
- 1518 0016 FFF7FEFF 		bl	lr1mac_core_context_save
- 1519 001a 2800     		movs	r0, r5
- 1520 001c FFF7FEFF 		bl	smtc_real_config
- 1521 0020 2800     		movs	r0, r5
- 1522 0022 FFF7FEFF 		bl	smtc_real_init
- 1523 0026 9523     		movs	r3, #149
- 1524 0028 2000     		movs	r0, r4
- 1525 002a DB00     		lsls	r3, r3, #3
- 1526 002c EC50     		str	r4, [r5, r3]
- 1527              	.L151:
- 1528              		@ sp needed
- 1529 002e 70BD     		pop	{r4, r5, r6, pc}
- 1530              	.L152:
- 1531 0030 0120     		movs	r0, #1
- 1532 0032 4042     		rsbs	r0, r0, #0
- 1533 0034 FBE7     		b	.L151
- 1535              		.section	.text.lr1mac_core_set_no_rx_packet_threshold,"ax",%progbits
- 1536              		.align	1
- 1537              		.global	lr1mac_core_set_no_rx_packet_threshold
- 1538              		.syntax unified
-ARM GAS  /tmp/ccoOjQhv.s 			page 28
+ 1500              		.section	.text.lr1mac_core_get_no_rx_packet_threshold,"ax",%progbits
+ 1501              		.align	1
+ 1502              		.global	lr1mac_core_get_no_rx_packet_threshold
+ 1503              		.syntax unified
+ 1504              		.code	16
+ 1505              		.thumb_func
+ 1506              		.fpu softvfp
+ 1508              	lr1mac_core_get_no_rx_packet_threshold:
+ 1509              		@ args = 0, pretend = 0, frame = 0
+ 1510              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1511              		@ link register save eliminated.
+ 1512 0000 014B     		ldr	r3, .L157
+ 1513              		@ sp needed
+ 1514 0002 C05A     		ldrh	r0, [r0, r3]
+ 1515 0004 7047     		bx	lr
+ 1516              	.L158:
+ 1517 0006 C046     		.align	2
+ 1518              	.L157:
+ 1519 0008 9C040000 		.word	1180
+ 1521              		.section	.text.lr1mac_core_get_current_adr_ack_cnt,"ax",%progbits
+ 1522              		.align	1
+ 1523              		.global	lr1mac_core_get_current_adr_ack_cnt
+ 1524              		.syntax unified
+ 1525              		.code	16
+ 1526              		.thumb_func
+ 1527              		.fpu softvfp
+ 1529              	lr1mac_core_get_current_adr_ack_cnt:
+ 1530              		@ args = 0, pretend = 0, frame = 0
+ 1531              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1532              		@ link register save eliminated.
+ 1533 0000 9123     		movs	r3, #145
+ 1534              		@ sp needed
+ 1535 0002 DB00     		lsls	r3, r3, #3
+ 1536 0004 C058     		ldr	r0, [r0, r3]
+ 1537 0006 80B2     		uxth	r0, r0
+ 1538 0008 7047     		bx	lr
+ 1540              		.section	.text.lr1mac_core_get_current_no_rx_packet_in_mobile_mode,"ax",%progbits
+ 1541              		.align	1
+ 1542              		.global	lr1mac_core_get_current_no_rx_packet_in_mobile_mode
+ 1543              		.syntax unified
+ 1544              		.code	16
+ 1545              		.thumb_func
+ 1546              		.fpu softvfp
+ 1548              	lr1mac_core_get_current_no_rx_packet_in_mobile_mode:
+ 1549              		@ args = 0, pretend = 0, frame = 0
+ 1550              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1551              		@ link register save eliminated.
+ 1552 0000 9423     		movs	r3, #148
+ 1553              		@ sp needed
+ 1554 0002 DB00     		lsls	r3, r3, #3
+ 1555 0004 C05A     		ldrh	r0, [r0, r3]
+ 1556 0006 7047     		bx	lr
+ 1558              		.section	.text.lr1mac_core_reset_no_rx_packet_in_mobile_mode_cnt,"ax",%progbits
+ 1559              		.align	1
+ 1560              		.global	lr1mac_core_reset_no_rx_packet_in_mobile_mode_cnt
+ 1561              		.syntax unified
+ 1562              		.code	16
+ARM GAS  /tmp/ccqGV7VH.s 			page 28
 
 
- 1539              		.code	16
- 1540              		.thumb_func
- 1541              		.fpu softvfp
- 1543              	lr1mac_core_set_no_rx_packet_threshold:
- 1544              		@ args = 0, pretend = 0, frame = 0
- 1545              		@ frame_needed = 0, uses_anonymous_args = 0
- 1546              		@ link register save eliminated.
- 1547 0000 014B     		ldr	r3, .L154
- 1548              		@ sp needed
- 1549 0002 C152     		strh	r1, [r0, r3]
- 1550 0004 7047     		bx	lr
- 1551              	.L155:
- 1552 0006 C046     		.align	2
- 1553              	.L154:
- 1554 0008 9C040000 		.word	1180
- 1556              		.section	.text.lr1mac_core_get_no_rx_packet_threshold,"ax",%progbits
- 1557              		.align	1
- 1558              		.global	lr1mac_core_get_no_rx_packet_threshold
- 1559              		.syntax unified
- 1560              		.code	16
- 1561              		.thumb_func
- 1562              		.fpu softvfp
- 1564              	lr1mac_core_get_no_rx_packet_threshold:
- 1565              		@ args = 0, pretend = 0, frame = 0
- 1566              		@ frame_needed = 0, uses_anonymous_args = 0
- 1567              		@ link register save eliminated.
- 1568 0000 014B     		ldr	r3, .L157
- 1569              		@ sp needed
- 1570 0002 C05A     		ldrh	r0, [r0, r3]
- 1571 0004 7047     		bx	lr
- 1572              	.L158:
- 1573 0006 C046     		.align	2
- 1574              	.L157:
- 1575 0008 9C040000 		.word	1180
- 1577              		.section	.text.lr1mac_core_get_current_adr_ack_cnt,"ax",%progbits
+ 1563              		.thumb_func
+ 1564              		.fpu softvfp
+ 1566              	lr1mac_core_reset_no_rx_packet_in_mobile_mode_cnt:
+ 1567              		@ args = 0, pretend = 0, frame = 0
+ 1568              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1569              		@ link register save eliminated.
+ 1570 0000 9423     		movs	r3, #148
+ 1571              		@ sp needed
+ 1572 0002 0022     		movs	r2, #0
+ 1573 0004 DB00     		lsls	r3, r3, #3
+ 1574 0006 C252     		strh	r2, [r0, r3]
+ 1575 0008 7047     		bx	lr
+ 1577              		.section	.text.lr1mac_core_get_current_no_rx_packet_cnt,"ax",%progbits
  1578              		.align	1
- 1579              		.global	lr1mac_core_get_current_adr_ack_cnt
+ 1579              		.global	lr1mac_core_get_current_no_rx_packet_cnt
  1580              		.syntax unified
  1581              		.code	16
  1582              		.thumb_func
  1583              		.fpu softvfp
- 1585              	lr1mac_core_get_current_adr_ack_cnt:
+ 1585              	lr1mac_core_get_current_no_rx_packet_cnt:
  1586              		@ args = 0, pretend = 0, frame = 0
  1587              		@ frame_needed = 0, uses_anonymous_args = 0
  1588              		@ link register save eliminated.
- 1589 0000 9123     		movs	r3, #145
+ 1589 0000 014B     		ldr	r3, .L163
  1590              		@ sp needed
- 1591 0002 DB00     		lsls	r3, r3, #3
- 1592 0004 C058     		ldr	r0, [r0, r3]
- 1593 0006 80B2     		uxth	r0, r0
- 1594 0008 7047     		bx	lr
- 1596              		.section	.text.lr1mac_core_get_current_no_rx_packet_in_mobile_mode,"ax",%progbits
- 1597              		.align	1
- 1598              		.global	lr1mac_core_get_current_no_rx_packet_in_mobile_mode
- 1599              		.syntax unified
- 1600              		.code	16
- 1601              		.thumb_func
-ARM GAS  /tmp/ccoOjQhv.s 			page 29
+ 1591 0002 C05A     		ldrh	r0, [r0, r3]
+ 1592 0004 7047     		bx	lr
+ 1593              	.L164:
+ 1594 0006 C046     		.align	2
+ 1595              	.L163:
+ 1596 0008 9E040000 		.word	1182
+ 1598              		.section	.text.lr1mac_core_available_link_adr_get,"ax",%progbits
+ 1599              		.align	1
+ 1600              		.global	lr1mac_core_available_link_adr_get
+ 1601              		.syntax unified
+ 1602              		.code	16
+ 1603              		.thumb_func
+ 1604              		.fpu softvfp
+ 1606              	lr1mac_core_available_link_adr_get:
+ 1607              		@ args = 0, pretend = 0, frame = 0
+ 1608              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1609              		@ link register save eliminated.
+ 1610 0000 034A     		ldr	r2, .L170
+ 1611 0002 0300     		movs	r3, r0
+ 1612 0004 805C     		ldrb	r0, [r0, r2]
+ 1613 0006 0028     		cmp	r0, #0
+ 1614 0008 01D0     		beq	.L166
+ 1615 000a 0021     		movs	r1, #0
+ 1616 000c 9954     		strb	r1, [r3, r2]
+ 1617              	.L166:
+ 1618              		@ sp needed
+ 1619 000e 7047     		bx	lr
+ 1620              	.L171:
+ 1621              		.align	2
+ 1622              	.L170:
+ 1623 0010 19050000 		.word	1305
+ 1625              		.section	.text.lr1mac_core_certification_set,"ax",%progbits
+ARM GAS  /tmp/ccqGV7VH.s 			page 29
 
 
- 1602              		.fpu softvfp
- 1604              	lr1mac_core_get_current_no_rx_packet_in_mobile_mode:
- 1605              		@ args = 0, pretend = 0, frame = 0
- 1606              		@ frame_needed = 0, uses_anonymous_args = 0
- 1607              		@ link register save eliminated.
- 1608 0000 9423     		movs	r3, #148
- 1609              		@ sp needed
- 1610 0002 DB00     		lsls	r3, r3, #3
- 1611 0004 C05A     		ldrh	r0, [r0, r3]
- 1612 0006 7047     		bx	lr
- 1614              		.section	.text.lr1mac_core_reset_no_rx_packet_in_mobile_mode_cnt,"ax",%progbits
- 1615              		.align	1
- 1616              		.global	lr1mac_core_reset_no_rx_packet_in_mobile_mode_cnt
- 1617              		.syntax unified
- 1618              		.code	16
- 1619              		.thumb_func
- 1620              		.fpu softvfp
- 1622              	lr1mac_core_reset_no_rx_packet_in_mobile_mode_cnt:
- 1623              		@ args = 0, pretend = 0, frame = 0
- 1624              		@ frame_needed = 0, uses_anonymous_args = 0
- 1625              		@ link register save eliminated.
- 1626 0000 9423     		movs	r3, #148
- 1627              		@ sp needed
- 1628 0002 0022     		movs	r2, #0
- 1629 0004 DB00     		lsls	r3, r3, #3
- 1630 0006 C252     		strh	r2, [r0, r3]
- 1631 0008 7047     		bx	lr
- 1633              		.section	.text.lr1mac_core_get_current_no_rx_packet_cnt,"ax",%progbits
- 1634              		.align	1
- 1635              		.global	lr1mac_core_get_current_no_rx_packet_cnt
- 1636              		.syntax unified
- 1637              		.code	16
- 1638              		.thumb_func
- 1639              		.fpu softvfp
- 1641              	lr1mac_core_get_current_no_rx_packet_cnt:
- 1642              		@ args = 0, pretend = 0, frame = 0
- 1643              		@ frame_needed = 0, uses_anonymous_args = 0
- 1644              		@ link register save eliminated.
- 1645 0000 014B     		ldr	r3, .L163
- 1646              		@ sp needed
- 1647 0002 C05A     		ldrh	r0, [r0, r3]
- 1648 0004 7047     		bx	lr
- 1649              	.L164:
- 1650 0006 C046     		.align	2
- 1651              	.L163:
- 1652 0008 9E040000 		.word	1182
- 1654              		.section	.text.lr1mac_core_available_link_adr_get,"ax",%progbits
- 1655              		.align	1
- 1656              		.global	lr1mac_core_available_link_adr_get
- 1657              		.syntax unified
- 1658              		.code	16
- 1659              		.thumb_func
- 1660              		.fpu softvfp
- 1662              	lr1mac_core_available_link_adr_get:
- 1663              		@ args = 0, pretend = 0, frame = 0
- 1664              		@ frame_needed = 0, uses_anonymous_args = 0
- 1665              		@ link register save eliminated.
-ARM GAS  /tmp/ccoOjQhv.s 			page 30
+ 1626              		.align	1
+ 1627              		.global	lr1mac_core_certification_set
+ 1628              		.syntax unified
+ 1629              		.code	16
+ 1630              		.thumb_func
+ 1631              		.fpu softvfp
+ 1633              	lr1mac_core_certification_set:
+ 1634              		@ args = 0, pretend = 0, frame = 0
+ 1635              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1636 0000 10B5     		push	{r4, lr}
+ 1637 0002 024B     		ldr	r3, .L173
+ 1638              		@ sp needed
+ 1639 0004 C154     		strb	r1, [r0, r3]
+ 1640 0006 FFF7FEFF 		bl	lr1mac_core_context_save
+ 1641 000a 10BD     		pop	{r4, pc}
+ 1642              	.L174:
+ 1643              		.align	2
+ 1644              	.L173:
+ 1645 000c 1A050000 		.word	1306
+ 1647              		.section	.text.lr1mac_core_certification_get,"ax",%progbits
+ 1648              		.align	1
+ 1649              		.global	lr1mac_core_certification_get
+ 1650              		.syntax unified
+ 1651              		.code	16
+ 1652              		.thumb_func
+ 1653              		.fpu softvfp
+ 1655              	lr1mac_core_certification_get:
+ 1656              		@ args = 0, pretend = 0, frame = 0
+ 1657              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1658              		@ link register save eliminated.
+ 1659 0000 014B     		ldr	r3, .L176
+ 1660              		@ sp needed
+ 1661 0002 C05C     		ldrb	r0, [r0, r3]
+ 1662 0004 7047     		bx	lr
+ 1663              	.L177:
+ 1664 0006 C046     		.align	2
+ 1665              	.L176:
+ 1666 0008 1A050000 		.word	1306
+ 1668              		.section	.text.lr1mac_core_get_lorawan_version,"ax",%progbits
+ 1669              		.align	1
+ 1670              		.global	lr1mac_core_get_lorawan_version
+ 1671              		.syntax unified
+ 1672              		.code	16
+ 1673              		.thumb_func
+ 1674              		.fpu softvfp
+ 1676              	lr1mac_core_get_lorawan_version:
+ 1677              		@ args = 0, pretend = 0, frame = 8
+ 1678              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1679              		@ link register save eliminated.
+ 1680 0000 0148     		ldr	r0, .L179
+ 1681 0002 82B0     		sub	sp, sp, #8
+ 1682 0004 02B0     		add	sp, sp, #8
+ 1683              		@ sp needed
+ 1684 0006 7047     		bx	lr
+ 1685              	.L180:
+ 1686              		.align	2
+ 1687              	.L179:
+ARM GAS  /tmp/ccqGV7VH.s 			page 30
 
 
- 1666 0000 034A     		ldr	r2, .L170
- 1667 0002 0300     		movs	r3, r0
- 1668 0004 805C     		ldrb	r0, [r0, r2]
- 1669 0006 0028     		cmp	r0, #0
- 1670 0008 01D0     		beq	.L166
- 1671 000a 0021     		movs	r1, #0
- 1672 000c 9954     		strb	r1, [r3, r2]
- 1673              	.L166:
- 1674              		@ sp needed
- 1675 000e 7047     		bx	lr
- 1676              	.L171:
- 1677              		.align	2
- 1678              	.L170:
- 1679 0010 19050000 		.word	1305
- 1681              		.section	.text.lr1mac_core_certification_set,"ax",%progbits
- 1682              		.align	1
- 1683              		.global	lr1mac_core_certification_set
- 1684              		.syntax unified
- 1685              		.code	16
- 1686              		.thumb_func
- 1687              		.fpu softvfp
- 1689              	lr1mac_core_certification_set:
- 1690              		@ args = 0, pretend = 0, frame = 0
- 1691              		@ frame_needed = 0, uses_anonymous_args = 0
- 1692 0000 10B5     		push	{r4, lr}
- 1693 0002 024B     		ldr	r3, .L173
- 1694              		@ sp needed
- 1695 0004 C154     		strb	r1, [r0, r3]
- 1696 0006 FFF7FEFF 		bl	lr1mac_core_context_save
- 1697 000a 10BD     		pop	{r4, pc}
- 1698              	.L174:
- 1699              		.align	2
- 1700              	.L173:
- 1701 000c 1A050000 		.word	1306
- 1703              		.section	.text.lr1mac_core_certification_get,"ax",%progbits
- 1704              		.align	1
- 1705              		.global	lr1mac_core_certification_get
- 1706              		.syntax unified
- 1707              		.code	16
- 1708              		.thumb_func
- 1709              		.fpu softvfp
- 1711              	lr1mac_core_certification_get:
- 1712              		@ args = 0, pretend = 0, frame = 0
- 1713              		@ frame_needed = 0, uses_anonymous_args = 0
- 1714              		@ link register save eliminated.
- 1715 0000 014B     		ldr	r3, .L176
- 1716              		@ sp needed
- 1717 0002 C05C     		ldrb	r0, [r0, r3]
- 1718 0004 7047     		bx	lr
- 1719              	.L177:
- 1720 0006 C046     		.align	2
- 1721              	.L176:
- 1722 0008 1A050000 		.word	1306
- 1724              		.section	.text.lr1mac_core_get_lorawan_version,"ax",%progbits
- 1725              		.align	1
- 1726              		.global	lr1mac_core_get_lorawan_version
- 1727              		.syntax unified
-ARM GAS  /tmp/ccoOjQhv.s 			page 31
-
-
- 1728              		.code	16
- 1729              		.thumb_func
- 1730              		.fpu softvfp
- 1732              	lr1mac_core_get_lorawan_version:
- 1733              		@ args = 0, pretend = 0, frame = 8
- 1734              		@ frame_needed = 0, uses_anonymous_args = 0
- 1735              		@ link register save eliminated.
- 1736 0000 0148     		ldr	r0, .L179
- 1737 0002 82B0     		sub	sp, sp, #8
- 1738 0004 02B0     		add	sp, sp, #8
+ 1688 0008 01000401 		.word	17039361
+ 1690              		.section	.text.lr1mac_core_is_time_valid,"ax",%progbits
+ 1691              		.align	1
+ 1692              		.global	lr1mac_core_is_time_valid
+ 1693              		.syntax unified
+ 1694              		.code	16
+ 1695              		.thumb_func
+ 1696              		.fpu softvfp
+ 1698              	lr1mac_core_is_time_valid:
+ 1699              		@ args = 0, pretend = 0, frame = 0
+ 1700              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1701 0000 10B5     		push	{r4, lr}
+ 1702 0002 0400     		movs	r4, r0
+ 1703 0004 FFF7FEFF 		bl	smtc_modem_hal_get_time_in_s
+ 1704 0008 0300     		movs	r3, r0
+ 1705 000a 0020     		movs	r0, #0
+ 1706 000c 054A     		ldr	r2, .L185
+ 1707 000e A258     		ldr	r2, [r4, r2]
+ 1708 0010 8242     		cmp	r2, r0
+ 1709 0012 05D0     		beq	.L182
+ 1710 0014 A821     		movs	r1, #168
+ 1711 0016 C900     		lsls	r1, r1, #3
+ 1712 0018 6058     		ldr	r0, [r4, r1]
+ 1713 001a 1218     		adds	r2, r2, r0
+ 1714 001c 9B1A     		subs	r3, r3, r2
+ 1715 001e D80F     		lsrs	r0, r3, #31
+ 1716              	.L182:
+ 1717              		@ sp needed
+ 1718 0020 10BD     		pop	{r4, pc}
+ 1719              	.L186:
+ 1720 0022 C046     		.align	2
+ 1721              	.L185:
+ 1722 0024 34050000 		.word	1332
+ 1724              		.global	__aeabi_uidiv
+ 1725              		.global	__aeabi_uidivmod
+ 1726              		.section	.text.lr1mac_core_convert_rtc_to_gps_epoch_time,"ax",%progbits
+ 1727              		.align	1
+ 1728              		.global	lr1mac_core_convert_rtc_to_gps_epoch_time
+ 1729              		.syntax unified
+ 1730              		.code	16
+ 1731              		.thumb_func
+ 1732              		.fpu softvfp
+ 1734              	lr1mac_core_convert_rtc_to_gps_epoch_time:
+ 1735              		@ args = 0, pretend = 0, frame = 0
+ 1736              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1737 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 1738 0002 1E00     		movs	r6, r3
  1739              		@ sp needed
- 1740 0006 7047     		bx	lr
- 1741              	.L180:
- 1742              		.align	2
- 1743              	.L179:
- 1744 0008 01000401 		.word	17039361
- 1746              		.section	.text.lr1mac_core_is_time_valid,"ax",%progbits
- 1747              		.align	1
- 1748              		.global	lr1mac_core_is_time_valid
- 1749              		.syntax unified
- 1750              		.code	16
- 1751              		.thumb_func
- 1752              		.fpu softvfp
- 1754              	lr1mac_core_is_time_valid:
- 1755              		@ args = 0, pretend = 0, frame = 0
- 1756              		@ frame_needed = 0, uses_anonymous_args = 0
- 1757 0000 10B5     		push	{r4, lr}
- 1758 0002 0400     		movs	r4, r0
- 1759 0004 FFF7FEFF 		bl	smtc_modem_hal_get_time_in_s
- 1760 0008 0300     		movs	r3, r0
- 1761 000a 0020     		movs	r0, #0
- 1762 000c 054A     		ldr	r2, .L185
- 1763 000e A258     		ldr	r2, [r4, r2]
- 1764 0010 8242     		cmp	r2, r0
- 1765 0012 05D0     		beq	.L182
- 1766 0014 A821     		movs	r1, #168
- 1767 0016 C900     		lsls	r1, r1, #3
- 1768 0018 6058     		ldr	r0, [r4, r1]
- 1769 001a 1218     		adds	r2, r2, r0
- 1770 001c 9B1A     		subs	r3, r3, r2
- 1771 001e D80F     		lsrs	r0, r3, #31
- 1772              	.L182:
- 1773              		@ sp needed
- 1774 0020 10BD     		pop	{r4, pc}
- 1775              	.L186:
- 1776 0022 C046     		.align	2
- 1777              	.L185:
- 1778 0024 34050000 		.word	1332
- 1780              		.global	__aeabi_uidiv
- 1781              		.global	__aeabi_uidivmod
- 1782              		.section	.text.lr1mac_core_convert_rtc_to_gps_epoch_time,"ax",%progbits
- 1783              		.align	1
- 1784              		.global	lr1mac_core_convert_rtc_to_gps_epoch_time
- 1785              		.syntax unified
- 1786              		.code	16
- 1787              		.thumb_func
- 1788              		.fpu softvfp
-ARM GAS  /tmp/ccoOjQhv.s 			page 32
+ 1740 0004 A523     		movs	r3, #165
+ 1741 0006 DB00     		lsls	r3, r3, #3
+ 1742 0008 C558     		ldr	r5, [r0, r3]
+ 1743 000a 0C4B     		ldr	r3, .L188
+ 1744 000c 4919     		adds	r1, r1, r5
+ 1745 000e C558     		ldr	r5, [r0, r3]
+ 1746 0010 0400     		movs	r4, r0
+ 1747 0012 4D1B     		subs	r5, r1, r5
+ 1748 0014 FA21     		movs	r1, #250
+ARM GAS  /tmp/ccqGV7VH.s 			page 31
 
 
- 1790              	lr1mac_core_convert_rtc_to_gps_epoch_time:
- 1791              		@ args = 0, pretend = 0, frame = 0
- 1792              		@ frame_needed = 0, uses_anonymous_args = 0
- 1793 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
- 1794 0002 1E00     		movs	r6, r3
- 1795              		@ sp needed
- 1796 0004 A523     		movs	r3, #165
- 1797 0006 DB00     		lsls	r3, r3, #3
- 1798 0008 C558     		ldr	r5, [r0, r3]
- 1799 000a 0C4B     		ldr	r3, .L188
- 1800 000c 4919     		adds	r1, r1, r5
- 1801 000e C558     		ldr	r5, [r0, r3]
- 1802 0010 0400     		movs	r4, r0
- 1803 0012 4D1B     		subs	r5, r1, r5
- 1804 0014 FA21     		movs	r1, #250
- 1805 0016 2800     		movs	r0, r5
- 1806 0018 8900     		lsls	r1, r1, #2
- 1807 001a 1700     		movs	r7, r2
- 1808 001c FFF7FEFF 		bl	__aeabi_uidiv
- 1809 0020 FA21     		movs	r1, #250
- 1810 0022 074B     		ldr	r3, .L188+4
- 1811 0024 8900     		lsls	r1, r1, #2
- 1812 0026 E358     		ldr	r3, [r4, r3]
- 1813 0028 1B18     		adds	r3, r3, r0
- 1814 002a 3B60     		str	r3, [r7]
- 1815 002c 2800     		movs	r0, r5
- 1816 002e FFF7FEFF 		bl	__aeabi_uidivmod
- 1817 0032 2000     		movs	r0, r4
- 1818 0034 3160     		str	r1, [r6]
- 1819 0036 FFF7FEFF 		bl	lr1mac_core_is_time_valid
- 1820 003a F8BD     		pop	{r3, r4, r5, r6, r7, pc}
- 1821              	.L189:
- 1822              		.align	2
- 1823              	.L188:
- 1824 003c 2C050000 		.word	1324
- 1825 0040 24050000 		.word	1316
- 1827              		.section	.text.lr1mac_core_get_timestamp_last_device_time_ans_s,"ax",%progbits
- 1828              		.align	1
- 1829              		.global	lr1mac_core_get_timestamp_last_device_time_ans_s
- 1830              		.syntax unified
- 1831              		.code	16
- 1832              		.thumb_func
- 1833              		.fpu softvfp
- 1835              	lr1mac_core_get_timestamp_last_device_time_ans_s:
- 1836              		@ args = 0, pretend = 0, frame = 0
- 1837              		@ frame_needed = 0, uses_anonymous_args = 0
- 1838              		@ link register save eliminated.
- 1839 0000 014B     		ldr	r3, .L191
- 1840              		@ sp needed
- 1841 0002 C058     		ldr	r0, [r0, r3]
- 1842 0004 7047     		bx	lr
- 1843              	.L192:
- 1844 0006 C046     		.align	2
- 1845              	.L191:
- 1846 0008 34050000 		.word	1332
- 1848              		.section	.text.lr1mac_core_get_time_left_connection_lost,"ax",%progbits
- 1849              		.align	1
-ARM GAS  /tmp/ccoOjQhv.s 			page 33
+ 1749 0016 2800     		movs	r0, r5
+ 1750 0018 8900     		lsls	r1, r1, #2
+ 1751 001a 1700     		movs	r7, r2
+ 1752 001c FFF7FEFF 		bl	__aeabi_uidiv
+ 1753 0020 FA21     		movs	r1, #250
+ 1754 0022 074B     		ldr	r3, .L188+4
+ 1755 0024 8900     		lsls	r1, r1, #2
+ 1756 0026 E358     		ldr	r3, [r4, r3]
+ 1757 0028 1B18     		adds	r3, r3, r0
+ 1758 002a 3B60     		str	r3, [r7]
+ 1759 002c 2800     		movs	r0, r5
+ 1760 002e FFF7FEFF 		bl	__aeabi_uidivmod
+ 1761 0032 2000     		movs	r0, r4
+ 1762 0034 3160     		str	r1, [r6]
+ 1763 0036 FFF7FEFF 		bl	lr1mac_core_is_time_valid
+ 1764 003a F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 1765              	.L189:
+ 1766              		.align	2
+ 1767              	.L188:
+ 1768 003c 2C050000 		.word	1324
+ 1769 0040 24050000 		.word	1316
+ 1771              		.section	.text.lr1mac_core_get_timestamp_last_device_time_ans_s,"ax",%progbits
+ 1772              		.align	1
+ 1773              		.global	lr1mac_core_get_timestamp_last_device_time_ans_s
+ 1774              		.syntax unified
+ 1775              		.code	16
+ 1776              		.thumb_func
+ 1777              		.fpu softvfp
+ 1779              	lr1mac_core_get_timestamp_last_device_time_ans_s:
+ 1780              		@ args = 0, pretend = 0, frame = 0
+ 1781              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1782              		@ link register save eliminated.
+ 1783 0000 014B     		ldr	r3, .L191
+ 1784              		@ sp needed
+ 1785 0002 C058     		ldr	r0, [r0, r3]
+ 1786 0004 7047     		bx	lr
+ 1787              	.L192:
+ 1788 0006 C046     		.align	2
+ 1789              	.L191:
+ 1790 0008 34050000 		.word	1332
+ 1792              		.section	.text.lr1mac_core_get_time_left_connection_lost,"ax",%progbits
+ 1793              		.align	1
+ 1794              		.global	lr1mac_core_get_time_left_connection_lost
+ 1795              		.syntax unified
+ 1796              		.code	16
+ 1797              		.thumb_func
+ 1798              		.fpu softvfp
+ 1800              	lr1mac_core_get_time_left_connection_lost:
+ 1801              		@ args = 0, pretend = 0, frame = 0
+ 1802              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1803 0000 10B5     		push	{r4, lr}
+ 1804 0002 0400     		movs	r4, r0
+ 1805 0004 FFF7FEFF 		bl	smtc_modem_hal_get_time_in_s
+ 1806 0008 A823     		movs	r3, #168
+ 1807 000a DB00     		lsls	r3, r3, #3
+ 1808 000c 0200     		movs	r2, r0
+ 1809 000e E058     		ldr	r0, [r4, r3]
+ARM GAS  /tmp/ccqGV7VH.s 			page 32
 
 
- 1850              		.global	lr1mac_core_get_time_left_connection_lost
- 1851              		.syntax unified
- 1852              		.code	16
- 1853              		.thumb_func
- 1854              		.fpu softvfp
- 1856              	lr1mac_core_get_time_left_connection_lost:
- 1857              		@ args = 0, pretend = 0, frame = 0
- 1858              		@ frame_needed = 0, uses_anonymous_args = 0
- 1859 0000 10B5     		push	{r4, lr}
- 1860 0002 0400     		movs	r4, r0
- 1861 0004 FFF7FEFF 		bl	smtc_modem_hal_get_time_in_s
- 1862 0008 A823     		movs	r3, #168
- 1863 000a DB00     		lsls	r3, r3, #3
- 1864 000c 0200     		movs	r2, r0
- 1865 000e E058     		ldr	r0, [r4, r3]
- 1866 0010 074B     		ldr	r3, .L199
- 1867 0012 E358     		ldr	r3, [r4, r3]
- 1868 0014 002B     		cmp	r3, #0
- 1869 0016 08D0     		beq	.L193
- 1870 0018 D11A     		subs	r1, r2, r3
- 1871 001a 8842     		cmp	r0, r1
- 1872 001c 05D3     		bcc	.L193
- 1873 001e 1B18     		adds	r3, r3, r0
- 1874 0020 9B1A     		subs	r3, r3, r2
- 1875 0022 9842     		cmp	r0, r3
- 1876 0024 02D2     		bcs	.L195
- 1877 0026 E120     		movs	r0, #225
- 1878 0028 0001     		lsls	r0, r0, #4
- 1879              	.L193:
- 1880              		@ sp needed
- 1881 002a 10BD     		pop	{r4, pc}
- 1882              	.L195:
- 1883 002c 1800     		movs	r0, r3
- 1884 002e FCE7     		b	.L193
- 1885              	.L200:
- 1886              		.align	2
- 1887              	.L199:
- 1888 0030 34050000 		.word	1332
- 1890              		.section	.text.lr1mac_core_set_device_time_callback,"ax",%progbits
- 1891              		.align	1
- 1892              		.global	lr1mac_core_set_device_time_callback
- 1893              		.syntax unified
- 1894              		.code	16
- 1895              		.thumb_func
- 1896              		.fpu softvfp
- 1898              	lr1mac_core_set_device_time_callback:
- 1899              		@ args = 0, pretend = 0, frame = 0
- 1900              		@ frame_needed = 0, uses_anonymous_args = 0
- 1901              		@ link register save eliminated.
- 1902 0000 0029     		cmp	r1, #0
- 1903 0002 04D0     		beq	.L201
- 1904 0004 A723     		movs	r3, #167
- 1905 0006 DB00     		lsls	r3, r3, #3
- 1906 0008 C150     		str	r1, [r0, r3]
- 1907 000a 014B     		ldr	r3, .L206
- 1908 000c C250     		str	r2, [r0, r3]
- 1909              	.L201:
-ARM GAS  /tmp/ccoOjQhv.s 			page 34
+ 1810 0010 074B     		ldr	r3, .L199
+ 1811 0012 E358     		ldr	r3, [r4, r3]
+ 1812 0014 002B     		cmp	r3, #0
+ 1813 0016 08D0     		beq	.L193
+ 1814 0018 D11A     		subs	r1, r2, r3
+ 1815 001a 8842     		cmp	r0, r1
+ 1816 001c 05D3     		bcc	.L193
+ 1817 001e 1B18     		adds	r3, r3, r0
+ 1818 0020 9B1A     		subs	r3, r3, r2
+ 1819 0022 9842     		cmp	r0, r3
+ 1820 0024 02D2     		bcs	.L195
+ 1821 0026 E120     		movs	r0, #225
+ 1822 0028 0001     		lsls	r0, r0, #4
+ 1823              	.L193:
+ 1824              		@ sp needed
+ 1825 002a 10BD     		pop	{r4, pc}
+ 1826              	.L195:
+ 1827 002c 1800     		movs	r0, r3
+ 1828 002e FCE7     		b	.L193
+ 1829              	.L200:
+ 1830              		.align	2
+ 1831              	.L199:
+ 1832 0030 34050000 		.word	1332
+ 1834              		.section	.text.lr1mac_core_set_device_time_callback,"ax",%progbits
+ 1835              		.align	1
+ 1836              		.global	lr1mac_core_set_device_time_callback
+ 1837              		.syntax unified
+ 1838              		.code	16
+ 1839              		.thumb_func
+ 1840              		.fpu softvfp
+ 1842              	lr1mac_core_set_device_time_callback:
+ 1843              		@ args = 0, pretend = 0, frame = 0
+ 1844              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1845              		@ link register save eliminated.
+ 1846 0000 0029     		cmp	r1, #0
+ 1847 0002 04D0     		beq	.L201
+ 1848 0004 A723     		movs	r3, #167
+ 1849 0006 DB00     		lsls	r3, r3, #3
+ 1850 0008 C150     		str	r1, [r0, r3]
+ 1851 000a 014B     		ldr	r3, .L206
+ 1852 000c C250     		str	r2, [r0, r3]
+ 1853              	.L201:
+ 1854              		@ sp needed
+ 1855 000e 7047     		bx	lr
+ 1856              	.L207:
+ 1857              		.align	2
+ 1858              	.L206:
+ 1859 0010 3C050000 		.word	1340
+ 1861              		.section	.text.lr1_mac_core_set_device_time_invalid_delay_s,"ax",%progbits
+ 1862              		.align	1
+ 1863              		.global	lr1_mac_core_set_device_time_invalid_delay_s
+ 1864              		.syntax unified
+ 1865              		.code	16
+ 1866              		.thumb_func
+ 1867              		.fpu softvfp
+ 1869              	lr1_mac_core_set_device_time_invalid_delay_s:
+ 1870              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  /tmp/ccqGV7VH.s 			page 33
 
 
- 1910              		@ sp needed
- 1911 000e 7047     		bx	lr
- 1912              	.L207:
- 1913              		.align	2
- 1914              	.L206:
- 1915 0010 3C050000 		.word	1340
- 1917              		.section	.text.lr1_mac_core_set_device_time_invalid_delay_s,"ax",%progbits
- 1918              		.align	1
- 1919              		.global	lr1_mac_core_set_device_time_invalid_delay_s
- 1920              		.syntax unified
- 1921              		.code	16
- 1922              		.thumb_func
- 1923              		.fpu softvfp
- 1925              	lr1_mac_core_set_device_time_invalid_delay_s:
- 1926              		@ args = 0, pretend = 0, frame = 0
- 1927              		@ frame_needed = 0, uses_anonymous_args = 0
- 1928              		@ link register save eliminated.
- 1929 0000 054B     		ldr	r3, .L211
- 1930 0002 9942     		cmp	r1, r3
- 1931 0004 04D8     		bhi	.L210
- 1932 0006 A823     		movs	r3, #168
- 1933 0008 DB00     		lsls	r3, r3, #3
- 1934 000a C150     		str	r1, [r0, r3]
- 1935 000c 0020     		movs	r0, #0
- 1936              	.L209:
- 1937              		@ sp needed
- 1938 000e 7047     		bx	lr
- 1939              	.L210:
- 1940 0010 0120     		movs	r0, #1
- 1941 0012 4042     		rsbs	r0, r0, #0
- 1942 0014 FBE7     		b	.L209
- 1943              	.L212:
- 1944 0016 C046     		.align	2
- 1945              	.L211:
- 1946 0018 80994000 		.word	4233600
- 1948              		.section	.text.lr1_mac_core_get_device_time_invalid_delay_s,"ax",%progbits
- 1949              		.align	1
- 1950              		.global	lr1_mac_core_get_device_time_invalid_delay_s
- 1951              		.syntax unified
- 1952              		.code	16
- 1953              		.thumb_func
- 1954              		.fpu softvfp
- 1956              	lr1_mac_core_get_device_time_invalid_delay_s:
- 1957              		@ args = 0, pretend = 0, frame = 0
- 1958              		@ frame_needed = 0, uses_anonymous_args = 0
- 1959              		@ link register save eliminated.
- 1960 0000 A823     		movs	r3, #168
- 1961              		@ sp needed
- 1962 0002 DB00     		lsls	r3, r3, #3
- 1963 0004 C058     		ldr	r0, [r0, r3]
- 1964 0006 7047     		bx	lr
- 1966              		.section	.text.lr1mac_core_set_ping_slot_periodicity,"ax",%progbits
+ 1871              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1872              		@ link register save eliminated.
+ 1873 0000 054B     		ldr	r3, .L211
+ 1874 0002 9942     		cmp	r1, r3
+ 1875 0004 04D8     		bhi	.L210
+ 1876 0006 A823     		movs	r3, #168
+ 1877 0008 DB00     		lsls	r3, r3, #3
+ 1878 000a C150     		str	r1, [r0, r3]
+ 1879 000c 0020     		movs	r0, #0
+ 1880              	.L209:
+ 1881              		@ sp needed
+ 1882 000e 7047     		bx	lr
+ 1883              	.L210:
+ 1884 0010 0120     		movs	r0, #1
+ 1885 0012 4042     		rsbs	r0, r0, #0
+ 1886 0014 FBE7     		b	.L209
+ 1887              	.L212:
+ 1888 0016 C046     		.align	2
+ 1889              	.L211:
+ 1890 0018 80994000 		.word	4233600
+ 1892              		.section	.text.lr1_mac_core_get_device_time_invalid_delay_s,"ax",%progbits
+ 1893              		.align	1
+ 1894              		.global	lr1_mac_core_get_device_time_invalid_delay_s
+ 1895              		.syntax unified
+ 1896              		.code	16
+ 1897              		.thumb_func
+ 1898              		.fpu softvfp
+ 1900              	lr1_mac_core_get_device_time_invalid_delay_s:
+ 1901              		@ args = 0, pretend = 0, frame = 0
+ 1902              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1903              		@ link register save eliminated.
+ 1904 0000 A823     		movs	r3, #168
+ 1905              		@ sp needed
+ 1906 0002 DB00     		lsls	r3, r3, #3
+ 1907 0004 C058     		ldr	r0, [r0, r3]
+ 1908 0006 7047     		bx	lr
+ 1910              		.section	.text.lr1mac_core_set_ping_slot_periodicity,"ax",%progbits
+ 1911              		.align	1
+ 1912              		.global	lr1mac_core_set_ping_slot_periodicity
+ 1913              		.syntax unified
+ 1914              		.code	16
+ 1915              		.thumb_func
+ 1916              		.fpu softvfp
+ 1918              	lr1mac_core_set_ping_slot_periodicity:
+ 1919              		@ args = 0, pretend = 0, frame = 0
+ 1920              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1921              		@ link register save eliminated.
+ 1922 0000 0729     		cmp	r1, #7
+ 1923 0002 08D8     		bhi	.L217
+ 1924 0004 054B     		ldr	r3, .L218
+ 1925 0006 C35C     		ldrb	r3, [r0, r3]
+ 1926 0008 013B     		subs	r3, r3, #1
+ 1927 000a 012B     		cmp	r3, #1
+ 1928 000c 03D9     		bls	.L217
+ 1929 000e 044B     		ldr	r3, .L218+4
+ 1930 0010 C154     		strb	r1, [r0, r3]
+ 1931 0012 0020     		movs	r0, #0
+ARM GAS  /tmp/ccqGV7VH.s 			page 34
+
+
+ 1932              	.L215:
+ 1933              		@ sp needed
+ 1934 0014 7047     		bx	lr
+ 1935              	.L217:
+ 1936 0016 0120     		movs	r0, #1
+ 1937 0018 4042     		rsbs	r0, r0, #0
+ 1938 001a FBE7     		b	.L215
+ 1939              	.L219:
+ 1940              		.align	2
+ 1941              	.L218:
+ 1942 001c 46050000 		.word	1350
+ 1943 0020 51050000 		.word	1361
+ 1945              		.section	.text.lr1mac_core_get_ping_slot_periodicity,"ax",%progbits
+ 1946              		.align	1
+ 1947              		.global	lr1mac_core_get_ping_slot_periodicity
+ 1948              		.syntax unified
+ 1949              		.code	16
+ 1950              		.thumb_func
+ 1951              		.fpu softvfp
+ 1953              	lr1mac_core_get_ping_slot_periodicity:
+ 1954              		@ args = 0, pretend = 0, frame = 0
+ 1955              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1956              		@ link register save eliminated.
+ 1957 0000 014B     		ldr	r3, .L221
+ 1958              		@ sp needed
+ 1959 0002 C05C     		ldrb	r0, [r0, r3]
+ 1960 0004 7047     		bx	lr
+ 1961              	.L222:
+ 1962 0006 C046     		.align	2
+ 1963              	.L221:
+ 1964 0008 51050000 		.word	1361
+ 1966              		.section	.text.lr1mac_core_get_class_b_status,"ax",%progbits
  1967              		.align	1
- 1968              		.global	lr1mac_core_set_ping_slot_periodicity
+ 1968              		.global	lr1mac_core_get_class_b_status
  1969              		.syntax unified
  1970              		.code	16
  1971              		.thumb_func
-ARM GAS  /tmp/ccoOjQhv.s 			page 35
-
-
  1972              		.fpu softvfp
- 1974              	lr1mac_core_set_ping_slot_periodicity:
+ 1974              	lr1mac_core_get_class_b_status:
  1975              		@ args = 0, pretend = 0, frame = 0
  1976              		@ frame_needed = 0, uses_anonymous_args = 0
  1977              		@ link register save eliminated.
- 1978 0000 0729     		cmp	r1, #7
- 1979 0002 08D8     		bhi	.L217
- 1980 0004 054B     		ldr	r3, .L218
- 1981 0006 C35C     		ldrb	r3, [r0, r3]
- 1982 0008 013B     		subs	r3, r3, #1
- 1983 000a 012B     		cmp	r3, #1
- 1984 000c 03D9     		bls	.L217
- 1985 000e 044B     		ldr	r3, .L218+4
- 1986 0010 C154     		strb	r1, [r0, r3]
- 1987 0012 0020     		movs	r0, #0
- 1988              	.L215:
- 1989              		@ sp needed
- 1990 0014 7047     		bx	lr
- 1991              	.L217:
- 1992 0016 0120     		movs	r0, #1
- 1993 0018 4042     		rsbs	r0, r0, #0
- 1994 001a FBE7     		b	.L215
- 1995              	.L219:
- 1996              		.align	2
- 1997              	.L218:
- 1998 001c 46050000 		.word	1350
- 1999 0020 51050000 		.word	1361
- 2001              		.section	.text.lr1mac_core_get_ping_slot_periodicity,"ax",%progbits
- 2002              		.align	1
- 2003              		.global	lr1mac_core_get_ping_slot_periodicity
- 2004              		.syntax unified
- 2005              		.code	16
- 2006              		.thumb_func
- 2007              		.fpu softvfp
- 2009              	lr1mac_core_get_ping_slot_periodicity:
- 2010              		@ args = 0, pretend = 0, frame = 0
- 2011              		@ frame_needed = 0, uses_anonymous_args = 0
- 2012              		@ link register save eliminated.
- 2013 0000 014B     		ldr	r3, .L221
- 2014              		@ sp needed
- 2015 0002 C05C     		ldrb	r0, [r0, r3]
- 2016 0004 7047     		bx	lr
- 2017              	.L222:
- 2018 0006 C046     		.align	2
- 2019              	.L221:
- 2020 0008 51050000 		.word	1361
- 2022              		.section	.text.lr1mac_core_get_class_b_status,"ax",%progbits
- 2023              		.align	1
- 2024              		.global	lr1mac_core_get_class_b_status
- 2025              		.syntax unified
- 2026              		.code	16
- 2027              		.thumb_func
- 2028              		.fpu softvfp
- 2030              	lr1mac_core_get_class_b_status:
- 2031              		@ args = 0, pretend = 0, frame = 0
- 2032              		@ frame_needed = 0, uses_anonymous_args = 0
- 2033              		@ link register save eliminated.
-ARM GAS  /tmp/ccoOjQhv.s 			page 36
+ 1978 0000 7730     		adds	r0, r0, #119
+ 1979 0002 0078     		ldrb	r0, [r0]
+ 1980              		@ sp needed
+ 1981 0004 431E     		subs	r3, r0, #1
+ 1982 0006 9841     		sbcs	r0, r0, r3
+ 1983 0008 C0B2     		uxtb	r0, r0
+ 1984 000a 7047     		bx	lr
+ 1986              		.section	.text.lr1_mac_core_get_link_check_ans,"ax",%progbits
+ 1987              		.align	1
+ 1988              		.global	lr1_mac_core_get_link_check_ans
+ 1989              		.syntax unified
+ 1990              		.code	16
+ 1991              		.thumb_func
+ 1992              		.fpu softvfp
+ 1994              	lr1_mac_core_get_link_check_ans:
+ARM GAS  /tmp/ccqGV7VH.s 			page 35
 
 
- 2034 0000 7730     		adds	r0, r0, #119
- 2035 0002 0078     		ldrb	r0, [r0]
- 2036              		@ sp needed
- 2037 0004 431E     		subs	r3, r0, #1
- 2038 0006 9841     		sbcs	r0, r0, r3
- 2039 0008 C0B2     		uxtb	r0, r0
- 2040 000a 7047     		bx	lr
- 2042              		.section	.text.lr1_mac_core_get_link_check_ans,"ax",%progbits
- 2043              		.align	1
- 2044              		.global	lr1_mac_core_get_link_check_ans
- 2045              		.syntax unified
- 2046              		.code	16
- 2047              		.thumb_func
- 2048              		.fpu softvfp
- 2050              	lr1_mac_core_get_link_check_ans:
- 2051              		@ args = 0, pretend = 0, frame = 0
- 2052              		@ frame_needed = 0, uses_anonymous_args = 0
- 2053              		@ link register save eliminated.
- 2054 0000 094B     		ldr	r3, .L227
- 2055 0002 C35C     		ldrb	r3, [r0, r3]
- 2056 0004 032B     		cmp	r3, #3
- 2057 0006 08D1     		bne	.L225
- 2058 0008 A423     		movs	r3, #164
- 2059 000a DB00     		lsls	r3, r3, #3
- 2060 000c C35C     		ldrb	r3, [r0, r3]
- 2061 000e 0B70     		strb	r3, [r1]
- 2062 0010 064B     		ldr	r3, .L227+4
- 2063 0012 C35C     		ldrb	r3, [r0, r3]
- 2064 0014 0020     		movs	r0, #0
- 2065 0016 1370     		strb	r3, [r2]
- 2066              	.L226:
- 2067              		@ sp needed
- 2068 0018 7047     		bx	lr
- 2069              	.L225:
- 2070 001a 0023     		movs	r3, #0
- 2071 001c 0120     		movs	r0, #1
- 2072 001e 0B70     		strb	r3, [r1]
- 2073 0020 4042     		rsbs	r0, r0, #0
- 2074 0022 1370     		strb	r3, [r2]
- 2075 0024 F8E7     		b	.L226
- 2076              	.L228:
- 2077 0026 C046     		.align	2
- 2078              	.L227:
- 2079 0028 44050000 		.word	1348
- 2080 002c 21050000 		.word	1313
- 2082              		.section	.text.lr1_mac_core_get_device_time_req_status,"ax",%progbits
- 2083              		.align	1
- 2084              		.global	lr1_mac_core_get_device_time_req_status
- 2085              		.syntax unified
- 2086              		.code	16
- 2087              		.thumb_func
- 2088              		.fpu softvfp
- 2090              	lr1_mac_core_get_device_time_req_status:
- 2091              		@ args = 0, pretend = 0, frame = 0
- 2092              		@ frame_needed = 0, uses_anonymous_args = 0
- 2093              		@ link register save eliminated.
- 2094 0000 034B     		ldr	r3, .L230
-ARM GAS  /tmp/ccoOjQhv.s 			page 37
+ 1995              		@ args = 0, pretend = 0, frame = 0
+ 1996              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1997              		@ link register save eliminated.
+ 1998 0000 094B     		ldr	r3, .L227
+ 1999 0002 C35C     		ldrb	r3, [r0, r3]
+ 2000 0004 032B     		cmp	r3, #3
+ 2001 0006 08D1     		bne	.L225
+ 2002 0008 A423     		movs	r3, #164
+ 2003 000a DB00     		lsls	r3, r3, #3
+ 2004 000c C35C     		ldrb	r3, [r0, r3]
+ 2005 000e 0B70     		strb	r3, [r1]
+ 2006 0010 064B     		ldr	r3, .L227+4
+ 2007 0012 C35C     		ldrb	r3, [r0, r3]
+ 2008 0014 0020     		movs	r0, #0
+ 2009 0016 1370     		strb	r3, [r2]
+ 2010              	.L226:
+ 2011              		@ sp needed
+ 2012 0018 7047     		bx	lr
+ 2013              	.L225:
+ 2014 001a 0023     		movs	r3, #0
+ 2015 001c 0120     		movs	r0, #1
+ 2016 001e 0B70     		strb	r3, [r1]
+ 2017 0020 4042     		rsbs	r0, r0, #0
+ 2018 0022 1370     		strb	r3, [r2]
+ 2019 0024 F8E7     		b	.L226
+ 2020              	.L228:
+ 2021 0026 C046     		.align	2
+ 2022              	.L227:
+ 2023 0028 44050000 		.word	1348
+ 2024 002c 21050000 		.word	1313
+ 2026              		.section	.text.lr1_mac_core_get_device_time_req_status,"ax",%progbits
+ 2027              		.align	1
+ 2028              		.global	lr1_mac_core_get_device_time_req_status
+ 2029              		.syntax unified
+ 2030              		.code	16
+ 2031              		.thumb_func
+ 2032              		.fpu softvfp
+ 2034              	lr1_mac_core_get_device_time_req_status:
+ 2035              		@ args = 0, pretend = 0, frame = 0
+ 2036              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2037              		@ link register save eliminated.
+ 2038 0000 034B     		ldr	r3, .L230
+ 2039              		@ sp needed
+ 2040 0002 C05C     		ldrb	r0, [r0, r3]
+ 2041 0004 0338     		subs	r0, r0, #3
+ 2042 0006 431E     		subs	r3, r0, #1
+ 2043 0008 9841     		sbcs	r0, r0, r3
+ 2044 000a 4042     		rsbs	r0, r0, #0
+ 2045 000c 7047     		bx	lr
+ 2046              	.L231:
+ 2047 000e C046     		.align	2
+ 2048              	.L230:
+ 2049 0010 45050000 		.word	1349
+ 2051              		.section	.text.lr1_mac_core_get_ping_slot_info_req_status,"ax",%progbits
+ 2052              		.align	1
+ 2053              		.global	lr1_mac_core_get_ping_slot_info_req_status
+ 2054              		.syntax unified
+ARM GAS  /tmp/ccqGV7VH.s 			page 36
 
 
- 2095              		@ sp needed
- 2096 0002 C05C     		ldrb	r0, [r0, r3]
- 2097 0004 0338     		subs	r0, r0, #3
- 2098 0006 431E     		subs	r3, r0, #1
- 2099 0008 9841     		sbcs	r0, r0, r3
- 2100 000a 4042     		rsbs	r0, r0, #0
- 2101 000c 7047     		bx	lr
- 2102              	.L231:
- 2103 000e C046     		.align	2
- 2104              	.L230:
- 2105 0010 45050000 		.word	1349
- 2107              		.section	.text.lr1_mac_core_get_ping_slot_info_req_status,"ax",%progbits
- 2108              		.align	1
- 2109              		.global	lr1_mac_core_get_ping_slot_info_req_status
- 2110              		.syntax unified
- 2111              		.code	16
- 2112              		.thumb_func
- 2113              		.fpu softvfp
- 2115              	lr1_mac_core_get_ping_slot_info_req_status:
- 2116              		@ args = 0, pretend = 0, frame = 0
- 2117              		@ frame_needed = 0, uses_anonymous_args = 0
- 2118              		@ link register save eliminated.
- 2119 0000 034B     		ldr	r3, .L233
- 2120              		@ sp needed
- 2121 0002 C05C     		ldrb	r0, [r0, r3]
- 2122 0004 0338     		subs	r0, r0, #3
- 2123 0006 431E     		subs	r3, r0, #1
- 2124 0008 9841     		sbcs	r0, r0, r3
- 2125 000a 4042     		rsbs	r0, r0, #0
- 2126 000c 7047     		bx	lr
- 2127              	.L234:
- 2128 000e C046     		.align	2
- 2129              	.L233:
- 2130 0010 46050000 		.word	1350
- 2132              		.section	.text.lr1mac_core_get_status_push_network_downlink_to_user,"ax",%progbits
- 2133              		.align	1
- 2134              		.global	lr1mac_core_get_status_push_network_downlink_to_user
- 2135              		.syntax unified
- 2136              		.code	16
- 2137              		.thumb_func
- 2138              		.fpu softvfp
- 2140              	lr1mac_core_get_status_push_network_downlink_to_user:
- 2141              		@ args = 0, pretend = 0, frame = 0
- 2142              		@ frame_needed = 0, uses_anonymous_args = 0
- 2143              		@ link register save eliminated.
- 2144 0000 014B     		ldr	r3, .L236
- 2145              		@ sp needed
- 2146 0002 C05C     		ldrb	r0, [r0, r3]
- 2147 0004 7047     		bx	lr
- 2148              	.L237:
- 2149 0006 C046     		.align	2
- 2150              	.L236:
- 2151 0008 53050000 		.word	1363
- 2153              		.section	.text.lr1mac_core_set_status_push_network_downlink_to_user,"ax",%progbits
- 2154              		.align	1
- 2155              		.global	lr1mac_core_set_status_push_network_downlink_to_user
- 2156              		.syntax unified
-ARM GAS  /tmp/ccoOjQhv.s 			page 38
+ 2055              		.code	16
+ 2056              		.thumb_func
+ 2057              		.fpu softvfp
+ 2059              	lr1_mac_core_get_ping_slot_info_req_status:
+ 2060              		@ args = 0, pretend = 0, frame = 0
+ 2061              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2062              		@ link register save eliminated.
+ 2063 0000 034B     		ldr	r3, .L233
+ 2064              		@ sp needed
+ 2065 0002 C05C     		ldrb	r0, [r0, r3]
+ 2066 0004 0338     		subs	r0, r0, #3
+ 2067 0006 431E     		subs	r3, r0, #1
+ 2068 0008 9841     		sbcs	r0, r0, r3
+ 2069 000a 4042     		rsbs	r0, r0, #0
+ 2070 000c 7047     		bx	lr
+ 2071              	.L234:
+ 2072 000e C046     		.align	2
+ 2073              	.L233:
+ 2074 0010 46050000 		.word	1350
+ 2076              		.section	.text.lr1mac_core_get_status_push_network_downlink_to_user,"ax",%progbits
+ 2077              		.align	1
+ 2078              		.global	lr1mac_core_get_status_push_network_downlink_to_user
+ 2079              		.syntax unified
+ 2080              		.code	16
+ 2081              		.thumb_func
+ 2082              		.fpu softvfp
+ 2084              	lr1mac_core_get_status_push_network_downlink_to_user:
+ 2085              		@ args = 0, pretend = 0, frame = 0
+ 2086              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2087              		@ link register save eliminated.
+ 2088 0000 014B     		ldr	r3, .L236
+ 2089              		@ sp needed
+ 2090 0002 C05C     		ldrb	r0, [r0, r3]
+ 2091 0004 7047     		bx	lr
+ 2092              	.L237:
+ 2093 0006 C046     		.align	2
+ 2094              	.L236:
+ 2095 0008 53050000 		.word	1363
+ 2097              		.section	.text.lr1mac_core_set_status_push_network_downlink_to_user,"ax",%progbits
+ 2098              		.align	1
+ 2099              		.global	lr1mac_core_set_status_push_network_downlink_to_user
+ 2100              		.syntax unified
+ 2101              		.code	16
+ 2102              		.thumb_func
+ 2103              		.fpu softvfp
+ 2105              	lr1mac_core_set_status_push_network_downlink_to_user:
+ 2106              		@ args = 0, pretend = 0, frame = 0
+ 2107              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2108              		@ link register save eliminated.
+ 2109 0000 014B     		ldr	r3, .L239
+ 2110              		@ sp needed
+ 2111 0002 C154     		strb	r1, [r0, r3]
+ 2112 0004 7047     		bx	lr
+ 2113              	.L240:
+ 2114 0006 C046     		.align	2
+ 2115              	.L239:
+ 2116 0008 53050000 		.word	1363
+ARM GAS  /tmp/ccqGV7VH.s 			page 37
 
 
- 2157              		.code	16
- 2158              		.thumb_func
- 2159              		.fpu softvfp
- 2161              	lr1mac_core_set_status_push_network_downlink_to_user:
- 2162              		@ args = 0, pretend = 0, frame = 0
- 2163              		@ frame_needed = 0, uses_anonymous_args = 0
- 2164              		@ link register save eliminated.
- 2165 0000 014B     		ldr	r3, .L239
- 2166              		@ sp needed
- 2167 0002 C154     		strb	r1, [r0, r3]
- 2168 0004 7047     		bx	lr
- 2169              	.L240:
- 2170 0006 C046     		.align	2
- 2171              	.L239:
- 2172 0008 53050000 		.word	1363
- 2174              		.section	.text.lr1mac_core_set_adr_ack_limit_delay,"ax",%progbits
- 2175              		.align	1
- 2176              		.global	lr1mac_core_set_adr_ack_limit_delay
- 2177              		.syntax unified
- 2178              		.code	16
- 2179              		.thumb_func
- 2180              		.fpu softvfp
- 2182              	lr1mac_core_set_adr_ack_limit_delay:
- 2183              		@ args = 0, pretend = 0, frame = 0
- 2184              		@ frame_needed = 0, uses_anonymous_args = 0
- 2185              		@ link register save eliminated.
- 2186 0000 0300     		movs	r3, r0
- 2187 0002 881E     		subs	r0, r1, #2
- 2188 0004 7D28     		cmp	r0, #125
- 2189 0006 0BD8     		bhi	.L244
- 2190 0008 901E     		subs	r0, r2, #2
- 2191 000a 7D28     		cmp	r0, #125
- 2192 000c 08D8     		bhi	.L244
- 2193 000e 0648     		ldr	r0, .L245
- 2194 0010 1954     		strb	r1, [r3, r0]
- 2195 0012 0649     		ldr	r1, .L245+4
- 2196 0014 0020     		movs	r0, #0
- 2197 0016 5A54     		strb	r2, [r3, r1]
- 2198 0018 9122     		movs	r2, #145
- 2199 001a D200     		lsls	r2, r2, #3
- 2200 001c 9850     		str	r0, [r3, r2]
- 2201              	.L242:
- 2202              		@ sp needed
- 2203 001e 7047     		bx	lr
- 2204              	.L244:
- 2205 0020 0120     		movs	r0, #1
- 2206 0022 4042     		rsbs	r0, r0, #0
- 2207 0024 FBE7     		b	.L242
- 2208              	.L246:
- 2209 0026 C046     		.align	2
- 2210              	.L245:
- 2211 0028 8D040000 		.word	1165
- 2212 002c 8C040000 		.word	1164
- 2214              		.section	.text.lr1mac_core_get_adr_ack_limit_delay,"ax",%progbits
- 2215              		.align	1
- 2216              		.global	lr1mac_core_get_adr_ack_limit_delay
- 2217              		.syntax unified
-ARM GAS  /tmp/ccoOjQhv.s 			page 39
+ 2118              		.section	.text.lr1mac_core_set_adr_ack_limit_delay,"ax",%progbits
+ 2119              		.align	1
+ 2120              		.global	lr1mac_core_set_adr_ack_limit_delay
+ 2121              		.syntax unified
+ 2122              		.code	16
+ 2123              		.thumb_func
+ 2124              		.fpu softvfp
+ 2126              	lr1mac_core_set_adr_ack_limit_delay:
+ 2127              		@ args = 0, pretend = 0, frame = 0
+ 2128              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2129              		@ link register save eliminated.
+ 2130 0000 0300     		movs	r3, r0
+ 2131 0002 881E     		subs	r0, r1, #2
+ 2132 0004 7D28     		cmp	r0, #125
+ 2133 0006 0BD8     		bhi	.L244
+ 2134 0008 901E     		subs	r0, r2, #2
+ 2135 000a 7D28     		cmp	r0, #125
+ 2136 000c 08D8     		bhi	.L244
+ 2137 000e 0648     		ldr	r0, .L245
+ 2138 0010 1954     		strb	r1, [r3, r0]
+ 2139 0012 0649     		ldr	r1, .L245+4
+ 2140 0014 0020     		movs	r0, #0
+ 2141 0016 5A54     		strb	r2, [r3, r1]
+ 2142 0018 9122     		movs	r2, #145
+ 2143 001a D200     		lsls	r2, r2, #3
+ 2144 001c 9850     		str	r0, [r3, r2]
+ 2145              	.L242:
+ 2146              		@ sp needed
+ 2147 001e 7047     		bx	lr
+ 2148              	.L244:
+ 2149 0020 0120     		movs	r0, #1
+ 2150 0022 4042     		rsbs	r0, r0, #0
+ 2151 0024 FBE7     		b	.L242
+ 2152              	.L246:
+ 2153 0026 C046     		.align	2
+ 2154              	.L245:
+ 2155 0028 8D040000 		.word	1165
+ 2156 002c 8C040000 		.word	1164
+ 2158              		.section	.text.lr1mac_core_get_adr_ack_limit_delay,"ax",%progbits
+ 2159              		.align	1
+ 2160              		.global	lr1mac_core_get_adr_ack_limit_delay
+ 2161              		.syntax unified
+ 2162              		.code	16
+ 2163              		.thumb_func
+ 2164              		.fpu softvfp
+ 2166              	lr1mac_core_get_adr_ack_limit_delay:
+ 2167              		@ args = 0, pretend = 0, frame = 0
+ 2168              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2169              		@ link register save eliminated.
+ 2170 0000 034B     		ldr	r3, .L248
+ 2171              		@ sp needed
+ 2172 0002 C35C     		ldrb	r3, [r0, r3]
+ 2173 0004 0B70     		strb	r3, [r1]
+ 2174 0006 034B     		ldr	r3, .L248+4
+ 2175 0008 C35C     		ldrb	r3, [r0, r3]
+ 2176 000a 1370     		strb	r3, [r2]
+ 2177 000c 7047     		bx	lr
+ARM GAS  /tmp/ccqGV7VH.s 			page 38
 
 
- 2218              		.code	16
- 2219              		.thumb_func
- 2220              		.fpu softvfp
- 2222              	lr1mac_core_get_adr_ack_limit_delay:
- 2223              		@ args = 0, pretend = 0, frame = 0
- 2224              		@ frame_needed = 0, uses_anonymous_args = 0
- 2225              		@ link register save eliminated.
- 2226 0000 034B     		ldr	r3, .L248
- 2227              		@ sp needed
- 2228 0002 C35C     		ldrb	r3, [r0, r3]
- 2229 0004 0B70     		strb	r3, [r1]
- 2230 0006 034B     		ldr	r3, .L248+4
- 2231 0008 C35C     		ldrb	r3, [r0, r3]
- 2232 000a 1370     		strb	r3, [r2]
- 2233 000c 7047     		bx	lr
- 2234              	.L249:
- 2235 000e C046     		.align	2
- 2236              	.L248:
- 2237 0010 8D040000 		.word	1165
- 2238 0014 8C040000 		.word	1164
- 2240              		.section	.text.lr1mac_core_abort,"ax",%progbits
- 2241              		.align	1
- 2242              		.global	lr1mac_core_abort
- 2243              		.syntax unified
- 2244              		.code	16
- 2245              		.thumb_func
- 2246              		.fpu softvfp
- 2248              	lr1mac_core_abort:
- 2249              		@ args = 0, pretend = 0, frame = 0
- 2250              		@ frame_needed = 0, uses_anonymous_args = 0
- 2251 0000 0023     		movs	r3, #0
- 2252 0002 0A4A     		ldr	r2, .L251
- 2253 0004 10B5     		push	{r4, lr}
- 2254 0006 8354     		strb	r3, [r0, r2]
- 2255 0008 A222     		movs	r2, #162
- 2256              		@ sp needed
- 2257 000a D200     		lsls	r2, r2, #3
- 2258 000c 8354     		strb	r3, [r0, r2]
- 2259 000e 084A     		ldr	r2, .L251+4
- 2260 0010 8354     		strb	r3, [r0, r2]
- 2261 0012 0300     		movs	r3, r0
- 2262 0014 0122     		movs	r2, #1
- 2263 0016 5233     		adds	r3, r3, #82
- 2264 0018 1A70     		strb	r2, [r3]
- 2265 001a 9823     		movs	r3, #152
- 2266 001c DB00     		lsls	r3, r3, #3
- 2267 001e C15C     		ldrb	r1, [r0, r3]
- 2268 0020 044B     		ldr	r3, .L251+8
- 2269 0022 C058     		ldr	r0, [r0, r3]
- 2270 0024 FFF7FEFF 		bl	rp_task_abort
- 2271 0028 10BD     		pop	{r4, pc}
- 2272              	.L252:
- 2273 002a C046     		.align	2
- 2274              	.L251:
- 2275 002c 11030000 		.word	785
- 2276 0030 D9040000 		.word	1241
- 2277 0034 BC040000 		.word	1212
-ARM GAS  /tmp/ccoOjQhv.s 			page 40
+ 2178              	.L249:
+ 2179 000e C046     		.align	2
+ 2180              	.L248:
+ 2181 0010 8D040000 		.word	1165
+ 2182 0014 8C040000 		.word	1164
+ 2184              		.section	.text.lr1mac_core_abort,"ax",%progbits
+ 2185              		.align	1
+ 2186              		.global	lr1mac_core_abort
+ 2187              		.syntax unified
+ 2188              		.code	16
+ 2189              		.thumb_func
+ 2190              		.fpu softvfp
+ 2192              	lr1mac_core_abort:
+ 2193              		@ args = 0, pretend = 0, frame = 0
+ 2194              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2195 0000 0023     		movs	r3, #0
+ 2196 0002 0A4A     		ldr	r2, .L251
+ 2197 0004 10B5     		push	{r4, lr}
+ 2198 0006 8354     		strb	r3, [r0, r2]
+ 2199 0008 A222     		movs	r2, #162
+ 2200              		@ sp needed
+ 2201 000a D200     		lsls	r2, r2, #3
+ 2202 000c 8354     		strb	r3, [r0, r2]
+ 2203 000e 084A     		ldr	r2, .L251+4
+ 2204 0010 8354     		strb	r3, [r0, r2]
+ 2205 0012 0300     		movs	r3, r0
+ 2206 0014 0122     		movs	r2, #1
+ 2207 0016 5233     		adds	r3, r3, #82
+ 2208 0018 1A70     		strb	r2, [r3]
+ 2209 001a 9823     		movs	r3, #152
+ 2210 001c DB00     		lsls	r3, r3, #3
+ 2211 001e C15C     		ldrb	r1, [r0, r3]
+ 2212 0020 044B     		ldr	r3, .L251+8
+ 2213 0022 C058     		ldr	r0, [r0, r3]
+ 2214 0024 FFF7FEFF 		bl	rp_task_abort
+ 2215 0028 10BD     		pop	{r4, pc}
+ 2216              	.L252:
+ 2217 002a C046     		.align	2
+ 2218              	.L251:
+ 2219 002c 11030000 		.word	785
+ 2220 0030 D9040000 		.word	1241
+ 2221 0034 BC040000 		.word	1212
+ 2223              		.section	.text.lr1mac_core_join_status_clear,"ax",%progbits
+ 2224              		.align	1
+ 2225              		.global	lr1mac_core_join_status_clear
+ 2226              		.syntax unified
+ 2227              		.code	16
+ 2228              		.thumb_func
+ 2229              		.fpu softvfp
+ 2231              	lr1mac_core_join_status_clear:
+ 2232              		@ args = 0, pretend = 0, frame = 0
+ 2233              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2234 0000 70B5     		push	{r4, r5, r6, lr}
+ 2235 0002 0025     		movs	r5, #0
+ 2236              		@ sp needed
+ 2237 0004 0400     		movs	r4, r0
+ 2238 0006 054B     		ldr	r3, .L254
+ARM GAS  /tmp/ccqGV7VH.s 			page 39
 
 
- 2279              		.section	.text.lr1mac_core_join_status_clear,"ax",%progbits
- 2280              		.align	1
- 2281              		.global	lr1mac_core_join_status_clear
- 2282              		.syntax unified
- 2283              		.code	16
- 2284              		.thumb_func
- 2285              		.fpu softvfp
- 2287              	lr1mac_core_join_status_clear:
- 2288              		@ args = 0, pretend = 0, frame = 0
- 2289              		@ frame_needed = 0, uses_anonymous_args = 0
- 2290 0000 70B5     		push	{r4, r5, r6, lr}
- 2291 0002 0025     		movs	r5, #0
- 2292              		@ sp needed
- 2293 0004 0400     		movs	r4, r0
- 2294 0006 054B     		ldr	r3, .L254
- 2295 0008 C554     		strb	r5, [r0, r3]
- 2296 000a FFF7FEFF 		bl	lr1mac_core_abort
- 2297 000e 2000     		movs	r0, r4
- 2298 0010 FFF7FEFF 		bl	smtc_real_init_join_snapshot_channel_mask
- 2299 0014 9523     		movs	r3, #149
- 2300 0016 DB00     		lsls	r3, r3, #3
- 2301 0018 E550     		str	r5, [r4, r3]
- 2302 001a 70BD     		pop	{r4, r5, r6, pc}
- 2303              	.L255:
- 2304              		.align	2
- 2305              	.L254:
- 2306 001c CE040000 		.word	1230
- 2308              		.section	.rodata.str1.1,"aMS",%progbits,1
- 2309              	.LC38:
- 2310 0000 45553836 		.ascii	"EU868\000"
- 2310      3800
- 2311              		.section	.rodata.smtc_real_region_list_str,"a"
- 2312              		.align	2
- 2313              		.set	.LANCHOR0,. + 0
- 2316              	smtc_real_region_list_str:
- 2317 0000 00000000 		.space	4
- 2318 0004 00000000 		.word	.LC38
- 2319              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/ccoOjQhv.s 			page 41
+ 2239 0008 C554     		strb	r5, [r0, r3]
+ 2240 000a FFF7FEFF 		bl	lr1mac_core_abort
+ 2241 000e 2000     		movs	r0, r4
+ 2242 0010 FFF7FEFF 		bl	smtc_real_init_join_snapshot_channel_mask
+ 2243 0014 9523     		movs	r3, #149
+ 2244 0016 DB00     		lsls	r3, r3, #3
+ 2245 0018 E550     		str	r5, [r4, r3]
+ 2246 001a 70BD     		pop	{r4, r5, r6, pc}
+ 2247              	.L255:
+ 2248              		.align	2
+ 2249              	.L254:
+ 2250 001c CE040000 		.word	1230
+ 2252              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccqGV7VH.s 			page 40
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 lr1mac_core.c
-     /tmp/ccoOjQhv.s:21     .text.lr1mac_core_join:0000000000000000 $t
-     /tmp/ccoOjQhv.s:29     .text.lr1mac_core_join:0000000000000000 lr1mac_core_join
-     /tmp/ccoOjQhv.s:121    .text.lr1mac_core_join:00000000000000b4 $d
-     /tmp/ccoOjQhv.s:133    .text.lr1_mac_joined_status_get:0000000000000000 $t
-     /tmp/ccoOjQhv.s:140    .text.lr1_mac_joined_status_get:0000000000000000 lr1_mac_joined_status_get
-     /tmp/ccoOjQhv.s:151    .text.lr1_mac_joined_status_get:0000000000000008 $d
-     /tmp/ccoOjQhv.s:154    .text.lr1mac_core_dr_strategy_set:0000000000000000 $t
-     /tmp/ccoOjQhv.s:161    .text.lr1mac_core_dr_strategy_set:0000000000000000 lr1mac_core_dr_strategy_set
-     /tmp/ccoOjQhv.s:202    .text.lr1mac_core_dr_strategy_set:000000000000004c $d
-     /tmp/ccoOjQhv.s:205    .text.lr1mac_core_dr_strategy_get:0000000000000000 $t
-     /tmp/ccoOjQhv.s:212    .text.lr1mac_core_dr_strategy_get:0000000000000000 lr1mac_core_dr_strategy_get
-     /tmp/ccoOjQhv.s:223    .text.lr1mac_core_dr_strategy_get:0000000000000008 $d
-     /tmp/ccoOjQhv.s:226    .text.lr1mac_core_devaddr_get:0000000000000000 $t
-     /tmp/ccoOjQhv.s:233    .text.lr1mac_core_devaddr_get:0000000000000000 lr1mac_core_devaddr_get
-     /tmp/ccoOjQhv.s:242    .text.lr1mac_core_next_power_get:0000000000000000 $t
-     /tmp/ccoOjQhv.s:249    .text.lr1mac_core_next_power_get:0000000000000000 lr1mac_core_next_power_get
-     /tmp/ccoOjQhv.s:259    .text.lr1mac_core_state_get:0000000000000000 $t
-     /tmp/ccoOjQhv.s:266    .text.lr1mac_core_state_get:0000000000000000 lr1mac_core_state_get
-     /tmp/ccoOjQhv.s:277    .text.lr1mac_core_state_get:0000000000000008 $d
-     /tmp/ccoOjQhv.s:280    .text.lr1mac_core_context_save:0000000000000000 $t
-     /tmp/ccoOjQhv.s:287    .text.lr1mac_core_context_save:0000000000000000 lr1mac_core_context_save
-     /tmp/ccoOjQhv.s:337    .text.lr1mac_core_context_save:000000000000005c $d
-     /tmp/ccoOjQhv.s:341    .text.lr1mac_core_dr_custom_set:0000000000000000 $t
-     /tmp/ccoOjQhv.s:348    .text.lr1mac_core_dr_custom_set:0000000000000000 lr1mac_core_dr_custom_set
-     /tmp/ccoOjQhv.s:364    .text.lr1mac_core_dr_custom_set:0000000000000014 $d
-     /tmp/ccoOjQhv.s:367    .text.lr1mac_core_next_max_payload_length_get:0000000000000000 $t
-     /tmp/ccoOjQhv.s:374    .text.lr1mac_core_next_max_payload_length_get:0000000000000000 lr1mac_core_next_max_payload_length_get
-     /tmp/ccoOjQhv.s:394    .text.lr1mac_core_next_dr_get:0000000000000000 $t
-     /tmp/ccoOjQhv.s:401    .text.lr1mac_core_next_dr_get:0000000000000000 lr1mac_core_next_dr_get
-     /tmp/ccoOjQhv.s:411    .text.lr1mac_core_next_frequency_get:0000000000000000 $t
-     /tmp/ccoOjQhv.s:418    .text.lr1mac_core_next_frequency_get:0000000000000000 lr1mac_core_next_frequency_get
-     /tmp/ccoOjQhv.s:429    .text.lr1mac_core_factory_reset:0000000000000000 $t
-     /tmp/ccoOjQhv.s:436    .text.lr1mac_core_factory_reset:0000000000000000 lr1mac_core_factory_reset
-     /tmp/ccoOjQhv.s:476    .text.lr1mac_core_factory_reset:000000000000004c $d
-     /tmp/ccoOjQhv.s:480    .text.lr1mac_core_get_activation_mode:0000000000000000 $t
-     /tmp/ccoOjQhv.s:487    .text.lr1mac_core_get_activation_mode:0000000000000000 lr1mac_core_get_activation_mode
-     /tmp/ccoOjQhv.s:497    .text.lr1mac_core_set_activation_mode:0000000000000000 $t
-     /tmp/ccoOjQhv.s:504    .text.lr1mac_core_set_activation_mode:0000000000000000 lr1mac_core_set_activation_mode
-     /tmp/ccoOjQhv.s:514    .text.lr1mac_core_rp_get:0000000000000000 $t
-     /tmp/ccoOjQhv.s:521    .text.lr1mac_core_rp_get:0000000000000000 lr1mac_core_rp_get
-     /tmp/ccoOjQhv.s:532    .text.lr1mac_core_rp_get:0000000000000008 $d
-     /tmp/ccoOjQhv.s:535    .text.lr1mac_core_nb_reset_get:0000000000000000 $t
-     /tmp/ccoOjQhv.s:542    .text.lr1mac_core_nb_reset_get:0000000000000000 lr1mac_core_nb_reset_get
-     /tmp/ccoOjQhv.s:552    .text.lr1mac_core_devnonce_get:0000000000000000 $t
-     /tmp/ccoOjQhv.s:559    .text.lr1mac_core_devnonce_get:0000000000000000 lr1mac_core_devnonce_get
-     /tmp/ccoOjQhv.s:570    .text.lr1mac_core_last_snr_get:0000000000000000 $t
-     /tmp/ccoOjQhv.s:577    .text.lr1mac_core_last_snr_get:0000000000000000 lr1mac_core_last_snr_get
-     /tmp/ccoOjQhv.s:588    .text.lr1mac_core_last_snr_get:0000000000000008 $d
-     /tmp/ccoOjQhv.s:591    .text.lr1mac_core_last_rssi_get:0000000000000000 $t
-     /tmp/ccoOjQhv.s:598    .text.lr1mac_core_last_rssi_get:0000000000000000 lr1mac_core_last_rssi_get
-     /tmp/ccoOjQhv.s:609    .text.lr1mac_core_last_rssi_get:0000000000000008 $d
-     /tmp/ccoOjQhv.s:612    .text.lr1mac_core_context_load:0000000000000000 $t
-     /tmp/ccoOjQhv.s:619    .text.lr1mac_core_context_load:0000000000000000 lr1mac_core_context_load
-     /tmp/ccoOjQhv.s:656    .text.lr1mac_core_context_load:000000000000003c $d
-     /tmp/ccoOjQhv.s:682    .text.lr1mac_core_init:0000000000000000 $t
-ARM GAS  /tmp/ccoOjQhv.s 			page 42
+     /tmp/ccqGV7VH.s:21     .text.lr1mac_core_join:0000000000000000 $t
+     /tmp/ccqGV7VH.s:29     .text.lr1mac_core_join:0000000000000000 lr1mac_core_join
+     /tmp/ccqGV7VH.s:121    .text.lr1mac_core_join:00000000000000b4 $d
+     /tmp/ccqGV7VH.s:133    .text.lr1_mac_joined_status_get:0000000000000000 $t
+     /tmp/ccqGV7VH.s:140    .text.lr1_mac_joined_status_get:0000000000000000 lr1_mac_joined_status_get
+     /tmp/ccqGV7VH.s:151    .text.lr1_mac_joined_status_get:0000000000000008 $d
+     /tmp/ccqGV7VH.s:154    .text.lr1mac_core_dr_strategy_set:0000000000000000 $t
+     /tmp/ccqGV7VH.s:161    .text.lr1mac_core_dr_strategy_set:0000000000000000 lr1mac_core_dr_strategy_set
+     /tmp/ccqGV7VH.s:202    .text.lr1mac_core_dr_strategy_set:000000000000004c $d
+     /tmp/ccqGV7VH.s:205    .text.lr1mac_core_dr_strategy_get:0000000000000000 $t
+     /tmp/ccqGV7VH.s:212    .text.lr1mac_core_dr_strategy_get:0000000000000000 lr1mac_core_dr_strategy_get
+     /tmp/ccqGV7VH.s:223    .text.lr1mac_core_dr_strategy_get:0000000000000008 $d
+     /tmp/ccqGV7VH.s:226    .text.lr1mac_core_devaddr_get:0000000000000000 $t
+     /tmp/ccqGV7VH.s:233    .text.lr1mac_core_devaddr_get:0000000000000000 lr1mac_core_devaddr_get
+     /tmp/ccqGV7VH.s:242    .text.lr1mac_core_next_power_get:0000000000000000 $t
+     /tmp/ccqGV7VH.s:249    .text.lr1mac_core_next_power_get:0000000000000000 lr1mac_core_next_power_get
+     /tmp/ccqGV7VH.s:259    .text.lr1mac_core_state_get:0000000000000000 $t
+     /tmp/ccqGV7VH.s:266    .text.lr1mac_core_state_get:0000000000000000 lr1mac_core_state_get
+     /tmp/ccqGV7VH.s:277    .text.lr1mac_core_state_get:0000000000000008 $d
+     /tmp/ccqGV7VH.s:280    .text.lr1mac_core_context_save:0000000000000000 $t
+     /tmp/ccqGV7VH.s:287    .text.lr1mac_core_context_save:0000000000000000 lr1mac_core_context_save
+     /tmp/ccqGV7VH.s:337    .text.lr1mac_core_context_save:000000000000005c $d
+     /tmp/ccqGV7VH.s:341    .text.lr1mac_core_dr_custom_set:0000000000000000 $t
+     /tmp/ccqGV7VH.s:348    .text.lr1mac_core_dr_custom_set:0000000000000000 lr1mac_core_dr_custom_set
+     /tmp/ccqGV7VH.s:364    .text.lr1mac_core_dr_custom_set:0000000000000014 $d
+     /tmp/ccqGV7VH.s:367    .text.lr1mac_core_next_max_payload_length_get:0000000000000000 $t
+     /tmp/ccqGV7VH.s:374    .text.lr1mac_core_next_max_payload_length_get:0000000000000000 lr1mac_core_next_max_payload_length_get
+     /tmp/ccqGV7VH.s:394    .text.lr1mac_core_next_dr_get:0000000000000000 $t
+     /tmp/ccqGV7VH.s:401    .text.lr1mac_core_next_dr_get:0000000000000000 lr1mac_core_next_dr_get
+     /tmp/ccqGV7VH.s:411    .text.lr1mac_core_next_frequency_get:0000000000000000 $t
+     /tmp/ccqGV7VH.s:418    .text.lr1mac_core_next_frequency_get:0000000000000000 lr1mac_core_next_frequency_get
+     /tmp/ccqGV7VH.s:429    .text.lr1mac_core_factory_reset:0000000000000000 $t
+     /tmp/ccqGV7VH.s:436    .text.lr1mac_core_factory_reset:0000000000000000 lr1mac_core_factory_reset
+     /tmp/ccqGV7VH.s:476    .text.lr1mac_core_factory_reset:000000000000004c $d
+     /tmp/ccqGV7VH.s:480    .text.lr1mac_core_get_activation_mode:0000000000000000 $t
+     /tmp/ccqGV7VH.s:487    .text.lr1mac_core_get_activation_mode:0000000000000000 lr1mac_core_get_activation_mode
+     /tmp/ccqGV7VH.s:497    .text.lr1mac_core_set_activation_mode:0000000000000000 $t
+     /tmp/ccqGV7VH.s:504    .text.lr1mac_core_set_activation_mode:0000000000000000 lr1mac_core_set_activation_mode
+     /tmp/ccqGV7VH.s:514    .text.lr1mac_core_rp_get:0000000000000000 $t
+     /tmp/ccqGV7VH.s:521    .text.lr1mac_core_rp_get:0000000000000000 lr1mac_core_rp_get
+     /tmp/ccqGV7VH.s:532    .text.lr1mac_core_rp_get:0000000000000008 $d
+     /tmp/ccqGV7VH.s:535    .text.lr1mac_core_nb_reset_get:0000000000000000 $t
+     /tmp/ccqGV7VH.s:542    .text.lr1mac_core_nb_reset_get:0000000000000000 lr1mac_core_nb_reset_get
+     /tmp/ccqGV7VH.s:552    .text.lr1mac_core_devnonce_get:0000000000000000 $t
+     /tmp/ccqGV7VH.s:559    .text.lr1mac_core_devnonce_get:0000000000000000 lr1mac_core_devnonce_get
+     /tmp/ccqGV7VH.s:570    .text.lr1mac_core_last_snr_get:0000000000000000 $t
+     /tmp/ccqGV7VH.s:577    .text.lr1mac_core_last_snr_get:0000000000000000 lr1mac_core_last_snr_get
+     /tmp/ccqGV7VH.s:588    .text.lr1mac_core_last_snr_get:0000000000000008 $d
+     /tmp/ccqGV7VH.s:591    .text.lr1mac_core_last_rssi_get:0000000000000000 $t
+     /tmp/ccqGV7VH.s:598    .text.lr1mac_core_last_rssi_get:0000000000000000 lr1mac_core_last_rssi_get
+     /tmp/ccqGV7VH.s:609    .text.lr1mac_core_last_rssi_get:0000000000000008 $d
+     /tmp/ccqGV7VH.s:612    .text.lr1mac_core_context_load:0000000000000000 $t
+     /tmp/ccqGV7VH.s:619    .text.lr1mac_core_context_load:0000000000000000 lr1mac_core_context_load
+     /tmp/ccqGV7VH.s:656    .text.lr1mac_core_context_load:000000000000003c $d
+     /tmp/ccqGV7VH.s:673    .text.lr1mac_core_init:0000000000000000 $t
+ARM GAS  /tmp/ccqGV7VH.s 			page 41
 
 
-     /tmp/ccoOjQhv.s:689    .text.lr1mac_core_init:0000000000000000 lr1mac_core_init
-     /tmp/ccoOjQhv.s:969    .text.lr1mac_core_init:0000000000000254 $d
-     /tmp/ccoOjQhv.s:999    .text.lr1mac_core_rx_window_get:0000000000000000 $t
-     /tmp/ccoOjQhv.s:1006   .text.lr1mac_core_rx_window_get:0000000000000000 lr1mac_core_rx_window_get
-     /tmp/ccoOjQhv.s:1017   .text.lr1mac_core_rx_window_get:0000000000000008 $d
-     /tmp/ccoOjQhv.s:1020   .text.lr1mac_core_fcnt_up_get:0000000000000000 $t
-     /tmp/ccoOjQhv.s:1027   .text.lr1mac_core_fcnt_up_get:0000000000000000 lr1mac_core_fcnt_up_get
-     /tmp/ccoOjQhv.s:1036   .text.lr1mac_core_next_join_time_second_get:0000000000000000 $t
-     /tmp/ccoOjQhv.s:1043   .text.lr1mac_core_next_join_time_second_get:0000000000000000 lr1mac_core_next_join_time_second_get
-     /tmp/ccoOjQhv.s:1054   .text.lr1mac_core_next_join_time_second_get:0000000000000008 $d
-     /tmp/ccoOjQhv.s:1057   .text.lr1mac_core_next_free_duty_cycle_ms_get:0000000000000000 $t
-     /tmp/ccoOjQhv.s:1064   .text.lr1mac_core_next_free_duty_cycle_ms_get:0000000000000000 lr1mac_core_next_free_duty_cycle_ms_get
-     /tmp/ccoOjQhv.s:1123   .text.lr1mac_core_payload_send:0000000000000000 $t
-     /tmp/ccoOjQhv.s:1130   .text.lr1mac_core_payload_send:0000000000000000 lr1mac_core_payload_send
-     /tmp/ccoOjQhv.s:1267   .text.lr1mac_core_payload_send:0000000000000114 $d
-     /tmp/ccoOjQhv.s:1280   .text.lr1mac_core_send_stack_cid_req:0000000000000000 $t
-     /tmp/ccoOjQhv.s:1287   .text.lr1mac_core_send_stack_cid_req:0000000000000000 lr1mac_core_send_stack_cid_req
-     /tmp/ccoOjQhv.s:1403   .text.lr1mac_core_send_stack_cid_req:00000000000000d4 $d
-     /tmp/ccoOjQhv.s:1409   .text.lr1mac_core_payload_send_at_time:0000000000000000 $t
-     /tmp/ccoOjQhv.s:1416   .text.lr1mac_core_payload_send_at_time:0000000000000000 lr1mac_core_payload_send_at_time
-     /tmp/ccoOjQhv.s:1445   .text.lr1mac_core_rx_ack_bit_get:0000000000000000 $t
-     /tmp/ccoOjQhv.s:1452   .text.lr1mac_core_rx_ack_bit_get:0000000000000000 lr1mac_core_rx_ack_bit_get
-     /tmp/ccoOjQhv.s:1463   .text.lr1mac_core_rx_fpending_bit_get:0000000000000000 $t
-     /tmp/ccoOjQhv.s:1470   .text.lr1mac_core_rx_fpending_bit_get:0000000000000000 lr1mac_core_rx_fpending_bit_get
-     /tmp/ccoOjQhv.s:1481   .text.lr1mac_core_get_region:0000000000000000 $t
-     /tmp/ccoOjQhv.s:1488   .text.lr1mac_core_get_region:0000000000000000 lr1mac_core_get_region
-     /tmp/ccoOjQhv.s:1498   .text.lr1mac_core_set_region:0000000000000000 $t
-     /tmp/ccoOjQhv.s:1505   .text.lr1mac_core_set_region:0000000000000000 lr1mac_core_set_region
-     /tmp/ccoOjQhv.s:1536   .text.lr1mac_core_set_no_rx_packet_threshold:0000000000000000 $t
-     /tmp/ccoOjQhv.s:1543   .text.lr1mac_core_set_no_rx_packet_threshold:0000000000000000 lr1mac_core_set_no_rx_packet_threshold
-     /tmp/ccoOjQhv.s:1554   .text.lr1mac_core_set_no_rx_packet_threshold:0000000000000008 $d
-     /tmp/ccoOjQhv.s:1557   .text.lr1mac_core_get_no_rx_packet_threshold:0000000000000000 $t
-     /tmp/ccoOjQhv.s:1564   .text.lr1mac_core_get_no_rx_packet_threshold:0000000000000000 lr1mac_core_get_no_rx_packet_threshold
-     /tmp/ccoOjQhv.s:1575   .text.lr1mac_core_get_no_rx_packet_threshold:0000000000000008 $d
-     /tmp/ccoOjQhv.s:1578   .text.lr1mac_core_get_current_adr_ack_cnt:0000000000000000 $t
-     /tmp/ccoOjQhv.s:1585   .text.lr1mac_core_get_current_adr_ack_cnt:0000000000000000 lr1mac_core_get_current_adr_ack_cnt
-     /tmp/ccoOjQhv.s:1597   .text.lr1mac_core_get_current_no_rx_packet_in_mobile_mode:0000000000000000 $t
-     /tmp/ccoOjQhv.s:1604   .text.lr1mac_core_get_current_no_rx_packet_in_mobile_mode:0000000000000000 lr1mac_core_get_current_no_rx_packet_in_mobile_mode
-     /tmp/ccoOjQhv.s:1615   .text.lr1mac_core_reset_no_rx_packet_in_mobile_mode_cnt:0000000000000000 $t
-     /tmp/ccoOjQhv.s:1622   .text.lr1mac_core_reset_no_rx_packet_in_mobile_mode_cnt:0000000000000000 lr1mac_core_reset_no_rx_packet_in_mobile_mode_cnt
-     /tmp/ccoOjQhv.s:1634   .text.lr1mac_core_get_current_no_rx_packet_cnt:0000000000000000 $t
-     /tmp/ccoOjQhv.s:1641   .text.lr1mac_core_get_current_no_rx_packet_cnt:0000000000000000 lr1mac_core_get_current_no_rx_packet_cnt
-     /tmp/ccoOjQhv.s:1652   .text.lr1mac_core_get_current_no_rx_packet_cnt:0000000000000008 $d
-     /tmp/ccoOjQhv.s:1655   .text.lr1mac_core_available_link_adr_get:0000000000000000 $t
-     /tmp/ccoOjQhv.s:1662   .text.lr1mac_core_available_link_adr_get:0000000000000000 lr1mac_core_available_link_adr_get
-     /tmp/ccoOjQhv.s:1679   .text.lr1mac_core_available_link_adr_get:0000000000000010 $d
-     /tmp/ccoOjQhv.s:1682   .text.lr1mac_core_certification_set:0000000000000000 $t
-     /tmp/ccoOjQhv.s:1689   .text.lr1mac_core_certification_set:0000000000000000 lr1mac_core_certification_set
-     /tmp/ccoOjQhv.s:1701   .text.lr1mac_core_certification_set:000000000000000c $d
-     /tmp/ccoOjQhv.s:1704   .text.lr1mac_core_certification_get:0000000000000000 $t
-     /tmp/ccoOjQhv.s:1711   .text.lr1mac_core_certification_get:0000000000000000 lr1mac_core_certification_get
-     /tmp/ccoOjQhv.s:1722   .text.lr1mac_core_certification_get:0000000000000008 $d
-     /tmp/ccoOjQhv.s:1725   .text.lr1mac_core_get_lorawan_version:0000000000000000 $t
-     /tmp/ccoOjQhv.s:1732   .text.lr1mac_core_get_lorawan_version:0000000000000000 lr1mac_core_get_lorawan_version
-     /tmp/ccoOjQhv.s:1744   .text.lr1mac_core_get_lorawan_version:0000000000000008 $d
-     /tmp/ccoOjQhv.s:1747   .text.lr1mac_core_is_time_valid:0000000000000000 $t
-     /tmp/ccoOjQhv.s:1754   .text.lr1mac_core_is_time_valid:0000000000000000 lr1mac_core_is_time_valid
-ARM GAS  /tmp/ccoOjQhv.s 			page 43
+     /tmp/ccqGV7VH.s:680    .text.lr1mac_core_init:0000000000000000 lr1mac_core_init
+     /tmp/ccqGV7VH.s:922    .text.lr1mac_core_init:0000000000000200 $d
+     /tmp/ccqGV7VH.s:943    .text.lr1mac_core_rx_window_get:0000000000000000 $t
+     /tmp/ccqGV7VH.s:950    .text.lr1mac_core_rx_window_get:0000000000000000 lr1mac_core_rx_window_get
+     /tmp/ccqGV7VH.s:961    .text.lr1mac_core_rx_window_get:0000000000000008 $d
+     /tmp/ccqGV7VH.s:964    .text.lr1mac_core_fcnt_up_get:0000000000000000 $t
+     /tmp/ccqGV7VH.s:971    .text.lr1mac_core_fcnt_up_get:0000000000000000 lr1mac_core_fcnt_up_get
+     /tmp/ccqGV7VH.s:980    .text.lr1mac_core_next_join_time_second_get:0000000000000000 $t
+     /tmp/ccqGV7VH.s:987    .text.lr1mac_core_next_join_time_second_get:0000000000000000 lr1mac_core_next_join_time_second_get
+     /tmp/ccqGV7VH.s:998    .text.lr1mac_core_next_join_time_second_get:0000000000000008 $d
+     /tmp/ccqGV7VH.s:1001   .text.lr1mac_core_next_free_duty_cycle_ms_get:0000000000000000 $t
+     /tmp/ccqGV7VH.s:1008   .text.lr1mac_core_next_free_duty_cycle_ms_get:0000000000000000 lr1mac_core_next_free_duty_cycle_ms_get
+     /tmp/ccqGV7VH.s:1067   .text.lr1mac_core_payload_send:0000000000000000 $t
+     /tmp/ccqGV7VH.s:1074   .text.lr1mac_core_payload_send:0000000000000000 lr1mac_core_payload_send
+     /tmp/ccqGV7VH.s:1211   .text.lr1mac_core_payload_send:0000000000000114 $d
+     /tmp/ccqGV7VH.s:1224   .text.lr1mac_core_send_stack_cid_req:0000000000000000 $t
+     /tmp/ccqGV7VH.s:1231   .text.lr1mac_core_send_stack_cid_req:0000000000000000 lr1mac_core_send_stack_cid_req
+     /tmp/ccqGV7VH.s:1347   .text.lr1mac_core_send_stack_cid_req:00000000000000d4 $d
+     /tmp/ccqGV7VH.s:1353   .text.lr1mac_core_payload_send_at_time:0000000000000000 $t
+     /tmp/ccqGV7VH.s:1360   .text.lr1mac_core_payload_send_at_time:0000000000000000 lr1mac_core_payload_send_at_time
+     /tmp/ccqGV7VH.s:1389   .text.lr1mac_core_rx_ack_bit_get:0000000000000000 $t
+     /tmp/ccqGV7VH.s:1396   .text.lr1mac_core_rx_ack_bit_get:0000000000000000 lr1mac_core_rx_ack_bit_get
+     /tmp/ccqGV7VH.s:1407   .text.lr1mac_core_rx_fpending_bit_get:0000000000000000 $t
+     /tmp/ccqGV7VH.s:1414   .text.lr1mac_core_rx_fpending_bit_get:0000000000000000 lr1mac_core_rx_fpending_bit_get
+     /tmp/ccqGV7VH.s:1425   .text.lr1mac_core_get_region:0000000000000000 $t
+     /tmp/ccqGV7VH.s:1432   .text.lr1mac_core_get_region:0000000000000000 lr1mac_core_get_region
+     /tmp/ccqGV7VH.s:1442   .text.lr1mac_core_set_region:0000000000000000 $t
+     /tmp/ccqGV7VH.s:1449   .text.lr1mac_core_set_region:0000000000000000 lr1mac_core_set_region
+     /tmp/ccqGV7VH.s:1480   .text.lr1mac_core_set_no_rx_packet_threshold:0000000000000000 $t
+     /tmp/ccqGV7VH.s:1487   .text.lr1mac_core_set_no_rx_packet_threshold:0000000000000000 lr1mac_core_set_no_rx_packet_threshold
+     /tmp/ccqGV7VH.s:1498   .text.lr1mac_core_set_no_rx_packet_threshold:0000000000000008 $d
+     /tmp/ccqGV7VH.s:1501   .text.lr1mac_core_get_no_rx_packet_threshold:0000000000000000 $t
+     /tmp/ccqGV7VH.s:1508   .text.lr1mac_core_get_no_rx_packet_threshold:0000000000000000 lr1mac_core_get_no_rx_packet_threshold
+     /tmp/ccqGV7VH.s:1519   .text.lr1mac_core_get_no_rx_packet_threshold:0000000000000008 $d
+     /tmp/ccqGV7VH.s:1522   .text.lr1mac_core_get_current_adr_ack_cnt:0000000000000000 $t
+     /tmp/ccqGV7VH.s:1529   .text.lr1mac_core_get_current_adr_ack_cnt:0000000000000000 lr1mac_core_get_current_adr_ack_cnt
+     /tmp/ccqGV7VH.s:1541   .text.lr1mac_core_get_current_no_rx_packet_in_mobile_mode:0000000000000000 $t
+     /tmp/ccqGV7VH.s:1548   .text.lr1mac_core_get_current_no_rx_packet_in_mobile_mode:0000000000000000 lr1mac_core_get_current_no_rx_packet_in_mobile_mode
+     /tmp/ccqGV7VH.s:1559   .text.lr1mac_core_reset_no_rx_packet_in_mobile_mode_cnt:0000000000000000 $t
+     /tmp/ccqGV7VH.s:1566   .text.lr1mac_core_reset_no_rx_packet_in_mobile_mode_cnt:0000000000000000 lr1mac_core_reset_no_rx_packet_in_mobile_mode_cnt
+     /tmp/ccqGV7VH.s:1578   .text.lr1mac_core_get_current_no_rx_packet_cnt:0000000000000000 $t
+     /tmp/ccqGV7VH.s:1585   .text.lr1mac_core_get_current_no_rx_packet_cnt:0000000000000000 lr1mac_core_get_current_no_rx_packet_cnt
+     /tmp/ccqGV7VH.s:1596   .text.lr1mac_core_get_current_no_rx_packet_cnt:0000000000000008 $d
+     /tmp/ccqGV7VH.s:1599   .text.lr1mac_core_available_link_adr_get:0000000000000000 $t
+     /tmp/ccqGV7VH.s:1606   .text.lr1mac_core_available_link_adr_get:0000000000000000 lr1mac_core_available_link_adr_get
+     /tmp/ccqGV7VH.s:1623   .text.lr1mac_core_available_link_adr_get:0000000000000010 $d
+     /tmp/ccqGV7VH.s:1626   .text.lr1mac_core_certification_set:0000000000000000 $t
+     /tmp/ccqGV7VH.s:1633   .text.lr1mac_core_certification_set:0000000000000000 lr1mac_core_certification_set
+     /tmp/ccqGV7VH.s:1645   .text.lr1mac_core_certification_set:000000000000000c $d
+     /tmp/ccqGV7VH.s:1648   .text.lr1mac_core_certification_get:0000000000000000 $t
+     /tmp/ccqGV7VH.s:1655   .text.lr1mac_core_certification_get:0000000000000000 lr1mac_core_certification_get
+     /tmp/ccqGV7VH.s:1666   .text.lr1mac_core_certification_get:0000000000000008 $d
+     /tmp/ccqGV7VH.s:1669   .text.lr1mac_core_get_lorawan_version:0000000000000000 $t
+     /tmp/ccqGV7VH.s:1676   .text.lr1mac_core_get_lorawan_version:0000000000000000 lr1mac_core_get_lorawan_version
+     /tmp/ccqGV7VH.s:1688   .text.lr1mac_core_get_lorawan_version:0000000000000008 $d
+     /tmp/ccqGV7VH.s:1691   .text.lr1mac_core_is_time_valid:0000000000000000 $t
+     /tmp/ccqGV7VH.s:1698   .text.lr1mac_core_is_time_valid:0000000000000000 lr1mac_core_is_time_valid
+ARM GAS  /tmp/ccqGV7VH.s 			page 42
 
 
-     /tmp/ccoOjQhv.s:1778   .text.lr1mac_core_is_time_valid:0000000000000024 $d
-     /tmp/ccoOjQhv.s:1783   .text.lr1mac_core_convert_rtc_to_gps_epoch_time:0000000000000000 $t
-     /tmp/ccoOjQhv.s:1790   .text.lr1mac_core_convert_rtc_to_gps_epoch_time:0000000000000000 lr1mac_core_convert_rtc_to_gps_epoch_time
-     /tmp/ccoOjQhv.s:1824   .text.lr1mac_core_convert_rtc_to_gps_epoch_time:000000000000003c $d
-     /tmp/ccoOjQhv.s:1828   .text.lr1mac_core_get_timestamp_last_device_time_ans_s:0000000000000000 $t
-     /tmp/ccoOjQhv.s:1835   .text.lr1mac_core_get_timestamp_last_device_time_ans_s:0000000000000000 lr1mac_core_get_timestamp_last_device_time_ans_s
-     /tmp/ccoOjQhv.s:1846   .text.lr1mac_core_get_timestamp_last_device_time_ans_s:0000000000000008 $d
-     /tmp/ccoOjQhv.s:1849   .text.lr1mac_core_get_time_left_connection_lost:0000000000000000 $t
-     /tmp/ccoOjQhv.s:1856   .text.lr1mac_core_get_time_left_connection_lost:0000000000000000 lr1mac_core_get_time_left_connection_lost
-     /tmp/ccoOjQhv.s:1888   .text.lr1mac_core_get_time_left_connection_lost:0000000000000030 $d
-     /tmp/ccoOjQhv.s:1891   .text.lr1mac_core_set_device_time_callback:0000000000000000 $t
-     /tmp/ccoOjQhv.s:1898   .text.lr1mac_core_set_device_time_callback:0000000000000000 lr1mac_core_set_device_time_callback
-     /tmp/ccoOjQhv.s:1915   .text.lr1mac_core_set_device_time_callback:0000000000000010 $d
-     /tmp/ccoOjQhv.s:1918   .text.lr1_mac_core_set_device_time_invalid_delay_s:0000000000000000 $t
-     /tmp/ccoOjQhv.s:1925   .text.lr1_mac_core_set_device_time_invalid_delay_s:0000000000000000 lr1_mac_core_set_device_time_invalid_delay_s
-     /tmp/ccoOjQhv.s:1946   .text.lr1_mac_core_set_device_time_invalid_delay_s:0000000000000018 $d
-     /tmp/ccoOjQhv.s:1949   .text.lr1_mac_core_get_device_time_invalid_delay_s:0000000000000000 $t
-     /tmp/ccoOjQhv.s:1956   .text.lr1_mac_core_get_device_time_invalid_delay_s:0000000000000000 lr1_mac_core_get_device_time_invalid_delay_s
-     /tmp/ccoOjQhv.s:1967   .text.lr1mac_core_set_ping_slot_periodicity:0000000000000000 $t
-     /tmp/ccoOjQhv.s:1974   .text.lr1mac_core_set_ping_slot_periodicity:0000000000000000 lr1mac_core_set_ping_slot_periodicity
-     /tmp/ccoOjQhv.s:1998   .text.lr1mac_core_set_ping_slot_periodicity:000000000000001c $d
-     /tmp/ccoOjQhv.s:2002   .text.lr1mac_core_get_ping_slot_periodicity:0000000000000000 $t
-     /tmp/ccoOjQhv.s:2009   .text.lr1mac_core_get_ping_slot_periodicity:0000000000000000 lr1mac_core_get_ping_slot_periodicity
-     /tmp/ccoOjQhv.s:2020   .text.lr1mac_core_get_ping_slot_periodicity:0000000000000008 $d
-     /tmp/ccoOjQhv.s:2023   .text.lr1mac_core_get_class_b_status:0000000000000000 $t
-     /tmp/ccoOjQhv.s:2030   .text.lr1mac_core_get_class_b_status:0000000000000000 lr1mac_core_get_class_b_status
-     /tmp/ccoOjQhv.s:2043   .text.lr1_mac_core_get_link_check_ans:0000000000000000 $t
-     /tmp/ccoOjQhv.s:2050   .text.lr1_mac_core_get_link_check_ans:0000000000000000 lr1_mac_core_get_link_check_ans
-     /tmp/ccoOjQhv.s:2079   .text.lr1_mac_core_get_link_check_ans:0000000000000028 $d
-     /tmp/ccoOjQhv.s:2083   .text.lr1_mac_core_get_device_time_req_status:0000000000000000 $t
-     /tmp/ccoOjQhv.s:2090   .text.lr1_mac_core_get_device_time_req_status:0000000000000000 lr1_mac_core_get_device_time_req_status
-     /tmp/ccoOjQhv.s:2105   .text.lr1_mac_core_get_device_time_req_status:0000000000000010 $d
-     /tmp/ccoOjQhv.s:2108   .text.lr1_mac_core_get_ping_slot_info_req_status:0000000000000000 $t
-     /tmp/ccoOjQhv.s:2115   .text.lr1_mac_core_get_ping_slot_info_req_status:0000000000000000 lr1_mac_core_get_ping_slot_info_req_status
-     /tmp/ccoOjQhv.s:2130   .text.lr1_mac_core_get_ping_slot_info_req_status:0000000000000010 $d
-     /tmp/ccoOjQhv.s:2133   .text.lr1mac_core_get_status_push_network_downlink_to_user:0000000000000000 $t
-     /tmp/ccoOjQhv.s:2140   .text.lr1mac_core_get_status_push_network_downlink_to_user:0000000000000000 lr1mac_core_get_status_push_network_downlink_to_user
-     /tmp/ccoOjQhv.s:2151   .text.lr1mac_core_get_status_push_network_downlink_to_user:0000000000000008 $d
-     /tmp/ccoOjQhv.s:2154   .text.lr1mac_core_set_status_push_network_downlink_to_user:0000000000000000 $t
-     /tmp/ccoOjQhv.s:2161   .text.lr1mac_core_set_status_push_network_downlink_to_user:0000000000000000 lr1mac_core_set_status_push_network_downlink_to_user
-     /tmp/ccoOjQhv.s:2172   .text.lr1mac_core_set_status_push_network_downlink_to_user:0000000000000008 $d
-     /tmp/ccoOjQhv.s:2175   .text.lr1mac_core_set_adr_ack_limit_delay:0000000000000000 $t
-     /tmp/ccoOjQhv.s:2182   .text.lr1mac_core_set_adr_ack_limit_delay:0000000000000000 lr1mac_core_set_adr_ack_limit_delay
-     /tmp/ccoOjQhv.s:2211   .text.lr1mac_core_set_adr_ack_limit_delay:0000000000000028 $d
-     /tmp/ccoOjQhv.s:2215   .text.lr1mac_core_get_adr_ack_limit_delay:0000000000000000 $t
-     /tmp/ccoOjQhv.s:2222   .text.lr1mac_core_get_adr_ack_limit_delay:0000000000000000 lr1mac_core_get_adr_ack_limit_delay
-     /tmp/ccoOjQhv.s:2237   .text.lr1mac_core_get_adr_ack_limit_delay:0000000000000010 $d
-     /tmp/ccoOjQhv.s:2241   .text.lr1mac_core_abort:0000000000000000 $t
-     /tmp/ccoOjQhv.s:2248   .text.lr1mac_core_abort:0000000000000000 lr1mac_core_abort
-     /tmp/ccoOjQhv.s:2275   .text.lr1mac_core_abort:000000000000002c $d
-     /tmp/ccoOjQhv.s:2280   .text.lr1mac_core_join_status_clear:0000000000000000 $t
-     /tmp/ccoOjQhv.s:2287   .text.lr1mac_core_join_status_clear:0000000000000000 lr1mac_core_join_status_clear
-     /tmp/ccoOjQhv.s:2306   .text.lr1mac_core_join_status_clear:000000000000001c $d
-     /tmp/ccoOjQhv.s:2312   .rodata.smtc_real_region_list_str:0000000000000000 $d
-     /tmp/ccoOjQhv.s:2316   .rodata.smtc_real_region_list_str:0000000000000000 smtc_real_region_list_str
+     /tmp/ccqGV7VH.s:1722   .text.lr1mac_core_is_time_valid:0000000000000024 $d
+     /tmp/ccqGV7VH.s:1727   .text.lr1mac_core_convert_rtc_to_gps_epoch_time:0000000000000000 $t
+     /tmp/ccqGV7VH.s:1734   .text.lr1mac_core_convert_rtc_to_gps_epoch_time:0000000000000000 lr1mac_core_convert_rtc_to_gps_epoch_time
+     /tmp/ccqGV7VH.s:1768   .text.lr1mac_core_convert_rtc_to_gps_epoch_time:000000000000003c $d
+     /tmp/ccqGV7VH.s:1772   .text.lr1mac_core_get_timestamp_last_device_time_ans_s:0000000000000000 $t
+     /tmp/ccqGV7VH.s:1779   .text.lr1mac_core_get_timestamp_last_device_time_ans_s:0000000000000000 lr1mac_core_get_timestamp_last_device_time_ans_s
+     /tmp/ccqGV7VH.s:1790   .text.lr1mac_core_get_timestamp_last_device_time_ans_s:0000000000000008 $d
+     /tmp/ccqGV7VH.s:1793   .text.lr1mac_core_get_time_left_connection_lost:0000000000000000 $t
+     /tmp/ccqGV7VH.s:1800   .text.lr1mac_core_get_time_left_connection_lost:0000000000000000 lr1mac_core_get_time_left_connection_lost
+     /tmp/ccqGV7VH.s:1832   .text.lr1mac_core_get_time_left_connection_lost:0000000000000030 $d
+     /tmp/ccqGV7VH.s:1835   .text.lr1mac_core_set_device_time_callback:0000000000000000 $t
+     /tmp/ccqGV7VH.s:1842   .text.lr1mac_core_set_device_time_callback:0000000000000000 lr1mac_core_set_device_time_callback
+     /tmp/ccqGV7VH.s:1859   .text.lr1mac_core_set_device_time_callback:0000000000000010 $d
+     /tmp/ccqGV7VH.s:1862   .text.lr1_mac_core_set_device_time_invalid_delay_s:0000000000000000 $t
+     /tmp/ccqGV7VH.s:1869   .text.lr1_mac_core_set_device_time_invalid_delay_s:0000000000000000 lr1_mac_core_set_device_time_invalid_delay_s
+     /tmp/ccqGV7VH.s:1890   .text.lr1_mac_core_set_device_time_invalid_delay_s:0000000000000018 $d
+     /tmp/ccqGV7VH.s:1893   .text.lr1_mac_core_get_device_time_invalid_delay_s:0000000000000000 $t
+     /tmp/ccqGV7VH.s:1900   .text.lr1_mac_core_get_device_time_invalid_delay_s:0000000000000000 lr1_mac_core_get_device_time_invalid_delay_s
+     /tmp/ccqGV7VH.s:1911   .text.lr1mac_core_set_ping_slot_periodicity:0000000000000000 $t
+     /tmp/ccqGV7VH.s:1918   .text.lr1mac_core_set_ping_slot_periodicity:0000000000000000 lr1mac_core_set_ping_slot_periodicity
+     /tmp/ccqGV7VH.s:1942   .text.lr1mac_core_set_ping_slot_periodicity:000000000000001c $d
+     /tmp/ccqGV7VH.s:1946   .text.lr1mac_core_get_ping_slot_periodicity:0000000000000000 $t
+     /tmp/ccqGV7VH.s:1953   .text.lr1mac_core_get_ping_slot_periodicity:0000000000000000 lr1mac_core_get_ping_slot_periodicity
+     /tmp/ccqGV7VH.s:1964   .text.lr1mac_core_get_ping_slot_periodicity:0000000000000008 $d
+     /tmp/ccqGV7VH.s:1967   .text.lr1mac_core_get_class_b_status:0000000000000000 $t
+     /tmp/ccqGV7VH.s:1974   .text.lr1mac_core_get_class_b_status:0000000000000000 lr1mac_core_get_class_b_status
+     /tmp/ccqGV7VH.s:1987   .text.lr1_mac_core_get_link_check_ans:0000000000000000 $t
+     /tmp/ccqGV7VH.s:1994   .text.lr1_mac_core_get_link_check_ans:0000000000000000 lr1_mac_core_get_link_check_ans
+     /tmp/ccqGV7VH.s:2023   .text.lr1_mac_core_get_link_check_ans:0000000000000028 $d
+     /tmp/ccqGV7VH.s:2027   .text.lr1_mac_core_get_device_time_req_status:0000000000000000 $t
+     /tmp/ccqGV7VH.s:2034   .text.lr1_mac_core_get_device_time_req_status:0000000000000000 lr1_mac_core_get_device_time_req_status
+     /tmp/ccqGV7VH.s:2049   .text.lr1_mac_core_get_device_time_req_status:0000000000000010 $d
+     /tmp/ccqGV7VH.s:2052   .text.lr1_mac_core_get_ping_slot_info_req_status:0000000000000000 $t
+     /tmp/ccqGV7VH.s:2059   .text.lr1_mac_core_get_ping_slot_info_req_status:0000000000000000 lr1_mac_core_get_ping_slot_info_req_status
+     /tmp/ccqGV7VH.s:2074   .text.lr1_mac_core_get_ping_slot_info_req_status:0000000000000010 $d
+     /tmp/ccqGV7VH.s:2077   .text.lr1mac_core_get_status_push_network_downlink_to_user:0000000000000000 $t
+     /tmp/ccqGV7VH.s:2084   .text.lr1mac_core_get_status_push_network_downlink_to_user:0000000000000000 lr1mac_core_get_status_push_network_downlink_to_user
+     /tmp/ccqGV7VH.s:2095   .text.lr1mac_core_get_status_push_network_downlink_to_user:0000000000000008 $d
+     /tmp/ccqGV7VH.s:2098   .text.lr1mac_core_set_status_push_network_downlink_to_user:0000000000000000 $t
+     /tmp/ccqGV7VH.s:2105   .text.lr1mac_core_set_status_push_network_downlink_to_user:0000000000000000 lr1mac_core_set_status_push_network_downlink_to_user
+     /tmp/ccqGV7VH.s:2116   .text.lr1mac_core_set_status_push_network_downlink_to_user:0000000000000008 $d
+     /tmp/ccqGV7VH.s:2119   .text.lr1mac_core_set_adr_ack_limit_delay:0000000000000000 $t
+     /tmp/ccqGV7VH.s:2126   .text.lr1mac_core_set_adr_ack_limit_delay:0000000000000000 lr1mac_core_set_adr_ack_limit_delay
+     /tmp/ccqGV7VH.s:2155   .text.lr1mac_core_set_adr_ack_limit_delay:0000000000000028 $d
+     /tmp/ccqGV7VH.s:2159   .text.lr1mac_core_get_adr_ack_limit_delay:0000000000000000 $t
+     /tmp/ccqGV7VH.s:2166   .text.lr1mac_core_get_adr_ack_limit_delay:0000000000000000 lr1mac_core_get_adr_ack_limit_delay
+     /tmp/ccqGV7VH.s:2181   .text.lr1mac_core_get_adr_ack_limit_delay:0000000000000010 $d
+     /tmp/ccqGV7VH.s:2185   .text.lr1mac_core_abort:0000000000000000 $t
+     /tmp/ccqGV7VH.s:2192   .text.lr1mac_core_abort:0000000000000000 lr1mac_core_abort
+     /tmp/ccqGV7VH.s:2219   .text.lr1mac_core_abort:000000000000002c $d
+     /tmp/ccqGV7VH.s:2224   .text.lr1mac_core_join_status_clear:0000000000000000 $t
+     /tmp/ccqGV7VH.s:2231   .text.lr1mac_core_join_status_clear:0000000000000000 lr1mac_core_join_status_clear
+     /tmp/ccqGV7VH.s:2250   .text.lr1mac_core_join_status_clear:000000000000001c $d
 
 UNDEFINED SYMBOLS
-ARM GAS  /tmp/ccoOjQhv.s 			page 44
-
-
 smtc_modem_hal_print_trace
 smtc_modem_hal_get_time_in_s
+ARM GAS  /tmp/ccqGV7VH.s 			page 43
+
+
 smtc_real_init
 smtc_real_set_dr_distribution
 smtc_real_get_next_dr

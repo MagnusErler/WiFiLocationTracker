@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccaDsiSD.s 			page 1
+ARM GAS  /tmp/ccidUY5y.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccaDsiSD.s 			page 1
   56 0038 5205     		lsls	r2, r2, #21
   57 003a 0FD4     		bmi	.L7
   58 003c 9A69     		ldr	r2, [r3, #24]
-ARM GAS  /tmp/ccaDsiSD.s 			page 2
+ARM GAS  /tmp/ccidUY5y.s 			page 2
 
 
   59 003e 1205     		lsls	r2, r2, #20
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccaDsiSD.s 			page 1
  113 00a2 8020     		movs	r0, #128
  114 00a4 9969     		ldr	r1, [r3, #24]
  115 00a6 0001     		lsls	r0, r0, #4
-ARM GAS  /tmp/ccaDsiSD.s 			page 3
+ARM GAS  /tmp/ccidUY5y.s 			page 3
 
 
  116 00a8 0142     		tst	r1, r0
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccaDsiSD.s 			page 1
  171              		.syntax unified
  172              		.code	16
  173              		.thumb_func
-ARM GAS  /tmp/ccaDsiSD.s 			page 4
+ARM GAS  /tmp/ccidUY5y.s 			page 4
 
 
  174              		.fpu softvfp
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccaDsiSD.s 			page 1
  232              		.code	16
  233              		.thumb_func
  234              		.fpu softvfp
-ARM GAS  /tmp/ccaDsiSD.s 			page 5
+ARM GAS  /tmp/ccidUY5y.s 			page 5
 
 
  236              	HAL_FLASHEx_EraseParallelPage:
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccaDsiSD.s 			page 1
  292              		@ args = 0, pretend = 0, frame = 8
  293              		@ frame_needed = 0, uses_anonymous_args = 0
  294 01a8 F7B5     		push	{r0, r1, r2, r4, r5, r6, r7, lr}
-ARM GAS  /tmp/ccaDsiSD.s 			page 6
+ARM GAS  /tmp/ccidUY5y.s 			page 6
 
 
  295 01aa 0700     		movs	r7, r0
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccaDsiSD.s 			page 1
  349 0202 0822     		movs	r2, #8
  350 0204 6368     		ldr	r3, [r4, #4]
  351 0206 9343     		bics	r3, r2
-ARM GAS  /tmp/ccaDsiSD.s 			page 7
+ARM GAS  /tmp/ccidUY5y.s 			page 7
 
 
  352 0208 6360     		str	r3, [r4, #4]
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccaDsiSD.s 			page 1
  408 0254 9D42     		cmp	r5, r3
  409 0256 FBD1     		bne	.L65
  410              		.syntax divided
-ARM GAS  /tmp/ccaDsiSD.s 			page 8
+ARM GAS  /tmp/ccidUY5y.s 			page 8
 
 
  411              	@ 198 "bsp_l0/mcu_drivers/cmsis/Core/Include/cmsis_gcc.h" 1
@@ -464,32 +464,32 @@ ARM GAS  /tmp/ccaDsiSD.s 			page 1
  453              	.L70:
  454 0284 00000000 		.word	pFlash
  456              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/ccaDsiSD.s 			page 9
+ARM GAS  /tmp/ccidUY5y.s 			page 9
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 stm32l0xx_hal_flash_ramfunc.c
-     /tmp/ccaDsiSD.s:12     .RamFunc:0000000000000000 $t
-     /tmp/ccaDsiSD.s:19     .RamFunc:0000000000000000 FLASHRAM_WaitForLastOperation.constprop.0
-     /tmp/ccaDsiSD.s:165    .RamFunc:00000000000000fc $d
-     /tmp/ccaDsiSD.s:169    .RamFunc:0000000000000108 $t
-     /tmp/ccaDsiSD.s:176    .RamFunc:0000000000000108 HAL_FLASHEx_EnableRunPowerDown
-     /tmp/ccaDsiSD.s:195    .RamFunc:0000000000000120 $d
-     /tmp/ccaDsiSD.s:199    .RamFunc:000000000000012c $t
-     /tmp/ccaDsiSD.s:206    .RamFunc:000000000000012c HAL_FLASHEx_DisableRunPowerDown
-     /tmp/ccaDsiSD.s:225    .RamFunc:0000000000000144 $d
-     /tmp/ccaDsiSD.s:229    .RamFunc:0000000000000150 $t
-     /tmp/ccaDsiSD.s:236    .RamFunc:0000000000000150 HAL_FLASHEx_EraseParallelPage
-     /tmp/ccaDsiSD.s:280    .RamFunc:000000000000019c $d
-     /tmp/ccaDsiSD.s:284    .RamFunc:00000000000001a8 $t
-     /tmp/ccaDsiSD.s:291    .RamFunc:00000000000001a8 HAL_FLASHEx_ProgramParallelHalfPage
-     /tmp/ccaDsiSD.s:367    .RamFunc:000000000000021c $d
-     /tmp/ccaDsiSD.s:371    .RamFunc:0000000000000228 $t
-     /tmp/ccaDsiSD.s:378    .RamFunc:0000000000000228 HAL_FLASHEx_HalfPageProgram
-     /tmp/ccaDsiSD.s:431    .RamFunc:0000000000000270 $d
-     /tmp/ccaDsiSD.s:434    .RamFunc:0000000000000278 $t
-     /tmp/ccaDsiSD.s:441    .RamFunc:0000000000000278 HAL_FLASHEx_GetError
-     /tmp/ccaDsiSD.s:454    .RamFunc:0000000000000284 $d
+     /tmp/ccidUY5y.s:12     .RamFunc:0000000000000000 $t
+     /tmp/ccidUY5y.s:19     .RamFunc:0000000000000000 FLASHRAM_WaitForLastOperation.constprop.0
+     /tmp/ccidUY5y.s:165    .RamFunc:00000000000000fc $d
+     /tmp/ccidUY5y.s:169    .RamFunc:0000000000000108 $t
+     /tmp/ccidUY5y.s:176    .RamFunc:0000000000000108 HAL_FLASHEx_EnableRunPowerDown
+     /tmp/ccidUY5y.s:195    .RamFunc:0000000000000120 $d
+     /tmp/ccidUY5y.s:199    .RamFunc:000000000000012c $t
+     /tmp/ccidUY5y.s:206    .RamFunc:000000000000012c HAL_FLASHEx_DisableRunPowerDown
+     /tmp/ccidUY5y.s:225    .RamFunc:0000000000000144 $d
+     /tmp/ccidUY5y.s:229    .RamFunc:0000000000000150 $t
+     /tmp/ccidUY5y.s:236    .RamFunc:0000000000000150 HAL_FLASHEx_EraseParallelPage
+     /tmp/ccidUY5y.s:280    .RamFunc:000000000000019c $d
+     /tmp/ccidUY5y.s:284    .RamFunc:00000000000001a8 $t
+     /tmp/ccidUY5y.s:291    .RamFunc:00000000000001a8 HAL_FLASHEx_ProgramParallelHalfPage
+     /tmp/ccidUY5y.s:367    .RamFunc:000000000000021c $d
+     /tmp/ccidUY5y.s:371    .RamFunc:0000000000000228 $t
+     /tmp/ccidUY5y.s:378    .RamFunc:0000000000000228 HAL_FLASHEx_HalfPageProgram
+     /tmp/ccidUY5y.s:431    .RamFunc:0000000000000270 $d
+     /tmp/ccidUY5y.s:434    .RamFunc:0000000000000278 $t
+     /tmp/ccidUY5y.s:441    .RamFunc:0000000000000278 HAL_FLASHEx_GetError
+     /tmp/ccidUY5y.s:454    .RamFunc:0000000000000284 $d
 
 UNDEFINED SYMBOLS
 pFlash

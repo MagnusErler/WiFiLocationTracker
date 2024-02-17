@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccvVzsy5.s 			page 1
+ARM GAS  /tmp/ccKLjx7v.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccvVzsy5.s 			page 1
   56 0032 BB68     		ldr	r3, [r7, #8]
   57 0034 9A42     		cmp	r2, r3
   58 0036 F7D3     		bcc	.L3
-ARM GAS  /tmp/ccvVzsy5.s 			page 2
+ARM GAS  /tmp/ccKLjx7v.s 			page 2
 
 
   59 0038 C046     		nop
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccvVzsy5.s 			page 1
  118              		.syntax unified
  119              		.code	16
  120              		.thumb_func
-ARM GAS  /tmp/ccvVzsy5.s 			page 3
+ARM GAS  /tmp/ccKLjx7v.s 			page 3
 
 
  121              		.fpu softvfp
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccvVzsy5.s 			page 1
  181              		.global	hal_mcu_reset
  182              		.syntax unified
  183              		.code	16
-ARM GAS  /tmp/ccvVzsy5.s 			page 4
+ARM GAS  /tmp/ccKLjx7v.s 			page 4
 
 
  184              		.thumb_func
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccvVzsy5.s 			page 1
  241 000e FFF7FEFF 		bl	memset
  242 0012 4F4C     		ldr	r4, .L18
  243 0014 1422     		movs	r2, #20
-ARM GAS  /tmp/ccvVzsy5.s 			page 5
+ARM GAS  /tmp/ccKLjx7v.s 			page 5
 
 
  244 0016 0021     		movs	r1, #0
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccvVzsy5.s 			page 1
  298 0090 0323     		movs	r3, #3
  299 0092 0025     		movs	r5, #0
  300 0094 0026     		movs	r6, #0
-ARM GAS  /tmp/ccvVzsy5.s 			page 6
+ARM GAS  /tmp/ccKLjx7v.s 			page 6
 
 
  301 0096 0490     		str	r0, [sp, #16]
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccvVzsy5.s 			page 1
  355 0112 1E22     		movs	r2, #30
  356 0114 1F21     		movs	r1, #31
  357 0116 0220     		movs	r0, #2
-ARM GAS  /tmp/ccvVzsy5.s 			page 7
+ARM GAS  /tmp/ccKLjx7v.s 			page 7
 
 
  358 0118 FFF7FEFF 		bl	hal_spi_init
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccvVzsy5.s 			page 1
  414              		@ sp needed
  415 0018 70BD     		pop	{r4, r5, r6, pc}
  416              	.L23:
-ARM GAS  /tmp/ccvVzsy5.s 			page 8
+ARM GAS  /tmp/ccKLjx7v.s 			page 8
 
 
  417 001a FFF7FEFF 		bl	watchdog_reload
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccvVzsy5.s 			page 1
  471 0088 3422     		movs	r2, #52
  472 008a 09A8     		add	r0, sp, #36
  473 008c FFF7FEFF 		bl	memset
-ARM GAS  /tmp/ccvVzsy5.s 			page 9
+ARM GAS  /tmp/ccKLjx7v.s 			page 9
 
 
  474 0090 8023     		movs	r3, #128
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccvVzsy5.s 			page 1
  528 010c FFF7FEFF 		bl	hal_i2c_init
  529 0110 2000     		movs	r0, r4
  530 0112 1323     		movs	r3, #19
-ARM GAS  /tmp/ccvVzsy5.s 			page 10
+ARM GAS  /tmp/ccKLjx7v.s 			page 10
 
 
  531 0114 1422     		movs	r2, #20
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccvVzsy5.s 			page 1
  586              		.code	16
  587              		.thumb_func
  588              		.fpu softvfp
-ARM GAS  /tmp/ccvVzsy5.s 			page 11
+ARM GAS  /tmp/ccKLjx7v.s 			page 11
 
 
  590              	hal_mcu_disable_low_power_wait:
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccvVzsy5.s 			page 1
  648 0006 034B     		ldr	r3, .L45+4
  649 0008 9218     		adds	r2, r2, r2
  650 000a 1A70     		strb	r2, [r3]
-ARM GAS  /tmp/ccvVzsy5.s 			page 12
+ARM GAS  /tmp/ccKLjx7v.s 			page 12
 
 
  651 000c 7047     		bx	lr
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccvVzsy5.s 			page 1
  712              		.align	1
  713              		.global	HardFault_Handler
  714              		.syntax unified
-ARM GAS  /tmp/ccvVzsy5.s 			page 13
+ARM GAS  /tmp/ccKLjx7v.s 			page 13
 
 
  715              		.code	16
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccvVzsy5.s 			page 1
  760      41524446 
  760      41554C54 
  760      5F48616E 
-ARM GAS  /tmp/ccvVzsy5.s 			page 14
+ARM GAS  /tmp/ccKLjx7v.s 			page 14
 
 
  761              	.LC27:
@@ -822,67 +822,67 @@ ARM GAS  /tmp/ccvVzsy5.s 			page 1
  799      5F636F6E 
  799      66696700 
  800              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/ccvVzsy5.s 			page 15
+ARM GAS  /tmp/ccKLjx7v.s 			page 15
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 smtc_hal_mcu.c
-     /tmp/ccvVzsy5.s:13     .text.hal_mcu_wait_us:0000000000000000 $t
-     /tmp/ccvVzsy5.s:22     .text.hal_mcu_wait_us:0000000000000000 hal_mcu_wait_us
-     /tmp/ccvVzsy5.s:67     .text.wut_cb:0000000000000000 $t
-     /tmp/ccvVzsy5.s:73     .text.wut_cb:0000000000000000 wut_cb
-     /tmp/ccvVzsy5.s:85     .text.wut_cb:0000000000000008 $d
-     /tmp/ccvVzsy5.s:88     .text.hal_mcu_critical_section_begin:0000000000000000 $t
-     /tmp/ccvVzsy5.s:95     .text.hal_mcu_critical_section_begin:0000000000000000 hal_mcu_critical_section_begin
-     /tmp/ccvVzsy5.s:116    .text.hal_mcu_critical_section_end:0000000000000000 $t
-     /tmp/ccvVzsy5.s:123    .text.hal_mcu_critical_section_end:0000000000000000 hal_mcu_critical_section_end
-     /tmp/ccvVzsy5.s:138    .text.hal_mcu_disable_irq:0000000000000000 $t
-     /tmp/ccvVzsy5.s:145    .text.hal_mcu_disable_irq:0000000000000000 hal_mcu_disable_irq
-     /tmp/ccvVzsy5.s:159    .text.hal_mcu_enable_irq:0000000000000000 $t
-     /tmp/ccvVzsy5.s:166    .text.hal_mcu_enable_irq:0000000000000000 hal_mcu_enable_irq
-     /tmp/ccvVzsy5.s:180    .text.hal_mcu_reset:0000000000000000 $t
-     /tmp/ccvVzsy5.s:187    .text.hal_mcu_reset:0000000000000000 hal_mcu_reset
-     /tmp/ccvVzsy5.s:221    .text.hal_mcu_reset:0000000000000014 $d
-     /tmp/ccvVzsy5.s:225    .text.hal_mcu_init:0000000000000000 $t
-     /tmp/ccvVzsy5.s:232    .text.hal_mcu_init:0000000000000000 hal_mcu_init
-     /tmp/ccvVzsy5.s:382    .text.hal_mcu_init:0000000000000150 $d
-     /tmp/ccvVzsy5.s:391    .text.hal_mcu_set_sleep_for_ms:0000000000000000 $t
-     /tmp/ccvVzsy5.s:398    .text.hal_mcu_set_sleep_for_ms:0000000000000000 hal_mcu_set_sleep_for_ms
-     /tmp/ccvVzsy5.s:573    .text.hal_mcu_set_sleep_for_ms:000000000000015c $d
-     /tmp/ccvVzsy5.s:583    .text.hal_mcu_disable_low_power_wait:0000000000000000 $t
-     /tmp/ccvVzsy5.s:590    .text.hal_mcu_disable_low_power_wait:0000000000000000 hal_mcu_disable_low_power_wait
-     /tmp/ccvVzsy5.s:604    .text.hal_mcu_disable_low_power_wait:000000000000000c $d
-     /tmp/ccvVzsy5.s:608    .text.hal_mcu_enable_low_power_wait:0000000000000000 $t
-     /tmp/ccvVzsy5.s:615    .text.hal_mcu_enable_low_power_wait:0000000000000000 hal_mcu_enable_low_power_wait
-     /tmp/ccvVzsy5.s:629    .text.hal_mcu_enable_low_power_wait:000000000000000c $d
-     /tmp/ccvVzsy5.s:633    .text.hal_mcu_disable_once_low_power_wait:0000000000000000 $t
-     /tmp/ccvVzsy5.s:640    .text.hal_mcu_disable_once_low_power_wait:0000000000000000 hal_mcu_disable_once_low_power_wait
-     /tmp/ccvVzsy5.s:655    .text.hal_mcu_disable_once_low_power_wait:0000000000000010 $d
-     /tmp/ccvVzsy5.s:659    .text.SysTick_Handler:0000000000000000 $t
-     /tmp/ccvVzsy5.s:666    .text.SysTick_Handler:0000000000000000 SysTick_Handler
-     /tmp/ccvVzsy5.s:676    .text.HAL_MspInit:0000000000000000 $t
-     /tmp/ccvVzsy5.s:683    .text.HAL_MspInit:0000000000000000 HAL_MspInit
-     /tmp/ccvVzsy5.s:696    .text.hal_mcu_delay_ms:0000000000000000 $t
-     /tmp/ccvVzsy5.s:703    .text.hal_mcu_delay_ms:0000000000000000 hal_mcu_delay_ms
-     /tmp/ccvVzsy5.s:712    .text.HardFault_Handler:0000000000000000 $t
-     /tmp/ccvVzsy5.s:719    .text.HardFault_Handler:0000000000000000 HardFault_Handler
-     /tmp/ccvVzsy5.s:747    .text.HardFault_Handler:0000000000000034 $d
-     /tmp/ccvVzsy5.s:767    .bss.exit_wait:0000000000000000 exit_wait
-     /tmp/ccvVzsy5.s:768    .bss.exit_wait:0000000000000000 $d
-     /tmp/ccvVzsy5.s:773    .bss.lp_current_mode:0000000000000000 lp_current_mode
-     /tmp/ccvVzsy5.s:774    .bss.lp_current_mode:0000000000000000 $d
-     /tmp/ccvVzsy5.s:776    .bss.wut:0000000000000000 $d
-     /tmp/ccvVzsy5.s:780    .bss.wut:0000000000000000 wut
-     /tmp/ccvVzsy5.s:786    .bss.wut_flag:0000000000000000 wut_flag
-     /tmp/ccvVzsy5.s:787    .bss.wut_flag:0000000000000000 $d
-     /tmp/ccvVzsy5.s:792    .rodata.__func__.0:0000000000000000 __func__.0
-     /tmp/ccvVzsy5.s:798    .rodata.__func__.1:0000000000000000 __func__.1
+     /tmp/ccKLjx7v.s:13     .text.hal_mcu_wait_us:0000000000000000 $t
+     /tmp/ccKLjx7v.s:22     .text.hal_mcu_wait_us:0000000000000000 hal_mcu_wait_us
+     /tmp/ccKLjx7v.s:67     .text.wut_cb:0000000000000000 $t
+     /tmp/ccKLjx7v.s:73     .text.wut_cb:0000000000000000 wut_cb
+     /tmp/ccKLjx7v.s:85     .text.wut_cb:0000000000000008 $d
+     /tmp/ccKLjx7v.s:88     .text.hal_mcu_critical_section_begin:0000000000000000 $t
+     /tmp/ccKLjx7v.s:95     .text.hal_mcu_critical_section_begin:0000000000000000 hal_mcu_critical_section_begin
+     /tmp/ccKLjx7v.s:116    .text.hal_mcu_critical_section_end:0000000000000000 $t
+     /tmp/ccKLjx7v.s:123    .text.hal_mcu_critical_section_end:0000000000000000 hal_mcu_critical_section_end
+     /tmp/ccKLjx7v.s:138    .text.hal_mcu_disable_irq:0000000000000000 $t
+     /tmp/ccKLjx7v.s:145    .text.hal_mcu_disable_irq:0000000000000000 hal_mcu_disable_irq
+     /tmp/ccKLjx7v.s:159    .text.hal_mcu_enable_irq:0000000000000000 $t
+     /tmp/ccKLjx7v.s:166    .text.hal_mcu_enable_irq:0000000000000000 hal_mcu_enable_irq
+     /tmp/ccKLjx7v.s:180    .text.hal_mcu_reset:0000000000000000 $t
+     /tmp/ccKLjx7v.s:187    .text.hal_mcu_reset:0000000000000000 hal_mcu_reset
+     /tmp/ccKLjx7v.s:221    .text.hal_mcu_reset:0000000000000014 $d
+     /tmp/ccKLjx7v.s:225    .text.hal_mcu_init:0000000000000000 $t
+     /tmp/ccKLjx7v.s:232    .text.hal_mcu_init:0000000000000000 hal_mcu_init
+     /tmp/ccKLjx7v.s:382    .text.hal_mcu_init:0000000000000150 $d
+     /tmp/ccKLjx7v.s:391    .text.hal_mcu_set_sleep_for_ms:0000000000000000 $t
+     /tmp/ccKLjx7v.s:398    .text.hal_mcu_set_sleep_for_ms:0000000000000000 hal_mcu_set_sleep_for_ms
+     /tmp/ccKLjx7v.s:573    .text.hal_mcu_set_sleep_for_ms:000000000000015c $d
+     /tmp/ccKLjx7v.s:583    .text.hal_mcu_disable_low_power_wait:0000000000000000 $t
+     /tmp/ccKLjx7v.s:590    .text.hal_mcu_disable_low_power_wait:0000000000000000 hal_mcu_disable_low_power_wait
+     /tmp/ccKLjx7v.s:604    .text.hal_mcu_disable_low_power_wait:000000000000000c $d
+     /tmp/ccKLjx7v.s:608    .text.hal_mcu_enable_low_power_wait:0000000000000000 $t
+     /tmp/ccKLjx7v.s:615    .text.hal_mcu_enable_low_power_wait:0000000000000000 hal_mcu_enable_low_power_wait
+     /tmp/ccKLjx7v.s:629    .text.hal_mcu_enable_low_power_wait:000000000000000c $d
+     /tmp/ccKLjx7v.s:633    .text.hal_mcu_disable_once_low_power_wait:0000000000000000 $t
+     /tmp/ccKLjx7v.s:640    .text.hal_mcu_disable_once_low_power_wait:0000000000000000 hal_mcu_disable_once_low_power_wait
+     /tmp/ccKLjx7v.s:655    .text.hal_mcu_disable_once_low_power_wait:0000000000000010 $d
+     /tmp/ccKLjx7v.s:659    .text.SysTick_Handler:0000000000000000 $t
+     /tmp/ccKLjx7v.s:666    .text.SysTick_Handler:0000000000000000 SysTick_Handler
+     /tmp/ccKLjx7v.s:676    .text.HAL_MspInit:0000000000000000 $t
+     /tmp/ccKLjx7v.s:683    .text.HAL_MspInit:0000000000000000 HAL_MspInit
+     /tmp/ccKLjx7v.s:696    .text.hal_mcu_delay_ms:0000000000000000 $t
+     /tmp/ccKLjx7v.s:703    .text.hal_mcu_delay_ms:0000000000000000 hal_mcu_delay_ms
+     /tmp/ccKLjx7v.s:712    .text.HardFault_Handler:0000000000000000 $t
+     /tmp/ccKLjx7v.s:719    .text.HardFault_Handler:0000000000000000 HardFault_Handler
+     /tmp/ccKLjx7v.s:747    .text.HardFault_Handler:0000000000000034 $d
+     /tmp/ccKLjx7v.s:767    .bss.exit_wait:0000000000000000 exit_wait
+     /tmp/ccKLjx7v.s:768    .bss.exit_wait:0000000000000000 $d
+     /tmp/ccKLjx7v.s:773    .bss.lp_current_mode:0000000000000000 lp_current_mode
+     /tmp/ccKLjx7v.s:774    .bss.lp_current_mode:0000000000000000 $d
+     /tmp/ccKLjx7v.s:776    .bss.wut:0000000000000000 $d
+     /tmp/ccKLjx7v.s:780    .bss.wut:0000000000000000 wut
+     /tmp/ccKLjx7v.s:786    .bss.wut_flag:0000000000000000 wut_flag
+     /tmp/ccKLjx7v.s:787    .bss.wut_flag:0000000000000000 $d
+     /tmp/ccKLjx7v.s:792    .rodata.__func__.0:0000000000000000 __func__.0
+     /tmp/ccKLjx7v.s:798    .rodata.__func__.1:0000000000000000 __func__.1
 
 UNDEFINED SYMBOLS
 __aeabi_idiv
 HAL_Init
 memset
-ARM GAS  /tmp/ccvVzsy5.s 			page 16
+ARM GAS  /tmp/ccKLjx7v.s 			page 16
 
 
 HAL_PWR_EnableBkUpAccess

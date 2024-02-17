@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cchkk89K.s 			page 1
+ARM GAS  /tmp/ccshtK2a.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
   56 0038 00D0     		beq	.L8
   57 003a 1843     		orrs	r0, r3
   58              	.L8:
-ARM GAS  /tmp/cchkk89K.s 			page 2
+ARM GAS  /tmp/ccshtK2a.s 			page 2
 
 
   59 003c 8023     		movs	r3, #128
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  115 0016 1843     		orrs	r0, r3
  116              	.L51:
  117 0018 1307     		lsls	r3, r2, #28
-ARM GAS  /tmp/cchkk89K.s 			page 3
+ARM GAS  /tmp/ccshtK2a.s 			page 3
 
 
  118 001a 02D5     		bpl	.L52
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  173              		.syntax unified
  174              		.code	16
  175              		.thumb_func
-ARM GAS  /tmp/cchkk89K.s 			page 4
+ARM GAS  /tmp/ccshtK2a.s 			page 4
 
 
  176              		.fpu softvfp
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  231 004a 0722     		movs	r2, #7
  232 004c E5E7     		b	.L120
  233              	.L109:
-ARM GAS  /tmp/cchkk89K.s 			page 5
+ARM GAS  /tmp/ccshtK2a.s 			page 5
 
 
  234 004e 4A71     		strb	r2, [r1, #5]
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  290 0008 4278     		ldrb	r2, [r0, #1]
  291 000a 0220     		movs	r0, #2
  292 000c 013A     		subs	r2, r2, #1
-ARM GAS  /tmp/cchkk89K.s 			page 6
+ARM GAS  /tmp/ccshtK2a.s 			page 6
 
 
  293 000e 0B2A     		cmp	r2, #11
@@ -358,7 +358,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  347              	.L127:
  348 0054 0E22     		movs	r2, #14
  349 0056 E6E7     		b	.L139
-ARM GAS  /tmp/cchkk89K.s 			page 7
+ARM GAS  /tmp/ccshtK2a.s 			page 7
 
 
  350              	.L126:
@@ -418,7 +418,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  406 0040 FAE7     		b	.L141
  407              	.L145:
  408 0042 0922     		movs	r2, #9
-ARM GAS  /tmp/cchkk89K.s 			page 8
+ARM GAS  /tmp/ccshtK2a.s 			page 8
 
 
  409 0044 FBE7     		b	.L149
@@ -478,7 +478,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  464              		.fpu softvfp
  466              	ral_lr11xx_handles_part:
  467              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  /tmp/cchkk89K.s 			page 9
+ARM GAS  /tmp/ccshtK2a.s 			page 9
 
 
  468              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -538,7 +538,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  526 0010 6A46     		mov	r2, sp
  527 0012 0023     		movs	r3, #0
  528 0014 2800     		movs	r0, r5
-ARM GAS  /tmp/cchkk89K.s 			page 10
+ARM GAS  /tmp/ccshtK2a.s 			page 10
 
 
  529 0016 D11C     		adds	r1, r2, #3
@@ -598,7 +598,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  583 0090 041E     		subs	r4, r0, #0
  584 0092 CAD0     		beq	.L166
  585              	.L164:
-ARM GAS  /tmp/cchkk89K.s 			page 11
+ARM GAS  /tmp/ccshtK2a.s 			page 11
 
 
  586 0094 2000     		movs	r0, r4
@@ -658,7 +658,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  646              		@ frame_needed = 0, uses_anonymous_args = 0
  647 0000 0300     		movs	r3, r0
  648 0002 10B5     		push	{r4, lr}
-ARM GAS  /tmp/cchkk89K.s 			page 12
+ARM GAS  /tmp/ccshtK2a.s 			page 12
 
 
  649 0004 0029     		cmp	r1, #0
@@ -718,7 +718,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  709 0008 FFF7FEFF 		bl	lr11xx_radio_set_rx_with_timeout_in_rtc_step
  710              	.L187:
  711 000c 0300     		movs	r3, r0
-ARM GAS  /tmp/cchkk89K.s 			page 13
+ARM GAS  /tmp/ccshtK2a.s 			page 13
 
 
  712              	.L185:
@@ -778,7 +778,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  771              		.global	ral_lr11xx_stop_timer_on_preamble
  772              		.syntax unified
  773              		.code	16
-ARM GAS  /tmp/cchkk89K.s 			page 14
+ARM GAS  /tmp/ccshtK2a.s 			page 14
 
 
  774              		.thumb_func
@@ -838,7 +838,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  836              		.global	ral_lr11xx_set_tx_infinite_preamble
  837              		.syntax unified
  838              		.code	16
-ARM GAS  /tmp/cchkk89K.s 			page 15
+ARM GAS  /tmp/ccshtK2a.s 			page 15
 
 
  839              		.thumb_func
@@ -898,7 +898,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  898              		@ sp needed
  899 002e 10BD     		pop	{r4, pc}
  901              		.section	.text.ral_lr11xx_set_pkt_payload,"ax",%progbits
-ARM GAS  /tmp/cchkk89K.s 			page 16
+ARM GAS  /tmp/ccshtK2a.s 			page 16
 
 
  902              		.align	1
@@ -958,7 +958,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  959 003a F0BD     		pop	{r4, r5, r6, r7, pc}
  961              		.section	.text.ral_lr11xx_get_irq_status,"ax",%progbits
  962              		.align	1
-ARM GAS  /tmp/cchkk89K.s 			page 17
+ARM GAS  /tmp/ccshtK2a.s 			page 17
 
 
  963              		.global	ral_lr11xx_get_irq_status
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  1022 0002 37B5     		push	{r0, r1, r2, r4, r5, lr}
  1023 0004 0D00     		movs	r5, r1
  1024 0006 01A9     		add	r1, sp, #4
-ARM GAS  /tmp/cchkk89K.s 			page 18
+ARM GAS  /tmp/ccshtK2a.s 			page 18
 
 
  1025 0008 0193     		str	r3, [sp, #4]
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  1083 001a 2000     		movs	r0, r4
  1084 001c 01A9     		add	r1, sp, #4
  1085 001e FFF7FEFF 		bl	lr11xx_radio_set_rssi_calibration
-ARM GAS  /tmp/cchkk89K.s 			page 19
+ARM GAS  /tmp/ccshtK2a.s 			page 19
 
 
  1086              	.L220:
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  1144 001c 0230     		adds	r0, r0, #2
  1145              	.L227:
  1146              		@ sp needed
-ARM GAS  /tmp/cchkk89K.s 			page 20
+ARM GAS  /tmp/ccshtK2a.s 			page 20
 
 
  1147 001e 3EBD     		pop	{r1, r2, r3, r4, r5, pc}
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  1205 000c 01A8     		add	r0, sp, #4
  1206 000e FFF7FEFF 		bl	memset
  1207 0012 2800     		movs	r0, r5
-ARM GAS  /tmp/cchkk89K.s 			page 21
+ARM GAS  /tmp/ccshtK2a.s 			page 21
 
 
  1208 0014 01A9     		add	r1, sp, #4
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  1266 0018 0028     		cmp	r0, #0
  1267 001a 03D1     		bne	.L237
  1268 001c 6946     		mov	r1, sp
-ARM GAS  /tmp/cchkk89K.s 			page 22
+ARM GAS  /tmp/ccshtK2a.s 			page 22
 
 
  1269 001e 2000     		movs	r0, r4
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  1325 003e 6946     		mov	r1, sp
  1326 0040 0190     		str	r0, [sp, #4]
  1327 0042 2000     		movs	r0, r4
-ARM GAS  /tmp/cchkk89K.s 			page 23
+ARM GAS  /tmp/ccshtK2a.s 			page 23
 
 
  1328 0044 FFF7FEFF 		bl	lr11xx_radio_set_cad_params
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  1388              	ral_lr11xx_set_flrc_pkt_params:
  1389              		@ args = 0, pretend = 0, frame = 0
  1390              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  /tmp/cchkk89K.s 			page 24
+ARM GAS  /tmp/ccshtK2a.s 			page 24
 
 
  1391              		@ link register save eliminated.
@@ -1438,7 +1438,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  1447 0052 E356     		ldrsb	r3, [r4, r3]
  1448 0054 AB80     		strh	r3, [r5, #4]
  1449              	.L258:
-ARM GAS  /tmp/cchkk89K.s 			page 25
+ARM GAS  /tmp/ccshtK2a.s 			page 25
 
 
  1450 0056 05B0     		add	sp, sp, #20
@@ -1498,7 +1498,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  1510              		@ args = 0, pretend = 0, frame = 8
  1511              		@ frame_needed = 0, uses_anonymous_args = 0
  1512 0000 37B5     		push	{r0, r1, r2, r4, r5, lr}
-ARM GAS  /tmp/cchkk89K.s 			page 26
+ARM GAS  /tmp/ccshtK2a.s 			page 26
 
 
  1513 0002 6B46     		mov	r3, sp
@@ -1558,7 +1558,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  1571 0018 03A9     		add	r1, sp, #12
  1572 001a FFF7FEFF 		bl	lr11xx_radio_get_gfsk_time_on_air_in_ms
  1573 001e 06B0     		add	sp, sp, #24
-ARM GAS  /tmp/cchkk89K.s 			page 27
+ARM GAS  /tmp/ccshtK2a.s 			page 27
 
 
  1574              		@ sp needed
@@ -1618,7 +1618,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  1634 0000 10B5     		push	{r4, lr}
  1635 0002 FFF7FEFF 		bl	lr11xx_radio_set_lora_sync_word
  1636              		@ sp needed
-ARM GAS  /tmp/cchkk89K.s 			page 28
+ARM GAS  /tmp/ccshtK2a.s 			page 28
 
 
  1637 0006 10BD     		pop	{r4, pc}
@@ -1678,7 +1678,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  1699 0002 FFF7FEFF 		bl	lr11xx_radio_set_gfsk_whitening_seed
  1700              		@ sp needed
  1701 0006 10BD     		pop	{r4, pc}
-ARM GAS  /tmp/cchkk89K.s 			page 29
+ARM GAS  /tmp/ccshtK2a.s 			page 29
 
 
  1703              		.section	.text.ral_lr11xx_lr_fhss_init,"ax",%progbits
@@ -1738,7 +1738,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  1760 003e 039A     		ldr	r2, [sp, #12]
  1761 0040 FFF7FEFF 		bl	lr11xx_lr_fhss_build_frame
  1762 0044 0028     		cmp	r0, #0
-ARM GAS  /tmp/cchkk89K.s 			page 30
+ARM GAS  /tmp/ccshtK2a.s 			page 30
 
 
  1763 0046 0CD1     		bne	.L286
@@ -1798,7 +1798,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  1823              		@ frame_needed = 0, uses_anonymous_args = 0
  1824 0000 F0B5     		push	{r4, r5, r6, r7, lr}
  1825 0002 0C00     		movs	r4, r1
-ARM GAS  /tmp/cchkk89K.s 			page 31
+ARM GAS  /tmp/ccshtK2a.s 			page 31
 
 
  1826 0004 1D00     		movs	r5, r3
@@ -1858,7 +1858,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  1884 0002 7047     		bx	lr
  1886              		.section	.text.ral_lr11xx_get_tx_consumption_in_ua,"ax",%progbits
  1887              		.align	1
-ARM GAS  /tmp/cchkk89K.s 			page 32
+ARM GAS  /tmp/ccshtK2a.s 			page 32
 
 
  1888              		.global	ral_lr11xx_get_tx_consumption_in_ua
@@ -1918,7 +1918,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  1943              	.L299:
  1944 0058 1C4A     		ldr	r2, .L316+4
  1945 005a F9E7     		b	.L314
-ARM GAS  /tmp/cchkk89K.s 			page 33
+ARM GAS  /tmp/ccshtK2a.s 			page 33
 
 
  1946              	.L296:
@@ -1978,7 +1978,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  2000 00bc C8E7     		b	.L314
  2001              	.L309:
  2002 00be 0220     		movs	r0, #2
-ARM GAS  /tmp/cchkk89K.s 			page 34
+ARM GAS  /tmp/ccshtK2a.s 			page 34
 
 
  2003 00c0 C8E7     		b	.L297
@@ -2038,7 +2038,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  2061              		@ frame_needed = 0, uses_anonymous_args = 0
  2062 0000 73B5     		push	{r0, r1, r4, r5, r6, lr}
  2063 0002 1500     		movs	r5, r2
-ARM GAS  /tmp/cchkk89K.s 			page 35
+ARM GAS  /tmp/ccshtK2a.s 			page 35
 
 
  2064              		@ sp needed
@@ -2098,7 +2098,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  2121              		.set	.LANCHOR0,. + 0
  2124              	ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_hf_vreg:
  2125 0000 182E0000 		.word	11800
-ARM GAS  /tmp/cchkk89K.s 			page 36
+ARM GAS  /tmp/ccshtK2a.s 			page 36
 
 
  2126 0004 182E0000 		.word	11800
@@ -2158,7 +2158,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  2182 0054 8C360100 		.word	79500
  2183 0058 A2480100 		.word	84130
  2184 005c 96590100 		.word	88470
-ARM GAS  /tmp/cchkk89K.s 			page 37
+ARM GAS  /tmp/ccshtK2a.s 			page 37
 
 
  2185 0060 28680100 		.word	92200
@@ -2218,7 +2218,7 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  2243 001c 6CA70000 		.word	42860
  2244 0020 5EB00000 		.word	45150
  2245 0024 28B90000 		.word	47400
-ARM GAS  /tmp/cchkk89K.s 			page 38
+ARM GAS  /tmp/ccshtK2a.s 			page 38
 
 
  2246 0028 C0C10000 		.word	49600
@@ -2278,181 +2278,181 @@ ARM GAS  /tmp/cchkk89K.s 			page 1
  2302 0074 E6AF0000 		.word	45030
  2303 0078 1CBB0000 		.word	47900
  2304 007c 14C80000 		.word	51220
-ARM GAS  /tmp/cchkk89K.s 			page 39
+ARM GAS  /tmp/ccshtK2a.s 			page 39
 
 
  2305 0080 0C020100 		.word	66060
  2306              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/cchkk89K.s 			page 40
+ARM GAS  /tmp/ccshtK2a.s 			page 40
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 ral_lr11xx.c
-     /tmp/cchkk89K.s:12     .text.ral_lr11xx_convert_irq_flags_to_ral:0000000000000000 $t
-     /tmp/cchkk89K.s:19     .text.ral_lr11xx_convert_irq_flags_to_ral:0000000000000000 ral_lr11xx_convert_irq_flags_to_ral
-     /tmp/cchkk89K.s:93     .text.ral_lr11xx_convert_irq_flags_from_ral:0000000000000000 $t
-     /tmp/cchkk89K.s:99     .text.ral_lr11xx_convert_irq_flags_from_ral:0000000000000000 ral_lr11xx_convert_irq_flags_from_ral
-     /tmp/cchkk89K.s:172    .text.ral_lr11xx_convert_gfsk_pkt_params_from_ral:0000000000000000 $t
-     /tmp/cchkk89K.s:178    .text.ral_lr11xx_convert_gfsk_pkt_params_from_ral:0000000000000000 ral_lr11xx_convert_gfsk_pkt_params_from_ral
-     /tmp/cchkk89K.s:190    .text.ral_lr11xx_convert_gfsk_pkt_params_from_ral:0000000000000012 $d
-     /tmp/cchkk89K.s:242    .text.ral_lr11xx_convert_gfsk_pkt_params_from_ral:000000000000005e $d
-     /tmp/cchkk89K.s:277    .text.ral_lr11xx_convert_lora_mod_params_from_ral:0000000000000000 $t
-     /tmp/cchkk89K.s:283    .text.ral_lr11xx_convert_lora_mod_params_from_ral:0000000000000000 ral_lr11xx_convert_lora_mod_params_from_ral
-     /tmp/cchkk89K.s:298    .text.ral_lr11xx_convert_lora_mod_params_from_ral:0000000000000018 $d
-     /tmp/cchkk89K.s:310    .text.ral_lr11xx_convert_lora_mod_params_from_ral:0000000000000024 $t
-     /tmp/cchkk89K.s:358    .text.ral_lr11xx_convert_gfsk_mod_params_from_ral:0000000000000000 $t
-     /tmp/cchkk89K.s:364    .text.ral_lr11xx_convert_gfsk_mod_params_from_ral:0000000000000000 ral_lr11xx_convert_gfsk_mod_params_from_ral
-     /tmp/cchkk89K.s:388    .text.ral_lr11xx_convert_gfsk_mod_params_from_ral:000000000000002c $d
-     /tmp/cchkk89K.s:421    .text.ral_lr11xx_convert_lora_pkt_params_from_ral:0000000000000000 $t
-     /tmp/cchkk89K.s:427    .text.ral_lr11xx_convert_lora_pkt_params_from_ral:0000000000000000 ral_lr11xx_convert_lora_pkt_params_from_ral
-     /tmp/cchkk89K.s:459    .text.ral_lr11xx_handles_part:0000000000000000 $t
-     /tmp/cchkk89K.s:466    .text.ral_lr11xx_handles_part:0000000000000000 ral_lr11xx_handles_part
-     /tmp/cchkk89K.s:489    .text.ral_lr11xx_handles_part:0000000000000024 $d
-     /tmp/cchkk89K.s:493    .text.ral_lr11xx_reset:0000000000000000 $t
-     /tmp/cchkk89K.s:500    .text.ral_lr11xx_reset:0000000000000000 ral_lr11xx_reset
-     /tmp/cchkk89K.s:509    .text.ral_lr11xx_init:0000000000000000 $t
-     /tmp/cchkk89K.s:516    .text.ral_lr11xx_init:0000000000000000 ral_lr11xx_init
-     /tmp/cchkk89K.s:592    .text.ral_lr11xx_wakeup:0000000000000000 $t
-     /tmp/cchkk89K.s:599    .text.ral_lr11xx_wakeup:0000000000000000 ral_lr11xx_wakeup
-     /tmp/cchkk89K.s:608    .text.ral_lr11xx_set_sleep:0000000000000000 $t
-     /tmp/cchkk89K.s:615    .text.ral_lr11xx_set_sleep:0000000000000000 ral_lr11xx_set_sleep
-     /tmp/cchkk89K.s:637    .text.ral_lr11xx_set_standby:0000000000000000 $t
-     /tmp/cchkk89K.s:644    .text.ral_lr11xx_set_standby:0000000000000000 ral_lr11xx_set_standby
-     /tmp/cchkk89K.s:662    .text.ral_lr11xx_set_fs:0000000000000000 $t
-     /tmp/cchkk89K.s:669    .text.ral_lr11xx_set_fs:0000000000000000 ral_lr11xx_set_fs
-     /tmp/cchkk89K.s:678    .text.ral_lr11xx_set_tx:0000000000000000 $t
-     /tmp/cchkk89K.s:685    .text.ral_lr11xx_set_tx:0000000000000000 ral_lr11xx_set_tx
-     /tmp/cchkk89K.s:695    .text.ral_lr11xx_set_rx:0000000000000000 $t
-     /tmp/cchkk89K.s:702    .text.ral_lr11xx_set_rx:0000000000000000 ral_lr11xx_set_rx
-     /tmp/cchkk89K.s:727    .text.ral_lr11xx_set_rx:0000000000000024 $d
-     /tmp/cchkk89K.s:730    .text.ral_lr11xx_cfg_rx_boosted:0000000000000000 $t
-     /tmp/cchkk89K.s:737    .text.ral_lr11xx_cfg_rx_boosted:0000000000000000 ral_lr11xx_cfg_rx_boosted
-     /tmp/cchkk89K.s:746    .text.ral_lr11xx_set_rx_tx_fallback_mode:0000000000000000 $t
-     /tmp/cchkk89K.s:753    .text.ral_lr11xx_set_rx_tx_fallback_mode:0000000000000000 ral_lr11xx_set_rx_tx_fallback_mode
-     /tmp/cchkk89K.s:770    .text.ral_lr11xx_stop_timer_on_preamble:0000000000000000 $t
-     /tmp/cchkk89K.s:777    .text.ral_lr11xx_stop_timer_on_preamble:0000000000000000 ral_lr11xx_stop_timer_on_preamble
-     /tmp/cchkk89K.s:786    .text.ral_lr11xx_set_rx_duty_cycle:0000000000000000 $t
-     /tmp/cchkk89K.s:793    .text.ral_lr11xx_set_rx_duty_cycle:0000000000000000 ral_lr11xx_set_rx_duty_cycle
-     /tmp/cchkk89K.s:803    .text.ral_lr11xx_set_lora_cad:0000000000000000 $t
-     /tmp/cchkk89K.s:810    .text.ral_lr11xx_set_lora_cad:0000000000000000 ral_lr11xx_set_lora_cad
-     /tmp/cchkk89K.s:819    .text.ral_lr11xx_set_tx_cw:0000000000000000 $t
-     /tmp/cchkk89K.s:826    .text.ral_lr11xx_set_tx_cw:0000000000000000 ral_lr11xx_set_tx_cw
-     /tmp/cchkk89K.s:835    .text.ral_lr11xx_set_tx_infinite_preamble:0000000000000000 $t
-     /tmp/cchkk89K.s:842    .text.ral_lr11xx_set_tx_infinite_preamble:0000000000000000 ral_lr11xx_set_tx_infinite_preamble
-     /tmp/cchkk89K.s:851    .text.ral_lr11xx_cal_img:0000000000000000 $t
-     /tmp/cchkk89K.s:858    .text.ral_lr11xx_cal_img:0000000000000000 ral_lr11xx_cal_img
-     /tmp/cchkk89K.s:867    .text.ral_lr11xx_set_tx_cfg:0000000000000000 $t
-     /tmp/cchkk89K.s:874    .text.ral_lr11xx_set_tx_cfg:0000000000000000 ral_lr11xx_set_tx_cfg
-ARM GAS  /tmp/cchkk89K.s 			page 41
+     /tmp/ccshtK2a.s:12     .text.ral_lr11xx_convert_irq_flags_to_ral:0000000000000000 $t
+     /tmp/ccshtK2a.s:19     .text.ral_lr11xx_convert_irq_flags_to_ral:0000000000000000 ral_lr11xx_convert_irq_flags_to_ral
+     /tmp/ccshtK2a.s:93     .text.ral_lr11xx_convert_irq_flags_from_ral:0000000000000000 $t
+     /tmp/ccshtK2a.s:99     .text.ral_lr11xx_convert_irq_flags_from_ral:0000000000000000 ral_lr11xx_convert_irq_flags_from_ral
+     /tmp/ccshtK2a.s:172    .text.ral_lr11xx_convert_gfsk_pkt_params_from_ral:0000000000000000 $t
+     /tmp/ccshtK2a.s:178    .text.ral_lr11xx_convert_gfsk_pkt_params_from_ral:0000000000000000 ral_lr11xx_convert_gfsk_pkt_params_from_ral
+     /tmp/ccshtK2a.s:190    .text.ral_lr11xx_convert_gfsk_pkt_params_from_ral:0000000000000012 $d
+     /tmp/ccshtK2a.s:242    .text.ral_lr11xx_convert_gfsk_pkt_params_from_ral:000000000000005e $d
+     /tmp/ccshtK2a.s:277    .text.ral_lr11xx_convert_lora_mod_params_from_ral:0000000000000000 $t
+     /tmp/ccshtK2a.s:283    .text.ral_lr11xx_convert_lora_mod_params_from_ral:0000000000000000 ral_lr11xx_convert_lora_mod_params_from_ral
+     /tmp/ccshtK2a.s:298    .text.ral_lr11xx_convert_lora_mod_params_from_ral:0000000000000018 $d
+     /tmp/ccshtK2a.s:310    .text.ral_lr11xx_convert_lora_mod_params_from_ral:0000000000000024 $t
+     /tmp/ccshtK2a.s:358    .text.ral_lr11xx_convert_gfsk_mod_params_from_ral:0000000000000000 $t
+     /tmp/ccshtK2a.s:364    .text.ral_lr11xx_convert_gfsk_mod_params_from_ral:0000000000000000 ral_lr11xx_convert_gfsk_mod_params_from_ral
+     /tmp/ccshtK2a.s:388    .text.ral_lr11xx_convert_gfsk_mod_params_from_ral:000000000000002c $d
+     /tmp/ccshtK2a.s:421    .text.ral_lr11xx_convert_lora_pkt_params_from_ral:0000000000000000 $t
+     /tmp/ccshtK2a.s:427    .text.ral_lr11xx_convert_lora_pkt_params_from_ral:0000000000000000 ral_lr11xx_convert_lora_pkt_params_from_ral
+     /tmp/ccshtK2a.s:459    .text.ral_lr11xx_handles_part:0000000000000000 $t
+     /tmp/ccshtK2a.s:466    .text.ral_lr11xx_handles_part:0000000000000000 ral_lr11xx_handles_part
+     /tmp/ccshtK2a.s:489    .text.ral_lr11xx_handles_part:0000000000000024 $d
+     /tmp/ccshtK2a.s:493    .text.ral_lr11xx_reset:0000000000000000 $t
+     /tmp/ccshtK2a.s:500    .text.ral_lr11xx_reset:0000000000000000 ral_lr11xx_reset
+     /tmp/ccshtK2a.s:509    .text.ral_lr11xx_init:0000000000000000 $t
+     /tmp/ccshtK2a.s:516    .text.ral_lr11xx_init:0000000000000000 ral_lr11xx_init
+     /tmp/ccshtK2a.s:592    .text.ral_lr11xx_wakeup:0000000000000000 $t
+     /tmp/ccshtK2a.s:599    .text.ral_lr11xx_wakeup:0000000000000000 ral_lr11xx_wakeup
+     /tmp/ccshtK2a.s:608    .text.ral_lr11xx_set_sleep:0000000000000000 $t
+     /tmp/ccshtK2a.s:615    .text.ral_lr11xx_set_sleep:0000000000000000 ral_lr11xx_set_sleep
+     /tmp/ccshtK2a.s:637    .text.ral_lr11xx_set_standby:0000000000000000 $t
+     /tmp/ccshtK2a.s:644    .text.ral_lr11xx_set_standby:0000000000000000 ral_lr11xx_set_standby
+     /tmp/ccshtK2a.s:662    .text.ral_lr11xx_set_fs:0000000000000000 $t
+     /tmp/ccshtK2a.s:669    .text.ral_lr11xx_set_fs:0000000000000000 ral_lr11xx_set_fs
+     /tmp/ccshtK2a.s:678    .text.ral_lr11xx_set_tx:0000000000000000 $t
+     /tmp/ccshtK2a.s:685    .text.ral_lr11xx_set_tx:0000000000000000 ral_lr11xx_set_tx
+     /tmp/ccshtK2a.s:695    .text.ral_lr11xx_set_rx:0000000000000000 $t
+     /tmp/ccshtK2a.s:702    .text.ral_lr11xx_set_rx:0000000000000000 ral_lr11xx_set_rx
+     /tmp/ccshtK2a.s:727    .text.ral_lr11xx_set_rx:0000000000000024 $d
+     /tmp/ccshtK2a.s:730    .text.ral_lr11xx_cfg_rx_boosted:0000000000000000 $t
+     /tmp/ccshtK2a.s:737    .text.ral_lr11xx_cfg_rx_boosted:0000000000000000 ral_lr11xx_cfg_rx_boosted
+     /tmp/ccshtK2a.s:746    .text.ral_lr11xx_set_rx_tx_fallback_mode:0000000000000000 $t
+     /tmp/ccshtK2a.s:753    .text.ral_lr11xx_set_rx_tx_fallback_mode:0000000000000000 ral_lr11xx_set_rx_tx_fallback_mode
+     /tmp/ccshtK2a.s:770    .text.ral_lr11xx_stop_timer_on_preamble:0000000000000000 $t
+     /tmp/ccshtK2a.s:777    .text.ral_lr11xx_stop_timer_on_preamble:0000000000000000 ral_lr11xx_stop_timer_on_preamble
+     /tmp/ccshtK2a.s:786    .text.ral_lr11xx_set_rx_duty_cycle:0000000000000000 $t
+     /tmp/ccshtK2a.s:793    .text.ral_lr11xx_set_rx_duty_cycle:0000000000000000 ral_lr11xx_set_rx_duty_cycle
+     /tmp/ccshtK2a.s:803    .text.ral_lr11xx_set_lora_cad:0000000000000000 $t
+     /tmp/ccshtK2a.s:810    .text.ral_lr11xx_set_lora_cad:0000000000000000 ral_lr11xx_set_lora_cad
+     /tmp/ccshtK2a.s:819    .text.ral_lr11xx_set_tx_cw:0000000000000000 $t
+     /tmp/ccshtK2a.s:826    .text.ral_lr11xx_set_tx_cw:0000000000000000 ral_lr11xx_set_tx_cw
+     /tmp/ccshtK2a.s:835    .text.ral_lr11xx_set_tx_infinite_preamble:0000000000000000 $t
+     /tmp/ccshtK2a.s:842    .text.ral_lr11xx_set_tx_infinite_preamble:0000000000000000 ral_lr11xx_set_tx_infinite_preamble
+     /tmp/ccshtK2a.s:851    .text.ral_lr11xx_cal_img:0000000000000000 $t
+     /tmp/ccshtK2a.s:858    .text.ral_lr11xx_cal_img:0000000000000000 ral_lr11xx_cal_img
+     /tmp/ccshtK2a.s:867    .text.ral_lr11xx_set_tx_cfg:0000000000000000 $t
+     /tmp/ccshtK2a.s:874    .text.ral_lr11xx_set_tx_cfg:0000000000000000 ral_lr11xx_set_tx_cfg
+ARM GAS  /tmp/ccshtK2a.s 			page 41
 
 
-     /tmp/cchkk89K.s:902    .text.ral_lr11xx_set_pkt_payload:0000000000000000 $t
-     /tmp/cchkk89K.s:909    .text.ral_lr11xx_set_pkt_payload:0000000000000000 ral_lr11xx_set_pkt_payload
-     /tmp/cchkk89K.s:919    .text.ral_lr11xx_get_pkt_payload:0000000000000000 $t
-     /tmp/cchkk89K.s:926    .text.ral_lr11xx_get_pkt_payload:0000000000000000 ral_lr11xx_get_pkt_payload
-     /tmp/cchkk89K.s:962    .text.ral_lr11xx_get_irq_status:0000000000000000 $t
-     /tmp/cchkk89K.s:969    .text.ral_lr11xx_get_irq_status:0000000000000000 ral_lr11xx_get_irq_status
-     /tmp/cchkk89K.s:990    .text.ral_lr11xx_clear_irq_status:0000000000000000 $t
-     /tmp/cchkk89K.s:997    .text.ral_lr11xx_clear_irq_status:0000000000000000 ral_lr11xx_clear_irq_status
-     /tmp/cchkk89K.s:1011   .text.ral_lr11xx_get_and_clear_irq_status:0000000000000000 $t
-     /tmp/cchkk89K.s:1018   .text.ral_lr11xx_get_and_clear_irq_status:0000000000000000 ral_lr11xx_get_and_clear_irq_status
-     /tmp/cchkk89K.s:1040   .text.ral_lr11xx_set_dio_irq_params:0000000000000000 $t
-     /tmp/cchkk89K.s:1047   .text.ral_lr11xx_set_dio_irq_params:0000000000000000 ral_lr11xx_set_dio_irq_params
-     /tmp/cchkk89K.s:1062   .text.ral_lr11xx_set_rf_freq:0000000000000000 $t
-     /tmp/cchkk89K.s:1069   .text.ral_lr11xx_set_rf_freq:0000000000000000 ral_lr11xx_set_rf_freq
-     /tmp/cchkk89K.s:1092   .text.ral_lr11xx_set_pkt_type:0000000000000000 $t
-     /tmp/cchkk89K.s:1099   .text.ral_lr11xx_set_pkt_type:0000000000000000 ral_lr11xx_set_pkt_type
-     /tmp/cchkk89K.s:1121   .text.ral_lr11xx_get_pkt_type:0000000000000000 $t
-     /tmp/cchkk89K.s:1128   .text.ral_lr11xx_get_pkt_type:0000000000000000 ral_lr11xx_get_pkt_type
-     /tmp/cchkk89K.s:1157   .text.ral_lr11xx_set_gfsk_mod_params:0000000000000000 $t
-     /tmp/cchkk89K.s:1164   .text.ral_lr11xx_set_gfsk_mod_params:0000000000000000 ral_lr11xx_set_gfsk_mod_params
-     /tmp/cchkk89K.s:1189   .text.ral_lr11xx_set_gfsk_pkt_params:0000000000000000 $t
-     /tmp/cchkk89K.s:1196   .text.ral_lr11xx_set_gfsk_pkt_params:0000000000000000 ral_lr11xx_set_gfsk_pkt_params
-     /tmp/cchkk89K.s:1221   .text.ral_lr11xx_set_lora_mod_params:0000000000000000 $t
-     /tmp/cchkk89K.s:1228   .text.ral_lr11xx_set_lora_mod_params:0000000000000000 ral_lr11xx_set_lora_mod_params
-     /tmp/cchkk89K.s:1246   .text.ral_lr11xx_set_lora_pkt_params:0000000000000000 $t
-     /tmp/cchkk89K.s:1253   .text.ral_lr11xx_set_lora_pkt_params:0000000000000000 ral_lr11xx_set_lora_pkt_params
-     /tmp/cchkk89K.s:1276   .text.ral_lr11xx_set_lora_cad_params:0000000000000000 $t
-     /tmp/cchkk89K.s:1283   .text.ral_lr11xx_set_lora_cad_params:0000000000000000 ral_lr11xx_set_lora_cad_params
-     /tmp/cchkk89K.s:1293   .text.ral_lr11xx_set_lora_cad_params:000000000000000e $d
-     /tmp/cchkk89K.s:1349   .text.ral_lr11xx_set_lora_symb_nb_timeout:0000000000000000 $t
-     /tmp/cchkk89K.s:1356   .text.ral_lr11xx_set_lora_symb_nb_timeout:0000000000000000 ral_lr11xx_set_lora_symb_nb_timeout
-     /tmp/cchkk89K.s:1365   .text.ral_lr11xx_set_flrc_mod_params:0000000000000000 $t
-     /tmp/cchkk89K.s:1372   .text.ral_lr11xx_set_flrc_mod_params:0000000000000000 ral_lr11xx_set_flrc_mod_params
-     /tmp/cchkk89K.s:1381   .text.ral_lr11xx_set_flrc_pkt_params:0000000000000000 $t
-     /tmp/cchkk89K.s:1388   .text.ral_lr11xx_set_flrc_pkt_params:0000000000000000 ral_lr11xx_set_flrc_pkt_params
-     /tmp/cchkk89K.s:1397   .text.ral_lr11xx_get_gfsk_rx_pkt_status:0000000000000000 $t
-     /tmp/cchkk89K.s:1404   .text.ral_lr11xx_get_gfsk_rx_pkt_status:0000000000000000 ral_lr11xx_get_gfsk_rx_pkt_status
-     /tmp/cchkk89K.s:1455   .text.ral_lr11xx_get_lora_rx_pkt_status:0000000000000000 $t
-     /tmp/cchkk89K.s:1462   .text.ral_lr11xx_get_lora_rx_pkt_status:0000000000000000 ral_lr11xx_get_lora_rx_pkt_status
-     /tmp/cchkk89K.s:1486   .text.ral_lr11xx_get_flrc_rx_pkt_status:0000000000000000 $t
-     /tmp/cchkk89K.s:1493   .text.ral_lr11xx_get_flrc_rx_pkt_status:0000000000000000 ral_lr11xx_get_flrc_rx_pkt_status
-     /tmp/cchkk89K.s:1502   .text.ral_lr11xx_get_rssi_inst:0000000000000000 $t
-     /tmp/cchkk89K.s:1509   .text.ral_lr11xx_get_rssi_inst:0000000000000000 ral_lr11xx_get_rssi_inst
-     /tmp/cchkk89K.s:1525   .text.ral_lr11xx_get_lora_time_on_air_in_ms:0000000000000000 $t
-     /tmp/cchkk89K.s:1532   .text.ral_lr11xx_get_lora_time_on_air_in_ms:0000000000000000 ral_lr11xx_get_lora_time_on_air_in_ms
-     /tmp/cchkk89K.s:1551   .text.ral_lr11xx_get_gfsk_time_on_air_in_ms:0000000000000000 $t
-     /tmp/cchkk89K.s:1558   .text.ral_lr11xx_get_gfsk_time_on_air_in_ms:0000000000000000 ral_lr11xx_get_gfsk_time_on_air_in_ms
-     /tmp/cchkk89K.s:1578   .text.ral_lr11xx_get_flrc_time_on_air_in_ms:0000000000000000 $t
-     /tmp/cchkk89K.s:1585   .text.ral_lr11xx_get_flrc_time_on_air_in_ms:0000000000000000 ral_lr11xx_get_flrc_time_on_air_in_ms
-     /tmp/cchkk89K.s:1594   .text.ral_lr11xx_set_gfsk_sync_word:0000000000000000 $t
-     /tmp/cchkk89K.s:1601   .text.ral_lr11xx_set_gfsk_sync_word:0000000000000000 ral_lr11xx_set_gfsk_sync_word
-     /tmp/cchkk89K.s:1624   .text.ral_lr11xx_set_lora_sync_word:0000000000000000 $t
-     /tmp/cchkk89K.s:1631   .text.ral_lr11xx_set_lora_sync_word:0000000000000000 ral_lr11xx_set_lora_sync_word
-     /tmp/cchkk89K.s:1640   .text.ral_lr11xx_set_flrc_sync_word:0000000000000000 $t
-     /tmp/cchkk89K.s:1647   .text.ral_lr11xx_set_flrc_sync_word:0000000000000000 ral_lr11xx_set_flrc_sync_word
-     /tmp/cchkk89K.s:1656   .text.ral_lr11xx_set_gfsk_crc_params:0000000000000000 $t
-     /tmp/cchkk89K.s:1663   .text.ral_lr11xx_set_gfsk_crc_params:0000000000000000 ral_lr11xx_set_gfsk_crc_params
-ARM GAS  /tmp/cchkk89K.s 			page 42
+     /tmp/ccshtK2a.s:902    .text.ral_lr11xx_set_pkt_payload:0000000000000000 $t
+     /tmp/ccshtK2a.s:909    .text.ral_lr11xx_set_pkt_payload:0000000000000000 ral_lr11xx_set_pkt_payload
+     /tmp/ccshtK2a.s:919    .text.ral_lr11xx_get_pkt_payload:0000000000000000 $t
+     /tmp/ccshtK2a.s:926    .text.ral_lr11xx_get_pkt_payload:0000000000000000 ral_lr11xx_get_pkt_payload
+     /tmp/ccshtK2a.s:962    .text.ral_lr11xx_get_irq_status:0000000000000000 $t
+     /tmp/ccshtK2a.s:969    .text.ral_lr11xx_get_irq_status:0000000000000000 ral_lr11xx_get_irq_status
+     /tmp/ccshtK2a.s:990    .text.ral_lr11xx_clear_irq_status:0000000000000000 $t
+     /tmp/ccshtK2a.s:997    .text.ral_lr11xx_clear_irq_status:0000000000000000 ral_lr11xx_clear_irq_status
+     /tmp/ccshtK2a.s:1011   .text.ral_lr11xx_get_and_clear_irq_status:0000000000000000 $t
+     /tmp/ccshtK2a.s:1018   .text.ral_lr11xx_get_and_clear_irq_status:0000000000000000 ral_lr11xx_get_and_clear_irq_status
+     /tmp/ccshtK2a.s:1040   .text.ral_lr11xx_set_dio_irq_params:0000000000000000 $t
+     /tmp/ccshtK2a.s:1047   .text.ral_lr11xx_set_dio_irq_params:0000000000000000 ral_lr11xx_set_dio_irq_params
+     /tmp/ccshtK2a.s:1062   .text.ral_lr11xx_set_rf_freq:0000000000000000 $t
+     /tmp/ccshtK2a.s:1069   .text.ral_lr11xx_set_rf_freq:0000000000000000 ral_lr11xx_set_rf_freq
+     /tmp/ccshtK2a.s:1092   .text.ral_lr11xx_set_pkt_type:0000000000000000 $t
+     /tmp/ccshtK2a.s:1099   .text.ral_lr11xx_set_pkt_type:0000000000000000 ral_lr11xx_set_pkt_type
+     /tmp/ccshtK2a.s:1121   .text.ral_lr11xx_get_pkt_type:0000000000000000 $t
+     /tmp/ccshtK2a.s:1128   .text.ral_lr11xx_get_pkt_type:0000000000000000 ral_lr11xx_get_pkt_type
+     /tmp/ccshtK2a.s:1157   .text.ral_lr11xx_set_gfsk_mod_params:0000000000000000 $t
+     /tmp/ccshtK2a.s:1164   .text.ral_lr11xx_set_gfsk_mod_params:0000000000000000 ral_lr11xx_set_gfsk_mod_params
+     /tmp/ccshtK2a.s:1189   .text.ral_lr11xx_set_gfsk_pkt_params:0000000000000000 $t
+     /tmp/ccshtK2a.s:1196   .text.ral_lr11xx_set_gfsk_pkt_params:0000000000000000 ral_lr11xx_set_gfsk_pkt_params
+     /tmp/ccshtK2a.s:1221   .text.ral_lr11xx_set_lora_mod_params:0000000000000000 $t
+     /tmp/ccshtK2a.s:1228   .text.ral_lr11xx_set_lora_mod_params:0000000000000000 ral_lr11xx_set_lora_mod_params
+     /tmp/ccshtK2a.s:1246   .text.ral_lr11xx_set_lora_pkt_params:0000000000000000 $t
+     /tmp/ccshtK2a.s:1253   .text.ral_lr11xx_set_lora_pkt_params:0000000000000000 ral_lr11xx_set_lora_pkt_params
+     /tmp/ccshtK2a.s:1276   .text.ral_lr11xx_set_lora_cad_params:0000000000000000 $t
+     /tmp/ccshtK2a.s:1283   .text.ral_lr11xx_set_lora_cad_params:0000000000000000 ral_lr11xx_set_lora_cad_params
+     /tmp/ccshtK2a.s:1293   .text.ral_lr11xx_set_lora_cad_params:000000000000000e $d
+     /tmp/ccshtK2a.s:1349   .text.ral_lr11xx_set_lora_symb_nb_timeout:0000000000000000 $t
+     /tmp/ccshtK2a.s:1356   .text.ral_lr11xx_set_lora_symb_nb_timeout:0000000000000000 ral_lr11xx_set_lora_symb_nb_timeout
+     /tmp/ccshtK2a.s:1365   .text.ral_lr11xx_set_flrc_mod_params:0000000000000000 $t
+     /tmp/ccshtK2a.s:1372   .text.ral_lr11xx_set_flrc_mod_params:0000000000000000 ral_lr11xx_set_flrc_mod_params
+     /tmp/ccshtK2a.s:1381   .text.ral_lr11xx_set_flrc_pkt_params:0000000000000000 $t
+     /tmp/ccshtK2a.s:1388   .text.ral_lr11xx_set_flrc_pkt_params:0000000000000000 ral_lr11xx_set_flrc_pkt_params
+     /tmp/ccshtK2a.s:1397   .text.ral_lr11xx_get_gfsk_rx_pkt_status:0000000000000000 $t
+     /tmp/ccshtK2a.s:1404   .text.ral_lr11xx_get_gfsk_rx_pkt_status:0000000000000000 ral_lr11xx_get_gfsk_rx_pkt_status
+     /tmp/ccshtK2a.s:1455   .text.ral_lr11xx_get_lora_rx_pkt_status:0000000000000000 $t
+     /tmp/ccshtK2a.s:1462   .text.ral_lr11xx_get_lora_rx_pkt_status:0000000000000000 ral_lr11xx_get_lora_rx_pkt_status
+     /tmp/ccshtK2a.s:1486   .text.ral_lr11xx_get_flrc_rx_pkt_status:0000000000000000 $t
+     /tmp/ccshtK2a.s:1493   .text.ral_lr11xx_get_flrc_rx_pkt_status:0000000000000000 ral_lr11xx_get_flrc_rx_pkt_status
+     /tmp/ccshtK2a.s:1502   .text.ral_lr11xx_get_rssi_inst:0000000000000000 $t
+     /tmp/ccshtK2a.s:1509   .text.ral_lr11xx_get_rssi_inst:0000000000000000 ral_lr11xx_get_rssi_inst
+     /tmp/ccshtK2a.s:1525   .text.ral_lr11xx_get_lora_time_on_air_in_ms:0000000000000000 $t
+     /tmp/ccshtK2a.s:1532   .text.ral_lr11xx_get_lora_time_on_air_in_ms:0000000000000000 ral_lr11xx_get_lora_time_on_air_in_ms
+     /tmp/ccshtK2a.s:1551   .text.ral_lr11xx_get_gfsk_time_on_air_in_ms:0000000000000000 $t
+     /tmp/ccshtK2a.s:1558   .text.ral_lr11xx_get_gfsk_time_on_air_in_ms:0000000000000000 ral_lr11xx_get_gfsk_time_on_air_in_ms
+     /tmp/ccshtK2a.s:1578   .text.ral_lr11xx_get_flrc_time_on_air_in_ms:0000000000000000 $t
+     /tmp/ccshtK2a.s:1585   .text.ral_lr11xx_get_flrc_time_on_air_in_ms:0000000000000000 ral_lr11xx_get_flrc_time_on_air_in_ms
+     /tmp/ccshtK2a.s:1594   .text.ral_lr11xx_set_gfsk_sync_word:0000000000000000 $t
+     /tmp/ccshtK2a.s:1601   .text.ral_lr11xx_set_gfsk_sync_word:0000000000000000 ral_lr11xx_set_gfsk_sync_word
+     /tmp/ccshtK2a.s:1624   .text.ral_lr11xx_set_lora_sync_word:0000000000000000 $t
+     /tmp/ccshtK2a.s:1631   .text.ral_lr11xx_set_lora_sync_word:0000000000000000 ral_lr11xx_set_lora_sync_word
+     /tmp/ccshtK2a.s:1640   .text.ral_lr11xx_set_flrc_sync_word:0000000000000000 $t
+     /tmp/ccshtK2a.s:1647   .text.ral_lr11xx_set_flrc_sync_word:0000000000000000 ral_lr11xx_set_flrc_sync_word
+     /tmp/ccshtK2a.s:1656   .text.ral_lr11xx_set_gfsk_crc_params:0000000000000000 $t
+     /tmp/ccshtK2a.s:1663   .text.ral_lr11xx_set_gfsk_crc_params:0000000000000000 ral_lr11xx_set_gfsk_crc_params
+ARM GAS  /tmp/ccshtK2a.s 			page 42
 
 
-     /tmp/cchkk89K.s:1672   .text.ral_lr11xx_set_flrc_crc_params:0000000000000000 $t
-     /tmp/cchkk89K.s:1679   .text.ral_lr11xx_set_flrc_crc_params:0000000000000000 ral_lr11xx_set_flrc_crc_params
-     /tmp/cchkk89K.s:1688   .text.ral_lr11xx_set_gfsk_whitening_seed:0000000000000000 $t
-     /tmp/cchkk89K.s:1695   .text.ral_lr11xx_set_gfsk_whitening_seed:0000000000000000 ral_lr11xx_set_gfsk_whitening_seed
-     /tmp/cchkk89K.s:1704   .text.ral_lr11xx_lr_fhss_init:0000000000000000 $t
-     /tmp/cchkk89K.s:1711   .text.ral_lr11xx_lr_fhss_init:0000000000000000 ral_lr11xx_lr_fhss_init
-     /tmp/cchkk89K.s:1720   .text.ral_lr11xx_lr_fhss_build_frame:0000000000000000 $t
-     /tmp/cchkk89K.s:1727   .text.ral_lr11xx_lr_fhss_build_frame:0000000000000000 ral_lr11xx_lr_fhss_build_frame
-     /tmp/cchkk89K.s:1782   .text.ral_lr11xx_lr_fhss_handle_hop:0000000000000000 $t
-     /tmp/cchkk89K.s:1789   .text.ral_lr11xx_lr_fhss_handle_hop:0000000000000000 ral_lr11xx_lr_fhss_handle_hop
-     /tmp/cchkk89K.s:1798   .text.ral_lr11xx_lr_fhss_handle_tx_done:0000000000000000 $t
-     /tmp/cchkk89K.s:1805   .text.ral_lr11xx_lr_fhss_handle_tx_done:0000000000000000 ral_lr11xx_lr_fhss_handle_tx_done
-     /tmp/cchkk89K.s:1814   .text.ral_lr11xx_lr_fhss_get_time_on_air_in_ms:0000000000000000 $t
-     /tmp/cchkk89K.s:1821   .text.ral_lr11xx_lr_fhss_get_time_on_air_in_ms:0000000000000000 ral_lr11xx_lr_fhss_get_time_on_air_in_ms
-     /tmp/cchkk89K.s:1846   .text.ral_lr11xx_lr_fhss_get_hop_sequence_count:0000000000000000 $t
-     /tmp/cchkk89K.s:1853   .text.ral_lr11xx_lr_fhss_get_hop_sequence_count:0000000000000000 ral_lr11xx_lr_fhss_get_hop_sequence_count
-     /tmp/cchkk89K.s:1871   .text.ral_lr11xx_get_lora_rx_pkt_cr_crc:0000000000000000 $t
-     /tmp/cchkk89K.s:1878   .text.ral_lr11xx_get_lora_rx_pkt_cr_crc:0000000000000000 ral_lr11xx_get_lora_rx_pkt_cr_crc
-     /tmp/cchkk89K.s:1887   .text.ral_lr11xx_get_tx_consumption_in_ua:0000000000000000 $t
-     /tmp/cchkk89K.s:1894   .text.ral_lr11xx_get_tx_consumption_in_ua:0000000000000000 ral_lr11xx_get_tx_consumption_in_ua
-     /tmp/cchkk89K.s:2010   .text.ral_lr11xx_get_tx_consumption_in_ua:00000000000000c8 $d
-     /tmp/cchkk89K.s:2197   .rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_lp_vreg:0000000000000000 ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_lp_vreg
-     /tmp/cchkk89K.s:2272   .rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_ldo_lp_vreg:0000000000000000 ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_ldo_lp_vreg
-     /tmp/cchkk89K.s:2160   .rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_hp_vbat:0000000000000000 ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_hp_vbat
-     /tmp/cchkk89K.s:2235   .rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_ldo_hp_vbat:0000000000000000 ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_ldo_hp_vbat
-     /tmp/cchkk89K.s:2017   .text.ral_lr11xx_get_gfsk_rx_consumption_in_ua:0000000000000000 $t
-     /tmp/cchkk89K.s:2024   .text.ral_lr11xx_get_gfsk_rx_consumption_in_ua:0000000000000000 ral_lr11xx_get_gfsk_rx_consumption_in_ua
-     /tmp/cchkk89K.s:2048   .text.ral_lr11xx_get_gfsk_rx_consumption_in_ua:0000000000000024 $d
-     /tmp/cchkk89K.s:2052   .text.ral_lr11xx_get_lora_rx_consumption_in_ua:0000000000000000 $t
-     /tmp/cchkk89K.s:2059   .text.ral_lr11xx_get_lora_rx_consumption_in_ua:0000000000000000 ral_lr11xx_get_lora_rx_consumption_in_ua
-     /tmp/cchkk89K.s:2083   .text.ral_lr11xx_get_lora_rx_consumption_in_ua:0000000000000024 $d
-     /tmp/cchkk89K.s:2087   .text.ral_lr11xx_get_random_numbers:0000000000000000 $t
-     /tmp/cchkk89K.s:2094   .text.ral_lr11xx_get_random_numbers:0000000000000000 ral_lr11xx_get_random_numbers
-     /tmp/cchkk89K.s:2120   .rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_hf_vreg:0000000000000000 $d
-     /tmp/cchkk89K.s:2124   .rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_hf_vreg:0000000000000000 ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_hf_vreg
-     /tmp/cchkk89K.s:2157   .rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_hp_vbat:0000000000000000 $d
-     /tmp/cchkk89K.s:2194   .rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_lp_vreg:0000000000000000 $d
-     /tmp/cchkk89K.s:2232   .rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_ldo_hp_vbat:0000000000000000 $d
-     /tmp/cchkk89K.s:2269   .rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_ldo_lp_vreg:0000000000000000 $d
-     /tmp/cchkk89K.s:195    .text.ral_lr11xx_convert_gfsk_pkt_params_from_ral:0000000000000017 $d
-     /tmp/cchkk89K.s:195    .text.ral_lr11xx_convert_gfsk_pkt_params_from_ral:0000000000000018 $t
-     /tmp/cchkk89K.s:247    .text.ral_lr11xx_convert_gfsk_pkt_params_from_ral:0000000000000063 $d
-     /tmp/cchkk89K.s:247    .text.ral_lr11xx_convert_gfsk_pkt_params_from_ral:0000000000000064 $t
-     /tmp/cchkk89K.s:393    .text.ral_lr11xx_convert_gfsk_mod_params_from_ral:0000000000000031 $d
-     /tmp/cchkk89K.s:393    .text.ral_lr11xx_convert_gfsk_mod_params_from_ral:0000000000000032 $t
-     /tmp/cchkk89K.s:1298   .text.ral_lr11xx_set_lora_cad_params:0000000000000013 $d
-     /tmp/cchkk89K.s:1298   .text.ral_lr11xx_set_lora_cad_params:0000000000000014 $t
+     /tmp/ccshtK2a.s:1672   .text.ral_lr11xx_set_flrc_crc_params:0000000000000000 $t
+     /tmp/ccshtK2a.s:1679   .text.ral_lr11xx_set_flrc_crc_params:0000000000000000 ral_lr11xx_set_flrc_crc_params
+     /tmp/ccshtK2a.s:1688   .text.ral_lr11xx_set_gfsk_whitening_seed:0000000000000000 $t
+     /tmp/ccshtK2a.s:1695   .text.ral_lr11xx_set_gfsk_whitening_seed:0000000000000000 ral_lr11xx_set_gfsk_whitening_seed
+     /tmp/ccshtK2a.s:1704   .text.ral_lr11xx_lr_fhss_init:0000000000000000 $t
+     /tmp/ccshtK2a.s:1711   .text.ral_lr11xx_lr_fhss_init:0000000000000000 ral_lr11xx_lr_fhss_init
+     /tmp/ccshtK2a.s:1720   .text.ral_lr11xx_lr_fhss_build_frame:0000000000000000 $t
+     /tmp/ccshtK2a.s:1727   .text.ral_lr11xx_lr_fhss_build_frame:0000000000000000 ral_lr11xx_lr_fhss_build_frame
+     /tmp/ccshtK2a.s:1782   .text.ral_lr11xx_lr_fhss_handle_hop:0000000000000000 $t
+     /tmp/ccshtK2a.s:1789   .text.ral_lr11xx_lr_fhss_handle_hop:0000000000000000 ral_lr11xx_lr_fhss_handle_hop
+     /tmp/ccshtK2a.s:1798   .text.ral_lr11xx_lr_fhss_handle_tx_done:0000000000000000 $t
+     /tmp/ccshtK2a.s:1805   .text.ral_lr11xx_lr_fhss_handle_tx_done:0000000000000000 ral_lr11xx_lr_fhss_handle_tx_done
+     /tmp/ccshtK2a.s:1814   .text.ral_lr11xx_lr_fhss_get_time_on_air_in_ms:0000000000000000 $t
+     /tmp/ccshtK2a.s:1821   .text.ral_lr11xx_lr_fhss_get_time_on_air_in_ms:0000000000000000 ral_lr11xx_lr_fhss_get_time_on_air_in_ms
+     /tmp/ccshtK2a.s:1846   .text.ral_lr11xx_lr_fhss_get_hop_sequence_count:0000000000000000 $t
+     /tmp/ccshtK2a.s:1853   .text.ral_lr11xx_lr_fhss_get_hop_sequence_count:0000000000000000 ral_lr11xx_lr_fhss_get_hop_sequence_count
+     /tmp/ccshtK2a.s:1871   .text.ral_lr11xx_get_lora_rx_pkt_cr_crc:0000000000000000 $t
+     /tmp/ccshtK2a.s:1878   .text.ral_lr11xx_get_lora_rx_pkt_cr_crc:0000000000000000 ral_lr11xx_get_lora_rx_pkt_cr_crc
+     /tmp/ccshtK2a.s:1887   .text.ral_lr11xx_get_tx_consumption_in_ua:0000000000000000 $t
+     /tmp/ccshtK2a.s:1894   .text.ral_lr11xx_get_tx_consumption_in_ua:0000000000000000 ral_lr11xx_get_tx_consumption_in_ua
+     /tmp/ccshtK2a.s:2010   .text.ral_lr11xx_get_tx_consumption_in_ua:00000000000000c8 $d
+     /tmp/ccshtK2a.s:2197   .rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_lp_vreg:0000000000000000 ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_lp_vreg
+     /tmp/ccshtK2a.s:2272   .rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_ldo_lp_vreg:0000000000000000 ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_ldo_lp_vreg
+     /tmp/ccshtK2a.s:2160   .rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_hp_vbat:0000000000000000 ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_hp_vbat
+     /tmp/ccshtK2a.s:2235   .rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_ldo_hp_vbat:0000000000000000 ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_ldo_hp_vbat
+     /tmp/ccshtK2a.s:2017   .text.ral_lr11xx_get_gfsk_rx_consumption_in_ua:0000000000000000 $t
+     /tmp/ccshtK2a.s:2024   .text.ral_lr11xx_get_gfsk_rx_consumption_in_ua:0000000000000000 ral_lr11xx_get_gfsk_rx_consumption_in_ua
+     /tmp/ccshtK2a.s:2048   .text.ral_lr11xx_get_gfsk_rx_consumption_in_ua:0000000000000024 $d
+     /tmp/ccshtK2a.s:2052   .text.ral_lr11xx_get_lora_rx_consumption_in_ua:0000000000000000 $t
+     /tmp/ccshtK2a.s:2059   .text.ral_lr11xx_get_lora_rx_consumption_in_ua:0000000000000000 ral_lr11xx_get_lora_rx_consumption_in_ua
+     /tmp/ccshtK2a.s:2083   .text.ral_lr11xx_get_lora_rx_consumption_in_ua:0000000000000024 $d
+     /tmp/ccshtK2a.s:2087   .text.ral_lr11xx_get_random_numbers:0000000000000000 $t
+     /tmp/ccshtK2a.s:2094   .text.ral_lr11xx_get_random_numbers:0000000000000000 ral_lr11xx_get_random_numbers
+     /tmp/ccshtK2a.s:2120   .rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_hf_vreg:0000000000000000 $d
+     /tmp/ccshtK2a.s:2124   .rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_hf_vreg:0000000000000000 ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_hf_vreg
+     /tmp/ccshtK2a.s:2157   .rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_hp_vbat:0000000000000000 $d
+     /tmp/ccshtK2a.s:2194   .rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_dcdc_lp_vreg:0000000000000000 $d
+     /tmp/ccshtK2a.s:2232   .rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_ldo_hp_vbat:0000000000000000 $d
+     /tmp/ccshtK2a.s:2269   .rodata.ral_lr11xx_convert_tx_dbm_to_ua_reg_mode_ldo_lp_vreg:0000000000000000 $d
+     /tmp/ccshtK2a.s:195    .text.ral_lr11xx_convert_gfsk_pkt_params_from_ral:0000000000000017 $d
+     /tmp/ccshtK2a.s:195    .text.ral_lr11xx_convert_gfsk_pkt_params_from_ral:0000000000000018 $t
+     /tmp/ccshtK2a.s:247    .text.ral_lr11xx_convert_gfsk_pkt_params_from_ral:0000000000000063 $d
+     /tmp/ccshtK2a.s:247    .text.ral_lr11xx_convert_gfsk_pkt_params_from_ral:0000000000000064 $t
+     /tmp/ccshtK2a.s:393    .text.ral_lr11xx_convert_gfsk_mod_params_from_ral:0000000000000031 $d
+     /tmp/ccshtK2a.s:393    .text.ral_lr11xx_convert_gfsk_mod_params_from_ral:0000000000000032 $t
+     /tmp/ccshtK2a.s:1298   .text.ral_lr11xx_set_lora_cad_params:0000000000000013 $d
+     /tmp/ccshtK2a.s:1298   .text.ral_lr11xx_set_lora_cad_params:0000000000000014 $t
 
 UNDEFINED SYMBOLS
 __gnu_thumb1_case_uqi
@@ -2463,7 +2463,7 @@ memset
 ral_lr11xx_bsp_get_crc_state
 ral_lr11xx_bsp_get_reg_mode
 lr11xx_system_set_reg_mode
-ARM GAS  /tmp/cchkk89K.s 			page 43
+ARM GAS  /tmp/ccshtK2a.s 			page 43
 
 
 ral_lr11xx_bsp_get_rf_switch_cfg
@@ -2523,7 +2523,7 @@ lr11xx_lr_fhss_init
 lr11xx_lr_fhss_build_frame
 lr11xx_lr_fhss_get_time_on_air_in_ms
 lr11xx_lr_fhss_get_hop_sequence_count
-ARM GAS  /tmp/cchkk89K.s 			page 44
+ARM GAS  /tmp/ccshtK2a.s 			page 44
 
 
 lr11xx_system_get_random_number

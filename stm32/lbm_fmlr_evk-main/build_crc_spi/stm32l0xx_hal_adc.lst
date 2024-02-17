@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc7Ja3Jx.s 			page 1
+ARM GAS  /tmp/ccre0hO8.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cc7Ja3Jx.s 			page 1
   58 0000 0321     		movs	r1, #3
   59 0002 0368     		ldr	r3, [r0]
   60 0004 70B5     		push	{r4, r5, r6, lr}
-ARM GAS  /tmp/cc7Ja3Jx.s 			page 2
+ARM GAS  /tmp/ccre0hO8.s 			page 2
 
 
   61 0006 0400     		movs	r4, r0
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cc7Ja3Jx.s 			page 1
  115 006a 0343     		orrs	r3, r0
  116 006c A365     		str	r3, [r4, #88]
  117 006e D0E7     		b	.L8
-ARM GAS  /tmp/cc7Ja3Jx.s 			page 3
+ARM GAS  /tmp/ccre0hO8.s 			page 3
 
 
  119              		.section	.text.ADC_Enable,"ax",%progbits
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cc7Ja3Jx.s 			page 1
  174 0054 801B     		subs	r0, r0, r6
  175 0056 0A28     		cmp	r0, #10
  176 0058 F6D9     		bls	.L28
-ARM GAS  /tmp/cc7Ja3Jx.s 			page 4
+ARM GAS  /tmp/ccre0hO8.s 			page 4
 
 
  177 005a 2368     		ldr	r3, [r4]
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cc7Ja3Jx.s 			page 1
  233 002e 2368     		ldr	r3, [r4]
  234 0030 9B68     		ldr	r3, [r3, #8]
  235 0032 3342     		tst	r3, r6
-ARM GAS  /tmp/cc7Ja3Jx.s 			page 5
+ARM GAS  /tmp/ccre0hO8.s 			page 5
 
 
  236 0034 EBD0     		beq	.L38
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cc7Ja3Jx.s 			page 1
  294 001a FFF7FEFF 		bl	HAL_ADC_MspInit
  295              	.L48:
  296 001e 636D     		ldr	r3, [r4, #84]
-ARM GAS  /tmp/cc7Ja3Jx.s 			page 6
+ARM GAS  /tmp/ccre0hO8.s 			page 6
 
 
  297 0020 DB06     		lsls	r3, r3, #27
@@ -358,7 +358,7 @@ ARM GAS  /tmp/cc7Ja3Jx.s 			page 1
  351 0080 1D69     		ldr	r5, [r3, #16]
  352 0082 2943     		orrs	r1, r5
  353 0084 1961     		str	r1, [r3, #16]
-ARM GAS  /tmp/cc7Ja3Jx.s 			page 7
+ARM GAS  /tmp/ccre0hO8.s 			page 7
 
 
  354              	.L55:
@@ -418,7 +418,7 @@ ARM GAS  /tmp/cc7Ja3Jx.s 			page 1
  408 00ea 2D78     		ldrb	r5, [r5]
  409 00ec 6D00     		lsls	r5, r5, #1
  410 00ee 2A43     		orrs	r2, r5
-ARM GAS  /tmp/cc7Ja3Jx.s 			page 8
+ARM GAS  /tmp/ccre0hO8.s 			page 8
 
 
  411 00f0 0243     		orrs	r2, r0
@@ -478,7 +478,7 @@ ARM GAS  /tmp/cc7Ja3Jx.s 			page 1
  465 0156 A065     		str	r0, [r4, #88]
  466 0158 636D     		ldr	r3, [r4, #84]
  467 015a 9343     		bics	r3, r2
-ARM GAS  /tmp/cc7Ja3Jx.s 			page 9
+ARM GAS  /tmp/ccre0hO8.s 			page 9
 
 
  468 015c 1A00     		movs	r2, r3
@@ -538,7 +538,7 @@ ARM GAS  /tmp/cc7Ja3Jx.s 			page 1
  524              		@ link register save eliminated.
  525              		@ sp needed
  526 0000 7047     		bx	lr
-ARM GAS  /tmp/cc7Ja3Jx.s 			page 10
+ARM GAS  /tmp/ccre0hO8.s 			page 10
 
 
  528              		.section	.text.HAL_ADC_DeInit,"ax",%progbits
@@ -598,7 +598,7 @@ ARM GAS  /tmp/cc7Ja3Jx.s 			page 1
  583 0050 1249     		ldr	r1, .L82+12
  584 0052 0A40     		ands	r2, r1
  585 0054 DA60     		str	r2, [r3, #12]
-ARM GAS  /tmp/cc7Ja3Jx.s 			page 11
+ARM GAS  /tmp/ccre0hO8.s 			page 11
 
 
  586 0056 1A69     		ldr	r2, [r3, #16]
@@ -658,7 +658,7 @@ ARM GAS  /tmp/cc7Ja3Jx.s 			page 1
  642 000c 1AD4     		bmi	.L85
  643 000e 2500     		movs	r5, r4
  644 0010 5035     		adds	r5, r5, #80
-ARM GAS  /tmp/cc7Ja3Jx.s 			page 12
+ARM GAS  /tmp/ccre0hO8.s 			page 12
 
 
  645 0012 2B78     		ldrb	r3, [r5]
@@ -718,7 +718,7 @@ ARM GAS  /tmp/cc7Ja3Jx.s 			page 1
  701 000a 0220     		movs	r0, #2
  702 000c 012B     		cmp	r3, #1
  703 000e 12D0     		beq	.L96
-ARM GAS  /tmp/cc7Ja3Jx.s 			page 13
+ARM GAS  /tmp/ccre0hO8.s 			page 13
 
 
  704 0010 0125     		movs	r5, #1
@@ -778,7 +778,7 @@ ARM GAS  /tmp/cc7Ja3Jx.s 			page 1
  760              	.L103:
  761              		@ sp needed
  762 0026 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
-ARM GAS  /tmp/cc7Ja3Jx.s 			page 14
+ARM GAS  /tmp/ccre0hO8.s 			page 14
 
 
  763              	.L102:
@@ -838,7 +838,7 @@ ARM GAS  /tmp/cc7Ja3Jx.s 			page 1
  817 008a 2368     		ldr	r3, [r4]
  818 008c 1B68     		ldr	r3, [r3]
  819 008e 1A40     		ands	r2, r3
-ARM GAS  /tmp/cc7Ja3Jx.s 			page 15
+ARM GAS  /tmp/ccre0hO8.s 			page 15
 
 
  820 0090 1D42     		tst	r5, r3
@@ -898,7 +898,7 @@ ARM GAS  /tmp/cc7Ja3Jx.s 			page 1
  876 001a 1FD1     		bne	.L135
  877 001c 8022     		movs	r2, #128
  878 001e 616D     		ldr	r1, [r4, #84]
-ARM GAS  /tmp/cc7Ja3Jx.s 			page 16
+ARM GAS  /tmp/ccre0hO8.s 			page 16
 
 
  879 0020 5202     		lsls	r2, r2, #9
@@ -958,7 +958,7 @@ ARM GAS  /tmp/cc7Ja3Jx.s 			page 1
  934              		.global	HAL_ADC_Start_IT
  935              		.syntax unified
  936              		.code	16
-ARM GAS  /tmp/cc7Ja3Jx.s 			page 17
+ARM GAS  /tmp/ccre0hO8.s 			page 17
 
 
  937              		.thumb_func
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/cc7Ja3Jx.s 			page 1
  992              	.L142:
  993 005e 2000     		movs	r0, r4
  994 0060 FFF7FEFF 		bl	ADC_Enable
-ARM GAS  /tmp/cc7Ja3Jx.s 			page 18
+ARM GAS  /tmp/ccre0hO8.s 			page 18
 
 
  995 0064 0028     		cmp	r0, #0
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/cc7Ja3Jx.s 			page 1
  1051              		@ sp needed
  1052 0040 70BD     		pop	{r4, r5, r6, pc}
  1053              	.L161:
-ARM GAS  /tmp/cc7Ja3Jx.s 			page 19
+ARM GAS  /tmp/ccre0hO8.s 			page 19
 
 
  1054 0042 C046     		.align	2
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/cc7Ja3Jx.s 			page 1
  1110 0050 1C23     		movs	r3, #28
  1111 0052 0B60     		str	r3, [r1]
  1112 0054 4A68     		ldr	r2, [r1, #4]
-ARM GAS  /tmp/cc7Ja3Jx.s 			page 20
+ARM GAS  /tmp/ccre0hO8.s 			page 20
 
 
  1113 0056 0C3B     		subs	r3, r3, #12
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/cc7Ja3Jx.s 			page 1
  1169 0020 D368     		ldr	r3, [r2, #12]
  1170 0022 BB43     		bics	r3, r7
  1171 0024 D360     		str	r3, [r2, #12]
-ARM GAS  /tmp/cc7Ja3Jx.s 			page 21
+ARM GAS  /tmp/ccre0hO8.s 			page 21
 
 
  1172 0026 831D     		adds	r3, r0, #6
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/cc7Ja3Jx.s 			page 1
  1228              		@ frame_needed = 0, uses_anonymous_args = 0
  1229              		@ link register save eliminated.
  1230 0000 0368     		ldr	r3, [r0]
-ARM GAS  /tmp/cc7Ja3Jx.s 			page 22
+ARM GAS  /tmp/ccre0hO8.s 			page 22
 
 
  1231              		@ sp needed
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/cc7Ja3Jx.s 			page 1
  1289 003a 8143     		bics	r1, r0
  1290 003c 5160     		str	r1, [r2, #4]
  1291 003e 5A6D     		ldr	r2, [r3, #84]
-ARM GAS  /tmp/cc7Ja3Jx.s 			page 23
+ARM GAS  /tmp/ccre0hO8.s 			page 23
 
 
  1292 0040 0A49     		ldr	r1, .L195
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/cc7Ja3Jx.s 			page 1
  1350 0004 FFF7FEFF 		bl	HAL_ADC_ConvHalfCpltCallback
  1351              		@ sp needed
  1352 0008 10BD     		pop	{r4, pc}
-ARM GAS  /tmp/cc7Ja3Jx.s 			page 24
+ARM GAS  /tmp/ccre0hO8.s 			page 24
 
 
  1354              		.section	.text.HAL_ADC_LevelOutOfWindowCallback,"ax",%progbits
@@ -1438,7 +1438,7 @@ ARM GAS  /tmp/cc7Ja3Jx.s 			page 1
  1414              		.fpu softvfp
  1416              	HAL_ADC_IRQHandler:
  1417              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  /tmp/cc7Ja3Jx.s 			page 25
+ARM GAS  /tmp/ccre0hO8.s 			page 25
 
 
  1418              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -1498,7 +1498,7 @@ ARM GAS  /tmp/cc7Ja3Jx.s 			page 1
  1472              	.L209:
  1473 0064 2000     		movs	r0, r4
  1474 0066 FFF7FEFF 		bl	HAL_ADC_ConvCpltCallback
-ARM GAS  /tmp/cc7Ja3Jx.s 			page 26
+ARM GAS  /tmp/ccre0hO8.s 			page 26
 
 
  1475 006a A369     		ldr	r3, [r4, #24]
@@ -1558,7 +1558,7 @@ ARM GAS  /tmp/cc7Ja3Jx.s 			page 1
  1529 00ce 70BD     		pop	{r4, r5, r6, pc}
  1530              	.L210:
  1531 00d0 2023     		movs	r3, #32
-ARM GAS  /tmp/cc7Ja3Jx.s 			page 27
+ARM GAS  /tmp/ccre0hO8.s 			page 27
 
 
  1532 00d2 626D     		ldr	r2, [r4, #84]
@@ -1618,7 +1618,7 @@ ARM GAS  /tmp/cc7Ja3Jx.s 			page 1
  1588 003a 0340     		ands	r3, r0
  1589 003c B742     		cmp	r7, r6
  1590 003e 19D0     		beq	.L250
-ARM GAS  /tmp/cc7Ja3Jx.s 			page 28
+ARM GAS  /tmp/ccre0hO8.s 			page 28
 
 
  1591 0040 906A     		ldr	r0, [r2, #40]
@@ -1678,7 +1678,7 @@ ARM GAS  /tmp/cc7Ja3Jx.s 			page 1
  1646              		.section	.text.HAL_ADC_AnalogWDGConfig,"ax",%progbits
  1647              		.align	1
  1648              		.global	HAL_ADC_AnalogWDGConfig
-ARM GAS  /tmp/cc7Ja3Jx.s 			page 29
+ARM GAS  /tmp/ccre0hO8.s 			page 29
 
 
  1649              		.syntax unified
@@ -1738,7 +1738,7 @@ ARM GAS  /tmp/cc7Ja3Jx.s 			page 1
  1704 005c 9140     		lsls	r1, r1, r2
  1705 005e 0C48     		ldr	r0, .L276+4
  1706 0060 1A6A     		ldr	r2, [r3, #32]
-ARM GAS  /tmp/cc7Ja3Jx.s 			page 30
+ARM GAS  /tmp/ccre0hO8.s 			page 30
 
 
  1707 0062 3604     		lsls	r6, r6, #16
@@ -1798,92 +1798,92 @@ ARM GAS  /tmp/cc7Ja3Jx.s 			page 1
  1765              		@ link register save eliminated.
  1766 0000 806D     		ldr	r0, [r0, #88]
  1767              		@ sp needed
-ARM GAS  /tmp/cc7Ja3Jx.s 			page 31
+ARM GAS  /tmp/ccre0hO8.s 			page 31
 
 
  1768 0002 7047     		bx	lr
  1770              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/cc7Ja3Jx.s 			page 32
+ARM GAS  /tmp/ccre0hO8.s 			page 32
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 stm32l0xx_hal_adc.c
-     /tmp/cc7Ja3Jx.s:13     .text.ADC_DelayMicroSecond:0000000000000000 $t
-     /tmp/cc7Ja3Jx.s:20     .text.ADC_DelayMicroSecond:0000000000000000 ADC_DelayMicroSecond
-     /tmp/cc7Ja3Jx.s:45     .text.ADC_DelayMicroSecond:0000000000000024 $d
-     /tmp/cc7Ja3Jx.s:49     .text.ADC_Disable:0000000000000000 $t
-     /tmp/cc7Ja3Jx.s:55     .text.ADC_Disable:0000000000000000 ADC_Disable
-     /tmp/cc7Ja3Jx.s:120    .text.ADC_Enable:0000000000000000 $t
-     /tmp/cc7Ja3Jx.s:126    .text.ADC_Enable:0000000000000000 ADC_Enable
-     /tmp/cc7Ja3Jx.s:193    .text.ADC_Enable:0000000000000074 $d
-     /tmp/cc7Ja3Jx.s:196    .text.ADC_ConversionStop:0000000000000000 $t
-     /tmp/cc7Ja3Jx.s:202    .text.ADC_ConversionStop:0000000000000000 ADC_ConversionStop
-     /tmp/cc7Ja3Jx.s:256    .text.HAL_ADC_MspInit:0000000000000000 $t
-     /tmp/cc7Ja3Jx.s:263    .text.HAL_ADC_MspInit:0000000000000000 HAL_ADC_MspInit
-     /tmp/cc7Ja3Jx.s:271    .text.HAL_ADC_Init:0000000000000000 $t
-     /tmp/cc7Ja3Jx.s:278    .text.HAL_ADC_Init:0000000000000000 HAL_ADC_Init
-     /tmp/cc7Ja3Jx.s:506    .text.HAL_ADC_Init:000000000000019c $d
-     /tmp/cc7Ja3Jx.s:514    .text.HAL_ADC_MspDeInit:0000000000000000 $t
-     /tmp/cc7Ja3Jx.s:521    .text.HAL_ADC_MspDeInit:0000000000000000 HAL_ADC_MspDeInit
-     /tmp/cc7Ja3Jx.s:529    .text.HAL_ADC_DeInit:0000000000000000 $t
-     /tmp/cc7Ja3Jx.s:536    .text.HAL_ADC_DeInit:0000000000000000 HAL_ADC_DeInit
-     /tmp/cc7Ja3Jx.s:618    .text.HAL_ADC_DeInit:0000000000000090 $d
-     /tmp/cc7Ja3Jx.s:626    .text.HAL_ADC_Start:0000000000000000 $t
-     /tmp/cc7Ja3Jx.s:633    .text.HAL_ADC_Start:0000000000000000 HAL_ADC_Start
-     /tmp/cc7Ja3Jx.s:683    .text.HAL_ADC_Start:0000000000000054 $d
-     /tmp/cc7Ja3Jx.s:686    .text.HAL_ADC_Stop:0000000000000000 $t
-     /tmp/cc7Ja3Jx.s:693    .text.HAL_ADC_Stop:0000000000000000 HAL_ADC_Stop
-     /tmp/cc7Ja3Jx.s:728    .text.HAL_ADC_Stop:0000000000000038 $d
-     /tmp/cc7Ja3Jx.s:731    .text.HAL_ADC_PollForConversion:0000000000000000 $t
-     /tmp/cc7Ja3Jx.s:738    .text.HAL_ADC_PollForConversion:0000000000000000 HAL_ADC_PollForConversion
-     /tmp/cc7Ja3Jx.s:849    .text.HAL_ADC_PollForConversion:00000000000000c4 $d
-     /tmp/cc7Ja3Jx.s:852    .text.HAL_ADC_PollForEvent:0000000000000000 $t
-     /tmp/cc7Ja3Jx.s:859    .text.HAL_ADC_PollForEvent:0000000000000000 HAL_ADC_PollForEvent
-     /tmp/cc7Ja3Jx.s:933    .text.HAL_ADC_Start_IT:0000000000000000 $t
-     /tmp/cc7Ja3Jx.s:940    .text.HAL_ADC_Start_IT:0000000000000000 HAL_ADC_Start_IT
-     /tmp/cc7Ja3Jx.s:1006   .text.HAL_ADC_Start_IT:0000000000000070 $d
-     /tmp/cc7Ja3Jx.s:1009   .text.HAL_ADC_Stop_IT:0000000000000000 $t
-     /tmp/cc7Ja3Jx.s:1016   .text.HAL_ADC_Stop_IT:0000000000000000 HAL_ADC_Stop_IT
-     /tmp/cc7Ja3Jx.s:1056   .text.HAL_ADC_Stop_IT:0000000000000044 $d
-     /tmp/cc7Ja3Jx.s:1059   .text.HAL_ADC_Start_DMA:0000000000000000 $t
-     /tmp/cc7Ja3Jx.s:1066   .text.HAL_ADC_Start_DMA:0000000000000000 HAL_ADC_Start_DMA
-     /tmp/cc7Ja3Jx.s:1138   .text.HAL_ADC_Start_DMA:0000000000000080 $d
-     /tmp/cc7Ja3Jx.s:1257   .text.ADC_DMAConvCplt:0000000000000000 ADC_DMAConvCplt
-     /tmp/cc7Ja3Jx.s:1345   .text.ADC_DMAHalfConvCplt:0000000000000000 ADC_DMAHalfConvCplt
-     /tmp/cc7Ja3Jx.s:1391   .text.ADC_DMAError:0000000000000000 ADC_DMAError
-     /tmp/cc7Ja3Jx.s:1144   .text.HAL_ADC_Stop_DMA:0000000000000000 $t
-     /tmp/cc7Ja3Jx.s:1151   .text.HAL_ADC_Stop_DMA:0000000000000000 HAL_ADC_Stop_DMA
-     /tmp/cc7Ja3Jx.s:1216   .text.HAL_ADC_Stop_DMA:0000000000000074 $d
-     /tmp/cc7Ja3Jx.s:1219   .text.HAL_ADC_GetValue:0000000000000000 $t
-     /tmp/cc7Ja3Jx.s:1226   .text.HAL_ADC_GetValue:0000000000000000 HAL_ADC_GetValue
-     /tmp/cc7Ja3Jx.s:1236   .text.HAL_ADC_ConvCpltCallback:0000000000000000 $t
-     /tmp/cc7Ja3Jx.s:1243   .text.HAL_ADC_ConvCpltCallback:0000000000000000 HAL_ADC_ConvCpltCallback
-     /tmp/cc7Ja3Jx.s:1251   .text.ADC_DMAConvCplt:0000000000000000 $t
-     /tmp/cc7Ja3Jx.s:1321   .text.ADC_DMAConvCplt:000000000000006c $d
-     /tmp/cc7Ja3Jx.s:1324   .text.HAL_ADC_ConvHalfCpltCallback:0000000000000000 $t
-     /tmp/cc7Ja3Jx.s:1331   .text.HAL_ADC_ConvHalfCpltCallback:0000000000000000 HAL_ADC_ConvHalfCpltCallback
-     /tmp/cc7Ja3Jx.s:1339   .text.ADC_DMAHalfConvCplt:0000000000000000 $t
-ARM GAS  /tmp/cc7Ja3Jx.s 			page 33
+     /tmp/ccre0hO8.s:13     .text.ADC_DelayMicroSecond:0000000000000000 $t
+     /tmp/ccre0hO8.s:20     .text.ADC_DelayMicroSecond:0000000000000000 ADC_DelayMicroSecond
+     /tmp/ccre0hO8.s:45     .text.ADC_DelayMicroSecond:0000000000000024 $d
+     /tmp/ccre0hO8.s:49     .text.ADC_Disable:0000000000000000 $t
+     /tmp/ccre0hO8.s:55     .text.ADC_Disable:0000000000000000 ADC_Disable
+     /tmp/ccre0hO8.s:120    .text.ADC_Enable:0000000000000000 $t
+     /tmp/ccre0hO8.s:126    .text.ADC_Enable:0000000000000000 ADC_Enable
+     /tmp/ccre0hO8.s:193    .text.ADC_Enable:0000000000000074 $d
+     /tmp/ccre0hO8.s:196    .text.ADC_ConversionStop:0000000000000000 $t
+     /tmp/ccre0hO8.s:202    .text.ADC_ConversionStop:0000000000000000 ADC_ConversionStop
+     /tmp/ccre0hO8.s:256    .text.HAL_ADC_MspInit:0000000000000000 $t
+     /tmp/ccre0hO8.s:263    .text.HAL_ADC_MspInit:0000000000000000 HAL_ADC_MspInit
+     /tmp/ccre0hO8.s:271    .text.HAL_ADC_Init:0000000000000000 $t
+     /tmp/ccre0hO8.s:278    .text.HAL_ADC_Init:0000000000000000 HAL_ADC_Init
+     /tmp/ccre0hO8.s:506    .text.HAL_ADC_Init:000000000000019c $d
+     /tmp/ccre0hO8.s:514    .text.HAL_ADC_MspDeInit:0000000000000000 $t
+     /tmp/ccre0hO8.s:521    .text.HAL_ADC_MspDeInit:0000000000000000 HAL_ADC_MspDeInit
+     /tmp/ccre0hO8.s:529    .text.HAL_ADC_DeInit:0000000000000000 $t
+     /tmp/ccre0hO8.s:536    .text.HAL_ADC_DeInit:0000000000000000 HAL_ADC_DeInit
+     /tmp/ccre0hO8.s:618    .text.HAL_ADC_DeInit:0000000000000090 $d
+     /tmp/ccre0hO8.s:626    .text.HAL_ADC_Start:0000000000000000 $t
+     /tmp/ccre0hO8.s:633    .text.HAL_ADC_Start:0000000000000000 HAL_ADC_Start
+     /tmp/ccre0hO8.s:683    .text.HAL_ADC_Start:0000000000000054 $d
+     /tmp/ccre0hO8.s:686    .text.HAL_ADC_Stop:0000000000000000 $t
+     /tmp/ccre0hO8.s:693    .text.HAL_ADC_Stop:0000000000000000 HAL_ADC_Stop
+     /tmp/ccre0hO8.s:728    .text.HAL_ADC_Stop:0000000000000038 $d
+     /tmp/ccre0hO8.s:731    .text.HAL_ADC_PollForConversion:0000000000000000 $t
+     /tmp/ccre0hO8.s:738    .text.HAL_ADC_PollForConversion:0000000000000000 HAL_ADC_PollForConversion
+     /tmp/ccre0hO8.s:849    .text.HAL_ADC_PollForConversion:00000000000000c4 $d
+     /tmp/ccre0hO8.s:852    .text.HAL_ADC_PollForEvent:0000000000000000 $t
+     /tmp/ccre0hO8.s:859    .text.HAL_ADC_PollForEvent:0000000000000000 HAL_ADC_PollForEvent
+     /tmp/ccre0hO8.s:933    .text.HAL_ADC_Start_IT:0000000000000000 $t
+     /tmp/ccre0hO8.s:940    .text.HAL_ADC_Start_IT:0000000000000000 HAL_ADC_Start_IT
+     /tmp/ccre0hO8.s:1006   .text.HAL_ADC_Start_IT:0000000000000070 $d
+     /tmp/ccre0hO8.s:1009   .text.HAL_ADC_Stop_IT:0000000000000000 $t
+     /tmp/ccre0hO8.s:1016   .text.HAL_ADC_Stop_IT:0000000000000000 HAL_ADC_Stop_IT
+     /tmp/ccre0hO8.s:1056   .text.HAL_ADC_Stop_IT:0000000000000044 $d
+     /tmp/ccre0hO8.s:1059   .text.HAL_ADC_Start_DMA:0000000000000000 $t
+     /tmp/ccre0hO8.s:1066   .text.HAL_ADC_Start_DMA:0000000000000000 HAL_ADC_Start_DMA
+     /tmp/ccre0hO8.s:1138   .text.HAL_ADC_Start_DMA:0000000000000080 $d
+     /tmp/ccre0hO8.s:1257   .text.ADC_DMAConvCplt:0000000000000000 ADC_DMAConvCplt
+     /tmp/ccre0hO8.s:1345   .text.ADC_DMAHalfConvCplt:0000000000000000 ADC_DMAHalfConvCplt
+     /tmp/ccre0hO8.s:1391   .text.ADC_DMAError:0000000000000000 ADC_DMAError
+     /tmp/ccre0hO8.s:1144   .text.HAL_ADC_Stop_DMA:0000000000000000 $t
+     /tmp/ccre0hO8.s:1151   .text.HAL_ADC_Stop_DMA:0000000000000000 HAL_ADC_Stop_DMA
+     /tmp/ccre0hO8.s:1216   .text.HAL_ADC_Stop_DMA:0000000000000074 $d
+     /tmp/ccre0hO8.s:1219   .text.HAL_ADC_GetValue:0000000000000000 $t
+     /tmp/ccre0hO8.s:1226   .text.HAL_ADC_GetValue:0000000000000000 HAL_ADC_GetValue
+     /tmp/ccre0hO8.s:1236   .text.HAL_ADC_ConvCpltCallback:0000000000000000 $t
+     /tmp/ccre0hO8.s:1243   .text.HAL_ADC_ConvCpltCallback:0000000000000000 HAL_ADC_ConvCpltCallback
+     /tmp/ccre0hO8.s:1251   .text.ADC_DMAConvCplt:0000000000000000 $t
+     /tmp/ccre0hO8.s:1321   .text.ADC_DMAConvCplt:000000000000006c $d
+     /tmp/ccre0hO8.s:1324   .text.HAL_ADC_ConvHalfCpltCallback:0000000000000000 $t
+     /tmp/ccre0hO8.s:1331   .text.HAL_ADC_ConvHalfCpltCallback:0000000000000000 HAL_ADC_ConvHalfCpltCallback
+     /tmp/ccre0hO8.s:1339   .text.ADC_DMAHalfConvCplt:0000000000000000 $t
+ARM GAS  /tmp/ccre0hO8.s 			page 33
 
 
-     /tmp/cc7Ja3Jx.s:1355   .text.HAL_ADC_LevelOutOfWindowCallback:0000000000000000 $t
-     /tmp/cc7Ja3Jx.s:1362   .text.HAL_ADC_LevelOutOfWindowCallback:0000000000000000 HAL_ADC_LevelOutOfWindowCallback
-     /tmp/cc7Ja3Jx.s:1370   .text.HAL_ADC_ErrorCallback:0000000000000000 $t
-     /tmp/cc7Ja3Jx.s:1377   .text.HAL_ADC_ErrorCallback:0000000000000000 HAL_ADC_ErrorCallback
-     /tmp/cc7Ja3Jx.s:1385   .text.ADC_DMAError:0000000000000000 $t
-     /tmp/cc7Ja3Jx.s:1409   .text.HAL_ADC_IRQHandler:0000000000000000 $t
-     /tmp/cc7Ja3Jx.s:1416   .text.HAL_ADC_IRQHandler:0000000000000000 HAL_ADC_IRQHandler
-     /tmp/cc7Ja3Jx.s:1543   .text.HAL_ADC_IRQHandler:00000000000000e4 $d
-     /tmp/cc7Ja3Jx.s:1546   .text.HAL_ADC_ConfigChannel:0000000000000000 $t
-     /tmp/cc7Ja3Jx.s:1553   .text.HAL_ADC_ConfigChannel:0000000000000000 HAL_ADC_ConfigChannel
-     /tmp/cc7Ja3Jx.s:1641   .text.HAL_ADC_ConfigChannel:0000000000000098 $d
-     /tmp/cc7Ja3Jx.s:1647   .text.HAL_ADC_AnalogWDGConfig:0000000000000000 $t
-     /tmp/cc7Ja3Jx.s:1654   .text.HAL_ADC_AnalogWDGConfig:0000000000000000 HAL_ADC_AnalogWDGConfig
-     /tmp/cc7Ja3Jx.s:1735   .text.HAL_ADC_AnalogWDGConfig:000000000000008c $d
-     /tmp/cc7Ja3Jx.s:1739   .text.HAL_ADC_GetState:0000000000000000 $t
-     /tmp/cc7Ja3Jx.s:1746   .text.HAL_ADC_GetState:0000000000000000 HAL_ADC_GetState
-     /tmp/cc7Ja3Jx.s:1755   .text.HAL_ADC_GetError:0000000000000000 $t
-     /tmp/cc7Ja3Jx.s:1762   .text.HAL_ADC_GetError:0000000000000000 HAL_ADC_GetError
+     /tmp/ccre0hO8.s:1355   .text.HAL_ADC_LevelOutOfWindowCallback:0000000000000000 $t
+     /tmp/ccre0hO8.s:1362   .text.HAL_ADC_LevelOutOfWindowCallback:0000000000000000 HAL_ADC_LevelOutOfWindowCallback
+     /tmp/ccre0hO8.s:1370   .text.HAL_ADC_ErrorCallback:0000000000000000 $t
+     /tmp/ccre0hO8.s:1377   .text.HAL_ADC_ErrorCallback:0000000000000000 HAL_ADC_ErrorCallback
+     /tmp/ccre0hO8.s:1385   .text.ADC_DMAError:0000000000000000 $t
+     /tmp/ccre0hO8.s:1409   .text.HAL_ADC_IRQHandler:0000000000000000 $t
+     /tmp/ccre0hO8.s:1416   .text.HAL_ADC_IRQHandler:0000000000000000 HAL_ADC_IRQHandler
+     /tmp/ccre0hO8.s:1543   .text.HAL_ADC_IRQHandler:00000000000000e4 $d
+     /tmp/ccre0hO8.s:1546   .text.HAL_ADC_ConfigChannel:0000000000000000 $t
+     /tmp/ccre0hO8.s:1553   .text.HAL_ADC_ConfigChannel:0000000000000000 HAL_ADC_ConfigChannel
+     /tmp/ccre0hO8.s:1641   .text.HAL_ADC_ConfigChannel:0000000000000098 $d
+     /tmp/ccre0hO8.s:1647   .text.HAL_ADC_AnalogWDGConfig:0000000000000000 $t
+     /tmp/ccre0hO8.s:1654   .text.HAL_ADC_AnalogWDGConfig:0000000000000000 HAL_ADC_AnalogWDGConfig
+     /tmp/ccre0hO8.s:1735   .text.HAL_ADC_AnalogWDGConfig:000000000000008c $d
+     /tmp/ccre0hO8.s:1739   .text.HAL_ADC_GetState:0000000000000000 $t
+     /tmp/ccre0hO8.s:1746   .text.HAL_ADC_GetState:0000000000000000 HAL_ADC_GetState
+     /tmp/ccre0hO8.s:1755   .text.HAL_ADC_GetError:0000000000000000 $t
+     /tmp/ccre0hO8.s:1762   .text.HAL_ADC_GetError:0000000000000000 HAL_ADC_GetError
 
 UNDEFINED SYMBOLS
 __aeabi_uidiv
