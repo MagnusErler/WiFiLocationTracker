@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccoRsBme.s 			page 1
+ARM GAS  /tmp/ccVEhBIj.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccoRsBme.s 			page 1
   59              		.section	.text.ral_lr11xx_bsp_get_xosc_cfg,"ax",%progbits
   60              		.align	1
   61              		.global	ral_lr11xx_bsp_get_xosc_cfg
-ARM GAS  /tmp/ccoRsBme.s 			page 2
+ARM GAS  /tmp/ccVEhBIj.s 			page 2
 
 
   62              		.syntax unified
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccoRsBme.s 			page 1
  121 001a D380     		strh	r3, [r2, #6]
  122 001c 1C4B     		ldr	r3, .L11+16
  123 001e 1381     		strh	r3, [r2, #8]
-ARM GAS  /tmp/ccoRsBme.s 			page 3
+ARM GAS  /tmp/ccVEhBIj.s 			page 3
 
 
  124 0020 1C4B     		ldr	r3, .L11+20
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccoRsBme.s 			page 1
  178              		.align	2
  179              	.L11:
  180 0080 0046C323 		.word	600000000
-ARM GAS  /tmp/ccoRsBme.s 			page 4
+ARM GAS  /tmp/ccVEhBIj.s 			page 4
 
 
  181 0084 0C0C0000 		.word	3084
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccoRsBme.s 			page 1
  237 001a 1800     		movs	r0, r3
  238 001c 0021     		movs	r1, #0
  239 001e 1130     		adds	r0, r0, #17
-ARM GAS  /tmp/ccoRsBme.s 			page 5
+ARM GAS  /tmp/ccVEhBIj.s 			page 5
 
 
  240 0020 354C     		ldr	r4, .L34
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccoRsBme.s 			page 1
  294              	.L22:
  295 007c 4BB2     		sxtb	r3, r1
  296 007e 0933     		adds	r3, r3, #9
-ARM GAS  /tmp/ccoRsBme.s 			page 6
+ARM GAS  /tmp/ccVEhBIj.s 			page 6
 
 
  297 0080 E7DA     		bge	.L23
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccoRsBme.s 			page 1
  351 00dc 1800     		movs	r0, r3
  352 00de 1170     		strb	r1, [r2]
  353 00e0 0021     		movs	r1, #0
-ARM GAS  /tmp/ccoRsBme.s 			page 7
+ARM GAS  /tmp/ccVEhBIj.s 			page 7
 
 
  354 00e2 1230     		adds	r0, r0, #18
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccoRsBme.s 			page 1
  410 002c C918     		adds	r1, r1, r3
  411 002e 4042     		rsbs	r0, r0, #0
  412 0030 2200     		movs	r2, r4
-ARM GAS  /tmp/ccoRsBme.s 			page 8
+ARM GAS  /tmp/ccVEhBIj.s 			page 8
 
 
  413 0032 0230     		adds	r0, r0, #2
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccoRsBme.s 			page 1
  470 0028 04       		.byte	4
  471 0029 00       		.byte	0
  472 002a FC       		.byte	-4
-ARM GAS  /tmp/ccoRsBme.s 			page 9
+ARM GAS  /tmp/ccVEhBIj.s 			page 9
 
 
  473 002b 04       		.byte	4
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccoRsBme.s 			page 1
  527              		.set	.LANCHOR1,. + 0
  530              	pa_hp_cfg_table:
  531 0000 09       		.byte	9
-ARM GAS  /tmp/ccoRsBme.s 			page 10
+ARM GAS  /tmp/ccVEhBIj.s 			page 10
 
 
  532 0001 00       		.byte	0
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccoRsBme.s 			page 1
  586 0037 00       		.byte	0
  587 0038 01       		.byte	1
  588 0039 16       		.byte	22
-ARM GAS  /tmp/ccoRsBme.s 			page 11
+ARM GAS  /tmp/ccVEhBIj.s 			page 11
 
 
  589 003a 01       		.byte	1
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccoRsBme.s 			page 1
  645 000d 00       		.byte	0
  646 000e 00       		.byte	0
  647 000f F7       		.byte	-9
-ARM GAS  /tmp/ccoRsBme.s 			page 12
+ARM GAS  /tmp/ccVEhBIj.s 			page 12
 
 
  648 0010 00       		.byte	0
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccoRsBme.s 			page 1
  702 0046 00       		.byte	0
  703 0047 00       		.byte	0
  704 0048 0C       		.byte	12
-ARM GAS  /tmp/ccoRsBme.s 			page 13
+ARM GAS  /tmp/ccVEhBIj.s 			page 13
 
 
  705 0049 00       		.byte	0
@@ -748,33 +748,33 @@ ARM GAS  /tmp/ccoRsBme.s 			page 1
  729 0061 07       		.byte	7
  730 0062 00       		.byte	0
  731              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/ccoRsBme.s 			page 14
+ARM GAS  /tmp/ccVEhBIj.s 			page 14
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 ral_lr11xx_bsp.c
-     /tmp/ccoRsBme.s:12     .text.ral_lr11xx_bsp_get_rf_switch_cfg:0000000000000000 $t
-     /tmp/ccoRsBme.s:20     .text.ral_lr11xx_bsp_get_rf_switch_cfg:0000000000000000 ral_lr11xx_bsp_get_rf_switch_cfg
-     /tmp/ccoRsBme.s:43     .text.ral_lr11xx_bsp_get_reg_mode:0000000000000000 $t
-     /tmp/ccoRsBme.s:50     .text.ral_lr11xx_bsp_get_reg_mode:0000000000000000 ral_lr11xx_bsp_get_reg_mode
-     /tmp/ccoRsBme.s:60     .text.ral_lr11xx_bsp_get_xosc_cfg:0000000000000000 $t
-     /tmp/ccoRsBme.s:67     .text.ral_lr11xx_bsp_get_xosc_cfg:0000000000000000 ral_lr11xx_bsp_get_xosc_cfg
-     /tmp/ccoRsBme.s:81     .text.ral_lr11xx_bsp_get_crc_state:0000000000000000 $t
-     /tmp/ccoRsBme.s:88     .text.ral_lr11xx_bsp_get_crc_state:0000000000000000 ral_lr11xx_bsp_get_crc_state
-     /tmp/ccoRsBme.s:98     .text.ral_lr11xx_bsp_get_rssi_calibration_table:0000000000000000 $t
-     /tmp/ccoRsBme.s:105    .text.ral_lr11xx_bsp_get_rssi_calibration_table:0000000000000000 ral_lr11xx_bsp_get_rssi_calibration_table
-     /tmp/ccoRsBme.s:180    .text.ral_lr11xx_bsp_get_rssi_calibration_table:0000000000000080 $d
-     /tmp/ccoRsBme.s:209    .text.lr11xx_get_tx_cfg:0000000000000000 $t
-     /tmp/ccoRsBme.s:216    .text.lr11xx_get_tx_cfg:0000000000000000 lr11xx_get_tx_cfg
-     /tmp/ccoRsBme.s:226    .text.lr11xx_get_tx_cfg:000000000000000e $d
-     /tmp/ccoRsBme.s:230    .text.lr11xx_get_tx_cfg:0000000000000012 $t
-     /tmp/ccoRsBme.s:369    .text.lr11xx_get_tx_cfg:00000000000000f8 $d
-     /tmp/ccoRsBme.s:377    .text.ral_lr11xx_bsp_get_tx_cfg:0000000000000000 $t
-     /tmp/ccoRsBme.s:384    .text.ral_lr11xx_bsp_get_tx_cfg:0000000000000000 ral_lr11xx_bsp_get_tx_cfg
-     /tmp/ccoRsBme.s:420    .text.ral_lr11xx_bsp_get_tx_cfg:000000000000003c $d
-     /tmp/ccoRsBme.s:429    .rodata.pa_hf_cfg_table:0000000000000000 pa_hf_cfg_table
-     /tmp/ccoRsBme.s:530    .rodata.pa_hp_cfg_table:0000000000000000 pa_hp_cfg_table
-     /tmp/ccoRsBme.s:631    .rodata.pa_lp_cfg_table:0000000000000000 pa_lp_cfg_table
+     /tmp/ccVEhBIj.s:12     .text.ral_lr11xx_bsp_get_rf_switch_cfg:0000000000000000 $t
+     /tmp/ccVEhBIj.s:20     .text.ral_lr11xx_bsp_get_rf_switch_cfg:0000000000000000 ral_lr11xx_bsp_get_rf_switch_cfg
+     /tmp/ccVEhBIj.s:43     .text.ral_lr11xx_bsp_get_reg_mode:0000000000000000 $t
+     /tmp/ccVEhBIj.s:50     .text.ral_lr11xx_bsp_get_reg_mode:0000000000000000 ral_lr11xx_bsp_get_reg_mode
+     /tmp/ccVEhBIj.s:60     .text.ral_lr11xx_bsp_get_xosc_cfg:0000000000000000 $t
+     /tmp/ccVEhBIj.s:67     .text.ral_lr11xx_bsp_get_xosc_cfg:0000000000000000 ral_lr11xx_bsp_get_xosc_cfg
+     /tmp/ccVEhBIj.s:81     .text.ral_lr11xx_bsp_get_crc_state:0000000000000000 $t
+     /tmp/ccVEhBIj.s:88     .text.ral_lr11xx_bsp_get_crc_state:0000000000000000 ral_lr11xx_bsp_get_crc_state
+     /tmp/ccVEhBIj.s:98     .text.ral_lr11xx_bsp_get_rssi_calibration_table:0000000000000000 $t
+     /tmp/ccVEhBIj.s:105    .text.ral_lr11xx_bsp_get_rssi_calibration_table:0000000000000000 ral_lr11xx_bsp_get_rssi_calibration_table
+     /tmp/ccVEhBIj.s:180    .text.ral_lr11xx_bsp_get_rssi_calibration_table:0000000000000080 $d
+     /tmp/ccVEhBIj.s:209    .text.lr11xx_get_tx_cfg:0000000000000000 $t
+     /tmp/ccVEhBIj.s:216    .text.lr11xx_get_tx_cfg:0000000000000000 lr11xx_get_tx_cfg
+     /tmp/ccVEhBIj.s:226    .text.lr11xx_get_tx_cfg:000000000000000e $d
+     /tmp/ccVEhBIj.s:230    .text.lr11xx_get_tx_cfg:0000000000000012 $t
+     /tmp/ccVEhBIj.s:369    .text.lr11xx_get_tx_cfg:00000000000000f8 $d
+     /tmp/ccVEhBIj.s:377    .text.ral_lr11xx_bsp_get_tx_cfg:0000000000000000 $t
+     /tmp/ccVEhBIj.s:384    .text.ral_lr11xx_bsp_get_tx_cfg:0000000000000000 ral_lr11xx_bsp_get_tx_cfg
+     /tmp/ccVEhBIj.s:420    .text.ral_lr11xx_bsp_get_tx_cfg:000000000000003c $d
+     /tmp/ccVEhBIj.s:429    .rodata.pa_hf_cfg_table:0000000000000000 pa_hf_cfg_table
+     /tmp/ccVEhBIj.s:530    .rodata.pa_hp_cfg_table:0000000000000000 pa_hp_cfg_table
+     /tmp/ccVEhBIj.s:631    .rodata.pa_lp_cfg_table:0000000000000000 pa_lp_cfg_table
 
 UNDEFINED SYMBOLS
 __gnu_thumb1_case_uqi

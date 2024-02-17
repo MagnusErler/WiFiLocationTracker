@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cccuKAsC.s 			page 1
+ARM GAS  /tmp/cc56WQ2u.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cccuKAsC.s 			page 1
   58              	.L5:
   59 0010 00700040 		.word	1073770496
   61              		.section	.text.HAL_PWREx_DisableFastWakeUp,"ax",%progbits
-ARM GAS  /tmp/cccuKAsC.s 			page 2
+ARM GAS  /tmp/cc56WQ2u.s 			page 2
 
 
   62              		.align	1
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cccuKAsC.s 			page 1
  121              		@ frame_needed = 0, uses_anonymous_args = 0
  122              		@ link register save eliminated.
  123 0000 024A     		ldr	r2, .L14
-ARM GAS  /tmp/cccuKAsC.s 			page 3
+ARM GAS  /tmp/cc56WQ2u.s 			page 3
 
 
  124 0002 0349     		ldr	r1, .L14+4
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cccuKAsC.s 			page 1
  182 000a 1340     		ands	r3, r2
  183 000c 0122     		movs	r2, #1
  184 000e 2360     		str	r3, [r4]
-ARM GAS  /tmp/cccuKAsC.s 			page 4
+ARM GAS  /tmp/cc56WQ2u.s 			page 4
 
 
  185 0010 2368     		ldr	r3, [r4]
@@ -216,32 +216,32 @@ ARM GAS  /tmp/cccuKAsC.s 			page 1
  217 0048 40420F00 		.word	1000000
  218 004c 00000000 		.word	SystemCoreClock
  220              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/cccuKAsC.s 			page 5
+ARM GAS  /tmp/cc56WQ2u.s 			page 5
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 stm32l0xx_hal_pwr_ex.c
-     /tmp/cccuKAsC.s:12     .text.HAL_PWREx_GetVoltageRange:0000000000000000 $t
-     /tmp/cccuKAsC.s:20     .text.HAL_PWREx_GetVoltageRange:0000000000000000 HAL_PWREx_GetVoltageRange
-     /tmp/cccuKAsC.s:34     .text.HAL_PWREx_GetVoltageRange:000000000000000c $d
-     /tmp/cccuKAsC.s:37     .text.HAL_PWREx_EnableFastWakeUp:0000000000000000 $t
-     /tmp/cccuKAsC.s:44     .text.HAL_PWREx_EnableFastWakeUp:0000000000000000 HAL_PWREx_EnableFastWakeUp
-     /tmp/cccuKAsC.s:59     .text.HAL_PWREx_EnableFastWakeUp:0000000000000010 $d
-     /tmp/cccuKAsC.s:62     .text.HAL_PWREx_DisableFastWakeUp:0000000000000000 $t
-     /tmp/cccuKAsC.s:69     .text.HAL_PWREx_DisableFastWakeUp:0000000000000000 HAL_PWREx_DisableFastWakeUp
-     /tmp/cccuKAsC.s:83     .text.HAL_PWREx_DisableFastWakeUp:000000000000000c $d
-     /tmp/cccuKAsC.s:87     .text.HAL_PWREx_EnableUltraLowPower:0000000000000000 $t
-     /tmp/cccuKAsC.s:94     .text.HAL_PWREx_EnableUltraLowPower:0000000000000000 HAL_PWREx_EnableUltraLowPower
-     /tmp/cccuKAsC.s:109    .text.HAL_PWREx_EnableUltraLowPower:0000000000000010 $d
-     /tmp/cccuKAsC.s:112    .text.HAL_PWREx_DisableUltraLowPower:0000000000000000 $t
-     /tmp/cccuKAsC.s:119    .text.HAL_PWREx_DisableUltraLowPower:0000000000000000 HAL_PWREx_DisableUltraLowPower
-     /tmp/cccuKAsC.s:133    .text.HAL_PWREx_DisableUltraLowPower:000000000000000c $d
-     /tmp/cccuKAsC.s:137    .text.HAL_PWREx_EnableLowPowerRunMode:0000000000000000 $t
-     /tmp/cccuKAsC.s:144    .text.HAL_PWREx_EnableLowPowerRunMode:0000000000000000 HAL_PWREx_EnableLowPowerRunMode
-     /tmp/cccuKAsC.s:163    .text.HAL_PWREx_EnableLowPowerRunMode:0000000000000018 $d
-     /tmp/cccuKAsC.s:167    .text.HAL_PWREx_DisableLowPowerRunMode:0000000000000000 $t
-     /tmp/cccuKAsC.s:174    .text.HAL_PWREx_DisableLowPowerRunMode:0000000000000000 HAL_PWREx_DisableLowPowerRunMode
-     /tmp/cccuKAsC.s:215    .text.HAL_PWREx_DisableLowPowerRunMode:0000000000000040 $d
+     /tmp/cc56WQ2u.s:12     .text.HAL_PWREx_GetVoltageRange:0000000000000000 $t
+     /tmp/cc56WQ2u.s:20     .text.HAL_PWREx_GetVoltageRange:0000000000000000 HAL_PWREx_GetVoltageRange
+     /tmp/cc56WQ2u.s:34     .text.HAL_PWREx_GetVoltageRange:000000000000000c $d
+     /tmp/cc56WQ2u.s:37     .text.HAL_PWREx_EnableFastWakeUp:0000000000000000 $t
+     /tmp/cc56WQ2u.s:44     .text.HAL_PWREx_EnableFastWakeUp:0000000000000000 HAL_PWREx_EnableFastWakeUp
+     /tmp/cc56WQ2u.s:59     .text.HAL_PWREx_EnableFastWakeUp:0000000000000010 $d
+     /tmp/cc56WQ2u.s:62     .text.HAL_PWREx_DisableFastWakeUp:0000000000000000 $t
+     /tmp/cc56WQ2u.s:69     .text.HAL_PWREx_DisableFastWakeUp:0000000000000000 HAL_PWREx_DisableFastWakeUp
+     /tmp/cc56WQ2u.s:83     .text.HAL_PWREx_DisableFastWakeUp:000000000000000c $d
+     /tmp/cc56WQ2u.s:87     .text.HAL_PWREx_EnableUltraLowPower:0000000000000000 $t
+     /tmp/cc56WQ2u.s:94     .text.HAL_PWREx_EnableUltraLowPower:0000000000000000 HAL_PWREx_EnableUltraLowPower
+     /tmp/cc56WQ2u.s:109    .text.HAL_PWREx_EnableUltraLowPower:0000000000000010 $d
+     /tmp/cc56WQ2u.s:112    .text.HAL_PWREx_DisableUltraLowPower:0000000000000000 $t
+     /tmp/cc56WQ2u.s:119    .text.HAL_PWREx_DisableUltraLowPower:0000000000000000 HAL_PWREx_DisableUltraLowPower
+     /tmp/cc56WQ2u.s:133    .text.HAL_PWREx_DisableUltraLowPower:000000000000000c $d
+     /tmp/cc56WQ2u.s:137    .text.HAL_PWREx_EnableLowPowerRunMode:0000000000000000 $t
+     /tmp/cc56WQ2u.s:144    .text.HAL_PWREx_EnableLowPowerRunMode:0000000000000000 HAL_PWREx_EnableLowPowerRunMode
+     /tmp/cc56WQ2u.s:163    .text.HAL_PWREx_EnableLowPowerRunMode:0000000000000018 $d
+     /tmp/cc56WQ2u.s:167    .text.HAL_PWREx_DisableLowPowerRunMode:0000000000000000 $t
+     /tmp/cc56WQ2u.s:174    .text.HAL_PWREx_DisableLowPowerRunMode:0000000000000000 HAL_PWREx_DisableLowPowerRunMode
+     /tmp/cc56WQ2u.s:215    .text.HAL_PWREx_DisableLowPowerRunMode:0000000000000040 $d
 
 UNDEFINED SYMBOLS
 __aeabi_uidiv

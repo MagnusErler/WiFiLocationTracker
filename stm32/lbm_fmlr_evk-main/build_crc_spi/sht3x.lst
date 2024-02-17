@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc8F2re0.s 			page 1
+ARM GAS  /tmp/cc7els0e.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cc8F2re0.s 			page 1
   56 003c 013A     		subs	r2, r2, #1
   57 003e D2B2     		uxtb	r2, r2
   58 0040 002A     		cmp	r2, #0
-ARM GAS  /tmp/cc8F2re0.s 			page 2
+ARM GAS  /tmp/cc7els0e.s 			page 2
 
 
   59 0042 F3D1     		bne	.L7
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cc8F2re0.s 			page 1
  116              		.align	1
  117              		.global	sht3x_read_temp
  118              		.syntax unified
-ARM GAS  /tmp/cc8F2re0.s 			page 3
+ARM GAS  /tmp/cc7els0e.s 			page 3
 
 
  119              		.code	16
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cc8F2re0.s 			page 1
  174 0068 5B13     		asrs	r3, r3, #13
  175 006a 2360     		str	r3, [r4]
  176              	.L14:
-ARM GAS  /tmp/cc8F2re0.s 			page 4
+ARM GAS  /tmp/cc7els0e.s 			page 4
 
 
  177 006c 05B0     		add	sp, sp, #20
@@ -208,24 +208,24 @@ ARM GAS  /tmp/cc8F2re0.s 			page 1
  206              	i2c:
  207 0000 00000000 		.space	4
  208              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/cc8F2re0.s 			page 5
+ARM GAS  /tmp/cc7els0e.s 			page 5
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 sht3x.c
-     /tmp/cc8F2re0.s:12     .text.sht3x_check_crc.constprop.0:0000000000000000 $t
-     /tmp/cc8F2re0.s:19     .text.sht3x_check_crc.constprop.0:0000000000000000 sht3x_check_crc.constprop.0
-     /tmp/cc8F2re0.s:69     .text.sht3x_init:0000000000000000 $t
-     /tmp/cc8F2re0.s:76     .text.sht3x_init:0000000000000000 sht3x_init
-     /tmp/cc8F2re0.s:110    .text.sht3x_init:0000000000000040 $d
-     /tmp/cc8F2re0.s:116    .text.sht3x_read_temp:0000000000000000 $t
-     /tmp/cc8F2re0.s:123    .text.sht3x_read_temp:0000000000000000 sht3x_read_temp
-     /tmp/cc8F2re0.s:183    .text.sht3x_read_temp:0000000000000070 $d
-     /tmp/cc8F2re0.s:194    .rodata:0000000000000002 $d
-     /tmp/cc8F2re0.s:199    .bss.address:0000000000000000 address
-     /tmp/cc8F2re0.s:200    .bss.address:0000000000000000 $d
-     /tmp/cc8F2re0.s:202    .bss.i2c:0000000000000000 $d
-     /tmp/cc8F2re0.s:206    .bss.i2c:0000000000000000 i2c
+     /tmp/cc7els0e.s:12     .text.sht3x_check_crc.constprop.0:0000000000000000 $t
+     /tmp/cc7els0e.s:19     .text.sht3x_check_crc.constprop.0:0000000000000000 sht3x_check_crc.constprop.0
+     /tmp/cc7els0e.s:69     .text.sht3x_init:0000000000000000 $t
+     /tmp/cc7els0e.s:76     .text.sht3x_init:0000000000000000 sht3x_init
+     /tmp/cc7els0e.s:110    .text.sht3x_init:0000000000000040 $d
+     /tmp/cc7els0e.s:116    .text.sht3x_read_temp:0000000000000000 $t
+     /tmp/cc7els0e.s:123    .text.sht3x_read_temp:0000000000000000 sht3x_read_temp
+     /tmp/cc7els0e.s:183    .text.sht3x_read_temp:0000000000000070 $d
+     /tmp/cc7els0e.s:194    .rodata:0000000000000002 $d
+     /tmp/cc7els0e.s:199    .bss.address:0000000000000000 address
+     /tmp/cc7els0e.s:200    .bss.address:0000000000000000 $d
+     /tmp/cc7els0e.s:202    .bss.i2c:0000000000000000 $d
+     /tmp/cc7els0e.s:206    .bss.i2c:0000000000000000 i2c
 
 UNDEFINED SYMBOLS
 hal_i2c_set_addr_size

@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccvznMtl.s 			page 1
+ARM GAS  /tmp/ccHiSk1R.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccvznMtl.s 			page 1
   58 0002 0F25     		movs	r5, #15
   59 0004 85B0     		sub	sp, sp, #20
   60 0006 0400     		movs	r4, r0
-ARM GAS  /tmp/ccvznMtl.s 			page 2
+ARM GAS  /tmp/ccHiSk1R.s 			page 2
 
 
   61 0008 6D44     		add	r5, r5, sp
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccvznMtl.s 			page 1
  117              		@ sp needed
  118 0026 FEBD     		pop	{r1, r2, r3, r4, r5, r6, r7, pc}
  119              	.L8:
-ARM GAS  /tmp/ccvznMtl.s 			page 3
+ARM GAS  /tmp/ccHiSk1R.s 			page 3
 
 
  120 0028 3378     		ldrb	r3, [r6]
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccvznMtl.s 			page 1
  175              		.align	1
  176              		.global	lis2dw_read
  177              		.syntax unified
-ARM GAS  /tmp/ccvznMtl.s 			page 4
+ARM GAS  /tmp/ccHiSk1R.s 			page 4
 
 
  178              		.code	16
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccvznMtl.s 			page 1
  233 0060 1ED8     		bhi	.L32
  234 0062 FFF7FEFF 		bl	__gnu_thumb1_case_uqi
  235              	.L34:
-ARM GAS  /tmp/ccvznMtl.s 			page 5
+ARM GAS  /tmp/ccHiSk1R.s 			page 5
 
 
  236 0066 70       		.byte	(.L40-.L34)/2
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccvznMtl.s 			page 1
  290 00e2 FFF7FEFF 		bl	__gnu_thumb1_case_uqi
  291              	.L39:
  292 00e6 02       		.byte	(.L42-.L39)/2
-ARM GAS  /tmp/ccvznMtl.s 			page 6
+ARM GAS  /tmp/ccHiSk1R.s 			page 6
 
 
  293 00e7 19       		.byte	(.L41-.L39)/2
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccvznMtl.s 			page 1
  347 0172 90E7     		b	.L43
  348              	.L38:
  349 0174 3000     		movs	r0, r6
-ARM GAS  /tmp/ccvznMtl.s 			page 7
+ARM GAS  /tmp/ccHiSk1R.s 			page 7
 
 
  350 0176 FFF7FEFF 		bl	__aeabi_i2f
@@ -408,35 +408,35 @@ ARM GAS  /tmp/ccvznMtl.s 			page 1
  403              	lp_mod:
  404 0000 00       		.space	1
  405              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/ccvznMtl.s 			page 8
+ARM GAS  /tmp/ccHiSk1R.s 			page 8
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 lis2dw.c
-     /tmp/ccvznMtl.s:12     .text.lis2dw_read_byte:0000000000000000 $t
-     /tmp/ccvznMtl.s:19     .text.lis2dw_read_byte:0000000000000000 lis2dw_read_byte
-     /tmp/ccvznMtl.s:44     .text.lis2dw_read_byte:0000000000000028 $d
-     /tmp/ccvznMtl.s:48     .text.lis2dw_write_byte:0000000000000000 $t
-     /tmp/ccvznMtl.s:54     .text.lis2dw_write_byte:0000000000000000 lis2dw_write_byte
-     /tmp/ccvznMtl.s:83     .text.lis2dw_write_byte:0000000000000030 $d
-     /tmp/ccvznMtl.s:87     .text.lis2dw_init:0000000000000000 $t
-     /tmp/ccvznMtl.s:94     .text.lis2dw_init:0000000000000000 lis2dw_init
-     /tmp/ccvznMtl.s:165    .text.lis2dw_init:0000000000000088 $d
-     /tmp/ccvznMtl.s:175    .text.lis2dw_read:0000000000000000 $t
-     /tmp/ccvznMtl.s:182    .text.lis2dw_read:0000000000000000 lis2dw_read
-     /tmp/ccvznMtl.s:236    .text.lis2dw_read:0000000000000066 $d
-     /tmp/ccvznMtl.s:240    .text.lis2dw_read:000000000000006a $t
-     /tmp/ccvznMtl.s:292    .text.lis2dw_read:00000000000000e6 $d
-     /tmp/ccvznMtl.s:296    .text.lis2dw_read:00000000000000ea $t
-     /tmp/ccvznMtl.s:368    .text.lis2dw_read:00000000000001a4 $d
-     /tmp/ccvznMtl.s:384    .bss.address:0000000000000000 address
-     /tmp/ccvznMtl.s:385    .bss.address:0000000000000000 $d
-     /tmp/ccvznMtl.s:390    .bss.dr:0000000000000000 dr
-     /tmp/ccvznMtl.s:391    .bss.dr:0000000000000000 $d
-     /tmp/ccvznMtl.s:393    .bss.i2c:0000000000000000 $d
-     /tmp/ccvznMtl.s:397    .bss.i2c:0000000000000000 i2c
-     /tmp/ccvznMtl.s:403    .bss.lp_mod:0000000000000000 lp_mod
-     /tmp/ccvznMtl.s:404    .bss.lp_mod:0000000000000000 $d
+     /tmp/ccHiSk1R.s:12     .text.lis2dw_read_byte:0000000000000000 $t
+     /tmp/ccHiSk1R.s:19     .text.lis2dw_read_byte:0000000000000000 lis2dw_read_byte
+     /tmp/ccHiSk1R.s:44     .text.lis2dw_read_byte:0000000000000028 $d
+     /tmp/ccHiSk1R.s:48     .text.lis2dw_write_byte:0000000000000000 $t
+     /tmp/ccHiSk1R.s:54     .text.lis2dw_write_byte:0000000000000000 lis2dw_write_byte
+     /tmp/ccHiSk1R.s:83     .text.lis2dw_write_byte:0000000000000030 $d
+     /tmp/ccHiSk1R.s:87     .text.lis2dw_init:0000000000000000 $t
+     /tmp/ccHiSk1R.s:94     .text.lis2dw_init:0000000000000000 lis2dw_init
+     /tmp/ccHiSk1R.s:165    .text.lis2dw_init:0000000000000088 $d
+     /tmp/ccHiSk1R.s:175    .text.lis2dw_read:0000000000000000 $t
+     /tmp/ccHiSk1R.s:182    .text.lis2dw_read:0000000000000000 lis2dw_read
+     /tmp/ccHiSk1R.s:236    .text.lis2dw_read:0000000000000066 $d
+     /tmp/ccHiSk1R.s:240    .text.lis2dw_read:000000000000006a $t
+     /tmp/ccHiSk1R.s:292    .text.lis2dw_read:00000000000000e6 $d
+     /tmp/ccHiSk1R.s:296    .text.lis2dw_read:00000000000000ea $t
+     /tmp/ccHiSk1R.s:368    .text.lis2dw_read:00000000000001a4 $d
+     /tmp/ccHiSk1R.s:384    .bss.address:0000000000000000 address
+     /tmp/ccHiSk1R.s:385    .bss.address:0000000000000000 $d
+     /tmp/ccHiSk1R.s:390    .bss.dr:0000000000000000 dr
+     /tmp/ccHiSk1R.s:391    .bss.dr:0000000000000000 $d
+     /tmp/ccHiSk1R.s:393    .bss.i2c:0000000000000000 $d
+     /tmp/ccHiSk1R.s:397    .bss.i2c:0000000000000000 i2c
+     /tmp/ccHiSk1R.s:403    .bss.lp_mod:0000000000000000 lp_mod
+     /tmp/ccHiSk1R.s:404    .bss.lp_mod:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 hal_i2c_set_addr_size

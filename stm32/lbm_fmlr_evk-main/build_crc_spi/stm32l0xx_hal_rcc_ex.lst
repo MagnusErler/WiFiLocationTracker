@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc7SLmmF.s 			page 1
+ARM GAS  /tmp/ccbdRoG9.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cc7SLmmF.s 			page 1
   56 003e 1E40     		ands	r6, r3
   57 0040 0240     		ands	r2, r0
   58 0042 0140     		ands	r1, r0
-ARM GAS  /tmp/cc7SLmmF.s 			page 2
+ARM GAS  /tmp/ccbdRoG9.s 			page 2
 
 
   59 0044 8A42     		cmp	r2, r1
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cc7SLmmF.s 			page 1
  113 00a6 0243     		orrs	r2, r0
  114 00a8 CA64     		str	r2, [r1, #76]
  115              	.L21:
-ARM GAS  /tmp/cc7SLmmF.s 			page 3
+ARM GAS  /tmp/ccbdRoG9.s 			page 3
 
 
  116 00aa 5A07     		lsls	r2, r3, #29
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cc7SLmmF.s 			page 1
  170 0110 6428     		cmp	r0, #100
  171 0112 F6D9     		bls	.L8
  172              	.L17:
-ARM GAS  /tmp/cc7SLmmF.s 			page 4
+ARM GAS  /tmp/ccbdRoG9.s 			page 4
 
 
  173 0114 0320     		movs	r0, #3
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cc7SLmmF.s 			page 1
  227 0170 9842     		cmp	r0, r3
  228 0172 F5D9     		bls	.L16
  229 0174 CEE7     		b	.L17
-ARM GAS  /tmp/cc7SLmmF.s 			page 5
+ARM GAS  /tmp/ccbdRoG9.s 			page 5
 
 
  230              	.L52:
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cc7SLmmF.s 			page 1
  286 003a 0A40     		ands	r2, r1
  287 003c C021     		movs	r1, #192
  288 003e 4261     		str	r2, [r0, #20]
-ARM GAS  /tmp/cc7SLmmF.s 			page 6
+ARM GAS  /tmp/ccbdRoG9.s 			page 6
 
 
  289 0040 DA6C     		ldr	r2, [r3, #76]
@@ -358,7 +358,7 @@ ARM GAS  /tmp/cc7SLmmF.s 			page 1
  345 002a 1028     		cmp	r0, #16
  346 002c 00D1     		bne	.LCB361
  347 002e A1E0     		b	.L67	@long jump
-ARM GAS  /tmp/cc7SLmmF.s 			page 7
+ARM GAS  /tmp/ccbdRoG9.s 			page 7
 
 
  348              	.LCB361:
@@ -418,7 +418,7 @@ ARM GAS  /tmp/cc7SLmmF.s 			page 1
  402 008c 9042     		cmp	r0, r2
  403 008e 00D1     		bne	.LCB427
  404 0090 89E0     		b	.L82	@long jump
-ARM GAS  /tmp/cc7SLmmF.s 			page 8
+ARM GAS  /tmp/ccbdRoG9.s 			page 8
 
 
  405              	.LCB427:
@@ -478,7 +478,7 @@ ARM GAS  /tmp/cc7SLmmF.s 			page 1
  459 00f0 BDD1     		bne	.L59
  460              	.L146:
  461 00f2 1A6D     		ldr	r2, [r3, #80]
-ARM GAS  /tmp/cc7SLmmF.s 			page 9
+ARM GAS  /tmp/ccbdRoG9.s 			page 9
 
 
  462 00f4 8023     		movs	r3, #128
@@ -538,7 +538,7 @@ ARM GAS  /tmp/cc7SLmmF.s 			page 1
  516 0156 8901     		lsls	r1, r1, #6
  517 0158 0200     		movs	r2, r0
  518 015a 0A40     		ands	r2, r1
-ARM GAS  /tmp/cc7SLmmF.s 			page 10
+ARM GAS  /tmp/ccbdRoG9.s 			page 10
 
 
  519 015c 0842     		tst	r0, r1
@@ -598,7 +598,7 @@ ARM GAS  /tmp/cc7SLmmF.s 			page 1
  573 01bc 80841E00 		.word	2000000
  574 01c0 001BB700 		.word	12000000
  575 01c4 00093D00 		.word	4000000
-ARM GAS  /tmp/cc7SLmmF.s 			page 11
+ARM GAS  /tmp/ccbdRoG9.s 			page 11
 
 
  576 01c8 40420F00 		.word	1000000
@@ -658,7 +658,7 @@ ARM GAS  /tmp/cc7SLmmF.s 			page 1
  635              		.global	HAL_RCCEx_EnableLSECSS_IT
  636              		.syntax unified
  637              		.code	16
-ARM GAS  /tmp/cc7SLmmF.s 			page 12
+ARM GAS  /tmp/ccbdRoG9.s 			page 12
 
 
  638              		.thumb_func
@@ -718,7 +718,7 @@ ARM GAS  /tmp/cc7SLmmF.s 			page 1
  697              		@ frame_needed = 0, uses_anonymous_args = 0
  698 0000 70B5     		push	{r4, r5, r6, lr}
  699 0002 8025     		movs	r5, #128
-ARM GAS  /tmp/cc7SLmmF.s 			page 13
+ARM GAS  /tmp/ccbdRoG9.s 			page 13
 
 
  700 0004 034C     		ldr	r4, .L172
@@ -735,36 +735,36 @@ ARM GAS  /tmp/cc7SLmmF.s 			page 1
  711              	.L172:
  712 0014 00100240 		.word	1073876992
  714              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/cc7SLmmF.s 			page 14
+ARM GAS  /tmp/ccbdRoG9.s 			page 14
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 stm32l0xx_hal_rcc_ex.c
-     /tmp/cc7SLmmF.s:12     .text.HAL_RCCEx_PeriphCLKConfig:0000000000000000 $t
-     /tmp/cc7SLmmF.s:20     .text.HAL_RCCEx_PeriphCLKConfig:0000000000000000 HAL_RCCEx_PeriphCLKConfig
-     /tmp/cc7SLmmF.s:233    .text.HAL_RCCEx_PeriphCLKConfig:0000000000000178 $d
-     /tmp/cc7SLmmF.s:245    .text.HAL_RCCEx_GetPeriphCLKConfig:0000000000000000 $t
-     /tmp/cc7SLmmF.s:252    .text.HAL_RCCEx_GetPeriphCLKConfig:0000000000000000 HAL_RCCEx_GetPeriphCLKConfig
-     /tmp/cc7SLmmF.s:304    .text.HAL_RCCEx_GetPeriphCLKConfig:0000000000000058 $d
-     /tmp/cc7SLmmF.s:307    .text.HAL_RCCEx_GetPeriphCLKFreq:0000000000000000 $t
-     /tmp/cc7SLmmF.s:314    .text.HAL_RCCEx_GetPeriphCLKFreq:0000000000000000 HAL_RCCEx_GetPeriphCLKFreq
-     /tmp/cc7SLmmF.s:327    .text.HAL_RCCEx_GetPeriphCLKFreq:0000000000000014 $d
-     /tmp/cc7SLmmF.s:335    .text.HAL_RCCEx_GetPeriphCLKFreq:000000000000001c $t
-     /tmp/cc7SLmmF.s:570    .text.HAL_RCCEx_GetPeriphCLKFreq:00000000000001b0 $d
-     /tmp/cc7SLmmF.s:580    .text.HAL_RCCEx_EnableLSECSS:0000000000000000 $t
-     /tmp/cc7SLmmF.s:587    .text.HAL_RCCEx_EnableLSECSS:0000000000000000 HAL_RCCEx_EnableLSECSS
-     /tmp/cc7SLmmF.s:602    .text.HAL_RCCEx_EnableLSECSS:0000000000000010 $d
-     /tmp/cc7SLmmF.s:605    .text.HAL_RCCEx_DisableLSECSS:0000000000000000 $t
-     /tmp/cc7SLmmF.s:612    .text.HAL_RCCEx_DisableLSECSS:0000000000000000 HAL_RCCEx_DisableLSECSS
-     /tmp/cc7SLmmF.s:630    .text.HAL_RCCEx_DisableLSECSS:0000000000000014 $d
-     /tmp/cc7SLmmF.s:634    .text.HAL_RCCEx_EnableLSECSS_IT:0000000000000000 $t
-     /tmp/cc7SLmmF.s:641    .text.HAL_RCCEx_EnableLSECSS_IT:0000000000000000 HAL_RCCEx_EnableLSECSS_IT
-     /tmp/cc7SLmmF.s:669    .text.HAL_RCCEx_EnableLSECSS_IT:0000000000000028 $d
-     /tmp/cc7SLmmF.s:673    .text.HAL_RCCEx_LSECSS_Callback:0000000000000000 $t
-     /tmp/cc7SLmmF.s:680    .text.HAL_RCCEx_LSECSS_Callback:0000000000000000 HAL_RCCEx_LSECSS_Callback
-     /tmp/cc7SLmmF.s:688    .text.HAL_RCCEx_LSECSS_IRQHandler:0000000000000000 $t
-     /tmp/cc7SLmmF.s:695    .text.HAL_RCCEx_LSECSS_IRQHandler:0000000000000000 HAL_RCCEx_LSECSS_IRQHandler
-     /tmp/cc7SLmmF.s:712    .text.HAL_RCCEx_LSECSS_IRQHandler:0000000000000014 $d
+     /tmp/ccbdRoG9.s:12     .text.HAL_RCCEx_PeriphCLKConfig:0000000000000000 $t
+     /tmp/ccbdRoG9.s:20     .text.HAL_RCCEx_PeriphCLKConfig:0000000000000000 HAL_RCCEx_PeriphCLKConfig
+     /tmp/ccbdRoG9.s:233    .text.HAL_RCCEx_PeriphCLKConfig:0000000000000178 $d
+     /tmp/ccbdRoG9.s:245    .text.HAL_RCCEx_GetPeriphCLKConfig:0000000000000000 $t
+     /tmp/ccbdRoG9.s:252    .text.HAL_RCCEx_GetPeriphCLKConfig:0000000000000000 HAL_RCCEx_GetPeriphCLKConfig
+     /tmp/ccbdRoG9.s:304    .text.HAL_RCCEx_GetPeriphCLKConfig:0000000000000058 $d
+     /tmp/ccbdRoG9.s:307    .text.HAL_RCCEx_GetPeriphCLKFreq:0000000000000000 $t
+     /tmp/ccbdRoG9.s:314    .text.HAL_RCCEx_GetPeriphCLKFreq:0000000000000000 HAL_RCCEx_GetPeriphCLKFreq
+     /tmp/ccbdRoG9.s:327    .text.HAL_RCCEx_GetPeriphCLKFreq:0000000000000014 $d
+     /tmp/ccbdRoG9.s:335    .text.HAL_RCCEx_GetPeriphCLKFreq:000000000000001c $t
+     /tmp/ccbdRoG9.s:570    .text.HAL_RCCEx_GetPeriphCLKFreq:00000000000001b0 $d
+     /tmp/ccbdRoG9.s:580    .text.HAL_RCCEx_EnableLSECSS:0000000000000000 $t
+     /tmp/ccbdRoG9.s:587    .text.HAL_RCCEx_EnableLSECSS:0000000000000000 HAL_RCCEx_EnableLSECSS
+     /tmp/ccbdRoG9.s:602    .text.HAL_RCCEx_EnableLSECSS:0000000000000010 $d
+     /tmp/ccbdRoG9.s:605    .text.HAL_RCCEx_DisableLSECSS:0000000000000000 $t
+     /tmp/ccbdRoG9.s:612    .text.HAL_RCCEx_DisableLSECSS:0000000000000000 HAL_RCCEx_DisableLSECSS
+     /tmp/ccbdRoG9.s:630    .text.HAL_RCCEx_DisableLSECSS:0000000000000014 $d
+     /tmp/ccbdRoG9.s:634    .text.HAL_RCCEx_EnableLSECSS_IT:0000000000000000 $t
+     /tmp/ccbdRoG9.s:641    .text.HAL_RCCEx_EnableLSECSS_IT:0000000000000000 HAL_RCCEx_EnableLSECSS_IT
+     /tmp/ccbdRoG9.s:669    .text.HAL_RCCEx_EnableLSECSS_IT:0000000000000028 $d
+     /tmp/ccbdRoG9.s:673    .text.HAL_RCCEx_LSECSS_Callback:0000000000000000 $t
+     /tmp/ccbdRoG9.s:680    .text.HAL_RCCEx_LSECSS_Callback:0000000000000000 HAL_RCCEx_LSECSS_Callback
+     /tmp/ccbdRoG9.s:688    .text.HAL_RCCEx_LSECSS_IRQHandler:0000000000000000 $t
+     /tmp/ccbdRoG9.s:695    .text.HAL_RCCEx_LSECSS_IRQHandler:0000000000000000 HAL_RCCEx_LSECSS_IRQHandler
+     /tmp/ccbdRoG9.s:712    .text.HAL_RCCEx_LSECSS_IRQHandler:0000000000000014 $d
 
 UNDEFINED SYMBOLS
 HAL_GetTick

@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc4IIRNL.s 			page 1
+ARM GAS  /tmp/ccv3ygbA.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cc4IIRNL.s 			page 1
   57              		.syntax unified
   58              		.code	16
   59              		.thumb_func
-ARM GAS  /tmp/cc4IIRNL.s 			page 2
+ARM GAS  /tmp/ccv3ygbA.s 			page 2
 
 
   60              		.fpu softvfp
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cc4IIRNL.s 			page 1
  118              		.fpu softvfp
  120              	lr11xx_hal_check_device_ready:
  121              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  /tmp/cc4IIRNL.s 			page 3
+ARM GAS  /tmp/ccv3ygbA.s 			page 3
 
 
  122              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cc4IIRNL.s 			page 1
  178              	.L23:
  179 002e B742     		cmp	r7, r6
  180 0030 1BD1     		bne	.L24
-ARM GAS  /tmp/cc4IIRNL.s 			page 4
+ARM GAS  /tmp/ccv3ygbA.s 			page 4
 
 
  181 0032 009B     		ldr	r3, [sp]
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cc4IIRNL.s 			page 1
  229      64206372 
  229      630A00
  230              	.LC5:
-ARM GAS  /tmp/cc4IIRNL.s 			page 5
+ARM GAS  /tmp/ccv3ygbA.s 			page 5
 
 
  231 0043 00       		.ascii	"\000"
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cc4IIRNL.s 			page 1
  286 0064 0134     		adds	r4, r4, #1
  287 0066 A3B2     		uxth	r3, r4
  288 0068 9F42     		cmp	r7, r3
-ARM GAS  /tmp/cc4IIRNL.s 			page 6
+ARM GAS  /tmp/ccv3ygbA.s 			page 6
 
 
  289 006a F6D8     		bhi	.L34
@@ -358,7 +358,7 @@ ARM GAS  /tmp/cc4IIRNL.s 			page 1
  345 000a 0021     		movs	r1, #0
  346 000c 0420     		movs	r0, #4
  347 000e FFF7FEFF 		bl	hal_gpio_set_value
-ARM GAS  /tmp/cc4IIRNL.s 			page 7
+ARM GAS  /tmp/ccv3ygbA.s 			page 7
 
 
  348 0012 2C00     		movs	r4, r5
@@ -418,38 +418,38 @@ ARM GAS  /tmp/cc4IIRNL.s 			page 1
  405              		.section	.data.radio_mode,"aw"
  406              		.set	.LANCHOR0,. + 0
  409              	radio_mode:
-ARM GAS  /tmp/cc4IIRNL.s 			page 8
+ARM GAS  /tmp/ccv3ygbA.s 			page 8
 
 
  410 0000 01       		.byte	1
  411              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/cc4IIRNL.s 			page 9
+ARM GAS  /tmp/ccv3ygbA.s 			page 9
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 lr11xx_hal.c
-     /tmp/cc4IIRNL.s:12     .text.lr11xx_hal_compute_crc:0000000000000000 $t
-     /tmp/cc4IIRNL.s:19     .text.lr11xx_hal_compute_crc:0000000000000000 lr11xx_hal_compute_crc
-     /tmp/cc4IIRNL.s:55     .text.lr11xx_hal_reset:0000000000000000 $t
-     /tmp/cc4IIRNL.s:62     .text.lr11xx_hal_reset:0000000000000000 lr11xx_hal_reset
-     /tmp/cc4IIRNL.s:88     .text.lr11xx_hal_reset:0000000000000030 $d
-     /tmp/cc4IIRNL.s:93     .text.lr11xx_hal_wait_on_busy:0000000000000000 $t
-     /tmp/cc4IIRNL.s:100    .text.lr11xx_hal_wait_on_busy:0000000000000000 lr11xx_hal_wait_on_busy
-     /tmp/cc4IIRNL.s:113    .text.lr11xx_hal_check_device_ready:0000000000000000 $t
-     /tmp/cc4IIRNL.s:120    .text.lr11xx_hal_check_device_ready:0000000000000000 lr11xx_hal_check_device_ready
-     /tmp/cc4IIRNL.s:146    .text.lr11xx_hal_check_device_ready:000000000000002c $d
-     /tmp/cc4IIRNL.s:149    .text.lr11xx_hal_write:0000000000000000 $t
-     /tmp/cc4IIRNL.s:156    .text.lr11xx_hal_write:0000000000000000 lr11xx_hal_write
-     /tmp/cc4IIRNL.s:224    .text.lr11xx_hal_write:0000000000000084 $d
-     /tmp/cc4IIRNL.s:233    .text.lr11xx_hal_read:0000000000000000 $t
-     /tmp/cc4IIRNL.s:240    .text.lr11xx_hal_read:0000000000000000 lr11xx_hal_read
-     /tmp/cc4IIRNL.s:327    .text.lr11xx_hal_read:00000000000000b8 $d
-     /tmp/cc4IIRNL.s:331    .text.lr11xx_hal_direct_read:0000000000000000 $t
-     /tmp/cc4IIRNL.s:338    .text.lr11xx_hal_direct_read:0000000000000000 lr11xx_hal_direct_read
-     /tmp/cc4IIRNL.s:385    .text.lr11xx_hal_direct_read:000000000000005c $d
-     /tmp/cc4IIRNL.s:389    .text.lr11xx_hal_wakeup:0000000000000000 $t
-     /tmp/cc4IIRNL.s:396    .text.lr11xx_hal_wakeup:0000000000000000 lr11xx_hal_wakeup
-     /tmp/cc4IIRNL.s:409    .data.radio_mode:0000000000000000 radio_mode
+     /tmp/ccv3ygbA.s:12     .text.lr11xx_hal_compute_crc:0000000000000000 $t
+     /tmp/ccv3ygbA.s:19     .text.lr11xx_hal_compute_crc:0000000000000000 lr11xx_hal_compute_crc
+     /tmp/ccv3ygbA.s:55     .text.lr11xx_hal_reset:0000000000000000 $t
+     /tmp/ccv3ygbA.s:62     .text.lr11xx_hal_reset:0000000000000000 lr11xx_hal_reset
+     /tmp/ccv3ygbA.s:88     .text.lr11xx_hal_reset:0000000000000030 $d
+     /tmp/ccv3ygbA.s:93     .text.lr11xx_hal_wait_on_busy:0000000000000000 $t
+     /tmp/ccv3ygbA.s:100    .text.lr11xx_hal_wait_on_busy:0000000000000000 lr11xx_hal_wait_on_busy
+     /tmp/ccv3ygbA.s:113    .text.lr11xx_hal_check_device_ready:0000000000000000 $t
+     /tmp/ccv3ygbA.s:120    .text.lr11xx_hal_check_device_ready:0000000000000000 lr11xx_hal_check_device_ready
+     /tmp/ccv3ygbA.s:146    .text.lr11xx_hal_check_device_ready:000000000000002c $d
+     /tmp/ccv3ygbA.s:149    .text.lr11xx_hal_write:0000000000000000 $t
+     /tmp/ccv3ygbA.s:156    .text.lr11xx_hal_write:0000000000000000 lr11xx_hal_write
+     /tmp/ccv3ygbA.s:224    .text.lr11xx_hal_write:0000000000000084 $d
+     /tmp/ccv3ygbA.s:233    .text.lr11xx_hal_read:0000000000000000 $t
+     /tmp/ccv3ygbA.s:240    .text.lr11xx_hal_read:0000000000000000 lr11xx_hal_read
+     /tmp/ccv3ygbA.s:327    .text.lr11xx_hal_read:00000000000000b8 $d
+     /tmp/ccv3ygbA.s:331    .text.lr11xx_hal_direct_read:0000000000000000 $t
+     /tmp/ccv3ygbA.s:338    .text.lr11xx_hal_direct_read:0000000000000000 lr11xx_hal_direct_read
+     /tmp/ccv3ygbA.s:385    .text.lr11xx_hal_direct_read:000000000000005c $d
+     /tmp/ccv3ygbA.s:389    .text.lr11xx_hal_wakeup:0000000000000000 $t
+     /tmp/ccv3ygbA.s:396    .text.lr11xx_hal_wakeup:0000000000000000 lr11xx_hal_wakeup
+     /tmp/ccv3ygbA.s:409    .data.radio_mode:0000000000000000 radio_mode
 
 UNDEFINED SYMBOLS
 hal_gpio_set_value

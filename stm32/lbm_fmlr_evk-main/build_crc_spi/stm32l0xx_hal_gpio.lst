@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccMLE0bO.s 			page 1
+ARM GAS  /tmp/ccnrKtV4.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccMLE0bO.s 			page 1
   56 003a 5E00     		lsls	r6, r3, #1
   57 003c 5268     		ldr	r2, [r2, #4]
   58 003e 0192     		str	r2, [sp, #4]
-ARM GAS  /tmp/ccMLE0bO.s 			page 2
+ARM GAS  /tmp/ccnrKtV4.s 			page 2
 
 
   59 0040 2240     		ands	r2, r4
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccMLE0bO.s 			page 1
  113              	.L7:
  114 00a8 B240     		lsls	r2, r2, r6
  115 00aa 0468     		ldr	r4, [r0]
-ARM GAS  /tmp/ccMLE0bO.s 			page 3
+ARM GAS  /tmp/ccnrKtV4.s 			page 3
 
 
  116 00ac 0499     		ldr	r1, [sp, #16]
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccMLE0bO.s 			page 1
  170 0116 0A43     		orrs	r2, r1
  171 0118 0299     		ldr	r1, [sp, #8]
  172 011a A260     		str	r2, [r4, #8]
-ARM GAS  /tmp/ccMLE0bO.s 			page 4
+ARM GAS  /tmp/ccnrKtV4.s 			page 4
 
 
  173 011c 0D00     		movs	r5, r1
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccMLE0bO.s 			page 1
  227 0184 00100050 		.word	1342181376
  228 0188 00040140 		.word	1073808384
  230              		.section	.text.HAL_GPIO_DeInit,"ax",%progbits
-ARM GAS  /tmp/ccMLE0bO.s 			page 5
+ARM GAS  /tmp/ccnrKtV4.s 			page 5
 
 
  231              		.align	1
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccMLE0bO.s 			page 1
  286 0054 9446     		mov	ip, r2
  287 0056 0022     		movs	r2, #0
  288 0058 6045     		cmp	r0, ip
-ARM GAS  /tmp/ccMLE0bO.s 			page 6
+ARM GAS  /tmp/ccnrKtV4.s 			page 6
 
 
  289 005a 11D0     		beq	.L34
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccMLE0bO.s 			page 1
  343 00c2 DA08     		lsrs	r2, r3, #3
  344 00c4 9200     		lsls	r2, r2, #2
  345 00c6 8218     		adds	r2, r0, r2
-ARM GAS  /tmp/ccMLE0bO.s 			page 7
+ARM GAS  /tmp/ccnrKtV4.s 			page 7
 
 
  346 00c8 156A     		ldr	r5, [r2, #32]
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccMLE0bO.s 			page 1
  404 0000 002A     		cmp	r2, #0
  405 0002 01D0     		beq	.L50
  406 0004 8161     		str	r1, [r0, #24]
-ARM GAS  /tmp/ccMLE0bO.s 			page 8
+ARM GAS  /tmp/ccnrKtV4.s 			page 8
 
 
  407              	.L49:
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccMLE0bO.s 			page 1
  465 0022 9843     		bics	r0, r3
  466 0024 02B0     		add	sp, sp, #8
  467              		@ sp needed
-ARM GAS  /tmp/ccMLE0bO.s 			page 9
+ARM GAS  /tmp/ccnrKtV4.s 			page 9
 
 
  468 0026 7047     		bx	lr
@@ -520,29 +520,29 @@ ARM GAS  /tmp/ccMLE0bO.s 			page 1
  508              	.L60:
  509 0014 00040140 		.word	1073808384
  511              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/ccMLE0bO.s 			page 10
+ARM GAS  /tmp/ccnrKtV4.s 			page 10
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 stm32l0xx_hal_gpio.c
-     /tmp/ccMLE0bO.s:12     .text.HAL_GPIO_Init:0000000000000000 $t
-     /tmp/ccMLE0bO.s:20     .text.HAL_GPIO_Init:0000000000000000 HAL_GPIO_Init
-     /tmp/ccMLE0bO.s:221    .text.HAL_GPIO_Init:000000000000016c $d
-     /tmp/ccMLE0bO.s:231    .text.HAL_GPIO_DeInit:0000000000000000 $t
-     /tmp/ccMLE0bO.s:238    .text.HAL_GPIO_DeInit:0000000000000000 HAL_GPIO_DeInit
-     /tmp/ccMLE0bO.s:364    .text.HAL_GPIO_DeInit:00000000000000e4 $d
-     /tmp/ccMLE0bO.s:373    .text.HAL_GPIO_ReadPin:0000000000000000 $t
-     /tmp/ccMLE0bO.s:380    .text.HAL_GPIO_ReadPin:0000000000000000 HAL_GPIO_ReadPin
-     /tmp/ccMLE0bO.s:393    .text.HAL_GPIO_WritePin:0000000000000000 $t
-     /tmp/ccMLE0bO.s:400    .text.HAL_GPIO_WritePin:0000000000000000 HAL_GPIO_WritePin
-     /tmp/ccMLE0bO.s:415    .text.HAL_GPIO_TogglePin:0000000000000000 $t
-     /tmp/ccMLE0bO.s:422    .text.HAL_GPIO_TogglePin:0000000000000000 HAL_GPIO_TogglePin
-     /tmp/ccMLE0bO.s:437    .text.HAL_GPIO_LockPin:0000000000000000 $t
-     /tmp/ccMLE0bO.s:444    .text.HAL_GPIO_LockPin:0000000000000000 HAL_GPIO_LockPin
-     /tmp/ccMLE0bO.s:471    .text.HAL_GPIO_EXTI_Callback:0000000000000000 $t
-     /tmp/ccMLE0bO.s:478    .text.HAL_GPIO_EXTI_Callback:0000000000000000 HAL_GPIO_EXTI_Callback
-     /tmp/ccMLE0bO.s:486    .text.HAL_GPIO_EXTI_IRQHandler:0000000000000000 $t
-     /tmp/ccMLE0bO.s:493    .text.HAL_GPIO_EXTI_IRQHandler:0000000000000000 HAL_GPIO_EXTI_IRQHandler
-     /tmp/ccMLE0bO.s:509    .text.HAL_GPIO_EXTI_IRQHandler:0000000000000014 $d
+     /tmp/ccnrKtV4.s:12     .text.HAL_GPIO_Init:0000000000000000 $t
+     /tmp/ccnrKtV4.s:20     .text.HAL_GPIO_Init:0000000000000000 HAL_GPIO_Init
+     /tmp/ccnrKtV4.s:221    .text.HAL_GPIO_Init:000000000000016c $d
+     /tmp/ccnrKtV4.s:231    .text.HAL_GPIO_DeInit:0000000000000000 $t
+     /tmp/ccnrKtV4.s:238    .text.HAL_GPIO_DeInit:0000000000000000 HAL_GPIO_DeInit
+     /tmp/ccnrKtV4.s:364    .text.HAL_GPIO_DeInit:00000000000000e4 $d
+     /tmp/ccnrKtV4.s:373    .text.HAL_GPIO_ReadPin:0000000000000000 $t
+     /tmp/ccnrKtV4.s:380    .text.HAL_GPIO_ReadPin:0000000000000000 HAL_GPIO_ReadPin
+     /tmp/ccnrKtV4.s:393    .text.HAL_GPIO_WritePin:0000000000000000 $t
+     /tmp/ccnrKtV4.s:400    .text.HAL_GPIO_WritePin:0000000000000000 HAL_GPIO_WritePin
+     /tmp/ccnrKtV4.s:415    .text.HAL_GPIO_TogglePin:0000000000000000 $t
+     /tmp/ccnrKtV4.s:422    .text.HAL_GPIO_TogglePin:0000000000000000 HAL_GPIO_TogglePin
+     /tmp/ccnrKtV4.s:437    .text.HAL_GPIO_LockPin:0000000000000000 $t
+     /tmp/ccnrKtV4.s:444    .text.HAL_GPIO_LockPin:0000000000000000 HAL_GPIO_LockPin
+     /tmp/ccnrKtV4.s:471    .text.HAL_GPIO_EXTI_Callback:0000000000000000 $t
+     /tmp/ccnrKtV4.s:478    .text.HAL_GPIO_EXTI_Callback:0000000000000000 HAL_GPIO_EXTI_Callback
+     /tmp/ccnrKtV4.s:486    .text.HAL_GPIO_EXTI_IRQHandler:0000000000000000 $t
+     /tmp/ccnrKtV4.s:493    .text.HAL_GPIO_EXTI_IRQHandler:0000000000000000 HAL_GPIO_EXTI_IRQHandler
+     /tmp/ccnrKtV4.s:509    .text.HAL_GPIO_EXTI_IRQHandler:0000000000000014 $d
 
 NO UNDEFINED SYMBOLS

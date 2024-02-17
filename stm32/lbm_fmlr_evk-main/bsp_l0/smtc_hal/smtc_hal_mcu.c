@@ -152,16 +152,10 @@ void hal_mcu_init( void ) {
 
     uart1_init( );
 
-    //hal_lp_timer_init( );
     hal_spi_init( RADIO_SPI_ID, RADIO_SPI_MOSI, RADIO_SPI_MISO, RADIO_SPI_SCLK );
     hal_rtc_init( );
-    //hal_rng_init( );
 
-    // TimerInit( &wut, &wut_cb );
-    // wut_flag = false;
-
-    // Initialize watchdog
-    hal_watchdog_init( );
+    //hal_watchdog_init( );
 }
 
 void hal_mcu_reset( void ) {

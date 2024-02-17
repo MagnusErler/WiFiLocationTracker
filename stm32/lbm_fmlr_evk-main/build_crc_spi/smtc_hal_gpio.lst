@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccJRvPJI.s 			page 1
+ARM GAS  /tmp/cccXcJfj.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccJRvPJI.s 			page 1
   58 000a 0400     		movs	r4, r0
   59 000c 9B01     		lsls	r3, r3, #6
   60 000e 9001     		lsls	r0, r2, #6
-ARM GAS  /tmp/ccJRvPJI.s 			page 2
+ARM GAS  /tmp/cccXcJfj.s 			page 2
 
 
   61 0010 0340     		ands	r3, r0
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccJRvPJI.s 			page 1
  115 007e 0340     		ands	r3, r0
  116 0080 1140     		ands	r1, r2
  117 0082 1042     		tst	r0, r2
-ARM GAS  /tmp/ccJRvPJI.s 			page 3
+ARM GAS  /tmp/cccXcJfj.s 			page 3
 
 
  118 0084 59D0     		beq	.L20
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccJRvPJI.s 			page 1
  172 00ec D762     		str	r7, [r2, #44]
  173 00ee D36A     		ldr	r3, [r2, #44]
  174 00f0 6246     		mov	r2, ip
-ARM GAS  /tmp/ccJRvPJI.s 			page 4
+ARM GAS  /tmp/cccXcJfj.s 			page 4
 
 
  175 00f2 1340     		ands	r3, r2
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccJRvPJI.s 			page 1
  229 0156 0620     		movs	r0, #6
  230 0158 F4E7     		b	.L24
  231              	.L26:
-ARM GAS  /tmp/ccJRvPJI.s 			page 5
+ARM GAS  /tmp/cccXcJfj.s 			page 5
 
 
  232 015a C046     		.align	2
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccJRvPJI.s 			page 1
  290 001c 1034     		adds	r4, r4, #16
  291 001e 0560     		str	r5, [r0]
  292 0020 02A8     		add	r0, sp, #8
-ARM GAS  /tmp/ccJRvPJI.s 			page 6
+ARM GAS  /tmp/cccXcJfj.s 			page 6
 
 
  293 0022 26CC     		ldmia	r4!, {r1, r2, r5}
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccJRvPJI.s 			page 1
  349              		.align	2
  350              	.L40:
  351 0014 00000000 		.word	.LANCHOR0
-ARM GAS  /tmp/ccJRvPJI.s 			page 7
+ARM GAS  /tmp/cccXcJfj.s 			page 7
 
 
  353              		.section	.text.hal_gpio_irq_enable,"ax",%progbits
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccJRvPJI.s 			page 1
  412 000c 9940     		lsls	r1, r1, r3
  413 000e F023     		movs	r3, #240
  414 0010 8001     		lsls	r0, r0, #6
-ARM GAS  /tmp/ccJRvPJI.s 			page 8
+ARM GAS  /tmp/cccXcJfj.s 			page 8
 
 
  415 0012 9B01     		lsls	r3, r3, #6
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccJRvPJI.s 			page 1
  473 000c 5200     		lsls	r2, r2, #1
  474 000e 2042     		tst	r0, r4
  475 0010 04D0     		beq	.L47
-ARM GAS  /tmp/ccJRvPJI.s 			page 9
+ARM GAS  /tmp/cccXcJfj.s 			page 9
 
 
  476 0012 023B     		subs	r3, r3, #2
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccJRvPJI.s 			page 1
  535              		.global	EXTI4_15_IRQHandler
  536              		.syntax unified
  537              		.code	16
-ARM GAS  /tmp/ccJRvPJI.s 			page 10
+ARM GAS  /tmp/cccXcJfj.s 			page 10
 
 
  538              		.thumb_func
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccJRvPJI.s 			page 1
  595 0008 0023     		movs	r3, #0
  596 000a 02E0     		b	.L59
  597              	.L61:
-ARM GAS  /tmp/ccJRvPJI.s 			page 11
+ARM GAS  /tmp/cccXcJfj.s 			page 11
 
 
  598 000c 0133     		adds	r3, r3, #1
@@ -647,48 +647,48 @@ ARM GAS  /tmp/ccJRvPJI.s 			page 1
  641      00000000 
  641      00000000 
  642              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/ccJRvPJI.s 			page 12
+ARM GAS  /tmp/cccXcJfj.s 			page 12
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 smtc_hal_gpio.c
-     /tmp/ccJRvPJI.s:12     .text.hal_gpio_irq_attach:0000000000000000 $t
-     /tmp/ccJRvPJI.s:20     .text.hal_gpio_irq_attach:0000000000000000 hal_gpio_irq_attach
-     /tmp/ccJRvPJI.s:41     .text.hal_gpio_irq_attach:0000000000000018 $d
-     /tmp/ccJRvPJI.s:44     .text.gpio_init.constprop.0:0000000000000000 $t
-     /tmp/ccJRvPJI.s:50     .text.gpio_init.constprop.0:0000000000000000 gpio_init.constprop.0
-     /tmp/ccJRvPJI.s:234    .text.gpio_init.constprop.0:000000000000015c $d
-     /tmp/ccJRvPJI.s:238    .text.hal_gpio_init_out:0000000000000000 $t
-     /tmp/ccJRvPJI.s:245    .text.hal_gpio_init_out:0000000000000000 hal_gpio_init_out
-     /tmp/ccJRvPJI.s:266    .text.hal_gpio_init_in:0000000000000000 $t
-     /tmp/ccJRvPJI.s:273    .text.hal_gpio_init_in:0000000000000000 hal_gpio_init_in
-     /tmp/ccJRvPJI.s:322    .text.hal_gpio_init_in:0000000000000054 $d
-     /tmp/ccJRvPJI.s:325    .text.hal_gpio_irq_deatach:0000000000000000 $t
-     /tmp/ccJRvPJI.s:332    .text.hal_gpio_irq_deatach:0000000000000000 hal_gpio_irq_deatach
-     /tmp/ccJRvPJI.s:351    .text.hal_gpio_irq_deatach:0000000000000014 $d
-     /tmp/ccJRvPJI.s:354    .text.hal_gpio_irq_enable:0000000000000000 $t
-     /tmp/ccJRvPJI.s:361    .text.hal_gpio_irq_enable:0000000000000000 hal_gpio_irq_enable
-     /tmp/ccJRvPJI.s:375    .text.hal_gpio_irq_disable:0000000000000000 $t
-     /tmp/ccJRvPJI.s:382    .text.hal_gpio_irq_disable:0000000000000000 hal_gpio_irq_disable
-     /tmp/ccJRvPJI.s:396    .text.hal_gpio_set_value:0000000000000000 $t
-     /tmp/ccJRvPJI.s:403    .text.hal_gpio_set_value:0000000000000000 hal_gpio_set_value
-     /tmp/ccJRvPJI.s:427    .text.hal_gpio_get_value:0000000000000000 $t
-     /tmp/ccJRvPJI.s:434    .text.hal_gpio_get_value:0000000000000000 hal_gpio_get_value
-     /tmp/ccJRvPJI.s:457    .text.hal_gpio_clear_pending_irq:0000000000000000 $t
-     /tmp/ccJRvPJI.s:464    .text.hal_gpio_clear_pending_irq:0000000000000000 hal_gpio_clear_pending_irq
-     /tmp/ccJRvPJI.s:493    .text.hal_gpio_clear_pending_irq:0000000000000028 $d
-     /tmp/ccJRvPJI.s:496    .text.EXTI0_1_IRQHandler:0000000000000000 $t
-     /tmp/ccJRvPJI.s:503    .text.EXTI0_1_IRQHandler:0000000000000000 EXTI0_1_IRQHandler
-     /tmp/ccJRvPJI.s:515    .text.EXTI2_3_IRQHandler:0000000000000000 $t
-     /tmp/ccJRvPJI.s:522    .text.EXTI2_3_IRQHandler:0000000000000000 EXTI2_3_IRQHandler
-     /tmp/ccJRvPJI.s:534    .text.EXTI4_15_IRQHandler:0000000000000000 $t
-     /tmp/ccJRvPJI.s:541    .text.EXTI4_15_IRQHandler:0000000000000000 EXTI4_15_IRQHandler
-     /tmp/ccJRvPJI.s:581    .text.HAL_GPIO_EXTI_Callback:0000000000000000 $t
-     /tmp/ccJRvPJI.s:588    .text.HAL_GPIO_EXTI_Callback:0000000000000000 HAL_GPIO_EXTI_Callback
-     /tmp/ccJRvPJI.s:621    .text.HAL_GPIO_EXTI_Callback:000000000000002c $d
-     /tmp/ccJRvPJI.s:624    .rodata:0000000000000000 $d
-     /tmp/ccJRvPJI.s:636    .bss.gpio_irq:0000000000000000 $d
-     /tmp/ccJRvPJI.s:640    .bss.gpio_irq:0000000000000000 gpio_irq
+     /tmp/cccXcJfj.s:12     .text.hal_gpio_irq_attach:0000000000000000 $t
+     /tmp/cccXcJfj.s:20     .text.hal_gpio_irq_attach:0000000000000000 hal_gpio_irq_attach
+     /tmp/cccXcJfj.s:41     .text.hal_gpio_irq_attach:0000000000000018 $d
+     /tmp/cccXcJfj.s:44     .text.gpio_init.constprop.0:0000000000000000 $t
+     /tmp/cccXcJfj.s:50     .text.gpio_init.constprop.0:0000000000000000 gpio_init.constprop.0
+     /tmp/cccXcJfj.s:234    .text.gpio_init.constprop.0:000000000000015c $d
+     /tmp/cccXcJfj.s:238    .text.hal_gpio_init_out:0000000000000000 $t
+     /tmp/cccXcJfj.s:245    .text.hal_gpio_init_out:0000000000000000 hal_gpio_init_out
+     /tmp/cccXcJfj.s:266    .text.hal_gpio_init_in:0000000000000000 $t
+     /tmp/cccXcJfj.s:273    .text.hal_gpio_init_in:0000000000000000 hal_gpio_init_in
+     /tmp/cccXcJfj.s:322    .text.hal_gpio_init_in:0000000000000054 $d
+     /tmp/cccXcJfj.s:325    .text.hal_gpio_irq_deatach:0000000000000000 $t
+     /tmp/cccXcJfj.s:332    .text.hal_gpio_irq_deatach:0000000000000000 hal_gpio_irq_deatach
+     /tmp/cccXcJfj.s:351    .text.hal_gpio_irq_deatach:0000000000000014 $d
+     /tmp/cccXcJfj.s:354    .text.hal_gpio_irq_enable:0000000000000000 $t
+     /tmp/cccXcJfj.s:361    .text.hal_gpio_irq_enable:0000000000000000 hal_gpio_irq_enable
+     /tmp/cccXcJfj.s:375    .text.hal_gpio_irq_disable:0000000000000000 $t
+     /tmp/cccXcJfj.s:382    .text.hal_gpio_irq_disable:0000000000000000 hal_gpio_irq_disable
+     /tmp/cccXcJfj.s:396    .text.hal_gpio_set_value:0000000000000000 $t
+     /tmp/cccXcJfj.s:403    .text.hal_gpio_set_value:0000000000000000 hal_gpio_set_value
+     /tmp/cccXcJfj.s:427    .text.hal_gpio_get_value:0000000000000000 $t
+     /tmp/cccXcJfj.s:434    .text.hal_gpio_get_value:0000000000000000 hal_gpio_get_value
+     /tmp/cccXcJfj.s:457    .text.hal_gpio_clear_pending_irq:0000000000000000 $t
+     /tmp/cccXcJfj.s:464    .text.hal_gpio_clear_pending_irq:0000000000000000 hal_gpio_clear_pending_irq
+     /tmp/cccXcJfj.s:493    .text.hal_gpio_clear_pending_irq:0000000000000028 $d
+     /tmp/cccXcJfj.s:496    .text.EXTI0_1_IRQHandler:0000000000000000 $t
+     /tmp/cccXcJfj.s:503    .text.EXTI0_1_IRQHandler:0000000000000000 EXTI0_1_IRQHandler
+     /tmp/cccXcJfj.s:515    .text.EXTI2_3_IRQHandler:0000000000000000 $t
+     /tmp/cccXcJfj.s:522    .text.EXTI2_3_IRQHandler:0000000000000000 EXTI2_3_IRQHandler
+     /tmp/cccXcJfj.s:534    .text.EXTI4_15_IRQHandler:0000000000000000 $t
+     /tmp/cccXcJfj.s:541    .text.EXTI4_15_IRQHandler:0000000000000000 EXTI4_15_IRQHandler
+     /tmp/cccXcJfj.s:581    .text.HAL_GPIO_EXTI_Callback:0000000000000000 $t
+     /tmp/cccXcJfj.s:588    .text.HAL_GPIO_EXTI_Callback:0000000000000000 HAL_GPIO_EXTI_Callback
+     /tmp/cccXcJfj.s:621    .text.HAL_GPIO_EXTI_Callback:000000000000002c $d
+     /tmp/cccXcJfj.s:624    .rodata:0000000000000000 $d
+     /tmp/cccXcJfj.s:636    .bss.gpio_irq:0000000000000000 $d
+     /tmp/cccXcJfj.s:640    .bss.gpio_irq:0000000000000000 gpio_irq
 
 UNDEFINED SYMBOLS
 HAL_GPIO_WritePin

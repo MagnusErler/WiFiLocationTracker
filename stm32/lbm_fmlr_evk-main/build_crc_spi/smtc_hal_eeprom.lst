@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccRjv05I.s 			page 1
+ARM GAS  /tmp/ccDYk89O.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccRjv05I.s 			page 1
   58              		@ args = 0, pretend = 0, frame = 0
   59              		@ frame_needed = 0, uses_anonymous_args = 0
   60 0000 0B00     		movs	r3, r1
-ARM GAS  /tmp/ccRjv05I.s 			page 2
+ARM GAS  /tmp/ccDYk89O.s 			page 2
 
 
   61 0002 10B5     		push	{r4, lr}
@@ -73,17 +73,17 @@ ARM GAS  /tmp/ccRjv05I.s 			page 1
   70              	.L7:
   71 0010 00000808 		.word	134742016
   73              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/ccRjv05I.s 			page 3
+ARM GAS  /tmp/ccDYk89O.s 			page 3
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 smtc_hal_eeprom.c
-     /tmp/ccRjv05I.s:12     .text.hal_eeprom_write_buffer:0000000000000000 $t
-     /tmp/ccRjv05I.s:20     .text.hal_eeprom_write_buffer:0000000000000000 hal_eeprom_write_buffer
-     /tmp/ccRjv05I.s:47     .text.hal_eeprom_write_buffer:0000000000000028 $d
-     /tmp/ccRjv05I.s:50     .text.hal_eeprom_read_buffer:0000000000000000 $t
-     /tmp/ccRjv05I.s:57     .text.hal_eeprom_read_buffer:0000000000000000 hal_eeprom_read_buffer
-     /tmp/ccRjv05I.s:71     .text.hal_eeprom_read_buffer:0000000000000010 $d
+     /tmp/ccDYk89O.s:12     .text.hal_eeprom_write_buffer:0000000000000000 $t
+     /tmp/ccDYk89O.s:20     .text.hal_eeprom_write_buffer:0000000000000000 hal_eeprom_write_buffer
+     /tmp/ccDYk89O.s:47     .text.hal_eeprom_write_buffer:0000000000000028 $d
+     /tmp/ccDYk89O.s:50     .text.hal_eeprom_read_buffer:0000000000000000 $t
+     /tmp/ccDYk89O.s:57     .text.hal_eeprom_read_buffer:0000000000000000 hal_eeprom_read_buffer
+     /tmp/ccDYk89O.s:71     .text.hal_eeprom_read_buffer:0000000000000010 $d
 
 UNDEFINED SYMBOLS
 HAL_FLASHEx_DATAEEPROM_Unlock

@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccRUgEeI.s 			page 1
+ARM GAS  /tmp/ccbd2Fi7.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccRUgEeI.s 			page 1
   61              		.align	1
   62              		.global	smtc_modem_hal_get_compensated_time_in_s
   63              		.syntax unified
-ARM GAS  /tmp/ccRUgEeI.s 			page 2
+ARM GAS  /tmp/ccbd2Fi7.s 			page 2
 
 
   64              		.code	16
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccRUgEeI.s 			page 1
  126              		.global	smtc_modem_hal_get_radio_irq_timestamp_in_100us
  127              		.syntax unified
  128              		.code	16
-ARM GAS  /tmp/ccRUgEeI.s 			page 3
+ARM GAS  /tmp/ccbd2Fi7.s 			page 3
 
 
  129              		.thumb_func
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccRUgEeI.s 			page 1
  190 000a 10BD     		pop	{r4, pc}
  192              		.section	.text.smtc_modem_hal_enable_modem_irq,"ax",%progbits
  193              		.align	1
-ARM GAS  /tmp/ccRUgEeI.s 			page 4
+ARM GAS  /tmp/ccbd2Fi7.s 			page 4
 
 
  194              		.global	smtc_modem_hal_enable_modem_irq
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccRUgEeI.s 			page 1
  245 0016 0D48     		ldr	r0, .L22+4
  246 0018 FAE7     		b	.L21
  247              	.L17:
-ARM GAS  /tmp/ccRUgEeI.s 			page 5
+ARM GAS  /tmp/ccbd2Fi7.s 			page 5
 
 
  248 001a 0D48     		ldr	r0, .L22+8
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccRUgEeI.s 			page 1
  304              		@ sp needed
  305 0014 10BD     		pop	{r4, pc}
  306              	.L29:
-ARM GAS  /tmp/ccRUgEeI.s 			page 6
+ARM GAS  /tmp/ccbd2Fi7.s 			page 6
 
 
  307 0016 0D48     		ldr	r0, .L33+4
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccRUgEeI.s 			page 1
  364              		.align	1
  365              		.global	smtc_modem_hal_restore_crashlog
  366              		.syntax unified
-ARM GAS  /tmp/ccRUgEeI.s 			page 7
+ARM GAS  /tmp/ccbd2Fi7.s 			page 7
 
 
  367              		.code	16
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccRUgEeI.s 			page 1
  426 000a C046     		.align	2
  427              	.L45:
  428 000c 00000000 		.word	.LANCHOR2
-ARM GAS  /tmp/ccRUgEeI.s 			page 8
+ARM GAS  /tmp/ccbd2Fi7.s 			page 8
 
 
  430              		.section	.text.smtc_modem_hal_get_random_nb,"ax",%progbits
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccRUgEeI.s 			page 1
  491 0004 034B     		ldr	r3, .L51
  492              		@ sp needed
  493 0006 9860     		str	r0, [r3, #8]
-ARM GAS  /tmp/ccRUgEeI.s 			page 9
+ARM GAS  /tmp/ccbd2Fi7.s 			page 9
 
 
  494 0008 1800     		movs	r0, r3
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccRUgEeI.s 			page 1
  555              		.code	16
  556              		.thumb_func
  557              		.fpu softvfp
-ARM GAS  /tmp/ccRUgEeI.s 			page 10
+ARM GAS  /tmp/ccbd2Fi7.s 			page 10
 
 
  559              	smtc_modem_hal_get_radio_tcxo_startup_delay_ms:
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccRUgEeI.s 			page 1
  619 000a 0400     		movs	r4, r0
  620 000c FFF7FEFF 		bl	hal_adc_deinit
  621 0010 1421     		movs	r1, #20
-ARM GAS  /tmp/ccRUgEeI.s 			page 11
+ARM GAS  /tmp/ccbd2Fi7.s 			page 11
 
 
  622 0012 2000     		movs	r0, r4
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccRUgEeI.s 			page 1
  678              		@ args = 0, pretend = 0, frame = 0
  679              		@ frame_needed = 0, uses_anonymous_args = 0
  680 0000 70B5     		push	{r4, r5, r6, lr}
-ARM GAS  /tmp/ccRUgEeI.s 			page 12
+ARM GAS  /tmp/ccbd2Fi7.s 			page 12
 
 
  681 0002 0D00     		movs	r5, r1
@@ -716,97 +716,97 @@ ARM GAS  /tmp/ccRUgEeI.s 			page 1
  731      616C5F63 
  731      6F6E7465 
  732              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/ccRUgEeI.s 			page 13
+ARM GAS  /tmp/ccbd2Fi7.s 			page 13
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 smtc_modem_hal.c
-     /tmp/ccRUgEeI.s:12     .text.smtc_modem_hal_reset_mcu:0000000000000000 $t
-     /tmp/ccRUgEeI.s:20     .text.smtc_modem_hal_reset_mcu:0000000000000000 smtc_modem_hal_reset_mcu
-     /tmp/ccRUgEeI.s:29     .text.smtc_modem_hal_reload_wdog:0000000000000000 $t
-     /tmp/ccRUgEeI.s:36     .text.smtc_modem_hal_reload_wdog:0000000000000000 smtc_modem_hal_reload_wdog
-     /tmp/ccRUgEeI.s:45     .text.smtc_modem_hal_get_time_in_s:0000000000000000 $t
-     /tmp/ccRUgEeI.s:52     .text.smtc_modem_hal_get_time_in_s:0000000000000000 smtc_modem_hal_get_time_in_s
-     /tmp/ccRUgEeI.s:61     .text.smtc_modem_hal_get_compensated_time_in_s:0000000000000000 $t
-     /tmp/ccRUgEeI.s:68     .text.smtc_modem_hal_get_compensated_time_in_s:0000000000000000 smtc_modem_hal_get_compensated_time_in_s
-     /tmp/ccRUgEeI.s:77     .text.smtc_modem_hal_get_time_compensation_in_s:0000000000000000 $t
-     /tmp/ccRUgEeI.s:84     .text.smtc_modem_hal_get_time_compensation_in_s:0000000000000000 smtc_modem_hal_get_time_compensation_in_s
-     /tmp/ccRUgEeI.s:93     .text.smtc_modem_hal_get_time_in_ms:0000000000000000 $t
-     /tmp/ccRUgEeI.s:100    .text.smtc_modem_hal_get_time_in_ms:0000000000000000 smtc_modem_hal_get_time_in_ms
-     /tmp/ccRUgEeI.s:109    .text.smtc_modem_hal_get_time_in_100us:0000000000000000 $t
-     /tmp/ccRUgEeI.s:116    .text.smtc_modem_hal_get_time_in_100us:0000000000000000 smtc_modem_hal_get_time_in_100us
-     /tmp/ccRUgEeI.s:125    .text.smtc_modem_hal_get_radio_irq_timestamp_in_100us:0000000000000000 $t
-     /tmp/ccRUgEeI.s:132    .text.smtc_modem_hal_get_radio_irq_timestamp_in_100us:0000000000000000 smtc_modem_hal_get_radio_irq_timestamp_in_100us
-     /tmp/ccRUgEeI.s:141    .text.smtc_modem_hal_start_timer:0000000000000000 $t
-     /tmp/ccRUgEeI.s:148    .text.smtc_modem_hal_start_timer:0000000000000000 smtc_modem_hal_start_timer
-     /tmp/ccRUgEeI.s:160    .text.smtc_modem_hal_stop_timer:0000000000000000 $t
-     /tmp/ccRUgEeI.s:167    .text.smtc_modem_hal_stop_timer:0000000000000000 smtc_modem_hal_stop_timer
-     /tmp/ccRUgEeI.s:176    .text.smtc_modem_hal_disable_modem_irq:0000000000000000 $t
-     /tmp/ccRUgEeI.s:183    .text.smtc_modem_hal_disable_modem_irq:0000000000000000 smtc_modem_hal_disable_modem_irq
-     /tmp/ccRUgEeI.s:193    .text.smtc_modem_hal_enable_modem_irq:0000000000000000 $t
-     /tmp/ccRUgEeI.s:200    .text.smtc_modem_hal_enable_modem_irq:0000000000000000 smtc_modem_hal_enable_modem_irq
-     /tmp/ccRUgEeI.s:217    .text.smtc_modem_hal_context_restore:0000000000000000 $t
-     /tmp/ccRUgEeI.s:224    .text.smtc_modem_hal_context_restore:0000000000000000 smtc_modem_hal_context_restore
-     /tmp/ccRUgEeI.s:232    .text.smtc_modem_hal_context_restore:000000000000000a $d
-     /tmp/ccRUgEeI.s:236    .text.smtc_modem_hal_context_restore:000000000000000e $t
-     /tmp/ccRUgEeI.s:270    .text.smtc_modem_hal_context_restore:0000000000000048 $d
-     /tmp/ccRUgEeI.s:279    .text.smtc_modem_hal_context_store:0000000000000000 $t
-     /tmp/ccRUgEeI.s:286    .text.smtc_modem_hal_context_store:0000000000000000 smtc_modem_hal_context_store
-     /tmp/ccRUgEeI.s:294    .text.smtc_modem_hal_context_store:000000000000000a $d
-     /tmp/ccRUgEeI.s:298    .text.smtc_modem_hal_context_store:000000000000000e $t
-     /tmp/ccRUgEeI.s:332    .text.smtc_modem_hal_context_store:0000000000000048 $d
-     /tmp/ccRUgEeI.s:341    .text.smtc_modem_hal_store_crashlog:0000000000000000 $t
-     /tmp/ccRUgEeI.s:348    .text.smtc_modem_hal_store_crashlog:0000000000000000 smtc_modem_hal_store_crashlog
-     /tmp/ccRUgEeI.s:361    .text.smtc_modem_hal_store_crashlog:0000000000000010 $d
-     /tmp/ccRUgEeI.s:364    .text.smtc_modem_hal_restore_crashlog:0000000000000000 $t
-     /tmp/ccRUgEeI.s:371    .text.smtc_modem_hal_restore_crashlog:0000000000000000 smtc_modem_hal_restore_crashlog
-     /tmp/ccRUgEeI.s:383    .text.smtc_modem_hal_restore_crashlog:000000000000000c $d
-     /tmp/ccRUgEeI.s:386    .text.smtc_modem_hal_set_crashlog_status:0000000000000000 $t
-     /tmp/ccRUgEeI.s:393    .text.smtc_modem_hal_set_crashlog_status:0000000000000000 smtc_modem_hal_set_crashlog_status
-     /tmp/ccRUgEeI.s:405    .text.smtc_modem_hal_set_crashlog_status:0000000000000008 $d
-     /tmp/ccRUgEeI.s:408    .text.smtc_modem_hal_get_crashlog_status:0000000000000000 $t
-     /tmp/ccRUgEeI.s:415    .text.smtc_modem_hal_get_crashlog_status:0000000000000000 smtc_modem_hal_get_crashlog_status
-     /tmp/ccRUgEeI.s:428    .text.smtc_modem_hal_get_crashlog_status:000000000000000c $d
-     /tmp/ccRUgEeI.s:431    .text.smtc_modem_hal_get_random_nb:0000000000000000 $t
-     /tmp/ccRUgEeI.s:438    .text.smtc_modem_hal_get_random_nb:0000000000000000 smtc_modem_hal_get_random_nb
-     /tmp/ccRUgEeI.s:447    .text.smtc_modem_hal_get_random_nb_in_range:0000000000000000 $t
-     /tmp/ccRUgEeI.s:454    .text.smtc_modem_hal_get_random_nb_in_range:0000000000000000 smtc_modem_hal_get_random_nb_in_range
-     /tmp/ccRUgEeI.s:463    .text.smtc_modem_hal_get_signed_random_nb_in_range:0000000000000000 $t
-     /tmp/ccRUgEeI.s:470    .text.smtc_modem_hal_get_signed_random_nb_in_range:0000000000000000 smtc_modem_hal_get_signed_random_nb_in_range
-     /tmp/ccRUgEeI.s:479    .text.smtc_modem_hal_irq_config_radio_irq:0000000000000000 $t
-     /tmp/ccRUgEeI.s:486    .text.smtc_modem_hal_irq_config_radio_irq:0000000000000000 smtc_modem_hal_irq_config_radio_irq
-     /tmp/ccRUgEeI.s:502    .text.smtc_modem_hal_irq_config_radio_irq:0000000000000014 $d
-ARM GAS  /tmp/ccRUgEeI.s 			page 14
+     /tmp/ccbd2Fi7.s:12     .text.smtc_modem_hal_reset_mcu:0000000000000000 $t
+     /tmp/ccbd2Fi7.s:20     .text.smtc_modem_hal_reset_mcu:0000000000000000 smtc_modem_hal_reset_mcu
+     /tmp/ccbd2Fi7.s:29     .text.smtc_modem_hal_reload_wdog:0000000000000000 $t
+     /tmp/ccbd2Fi7.s:36     .text.smtc_modem_hal_reload_wdog:0000000000000000 smtc_modem_hal_reload_wdog
+     /tmp/ccbd2Fi7.s:45     .text.smtc_modem_hal_get_time_in_s:0000000000000000 $t
+     /tmp/ccbd2Fi7.s:52     .text.smtc_modem_hal_get_time_in_s:0000000000000000 smtc_modem_hal_get_time_in_s
+     /tmp/ccbd2Fi7.s:61     .text.smtc_modem_hal_get_compensated_time_in_s:0000000000000000 $t
+     /tmp/ccbd2Fi7.s:68     .text.smtc_modem_hal_get_compensated_time_in_s:0000000000000000 smtc_modem_hal_get_compensated_time_in_s
+     /tmp/ccbd2Fi7.s:77     .text.smtc_modem_hal_get_time_compensation_in_s:0000000000000000 $t
+     /tmp/ccbd2Fi7.s:84     .text.smtc_modem_hal_get_time_compensation_in_s:0000000000000000 smtc_modem_hal_get_time_compensation_in_s
+     /tmp/ccbd2Fi7.s:93     .text.smtc_modem_hal_get_time_in_ms:0000000000000000 $t
+     /tmp/ccbd2Fi7.s:100    .text.smtc_modem_hal_get_time_in_ms:0000000000000000 smtc_modem_hal_get_time_in_ms
+     /tmp/ccbd2Fi7.s:109    .text.smtc_modem_hal_get_time_in_100us:0000000000000000 $t
+     /tmp/ccbd2Fi7.s:116    .text.smtc_modem_hal_get_time_in_100us:0000000000000000 smtc_modem_hal_get_time_in_100us
+     /tmp/ccbd2Fi7.s:125    .text.smtc_modem_hal_get_radio_irq_timestamp_in_100us:0000000000000000 $t
+     /tmp/ccbd2Fi7.s:132    .text.smtc_modem_hal_get_radio_irq_timestamp_in_100us:0000000000000000 smtc_modem_hal_get_radio_irq_timestamp_in_100us
+     /tmp/ccbd2Fi7.s:141    .text.smtc_modem_hal_start_timer:0000000000000000 $t
+     /tmp/ccbd2Fi7.s:148    .text.smtc_modem_hal_start_timer:0000000000000000 smtc_modem_hal_start_timer
+     /tmp/ccbd2Fi7.s:160    .text.smtc_modem_hal_stop_timer:0000000000000000 $t
+     /tmp/ccbd2Fi7.s:167    .text.smtc_modem_hal_stop_timer:0000000000000000 smtc_modem_hal_stop_timer
+     /tmp/ccbd2Fi7.s:176    .text.smtc_modem_hal_disable_modem_irq:0000000000000000 $t
+     /tmp/ccbd2Fi7.s:183    .text.smtc_modem_hal_disable_modem_irq:0000000000000000 smtc_modem_hal_disable_modem_irq
+     /tmp/ccbd2Fi7.s:193    .text.smtc_modem_hal_enable_modem_irq:0000000000000000 $t
+     /tmp/ccbd2Fi7.s:200    .text.smtc_modem_hal_enable_modem_irq:0000000000000000 smtc_modem_hal_enable_modem_irq
+     /tmp/ccbd2Fi7.s:217    .text.smtc_modem_hal_context_restore:0000000000000000 $t
+     /tmp/ccbd2Fi7.s:224    .text.smtc_modem_hal_context_restore:0000000000000000 smtc_modem_hal_context_restore
+     /tmp/ccbd2Fi7.s:232    .text.smtc_modem_hal_context_restore:000000000000000a $d
+     /tmp/ccbd2Fi7.s:236    .text.smtc_modem_hal_context_restore:000000000000000e $t
+     /tmp/ccbd2Fi7.s:270    .text.smtc_modem_hal_context_restore:0000000000000048 $d
+     /tmp/ccbd2Fi7.s:279    .text.smtc_modem_hal_context_store:0000000000000000 $t
+     /tmp/ccbd2Fi7.s:286    .text.smtc_modem_hal_context_store:0000000000000000 smtc_modem_hal_context_store
+     /tmp/ccbd2Fi7.s:294    .text.smtc_modem_hal_context_store:000000000000000a $d
+     /tmp/ccbd2Fi7.s:298    .text.smtc_modem_hal_context_store:000000000000000e $t
+     /tmp/ccbd2Fi7.s:332    .text.smtc_modem_hal_context_store:0000000000000048 $d
+     /tmp/ccbd2Fi7.s:341    .text.smtc_modem_hal_store_crashlog:0000000000000000 $t
+     /tmp/ccbd2Fi7.s:348    .text.smtc_modem_hal_store_crashlog:0000000000000000 smtc_modem_hal_store_crashlog
+     /tmp/ccbd2Fi7.s:361    .text.smtc_modem_hal_store_crashlog:0000000000000010 $d
+     /tmp/ccbd2Fi7.s:364    .text.smtc_modem_hal_restore_crashlog:0000000000000000 $t
+     /tmp/ccbd2Fi7.s:371    .text.smtc_modem_hal_restore_crashlog:0000000000000000 smtc_modem_hal_restore_crashlog
+     /tmp/ccbd2Fi7.s:383    .text.smtc_modem_hal_restore_crashlog:000000000000000c $d
+     /tmp/ccbd2Fi7.s:386    .text.smtc_modem_hal_set_crashlog_status:0000000000000000 $t
+     /tmp/ccbd2Fi7.s:393    .text.smtc_modem_hal_set_crashlog_status:0000000000000000 smtc_modem_hal_set_crashlog_status
+     /tmp/ccbd2Fi7.s:405    .text.smtc_modem_hal_set_crashlog_status:0000000000000008 $d
+     /tmp/ccbd2Fi7.s:408    .text.smtc_modem_hal_get_crashlog_status:0000000000000000 $t
+     /tmp/ccbd2Fi7.s:415    .text.smtc_modem_hal_get_crashlog_status:0000000000000000 smtc_modem_hal_get_crashlog_status
+     /tmp/ccbd2Fi7.s:428    .text.smtc_modem_hal_get_crashlog_status:000000000000000c $d
+     /tmp/ccbd2Fi7.s:431    .text.smtc_modem_hal_get_random_nb:0000000000000000 $t
+     /tmp/ccbd2Fi7.s:438    .text.smtc_modem_hal_get_random_nb:0000000000000000 smtc_modem_hal_get_random_nb
+     /tmp/ccbd2Fi7.s:447    .text.smtc_modem_hal_get_random_nb_in_range:0000000000000000 $t
+     /tmp/ccbd2Fi7.s:454    .text.smtc_modem_hal_get_random_nb_in_range:0000000000000000 smtc_modem_hal_get_random_nb_in_range
+     /tmp/ccbd2Fi7.s:463    .text.smtc_modem_hal_get_signed_random_nb_in_range:0000000000000000 $t
+     /tmp/ccbd2Fi7.s:470    .text.smtc_modem_hal_get_signed_random_nb_in_range:0000000000000000 smtc_modem_hal_get_signed_random_nb_in_range
+     /tmp/ccbd2Fi7.s:479    .text.smtc_modem_hal_irq_config_radio_irq:0000000000000000 $t
+     /tmp/ccbd2Fi7.s:486    .text.smtc_modem_hal_irq_config_radio_irq:0000000000000000 smtc_modem_hal_irq_config_radio_irq
+     /tmp/ccbd2Fi7.s:502    .text.smtc_modem_hal_irq_config_radio_irq:0000000000000014 $d
+ARM GAS  /tmp/ccbd2Fi7.s 			page 14
 
 
-     /tmp/ccRUgEeI.s:505    .text.smtc_modem_hal_radio_irq_clear_pending:0000000000000000 $t
-     /tmp/ccRUgEeI.s:512    .text.smtc_modem_hal_radio_irq_clear_pending:0000000000000000 smtc_modem_hal_radio_irq_clear_pending
-     /tmp/ccRUgEeI.s:522    .text.smtc_modem_hal_start_radio_tcxo:0000000000000000 $t
-     /tmp/ccRUgEeI.s:529    .text.smtc_modem_hal_start_radio_tcxo:0000000000000000 smtc_modem_hal_start_radio_tcxo
-     /tmp/ccRUgEeI.s:537    .text.smtc_modem_hal_stop_radio_tcxo:0000000000000000 $t
-     /tmp/ccRUgEeI.s:544    .text.smtc_modem_hal_stop_radio_tcxo:0000000000000000 smtc_modem_hal_stop_radio_tcxo
-     /tmp/ccRUgEeI.s:552    .text.smtc_modem_hal_get_radio_tcxo_startup_delay_ms:0000000000000000 $t
-     /tmp/ccRUgEeI.s:559    .text.smtc_modem_hal_get_radio_tcxo_startup_delay_ms:0000000000000000 smtc_modem_hal_get_radio_tcxo_startup_delay_ms
-     /tmp/ccRUgEeI.s:568    .text.smtc_modem_hal_get_battery_level:0000000000000000 $t
-     /tmp/ccRUgEeI.s:575    .text.smtc_modem_hal_get_battery_level:0000000000000000 smtc_modem_hal_get_battery_level
-     /tmp/ccRUgEeI.s:584    .text.smtc_modem_hal_get_temperature:0000000000000000 $t
-     /tmp/ccRUgEeI.s:591    .text.smtc_modem_hal_get_temperature:0000000000000000 smtc_modem_hal_get_temperature
-     /tmp/ccRUgEeI.s:605    .text.smtc_modem_hal_get_voltage:0000000000000000 $t
-     /tmp/ccRUgEeI.s:612    .text.smtc_modem_hal_get_voltage:0000000000000000 smtc_modem_hal_get_voltage
-     /tmp/ccRUgEeI.s:628    .text.smtc_modem_hal_get_board_delay_ms:0000000000000000 $t
-     /tmp/ccRUgEeI.s:635    .text.smtc_modem_hal_get_board_delay_ms:0000000000000000 smtc_modem_hal_get_board_delay_ms
-     /tmp/ccRUgEeI.s:644    .text.smtc_modem_hal_print_trace:0000000000000000 $t
-     /tmp/ccRUgEeI.s:651    .text.smtc_modem_hal_print_trace:0000000000000000 smtc_modem_hal_print_trace
-     /tmp/ccRUgEeI.s:670    .text.smtc_modem_hal_assert_fail:0000000000000000 $t
-     /tmp/ccRUgEeI.s:677    .text.smtc_modem_hal_assert_fail:0000000000000000 smtc_modem_hal_assert_fail
-     /tmp/ccRUgEeI.s:698    .text.smtc_modem_hal_assert_fail:0000000000000024 $d
-     /tmp/ccRUgEeI.s:718    .noinit:0000000000000020 crashlog_available
-     /tmp/ccRUgEeI.s:714    .noinit:0000000000000000 saved_crashlog
-     /tmp/ccRUgEeI.s:704    .bss.radio_dio_irq:0000000000000000 $d
-     /tmp/ccRUgEeI.s:708    .bss.radio_dio_irq:0000000000000000 radio_dio_irq
-     /tmp/ccRUgEeI.s:715    .noinit:0000000000000000 $d
-     /tmp/ccRUgEeI.s:724    .rodata.__func__.0:0000000000000000 __func__.0
-     /tmp/ccRUgEeI.s:730    .rodata.__func__.1:0000000000000000 __func__.1
+     /tmp/ccbd2Fi7.s:505    .text.smtc_modem_hal_radio_irq_clear_pending:0000000000000000 $t
+     /tmp/ccbd2Fi7.s:512    .text.smtc_modem_hal_radio_irq_clear_pending:0000000000000000 smtc_modem_hal_radio_irq_clear_pending
+     /tmp/ccbd2Fi7.s:522    .text.smtc_modem_hal_start_radio_tcxo:0000000000000000 $t
+     /tmp/ccbd2Fi7.s:529    .text.smtc_modem_hal_start_radio_tcxo:0000000000000000 smtc_modem_hal_start_radio_tcxo
+     /tmp/ccbd2Fi7.s:537    .text.smtc_modem_hal_stop_radio_tcxo:0000000000000000 $t
+     /tmp/ccbd2Fi7.s:544    .text.smtc_modem_hal_stop_radio_tcxo:0000000000000000 smtc_modem_hal_stop_radio_tcxo
+     /tmp/ccbd2Fi7.s:552    .text.smtc_modem_hal_get_radio_tcxo_startup_delay_ms:0000000000000000 $t
+     /tmp/ccbd2Fi7.s:559    .text.smtc_modem_hal_get_radio_tcxo_startup_delay_ms:0000000000000000 smtc_modem_hal_get_radio_tcxo_startup_delay_ms
+     /tmp/ccbd2Fi7.s:568    .text.smtc_modem_hal_get_battery_level:0000000000000000 $t
+     /tmp/ccbd2Fi7.s:575    .text.smtc_modem_hal_get_battery_level:0000000000000000 smtc_modem_hal_get_battery_level
+     /tmp/ccbd2Fi7.s:584    .text.smtc_modem_hal_get_temperature:0000000000000000 $t
+     /tmp/ccbd2Fi7.s:591    .text.smtc_modem_hal_get_temperature:0000000000000000 smtc_modem_hal_get_temperature
+     /tmp/ccbd2Fi7.s:605    .text.smtc_modem_hal_get_voltage:0000000000000000 $t
+     /tmp/ccbd2Fi7.s:612    .text.smtc_modem_hal_get_voltage:0000000000000000 smtc_modem_hal_get_voltage
+     /tmp/ccbd2Fi7.s:628    .text.smtc_modem_hal_get_board_delay_ms:0000000000000000 $t
+     /tmp/ccbd2Fi7.s:635    .text.smtc_modem_hal_get_board_delay_ms:0000000000000000 smtc_modem_hal_get_board_delay_ms
+     /tmp/ccbd2Fi7.s:644    .text.smtc_modem_hal_print_trace:0000000000000000 $t
+     /tmp/ccbd2Fi7.s:651    .text.smtc_modem_hal_print_trace:0000000000000000 smtc_modem_hal_print_trace
+     /tmp/ccbd2Fi7.s:670    .text.smtc_modem_hal_assert_fail:0000000000000000 $t
+     /tmp/ccbd2Fi7.s:677    .text.smtc_modem_hal_assert_fail:0000000000000000 smtc_modem_hal_assert_fail
+     /tmp/ccbd2Fi7.s:698    .text.smtc_modem_hal_assert_fail:0000000000000024 $d
+     /tmp/ccbd2Fi7.s:718    .noinit:0000000000000020 crashlog_available
+     /tmp/ccbd2Fi7.s:714    .noinit:0000000000000000 saved_crashlog
+     /tmp/ccbd2Fi7.s:704    .bss.radio_dio_irq:0000000000000000 $d
+     /tmp/ccbd2Fi7.s:708    .bss.radio_dio_irq:0000000000000000 radio_dio_irq
+     /tmp/ccbd2Fi7.s:715    .noinit:0000000000000000 $d
+     /tmp/ccbd2Fi7.s:724    .rodata.__func__.0:0000000000000000 __func__.0
+     /tmp/ccbd2Fi7.s:730    .rodata.__func__.1:0000000000000000 __func__.1
 
 UNDEFINED SYMBOLS
 hal_mcu_reset
@@ -836,6 +836,6 @@ hal_adc_deinit
 __aeabi_uidiv
 hal_adc_get_vref_int
 hal_trace_print
-ARM GAS  /tmp/ccRUgEeI.s 			page 15
+ARM GAS  /tmp/ccbd2Fi7.s 			page 15
 
 
