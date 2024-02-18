@@ -877,10 +877,11 @@ lr11xx_status_t1 lr11xx_wifi_scan1( const void* context, const lr11xx_wifi_signa
         ( uint8_t ) ( ( abort_on_timeout == true ) ? 1 : 0 ),
     };
 
-    //return ( lr11xx_status_t1 ) lr11xx_hal_write( context, cbuffer, 2+9, 0, 0 );
-    // lr11xx_hal_write( const void* context, const uint8_t* command, const uint16_t command_length, const uint8_t* data, const uint16_t data_length ) {
-    // lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* buffer, uint16_t length, uint32_t timeout_ms ) {
-    return ( lr11xx_status_t1 ) lr1110_spi_write( ((radio_t*)context)->spi, cbuffer, 2+9, 1000 );
+    if ( lr1110_spi_write( ((radio_t*)context)->spi, cbuffer, 2+9, 1000 ) == LR1110_SPI_STATUS_OK ) {
+        return LR11XX_STATUS_OK1;
+    } else {
+        return LR11XX_STATUS_ERROR1;
+    }
 }
 
 static uint8_t lr11xx_wifi_get_result_size_from_format1( const lr11xx_wifi_result_format_t1 format ) {
