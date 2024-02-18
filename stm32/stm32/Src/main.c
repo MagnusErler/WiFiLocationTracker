@@ -145,16 +145,11 @@ int main(void)
 
   void* lr1110_context = (void*) malloc(sizeof(radio_t));
   ((radio_t*)lr1110_context)->spi             = SPI1;
-  ((radio_t*)lr1110_context)->nss.port        = GPIOA;
+  ((radio_t*)lr1110_context)->nss.port        = NSS_GPIO_Port;
   ((radio_t*)lr1110_context)->nss.pin         = NSS_Pin;
-  ((radio_t*)lr1110_context)->reset.port      = GPIOA;
+  ((radio_t*)lr1110_context)->reset.port      = RESET_GPIO_Port;
   ((radio_t*)lr1110_context)->reset.pin       = RESET_Pin;
-  // ((radio_t*)lr1110_context)->event.irq1.port = GPIOB;
-  // ((radio_t*)lr1110_context)->event.irq1.pin = EVENT_Pin;
-  //((radio_t*)lr1110_context)->event.pin       = EVENT_Pin;
-  //((radio_t*)lr1110_context)->event.callback  = radio_event_callback;
-  ((radio_t*)lr1110_context)->event.context   = ( ( radio_t* ) lr1110_context );
-  ((radio_t*)lr1110_context)->busy.port       = GPIOB;
+  ((radio_t*)lr1110_context)->busy.port       = BUSY_GPIO_Port;
   ((radio_t*)lr1110_context)->busy.pin        = BUSY_Pin;
 
   /* USER CODE END Init */
@@ -175,7 +170,7 @@ int main(void)
 
 
   HAL_DBG_TRACE_MSG("-----------------------------\r\n\r\n");
-  resetLR1110();
+  resetLR1110(lr1110_context);
 
   blinkLED(GPIOC, RX_LED_Pin|TX_LED_Pin, 100, 5, true);
 
@@ -610,11 +605,14 @@ void setupTCXO( const void* context ) {
   }
 }
 
-void resetLR1110() {
+void resetLR1110( const void* context ) {
+
+  radio_t* radio = (radio_t*) context;
+
   HAL_DBG_TRACE_INFO("Resetting LR1110... ");
-  HAL_GPIO_WritePin(RESET_GPIO_Port, RESET_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(radio->reset.port, radio->reset.pin, GPIO_PIN_RESET);
   HAL_Delay(100);
-  HAL_GPIO_WritePin(RESET_GPIO_Port, RESET_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(radio->reset.port, radio->reset.pin, GPIO_PIN_SET);
   HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
 }
 

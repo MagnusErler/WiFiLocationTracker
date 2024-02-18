@@ -105,7 +105,7 @@ lr1110_spi_status_t _lr1110_spi_read_with_dummy_byte( SPI_TypeDef* spi, uint8_t*
 
 lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer, const uint16_t cbuffer_length, uint8_t* rbuffer, const uint16_t rbuffer_length ) {
 
-    radio = ( radio_t* ) context;
+    radio = (radio_t*) context;
     uint8_t  dummy_byte  = 0x00;
 
     // Wait for BUSY to become LOW -> LR1110 is ready for a new command
@@ -149,7 +149,7 @@ lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffe
 
     lr1110_spi_status_t status = LR1110_SPI_STATUS_OK;
 
-    radio = ( radio_t* ) context;
+    radio = (radio_t*) context;
 
     // Wait for BUSY to become LOW -> LR1110 is ready for a new command
     if (_waitForBusyState( GPIO_PIN_RESET, 1000 ) != LR1110_SPI_STATUS_OK) {
