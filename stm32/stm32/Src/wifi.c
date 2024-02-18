@@ -13,22 +13,23 @@
 
 
 lr11xx_status_t1 lr11xx_wifi_scan( const void* context, const lr11xx_wifi_signal_type_scan_t1 signal_type,
-                                  const lr11xx_wifi_channel_mask_t1 channels, const lr11xx_wifi_mode_t1 scan_mode,
-                                  const uint8_t max_results, const uint8_t nb_scan_per_channel,
-                                  const uint16_t timeout_in_ms, const bool abort_on_timeout ) {
-    const uint8_t cbuffer[2+9] = {
-        ( uint8_t ) ( 0x0300 >> 8 ),
-        ( uint8_t ) ( 0x0300 >> 0 ),
-        ( uint8_t ) signal_type,
-        ( uint8_t ) ( channels >> 8 ),
-        ( uint8_t ) ( channels >> 0 ),
-        ( uint8_t ) scan_mode,
-        max_results,
-        nb_scan_per_channel,
-        ( uint8_t ) ( timeout_in_ms >> 8 ),
-        ( uint8_t ) ( timeout_in_ms >> 0 ),
-        ( uint8_t ) ( ( abort_on_timeout == true ) ? 1 : 0 ),
-    };
+                                  const lr11xx_wifi_channel_mask_t1 chan_mask, const lr11xx_wifi_mode_t1 acq_mode,
+                                  const uint8_t nb_max_res, const uint8_t nb_scan_per_chan,
+                                  const uint16_t timeout, const bool abort_on_timeout ) {
+
+    uint8_t cbuffer[2+9];
+
+    cbuffer[0] = ( uint8_t )( 0x0300 >> 8 );
+    cbuffer[1] = ( uint8_t )( 0x0300 >> 0 );
+    cbuffer[2] = ( uint8_t ) signal_type;
+    cbuffer[3] = ( uint8_t )( chan_mask >> 8 );
+    cbuffer[4] = ( uint8_t )( chan_mask >> 0 );
+    cbuffer[5] = ( uint8_t ) acq_mode;
+    cbuffer[6] = nb_max_res;
+    cbuffer[7] = nb_scan_per_chan;
+    cbuffer[8] = ( uint8_t )( timeout >> 8 );
+    cbuffer[9] = ( uint8_t )( timeout >> 0 );
+    cbuffer[10] = ( uint8_t )( ( abort_on_timeout == true ) ? 1 : 0 );
 
     if ( lr1110_spi_write( context, cbuffer, 2+9 ) == LR1110_SPI_STATUS_OK ) {
         return LR11XX_STATUS_OK1;
@@ -56,30 +57,11 @@ static uint8_t lr11xx_wifi_get_result_size_from_format( const lr11xx_wifi_result
     return result_size;
 }
 
-static uint8_t lr11xx_wifi_get_format_code( const lr11xx_wifi_result_format_t1 format ) {
-    uint8_t format_code = 0x00;
-    switch( format ) {
-      case LR11XX_WIFI_RESULT_FORMAT_BASIC_COMPLETE: {
-          format_code = 0x01;
-          break;
-      }
-      case LR11XX_WIFI_RESULT_FORMAT_BASIC_MAC_TYPE_CHANNEL: {
-          format_code = 0x04;
-          break;
-      }
-      case LR11XX_WIFI_RESULT_FORMAT_EXTENDED_FULL: {
-          format_code = 0x01;
-          break;
-      }
-    }
-    return format_code;
-}
-
 static lr11xx_hal_status_t1 lr11xx_wifi_read_results_helper( const void* context, const uint8_t start_index,
                                                             const uint8_t n_elem, uint8_t* buffer,
                                                             const lr11xx_wifi_result_format_t1 result_format ) {
     const uint8_t  size_single_elem   = lr11xx_wifi_get_result_size_from_format( result_format );
-    const uint8_t  result_format_code = lr11xx_wifi_get_format_code( result_format );
+    const uint8_t  result_format_code = 0x01;
     const uint8_t  cbuffer[2+3] = { ( uint8_t ) ( 0x0306 >> 8 ), ( uint8_t ) ( 0x0306 & 0x00FF ), start_index, n_elem, result_format_code };
     const uint16_t size_total                                  = n_elem * size_single_elem;
     //return (lr11xx_hal_status_t1) lr11xx_hal_read( context, cbuffer, 2+3, buffer, size_total );
@@ -102,39 +84,6 @@ static uint64_t uint64_from_array( const uint8_t* array, const uint16_t index ) 
            ( ( uint64_t ) ( array[index + 2] ) << 40 ) + ( ( uint64_t ) ( array[index + 3] ) << 32 ) +
            ( ( uint64_t ) ( array[index + 4] ) << 24 ) + ( ( uint64_t ) ( array[index + 5] ) << 16 ) +
            ( ( uint64_t ) ( array[index + 6] ) << 8 ) + ( uint64_t ) ( array[index + 7] );
-}
-
-static void interpret_basic_complete_result_from_buffer( const uint8_t  nb_results,
-                                                         const uint8_t  index_result_start_writing,
-                                                         const uint8_t* buffer,
-                                                         lr11xx_wifi_basic_complete_result_t1* result ) {
-    for( uint8_t result_index = 0; result_index < nb_results; result_index++ ) {
-        const uint16_t                       local_index_start = 22 * result_index;
-        lr11xx_wifi_basic_complete_result_t1* local_wifi_result = &result[index_result_start_writing + result_index];
-        local_wifi_result->data_rate_info_byte                 = buffer[local_index_start + 0];
-        local_wifi_result->channel_info_byte                   = buffer[local_index_start + 1];
-        local_wifi_result->rssi                                = buffer[local_index_start + 2];
-        local_wifi_result->frame_type_info_byte                = buffer[local_index_start + 3];
-        lr11xx_wifi_read_mac_address_from_buffer( buffer, local_index_start + 4, local_wifi_result->mac_address );
-        local_wifi_result->phi_offset       = uint16_from_array( buffer, local_index_start + 10 );
-        local_wifi_result->timestamp_us     = uint64_from_array( buffer, local_index_start + 12 );
-        local_wifi_result->beacon_period_tu = uint16_from_array( buffer, local_index_start + 20 );
-    }
-}
-
-static void interpret_basic_mac_type_channel_result_from_buffer( const uint8_t  nb_results,
-                                                                 const uint8_t  index_result_start_writing,
-                                                                 const uint8_t* buffer,
-                                                                 lr11xx_wifi_basic_mac_type_channel_result_t1* result ) {
-    for( uint8_t result_index = 0; result_index < nb_results; result_index++ ) {
-        const uint16_t local_index_start = 9 * result_index;
-        lr11xx_wifi_basic_mac_type_channel_result_t1* local_wifi_result =
-            &result[index_result_start_writing + result_index];
-        local_wifi_result->data_rate_info_byte = buffer[local_index_start + 0];
-        local_wifi_result->channel_info_byte   = buffer[local_index_start + 1];
-        local_wifi_result->rssi                = buffer[local_index_start + 2];
-        lr11xx_wifi_read_mac_address_from_buffer( buffer, local_index_start + 3, local_wifi_result->mac_address );
-    }
 }
 
 void interpret_extended_full_result_from_buffer( const uint8_t nb_results, const uint8_t index_result_start_writing,
@@ -172,25 +121,8 @@ void interpret_extended_full_result_from_buffer( const uint8_t nb_results, const
 static void generic_results_interpreter( const uint8_t n_result_to_parse, const uint8_t index_result_start_writing,
                                          const uint8_t* buffer, lr11xx_wifi_result_interface_t1 result_interface,
                                          const lr11xx_wifi_result_format_t1 format_code ) {
-    switch( format_code ) {
-      case LR11XX_WIFI_RESULT_FORMAT_BASIC_COMPLETE: {
-          interpret_basic_complete_result_from_buffer( n_result_to_parse, index_result_start_writing, buffer,
-                                                      result_interface.basic_complete );
-          break;
-      }
-
-      case LR11XX_WIFI_RESULT_FORMAT_BASIC_MAC_TYPE_CHANNEL: {
-          interpret_basic_mac_type_channel_result_from_buffer( n_result_to_parse, index_result_start_writing, buffer,
-                                                              result_interface.basic_mac_type_channel );
-          break;
-      }
-
-      case LR11XX_WIFI_RESULT_FORMAT_EXTENDED_FULL: {
-          interpret_extended_full_result_from_buffer( n_result_to_parse, index_result_start_writing, buffer,
-                                                      result_interface.extended_complete );
-          break;
-      }
-    }
+    interpret_extended_full_result_from_buffer( n_result_to_parse, index_result_start_writing, buffer,
+                                                result_interface.extended_complete );
 }
 
 uint8_t min( const uint8_t a, const uint8_t b ) {
@@ -261,12 +193,13 @@ lr11xx_status_t1 lr11xx_wifi_get_nb_results( const void* context, uint8_t* nb_re
 void scanWiFiNetworks( const void* context ) {
     HAL_DBG_TRACE_PRINTF( "\r\n-----------------WIFI Scan-----------------\r\n" );
 
-    if (lr11xx_wifi_scan( context, LR11XX_WIFI_TYPE_SCAN_B_G_N, 0x3FFF, LR11XX_WIFI_SCAN_MODE_UNTIL_SSID, 12, 3, 110, true ) != LR11XX_STATUS_OK1) {
+    //  lr11xx_wifi_scan( context, 0x04,                        0x3FFF, 5,                                12, 3, 110, true )
+    if (lr11xx_wifi_scan( context, LR11XX_WIFI_TYPE_SCAN_B_G_N, 0x3FFF, LR11XX_WIFI_SCAN_MODE_UNTIL_SSID, 2, 3, 1000, true ) != LR11XX_STATUS_OK1) {
         HAL_DBG_TRACE_ERROR( "Failed to scan Wi-Fi networks\r\n" );
         return;
     }
 
-    HAL_Delay( 500 );
+    HAL_Delay( 2000 );
 
     uint8_t nb_results;
     if (lr11xx_wifi_get_nb_results( context, &nb_results ) != LR11XX_STATUS_OK1) {
