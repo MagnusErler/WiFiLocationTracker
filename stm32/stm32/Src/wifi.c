@@ -209,19 +209,21 @@ void scanWiFiNetworks( const void* context ) {
 }
 
 void getWiFi_Version( const void* context ) {
-  HAL_DBG_TRACE_INFO("Getting Wi-Fi version... ");
+    HAL_DBG_TRACE_INFO("Getting Wi-Fi version... ");
 
-  uint8_t cbuffer[LR1110_WIFI_VERSION_CMD_LENGTH];
-  uint8_t rbuffer[LR1110_WIFI_VERSION_LENGTH] = { 0 };
+    uint8_t cbuffer[LR1110_WIFI_VERSION_CMD_LENGTH];
+    uint8_t rbuffer[LR1110_WIFI_VERSION_LENGTH] = { 0 };
 
-  cbuffer[0] = ( uint8_t ) LR1110_GROUP_ID_WIFI;
-  cbuffer[1] = ( uint8_t ) LR1110_WIFI_GET_FIRMWARE_WIFI_VERSION_CMD;
+    cbuffer[0] = ( uint8_t ) LR1110_GROUP_ID_WIFI;
+    cbuffer[1] = ( uint8_t ) LR1110_WIFI_GET_FIRMWARE_WIFI_VERSION_CMD;
 
-  if (lr1110_spi_read( context, cbuffer, LR1110_WIFI_VERSION_CMD_LENGTH, rbuffer, LR1110_WIFI_VERSION_LENGTH ) == LR1110_SPI_STATUS_OK) {
-    HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+    turnOnLED(SNIFFING_LED_GPIO_Port, SNIFFING_LED_Pin);
+    if (lr1110_spi_read( context, cbuffer, LR1110_WIFI_VERSION_CMD_LENGTH, rbuffer, LR1110_WIFI_VERSION_LENGTH ) == LR1110_SPI_STATUS_OK) {
+        turnOffLED(SNIFFING_LED_GPIO_Port, SNIFFING_LED_Pin);
+        HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
 
-    HAL_DBG_TRACE_INFO("Wi-Fi firmware version: %d.%d (0x%X.0x%X)\r\n", rbuffer[0], rbuffer[1], rbuffer[0], rbuffer[1]);
-  } else {
-    HAL_DBG_TRACE_ERROR("Failed to get Wi-Fi version\r\n");
-  }
+        HAL_DBG_TRACE_INFO("Wi-Fi firmware version: %d.%d (0x%X.0x%X)\r\n", rbuffer[0], rbuffer[1], rbuffer[0], rbuffer[1]);
+    } else {
+        HAL_DBG_TRACE_ERROR("Failed to get Wi-Fi version\r\n");
+    }
 }

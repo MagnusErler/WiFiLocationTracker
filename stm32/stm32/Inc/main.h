@@ -118,6 +118,8 @@ void blinkLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin, uint32_t period, ui
 #define BUSY_GPIO_Port GPIOB
 #define EVENT_Pin GPIO_PIN_4
 #define EVENT_GPIO_Port GPIOB
+#define SNIFFING_LED_Pin GPIO_PIN_5
+#define SNIFFING_LED_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 

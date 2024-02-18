@@ -166,6 +166,7 @@ int main(void)
 
   blinkLED(GPIOC, RX_LED_Pin|TX_LED_Pin, 100, 5, true);
 
+  setupTCXO(lr1110_context);    // Seems like the first time LR1110 is called it returns with an error, so we call it twice
   setupTCXO(lr1110_context);
 
   getLR1110_Bootloader_Version(lr1110_context);
@@ -406,6 +407,9 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, RESET_Pin|NSS_Pin, GPIO_PIN_RESET);
 
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(SNIFFING_LED_GPIO_Port, SNIFFING_LED_Pin, GPIO_PIN_RESET);
+
   /*Configure GPIO pin : B1_Pin */
   GPIO_InitStruct.Pin = B1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
@@ -437,6 +441,13 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(EVENT_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : SNIFFING_LED_Pin */
+  GPIO_InitStruct.Pin = SNIFFING_LED_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(SNIFFING_LED_GPIO_Port, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
@@ -565,7 +576,7 @@ void setupTCXO( const void* context ) {
   cbuffer[1] = ( uint8_t ) LR1110_SET_TCXO_MODE_CMD;
   cbuffer[2] = ( uint8_t ) LR1110_TCXO_CTRL_1_8V;
 
-  const uint32_t timeout = ( 5 * 1000 ) / 30.52;  // BOARD_TCXO_WAKEUP_TIME = 5
+  const uint8_t timeout = ( 5 * 1000 ) / 30.52;  // BOARD_TCXO_WAKEUP_TIME = 5               // 163
 
   cbuffer[3] = ( uint8_t )( timeout >> 16 );
   cbuffer[4] = ( uint8_t )( timeout >> 8 );
