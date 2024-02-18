@@ -160,8 +160,7 @@ static lr11xx_status_t1 _lr11xx_wifi_read_extended_full_results( const void* con
     lr11xx_wifi_result_interface_t1 result_interface = { 0 };
     result_interface.extended_complete              = results;
 
-    return _fetch_and_aggregate_all_results( context, start_result_index, nb_results, nb_results_per_chunk_max,
-                                            LR11XX_WIFI_RESULT_FORMAT_EXTENDED_FULL, result_buffer1, result_interface );
+    return _fetch_and_aggregate_all_results( context, start_result_index, nb_results, nb_results_per_chunk_max, LR11XX_WIFI_RESULT_FORMAT_EXTENDED_FULL, result_buffer1, result_interface );
 }
 
 static lr11xx_status_t1 _lr11xx_wifi_get_nb_results( const void* context, uint8_t* nb_results  ) {
@@ -188,7 +187,7 @@ void scanWiFiNetworks( const void* context ) {
     HAL_DBG_TRACE_PRINTF( "\r\n-----------------WIFI Scan-----------------\r\n" );
 
     //  _lr11xx_wifi_scan( context, 0x04,                        0x3FFF, 5,                                12, 3, 110, true )
-    if (_lr11xx_wifi_scan( context, LR11XX_WIFI_TYPE_SCAN_B_G_N, 0x3FFF, LR11XX_WIFI_SCAN_MODE_UNTIL_SSID, 2, 3, 110, true ) != LR11XX_STATUS_OK) {
+    if (_lr11xx_wifi_scan( context, LR11XX_WIFI_TYPE_SCAN_B_G_N, 0x3FFF, LR11XX_WIFI_SCAN_MODE_FULL_BEACON, 2, 3, 110, true ) != LR11XX_STATUS_OK) {
         return;
     }
 
