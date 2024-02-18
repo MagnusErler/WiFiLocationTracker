@@ -144,13 +144,13 @@ int main(void)
   int a = 0;
 
   void* lr1110_context = (void*) malloc(sizeof(radio_t));
-  ((radio_t*)lr1110_context)->spi             = SPI1;
-  ((radio_t*)lr1110_context)->nss.port        = NSS_GPIO_Port;
-  ((radio_t*)lr1110_context)->nss.pin         = NSS_Pin;
-  ((radio_t*)lr1110_context)->reset.port      = RESET_GPIO_Port;
-  ((radio_t*)lr1110_context)->reset.pin       = RESET_Pin;
-  ((radio_t*)lr1110_context)->busy.port       = BUSY_GPIO_Port;
-  ((radio_t*)lr1110_context)->busy.pin        = BUSY_Pin;
+  ((radio_t*)lr1110_context)->spi         = SPI1;
+  ((radio_t*)lr1110_context)->nss.port    = NSS_GPIO_Port;
+  ((radio_t*)lr1110_context)->nss.pin     = NSS_Pin;
+  ((radio_t*)lr1110_context)->reset.port  = RESET_GPIO_Port;
+  ((radio_t*)lr1110_context)->reset.pin   = RESET_Pin;
+  ((radio_t*)lr1110_context)->busy.port   = BUSY_GPIO_Port;
+  ((radio_t*)lr1110_context)->busy.pin    = BUSY_Pin;
 
   /* USER CODE END Init */
 
@@ -167,7 +167,6 @@ int main(void)
   MX_RTC_Init();
   MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
-
 
   HAL_DBG_TRACE_MSG("-----------------------------\r\n\r\n");
   resetLR1110(lr1110_context);
