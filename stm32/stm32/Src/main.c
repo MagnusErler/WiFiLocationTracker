@@ -22,8 +22,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
-#include <stdlib.h>  // used for malloc function
-#include <string.h>  // used for strlen function
+#include <stdlib.h> // used for malloc function
+#include <string.h> // used for strlen function
 #include <stdarg.h> // used for va_list, va_start, va_end functions
 #include <stdio.h>  // used for vsprintf function
 
@@ -460,13 +460,15 @@ static void MX_GPIO_Init(void)
  * --- PRIVATE FUNCTIONS DEFINITION --------------------------------------------
  */
 
-void hal_mcu_trace_print( const char* fmt, ... ) {
+void HAL_DBG_TRACE_PRINT( const char* fmt, ... ) {
   va_list argp;
   va_start( argp, fmt );
 
   char string[255];
   if( 0 < vsprintf( string, fmt, argp ) ) {
-      HAL_UART_Transmit(&huart2, (uint8_t*) string, (uint16_t) strlen((const char*) string), 0xffffff);
+      if (HAL_UART_Transmit(&huart2, (uint8_t*) string, (uint16_t) strlen((const char*) string), 1000) != HAL_OK) {
+          Error_Handler();
+      }
   }
 
   va_end( argp );
@@ -595,7 +597,7 @@ void resetLR1110( const void* context ) {
 
   HAL_DBG_TRACE_INFO("Resetting LR1110... ");
   HAL_GPIO_WritePin(radio->reset.port, radio->reset.pin, GPIO_PIN_RESET);
-  HAL_Delay(100);
+  HAL_Delay(200);   // At least 100ms
   HAL_GPIO_WritePin(radio->reset.port, radio->reset.pin, GPIO_PIN_SET);
   HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
 }

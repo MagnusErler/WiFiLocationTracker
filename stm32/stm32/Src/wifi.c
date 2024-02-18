@@ -174,9 +174,9 @@ static lr11xx_status_t1 _lr11xx_wifi_get_nb_results( const void* context, uint8_
     cbuffer[1] = ( uint8_t ) 0x05;
 
     if ( lr1110_spi_read( context, cbuffer, LR1110_NB_RESULTS_WIFI_CMD_LENGTH, rbuffer, LR1110_NB_RESULTS_WIFI_LENGTH ) == LR1110_SPI_STATUS_OK ) {
-        *nb_results = rbuffer[1];
+        *nb_results = rbuffer[0];
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
-        HAL_DBG_TRACE_INFO("Number of Wi-Fi networks found: %d\r\n", rbuffer[1] );
+        HAL_DBG_TRACE_INFO("Number of Wi-Fi networks found: %d\r\n", rbuffer[0] );
         return LR11XX_STATUS_OK;
     } else {
         HAL_DBG_TRACE_ERROR("Failed to get Wi-Fi networks count\r\n");
@@ -188,7 +188,7 @@ void scanWiFiNetworks( const void* context ) {
     HAL_DBG_TRACE_PRINTF( "\r\n-----------------WIFI Scan-----------------\r\n" );
 
     //  _lr11xx_wifi_scan( context, 0x04,                        0x3FFF, 5,                                12, 3, 110, true )
-    if (_lr11xx_wifi_scan( context, LR11XX_WIFI_TYPE_SCAN_B_G_N, 0x3FFF, LR11XX_WIFI_SCAN_MODE_UNTIL_SSID, 2, 3, 1000, true ) != LR11XX_STATUS_OK) {
+    if (_lr11xx_wifi_scan( context, LR11XX_WIFI_TYPE_SCAN_B_G_N, 0x3FFF, LR11XX_WIFI_SCAN_MODE_UNTIL_SSID, 2, 3, 110, true ) != LR11XX_STATUS_OK) {
         return;
     }
 
