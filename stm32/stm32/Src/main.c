@@ -27,6 +27,7 @@
 #include <stdarg.h> // used for va_list, va_start, va_end functions
 #include <stdio.h>  // used for vsprintf function
 
+#include "led.h"
 
 #include "spi.h"
 
@@ -58,43 +59,6 @@ SPI_HandleTypeDef hspi1;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* USER CODE END PV */
 
@@ -152,41 +116,6 @@ static void resetLR1110();
  * @param [in] context Radio abstraction
  */
 static void setupTCXO( const void* context );
-
-/*!
- * @brief Turn on LED
- *
- * @param [in] LED_GPIO_Port
- * @param [in] LED_Pin
- */
-void turnOnLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin);
-
-/*!
- * @brief Turn off LED
- *
- * @param [in] LED_GPIO_Port
- * @param [in] LED_Pin
- */
-void turnOffLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin);
-
-/*!
- * @brief Toggle LED
- *
- * @param [in] LED_GPIO_Port
- * @param [in] LED_Pin
- */
-void toggleLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin);
-
-/*!
- * @brief Blink LED
- *
- * @param [in] LED_GPIO_Port
- * @param [in] LED_Pin
- * @param [in] period
- * @param [in] count
- * @param [in] start
- */
-void blinkLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin, uint32_t period, uint8_t count, bool start);
 
 /* USER CODE END PFP */
 
@@ -537,29 +466,6 @@ static void MX_GPIO_Init(void)
  * --- PRIVATE FUNCTIONS DEFINITION --------------------------------------------
  */
 
-void turnOnLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin) {
-  HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
-}
-
-void turnOffLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin) {
-  HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET);
-}
-
-void toggleLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin) {
-  HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-}
-
-void blinkLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin, uint32_t period, uint8_t count, bool start) {
-  if (start) {
-    for (uint8_t i = 0; i < count; i++) {
-      turnOnLED(LED_GPIO_Port, LED_Pin);
-      HAL_Delay(period);
-      turnOffLED(LED_GPIO_Port, LED_Pin);
-      HAL_Delay(period);
-    }
-  }
-}
-
 void hal_mcu_trace_print( const char* fmt, ... ) {
   va_list argp;
   va_start( argp, fmt );
@@ -684,26 +590,6 @@ void getLR1110_Chip_EUI( const void* context ) {
     HAL_DBG_TRACE_ERROR("Failed to get LR1110 Chip EUI\r\n");
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 void resetLR1110() {
   HAL_DBG_TRACE_INFO("Resetting LR1110... ");

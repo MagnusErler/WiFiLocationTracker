@@ -7,6 +7,8 @@
 
 #include "spi.h"
 
+#include "led.h"
+
 #include "main.h"       // for HAL_DBG_TRACE-functions
 
 radio_t* radio;
