@@ -1,47 +1,17 @@
-/*!
- * @file      spi.h
- */
-
-/*
- * -----------------------------------------------------------------------------
- * --- DEPENDENCIES ------------------------------------------------------------
- */
-
 #include <stdint.h>
 #include <stdbool.h>
 
 #include "stm32l4xx_ll_gpio.h"
 #include "stm32l4xx_ll_spi.h"
 
-/*
- * -----------------------------------------------------------------------------
- * --- PUBLIC MACROS -----------------------------------------------------------
- */
-
-/*
- * -----------------------------------------------------------------------------
- * --- PUBLIC CONSTANTS --------------------------------------------------------
- */
-
-/*
- * -----------------------------------------------------------------------------
- * --- PUBLIC TYPES ------------------------------------------------------------
- */
-
 /*!
- * @brief Status code of HAL operation
+ * @brief Status code of SPI operations
  */
 typedef enum lr1110_spi_status_e {
     LR1110_SPI_STATUS_OK        = 0x00,  //!< SPI operation executed successfuly
     LR1110_SPI_STATUS_TIMEOUT   = 0x01,  //!< Timeout occured while waiting for a line state
     LR1110_SPI_STATUS_ERROR     = 0xFF,  //!< SPI operation failed
 } lr1110_spi_status_t;
-
-/*
- * ============================================================================
- * API definitions to be implemented by the user
- * ============================================================================
- */
 
 /*!
  * @brief Wait for a GPIO pin to reach a specific state

@@ -8,35 +8,6 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-static lr11xx_status_t1 _lr11xx_wifi_scan( const void* context, const lr11xx_wifi_signal_type_scan_t1 signal_type, const lr11xx_wifi_channel_mask_t1 chan_mask, const lr11xx_wifi_mode_t1 acq_mode, const uint8_t nb_max_res, const uint8_t nb_scan_per_chan, const uint16_t timeout, const bool abort_on_timeout ) {
-    HAL_DBG_TRACE_INFO("Scanning Wi-Fi networks... ");
-
-    uint8_t cbuffer[LR1110_SCAN_WIFI_CMD_LENGTH];
-
-    cbuffer[0] = ( uint8_t )( 0x0300 >> 8 );
-    cbuffer[1] = ( uint8_t )( 0x0300 >> 0 );
-    cbuffer[2] = ( uint8_t ) signal_type;
-    cbuffer[3] = ( uint8_t )( chan_mask >> 8 );
-    cbuffer[4] = ( uint8_t )( chan_mask >> 0 );
-    cbuffer[5] = ( uint8_t ) acq_mode;
-    cbuffer[6] = nb_max_res;
-    cbuffer[7] = nb_scan_per_chan;
-    cbuffer[8] = ( uint8_t )( timeout >> 8 );
-    cbuffer[9] = ( uint8_t )( timeout >> 0 );
-    cbuffer[10] = ( uint8_t )( ( abort_on_timeout == true ) ? 1 : 0 );
-
-    if ( lr1110_spi_write( context, cbuffer, LR1110_SCAN_WIFI_CMD_LENGTH ) == LR1110_SPI_STATUS_OK ) {
-        HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
-
-        HAL_Delay( 100 + timeout ); // wait for the scan to complete
-
-        return LR11XX_STATUS_OK;
-    } else {
-        HAL_DBG_TRACE_ERROR("Failed to scan Wi-Fi networks\r\n");
-        return LR11XX_STATUS_ERROR;
-    }
-}
-
 static uint8_t _lr11xx_wifi_get_result_size_from_format( const lr11xx_wifi_result_format_t1 format ) {
     uint8_t result_size = 0;
     switch( format ) {
@@ -122,7 +93,7 @@ static uint8_t _min( const uint8_t a, const uint8_t b ) {
     return ( a < b ) ? a : b;
 }
 
-static lr11xx_status_t1 _fetch_and_aggregate_all_results( const void* context, const uint8_t index_result_start, const uint8_t nb_results, const uint8_t nb_results_per_chunk_max, const lr11xx_wifi_result_format_t1 result_format_code, uint8_t* result_buffer, lr11xx_wifi_result_interface_t1 result_structures ) {
+static lr1110_wifi_status_t _fetch_and_aggregate_all_results( const void* context, const uint8_t index_result_start, const uint8_t nb_results, const uint8_t nb_results_per_chunk_max, const lr11xx_wifi_result_format_t1 result_format_code, uint8_t* result_buffer, lr11xx_wifi_result_interface_t1 result_structures ) {
     uint8_t index_to_read              = index_result_start;
     uint8_t index_result_start_writing = 0;
     uint8_t remaining_results          = nb_results;
@@ -134,7 +105,7 @@ static lr11xx_status_t1 _fetch_and_aggregate_all_results( const void* context, c
         lr11xx_hal_status_t1 local_hal_status = _lr11xx_wifi_read_results_helper( context, index_to_read, results_to_read,
                                                                                 result_buffer, result_format_code );
         if( local_hal_status != LR11XX_HAL_STATUS_OK1 ) {
-            return ( lr11xx_status_t1 ) local_hal_status;
+            return ( lr1110_wifi_status_t ) local_hal_status;
         }
 
         _generic_results_interpreter( results_to_read, index_result_start_writing, result_buffer, result_structures,
@@ -150,10 +121,10 @@ static lr11xx_status_t1 _fetch_and_aggregate_all_results( const void* context, c
         index_result_start_writing += results_to_read;
         remaining_results -= results_to_read;
     }
-    return ( lr11xx_status_t1 ) hal_status;
+    return ( lr1110_wifi_status_t ) hal_status;
 }
 
-static lr11xx_status_t1 _lr11xx_wifi_read_extended_full_results( const void* context, const uint8_t start_result_index, const uint8_t nb_results, lr11xx_wifi_extended_full_result_t1* results ) {
+static lr1110_wifi_status_t _lr11xx_wifi_read_extended_full_results( const void* context, const uint8_t start_result_index, const uint8_t nb_results, lr11xx_wifi_extended_full_result_t1* results ) {
     uint8_t result_buffer1[1020] = { 0 };      // uint8_t result_buffer1[79 * ( _min( ( 1020 ) / ( 79 ), 32 ) )] = { 0 };
     const uint8_t nb_results_per_chunk_max = 12;  // const uint8_t nb_results_per_chunk_max = _min( ( 1020 ) / ( 79 ), 32 );
 
@@ -163,7 +134,7 @@ static lr11xx_status_t1 _lr11xx_wifi_read_extended_full_results( const void* con
     return _fetch_and_aggregate_all_results( context, start_result_index, nb_results, nb_results_per_chunk_max, LR11XX_WIFI_RESULT_FORMAT_EXTENDED_FULL, result_buffer1, result_interface );
 }
 
-static lr11xx_status_t1 _lr11xx_wifi_get_nb_results( const void* context, uint8_t* nb_results  ) {
+lr1110_wifi_status_t getWiFiNbResults( const void* context ) {
     HAL_DBG_TRACE_INFO("Getting Wi-Fi networks count... ");
 
     uint8_t cbuffer[LR1110_NB_RESULTS_WIFI_CMD_LENGTH];
@@ -173,41 +144,57 @@ static lr11xx_status_t1 _lr11xx_wifi_get_nb_results( const void* context, uint8_
     cbuffer[1] = ( uint8_t ) 0x05;
 
     if ( lr1110_spi_read( context, cbuffer, LR1110_NB_RESULTS_WIFI_CMD_LENGTH, rbuffer, LR1110_NB_RESULTS_WIFI_LENGTH ) == LR1110_SPI_STATUS_OK ) {
-        *nb_results = rbuffer[0];
+        uint8_t nb_results = rbuffer[0];
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
-        HAL_DBG_TRACE_INFO("Number of Wi-Fi networks found: %d\r\n", rbuffer[0] );
-        return LR11XX_STATUS_OK;
+        HAL_DBG_TRACE_INFO("Number of Wi-Fi networks found: %d\r\n", nb_results );
+
+        lr11xx_wifi_extended_full_result_t1 wifi_scan_result;
+        for( int i = 0; i < nb_results; i++ ) {
+            if (_lr11xx_wifi_read_extended_full_results( context, i, 1, &wifi_scan_result ) != LR1110_WIFI_STATUS_OK) {
+                HAL_DBG_TRACE_ERROR( "Failed to read Wi-Fi networks\r\n" );
+                return LR1110_WIFI_STATUS_ERROR;
+            }
+            HAL_DBG_TRACE_INFO( "wifi %d: SSID: %s, ", i, wifi_scan_result.ssid_bytes );
+            HAL_DBG_TRACE_INFO( "mac: %02x:%02x:%02x:%02x:%02x:%02x, rssi: %d\r\n", wifi_scan_result.mac_address_3[0], wifi_scan_result.mac_address_3[1], wifi_scan_result.mac_address_3[2], wifi_scan_result.mac_address_3[3], wifi_scan_result.mac_address_3[4], wifi_scan_result.mac_address_3[5], wifi_scan_result.rssi );
+        }
+        return LR1110_WIFI_STATUS_OK;
     } else {
         HAL_DBG_TRACE_ERROR("Failed to get Wi-Fi networks count\r\n");
-        return LR11XX_STATUS_ERROR;
+        return LR1110_WIFI_STATUS_ERROR;
     }
 }
 
-void scanWiFiNetworks( const void* context ) {
-    HAL_DBG_TRACE_PRINTF( "\r\n-----------------WIFI Scan-----------------\r\n" );
+lr1110_wifi_status_t scanWiFiNetworks( const void* context, const lr11xx_wifi_signal_type_scan_t1 signal_type, const lr11xx_wifi_channel_mask_t1 chan_mask, const lr11xx_wifi_mode_t1 acq_mode, const uint8_t nb_max_res, const uint8_t nb_scan_per_chan, const uint16_t timeout, const bool abort_on_timeout ) {
+    HAL_DBG_TRACE_INFO("Scanning Wi-Fi networks... ");
 
-    //  _lr11xx_wifi_scan( context, 0x04,                        0x3FFF, 5,                                12, 3, 110, true )
-    if (_lr11xx_wifi_scan( context, LR11XX_WIFI_TYPE_SCAN_B_G_N, 0x3FFF, LR11XX_WIFI_SCAN_MODE_FULL_BEACON, 2, 3, 110, true ) != LR11XX_STATUS_OK) {
-        return;
+    uint8_t cbuffer[LR1110_SCAN_WIFI_CMD_LENGTH];
+
+    cbuffer[0] = ( uint8_t )( 0x0300 >> 8 );
+    cbuffer[1] = ( uint8_t )( 0x0300 >> 0 );
+    cbuffer[2] = ( uint8_t ) signal_type;
+    cbuffer[3] = ( uint8_t )( chan_mask >> 8 );
+    cbuffer[4] = ( uint8_t )( chan_mask >> 0 );
+    cbuffer[5] = ( uint8_t ) acq_mode;
+    cbuffer[6] = nb_max_res;
+    cbuffer[7] = nb_scan_per_chan;
+    cbuffer[8] = ( uint8_t )( timeout >> 8 );
+    cbuffer[9] = ( uint8_t )( timeout >> 0 );
+    cbuffer[10] = ( uint8_t )( ( abort_on_timeout == true ) ? 1 : 0 );
+
+    if ( lr1110_spi_write( context, cbuffer, LR1110_SCAN_WIFI_CMD_LENGTH ) == LR1110_SPI_STATUS_OK ) {
+        HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+
+        HAL_Delay( 100 + timeout ); // wait for the scan to complete
+
+        return LR1110_WIFI_STATUS_OK;
+    } else {
+        HAL_DBG_TRACE_ERROR("Failed to scan Wi-Fi networks\r\n");
+        return LR1110_WIFI_STATUS_ERROR;
     }
 
-    uint8_t nb_results;
-    if (_lr11xx_wifi_get_nb_results( context, &nb_results ) != LR11XX_STATUS_OK) {
-        return;
-    }
-
-    lr11xx_wifi_extended_full_result_t1 wifi_scan_result;
-    for( int i = 0; i < nb_results; i++ ) {
-        if (_lr11xx_wifi_read_extended_full_results( context, i, 1, &wifi_scan_result ) != LR11XX_STATUS_OK) {
-            HAL_DBG_TRACE_ERROR( "Failed to read Wi-Fi networks\r\n" );
-            return;
-        }
-        HAL_DBG_TRACE_INFO( "wifi %d: SSID: %s, ", i, wifi_scan_result.ssid_bytes );
-        HAL_DBG_TRACE_INFO( "mac: %02x:%02x:%02x:%02x:%02x:%02x, rssi: %d\r\n", wifi_scan_result.mac_address_3[0], wifi_scan_result.mac_address_3[1], wifi_scan_result.mac_address_3[2], wifi_scan_result.mac_address_3[3], wifi_scan_result.mac_address_3[4], wifi_scan_result.mac_address_3[5], wifi_scan_result.rssi );
-    }
 }
 
-void getWiFi_Version( const void* context ) {
+lr1110_wifi_status_t getWiFi_Version( const void* context ) {
     HAL_DBG_TRACE_INFO("Getting Wi-Fi version... ");
 
     uint8_t cbuffer[LR1110_WIFI_VERSION_CMD_LENGTH];
@@ -220,9 +207,10 @@ void getWiFi_Version( const void* context ) {
     if (lr1110_spi_read( context, cbuffer, LR1110_WIFI_VERSION_CMD_LENGTH, rbuffer, LR1110_WIFI_VERSION_LENGTH ) == LR1110_SPI_STATUS_OK) {
         turnOffLED(SNIFFING_LED_GPIO_Port, SNIFFING_LED_Pin);
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
-
         HAL_DBG_TRACE_INFO("Wi-Fi firmware version: %d.%d (0x%X.0x%X)\r\n", rbuffer[0], rbuffer[1], rbuffer[0], rbuffer[1]);
+        return LR1110_WIFI_STATUS_OK;
     } else {
         HAL_DBG_TRACE_ERROR("Failed to get Wi-Fi version\r\n");
+        return LR1110_WIFI_STATUS_ERROR;
     }
 }

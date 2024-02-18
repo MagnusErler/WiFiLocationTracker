@@ -1,4 +1,4 @@
-
+#include "main.h"
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -120,44 +120,49 @@ typedef enum lr11xx_hal_status_e1
     LR11XX_HAL_STATUS_ERROR1 = 3,
 } lr11xx_hal_status_t1;
 
-typedef enum
-{
-    LR11XX_WIFI_TYPE_SCAN_B     = 0x01,  //!< Wi-Fi B
-    LR11XX_WIFI_TYPE_SCAN_G     = 0x02,  //!< Wi-Fi G
-    LR11XX_WIFI_TYPE_SCAN_N     = 0x03,  //!< Wi-Fi N
-    LR11XX_WIFI_TYPE_SCAN_B_G_N = 0x04,  //!< Wi-Fi B and Wi-Fi G/N
-} lr11xx_wifi_signal_type_scan_t1;
-
 typedef uint16_t lr11xx_wifi_channel_mask_t1;
 
-typedef enum
-{
-    LR11XX_WIFI_SCAN_MODE_BEACON =
-        1,  //!< Exposes Beacons and Probe Responses Access Points frames until Period Beacon field (Basic result)
-    LR11XX_WIFI_SCAN_MODE_BEACON_AND_PKT =
-        2,  //!< Exposes some Management Access Points frames until Period Beacon field, and some other packets frame
-            //!< until third Mac Address field (Basic result)
-    LR11XX_WIFI_SCAN_MODE_FULL_BEACON =
-        4,  //!< Exposes Beacons and Probes Responses Access Points frames until Frame Check Sequence (FCS) field
-            //!< (Extended result). In this mode, only signal type LR11XX_WIFI_TYPE_SCAN_B is executed and other signal
-            //!< types are silently discarded.
-    LR11XX_WIFI_SCAN_MODE_UNTIL_SSID = 5,  //!< Exposes Beacons and Probes Responses Access Points frames until the end
-                                           //!< of SSID field (Extended result) - available since firmware 0x0306
-} lr11xx_wifi_mode_t1;
-
-typedef enum lr11xx_status_e1
-{
-    LR11XX_STATUS_OK    = 0,
-    LR11XX_STATUS_ERROR = 3,
-} lr11xx_status_t1;
+/*!
+ * @brief Status code of WIFI operations
+ */
+typedef enum lr1110_wifi_status_e {
+    LR1110_WIFI_STATUS_OK        = 0x00,  //!< WIFI operation executed successfuly
+    LR1110_WIFI_STATUS_ERROR     = 0xFF,  //!< WIFI operation failed
+} lr1110_wifi_status_t;
 
 
-
-void scanWiFiNetworks( const void* context );
+/*!
+ * @brief Scan Wi-Fi networks
+ *
+ * @param [in] context Radio abstraction
+ * @param [in] signal_type Type of signal to scan
+ * @param [in] chan_mask Mask of channels to scan
+ * @param [in] acq_mode Acquisition mode
+ * @param [in] nb_max_res Maximum number of results to return
+ * @param [in] nb_scan_per_chan Number of scan per channel
+ * @param [in] timeout Timeout for the scan
+ * @param [in] abort_on_timeout If true, the scan will be aborted on timeout
+ * 
+ * @return Operation status
+ */
+lr1110_wifi_status_t scanWiFiNetworks( const void* context, const lr11xx_wifi_signal_type_scan_t1 signal_type, 
+                                    const lr11xx_wifi_channel_mask_t1 chan_mask, const lr11xx_wifi_mode_t1 acq_mode, 
+                                    const uint8_t nb_max_res, const uint8_t nb_scan_per_chan, const uint16_t timeout, const bool abort_on_timeout );
 
 /*!
  * @brief Get LR1110 Wi-Fi version
  *
  * @param [in] context Radio abstraction
+ * 
+ * @return Operation status
  */
-void getWiFi_Version( const void* context);
+lr1110_wifi_status_t getWiFi_Version( const void* context);
+
+/*!
+ * @brief Get the number of Wi-Fi results
+ *
+ * @param [in] context Radio abstraction
+ * 
+ * @return Operation status
+ */
+lr1110_wifi_status_t getWiFiNbResults( const void* context );
