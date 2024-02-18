@@ -69,23 +69,22 @@ typedef enum lr1110_gpio_status_e
 /*!
  * @brief Wait for a GPIO pin to reach a specific state
  *
- * @param [in] spi              SPI peripheral to be used
- * @param [in] buffer           Pointer to the buffer to be transmitted
- * @param [in] length           Buffer size to be transmitted
- * @param [in] timeout_ms       Timeout in milliseconds
+ * @param [in] context      Radio implementation parameters
+ * @param [in] cbuffer      Pointer to the buffer to be transmitted
+ * @param [in] cbuffer_length   Buffer size to be transmitted
  * 
  * @returns Operation status
  */
-lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffer, uint16_t cbuffer_length, uint32_t timeout_ms );
+lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffer, uint16_t cbuffer_length );
 
 /*!
  * @brief Radio data transfer - read
  *
  * @param [in] context          Radio implementation parameters
- * @param [in] command          Pointer to the buffer to be transmitted
- * @param [in] command_length   Buffer size to be transmitted
- * @param [out] data            Pointer to the buffer to be received
- * @param [in] data_length      Buffer size to be received
+ * @param [in] cbuffer          Pointer to the buffer to be transmitted
+ * @param [in] cbuffer_length   Buffer size to be transmitted
+ * @param [out] rbuffer         Pointer to the buffer to be received
+ * @param [in] rbuffer_length   Buffer size to be received
  *
  * @returns Operation status
  */

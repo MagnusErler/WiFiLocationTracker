@@ -875,7 +875,7 @@ lr11xx_status_t1 lr11xx_wifi_scan1( const void* context, const lr11xx_wifi_signa
         ( uint8_t ) ( ( abort_on_timeout == true ) ? 1 : 0 ),
     };
 
-    if ( lr1110_spi_write( context, cbuffer, 2+9, 1000 ) == LR1110_SPI_STATUS_OK ) {
+    if ( lr1110_spi_write( context, cbuffer, 2+9 ) == LR1110_SPI_STATUS_OK ) {
         return LR11XX_STATUS_OK1;
     } else {
         return LR11XX_STATUS_ERROR1;
@@ -1217,7 +1217,7 @@ void setupTCXO( const void* context ) {
   cbuffer[4] = ( uint8_t )( timeout >> 8 );
   cbuffer[5] = ( uint8_t )( timeout >> 0 );
 
-  if (lr1110_spi_write( context, cbuffer, LR1110_SET_TCXO_MODE_CMD_LENGTH, 1000 ) == LR1110_SPI_STATUS_OK) {
+  if (lr1110_spi_write( context, cbuffer, LR1110_SET_TCXO_MODE_CMD_LENGTH ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
   } else {
     HAL_DBG_TRACE_ERROR("Failed to set TCXO mode\r\n");
