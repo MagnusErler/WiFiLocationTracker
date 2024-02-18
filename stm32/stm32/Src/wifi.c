@@ -214,7 +214,7 @@ void getWiFi_Version( const void* context ) {
   if (lr1110_spi_read( context, cbuffer, LR1110_WIFI_VERSION_CMD_LENGTH, rbuffer, LR1110_WIFI_VERSION_LENGTH ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
 
-    HAL_DBG_TRACE_INFO("Wi-Fi firmware version: %d.%d\r\n", rbuffer[0], rbuffer[1]);
+    HAL_DBG_TRACE_INFO("Wi-Fi firmware version: %d.%d (0x%X.0x%X)\r\n", rbuffer[0], rbuffer[1], rbuffer[0], rbuffer[1]);
   } else {
     HAL_DBG_TRACE_ERROR("Failed to get Wi-Fi version\r\n");
   }

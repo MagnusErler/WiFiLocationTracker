@@ -473,21 +473,21 @@ void getLR1110_Bootloader_Version( const void* context ) {
   if (lr1110_spi_read(context, cbuffer, LR1110_VERSION_CMD_LENGTH, rbuffer, LR1110_VERSION_LENGTH ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
 
-    HAL_DBG_TRACE_INFO("LR1110 bootloader hardware version: %d\r\n", rbuffer[0]);
+    HAL_DBG_TRACE_INFO("LR1110 bootloader hardware version: %d (0x%X)\r\n", rbuffer[0], rbuffer[0]);
     switch (rbuffer[1]) {
         case 1:
-            HAL_DBG_TRACE_INFO("LR1110 bootloader type: LR1110\r\n");
+            HAL_DBG_TRACE_INFO("LR1110 bootloader type: LR1110 (0x%X)\r\n", rbuffer[1]);
             break;
         case 2:
-            HAL_DBG_TRACE_INFO("LR1110 bootloader type: LR1120\r\n");
+            HAL_DBG_TRACE_INFO("LR1110 bootloader type: LR1120 (0x%X)\r\n", rbuffer[1]);
             break;
         case 3:
-            HAL_DBG_TRACE_INFO("LR1110 bootloader type: LR1121\r\n");
+            HAL_DBG_TRACE_INFO("LR1110 bootloader type: LR1121 (0x%X)\r\n", rbuffer[1]);
             break;
         default:
             break;
     }
-    HAL_DBG_TRACE_INFO("LR1110 bootloader firmware version: %d.%d\r\n", rbuffer[2], rbuffer[3]);
+    HAL_DBG_TRACE_INFO("LR1110 bootloader firmware version: %d.%d (0x%X.0x%X)\r\n", rbuffer[2], rbuffer[3], rbuffer[2], rbuffer[3]);
   } else {
     HAL_DBG_TRACE_ERROR("Failed to get LR1110 bootloader version\r\n");
   }
