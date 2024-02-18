@@ -9,17 +9,15 @@
 
 #include "main.h"
 
-#include "rtc.h"
-
 radio_t* radio;
 
 lr1110_gpio_status_t _waitForBusyState( GPIO_PinState state, uint32_t timeout_ms ) {
 
-    uint32_t start = hal_rtc_get_time_ms();
+    uint32_t start = HAL_GetTick();
 
     if( state == GPIO_PIN_RESET ) {
         while( HAL_GPIO_ReadPin( radio->busy.port, radio->busy.pin ) == GPIO_PIN_SET ) {
-            if( ( uint32_t )( hal_rtc_get_time_ms() - start ) > ( uint32_t ) timeout_ms ) {
+            if( ( uint32_t )( HAL_GetTick() - start ) > ( uint32_t ) timeout_ms ) {
                 HAL_DBG_TRACE_PRINTF("\r\n");
                 HAL_DBG_TRACE_ERROR("Timeout occured while waiting for BUSY to become LOW\r\n");
                 return LR1110_GPIO_STATUS_TIMEOUT;
@@ -27,7 +25,7 @@ lr1110_gpio_status_t _waitForBusyState( GPIO_PinState state, uint32_t timeout_ms
         };
     } else {
         while( HAL_GPIO_ReadPin( radio->busy.port, radio->busy.pin ) == GPIO_PIN_RESET ) {
-            if( ( uint32_t )( hal_rtc_get_time_ms() - start ) > ( uint32_t ) timeout_ms ) {
+            if( ( uint32_t )( HAL_GetTick() - start ) > ( uint32_t ) timeout_ms ) {
                 HAL_DBG_TRACE_PRINTF("\r\n");
                 HAL_DBG_TRACE_ERROR("Timeout occured while waiting for BUSY to become HIGH\r\n");
                 return LR1110_GPIO_STATUS_TIMEOUT;
@@ -43,11 +41,11 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
 
     for( uint16_t i = 0; i < cbuffer_length; i++ ) {
 
-        uint32_t start = hal_rtc_get_time_ms();
+        uint32_t start = HAL_GetTick();
 
         turnOnLED(GPIOC, TX_LED_Pin);
         while( LL_SPI_IsActiveFlag_TXE( spi ) == 0 ) {
-            if( ( uint32_t )( hal_rtc_get_time_ms() - start ) > ( uint32_t ) timeout_ms ) {
+            if( ( uint32_t )( HAL_GetTick() - start ) > ( uint32_t ) timeout_ms ) {
                 HAL_DBG_TRACE_PRINTF("\r\n");
                 HAL_DBG_TRACE_ERROR("_lr1110_spi_write(): Timeout occured while waiting for SPI to become ready for transmission\r\n");
                 status = LR1110_SPI_STATUS_TIMEOUT;
@@ -59,7 +57,7 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
 
         turnOnLED(GPIOC, RX_LED_Pin);
         while( LL_SPI_IsActiveFlag_RXNE( spi ) == 0 ) {
-            if( ( uint32_t )( hal_rtc_get_time_ms() - start ) > ( uint32_t ) timeout_ms ) {
+            if( ( uint32_t )( HAL_GetTick() - start ) > ( uint32_t ) timeout_ms ) {
                 HAL_DBG_TRACE_PRINTF("\r\n");
                 HAL_DBG_TRACE_ERROR("_lr1110_spi_write(): Timeout occured while waiting for SPI to become ready for reception\r\n");
                 status = LR1110_SPI_STATUS_TIMEOUT;
@@ -149,9 +147,11 @@ lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer
     return LR1110_SPI_STATUS_OK;
 }
 
-lr1110_spi_status_t lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer, uint16_t cbuffer_length, uint32_t timeout_ms ) {
+lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffer, uint16_t cbuffer_length, uint32_t timeout_ms ) {
 
     lr1110_spi_status_t status = LR1110_SPI_STATUS_OK;
+
+    radio = ( radio_t* ) context;
 
     // Wait for BUSY to become LOW -> LR1110 is ready for a new command
     if (_waitForBusyState( GPIO_PIN_RESET, 1000 ) != LR1110_GPIO_STATUS_OK) {
@@ -160,7 +160,7 @@ lr1110_spi_status_t lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer, 
 
     // Start of SPI transaction
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_RESET );
-    if (_lr1110_spi_write( spi, cbuffer, cbuffer_length, timeout_ms ) != LR1110_SPI_STATUS_OK) {
+    if (_lr1110_spi_write( radio->spi, cbuffer, cbuffer_length, timeout_ms ) != LR1110_SPI_STATUS_OK) {
         return LR1110_SPI_STATUS_ERROR;
     }
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
