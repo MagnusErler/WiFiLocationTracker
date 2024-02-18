@@ -1,76 +1,29 @@
 
 
-/*!
- * @brief Length of command buffer for commands that have no parameter
- */
-#define LR1110_CMD_NO_PARAM_LENGTH 2
 
-/*!
- * @brief Length of return buffer for commands that have no parameter
- */
-#define LR1110_NO_PARAM_LENGTH 2
+// LENGTHS FOR COMMANDS
+#define LR1110_CMD_NO_PARAM_LENGTH          2
+#define LR1110_VERSION_CMD_LENGTH           LR1110_CMD_NO_PARAM_LENGTH
+#define LR1110_TEMPERATURE_CMD_LENGTH       LR1110_CMD_NO_PARAM_LENGTH
+#define LR1110_GNSS_VERSION_CMD_LENGTH      LR1110_CMD_NO_PARAM_LENGTH
+#define LR1110_WIFI_VERSION_CMD_LENGTH      LR1110_CMD_NO_PARAM_LENGTH
+#define LR1110_CHIP_EUI_CMD_LENGTH          LR1110_CMD_NO_PARAM_LENGTH
+#define LR1110_SET_TCXO_MODE_CMD_LENGTH     LR1110_CMD_NO_PARAM_LENGTH + 4
+#define LR1110_SCAN_WIFI_CMD_LENGTH         LR1110_CMD_NO_PARAM_LENGTH + 9
+#define LR1110_NB_RESULTS_WIFI_CMD_LENGTH   LR1110_CMD_NO_PARAM_LENGTH
 
-/*!
- * @brief Length of command buffer for LR1110 version
- */
-#define LR1110_VERSION_CMD_LENGTH LR1110_CMD_NO_PARAM_LENGTH
-
-/*!
- * @brief Length of return buffer for LR1110 version
- */
-#define LR1110_VERSION_LENGTH LR1110_NO_PARAM_LENGTH + 2
-
-/*!
- * @brief Length of command buffer for LR1110 temperature
- */
-#define LR1110_TEMPERATURE_CMD_LENGTH LR1110_CMD_NO_PARAM_LENGTH
-
-/*!
- * @brief Length of return buffer for LR1110 temperature
- */
-#define LR1110_TEMPERATURE_LENGTH LR1110_NO_PARAM_LENGTH
-
-/*!
- * @brief Length of command buffer for GNSS version
- */
-#define LR1110_GNSS_VERSION_CMD_LENGTH LR1110_CMD_NO_PARAM_LENGTH
-
-/*!
- * @brief Length of return buffer for GNSS version
- */
-#define LR1110_GNSS_VERSION_LENGTH LR1110_NO_PARAM_LENGTH
-
-/*!
- * @brief Length of command buffer for WiFi version
- */
-#define LR1110_WIFI_VERSION_CMD_LENGTH LR1110_CMD_NO_PARAM_LENGTH
-
-/*!
- * @brief Length of return buffer for WiFi version
- */
-#define LR1110_WIFI_VERSION_LENGTH LR1110_NO_PARAM_LENGTH
-
-/*!
- * @brief Length of command buffer for Chip EUI
- */
-#define LR1110_CHIP_EUI_CMD_LENGTH LR1110_CMD_NO_PARAM_LENGTH
-
-/*!
- * @brief Length of return buffer for Chip EUI
- */
-#define LR1110_CHIP_EUI_LENGTH LR1110_NO_PARAM_LENGTH + 6
-
-/*!
- * @brief Length of command buffer for Set TCXO mode
- */
-#define LR1110_SET_TCXO_MODE_CMD_LENGTH LR1110_CMD_NO_PARAM_LENGTH + 4
+// LENGTHS FOR RESPONSES
+#define LR1110_NO_PARAM_LENGTH              2
+#define LR1110_VERSION_LENGTH               LR1110_NO_PARAM_LENGTH + 2
+#define LR1110_TEMPERATURE_LENGTH           LR1110_NO_PARAM_LENGTH
+#define LR1110_GNSS_VERSION_LENGTH          LR1110_NO_PARAM_LENGTH
+#define LR1110_WIFI_VERSION_LENGTH          LR1110_NO_PARAM_LENGTH
+#define LR1110_CHIP_EUI_LENGTH              LR1110_NO_PARAM_LENGTH + 6
+#define LR1110_NB_RESULTS_WIFI_LENGTH       LR1110_NO_PARAM_LENGTH
 
 
-/*!
- * @brief Operation code for system commands
- */
-enum
-{
+
+enum {
     LR1110_WRITE_REG_MEM_32_CMD     = 0x05,
     LR1110_READ_REG_MEM_32_CMD      = 0x06,
     LR1110_CALIBRATE_CMD            = 0x0F,
@@ -95,8 +48,7 @@ enum {
     LR1110_GET_TEMPERATURE          = 0x011A,  //!< Operation code for temperature read command
 };
 
-typedef enum
-{
+typedef enum {
     LR1110_WIFI_RESET_CUMUL_TIMING_PHASE_CMD       = 0x07,
     LR1110_WIFI_READ_CUMUL_TIMING_PHASE_CMD        = 0x08,
     LR1110_WIFI_CONFIG_TIMESTAMP_AP_PHONE_CMD      = 0x0B,
@@ -107,19 +59,14 @@ typedef enum
     LR1110_WIFI_SEARCH_COUNTRY_CODE_TIME_LIMIT_CMD = 0x33,
 } lr1110_api_command_wifi_t;
 
-typedef enum
-{
+typedef enum {
     LR1110_GROUP_ID_SYSTEM = 0x01,  //!< Group ID for system commands
     LR1110_GROUP_ID_WIFI   = 0x03,  //!< Group ID for Wi-Fi commands
     LR1110_GROUP_ID_GNSS   = 0x04,  //!< Group ID for GNSS commands
     LR1110_GROUP_ID_MODEM  = 0x06,  //!< Group ID for modem commands
 } lr1110_api_group_id_t;
 
-/*!
- * @brief TCXO supply voltage values
- */
-typedef enum
-{
+typedef enum {
     LR1110_TCXO_CTRL_1_6V = 0x00,  //!< Supply voltage = 1.6v
     LR1110_TCXO_CTRL_1_7V = 0x01,  //!< Supply voltage = 1.7v
     LR1110_TCXO_CTRL_1_8V = 0x02,  //!< Supply voltage = 1.8v
@@ -130,21 +77,18 @@ typedef enum
     LR1110_TCXO_CTRL_3_3V = 0x07,  //!< Supply voltage = 3.3v
 } lr1110_tcxo_supply_voltage_t;
 
-typedef struct configuration
-{
+typedef struct configuration {
     GPIO_TypeDef* port;
     uint32_t      pin;
 } gpio_t;
 
-typedef struct hal_gpio_irq_s
-{
+typedef struct hal_gpio_irq_s {
     gpio_t irq1;
     void*                context;
     void ( *callback )( void* context );
 } hal_gpio_irq_t;
 
-typedef struct
-{
+typedef struct {
     SPI_TypeDef*    spi;
     gpio_t          nss;
     gpio_t          reset;

@@ -1,6 +1,8 @@
 
 #include "wifi.h"
 
+#include "constants.h"
+
 #include "spi.h"
 
 #include "main.h"   // for HAL_DBG_TRACE-functions
@@ -11,7 +13,7 @@
 static lr11xx_status_t1 _lr11xx_wifi_scan( const void* context, const lr11xx_wifi_signal_type_scan_t1 signal_type, const lr11xx_wifi_channel_mask_t1 chan_mask, const lr11xx_wifi_mode_t1 acq_mode, const uint8_t nb_max_res, const uint8_t nb_scan_per_chan, const uint16_t timeout, const bool abort_on_timeout ) {
     HAL_DBG_TRACE_INFO("Scanning Wi-Fi networks... ");
 
-    uint8_t cbuffer[2+9];
+    uint8_t cbuffer[LR1110_SCAN_WIFI_CMD_LENGTH];
 
     cbuffer[0] = ( uint8_t )( 0x0300 >> 8 );
     cbuffer[1] = ( uint8_t )( 0x0300 >> 0 );
@@ -25,7 +27,7 @@ static lr11xx_status_t1 _lr11xx_wifi_scan( const void* context, const lr11xx_wif
     cbuffer[9] = ( uint8_t )( timeout >> 0 );
     cbuffer[10] = ( uint8_t )( ( abort_on_timeout == true ) ? 1 : 0 );
 
-    if ( lr1110_spi_write( context, cbuffer, 2+9 ) == LR1110_SPI_STATUS_OK ) {
+    if ( lr1110_spi_write( context, cbuffer, LR1110_SCAN_WIFI_CMD_LENGTH ) == LR1110_SPI_STATUS_OK ) {
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
 
         HAL_Delay( 100 + timeout ); // wait for the scan to complete
@@ -167,13 +169,13 @@ static lr11xx_status_t1 _lr11xx_wifi_read_extended_full_results( const void* con
 static lr11xx_status_t1 _lr11xx_wifi_get_nb_results( const void* context, uint8_t* nb_results  ) {
     HAL_DBG_TRACE_INFO("Getting Wi-Fi networks count... ");
 
-    uint8_t cbuffer[2];
-    uint8_t rbuffer[2] = { 0 };
+    uint8_t cbuffer[LR1110_NB_RESULTS_WIFI_CMD_LENGTH];
+    uint8_t rbuffer[LR1110_NB_RESULTS_WIFI_LENGTH] = { 0 };
 
     cbuffer[0] = ( uint8_t ) LR1110_GROUP_ID_WIFI;
-    cbuffer[1] = ( uint8_t ) 5;
+    cbuffer[1] = ( uint8_t ) 0x05;
 
-    if ( lr1110_spi_read( context, cbuffer, 2, rbuffer, 2 ) == LR1110_SPI_STATUS_OK ) {
+    if ( lr1110_spi_read( context, cbuffer, LR1110_NB_RESULTS_WIFI_CMD_LENGTH, rbuffer, LR1110_NB_RESULTS_WIFI_LENGTH ) == LR1110_SPI_STATUS_OK ) {
         *nb_results = rbuffer[1];
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
         HAL_DBG_TRACE_INFO("Number of Wi-Fi networks found: %d\r\n", nb_results );
