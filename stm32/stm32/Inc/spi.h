@@ -42,24 +42,6 @@ typedef enum lr1110_spi_status_e {
     LR1110_SPI_STATUS_ERROR     = 0xFF,  //!< SPI operation failed
 } lr1110_spi_status_t;
 
-/*!
- * @brief GPIO pin state
- */
-typedef enum {
-    LR1110_SPI_GPIO_PIN_STATE_LOW,
-    LR1110_SPI_GPIO_PIN_STATE_HIGH,
-} lr1110_spi_gpio_pin_state_t;
-
-/*!
- * @brief Status reported by the HAL layer
- */
-typedef enum lr1110_gpio_status_e
-{
-    LR1110_GPIO_STATUS_OK      = 0x00,  //!< Operation terminated successfully
-    LR1110_GPIO_STATUS_TIMEOUT = 0x01,  //!< Timeout occured while waiting for a line state
-    LR1110_GPIO_STATUS_ERROR   = 0xFF,  //!< Operation terminated with error
-} lr1110_gpio_status_t;
-
 /*
  * ============================================================================
  * API definitions to be implemented by the user
