@@ -1,8 +1,6 @@
 
 #include "wifi.h"
 
-#include "constants.h"
-
 #include "spi.h"
 
 #include "main.h"   // for HAL_DBG_TRACE-functions
@@ -178,7 +176,7 @@ static lr11xx_status_t1 _lr11xx_wifi_get_nb_results( const void* context, uint8_
     if ( lr1110_spi_read( context, cbuffer, LR1110_NB_RESULTS_WIFI_CMD_LENGTH, rbuffer, LR1110_NB_RESULTS_WIFI_LENGTH ) == LR1110_SPI_STATUS_OK ) {
         *nb_results = rbuffer[1];
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
-        HAL_DBG_TRACE_INFO("Number of Wi-Fi networks found: %d\r\n", nb_results );
+        HAL_DBG_TRACE_INFO("Number of Wi-Fi networks found: %d\r\n", rbuffer[1] );
         return LR11XX_STATUS_OK;
     } else {
         HAL_DBG_TRACE_ERROR("Failed to get Wi-Fi networks count\r\n");
