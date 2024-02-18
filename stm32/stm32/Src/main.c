@@ -161,7 +161,7 @@ int main(void)
   MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
 
-  HAL_DBG_TRACE_MSG("-----------------------------\r\n\r\n");
+  HAL_DBG_TRACE_MSG("\r\n\r\n-----------------------------------------------------\r\n\r\n");
   resetLR1110(lr1110_context);
 
   blinkLED(GPIOC, RX_LED_Pin|TX_LED_Pin, 100, 5, true);
