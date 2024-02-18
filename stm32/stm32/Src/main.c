@@ -190,12 +190,8 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1) {
-    
-    //turnOnLED(GPIOC, RX_LED_Pin);
-    //turnOffLED(GPIOC, RX_LED_Pin);
-    //toggleLED(GPIOC, RX_LED_Pin|TX_LED_Pin);
 
-    HAL_DBG_TRACE_PRINTF("2a = %d\r\n", a++);
+    HAL_DBG_TRACE_PRINTF("a = %d\r\n", a++);
 
     getLR1110_Temperature(lr1110_context);
 
@@ -506,7 +502,7 @@ void getLR1110_Bootloader_Version( const void* context ) {
     }
     HAL_DBG_TRACE_INFO("LR1110 bootloader firmware version: %d.%d\r\n", rbuffer[2], rbuffer[3]);
   } else {
-    HAL_DBG_TRACE_ERROR("\r\nFailed to get LR1110 bootloader version\r\n");
+    HAL_DBG_TRACE_ERROR("Failed to get LR1110 bootloader version\r\n");
   }
 }
 
@@ -532,7 +528,7 @@ void getLR1110_Temperature( const void* context ) {
 
     HAL_DBG_TRACE_INFO("LR1110 temperature: %d.%d °C\r\n", (int)temperature, (int)((temperature - (int)temperature) * 100));
   } else {
-    HAL_DBG_TRACE_ERROR("\r\nFailed to get LR1110 temperature\r\n");
+    HAL_DBG_TRACE_ERROR("Failed to get LR1110 temperature\r\n");
   }
 }
 
@@ -591,14 +587,6 @@ void getLR1110_Chip_EUI( const void* context ) {
   }
 }
 
-void resetLR1110() {
-  HAL_DBG_TRACE_INFO("Resetting LR1110... ");
-  HAL_GPIO_WritePin(RESET_GPIO_Port, RESET_Pin, GPIO_PIN_RESET);
-  HAL_Delay(100);
-  HAL_GPIO_WritePin(RESET_GPIO_Port, RESET_Pin, GPIO_PIN_SET);
-  HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
-}
-
 void setupTCXO( const void* context ) {
   HAL_DBG_TRACE_INFO( "Setting up TCXO mode... " );
 
@@ -620,6 +608,14 @@ void setupTCXO( const void* context ) {
   } else {
     HAL_DBG_TRACE_ERROR("Failed to set TCXO mode\r\n");
   }
+}
+
+void resetLR1110() {
+  HAL_DBG_TRACE_INFO("Resetting LR1110... ");
+  HAL_GPIO_WritePin(RESET_GPIO_Port, RESET_Pin, GPIO_PIN_RESET);
+  HAL_Delay(100);
+  HAL_GPIO_WritePin(RESET_GPIO_Port, RESET_Pin, GPIO_PIN_SET);
+  HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
 }
 
 /* USER CODE END 4 */
