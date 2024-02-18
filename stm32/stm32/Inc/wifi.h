@@ -8,42 +8,42 @@
 /*!
  * @brief Type to store a Wi-Fi datarate info byte
  */
-typedef uint8_t lr11xx_wifi_datarate_info_byte_t1;
+typedef uint8_t lr11xx_wifi_datarate_info_byte_t;
 
 /*!
  * @brief Type to store a Wi-Fi channel info byte
  */
-typedef uint8_t lr11xx_wifi_channel_info_byte_t1;
+typedef uint8_t lr11xx_wifi_channel_info_byte_t;
 
 /*!
  * @brief Type to store a Wi-Fi frame type info byte
  */
-typedef uint8_t lr11xx_wifi_frame_type_info_byte_t1;
+typedef uint8_t lr11xx_wifi_frame_type_info_byte_t;
 
 /*!
  * @brief Type to store a MAC address
  */
-typedef uint8_t lr11xx_wifi_mac_address_t1[6];
+typedef uint8_t lr11xx_wifi_mac_address_t[6];
 
-typedef struct lr11xx_wifi_basic_complete_result_s1
+typedef struct lr11xx_wifi_basic_complete_result_s
 {
-    lr11xx_wifi_datarate_info_byte_t1   data_rate_info_byte;
-    lr11xx_wifi_channel_info_byte_t1    channel_info_byte;
+    lr11xx_wifi_datarate_info_byte_t   data_rate_info_byte;
+    lr11xx_wifi_channel_info_byte_t    channel_info_byte;
     int8_t                             rssi;
-    lr11xx_wifi_frame_type_info_byte_t1 frame_type_info_byte;
-    lr11xx_wifi_mac_address_t1          mac_address;
+    lr11xx_wifi_frame_type_info_byte_t frame_type_info_byte;
+    lr11xx_wifi_mac_address_t          mac_address;
     int16_t                            phi_offset;
     uint64_t timestamp_us;  //!< Indicate the up-time of the Access Point transmitting the Beacon [us]
     uint16_t beacon_period_tu;
-} lr11xx_wifi_basic_complete_result_t1;
+} lr11xx_wifi_basic_complete_result_t;
 
-typedef struct lr11xx_wifi_basic_mac_type_channel_result_s1
+typedef struct lr11xx_wifi_basic_mac_type_channel_result_s
 {
-    lr11xx_wifi_datarate_info_byte_t1 data_rate_info_byte;
-    lr11xx_wifi_channel_info_byte_t1  channel_info_byte;
+    lr11xx_wifi_datarate_info_byte_t data_rate_info_byte;
+    lr11xx_wifi_channel_info_byte_t  channel_info_byte;
     int8_t                           rssi;
-    lr11xx_wifi_mac_address_t1        mac_address;
-} lr11xx_wifi_basic_mac_type_channel_result_t1;
+    lr11xx_wifi_mac_address_t        mac_address;
+} lr11xx_wifi_basic_mac_type_channel_result_t;
 
 typedef enum
 {
@@ -63,47 +63,47 @@ typedef enum
     LR11XX_WIFI_CHANNEL_13   = 0x0D,  //!< Channel at frequency 2.472 GHz
     LR11XX_WIFI_CHANNEL_14   = 0x0E,  //!< Channel at frequency 2.484 GHz
     LR11XX_WIFI_ALL_CHANNELS = 0x0F,
-} lr11xx_wifi_channel_t1;
+} lr11xx_wifi_channel_t;
 
-typedef uint8_t lr11xx_wifi_country_code_str_t1[2];
+typedef uint8_t lr11xx_wifi_country_code_str_t[2];
 
-typedef struct lr11xx_wifi_fcs_info_byte_s1
+typedef struct lr11xx_wifi_fcs_info_byte_s
 {
     bool is_fcs_ok;       //!< True if the LR11XX has checked the FCS and the check succeeded
     bool is_fcs_checked;  //!< True if the LR11XX has checked the FCS
-} lr11xx_wifi_fcs_info_byte_t1;
+} lr11xx_wifi_fcs_info_byte_t;
 
 typedef struct
 {
-    lr11xx_wifi_datarate_info_byte_t1 data_rate_info_byte;
-    lr11xx_wifi_channel_info_byte_t1  channel_info_byte;
+    lr11xx_wifi_datarate_info_byte_t data_rate_info_byte;
+    lr11xx_wifi_channel_info_byte_t  channel_info_byte;
     int8_t                           rssi;
     uint8_t                          rate;           //!< Rate index
     uint16_t                         service;        //!< Service value
     uint16_t                         length;         //!< Length of MPDU (in microseconds for WiFi B, bytes for WiFi G)
     uint16_t                         frame_control;  //!< Frame Control structure
-    lr11xx_wifi_mac_address_t1        mac_address_1;
-    lr11xx_wifi_mac_address_t1        mac_address_2;
-    lr11xx_wifi_mac_address_t1        mac_address_3;
+    lr11xx_wifi_mac_address_t        mac_address_1;
+    lr11xx_wifi_mac_address_t        mac_address_2;
+    lr11xx_wifi_mac_address_t        mac_address_3;
     uint64_t                         timestamp_us;  //!< Indicate the up-time of the Access Point
                                                     //!< transmitting the Beacon [us]
     uint16_t beacon_period_tu;
     uint16_t seq_control;                                 //!< Sequence Control value
     uint8_t  ssid_bytes[32];  //!< Service Set
                                                           //!< IDentifier
-    lr11xx_wifi_channel_t1          current_channel;       //!< Current channel indicated in the Wi-Fi frame
-    lr11xx_wifi_country_code_str_t1 country_code;          //!< Country Code
+    lr11xx_wifi_channel_t          current_channel;       //!< Current channel indicated in the Wi-Fi frame
+    lr11xx_wifi_country_code_str_t country_code;          //!< Country Code
     uint8_t                        io_regulation;         //!< Input Output Regulation
-    lr11xx_wifi_fcs_info_byte_t1    fcs_check_byte;        //!< Frame Check Sequence info
+    lr11xx_wifi_fcs_info_byte_t    fcs_check_byte;        //!< Frame Check Sequence info
     int16_t                        phi_offset;
-} lr11xx_wifi_extended_full_result_t1;
+} lr11xx_wifi_extended_full_result_t;
 
 typedef union
 {
-    lr11xx_wifi_basic_complete_result_t1*         basic_complete;
-    lr11xx_wifi_basic_mac_type_channel_result_t1* basic_mac_type_channel;
-    lr11xx_wifi_extended_full_result_t1*          extended_complete;
-} lr11xx_wifi_result_interface_t1;
+    lr11xx_wifi_basic_complete_result_t*         basic_complete;
+    lr11xx_wifi_basic_mac_type_channel_result_t* basic_mac_type_channel;
+    lr11xx_wifi_extended_full_result_t*          extended_complete;
+} lr11xx_wifi_result_interface_t;
 
 typedef enum
 {
@@ -112,15 +112,15 @@ typedef enum
     LR11XX_WIFI_RESULT_FORMAT_BASIC_MAC_TYPE_CHANNEL,  //!<  Basic MAC/type/channel result format: @ref
                                                        //!<  lr11xx_wifi_basic_mac_type_channel_result_t
     LR11XX_WIFI_RESULT_FORMAT_EXTENDED_FULL,  //!< Extended full result format: @ref lr11xx_wifi_extended_full_result_t
-} lr11xx_wifi_result_format_t1;
+} lr11xx_wifi_result_format_t;
 
 typedef enum lr11xx_hal_status_e1
 {
     LR11XX_HAL_STATUS_OK1    = 0,
     LR11XX_HAL_STATUS_ERROR1 = 3,
-} lr11xx_hal_status_t1;
+} lr11xx_hal_status_t;
 
-typedef uint16_t lr11xx_wifi_channel_mask_t1;
+typedef uint16_t lr11xx_wifi_channel_mask_t;
 
 /*!
  * @brief Status code of WIFI operations
@@ -145,8 +145,8 @@ typedef enum lr1110_wifi_status_e {
  * 
  * @return Operation status
  */
-lr1110_wifi_status_t scanWiFiNetworks( const void* context, const lr11xx_wifi_signal_type_scan_t1 signal_type, 
-                                    const lr11xx_wifi_channel_mask_t1 chan_mask, const lr11xx_wifi_mode_t1 acq_mode, 
+lr1110_wifi_status_t scanWiFiNetworks( const void* context, const lr11xx_wifi_signal_type_scan_t signal_type, 
+                                    const lr11xx_wifi_channel_mask_t chan_mask, const lr11xx_wifi_mode_t acq_mode, 
                                     const uint8_t nb_max_res, const uint8_t nb_scan_per_chan, const uint16_t timeout, const bool abort_on_timeout );
 
 /*!

@@ -63,7 +63,7 @@ typedef enum
     LR11XX_WIFI_TYPE_SCAN_G     = 0x02,  //!< Wi-Fi G
     LR11XX_WIFI_TYPE_SCAN_N     = 0x03,  //!< Wi-Fi N
     LR11XX_WIFI_TYPE_SCAN_B_G_N = 0x04,  //!< Wi-Fi B and Wi-Fi G/N
-} lr11xx_wifi_signal_type_scan_t1;
+} lr11xx_wifi_signal_type_scan_t;
 
 typedef enum
 {
@@ -78,7 +78,7 @@ typedef enum
             //!< types are silently discarded.
     LR11XX_WIFI_SCAN_MODE_UNTIL_SSID = 5,  //!< Exposes Beacons and Probes Responses Access Points frames until the end
                                            //!< of SSID field (Extended result) - available since firmware 0x0306
-} lr11xx_wifi_mode_t1;
+} lr11xx_wifi_mode_t;
 
 typedef enum {
     LR1110_GROUP_ID_SYSTEM = 0x01,  //!< Group ID for system commands
