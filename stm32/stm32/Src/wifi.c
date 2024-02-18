@@ -170,8 +170,8 @@ static lr11xx_status_t1 _lr11xx_wifi_get_nb_results( const void* context, uint8_
     uint8_t cbuffer[2];
     uint8_t rbuffer[2] = { 0 };
 
-    cbuffer[0] = ( uint8_t )( 0x0305 >> 8 );
-    cbuffer[1] = ( uint8_t )( 0x0305 >> 0 );
+    cbuffer[0] = ( uint8_t ) LR1110_GROUP_ID_WIFI;
+    cbuffer[1] = ( uint8_t ) 5;
 
     if ( lr1110_spi_read( context, cbuffer, 2, rbuffer, 2 ) == LR1110_SPI_STATUS_OK ) {
         *nb_results = rbuffer[1];
@@ -214,8 +214,8 @@ void getWiFi_Version( const void* context ) {
   uint8_t cbuffer[LR1110_WIFI_VERSION_CMD_LENGTH];
   uint8_t rbuffer[LR1110_WIFI_VERSION_LENGTH] = { 0 };
 
-  cbuffer[0] = LR1110_GROUP_ID_WIFI;
-  cbuffer[1] = LR1110_WIFI_GET_FIRMWARE_WIFI_VERSION_CMD;
+  cbuffer[0] = ( uint8_t ) LR1110_GROUP_ID_WIFI;
+  cbuffer[1] = ( uint8_t ) LR1110_WIFI_GET_FIRMWARE_WIFI_VERSION_CMD;
 
   if (lr1110_spi_read( context, cbuffer, LR1110_WIFI_VERSION_CMD_LENGTH, rbuffer, LR1110_WIFI_VERSION_LENGTH ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);

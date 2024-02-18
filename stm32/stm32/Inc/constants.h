@@ -107,34 +107,6 @@ typedef enum
     LR1110_WIFI_SEARCH_COUNTRY_CODE_TIME_LIMIT_CMD = 0x33,
 } lr1110_api_command_wifi_t;
 
-/*!
- * @brief Operation code for GNSS commands
- */
-typedef enum
-{
-    LR1110_GNSS_SET_CONSTELLATION_CMD            = 0x00,  //!< set the constellation to use
-    LR1110_GNSS_READ_CONSTELLATION_CMD           = 0x01,  //!< read the used consteallations
-    LR1110_GNSS_SET_ALMANAC_UPDATE_CMD           = 0x02,  //!< set almanac update configuration
-    LR1110_GNSS_READ_ALMANAC_UPDATE_CMD          = 0x03,  //!< read the almanac update configuration
-    LR1110_GNSS_SET_FREQ_SEARCH_SPACE_CMD        = 0x04,  //!< set the frequency search space
-    LR1110_GNSS_READ_FREQ_SEARCH_SPACE_CMD       = 0x05,  //!< read the frequency search space
-    LR1110_GNSS_READ_FW_VERSION_CMD              = 0x06,  //!< read the firmware version
-    LR1110_GNSS_READ_SUPPORTED_CONSTELLATION_CMD = 0x07,  //!< read the supported constellations
-    LR1110_GNSS_ALMANAC_FULL_UPDATE_CMD          = 0x0E,  //!< Almanac update
-    LR1110_GNSS_SET_ASSISTANCE_POSITION_CMD      = 0x10,  //!< set the assistance position
-    LR1110_GNSS_READ_ASSISTANCE_POSITION_CMD     = 0x11,  //!< read the assistance position
-    LR1110_GNSS_SET_XTAL_ERROR_CMD               = 0x12,  //!< set xtal accuracy
-    LR1110_GNSS_READ_XTAL_ERROR_CMD              = 0x13,  //!< read the xtal accuracy
-    LR1110_GNSS_PUSH_SOLVER_CMD                  = 0x14,  //!< set the informations from the solver to the chip
-    LR1110_GNSS_GET_CONTEXT_STATUS_CMD           = 0x16,  //!< read the GNSS context status
-    LR1110_GNSS_GET_NB_SV_DETECTED_CMD           = 0x17,  //!< read the number of detected satellites
-    LR1110_GNSS_GET_SV_DETECTED_CMD              = 0x18,  //!< read the informations of detected satellites
-    LR1110_GNSS_GET_TIMINGS_CMD                  = 0x19,  //!< read the meseaured timings during the scan
-    LR1110_GNSS_ALMANAC_READ_BY_INDEX_CMD        = 0x1A,  //!< read the almanac by index
-    LR1110_GNSS_SCAN_AUTONOMOUS_CMD              = 0x30,  //!< start the scan autonomous
-    LR1110_GNSS_SCAN_ASSISTED_CMD                = 0x31,  //!< start the scan assisted
-} lr1110_api_command_gnss_t;
-
 typedef enum
 {
     LR1110_GROUP_ID_SYSTEM = 0x01,  //!< Group ID for system commands
