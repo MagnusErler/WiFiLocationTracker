@@ -91,7 +91,7 @@ enum {
     LR1110_GET_HASH_OC              = 0x8004,  //!< Operation code for hash getter command
     LR1110_REBOOT_OC                = 0x8005,  //!< Operation code for reboot command
     LR1110_GET_PIN_OC               = 0x800B,  //!< Operation code for PIN read command
-    LR1110_GET_CHIP_EUI_OC          = 0x800C,  //!< Operation code for EUI read command
+    // NOT CORRECT      LR1110_GET_CHIP_EUI_OC          = 0x800C,  //!< Operation code for EUI read command
     LR1110_GET_TEMPERATURE          = 0x011A,  //!< Operation code for temperature read command
 };
 

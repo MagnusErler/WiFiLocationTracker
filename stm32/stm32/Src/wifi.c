@@ -9,6 +9,7 @@
 #include <stdbool.h>
 
 static lr11xx_status_t1 _lr11xx_wifi_scan( const void* context, const lr11xx_wifi_signal_type_scan_t1 signal_type, const lr11xx_wifi_channel_mask_t1 chan_mask, const lr11xx_wifi_mode_t1 acq_mode, const uint8_t nb_max_res, const uint8_t nb_scan_per_chan, const uint16_t timeout, const bool abort_on_timeout ) {
+    HAL_DBG_TRACE_INFO("Scanning Wi-Fi networks... ");
 
     uint8_t cbuffer[2+9];
 
@@ -25,9 +26,14 @@ static lr11xx_status_t1 _lr11xx_wifi_scan( const void* context, const lr11xx_wif
     cbuffer[10] = ( uint8_t )( ( abort_on_timeout == true ) ? 1 : 0 );
 
     if ( lr1110_spi_write( context, cbuffer, 2+9 ) == LR1110_SPI_STATUS_OK ) {
-        return LR11XX_STATUS_OK1;
+        HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+
+        HAL_Delay( 100 + timeout ); // wait for the scan to complete
+
+        return LR11XX_STATUS_OK;
     } else {
-        return LR11XX_STATUS_ERROR1;
+        HAL_DBG_TRACE_ERROR("Failed to scan Wi-Fi networks\r\n");
+        return LR11XX_STATUS_ERROR;
     }
 }
 
@@ -159,14 +165,22 @@ static lr11xx_status_t1 _lr11xx_wifi_read_extended_full_results( const void* con
 }
 
 static lr11xx_status_t1 _lr11xx_wifi_get_nb_results( const void* context, uint8_t* nb_results  ) {
-    const uint8_t cbuffer[2] = { ( uint8_t ) ( 0x0305 >> 8 ), ( uint8_t ) ( 0x0305 >> 0 ) };
-    uint8_t       rbuffer[2] = { 0 };
+    HAL_DBG_TRACE_INFO("Getting Wi-Fi networks count... ");
+
+    uint8_t cbuffer[2];
+    uint8_t rbuffer[2] = { 0 };
+
+    cbuffer[0] = ( uint8_t )( 0x0305 >> 8 );
+    cbuffer[1] = ( uint8_t )( 0x0305 >> 0 );
 
     if ( lr1110_spi_read( context, cbuffer, 2, rbuffer, 2 ) == LR1110_SPI_STATUS_OK ) {
         *nb_results = rbuffer[1];
-        return LR11XX_STATUS_OK1;
+        HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+        HAL_DBG_TRACE_INFO("Number of Wi-Fi networks found: %d\r\n", nb_results );
+        return LR11XX_STATUS_OK;
     } else {
-        return LR11XX_STATUS_ERROR1;
+        HAL_DBG_TRACE_ERROR("Failed to get Wi-Fi networks count\r\n");
+        return LR11XX_STATUS_ERROR;
     }
 }
 
@@ -174,31 +188,23 @@ void scanWiFiNetworks( const void* context ) {
     HAL_DBG_TRACE_PRINTF( "\r\n-----------------WIFI Scan-----------------\r\n" );
 
     //  _lr11xx_wifi_scan( context, 0x04,                        0x3FFF, 5,                                12, 3, 110, true )
-    if (_lr11xx_wifi_scan( context, LR11XX_WIFI_TYPE_SCAN_B_G_N, 0x3FFF, LR11XX_WIFI_SCAN_MODE_UNTIL_SSID, 2, 3, 1000, true ) != LR11XX_STATUS_OK1) {
-        HAL_DBG_TRACE_ERROR( "Failed to scan Wi-Fi networks\r\n" );
+    if (_lr11xx_wifi_scan( context, LR11XX_WIFI_TYPE_SCAN_B_G_N, 0x3FFF, LR11XX_WIFI_SCAN_MODE_UNTIL_SSID, 2, 3, 1000, true ) != LR11XX_STATUS_OK) {
         return;
     }
-
-    HAL_Delay( 2000 );
 
     uint8_t nb_results;
-    if (_lr11xx_wifi_get_nb_results( context, &nb_results ) != LR11XX_STATUS_OK1) {
-        HAL_DBG_TRACE_INFO( "Failed to get Wi-Fi networks count\r\n" );
+    if (_lr11xx_wifi_get_nb_results( context, &nb_results ) != LR11XX_STATUS_OK) {
         return;
     }
-
-    HAL_DBG_TRACE_PRINTF( "Number of Wi-Fi networks found: %d\r\n", nb_results );
-    
-    HAL_Delay( 500 );
 
     lr11xx_wifi_extended_full_result_t1 wifi_scan_result;
     for( int i = 0; i < nb_results; i++ ) {
-        if (_lr11xx_wifi_read_extended_full_results( context, i, 1, &wifi_scan_result ) != LR11XX_STATUS_OK1) {
+        if (_lr11xx_wifi_read_extended_full_results( context, i, 1, &wifi_scan_result ) != LR11XX_STATUS_OK) {
             HAL_DBG_TRACE_ERROR( "Failed to read Wi-Fi networks\r\n" );
             return;
         }
-        HAL_DBG_TRACE_PRINTF( "wifi %d: SSID: %s, ", i, wifi_scan_result.ssid_bytes );
-        HAL_DBG_TRACE_PRINTF( "mac: %02x:%02x:%02x:%02x:%02x:%02x, rssi: %d\r\n", wifi_scan_result.mac_address_3[0], wifi_scan_result.mac_address_3[1], wifi_scan_result.mac_address_3[2], wifi_scan_result.mac_address_3[3], wifi_scan_result.mac_address_3[4], wifi_scan_result.mac_address_3[5], wifi_scan_result.rssi );
+        HAL_DBG_TRACE_INFO( "wifi %d: SSID: %s, ", i, wifi_scan_result.ssid_bytes );
+        HAL_DBG_TRACE_INFO( "mac: %02x:%02x:%02x:%02x:%02x:%02x, rssi: %d\r\n", wifi_scan_result.mac_address_3[0], wifi_scan_result.mac_address_3[1], wifi_scan_result.mac_address_3[2], wifi_scan_result.mac_address_3[3], wifi_scan_result.mac_address_3[4], wifi_scan_result.mac_address_3[5], wifi_scan_result.rssi );
     }
 }
 

@@ -198,37 +198,6 @@ lr1110_spi_status_t _lr1110_spi_read_with_dummy_byte( SPI_TypeDef* spi, uint8_t*
         turnOffLED(RX_LED_GPIO_Port, RX_LED_Pin);
     }
 
-    #ifdef DEBUG
-    HAL_DBG_TRACE_PRINTF("\r\n---Stat1 Results---\r\n");
-    switch ( rbuffer[0] & 0x01 ) {
-        case 0:
-            HAL_DBG_TRACE_PRINTF("No interrupt active\r\n");
-            break;
-        case 1:
-            HAL_DBG_TRACE_PRINTF("At least 1 interrupt active\r\n");
-            break;
-        default:
-            HAL_DBG_TRACE_ERROR("Invalid interrupt status\r\n");
-    }
-
-    switch( ( rbuffer[0] & 0x0E ) >> 1 ) {
-        case 0:
-            HAL_DBG_TRACE_ERROR("CMD_FAIL: The last command could not be executed\r\n");
-            break;
-        case 1:
-            HAL_DBG_TRACE_WARNING("CMD_PERR: The last command could not be processed (wrong opcode, arguments)\r\n");
-            break;
-        case 2:
-            HAL_DBG_TRACE_PRINTF("CMD_OK: The last command was processed successfully\r\n");
-            break;
-        case 3:
-            HAL_DBG_TRACE_PRINTF("CMD_DAT: The last command was successfully processed, and data is currently transmitted instead of IRQ status\r\n");
-            break;
-        default:
-            HAL_DBG_TRACE_ERROR("Invalid command status\r\n");
-    }
-    #endif
-
     return LR1110_SPI_STATUS_OK;
 }
 

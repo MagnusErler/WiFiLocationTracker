@@ -147,8 +147,8 @@ typedef enum
 
 typedef enum lr11xx_status_e1
 {
-    LR11XX_STATUS_OK1    = 0,
-    LR11XX_STATUS_ERROR1 = 3,
+    LR11XX_STATUS_OK    = 0,
+    LR11XX_STATUS_ERROR = 3,
 } lr11xx_status_t1;
 
 
