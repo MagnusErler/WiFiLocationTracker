@@ -154,3 +154,10 @@ typedef enum lr11xx_status_e1
 
 
 void scanWiFiNetworks( const void* context );
+
+/*!
+ * @brief Get LR1110 Wi-Fi version
+ *
+ * @param [in] context Radio abstraction
+ */
+void getWiFi_Version( const void* context);
