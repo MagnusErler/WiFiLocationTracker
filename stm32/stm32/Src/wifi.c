@@ -171,7 +171,7 @@ lr1110_wifi_status_t scanWiFiNetworks( const void* context, const lr11xx_wifi_si
     }
 }
 
-lr1110_wifi_status_t getWiFiVersion( const void* context ) {
+lr1110_wifi_status_t getLR1110_WiFi_Version( const void* context ) {
     HAL_DBG_TRACE_INFO("Getting WiFi firmware version... ");
 
     uint8_t cbuffer[LR1110_WIFI_VERSION_CMD_LENGTH];

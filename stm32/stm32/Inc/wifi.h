@@ -184,7 +184,7 @@ lr1110_wifi_status_t scanWiFiNetworks( const void* context, const lr11xx_wifi_si
  * 
  * @return Operation status
  */
-lr1110_wifi_status_t getWiFiVersion( const void* context);
+lr1110_wifi_status_t getLR1110_WiFi_Version( const void* context);
 
 /*!
  * @brief Get the number of WiFi results
