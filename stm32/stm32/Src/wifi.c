@@ -170,10 +170,12 @@ lr1110_wifi_status_t scanLR1110_WiFi_Networks( const void* context, const lr11xx
     cbuffer[9] = ( uint8_t ) ( timeout >> 0 );
     cbuffer[10] = ( uint8_t ) ( ( abort_on_timeout == true ) ? 1 : 0 );
 
+    turnOnLED(SNIFFING_LED_GPIO_Port, SNIFFING_LED_Pin);
     if ( lr1110_spi_write( context, cbuffer, LR1110_SCAN_WIFI_CMD_LENGTH ) == LR1110_SPI_STATUS_OK ) {
-        HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
-
         HAL_Delay( 100 + timeout ); // wait for the scan to complete
+
+        HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+        turnOffLED(SNIFFING_LED_GPIO_Port, SNIFFING_LED_Pin);
 
         return LR1110_WIFI_STATUS_OK;
     } else {
@@ -191,9 +193,7 @@ lr1110_wifi_status_t getLR1110_WiFi_Version( const void* context ) {
     cbuffer[0] = ( uint8_t ) LR1110_GROUP_ID_WIFI;
     cbuffer[1] = ( uint8_t ) LR1110_WIFI_GET_FIRMWARE_WIFI_VERSION_CMD;
 
-    turnOnLED(SNIFFING_LED_GPIO_Port, SNIFFING_LED_Pin);
     if (lr1110_spi_read( context, cbuffer, LR1110_WIFI_VERSION_CMD_LENGTH, rbuffer, LR1110_WIFI_VERSION_LENGTH ) == LR1110_SPI_STATUS_OK) {
-        turnOffLED(SNIFFING_LED_GPIO_Port, SNIFFING_LED_Pin);
         HAL_DBG_TRACE_INFO_VALUE("%d.%d (0x%X.0x%X)\r\n", rbuffer[0], rbuffer[1], rbuffer[0], rbuffer[1]);
         return LR1110_WIFI_STATUS_OK;
     } else {
