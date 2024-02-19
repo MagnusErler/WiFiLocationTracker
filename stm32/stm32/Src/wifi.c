@@ -114,7 +114,7 @@ static lr1110_wifi_status_t getWiFiFullResults( const void* context, const uint8
     return _fetch_and_aggregate_all_results( context, start_result_index, nb_results, nb_results_per_chunk_max, LR11XX_WIFI_RESULT_FORMAT_EXTENDED_FULL, result_buffer1, result_interface );
 }
 
-lr1110_wifi_status_t getWiFiNbResults( const void* context ) {
+lr1110_wifi_status_t getLR1110_WiFi_Number_of_Results( const void* context ) {
     HAL_DBG_TRACE_INFO("Getting number of WiFi networks found... ");
 
     uint8_t cbuffer[LR1110_NB_RESULTS_WIFI_CMD_LENGTH];
@@ -133,7 +133,18 @@ lr1110_wifi_status_t getWiFiNbResults( const void* context ) {
                 HAL_DBG_TRACE_ERROR( "Failed to read WiFi networks\r\n" );
                 return LR1110_WIFI_STATUS_ERROR;
             }
-            HAL_DBG_TRACE_INFO( "WiFi %d: MAC: %02x:%02x:%02x:%02x:%02x:%02x, RSSI: %d, SSID: %s\r\n", i, wifi_scan_result.mac_address_3[0], wifi_scan_result.mac_address_3[1], wifi_scan_result.mac_address_3[2], wifi_scan_result.mac_address_3[3], wifi_scan_result.mac_address_3[4], wifi_scan_result.mac_address_3[5], wifi_scan_result.rssi, wifi_scan_result.ssid_bytes );
+            HAL_DBG_TRACE_INFO( "WiFi %d: MAC: %02x:%02x:%02x:%02x:%02x:%02x, RSSI: %d, uptime: %d.%d day(s), SSID: %s\r\n", i, wifi_scan_result.mac_address_3[0], wifi_scan_result.mac_address_3[1], wifi_scan_result.mac_address_3[2], wifi_scan_result.mac_address_3[3], wifi_scan_result.mac_address_3[4], wifi_scan_result.mac_address_3[5], wifi_scan_result.rssi, (uint8_t)(wifi_scan_result.timestamp_us / 86400000000.0), (uint8_t)(((wifi_scan_result.timestamp_us / 86400000000.0) - (uint8_t)(wifi_scan_result.timestamp_us / 86400000000.0)) * 100), wifi_scan_result.ssid_bytes );
+            // HAL_DBG_TRACE_INFO( "rate: %d\r\n", wifi_scan_result.rate );
+            // HAL_DBG_TRACE_INFO( "service: %d\r\n", wifi_scan_result.service );
+            // HAL_DBG_TRACE_INFO( "length: %d\r\n", wifi_scan_result.length );
+            // HAL_DBG_TRACE_INFO( "frame_control: %d\r\n", wifi_scan_result.frame_control );
+            // HAL_DBG_TRACE_INFO( "beacon_period_tu: %d\r\n", wifi_scan_result.beacon_period_tu );
+            // HAL_DBG_TRACE_INFO( "seq_control: %d\r\n", wifi_scan_result.seq_control );
+            // HAL_DBG_TRACE_INFO( "current_channel: %d\r\n", wifi_scan_result.current_channel );
+            // HAL_DBG_TRACE_INFO( "country_code: %c%c\r\n", wifi_scan_result.country_code[0], wifi_scan_result.country_code[1] );
+            // HAL_DBG_TRACE_INFO( "io_regulation: %d\r\n", wifi_scan_result.io_regulation );
+            // HAL_DBG_TRACE_INFO( "fcs_check_byte: %d\r\n", wifi_scan_result.fcs_check_byte.is_fcs_checked );
+            // HAL_DBG_TRACE_INFO( "phi_offset: %d\r\n", wifi_scan_result.phi_offset );
         }
         return LR1110_WIFI_STATUS_OK;
     } else {
@@ -142,7 +153,7 @@ lr1110_wifi_status_t getWiFiNbResults( const void* context ) {
     }
 }
 
-lr1110_wifi_status_t scanWiFiNetworks( const void* context, const lr11xx_wifi_signal_type_scan_t signal_type, const lr11xx_wifi_channel_mask_t chan_mask, const lr11xx_wifi_mode_t acq_mode, const uint8_t nb_max_res, const uint8_t nb_scan_per_chan, const uint16_t timeout, const bool abort_on_timeout ) {
+lr1110_wifi_status_t scanLR1110_WiFi_Networks( const void* context, const lr11xx_wifi_signal_type_scan_t signal_type, const lr11xx_wifi_channel_mask_t chan_mask, const lr11xx_wifi_mode_t acq_mode, const uint8_t nb_max_res, const uint8_t nb_scan_per_chan, const uint16_t timeout, const bool abort_on_timeout ) {
     HAL_DBG_TRACE_INFO("Scanning WiFi networks... ");
 
     uint8_t cbuffer[LR1110_SCAN_WIFI_CMD_LENGTH];
@@ -171,7 +182,7 @@ lr1110_wifi_status_t scanWiFiNetworks( const void* context, const lr11xx_wifi_si
     }
 }
 
-lr1110_wifi_status_t getWiFiVersion( const void* context ) {
+lr1110_wifi_status_t getLR1110_WiFi_Version( const void* context ) {
     HAL_DBG_TRACE_INFO("Getting WiFi firmware version... ");
 
     uint8_t cbuffer[LR1110_WIFI_VERSION_CMD_LENGTH];

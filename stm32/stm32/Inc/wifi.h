@@ -173,7 +173,7 @@ typedef enum {
  * 
  * @return Operation status
  */
-lr1110_wifi_status_t scanWiFiNetworks( const void* context, const lr11xx_wifi_signal_type_scan_t signal_type, 
+lr1110_wifi_status_t scanLR1110_WiFi_Networks( const void* context, const lr11xx_wifi_signal_type_scan_t signal_type, 
                                     const lr11xx_wifi_channel_mask_t chan_mask, const lr11xx_wifi_mode_t acq_mode, 
                                     const uint8_t nb_max_res, const uint8_t nb_scan_per_chan, const uint16_t timeout, const bool abort_on_timeout );
 
@@ -184,7 +184,7 @@ lr1110_wifi_status_t scanWiFiNetworks( const void* context, const lr11xx_wifi_si
  * 
  * @return Operation status
  */
-lr1110_wifi_status_t getWiFiVersion( const void* context);
+lr1110_wifi_status_t getLR1110_WiFi_Version( const void* context);
 
 /*!
  * @brief Get the number of WiFi results
@@ -193,4 +193,4 @@ lr1110_wifi_status_t getWiFiVersion( const void* context);
  * 
  * @return Operation status
  */
-lr1110_wifi_status_t getWiFiNbResults( const void* context );
+lr1110_wifi_status_t getLR1110_WiFi_Number_of_Results( const void* context );
