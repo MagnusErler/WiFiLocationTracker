@@ -1,7 +1,0 @@
-bsp_l0/smtc_hal/smtc_hal_mcu.c:144:44:hal_mcu_wait_us	24	static
-bsp_l0/smtc_hal/smtc_hal_mcu.c:139:6:hal_mcu_reset	0	static
-bsp_l0/smtc_hal/smtc_hal_mcu.c:126:6:hal_mcu_init	128	static
-bsp_l0/smtc_hal/smtc_hal_mcu.c:155:6:SysTick_Handler	8	static
-bsp_l0/smtc_hal/smtc_hal_mcu.c:160:6:HAL_MspInit	8	static
-bsp_l0/smtc_hal/smtc_hal_mcu.c:356:6:hal_mcu_delay_ms	8	static
-bsp_l0/smtc_hal/smtc_hal_mcu.c:363:6:HardFault_Handler	16	static

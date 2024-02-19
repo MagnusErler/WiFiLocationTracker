@@ -1,5 +1,0 @@
-smtc_modem_core/radio_drivers/lr11xx_driver/src/lr11xx_wifi.c:320:17:uint16_from_array	0	static
-smtc_modem_core/radio_drivers/lr11xx_driver/src/lr11xx_wifi.c:333:13:lr11xx_wifi_read_mac_address_from_buffer	0	static
-smtc_modem_core/radio_drivers/lr11xx_driver/src/lr11xx_wifi.c:249:17:lr11xx_wifi_scan	56	static
-smtc_modem_core/radio_drivers/lr11xx_driver/src/lr11xx_wifi.c:273:17:lr11xx_wifi_get_nb_results	24	static
-smtc_modem_core/radio_drivers/lr11xx_driver/src/lr11xx_wifi.c:286:17:lr11xx_wifi_read_extended_full_results	1096	static

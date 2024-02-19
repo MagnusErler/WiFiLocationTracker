@@ -1,2 +1,0 @@
-smtc_modem_core/modem_services/smtc_modem_services_hal.c:83:6:smtc_modem_services_aes_encrypt	8	static
-smtc_modem_core/modem_services/smtc_modem_services_hal.c:94:10:smtc_modem_services_get_time_s	8	static
