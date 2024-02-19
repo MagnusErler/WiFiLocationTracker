@@ -198,9 +198,8 @@ int main(void)
     HAL_DBG_TRACE_PRINTF("a = %d\r\n", a++);
 
     getLR1110_Temperature(lr1110_context);
-    getLR1110_Battery_Voltage(lr1110_context);
 
-    scanLR1110_WiFi_Networks(lr1110_context, LR11XX_WIFI_TYPE_SCAN_B_G_N, 0x3FFF, LR11XX_WIFI_SCAN_MODE_FULL_BEACON, 3, 3, 110, true);
+    scanLR1110_WiFi_Networks(lr1110_context, LR11XX_WIFI_TYPE_SCAN_B_G_N, 0x3FFF, LR11XX_WIFI_SCAN_MODE_FULL_BEACON, 6, 3, 110, true);
     getLR1110_WiFi_Number_of_Results(lr1110_context);
 
     /* USER CODE END WHILE */
