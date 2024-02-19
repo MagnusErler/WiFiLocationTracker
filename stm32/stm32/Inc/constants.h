@@ -47,40 +47,6 @@ enum {
 };
 
 typedef enum {
-    LR1110_WIFI_RESET_CUMUL_TIMING_PHASE_CMD       = 0x07,
-    LR1110_WIFI_READ_CUMUL_TIMING_PHASE_CMD        = 0x08,
-    LR1110_WIFI_CONFIG_TIMESTAMP_AP_PHONE_CMD      = 0x0B,
-    LR1110_WIFI_GET_FIRMWARE_WIFI_VERSION_CMD      = 0x20,
-    LR1110_WIFI_PASSIVE_SCAN_CMD                   = 0x30,
-    LR1110_WIFI_PASSIVE_SCAN_TIME_LIMIT_CMD        = 0x31,
-    LR1110_WIFI_SEARCH_COUNTRY_CODE_CMD            = 0x32,
-    LR1110_WIFI_SEARCH_COUNTRY_CODE_TIME_LIMIT_CMD = 0x33,
-} lr1110_api_command_wifi_t;
-
-typedef enum
-{
-    LR11XX_WIFI_TYPE_SCAN_B     = 0x01,  //!< WiFi B
-    LR11XX_WIFI_TYPE_SCAN_G     = 0x02,  //!< WiFi G
-    LR11XX_WIFI_TYPE_SCAN_N     = 0x03,  //!< WiFi N
-    LR11XX_WIFI_TYPE_SCAN_B_G_N = 0x04,  //!< WiFi B and WiFi G/N
-} lr11xx_wifi_signal_type_scan_t;
-
-typedef enum
-{
-    LR11XX_WIFI_SCAN_MODE_BEACON =
-        1,  //!< Exposes Beacons and Probe Responses Access Points frames until Period Beacon field (Basic result)
-    LR11XX_WIFI_SCAN_MODE_BEACON_AND_PKT =
-        2,  //!< Exposes some Management Access Points frames until Period Beacon field, and some other packets frame
-            //!< until third Mac Address field (Basic result)
-    LR11XX_WIFI_SCAN_MODE_FULL_BEACON =
-        4,  //!< Exposes Beacons and Probes Responses Access Points frames until Frame Check Sequence (FCS) field
-            //!< (Extended result). In this mode, only signal type LR11XX_WIFI_TYPE_SCAN_B is executed and other signal
-            //!< types are silently discarded.
-    LR11XX_WIFI_SCAN_MODE_UNTIL_SSID = 5,  //!< Exposes Beacons and Probes Responses Access Points frames until the end
-                                           //!< of SSID field (Extended result) - available since firmware 0x0306
-} lr11xx_wifi_mode_t;
-
-typedef enum {
     LR1110_GROUP_ID_SYSTEM = 0x01,  //!< Group ID for system commands
     LR1110_GROUP_ID_WIFI   = 0x03,  //!< Group ID for WiFi commands
     LR1110_GROUP_ID_GNSS   = 0x04,  //!< Group ID for GNSS commands
