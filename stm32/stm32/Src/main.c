@@ -101,19 +101,28 @@ static void getLR1110_Temperature( const void* context );
 static void getLR1110_Chip_EUI( const void* context );
 
 /*!
+ * @brief Get LR1110 Battery Voltage
+ *
+ * @param [in] context Radio abstraction
+ * 
+ */
+static void getLR1110_Battery_Voltage( const void* context );
+
+/*!
+ * @brief Setup LR1110 TCXO
+ *
+ * @param [in] context Radio abstraction
+ * 
+ */
+static void setupLR1110_TCXO( const void* context );
+
+/*!
  * @brief Reset LR1110
  *
  * @param [in] context Radio abstraction
  * 
  */
 static void resetLR1110( const void* context );
-
-/*!
- * @brief Setup TCXO
- *
- * @param [in] context Radio abstraction
- */
-static void setupTCXO( const void* context );
 
 /* USER CODE END PFP */
 
@@ -171,13 +180,14 @@ int main(void)
 
   blinkLED(GPIOC, RX_LED_Pin|TX_LED_Pin, 100, 5, true);
 
-  setupTCXO(lr1110_context);    // Seems like the first time LR1110 is called it returns with an error, so we call it twice
-  setupTCXO(lr1110_context);
+  setupLR1110_TCXO(lr1110_context);    // Seems like the first time LR1110 is called it returns with an error, so we call it twice
+  setupLR1110_TCXO(lr1110_context);
 
   getLR1110_Bootloader_Version(lr1110_context);
-  getWiFiVersion(lr1110_context);
+  getLR1110_WiFi_Version(lr1110_context);
   getLR1110_Chip_EUI(lr1110_context);
   getLR1110_Temperature(lr1110_context);
+  getLR1110_Battery_Voltage(lr1110_context);
 
   /* USER CODE END 2 */
 
@@ -189,8 +199,8 @@ int main(void)
 
     getLR1110_Temperature(lr1110_context);
 
-    scanWiFiNetworks(lr1110_context, LR11XX_WIFI_TYPE_SCAN_B_G_N, 0x3FFF, LR11XX_WIFI_SCAN_MODE_FULL_BEACON, 3, 3, 110, true);
-    getWiFiNbResults(lr1110_context);
+    scanLR1110_WiFi_Networks(lr1110_context, LR11XX_WIFI_TYPE_SCAN_B_G_N, 0x3FFF, LR11XX_WIFI_SCAN_MODE_FULL_BEACON, 3, 3, 110, true);
+    getLR1110_WiFi_Number_of_Results(lr1110_context);
 
     /* USER CODE END WHILE */
 
@@ -523,9 +533,8 @@ void getLR1110_Temperature( const void* context ) {
     uint16_t temp_10_0 = ((rbuffer[0] << 8) | rbuffer[1]) & 0x7FF;
     float temperature = 25 + (1000/(-1.7)) * ((temp_10_0/2047.0) * 1.35 - 0.7295);
     
-    HAL_DBG_TRACE_INFO_VALUE("%d.%d °C\r\n", (int)temperature, (int)((temperature - (int)temperature) * 100));
-
-    if ((int)temperature > 50) {
+    HAL_DBG_TRACE_INFO_VALUE("%d.%d °C\r\n", (uint8_t)temperature, (uint8_t)((temperature - (uint8_t)temperature) * 100));
+    if ((uint8_t)temperature > 50) {
       HAL_DBG_TRACE_ERROR("LR1110 temperature is too high. TCXO mode is maybe not set up correctly\r\n");
     }
   } else {
@@ -558,8 +567,8 @@ void getLR1110_Chip_EUI( const void* context ) {
   uint8_t cbuffer[LR1110_CHIP_EUI_CMD_LENGTH];
   uint8_t rbuffer[LR1110_CHIP_EUI_LENGTH] = { 0 };
 
-  cbuffer[0] = ( uint8_t )( 0x0125 >> 8 );
-  cbuffer[1] = ( uint8_t )( 0x0125 >> 0 );
+  cbuffer[0] = ( uint8_t ) 0x01;
+  cbuffer[1] = ( uint8_t ) 0x25;
 
   if (lr1110_spi_read( context, cbuffer, LR1110_CHIP_EUI_CMD_LENGTH, rbuffer, LR1110_CHIP_EUI_LENGTH ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_INFO_VALUE("%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X\r\n", rbuffer[0], rbuffer[1], rbuffer[2], rbuffer[3], rbuffer[4], rbuffer[5], rbuffer[6], rbuffer[7]);
@@ -568,8 +577,26 @@ void getLR1110_Chip_EUI( const void* context ) {
   }
 }
 
-void setupTCXO( const void* context ) {
-  HAL_DBG_TRACE_INFO( "Setting up TCXO mode... " );
+void getLR1110_Battery_Voltage( const void* context ) {
+  HAL_DBG_TRACE_INFO("Getting LR1110 battery voltage... ");
+
+  uint8_t cbuffer[LR1110_BATTERY_VOLTAGE_CMD_LENGTH];
+  uint8_t rbuffer[LR1110_BATTERY_VOLTAGE_LENGTH] = { 0 };
+
+  cbuffer[0] = ( uint8_t ) 0x01;
+  cbuffer[1] = ( uint8_t ) 0x19;
+
+  if (lr1110_spi_read( context, cbuffer, LR1110_BATTERY_VOLTAGE_CMD_LENGTH, rbuffer, LR1110_BATTERY_VOLTAGE_LENGTH ) == LR1110_SPI_STATUS_OK) {
+
+    float batteryVoltage = (((5 * rbuffer[0])/255.0) - 1) * 1.35;
+    HAL_DBG_TRACE_INFO_VALUE("%d.%d V\r\n", (uint8_t)batteryVoltage, (uint8_t)((batteryVoltage - (uint8_t)batteryVoltage) * 100));
+  } else {
+    HAL_DBG_TRACE_ERROR("Failed to get LR1110 battery voltage\r\n");
+  }
+}
+
+void setupLR1110_TCXO( const void* context ) {
+  HAL_DBG_TRACE_INFO( "Setting up LR1110 TCXO mode... " );
 
   uint8_t cbuffer[LR1110_SET_TCXO_MODE_CMD_LENGTH];
 
@@ -586,7 +613,7 @@ void setupTCXO( const void* context ) {
   if (lr1110_spi_write( context, cbuffer, LR1110_SET_TCXO_MODE_CMD_LENGTH ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
   } else {
-    HAL_DBG_TRACE_ERROR("Failed to set TCXO mode\r\n");
+    HAL_DBG_TRACE_ERROR("Failed to set LR1110 TCXO mode\r\n");
   }
 }
 
