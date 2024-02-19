@@ -216,7 +216,7 @@ lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer
     uint8_t dummy_byte = 0x00;
 
     // Wait for BUSY to become LOW -> LR1110 is ready for a new command
-    if (_waitForBusyState( GPIO_PIN_RESET, 1000 ) != LR1110_SPI_STATUS_OK) {
+    if (_waitForBusyState( GPIO_PIN_RESET, 2000 ) != LR1110_SPI_STATUS_OK) {
         return LR1110_SPI_STATUS_ERROR;
     }
 
@@ -229,7 +229,7 @@ lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer
     // End of 1st SPI transaction
 
     // Wait for BUSY to become LOW -> LR1110 is ready for a new command
-    if (_waitForBusyState( GPIO_PIN_RESET, 1000 ) != LR1110_SPI_STATUS_OK) {
+    if (_waitForBusyState( GPIO_PIN_RESET, 2000 ) != LR1110_SPI_STATUS_OK) {
         return LR1110_SPI_STATUS_ERROR;
     }
 
@@ -245,7 +245,7 @@ lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer
     // End of 2nd SPI transaction
 
     // Wait for BUSY to become LOW -> LR1110 is ready for a new command
-    if (_waitForBusyState( GPIO_PIN_RESET, 1000 ) != LR1110_SPI_STATUS_OK) {
+    if (_waitForBusyState( GPIO_PIN_RESET, 2000 ) != LR1110_SPI_STATUS_OK) {
         return LR1110_SPI_STATUS_ERROR;
     }
 
@@ -259,7 +259,7 @@ lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffe
     radio = (radio_t*) context;
 
     // Wait for BUSY to become LOW -> LR1110 is ready for a new command
-    if (_waitForBusyState( GPIO_PIN_RESET, 1000 ) != LR1110_SPI_STATUS_OK) {
+    if (_waitForBusyState( GPIO_PIN_RESET, 2000 ) != LR1110_SPI_STATUS_OK) {
         return LR1110_SPI_STATUS_TIMEOUT;
     }
 
@@ -272,7 +272,7 @@ lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffe
     // End of SPI transaction
 
     // Wait for BUSY to become LOW -> LR1110 is ready for a new command
-    if (_waitForBusyState( GPIO_PIN_RESET, 1000 ) != LR1110_SPI_STATUS_OK) {
+    if (_waitForBusyState( GPIO_PIN_RESET, 2000 ) != LR1110_SPI_STATUS_OK) {
         return LR1110_SPI_STATUS_TIMEOUT;
     }
     
