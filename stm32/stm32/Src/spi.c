@@ -53,6 +53,7 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
             if( ( uint32_t )( HAL_GetTick() - start ) > ( uint32_t ) timeout_ms ) {
                 HAL_DBG_TRACE_PRINTF("\r\n");
                 HAL_DBG_TRACE_ERROR("_lr1110_spi_write(): Timeout occured while waiting for SPI to become ready for transmission\r\n");
+                turnOffLED(TX_LED_GPIO_Port, TX_LED_Pin);
                 return LR1110_SPI_STATUS_TIMEOUT;
             }
         };
@@ -64,6 +65,7 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
             if( ( uint32_t )( HAL_GetTick() - start ) > ( uint32_t ) timeout_ms ) {
                 HAL_DBG_TRACE_PRINTF("\r\n");
                 HAL_DBG_TRACE_ERROR("_lr1110_spi_write(): Timeout occured while waiting for SPI to become ready for reception\r\n");
+                turnOffLED(RX_LED_GPIO_Port, RX_LED_Pin);
                 return LR1110_SPI_STATUS_TIMEOUT;
             }
         };
@@ -185,6 +187,7 @@ lr1110_spi_status_t _lr1110_spi_read_with_dummy_byte( SPI_TypeDef* spi, uint8_t*
             if( ( uint32_t )( HAL_GetTick() - start ) > ( uint32_t ) timeout_ms ) {
                 HAL_DBG_TRACE_PRINTF("\r\n");
                 HAL_DBG_TRACE_ERROR("_lr1110_spi_read_with_dummy_byte(): Timeout occured while waiting for SPI to become ready for transmission\r\n");
+                turnOffLED(TX_LED_GPIO_Port, TX_LED_Pin);
                 return LR1110_SPI_STATUS_TIMEOUT;
             }
         };
@@ -196,6 +199,7 @@ lr1110_spi_status_t _lr1110_spi_read_with_dummy_byte( SPI_TypeDef* spi, uint8_t*
             if( ( uint32_t )( HAL_GetTick() - start ) > ( uint32_t ) timeout_ms ) {
                 HAL_DBG_TRACE_PRINTF("\r\n");
                 HAL_DBG_TRACE_ERROR("_lr1110_spi_read_with_dummy_byte(): Timeout occured while waiting for SPI to become ready for reception\r\n");
+                turnOffLED(RX_LED_GPIO_Port, RX_LED_Pin);
                 return LR1110_SPI_STATUS_TIMEOUT;
             }
         };

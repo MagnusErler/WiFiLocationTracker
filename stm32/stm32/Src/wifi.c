@@ -180,6 +180,7 @@ lr1110_wifi_status_t scanLR1110_WiFi_Networks( const void* context, const lr11xx
         return LR1110_WIFI_STATUS_OK;
     } else {
         HAL_DBG_TRACE_ERROR("Failed to scan WiFi networks\r\n");
+        turnOffLED(SNIFFING_LED_GPIO_Port, SNIFFING_LED_Pin);
         return LR1110_WIFI_STATUS_ERROR;
     }
 }
