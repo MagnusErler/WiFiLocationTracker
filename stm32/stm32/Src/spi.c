@@ -85,10 +85,10 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
 
     switch( ( rbuffer[0] & 0x0E ) >> 1 ) {
         case 0:
-            HAL_DBG_TRACE_ERROR("\r\nCMD_FAIL: The last command could not be executed\r\n");
+            HAL_DBG_TRACE_ERROR("CMD_FAIL: The last command could not be executed\r\n");
             break;
         case 1:
-            HAL_DBG_TRACE_WARNING("\r\nCMD_PERR: The last command could not be processed (wrong opcode, arguments). It is possible to generate an interrupt on DIO if a command error occurred\r\n");
+            HAL_DBG_TRACE_WARNING("CMD_PERR: The last command could not be processed (wrong opcode, arguments). It is possible to generate an interrupt on DIO if a command error occurred\r\n");
             break;
         #ifdef DEBUG
         case 2:

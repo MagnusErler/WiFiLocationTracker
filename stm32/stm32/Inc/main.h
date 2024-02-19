@@ -58,41 +58,6 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
 
-/*!
- * @brief Turn on LED
- *
- * @param [in] LED_GPIO_Port
- * @param [in] LED_Pin
- */
-void turnOnLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin);
-
-/*!
- * @brief Turn off LED
- *
- * @param [in] LED_GPIO_Port
- * @param [in] LED_Pin
- */
-void turnOffLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin);
-
-/*!
- * @brief Toggle LED
- *
- * @param [in] LED_GPIO_Port
- * @param [in] LED_Pin
- */
-void toggleLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin);
-
-/*!
- * @brief Blink LED
- *
- * @param [in] LED_GPIO_Port
- * @param [in] LED_Pin
- * @param [in] period
- * @param [in] count
- * @param [in] start
- */
-void blinkLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin, uint32_t period, uint8_t count, bool start);
-
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
@@ -151,6 +116,14 @@ void blinkLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin, uint32_t period, ui
     {                                                        \
         HAL_DBG_TRACE_PRINTF( HAL_DBG_TRACE_COLOR_GREEN );   \
         HAL_DBG_TRACE_PRINTF( "INFO : " );                   \
+        HAL_DBG_TRACE_PRINTF( __VA_ARGS__ );                 \
+        HAL_DBG_TRACE_PRINTF( HAL_DBG_TRACE_COLOR_DEFAULT ); \
+    } while( 0 );
+
+#define HAL_DBG_TRACE_INFO_VALUE( ... )                            \
+    do                                                       \
+    {                                                        \
+        HAL_DBG_TRACE_PRINTF( HAL_DBG_TRACE_COLOR_GREEN );   \
         HAL_DBG_TRACE_PRINTF( __VA_ARGS__ );                 \
         HAL_DBG_TRACE_PRINTF( HAL_DBG_TRACE_COLOR_DEFAULT ); \
     } while( 0 );

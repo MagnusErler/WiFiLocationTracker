@@ -5,6 +5,8 @@
 
 #include "main.h"   // for HAL_DBG_TRACE-functions
 
+#include "led.h"
+
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -113,7 +115,7 @@ static lr1110_wifi_status_t getWiFiFullResults( const void* context, const uint8
 }
 
 lr1110_wifi_status_t getWiFiNbResults( const void* context ) {
-    HAL_DBG_TRACE_INFO("Getting Wi-Fi networks count... ");
+    HAL_DBG_TRACE_INFO("Getting number of Wi-Fi networks found... ");
 
     uint8_t cbuffer[LR1110_NB_RESULTS_WIFI_CMD_LENGTH];
     uint8_t rbuffer[LR1110_NB_RESULTS_WIFI_LENGTH] = { 0 };
@@ -123,8 +125,7 @@ lr1110_wifi_status_t getWiFiNbResults( const void* context ) {
 
     if ( lr1110_spi_read( context, cbuffer, LR1110_NB_RESULTS_WIFI_CMD_LENGTH, rbuffer, LR1110_NB_RESULTS_WIFI_LENGTH ) == LR1110_SPI_STATUS_OK ) {
         uint8_t nb_results = rbuffer[0];
-        HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
-        HAL_DBG_TRACE_INFO("Number of Wi-Fi networks found: %d\r\n", nb_results );
+        HAL_DBG_TRACE_INFO_VALUE("%d\r\n", nb_results);
 
         lr11xx_wifi_extended_full_result_t wifi_scan_result;
         for( int i = 0; i < nb_results; i++ ) {
@@ -132,8 +133,7 @@ lr1110_wifi_status_t getWiFiNbResults( const void* context ) {
                 HAL_DBG_TRACE_ERROR( "Failed to read Wi-Fi networks\r\n" );
                 return LR1110_WIFI_STATUS_ERROR;
             }
-            HAL_DBG_TRACE_INFO( "WiFi %d: SSID: %s, ", i, wifi_scan_result.ssid_bytes );
-            HAL_DBG_TRACE_INFO( "MAC: %02x:%02x:%02x:%02x:%02x:%02x, RSSI: %d\r\n", wifi_scan_result.mac_address_3[0], wifi_scan_result.mac_address_3[1], wifi_scan_result.mac_address_3[2], wifi_scan_result.mac_address_3[3], wifi_scan_result.mac_address_3[4], wifi_scan_result.mac_address_3[5], wifi_scan_result.rssi );
+            HAL_DBG_TRACE_INFO( "WiFi %d: MAC: %02x:%02x:%02x:%02x:%02x:%02x, RSSI: %d, SSID: %s\r\n", i, wifi_scan_result.mac_address_3[0], wifi_scan_result.mac_address_3[1], wifi_scan_result.mac_address_3[2], wifi_scan_result.mac_address_3[3], wifi_scan_result.mac_address_3[4], wifi_scan_result.mac_address_3[5], wifi_scan_result.rssi, wifi_scan_result.ssid_bytes );
         }
         return LR1110_WIFI_STATUS_OK;
     } else {
@@ -143,7 +143,7 @@ lr1110_wifi_status_t getWiFiNbResults( const void* context ) {
 }
 
 lr1110_wifi_status_t scanWiFiNetworks( const void* context, const lr11xx_wifi_signal_type_scan_t signal_type, const lr11xx_wifi_channel_mask_t chan_mask, const lr11xx_wifi_mode_t acq_mode, const uint8_t nb_max_res, const uint8_t nb_scan_per_chan, const uint16_t timeout, const bool abort_on_timeout ) {
-    HAL_DBG_TRACE_INFO("Scanning Wi-Fi networks... ");
+    HAL_DBG_TRACE_INFO("Scanning WiFi networks... ");
 
     uint8_t cbuffer[LR1110_SCAN_WIFI_CMD_LENGTH];
 
@@ -172,7 +172,7 @@ lr1110_wifi_status_t scanWiFiNetworks( const void* context, const lr11xx_wifi_si
 }
 
 lr1110_wifi_status_t getWiFi_Version( const void* context ) {
-    HAL_DBG_TRACE_INFO("Getting Wi-Fi version... ");
+    HAL_DBG_TRACE_INFO("Getting WiFi firmware version... ");
 
     uint8_t cbuffer[LR1110_WIFI_VERSION_CMD_LENGTH];
     uint8_t rbuffer[LR1110_WIFI_VERSION_LENGTH] = { 0 };
@@ -183,11 +183,10 @@ lr1110_wifi_status_t getWiFi_Version( const void* context ) {
     turnOnLED(SNIFFING_LED_GPIO_Port, SNIFFING_LED_Pin);
     if (lr1110_spi_read( context, cbuffer, LR1110_WIFI_VERSION_CMD_LENGTH, rbuffer, LR1110_WIFI_VERSION_LENGTH ) == LR1110_SPI_STATUS_OK) {
         turnOffLED(SNIFFING_LED_GPIO_Port, SNIFFING_LED_Pin);
-        HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
-        HAL_DBG_TRACE_INFO("Wi-Fi firmware version: %d.%d (0x%X.0x%X)\r\n", rbuffer[0], rbuffer[1], rbuffer[0], rbuffer[1]);
+        HAL_DBG_TRACE_INFO_VALUE("%d.%d (0x%X.0x%X)\r\n", rbuffer[0], rbuffer[1], rbuffer[0], rbuffer[1]);
         return LR1110_WIFI_STATUS_OK;
     } else {
-        HAL_DBG_TRACE_ERROR("Failed to get Wi-Fi version\r\n");
+        HAL_DBG_TRACE_ERROR("Failed to get WiFi firmware version\r\n");
         return LR1110_WIFI_STATUS_ERROR;
     }
 }

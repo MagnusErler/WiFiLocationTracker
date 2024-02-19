@@ -485,23 +485,19 @@ void getLR1110_Bootloader_Version( const void* context ) {
   cbuffer[1] = ( uint8_t )( LR1110_GET_VERSION_OC >> 0 );
   
   if (lr1110_spi_read(context, cbuffer, LR1110_VERSION_CMD_LENGTH, rbuffer, LR1110_VERSION_LENGTH ) == LR1110_SPI_STATUS_OK) {
-    HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
-
-    HAL_DBG_TRACE_INFO("LR1110 bootloader hardware version: %d (0x%X)\r\n", rbuffer[0], rbuffer[0]);
+    HAL_DBG_TRACE_INFO_VALUE("HW: %d (0x%X), ", rbuffer[0], rbuffer[0]);
+    HAL_DBG_TRACE_INFO_VALUE("FW: %d.%d (0x%X.0x%X), ", rbuffer[2], rbuffer[3], rbuffer[2], rbuffer[3]);
     switch (rbuffer[1]) {
         case 1:
-            HAL_DBG_TRACE_INFO("LR1110 bootloader type: LR1110 (0x%X)\r\n", rbuffer[1]);
+            HAL_DBG_TRACE_INFO_VALUE("Bootloader type: LR1110 (0x%X)\r\n", rbuffer[1]);
             break;
         case 2:
-            HAL_DBG_TRACE_INFO("LR1110 bootloader type: LR1120 (0x%X)\r\n", rbuffer[1]);
+            HAL_DBG_TRACE_INFO_VALUE("Bootloader type: LR1120 (0x%X)\r\n", rbuffer[1]);
             break;
         case 3:
-            HAL_DBG_TRACE_INFO("LR1110 bootloader type: LR1121 (0x%X)\r\n", rbuffer[1]);
-            break;
-        default:
+            HAL_DBG_TRACE_INFO_VALUE("Bootloader type: LR1121 (0x%X)\r\n", rbuffer[1]);
             break;
     }
-    HAL_DBG_TRACE_INFO("LR1110 bootloader firmware version: %d.%d (0x%X.0x%X)\r\n", rbuffer[2], rbuffer[3], rbuffer[2], rbuffer[3]);
   } else {
     HAL_DBG_TRACE_ERROR("Failed to get LR1110 bootloader version\r\n");
   }
@@ -517,17 +513,15 @@ void getLR1110_Temperature( const void* context ) {
   cbuffer[1] = ( uint8_t )( LR1110_GET_TEMPERATURE >> 0 );
 
   if (lr1110_spi_read( context, cbuffer, LR1110_TEMPERATURE_CMD_LENGTH, rbuffer, LR1110_TEMPERATURE_LENGTH ) == LR1110_SPI_STATUS_OK) {
-    HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
 
     uint16_t temp_10_0 = ((rbuffer[0] << 8) | rbuffer[1]) & 0x7FF;
     float temperature = 25 + (1000/(-1.7)) * ((temp_10_0/2047.0) * 1.35 - 0.7295);
+    
+    HAL_DBG_TRACE_INFO_VALUE("%d.%d °C\r\n", (int)temperature, (int)((temperature - (int)temperature) * 100));
 
     if ((int)temperature > 50) {
-      HAL_DBG_TRACE_ERROR("LR1110 temperature is too high\r\n");
-      HAL_DBG_TRACE_ERROR("TCXO mode is maybe not set up correctly\r\n");
+      HAL_DBG_TRACE_ERROR("LR1110 temperature is too high. TCXO mode is maybe not set up correctly\r\n");
     }
-
-    HAL_DBG_TRACE_INFO("LR1110 temperature: %d.%d °C\r\n", (int)temperature, (int)((temperature - (int)temperature) * 100));
   } else {
     HAL_DBG_TRACE_ERROR("Failed to get LR1110 temperature\r\n");
   }
@@ -562,9 +556,7 @@ void getLR1110_Chip_EUI( const void* context ) {
   cbuffer[1] = ( uint8_t )( 0x0125 >> 0 );
 
   if (lr1110_spi_read( context, cbuffer, LR1110_CHIP_EUI_CMD_LENGTH, rbuffer, LR1110_CHIP_EUI_LENGTH ) == LR1110_SPI_STATUS_OK) {
-    HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
-
-    HAL_DBG_TRACE_INFO("Chip EUI: %02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X\r\n", rbuffer[0], rbuffer[1], rbuffer[2], rbuffer[3], rbuffer[4], rbuffer[5], rbuffer[6], rbuffer[7]);
+    HAL_DBG_TRACE_INFO_VALUE("%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X\r\n", rbuffer[0], rbuffer[1], rbuffer[2], rbuffer[3], rbuffer[4], rbuffer[5], rbuffer[6], rbuffer[7]);
   } else {
     HAL_DBG_TRACE_ERROR("Failed to get LR1110 Chip EUI\r\n");
   }
