@@ -22,14 +22,17 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
-#include "spi.h"
-
-#include "rtc.h"
-
-#include <stdlib.h>  // used for malloc function
-#include <string.h>  // used for strlen function
+#include <stdlib.h> // used for malloc function
+#include <string.h> // used for strlen function
 #include <stdarg.h> // used for va_list, va_start, va_end functions
 #include <stdio.h>  // used for vsprintf function
+
+#include "led.h"
+
+#include "spi.h"
+
+#include "wifi.h"
+
 
 /* USER CODE END Includes */
 
@@ -81,19 +84,12 @@ static void getLR1110_Bootloader_Version();
  */
 static void getLR1110_Temperature( const void* context);
 
-/*!
- * @brief Get LR1110 GNSS version
- *
- * @param [in] context Radio abstraction
- */
-static void getLR1110_GNSS_Version( const void* context);
-
-/*!
- * @brief Get LR1110 Wi-Fi version
- *
- * @param [in] context Radio abstraction
- */
-static void getLR1110_WiFi_Version( const void* context);
+// /*!
+//  * @brief Get LR1110 GNSS version
+//  *
+//  * @param [in] context Radio abstraction
+//  */
+// static void getLR1110_GNSS_Version( const void* context);
 
 /*!
  * @brief Get LR1110 Chip EUI
@@ -113,41 +109,6 @@ static void resetLR1110();
  * @param [in] context Radio abstraction
  */
 static void setupTCXO( const void* context );
-
-/*!
- * @brief Turn on LED
- *
- * @param [in] LED_GPIO_Port
- * @param [in] LED_Pin
- */
-void turnOnLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin);
-
-/*!
- * @brief Turn off LED
- *
- * @param [in] LED_GPIO_Port
- * @param [in] LED_Pin
- */
-void turnOffLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin);
-
-/*!
- * @brief Toggle LED
- *
- * @param [in] LED_GPIO_Port
- * @param [in] LED_Pin
- */
-void toggleLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin);
-
-/*!
- * @brief Blink LED
- *
- * @param [in] LED_GPIO_Port
- * @param [in] LED_Pin
- * @param [in] period
- * @param [in] count
- * @param [in] start
- */
-void blinkLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin, uint32_t period, uint8_t count, bool start);
 
 /* USER CODE END PFP */
 
@@ -176,18 +137,13 @@ int main(void)
   int a = 0;
 
   void* lr1110_context = (void*) malloc(sizeof(radio_t));
-  ((radio_t*)lr1110_context)->spi             = SPI1;
-  ((radio_t*)lr1110_context)->nss.port        = GPIOA;
-  ((radio_t*)lr1110_context)->nss.pin         = NSS_Pin;
-  ((radio_t*)lr1110_context)->reset.port      = GPIOA;
-  ((radio_t*)lr1110_context)->reset.pin       = RESET_Pin;
-  // ((radio_t*)lr1110_context)->event.irq1.port = GPIOB;
-  // ((radio_t*)lr1110_context)->event.irq1.pin = EVENT_Pin;
-  //((radio_t*)lr1110_context)->event.pin       = EVENT_Pin;
-  //((radio_t*)lr1110_context)->event.callback  = radio_event_callback;
-  ((radio_t*)lr1110_context)->event.context   = ( ( radio_t* ) lr1110_context );
-  ((radio_t*)lr1110_context)->busy.port       = GPIOB;
-  ((radio_t*)lr1110_context)->busy.pin        = BUSY_Pin;
+  ((radio_t*)lr1110_context)->spi         = SPI1;
+  ((radio_t*)lr1110_context)->nss.port    = NSS_GPIO_Port;
+  ((radio_t*)lr1110_context)->nss.pin     = NSS_Pin;
+  ((radio_t*)lr1110_context)->reset.port  = RESET_GPIO_Port;
+  ((radio_t*)lr1110_context)->reset.pin   = RESET_Pin;
+  ((radio_t*)lr1110_context)->busy.port   = BUSY_GPIO_Port;
+  ((radio_t*)lr1110_context)->busy.pin    = BUSY_Pin;
 
   /* USER CODE END Init */
 
@@ -205,17 +161,16 @@ int main(void)
   MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
 
-
-  HAL_DBG_TRACE_MSG("-----------------------------\r\n\r\n");
-  resetLR1110();
+  HAL_DBG_TRACE_MSG("\r\n\r\n-----------------------------------------------------\r\n\r\n");
+  resetLR1110(lr1110_context);
 
   blinkLED(GPIOC, RX_LED_Pin|TX_LED_Pin, 100, 5, true);
 
+  setupTCXO(lr1110_context);    // Seems like the first time LR1110 is called it returns with an error, so we call it twice
   setupTCXO(lr1110_context);
 
-  getLR1110_Bootloader_Version(lr1110_context);   // First call to this function is always returning 0.0 no matter if calling for bootloader og wifi version
   getLR1110_Bootloader_Version(lr1110_context);
-  getLR1110_WiFi_Version(lr1110_context);
+  getWiFi_Version(lr1110_context);
   getLR1110_Chip_EUI(lr1110_context);
 
   /* USER CODE END 2 */
@@ -223,19 +178,18 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1) {
-    
-    //turnOnLED(GPIOC, RX_LED_Pin);
-    //turnOffLED(GPIOC, RX_LED_Pin);
-    //toggleLED(GPIOC, RX_LED_Pin|TX_LED_Pin);
 
-    HAL_DBG_TRACE_PRINTF("2a = %d\r\n", a++);
+    HAL_DBG_TRACE_PRINTF("a = %d\r\n", a++);
 
     getLR1110_Temperature(lr1110_context);
+
+    scanWiFiNetworks(lr1110_context, LR11XX_WIFI_TYPE_SCAN_B_G_N, 0x3FFF, LR11XX_WIFI_SCAN_MODE_FULL_BEACON, 3, 3, 110, true);
+    getWiFiNbResults(lr1110_context);
 
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    HAL_Delay(1000);
+    HAL_Delay(5000);
   }
   /* USER CODE END 3 */
 }
@@ -454,6 +408,9 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, RESET_Pin|NSS_Pin, GPIO_PIN_RESET);
 
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(SNIFFING_LED_GPIO_Port, SNIFFING_LED_Pin, GPIO_PIN_RESET);
+
   /*Configure GPIO pin : B1_Pin */
   GPIO_InitStruct.Pin = B1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
@@ -486,6 +443,13 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(EVENT_GPIO_Port, &GPIO_InitStruct);
 
+  /*Configure GPIO pin : SNIFFING_LED_Pin */
+  GPIO_InitStruct.Pin = SNIFFING_LED_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(SNIFFING_LED_GPIO_Port, &GPIO_InitStruct);
+
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
 }
@@ -497,36 +461,15 @@ static void MX_GPIO_Init(void)
  * --- PRIVATE FUNCTIONS DEFINITION --------------------------------------------
  */
 
-void turnOnLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin) {
-  HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
-}
-
-void turnOffLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin) {
-  HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET);
-}
-
-void toggleLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin) {
-  HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-}
-
-void blinkLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin, uint32_t period, uint8_t count, bool start) {
-  if (start) {
-    for (uint8_t i = 0; i < count; i++) {
-      turnOnLED(LED_GPIO_Port, LED_Pin);
-      HAL_Delay(period);
-      turnOffLED(LED_GPIO_Port, LED_Pin);
-      HAL_Delay(period);
-    }
-  }
-}
-
-void hal_mcu_trace_print( const char* fmt, ... ) {
+void HAL_DBG_TRACE_PRINT( const char* fmt, ... ) {
   va_list argp;
   va_start( argp, fmt );
 
   char string[255];
   if( 0 < vsprintf( string, fmt, argp ) ) {
-      HAL_UART_Transmit(&huart2, (uint8_t*) string, (uint16_t) strlen((const char*) string), 0xffffff);
+      if (HAL_UART_Transmit(&huart2, (uint8_t*) string, (uint16_t) strlen((const char*) string), 1000) != HAL_OK) {
+          Error_Handler();
+      }
   }
 
   va_end( argp );
@@ -542,25 +485,21 @@ void getLR1110_Bootloader_Version( const void* context ) {
   cbuffer[1] = ( uint8_t )( LR1110_GET_VERSION_OC >> 0 );
   
   if (lr1110_spi_read(context, cbuffer, LR1110_VERSION_CMD_LENGTH, rbuffer, LR1110_VERSION_LENGTH ) == LR1110_SPI_STATUS_OK) {
-    HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
-
-    HAL_DBG_TRACE_INFO("LR1110 bootloader hardware version: %d\r\n", rbuffer[0]);
+    HAL_DBG_TRACE_INFO_VALUE("HW: %d (0x%X), ", rbuffer[0], rbuffer[0]);
+    HAL_DBG_TRACE_INFO_VALUE("FW: %d.%d (0x%X.0x%X), ", rbuffer[2], rbuffer[3], rbuffer[2], rbuffer[3]);
     switch (rbuffer[1]) {
         case 1:
-            HAL_DBG_TRACE_INFO("LR1110 bootloader type: LR1110\r\n");
+            HAL_DBG_TRACE_INFO_VALUE("Bootloader type: LR1110 (0x%X)\r\n", rbuffer[1]);
             break;
         case 2:
-            HAL_DBG_TRACE_INFO("LR1110 bootloader type: LR1120\r\n");
+            HAL_DBG_TRACE_INFO_VALUE("Bootloader type: LR1120 (0x%X)\r\n", rbuffer[1]);
             break;
         case 3:
-            HAL_DBG_TRACE_INFO("LR1110 bootloader type: LR1121\r\n");
-            break;
-        default:
+            HAL_DBG_TRACE_INFO_VALUE("Bootloader type: LR1121 (0x%X)\r\n", rbuffer[1]);
             break;
     }
-    HAL_DBG_TRACE_INFO("LR1110 bootloader firmware version: %d.%d\r\n", rbuffer[2], rbuffer[3]);
   } else {
-    HAL_DBG_TRACE_ERROR("\r\nFailed to get LR1110 bootloader version\r\n");
+    HAL_DBG_TRACE_ERROR("Failed to get LR1110 bootloader version\r\n");
   }
 }
 
@@ -574,58 +513,38 @@ void getLR1110_Temperature( const void* context ) {
   cbuffer[1] = ( uint8_t )( LR1110_GET_TEMPERATURE >> 0 );
 
   if (lr1110_spi_read( context, cbuffer, LR1110_TEMPERATURE_CMD_LENGTH, rbuffer, LR1110_TEMPERATURE_LENGTH ) == LR1110_SPI_STATUS_OK) {
-    HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
 
     uint16_t temp_10_0 = ((rbuffer[0] << 8) | rbuffer[1]) & 0x7FF;
     float temperature = 25 + (1000/(-1.7)) * ((temp_10_0/2047.0) * 1.35 - 0.7295);
+    
+    HAL_DBG_TRACE_INFO_VALUE("%d.%d °C\r\n", (int)temperature, (int)((temperature - (int)temperature) * 100));
 
     if ((int)temperature > 50) {
-      HAL_DBG_TRACE_ERROR("LR1110 temperature is too high\r\n");
-      HAL_DBG_TRACE_ERROR("TCXO mode is maybe not set up correctly\r\n");
+      HAL_DBG_TRACE_ERROR("LR1110 temperature is too high. TCXO mode is maybe not set up correctly\r\n");
     }
-
-    HAL_DBG_TRACE_INFO("LR1110 temperature: %d.%d °C\r\n", (int)temperature, (int)((temperature - (int)temperature) * 100));
   } else {
-    HAL_DBG_TRACE_ERROR("\r\nFailed to get LR1110 temperature\r\n");
+    HAL_DBG_TRACE_ERROR("Failed to get LR1110 temperature\r\n");
   }
 }
 
-void getLR1110_GNSS_Version( const void* context ) {
-  HAL_DBG_TRACE_INFO("Getting GNSS version... ");
+// void getLR1110_GNSS_Version( const void* context ) {
+//   HAL_DBG_TRACE_INFO("Getting GNSS version... ");
 
-  uint8_t cbuffer[LR1110_GNSS_VERSION_CMD_LENGTH];
-  uint8_t rbuffer[LR1110_GNSS_VERSION_LENGTH] = { 0 };
+//   uint8_t cbuffer[LR1110_GNSS_VERSION_CMD_LENGTH];
+//   uint8_t rbuffer[LR1110_GNSS_VERSION_LENGTH] = { 0 };
 
-  cbuffer[0] = LR1110_GROUP_ID_GNSS;
-  cbuffer[1] = LR1110_GNSS_READ_FW_VERSION_CMD;
+//   cbuffer[0] = LR1110_GROUP_ID_GNSS;
+//   cbuffer[1] = LR1110_GNSS_READ_FW_VERSION_CMD;
 
-  if (lr1110_spi_read( context, cbuffer, LR1110_GNSS_VERSION_CMD_LENGTH, rbuffer, LR1110_GNSS_VERSION_LENGTH ) == LR1110_SPI_STATUS_OK) {
-    HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+//   if (lr1110_spi_read( context, cbuffer, LR1110_GNSS_VERSION_CMD_LENGTH, rbuffer, LR1110_GNSS_VERSION_LENGTH ) == LR1110_SPI_STATUS_OK) {
+//     HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
 
-    HAL_DBG_TRACE_INFO("GNSS firmware version = %d\n\r", rbuffer[0]);
-    HAL_DBG_TRACE_INFO("GNSS almanac version = %d\n\r", rbuffer[1]);
-  } else {
-    HAL_DBG_TRACE_ERROR("Failed to get GNSS version\r\n");
-  }
-}
-
-void getLR1110_WiFi_Version( const void* context ) {
-  HAL_DBG_TRACE_INFO("Getting Wi-Fi version... ");
-
-  uint8_t cbuffer[LR1110_WIFI_VERSION_CMD_LENGTH];
-  uint8_t rbuffer[LR1110_WIFI_VERSION_LENGTH] = { 0 };
-
-  cbuffer[0] = LR1110_GROUP_ID_WIFI;
-  cbuffer[1] = LR1110_WIFI_GET_FIRMWARE_WIFI_VERSION_CMD;
-
-  if (lr1110_spi_read( context, cbuffer, LR1110_WIFI_VERSION_CMD_LENGTH, rbuffer, LR1110_WIFI_VERSION_LENGTH ) == LR1110_SPI_STATUS_OK) {
-    HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
-
-    HAL_DBG_TRACE_INFO("Wi-Fi firmware version: %d.%d\r\n", rbuffer[0], rbuffer[1]);
-  } else {
-    HAL_DBG_TRACE_ERROR("Failed to get Wi-Fi version\r\n");
-  }
-}
+//     HAL_DBG_TRACE_INFO("GNSS firmware version = %d\n\r", rbuffer[0]);
+//     HAL_DBG_TRACE_INFO("GNSS almanac version = %d\n\r", rbuffer[1]);
+//   } else {
+//     HAL_DBG_TRACE_ERROR("Failed to get GNSS version\r\n");
+//   }
+// }
 
 void getLR1110_Chip_EUI( const void* context ) {
   HAL_DBG_TRACE_INFO("Getting LR1110 Chip EUI... ");
@@ -633,24 +552,14 @@ void getLR1110_Chip_EUI( const void* context ) {
   uint8_t cbuffer[LR1110_CHIP_EUI_CMD_LENGTH];
   uint8_t rbuffer[LR1110_CHIP_EUI_LENGTH] = { 0 };
 
-  cbuffer[0] = ( uint8_t )( LR1110_GET_CHIP_EUI_OC >> 8 );
-  cbuffer[1] = ( uint8_t )( LR1110_GET_CHIP_EUI_OC >> 0 );
+  cbuffer[0] = ( uint8_t )( 0x0125 >> 8 );
+  cbuffer[1] = ( uint8_t )( 0x0125 >> 0 );
 
   if (lr1110_spi_read( context, cbuffer, LR1110_CHIP_EUI_CMD_LENGTH, rbuffer, LR1110_CHIP_EUI_LENGTH ) == LR1110_SPI_STATUS_OK) {
-    HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
-
-    HAL_DBG_TRACE_INFO("Chip EUI: %02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X\r\n", rbuffer[0], rbuffer[1], rbuffer[2], rbuffer[3], rbuffer[4], rbuffer[5], rbuffer[6], rbuffer[7]);
+    HAL_DBG_TRACE_INFO_VALUE("%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X\r\n", rbuffer[0], rbuffer[1], rbuffer[2], rbuffer[3], rbuffer[4], rbuffer[5], rbuffer[6], rbuffer[7]);
   } else {
     HAL_DBG_TRACE_ERROR("Failed to get LR1110 Chip EUI\r\n");
   }
-}
-
-void resetLR1110() {
-  HAL_DBG_TRACE_INFO("Resetting LR1110... ");
-  HAL_GPIO_WritePin(RESET_GPIO_Port, RESET_Pin, GPIO_PIN_RESET);
-  HAL_Delay(100);
-  HAL_GPIO_WritePin(RESET_GPIO_Port, RESET_Pin, GPIO_PIN_SET);
-  HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
 }
 
 void setupTCXO( const void* context ) {
@@ -658,22 +567,32 @@ void setupTCXO( const void* context ) {
 
   uint8_t cbuffer[LR1110_SET_TCXO_MODE_CMD_LENGTH];
 
-  cbuffer[0] = LR1110_GROUP_ID_SYSTEM;
-  cbuffer[1] = LR1110_SET_TCXO_MODE_CMD;
-
+  cbuffer[0] = ( uint8_t ) LR1110_GROUP_ID_SYSTEM;
+  cbuffer[1] = ( uint8_t ) LR1110_SET_TCXO_MODE_CMD;
   cbuffer[2] = ( uint8_t ) LR1110_TCXO_CTRL_1_8V;
 
-  const uint32_t timeout = ( 5 * 1000 ) / 30.52;  // BOARD_TCXO_WAKEUP_TIME = 5
+  const uint8_t timeout = ( 5 * 1000 ) / 30.52;  // BOARD_TCXO_WAKEUP_TIME = 5               // 163
 
   cbuffer[3] = ( uint8_t )( timeout >> 16 );
   cbuffer[4] = ( uint8_t )( timeout >> 8 );
   cbuffer[5] = ( uint8_t )( timeout >> 0 );
 
-  if (lr1110_spi_write( ((radio_t*)context)->spi, cbuffer, LR1110_SET_TCXO_MODE_CMD_LENGTH, 1000 ) == LR1110_SPI_STATUS_OK) {
+  if (lr1110_spi_write( context, cbuffer, LR1110_SET_TCXO_MODE_CMD_LENGTH ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
   } else {
     HAL_DBG_TRACE_ERROR("Failed to set TCXO mode\r\n");
   }
+}
+
+void resetLR1110( const void* context ) {
+
+  radio_t* radio = (radio_t*) context;
+
+  HAL_DBG_TRACE_INFO("Resetting LR1110... ");
+  HAL_GPIO_WritePin(radio->reset.port, radio->reset.pin, GPIO_PIN_RESET);
+  HAL_Delay(200);   // At least 100ms
+  HAL_GPIO_WritePin(radio->reset.port, radio->reset.pin, GPIO_PIN_SET);
+  HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
 }
 
 /* USER CODE END 4 */
