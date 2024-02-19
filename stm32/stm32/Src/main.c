@@ -74,15 +74,16 @@ static void MX_SPI1_Init(void);
  * @brief Get LR1110 version
  *
  * @param [in] context Radio abstraction
+ * 
  */
-static void getLR1110_Bootloader_Version();
+static void getLR1110_Bootloader_Version( const void* context );
 
 /*!
  * @brief Get LR1110 temperature
  *
  * @param [in] context Radio abstraction
  */
-static void getLR1110_Temperature( const void* context);
+static void getLR1110_Temperature( const void* context );
 
 // /*!
 //  * @brief Get LR1110 GNSS version
@@ -95,13 +96,17 @@ static void getLR1110_Temperature( const void* context);
  * @brief Get LR1110 Chip EUI
  *
  * @param [in] context Radio abstraction
+ * 
  */
-static void getLR1110_Chip_EUI( const void* context);
+static void getLR1110_Chip_EUI( const void* context );
 
 /*!
  * @brief Reset LR1110
+ *
+ * @param [in] context Radio abstraction
+ * 
  */
-static void resetLR1110();
+static void resetLR1110( const void* context );
 
 /*!
  * @brief Setup TCXO
@@ -170,8 +175,9 @@ int main(void)
   setupTCXO(lr1110_context);
 
   getLR1110_Bootloader_Version(lr1110_context);
-  getWiFi_Version(lr1110_context);
+  getWiFiVersion(lr1110_context);
   getLR1110_Chip_EUI(lr1110_context);
+  getLR1110_Temperature(lr1110_context);
 
   /* USER CODE END 2 */
 

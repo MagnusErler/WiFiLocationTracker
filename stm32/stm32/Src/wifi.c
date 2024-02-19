@@ -115,7 +115,7 @@ static lr1110_wifi_status_t getWiFiFullResults( const void* context, const uint8
 }
 
 lr1110_wifi_status_t getWiFiNbResults( const void* context ) {
-    HAL_DBG_TRACE_INFO("Getting number of Wi-Fi networks found... ");
+    HAL_DBG_TRACE_INFO("Getting number of WiFi networks found... ");
 
     uint8_t cbuffer[LR1110_NB_RESULTS_WIFI_CMD_LENGTH];
     uint8_t rbuffer[LR1110_NB_RESULTS_WIFI_LENGTH] = { 0 };
@@ -130,14 +130,14 @@ lr1110_wifi_status_t getWiFiNbResults( const void* context ) {
         lr11xx_wifi_extended_full_result_t wifi_scan_result;
         for( int i = 0; i < nb_results; i++ ) {
             if (getWiFiFullResults( context, i, 1, &wifi_scan_result ) != LR1110_WIFI_STATUS_OK) {
-                HAL_DBG_TRACE_ERROR( "Failed to read Wi-Fi networks\r\n" );
+                HAL_DBG_TRACE_ERROR( "Failed to read WiFi networks\r\n" );
                 return LR1110_WIFI_STATUS_ERROR;
             }
             HAL_DBG_TRACE_INFO( "WiFi %d: MAC: %02x:%02x:%02x:%02x:%02x:%02x, RSSI: %d, SSID: %s\r\n", i, wifi_scan_result.mac_address_3[0], wifi_scan_result.mac_address_3[1], wifi_scan_result.mac_address_3[2], wifi_scan_result.mac_address_3[3], wifi_scan_result.mac_address_3[4], wifi_scan_result.mac_address_3[5], wifi_scan_result.rssi, wifi_scan_result.ssid_bytes );
         }
         return LR1110_WIFI_STATUS_OK;
     } else {
-        HAL_DBG_TRACE_ERROR("Failed to get Wi-Fi networks count\r\n");
+        HAL_DBG_TRACE_ERROR("Failed to get WiFi networks count\r\n");
         return LR1110_WIFI_STATUS_ERROR;
     }
 }
@@ -166,12 +166,12 @@ lr1110_wifi_status_t scanWiFiNetworks( const void* context, const lr11xx_wifi_si
 
         return LR1110_WIFI_STATUS_OK;
     } else {
-        HAL_DBG_TRACE_ERROR("Failed to scan Wi-Fi networks\r\n");
+        HAL_DBG_TRACE_ERROR("Failed to scan WiFi networks\r\n");
         return LR1110_WIFI_STATUS_ERROR;
     }
 }
 
-lr1110_wifi_status_t getWiFi_Version( const void* context ) {
+lr1110_wifi_status_t getWiFiVersion( const void* context ) {
     HAL_DBG_TRACE_INFO("Getting WiFi firmware version... ");
 
     uint8_t cbuffer[LR1110_WIFI_VERSION_CMD_LENGTH];

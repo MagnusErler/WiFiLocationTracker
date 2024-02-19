@@ -6,17 +6,17 @@
 
 
 /*!
- * @brief Type to store a Wi-Fi datarate info byte
+ * @brief Type to store a WiFi datarate info byte
  */
 typedef uint8_t lr11xx_wifi_datarate_info_byte_t;
 
 /*!
- * @brief Type to store a Wi-Fi channel info byte
+ * @brief Type to store a WiFi channel info byte
  */
 typedef uint8_t lr11xx_wifi_channel_info_byte_t;
 
 /*!
- * @brief Type to store a Wi-Fi frame type info byte
+ * @brief Type to store a WiFi frame type info byte
  */
 typedef uint8_t lr11xx_wifi_frame_type_info_byte_t;
 
@@ -91,7 +91,7 @@ typedef struct
     uint16_t seq_control;                                 //!< Sequence Control value
     uint8_t  ssid_bytes[32];  //!< Service Set
                                                           //!< IDentifier
-    lr11xx_wifi_channel_t          current_channel;       //!< Current channel indicated in the Wi-Fi frame
+    lr11xx_wifi_channel_t          current_channel;       //!< Current channel indicated in the WiFi frame
     lr11xx_wifi_country_code_str_t country_code;          //!< Country Code
     uint8_t                        io_regulation;         //!< Input Output Regulation
     lr11xx_wifi_fcs_info_byte_t    fcs_check_byte;        //!< Frame Check Sequence info
@@ -132,7 +132,7 @@ typedef enum lr1110_wifi_status_e {
 
 
 /*!
- * @brief Scan Wi-Fi networks
+ * @brief Scan WiFi networks
  *
  * @param [in] context Radio abstraction
  * @param [in] signal_type Type of signal to scan
@@ -150,16 +150,16 @@ lr1110_wifi_status_t scanWiFiNetworks( const void* context, const lr11xx_wifi_si
                                     const uint8_t nb_max_res, const uint8_t nb_scan_per_chan, const uint16_t timeout, const bool abort_on_timeout );
 
 /*!
- * @brief Get LR1110 Wi-Fi version
+ * @brief Get LR1110 WiFi version
  *
  * @param [in] context Radio abstraction
  * 
  * @return Operation status
  */
-lr1110_wifi_status_t getWiFi_Version( const void* context);
+lr1110_wifi_status_t getWiFiVersion( const void* context);
 
 /*!
- * @brief Get the number of Wi-Fi results
+ * @brief Get the number of WiFi results
  *
  * @param [in] context Radio abstraction
  * 

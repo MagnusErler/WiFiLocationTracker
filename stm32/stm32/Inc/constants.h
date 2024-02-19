@@ -59,10 +59,10 @@ typedef enum {
 
 typedef enum
 {
-    LR11XX_WIFI_TYPE_SCAN_B     = 0x01,  //!< Wi-Fi B
-    LR11XX_WIFI_TYPE_SCAN_G     = 0x02,  //!< Wi-Fi G
-    LR11XX_WIFI_TYPE_SCAN_N     = 0x03,  //!< Wi-Fi N
-    LR11XX_WIFI_TYPE_SCAN_B_G_N = 0x04,  //!< Wi-Fi B and Wi-Fi G/N
+    LR11XX_WIFI_TYPE_SCAN_B     = 0x01,  //!< WiFi B
+    LR11XX_WIFI_TYPE_SCAN_G     = 0x02,  //!< WiFi G
+    LR11XX_WIFI_TYPE_SCAN_N     = 0x03,  //!< WiFi N
+    LR11XX_WIFI_TYPE_SCAN_B_G_N = 0x04,  //!< WiFi B and WiFi G/N
 } lr11xx_wifi_signal_type_scan_t;
 
 typedef enum
@@ -82,7 +82,7 @@ typedef enum
 
 typedef enum {
     LR1110_GROUP_ID_SYSTEM = 0x01,  //!< Group ID for system commands
-    LR1110_GROUP_ID_WIFI   = 0x03,  //!< Group ID for Wi-Fi commands
+    LR1110_GROUP_ID_WIFI   = 0x03,  //!< Group ID for WiFi commands
     LR1110_GROUP_ID_GNSS   = 0x04,  //!< Group ID for GNSS commands
     LR1110_GROUP_ID_MODEM  = 0x06,  //!< Group ID for modem commands
 } lr1110_api_group_id_t;

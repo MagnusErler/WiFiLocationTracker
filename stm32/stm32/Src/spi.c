@@ -133,7 +133,7 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
             HAL_DBG_TRACE_PRINTF("\r\nChip mode: TX\r\n");
             break;
         case 6:
-            HAL_DBG_TRACE_PRINTF("\r\nChip mode: Wi-Fi or GNSS geolocation\r\n");
+            HAL_DBG_TRACE_PRINTF("\r\nChip mode: WiFi or GNSS geolocation\r\n");
             break;
     }
     #endif
@@ -256,7 +256,7 @@ lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffe
 
     // Wait for BUSY to become LOW -> LR1110 is ready for a new command
     if (_waitForBusyState( GPIO_PIN_RESET, 1000 ) != LR1110_SPI_STATUS_OK) {
-        return LR1110_SPI_STATUS_ERROR;
+        return LR1110_SPI_STATUS_TIMEOUT;
     }
 
     // Start of SPI transaction
@@ -269,7 +269,7 @@ lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffe
 
     // Wait for BUSY to become LOW -> LR1110 is ready for a new command
     if (_waitForBusyState( GPIO_PIN_RESET, 1000 ) != LR1110_SPI_STATUS_OK) {
-        return LR1110_SPI_STATUS_ERROR;
+        return LR1110_SPI_STATUS_TIMEOUT;
     }
     
     return status;
