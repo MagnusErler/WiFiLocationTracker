@@ -552,10 +552,8 @@ void getLR1110_Temperature( const void* context ) {
 //   cbuffer[1] = ( uint8_t )( LR1110_GET_GNSS_VERSION_CMD>> 0 );
 
 //   if (lr1110_spi_read( context, cbuffer, LR1110_GET_GNSS_VERSION_CMD_LENGTH, rbuffer, LR1110_GET_GNSS_VERSION_LENGTH ) == LR1110_SPI_STATUS_OK) {
-//     HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
-
-//     HAL_DBG_TRACE_INFO("GNSS firmware version = %d\n\r", rbuffer[0]);
-//     HAL_DBG_TRACE_INFO("GNSS almanac version = %d\n\r", rbuffer[1]);
+//     HAL_DBG_TRACE_INFO_VALUE("firmware version: %d, ", rbuffer[0]);
+//     HAL_DBG_TRACE_INFO_VALUE("almanac version: %d\n\r", rbuffer[1]);
 //   } else {
 //     HAL_DBG_TRACE_ERROR("Failed to get GNSS version\r\n");
 //   }
