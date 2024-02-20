@@ -77,10 +77,10 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
     HAL_DBG_TRACE_PRINTF("\r\n---Stat1 Results---\r\n");
     switch ( rbuffer[0] & 0x01 ) {
         case 0:
-            HAL_DBG_TRACE_PRINTF("\r\nNo interrupt active\r\n");
+            HAL_DBG_TRACE_PRINTF("No interrupt active\r\n");
             break;
         case 1:
-            HAL_DBG_TRACE_PRINTF("\r\nAt least 1 interrupt active\r\n");
+            HAL_DBG_TRACE_PRINTF("At least 1 interrupt active\r\n");
             break;
     }
     #endif
@@ -94,22 +94,22 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
             break;
         #ifdef DEBUG
         case 2:
-            HAL_DBG_TRACE_PRINTF("\r\nCMD_OK: The last command was processed successfully\r\n");
+            HAL_DBG_TRACE_PRINTF("CMD_OK: The last command was processed successfully\r\n");
             break;
         case 3:
-            HAL_DBG_TRACE_PRINTF("\r\nCMD_DAT: The last command was successfully processed, and data is currently transmitted instead of IRQ status\r\n");
+            HAL_DBG_TRACE_PRINTF("CMD_DAT: The last command was successfully processed, and data is currently transmitted instead of IRQ status\r\n");
             break;
         #endif
     }
 
     #ifdef DEBUG
-    HAL_DBG_TRACE_PRINTF("\r\n---Stat2 Results---");
+    HAL_DBG_TRACE_PRINTF("\r\n---Stat2 Results---\r\n");
     switch( ( rbuffer[1] & 0x0F ) >> 4 ) {
         case 0:
-            HAL_DBG_TRACE_PRINTF("\r\nBootloader: currently executes from boot-loader\r\n");
+            HAL_DBG_TRACE_PRINTF("Bootloader: currently executes from boot-loader\r\n");
             break;
         case 1:
-            HAL_DBG_TRACE_PRINTF("\r\nBootloader: currently executes from flash. The ResetStatus field is cleared on the first GetStatus() command after a reset. It is not cleared by any other command\r\n");
+            HAL_DBG_TRACE_PRINTF("Bootloader: currently executes from flash. The ResetStatus field is cleared on the first GetStatus() command after a reset. It is not cleared by any other command\r\n");
             break;
     }
     #endif
@@ -117,25 +117,25 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
     #ifdef DEBUG
     switch( ( rbuffer[1] & 0x0E ) >> 1 ) {
         case 0:
-            HAL_DBG_TRACE_PRINTF("\r\nChip mode: Sleep\r\n");
+            HAL_DBG_TRACE_PRINTF("Chip mode: Sleep\r\n");
             break;
         case 1:
-            HAL_DBG_TRACE_PRINTF("\r\nChip mode: Standby with RC Oscillator\r\n");
+            HAL_DBG_TRACE_PRINTF("Chip mode: Standby with RC Oscillator\r\n");
             break;
         case 2:
-            HAL_DBG_TRACE_PRINTF("\r\nChip mode: Standby with external Oscillator\r\n");
+            HAL_DBG_TRACE_PRINTF("Chip mode: Standby with external Oscillator\r\n");
             break;
         case 3:
-            HAL_DBG_TRACE_PRINTF("\r\nChip mode: FS\r\n");
+            HAL_DBG_TRACE_PRINTF("Chip mode: FS\r\n");
             break;
         case 4:
-            HAL_DBG_TRACE_PRINTF("\r\nChip mode: RX\r\n");
+            HAL_DBG_TRACE_PRINTF("Chip mode: RX\r\n");
             break;
         case 5:
-            HAL_DBG_TRACE_PRINTF("\r\nChip mode: TX\r\n");
+            HAL_DBG_TRACE_PRINTF("Chip mode: TX\r\n");
             break;
         case 6:
-            HAL_DBG_TRACE_PRINTF("\r\nChip mode: WiFi or GNSS geolocation\r\n");
+            HAL_DBG_TRACE_PRINTF("Chip mode: WiFi or GNSS geolocation\r\n");
             break;
     }
     #endif
@@ -143,30 +143,31 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
     #ifdef DEBUG
     switch( rbuffer[1] & 0x0F ) {
         case 0:
-            HAL_DBG_TRACE_PRINTF("\r\nReset status: Cleared (no active reset)\r\n");
+            HAL_DBG_TRACE_PRINTF("Reset status: Cleared (no active reset)\r\n");
             break;
         case 1:
-            HAL_DBG_TRACE_PRINTF("\r\nReset status: Analog reset (Power On Reset, Brown-Out Reset)\r\n");
+            HAL_DBG_TRACE_PRINTF("Reset status: Analog reset (Power On Reset, Brown-Out Reset)\r\n");
             break;
         case 2:
-            HAL_DBG_TRACE_PRINTF("\r\neset status: External reset (NRESET pin)\r\n");
+            HAL_DBG_TRACE_PRINTF("eset status: External reset (NRESET pin)\r\n");
             break;
         case 3:
-            HAL_DBG_TRACE_PRINTF("\r\nReset status: System reset\r\n");
+            HAL_DBG_TRACE_PRINTF("Reset status: System reset\r\n");
             break;
         case 4:
-            HAL_DBG_TRACE_PRINTF("\r\nReset status: Watchdog reset\r\n");
+            HAL_DBG_TRACE_PRINTF("Reset status: Watchdog reset\r\n");
             break;
         case 5:
-            HAL_DBG_TRACE_PRINTF("\r\nReset status: Wakeup NSS toggling\r\n");
+            HAL_DBG_TRACE_PRINTF("Reset status: Wakeup NSS toggling\r\n");
             break;
         case 6:
-            HAL_DBG_TRACE_PRINTF("\r\nReset status: RTC restart\r\n");
+            HAL_DBG_TRACE_PRINTF("Reset status: RTC restart\r\n");
             break;
     }
     #endif
 
     #ifdef DEBUG
+    HAL_DBG_TRACE_PRINTF("\r\n---IRQ Status---\r\n");
     HAL_DBG_TRACE_PRINTF("IRQStat(31:24): 0x%X\r\n", rbuffer[2]);
     HAL_DBG_TRACE_PRINTF("IRQStat(23:16): 0x%X\r\n", rbuffer[3]);
     HAL_DBG_TRACE_PRINTF("IRQStat(15:8): 0x%X\r\n", rbuffer[4]);
