@@ -28,7 +28,7 @@ void setup() {
     while (WiFi.status() != WL_CONNECTED) {
         Serial.print("Attempting to connect to WPA SSID: ");
         Serial.println(WIFI_SSID);
-        // wait 5 seconds for connection:
+
         Serial.print("Status = ");
         Serial.println(WiFi.status());
         delay(500);
@@ -52,5 +52,4 @@ void loop() {
   Serial.println("Accuracy: " + String(loc.accuracy));
 
   delay(10000);
-
 }
