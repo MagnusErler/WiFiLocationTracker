@@ -2,6 +2,22 @@
 #include <stdbool.h>
 
 
+// LENGTHS FOR COMMANDS
+#define LR1110_CMD_NO_PARAM_LENGTH                  2
+#define LR1110_GET_WIFI_VERSION_CMD_LENGTH          LR1110_CMD_NO_PARAM_LENGTH
+#define LR1110_GET_NB_RESULTS_WIFI_CMD_LENGTH       LR1110_CMD_NO_PARAM_LENGTH
+#define LR1110_SCAN_WIFI_CMD_LENGTH                 LR1110_CMD_NO_PARAM_LENGTH + 9
+
+// LENGTHS FOR RESPONSES
+#define LR1110_NO_PARAM_LENGTH                      2
+#define LR1110_GET_WIFI_VERSION_LENGTH              LR1110_NO_PARAM_LENGTH
+#define LR1110_GET_NB_RESULTS_WIFI_LENGTH           1
+
+// LR1110 WIFI COMMANDS
+#define LR1110_WIFI_GET_FIRMWARE_WIFI_VERSION_CMD   0x0320
+#define LR1110_WIFI_GET_NUMBER_OF_RESULTS_CMD       0x0305
+#define LR1110_WIFI_SCAN_WIFI_NETWORKS_CMD          0x0300
+
 /*!
  * @brief Type to store a WiFi datarate info byte
  */
@@ -111,12 +127,6 @@ typedef enum
     LR11XX_WIFI_RESULT_FORMAT_EXTENDED_FULL,  //!< Extended full result format: @ref lr11xx_wifi_extended_full_result_t
 } lr11xx_wifi_result_format_t;
 
-typedef enum lr11xx_hal_status_e1
-{
-    LR11XX_HAL_STATUS_OK1    = 0,
-    LR11XX_HAL_STATUS_ERROR1 = 3,
-} lr11xx_hal_status_t;
-
 typedef uint16_t lr11xx_wifi_channel_mask_t;
 
 /*!
@@ -126,17 +136,6 @@ typedef enum lr1110_wifi_status_e {
     LR1110_WIFI_STATUS_OK        = 0x00,  //!< WIFI operation executed successfuly
     LR1110_WIFI_STATUS_ERROR     = 0xFF,  //!< WIFI operation failed
 } lr1110_wifi_status_t;
-
-typedef enum {
-    LR1110_WIFI_RESET_CUMUL_TIMING_PHASE_CMD       = 0x07,
-    LR1110_WIFI_READ_CUMUL_TIMING_PHASE_CMD        = 0x08,
-    LR1110_WIFI_CONFIG_TIMESTAMP_AP_PHONE_CMD      = 0x0B,
-    LR1110_WIFI_GET_FIRMWARE_WIFI_VERSION_CMD      = 0x20,
-    LR1110_WIFI_PASSIVE_SCAN_CMD                   = 0x30,
-    LR1110_WIFI_PASSIVE_SCAN_TIME_LIMIT_CMD        = 0x31,
-    LR1110_WIFI_SEARCH_COUNTRY_CODE_CMD            = 0x32,
-    LR1110_WIFI_SEARCH_COUNTRY_CODE_TIME_LIMIT_CMD = 0x33,
-} lr1110_api_command_wifi_t;
 
 typedef enum {
     LR11XX_WIFI_TYPE_SCAN_B     = 0x01,  //!< WiFi B

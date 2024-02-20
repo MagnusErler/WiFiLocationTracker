@@ -494,13 +494,13 @@ void HAL_DBG_TRACE_PRINT( const char* fmt, ... ) {
 void getLR1110_Bootloader_Version( const void* context ) {
   HAL_DBG_TRACE_INFO("Getting LR1110 version... ");
 
-  uint8_t cbuffer[LR1110_VERSION_CMD_LENGTH];
-  uint8_t rbuffer[LR1110_VERSION_LENGTH] = { 0 };
+  uint8_t cbuffer[LR1110_GET_VERSION_CMD_LENGTH];
+  uint8_t rbuffer[LR1110_GET_VERSION_LENGTH] = { 0 };
 
-  cbuffer[0] = ( uint8_t )( LR1110_GET_VERSION_OC >> 8 );
-  cbuffer[1] = ( uint8_t )( LR1110_GET_VERSION_OC >> 0 );
+  cbuffer[0] = ( uint8_t )( LR1110_GET_VERSION_CMD>> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_GET_VERSION_CMD>> 0 );
   
-  if (lr1110_spi_read(context, cbuffer, LR1110_VERSION_CMD_LENGTH, rbuffer, LR1110_VERSION_LENGTH ) == LR1110_SPI_STATUS_OK) {
+  if (lr1110_spi_read(context, cbuffer, LR1110_GET_VERSION_CMD_LENGTH, rbuffer, LR1110_GET_VERSION_LENGTH ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_INFO_VALUE("HW: %d (0x%X), ", rbuffer[0], rbuffer[0]);
     HAL_DBG_TRACE_INFO_VALUE("FW: %d.%d (0x%X.0x%X), ", rbuffer[2], rbuffer[3], rbuffer[2], rbuffer[3]);
     switch (rbuffer[1]) {
@@ -522,13 +522,13 @@ void getLR1110_Bootloader_Version( const void* context ) {
 void getLR1110_Temperature( const void* context ) {
   HAL_DBG_TRACE_INFO("Getting LR1110 temperature... ");
 
-  uint8_t cbuffer[LR1110_TEMPERATURE_CMD_LENGTH];
-  uint8_t rbuffer[LR1110_TEMPERATURE_LENGTH] = { 0 };
+  uint8_t cbuffer[LR1110_GET_TEMPERATURE_CMD_LENGTH];
+  uint8_t rbuffer[LR1110_GET_TEMPERATURE_LENGTH] = { 0 };
 
-  cbuffer[0] = ( uint8_t )( LR1110_GET_TEMPERATURE >> 8 );
-  cbuffer[1] = ( uint8_t )( LR1110_GET_TEMPERATURE >> 0 );
+  cbuffer[0] = ( uint8_t )( LR1110_GET_TEMPERATURE_CMD>> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_GET_TEMPERATURE_CMD>> 0 );
 
-  if (lr1110_spi_read( context, cbuffer, LR1110_TEMPERATURE_CMD_LENGTH, rbuffer, LR1110_TEMPERATURE_LENGTH ) == LR1110_SPI_STATUS_OK) {
+  if (lr1110_spi_read( context, cbuffer, LR1110_GET_TEMPERATURE_CMD_LENGTH, rbuffer, LR1110_GET_TEMPERATURE_LENGTH ) == LR1110_SPI_STATUS_OK) {
 
     uint16_t temp_10_0 = ((rbuffer[0] << 8) | rbuffer[1]) & 0x7FF;
     float temperature = 25 + (1000/(-1.7)) * ((temp_10_0/2047.0) * 1.35 - 0.7295);
@@ -545,13 +545,13 @@ void getLR1110_Temperature( const void* context ) {
 // void getLR1110_GNSS_Version( const void* context ) {
 //   HAL_DBG_TRACE_INFO("Getting GNSS version... ");
 
-//   uint8_t cbuffer[LR1110_GNSS_VERSION_CMD_LENGTH];
-//   uint8_t rbuffer[LR1110_GNSS_VERSION_LENGTH] = { 0 };
+//   uint8_t cbuffer[LR1110_GET_GNSS_VERSION_CMD_LENGTH];
+//   uint8_t rbuffer[LR1110_GET_GNSS_VERSION_LENGTH] = { 0 };
 
-//   cbuffer[0] = LR1110_GROUP_ID_GNSS;
-//   cbuffer[1] = LR1110_GNSS_READ_FW_VERSION_CMD;
+//   cbuffer[0] = ( uint8_t )( LR1110_GET_GNSS_VERSION_CMD>> 8 );
+//   cbuffer[1] = ( uint8_t )( LR1110_GET_GNSS_VERSION_CMD>> 0 );
 
-//   if (lr1110_spi_read( context, cbuffer, LR1110_GNSS_VERSION_CMD_LENGTH, rbuffer, LR1110_GNSS_VERSION_LENGTH ) == LR1110_SPI_STATUS_OK) {
+//   if (lr1110_spi_read( context, cbuffer, LR1110_GET_GNSS_VERSION_CMD_LENGTH, rbuffer, LR1110_GET_GNSS_VERSION_LENGTH ) == LR1110_SPI_STATUS_OK) {
 //     HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
 
 //     HAL_DBG_TRACE_INFO("GNSS firmware version = %d\n\r", rbuffer[0]);
@@ -564,13 +564,13 @@ void getLR1110_Temperature( const void* context ) {
 void getLR1110_Chip_EUI( const void* context ) {
   HAL_DBG_TRACE_INFO("Getting LR1110 Chip EUI... ");
 
-  uint8_t cbuffer[LR1110_CHIP_EUI_CMD_LENGTH];
-  uint8_t rbuffer[LR1110_CHIP_EUI_LENGTH] = { 0 };
+  uint8_t cbuffer[LR1110_GET_CHIP_EUI_CMD_LENGTH];
+  uint8_t rbuffer[LR1110_GET_CHIP_EUI_LENGTH] = { 0 };
 
-  cbuffer[0] = ( uint8_t ) 0x01;
-  cbuffer[1] = ( uint8_t ) 0x25;
+  cbuffer[0] = ( uint8_t )( LR1110_GET_CHIP_EUI_CMD>> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_GET_CHIP_EUI_CMD>> 0 );
 
-  if (lr1110_spi_read( context, cbuffer, LR1110_CHIP_EUI_CMD_LENGTH, rbuffer, LR1110_CHIP_EUI_LENGTH ) == LR1110_SPI_STATUS_OK) {
+  if (lr1110_spi_read( context, cbuffer, LR1110_GET_CHIP_EUI_CMD_LENGTH, rbuffer, LR1110_GET_CHIP_EUI_LENGTH ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_INFO_VALUE("%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X\r\n", rbuffer[0], rbuffer[1], rbuffer[2], rbuffer[3], rbuffer[4], rbuffer[5], rbuffer[6], rbuffer[7]);
   } else {
     HAL_DBG_TRACE_ERROR("Failed to get LR1110 Chip EUI\r\n");
@@ -580,13 +580,13 @@ void getLR1110_Chip_EUI( const void* context ) {
 void getLR1110_Battery_Voltage( const void* context ) {
   HAL_DBG_TRACE_INFO("Getting LR1110 battery voltage... ");
 
-  uint8_t cbuffer[LR1110_BATTERY_VOLTAGE_CMD_LENGTH];
-  uint8_t rbuffer[LR1110_BATTERY_VOLTAGE_LENGTH] = { 0 };
+  uint8_t cbuffer[LR1110_GET_BATTERY_VOLTAGE_CMD_LENGTH];
+  uint8_t rbuffer[LR1110_GET_BATTERY_VOLTAGE_LENGTH] = { 0 };
 
-  cbuffer[0] = ( uint8_t ) 0x01;
-  cbuffer[1] = ( uint8_t ) 0x19;
+  cbuffer[0] = ( uint8_t )( LR1110_GET_BATTERY_VOLTAGE_CMD>> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_GET_BATTERY_VOLTAGE_CMD>> 0 );
 
-  if (lr1110_spi_read( context, cbuffer, LR1110_BATTERY_VOLTAGE_CMD_LENGTH, rbuffer, LR1110_BATTERY_VOLTAGE_LENGTH ) == LR1110_SPI_STATUS_OK) {
+  if (lr1110_spi_read( context, cbuffer, LR1110_GET_BATTERY_VOLTAGE_CMD_LENGTH, rbuffer, LR1110_GET_BATTERY_VOLTAGE_LENGTH ) == LR1110_SPI_STATUS_OK) {
 
     float batteryVoltage = (((5 * rbuffer[0])/255.0) - 1) * 1.35;
     HAL_DBG_TRACE_INFO_VALUE("%d.%d V\r\n", (uint8_t)batteryVoltage, (uint8_t)((batteryVoltage - (uint8_t)batteryVoltage) * 100));
@@ -600,8 +600,8 @@ void setupLR1110_TCXO( const void* context ) {
 
   uint8_t cbuffer[LR1110_SET_TCXO_MODE_CMD_LENGTH];
 
-  cbuffer[0] = ( uint8_t ) LR1110_GROUP_ID_SYSTEM;
-  cbuffer[1] = ( uint8_t ) LR1110_SET_TCXO_MODE_CMD;
+  cbuffer[0] = ( uint8_t )( LR1110_SET_TCXO_MODE_CMD>> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_SET_TCXO_MODE_CMD>> 0 );
   cbuffer[2] = ( uint8_t ) LR1110_TCXO_CTRL_1_8V;
 
   const uint8_t timeout = ( 5 * 1000 ) / 30.52;  // BOARD_TCXO_WAKEUP_TIME = 5               // 163

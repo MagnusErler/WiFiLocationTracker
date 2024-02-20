@@ -117,13 +117,13 @@ static lr1110_wifi_status_t getWiFiFullResults( const void* context, const uint8
 lr1110_wifi_status_t getLR1110_WiFi_Number_of_Results( const void* context ) {
     HAL_DBG_TRACE_INFO("Getting number of WiFi networks found... ");
 
-    uint8_t cbuffer[LR1110_NB_RESULTS_WIFI_CMD_LENGTH];
-    uint8_t rbuffer[LR1110_NB_RESULTS_WIFI_LENGTH] = { 0 };
+    uint8_t cbuffer[LR1110_GET_NB_RESULTS_WIFI_CMD_LENGTH];
+    uint8_t rbuffer[LR1110_GET_NB_RESULTS_WIFI_LENGTH] = { 0 };
 
-    cbuffer[0] = ( uint8_t ) LR1110_GROUP_ID_WIFI;
-    cbuffer[1] = ( uint8_t ) 0x05;
+    cbuffer[0] = ( uint8_t )( LR1110_WIFI_GET_NUMBER_OF_RESULTS_CMD >> 8 );
+    cbuffer[1] = ( uint8_t )( LR1110_WIFI_GET_NUMBER_OF_RESULTS_CMD >> 0 );
 
-    if ( lr1110_spi_read( context, cbuffer, LR1110_NB_RESULTS_WIFI_CMD_LENGTH, rbuffer, LR1110_NB_RESULTS_WIFI_LENGTH ) == LR1110_SPI_STATUS_OK ) {
+    if ( lr1110_spi_read( context, cbuffer, LR1110_GET_NB_RESULTS_WIFI_CMD_LENGTH, rbuffer, LR1110_GET_NB_RESULTS_WIFI_LENGTH ) == LR1110_SPI_STATUS_OK ) {
         uint8_t nb_results = rbuffer[0];
         HAL_DBG_TRACE_INFO_VALUE("%d\r\n", nb_results);
 
@@ -158,8 +158,8 @@ lr1110_wifi_status_t scanLR1110_WiFi_Networks( const void* context, const lr11xx
 
     uint8_t cbuffer[LR1110_SCAN_WIFI_CMD_LENGTH];
 
-    cbuffer[0] = ( uint8_t ) LR1110_GROUP_ID_WIFI;
-    cbuffer[1] = ( uint8_t ) 0x00;
+    cbuffer[0] = ( uint8_t )( LR1110_WIFI_SCAN_WIFI_NETWORKS_CMD >> 8 );
+    cbuffer[1] = ( uint8_t )( LR1110_WIFI_SCAN_WIFI_NETWORKS_CMD >> 0 );
     cbuffer[2] = ( uint8_t ) signal_type;
     cbuffer[3] = ( uint8_t ) ( chan_mask >> 8 );
     cbuffer[4] = ( uint8_t ) ( chan_mask >> 0 );
@@ -188,13 +188,13 @@ lr1110_wifi_status_t scanLR1110_WiFi_Networks( const void* context, const lr11xx
 lr1110_wifi_status_t getLR1110_WiFi_Version( const void* context ) {
     HAL_DBG_TRACE_INFO("Getting WiFi firmware version... ");
 
-    uint8_t cbuffer[LR1110_WIFI_VERSION_CMD_LENGTH];
-    uint8_t rbuffer[LR1110_WIFI_VERSION_LENGTH] = { 0 };
+    uint8_t cbuffer[LR1110_GET_WIFI_VERSION_CMD_LENGTH];
+    uint8_t rbuffer[LR1110_GET_WIFI_VERSION_LENGTH] = { 0 };
 
-    cbuffer[0] = ( uint8_t ) LR1110_GROUP_ID_WIFI;
-    cbuffer[1] = ( uint8_t ) LR1110_WIFI_GET_FIRMWARE_WIFI_VERSION_CMD;
+    cbuffer[0] = ( uint8_t )( LR1110_WIFI_GET_FIRMWARE_WIFI_VERSION_CMD >> 8 );
+    cbuffer[1] = ( uint8_t )( LR1110_WIFI_GET_FIRMWARE_WIFI_VERSION_CMD >> 0 );
 
-    if (lr1110_spi_read( context, cbuffer, LR1110_WIFI_VERSION_CMD_LENGTH, rbuffer, LR1110_WIFI_VERSION_LENGTH ) == LR1110_SPI_STATUS_OK) {
+    if (lr1110_spi_read( context, cbuffer, LR1110_GET_WIFI_VERSION_CMD_LENGTH, rbuffer, LR1110_GET_WIFI_VERSION_LENGTH ) == LR1110_SPI_STATUS_OK) {
         HAL_DBG_TRACE_INFO_VALUE("%d.%d (0x%X.0x%X)\r\n", rbuffer[0], rbuffer[1], rbuffer[0], rbuffer[1]);
         return LR1110_WIFI_STATUS_OK;
     } else {
