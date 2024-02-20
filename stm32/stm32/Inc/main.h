@@ -73,6 +73,8 @@ void Error_Handler(void);
 #define USART_TX_GPIO_Port GPIOA
 #define USART_RX_Pin GPIO_PIN_3
 #define USART_RX_GPIO_Port GPIOA
+#define LNA_CTRL_Pin GPIO_PIN_0
+#define LNA_CTRL_GPIO_Port GPIOB
 #define NSS_Pin GPIO_PIN_8
 #define NSS_GPIO_Port GPIOA
 #define TMS_Pin GPIO_PIN_13
