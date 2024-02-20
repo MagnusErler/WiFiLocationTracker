@@ -33,6 +33,8 @@
 
 #include "wifi.h"
 
+#include "gnss.h"
+
 
 /* USER CODE END Includes */
 
@@ -84,13 +86,6 @@ static void getLR1110_Bootloader_Version( const void* context );
  * @param [in] context Radio abstraction
  */
 static void getLR1110_Temperature( const void* context );
-
-// /*!
-//  * @brief Get LR1110 GNSS version
-//  *
-//  * @param [in] context Radio abstraction
-//  */
-// static void getLR1110_GNSS_Version( const void* context);
 
 /*!
  * @brief Get LR1110 Chip EUI
@@ -199,8 +194,10 @@ int main(void)
 
     getLR1110_Temperature(lr1110_context);
 
-    scanLR1110_WiFi_Networks(lr1110_context, LR11XX_WIFI_TYPE_SCAN_B_G_N, 0x3FFF, LR11XX_WIFI_SCAN_MODE_FULL_BEACON, 6, 3, 110, true);
-    getLR1110_WiFi_Number_of_Results(lr1110_context);
+    //scanLR1110_WiFi_Networks(lr1110_context, LR11XX_WIFI_TYPE_SCAN_B_G_N, 0x3FFF, LR11XX_WIFI_SCAN_MODE_FULL_BEACON, 6, 3, 110, true);
+    //getLR1110_WiFi_Number_of_Results(lr1110_context);
+
+    scanLR1110_GNSS_Satellites(lr1110_context);
 
     /* USER CODE END WHILE */
 
@@ -425,7 +422,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOA, RESET_Pin|NSS_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(SNIFFING_LED_GPIO_Port, SNIFFING_LED_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, LNA_CTRL_Pin|SNIFFING_LED_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : B1_Pin */
   GPIO_InitStruct.Pin = B1_Pin;
@@ -447,6 +444,13 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
+  /*Configure GPIO pins : LNA_CTRL_Pin SNIFFING_LED_Pin */
+  GPIO_InitStruct.Pin = LNA_CTRL_Pin|SNIFFING_LED_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
   /*Configure GPIO pin : BUSY_Pin */
   GPIO_InitStruct.Pin = BUSY_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
@@ -458,13 +462,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(EVENT_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : SNIFFING_LED_Pin */
-  GPIO_InitStruct.Pin = SNIFFING_LED_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(SNIFFING_LED_GPIO_Port, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
@@ -497,8 +494,8 @@ void getLR1110_Bootloader_Version( const void* context ) {
   uint8_t cbuffer[LR1110_GET_VERSION_CMD_LENGTH];
   uint8_t rbuffer[LR1110_GET_VERSION_LENGTH] = { 0 };
 
-  cbuffer[0] = ( uint8_t )( LR1110_GET_VERSION_CMD>> 8 );
-  cbuffer[1] = ( uint8_t )( LR1110_GET_VERSION_CMD>> 0 );
+  cbuffer[0] = ( uint8_t )( LR1110_GET_VERSION_CMD >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_GET_VERSION_CMD >> 0 );
   
   if (lr1110_spi_read(context, cbuffer, LR1110_GET_VERSION_CMD_LENGTH, rbuffer, LR1110_GET_VERSION_LENGTH ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_INFO_VALUE("HW: %d (0x%X), ", rbuffer[0], rbuffer[0]);
@@ -525,8 +522,8 @@ void getLR1110_Temperature( const void* context ) {
   uint8_t cbuffer[LR1110_GET_TEMPERATURE_CMD_LENGTH];
   uint8_t rbuffer[LR1110_GET_TEMPERATURE_LENGTH] = { 0 };
 
-  cbuffer[0] = ( uint8_t )( LR1110_GET_TEMPERATURE_CMD>> 8 );
-  cbuffer[1] = ( uint8_t )( LR1110_GET_TEMPERATURE_CMD>> 0 );
+  cbuffer[0] = ( uint8_t )( LR1110_GET_TEMPERATURE_CMD >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_GET_TEMPERATURE_CMD >> 0 );
 
   if (lr1110_spi_read( context, cbuffer, LR1110_GET_TEMPERATURE_CMD_LENGTH, rbuffer, LR1110_GET_TEMPERATURE_LENGTH ) == LR1110_SPI_STATUS_OK) {
 
@@ -542,31 +539,14 @@ void getLR1110_Temperature( const void* context ) {
   }
 }
 
-// void getLR1110_GNSS_Version( const void* context ) {
-//   HAL_DBG_TRACE_INFO("Getting GNSS version... ");
-
-//   uint8_t cbuffer[LR1110_GET_GNSS_VERSION_CMD_LENGTH];
-//   uint8_t rbuffer[LR1110_GET_GNSS_VERSION_LENGTH] = { 0 };
-
-//   cbuffer[0] = ( uint8_t )( LR1110_GET_GNSS_VERSION_CMD>> 8 );
-//   cbuffer[1] = ( uint8_t )( LR1110_GET_GNSS_VERSION_CMD>> 0 );
-
-//   if (lr1110_spi_read( context, cbuffer, LR1110_GET_GNSS_VERSION_CMD_LENGTH, rbuffer, LR1110_GET_GNSS_VERSION_LENGTH ) == LR1110_SPI_STATUS_OK) {
-//     HAL_DBG_TRACE_INFO_VALUE("firmware version: %d, ", rbuffer[0]);
-//     HAL_DBG_TRACE_INFO_VALUE("almanac version: %d\n\r", rbuffer[1]);
-//   } else {
-//     HAL_DBG_TRACE_ERROR("Failed to get GNSS version\r\n");
-//   }
-// }
-
 void getLR1110_Chip_EUI( const void* context ) {
   HAL_DBG_TRACE_INFO("Getting LR1110 Chip EUI... ");
 
   uint8_t cbuffer[LR1110_GET_CHIP_EUI_CMD_LENGTH];
   uint8_t rbuffer[LR1110_GET_CHIP_EUI_LENGTH] = { 0 };
 
-  cbuffer[0] = ( uint8_t )( LR1110_GET_CHIP_EUI_CMD>> 8 );
-  cbuffer[1] = ( uint8_t )( LR1110_GET_CHIP_EUI_CMD>> 0 );
+  cbuffer[0] = ( uint8_t )( LR1110_GET_CHIP_EUI_CMD >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_GET_CHIP_EUI_CMD >> 0 );
 
   if (lr1110_spi_read( context, cbuffer, LR1110_GET_CHIP_EUI_CMD_LENGTH, rbuffer, LR1110_GET_CHIP_EUI_LENGTH ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_INFO_VALUE("%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X\r\n", rbuffer[0], rbuffer[1], rbuffer[2], rbuffer[3], rbuffer[4], rbuffer[5], rbuffer[6], rbuffer[7]);
@@ -581,8 +561,8 @@ void getLR1110_Battery_Voltage( const void* context ) {
   uint8_t cbuffer[LR1110_GET_BATTERY_VOLTAGE_CMD_LENGTH];
   uint8_t rbuffer[LR1110_GET_BATTERY_VOLTAGE_LENGTH] = { 0 };
 
-  cbuffer[0] = ( uint8_t )( LR1110_GET_BATTERY_VOLTAGE_CMD>> 8 );
-  cbuffer[1] = ( uint8_t )( LR1110_GET_BATTERY_VOLTAGE_CMD>> 0 );
+  cbuffer[0] = ( uint8_t )( LR1110_GET_BATTERY_VOLTAGE_CMD >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_GET_BATTERY_VOLTAGE_CMD >> 0 );
 
   if (lr1110_spi_read( context, cbuffer, LR1110_GET_BATTERY_VOLTAGE_CMD_LENGTH, rbuffer, LR1110_GET_BATTERY_VOLTAGE_LENGTH ) == LR1110_SPI_STATUS_OK) {
 
@@ -598,8 +578,8 @@ void setupLR1110_TCXO( const void* context ) {
 
   uint8_t cbuffer[LR1110_SET_TCXO_MODE_CMD_LENGTH];
 
-  cbuffer[0] = ( uint8_t )( LR1110_SET_TCXO_MODE_CMD>> 8 );
-  cbuffer[1] = ( uint8_t )( LR1110_SET_TCXO_MODE_CMD>> 0 );
+  cbuffer[0] = ( uint8_t )( LR1110_SET_TCXO_MODE_CMD >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_SET_TCXO_MODE_CMD >> 0 );
   cbuffer[2] = ( uint8_t ) LR1110_TCXO_CTRL_1_8V;
 
   const uint8_t timeout = ( 5 * 1000 ) / 30.52;  // BOARD_TCXO_WAKEUP_TIME = 5               // 163
