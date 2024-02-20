@@ -494,8 +494,8 @@ void getLR1110_Bootloader_Version( const void* context ) {
   uint8_t cbuffer[LR1110_GET_VERSION_CMD_LENGTH];
   uint8_t rbuffer[LR1110_GET_VERSION_LENGTH] = { 0 };
 
-  cbuffer[0] = ( uint8_t )( LR1110_GET_VERSION_CMD>> 8 );
-  cbuffer[1] = ( uint8_t )( LR1110_GET_VERSION_CMD>> 0 );
+  cbuffer[0] = ( uint8_t )( LR1110_GET_VERSION_CMD >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_GET_VERSION_CMD >> 0 );
   
   if (lr1110_spi_read(context, cbuffer, LR1110_GET_VERSION_CMD_LENGTH, rbuffer, LR1110_GET_VERSION_LENGTH ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_INFO_VALUE("HW: %d (0x%X), ", rbuffer[0], rbuffer[0]);
@@ -522,8 +522,8 @@ void getLR1110_Temperature( const void* context ) {
   uint8_t cbuffer[LR1110_GET_TEMPERATURE_CMD_LENGTH];
   uint8_t rbuffer[LR1110_GET_TEMPERATURE_LENGTH] = { 0 };
 
-  cbuffer[0] = ( uint8_t )( LR1110_GET_TEMPERATURE_CMD>> 8 );
-  cbuffer[1] = ( uint8_t )( LR1110_GET_TEMPERATURE_CMD>> 0 );
+  cbuffer[0] = ( uint8_t )( LR1110_GET_TEMPERATURE_CMD >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_GET_TEMPERATURE_CMD >> 0 );
 
   if (lr1110_spi_read( context, cbuffer, LR1110_GET_TEMPERATURE_CMD_LENGTH, rbuffer, LR1110_GET_TEMPERATURE_LENGTH ) == LR1110_SPI_STATUS_OK) {
 
@@ -545,8 +545,8 @@ void getLR1110_Chip_EUI( const void* context ) {
   uint8_t cbuffer[LR1110_GET_CHIP_EUI_CMD_LENGTH];
   uint8_t rbuffer[LR1110_GET_CHIP_EUI_LENGTH] = { 0 };
 
-  cbuffer[0] = ( uint8_t )( LR1110_GET_CHIP_EUI_CMD>> 8 );
-  cbuffer[1] = ( uint8_t )( LR1110_GET_CHIP_EUI_CMD>> 0 );
+  cbuffer[0] = ( uint8_t )( LR1110_GET_CHIP_EUI_CMD >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_GET_CHIP_EUI_CMD >> 0 );
 
   if (lr1110_spi_read( context, cbuffer, LR1110_GET_CHIP_EUI_CMD_LENGTH, rbuffer, LR1110_GET_CHIP_EUI_LENGTH ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_INFO_VALUE("%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X\r\n", rbuffer[0], rbuffer[1], rbuffer[2], rbuffer[3], rbuffer[4], rbuffer[5], rbuffer[6], rbuffer[7]);
@@ -561,8 +561,8 @@ void getLR1110_Battery_Voltage( const void* context ) {
   uint8_t cbuffer[LR1110_GET_BATTERY_VOLTAGE_CMD_LENGTH];
   uint8_t rbuffer[LR1110_GET_BATTERY_VOLTAGE_LENGTH] = { 0 };
 
-  cbuffer[0] = ( uint8_t )( LR1110_GET_BATTERY_VOLTAGE_CMD>> 8 );
-  cbuffer[1] = ( uint8_t )( LR1110_GET_BATTERY_VOLTAGE_CMD>> 0 );
+  cbuffer[0] = ( uint8_t )( LR1110_GET_BATTERY_VOLTAGE_CMD >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_GET_BATTERY_VOLTAGE_CMD >> 0 );
 
   if (lr1110_spi_read( context, cbuffer, LR1110_GET_BATTERY_VOLTAGE_CMD_LENGTH, rbuffer, LR1110_GET_BATTERY_VOLTAGE_LENGTH ) == LR1110_SPI_STATUS_OK) {
 
@@ -578,8 +578,8 @@ void setupLR1110_TCXO( const void* context ) {
 
   uint8_t cbuffer[LR1110_SET_TCXO_MODE_CMD_LENGTH];
 
-  cbuffer[0] = ( uint8_t )( LR1110_SET_TCXO_MODE_CMD>> 8 );
-  cbuffer[1] = ( uint8_t )( LR1110_SET_TCXO_MODE_CMD>> 0 );
+  cbuffer[0] = ( uint8_t )( LR1110_SET_TCXO_MODE_CMD >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_SET_TCXO_MODE_CMD >> 0 );
   cbuffer[2] = ( uint8_t ) LR1110_TCXO_CTRL_1_8V;
 
   const uint8_t timeout = ( 5 * 1000 ) / 30.52;  // BOARD_TCXO_WAKEUP_TIME = 5               // 163
