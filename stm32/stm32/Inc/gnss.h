@@ -37,8 +37,7 @@ typedef uint32_t lr11xx_gnss_date_t;
 /*!
  * @brief Search mode for GNSS scan
  */
-typedef enum
-{
+typedef enum {
     LR11XX_GNSS_OPTION_DEFAULT     = 0x00,  //!< Search all requested satellites or fail
     LR11XX_GNSS_OPTION_BEST_EFFORT = 0x01,  //!< Add additional search if not all satellites are found
 } lr11xx_gnss_search_mode_t;
