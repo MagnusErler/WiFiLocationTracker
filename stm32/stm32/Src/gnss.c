@@ -26,45 +26,26 @@ uint8_t getLR1110_GNSS_Number_of_Detected_Satellites( const void* context) {
     }
 }
 
-lr1110_spi_status_t lr11xx_get_gnss_results( const void* context ) {
-    HAL_DBG_TRACE_INFO("Getting GNSS results... \r\n");
-
-    uint8_t cbuffer[LR1110_GET_RESULTS_CMD_LENGTH];
-    uint8_t rbuffer[LR1110_GET_RESULTS_LENGTH] = { 0 };
-
-    cbuffer[0] = ( uint8_t )( LR1110_GET_RESULTS_CMD >> 8 );
-    cbuffer[1] = ( uint8_t )( LR1110_GET_RESULTS_CMD >> 0 );
-
-    if (lr1110_spi_read( context, cbuffer, LR1110_GET_RESULTS_CMD_LENGTH, rbuffer, LR1110_GET_RESULTS_LENGTH ) == LR1110_SPI_STATUS_OK) {
-        HAL_DBG_TRACE_INFO("GNSS results 0: %d\r\n", rbuffer[0]);
-        HAL_DBG_TRACE_INFO("GNSS results 1: %d\r\n", rbuffer[1]);
-        return LR1110_SPI_STATUS_OK;
-    } else {
-        HAL_DBG_TRACE_ERROR("Failed to get GNSS results\r\n");
-        return LR1110_SPI_STATUS_ERROR;
-    }
-}
-
 void getLR1110_GNSS_Detected_Satellites( const void* context ) {
     HAL_DBG_TRACE_INFO("Getting GNSS satellites detected... \r\n");
 
-    uint8_t cbuffer[LR1110_GET_SV_DETECTED_CMD_LENGTH];
-    uint8_t rbuffer[LR1110_GET_SV_DETECTED_LENGTH] = { 0 };
+    uint8_t cbuffer[LR1110_GET_SATELLITES_DETECTED_CMD_LENGTH];
+    uint8_t rbuffer[LR1110_GET_SATELLITES_DETECTED_LENGTH] = { 0 };
 
-    cbuffer[0] = ( uint8_t )( LR1110_GET_SV_DETECTED_CMD >> 8 );
-    cbuffer[1] = ( uint8_t )( LR1110_GET_SV_DETECTED_CMD >> 0 );
+    cbuffer[0] = ( uint8_t )( LR1110_GET_SATELLITES_DETECTED_CMD >> 8 );
+    cbuffer[1] = ( uint8_t )( LR1110_GET_SATELLITES_DETECTED_CMD >> 0 );
 
-    if (lr1110_spi_read( context, cbuffer, LR1110_GET_SV_DETECTED_CMD_LENGTH, rbuffer, LR1110_GET_SV_DETECTED_LENGTH ) == LR1110_SPI_STATUS_OK) {
-        HAL_DBG_TRACE_INFO("GNSS SV detected 0: %d\r\n", rbuffer[0]);
-        HAL_DBG_TRACE_INFO("GNSS SV detected 1: %d\r\n", rbuffer[1]);
+    if (lr1110_spi_read( context, cbuffer, LR1110_GET_SATELLITES_DETECTED_CMD_LENGTH, rbuffer, LR1110_GET_SATELLITES_DETECTED_LENGTH ) == LR1110_SPI_STATUS_OK) {
+        HAL_DBG_TRACE_INFO("GNSS SATELLITES detected 0: %d\r\n", rbuffer[0]);
+        HAL_DBG_TRACE_INFO("GNSS SATELLITES detected 1: %d\r\n", rbuffer[1]);
     } else {
         HAL_DBG_TRACE_ERROR("Failed to get GNSS satellites detected\r\n");
     }
 }
 
-void scanLR1110_GNSS_Satellites( const void* context ) {
+void scanLR1110_GNSS_Satellites( const void* context, uint8_t effort_mode, uint8_t result_mask, uint8_t nb_sv_max ) {
     HAL_DBG_TRACE_INFO("Scanning GNSS satellites... ");
-    
+
     HAL_GPIO_WritePin(LNA_CTRL_GPIO_Port, LNA_CTRL_Pin, GPIO_PIN_SET);
     turnOnLED(SNIFFING_LED_GPIO_Port, SNIFFING_LED_Pin);
 
@@ -76,15 +57,15 @@ void scanLR1110_GNSS_Satellites( const void* context ) {
     cbuffer[3] = ( uint8_t )( 0x52FFD96B >> 16 );
     cbuffer[4] = ( uint8_t )( 0x52FFD96B >> 8 );
     cbuffer[5] = ( uint8_t )( 0x52FFD96B >> 0 );
-    cbuffer[6] = ( uint8_t )( 0x00 >> 0 );
-    cbuffer[7] = ( uint8_t )( 0x00 >> 0 );
-    cbuffer[8] = ( uint8_t )( 0x02 >> 0 );
+    cbuffer[6] = ( uint8_t )( effort_mode >> 0 );
+    cbuffer[7] = ( uint8_t )( result_mask >> 0 );
+    cbuffer[8] = ( uint8_t )( nb_sv_max >> 0 );
 
     if (lr1110_spi_write( context, cbuffer, LR1110_SCAN_GNSS_AUTONOMOUS_CMD_LENGTH ) == LR1110_SPI_STATUS_OK) {
-        HAL_Delay( 5000 );
+        //HAL_Delay( 5000 );
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
     } else {
-        HAL_Delay( 5000 );
+        //HAL_Delay( 5000 );
         HAL_DBG_TRACE_ERROR("Failed to scan GNSS satellites\r\n");
     }
 

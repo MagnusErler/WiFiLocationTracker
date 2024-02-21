@@ -196,7 +196,7 @@ int main(void)
     //scanLR1110_WiFi_Networks(lr1110_context, LR11XX_WIFI_TYPE_SCAN_B_G_N, 0x3FFF, LR11XX_WIFI_SCAN_MODE_FULL_BEACON, 6, 3, 110, true);
     //getLR1110_WiFi_Number_of_Results(lr1110_context);
 
-    scanLR1110_GNSS_Satellites(lr1110_context);
+    scanLR1110_GNSS_Satellites(lr1110_context, 0, 0, 0);
     if (getLR1110_GNSS_Number_of_Detected_Satellites(lr1110_context) > 0) {
       getLR1110_GNSS_Detected_Satellites(lr1110_context);
     }
