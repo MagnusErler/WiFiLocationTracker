@@ -132,13 +132,13 @@ void getWiFiFullResults( const void* context, const uint8_t start_result_index, 
 uint8_t getLR1110_WiFi_Number_of_Results( const void* context ) {
     HAL_DBG_TRACE_INFO("Getting number of WiFi networks found... ");
 
-    uint8_t cbuffer[LR1110_WIFI_CMD_LENGTH_GET_NB_RESULTS_WIFI];
-    uint8_t rbuffer[LR1110_WIFI_LENGTH_GET_NB_RESULTS] = { 0 };
+    uint8_t cbuffer[LR1110_WIFI_CMD_LENGTH_GET_NUMBER_OF_RESULTS];
+    uint8_t rbuffer[LR1110_WIFI_LENGTH_GET_NUMBER_OF_RESULTS] = { 0 };
 
     cbuffer[0] = ( uint8_t )( LR1110_WIFI_CMD_GET_NUMBER_OF_RESULTS >> 8 );
     cbuffer[1] = ( uint8_t )( LR1110_WIFI_CMD_GET_NUMBER_OF_RESULTS >> 0 );
 
-    if ( lr1110_spi_read( context, cbuffer, LR1110_WIFI_CMD_LENGTH_GET_NB_RESULTS_WIFI, rbuffer, LR1110_WIFI_LENGTH_GET_NB_RESULTS ) == LR1110_SPI_STATUS_OK ) {
+    if ( lr1110_spi_read( context, cbuffer, LR1110_WIFI_CMD_LENGTH_GET_NUMBER_OF_RESULTS, rbuffer, LR1110_WIFI_LENGTH_GET_NUMBER_OF_RESULTS ) == LR1110_SPI_STATUS_OK ) {
         HAL_DBG_TRACE_INFO_VALUE("%d\r\n", rbuffer[0]);
         return rbuffer[0];
     } else {
