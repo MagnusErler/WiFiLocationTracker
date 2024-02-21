@@ -186,4 +186,11 @@ void getLR1110_WiFi_Version( const void* context);
  *
  * @param [in] context Radio abstraction
  */
-void getLR1110_WiFi_Number_of_Results( const void* context );
+uint8_t getLR1110_WiFi_Number_of_Results( const void* context );
+
+/*!
+ * @brief Get WiFi results
+ *
+ * @param [in] context Radio abstraction
+ */
+lr1110_wifi_status_t getWiFiFullResults( const void* context, const uint8_t start_result_index, const uint8_t nb_results, lr11xx_wifi_extended_full_result_t* results );
