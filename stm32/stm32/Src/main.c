@@ -146,8 +146,6 @@ int main(void)
 
   /* USER CODE BEGIN Init */
 
-  int a = 0;
-
   void* lr1110_context = (void*) malloc(sizeof(radio_t));
   ((radio_t*)lr1110_context)->spi         = SPI1;
   ((radio_t*)lr1110_context)->nss.port    = NSS_GPIO_Port;
@@ -193,14 +191,15 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1) {
 
-    HAL_DBG_TRACE_PRINTF("a = %d\r\n", a++);
-
     getLR1110_Temperature(lr1110_context);
 
     //scanLR1110_WiFi_Networks(lr1110_context, LR11XX_WIFI_TYPE_SCAN_B_G_N, 0x3FFF, LR11XX_WIFI_SCAN_MODE_FULL_BEACON, 6, 3, 110, true);
     //getLR1110_WiFi_Number_of_Results(lr1110_context);
 
     scanLR1110_GNSS_Satellites(lr1110_context);
+    if (getLR1110_GNSS_Number_of_Detected_Satellites(lr1110_context) > 0) {
+      getLR1110_GNSS_Detected_Satellites(lr1110_context);
+    }
 
     /* USER CODE END WHILE */
 

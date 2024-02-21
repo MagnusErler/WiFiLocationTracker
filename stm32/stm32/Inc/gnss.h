@@ -43,6 +43,21 @@ typedef enum {
 } lr11xx_gnss_search_mode_t;
 
 
+/*!
+ * @brief Scan for GNSS satellites
+ *
+ * @param [in] context Radio abstraction
+ * 
+ * @return Number of detected satellites
+ */
+uint8_t getLR1110_GNSS_Number_of_Detected_Satellites( const void* context );
+
+/*!
+ * @brief Scan for GNSS satellites
+ *
+ * @param [in] context Radio abstraction
+ */
+void getLR1110_GNSS_Detected_Satellites( const void* context );
 
 /*!
  * @brief Scan for GNSS satellites
