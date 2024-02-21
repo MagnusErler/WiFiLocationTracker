@@ -196,17 +196,19 @@ int main(void)
     //scanLR1110_WiFi_Networks(lr1110_context, 0x04, 0x3FFF, 0x04, 32, 3, 500, true);
     scanLR1110_WiFi_Country_Code(lr1110_context, 0x3FFF, 32, 3, 500, true);
     uint8_t numberOfResults = getLR1110_WiFi_Number_of_Results(lr1110_context);
+    getLR1110_WiFi_Results(lr1110_context, 0, 6, 4);
+    
 
     // for( int i = 0; i < numberOfResults; i++ ) {
     //   getWiFiFullResults( lr1110_context, i, 1 );
     // }
 
 
-    // scanLR1110_GNSS_Satellites(lr1110_context, 0, 0, 0);
-    // uint8_t numberOfDetectedSatellites = getLR1110_GNSS_Number_of_Detected_Satellites(lr1110_context);
-    // if (numberOfDetectedSatellites > 0) {
-    //   getLR1110_GNSS_Detected_Satellites(lr1110_context, numberOfDetectedSatellites);
-    // }
+    scanLR1110_GNSS_Satellites(lr1110_context, 0, 0, 0);
+    uint8_t numberOfDetectedSatellites = getLR1110_GNSS_Number_of_Detected_Satellites(lr1110_context);
+    if (numberOfDetectedSatellites > 0) {
+      getLR1110_GNSS_Detected_Satellites(lr1110_context, numberOfDetectedSatellites);
+    }
 
     /* USER CODE END WHILE */
 
