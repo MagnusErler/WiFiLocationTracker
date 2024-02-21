@@ -13,7 +13,7 @@
 #define LR1110_GET_GNSS_VERSION_LENGTH              LR1110_NO_PARAM_LENGTH + 1
 #define LR1110_GET_NUMBER_OF_SATELLITES_LENGTH      LR1110_NO_PARAM_LENGTH + 1
 #define LR1110_GET_RESULTS_LENGTH                   LR1110_NO_PARAM_LENGTH + 1
-#define LR1110_GET_SATELLITES_DETECTED_LENGTH       LR1110_NO_PARAM_LENGTH + 1
+#define LR1110_GET_SATELLITES_DETECTED_LENGTH       LR1110_NO_PARAM_LENGTH
 
 // LR1110 CHIP COMMANDS
 #define LR1110_GET_GNSS_VERSION_CMD                 0x0406
@@ -56,8 +56,9 @@ uint8_t getLR1110_GNSS_Number_of_Detected_Satellites( const void* context );
  * @brief Scan for GNSS satellites
  *
  * @param [in] context Radio abstraction
+ * @param [in] nb_of_satellites Number of detected satellites
  */
-void getLR1110_GNSS_Detected_Satellites( const void* context );
+void getLR1110_GNSS_Detected_Satellites( const void* context, uint8_t nb_of_satellites );
 
 /*!
  * @brief Scan for GNSS satellites

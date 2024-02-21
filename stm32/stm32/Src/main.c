@@ -197,8 +197,9 @@ int main(void)
     //getLR1110_WiFi_Number_of_Results(lr1110_context);
 
     scanLR1110_GNSS_Satellites(lr1110_context, 0, 0, 0);
-    if (getLR1110_GNSS_Number_of_Detected_Satellites(lr1110_context) > 0) {
-      getLR1110_GNSS_Detected_Satellites(lr1110_context);
+    uint8_t numberOfDetectedSatellites = getLR1110_GNSS_Number_of_Detected_Satellites(lr1110_context);
+    if (numberOfDetectedSatellites > 0) {
+      getLR1110_GNSS_Detected_Satellites(lr1110_context, numberOfDetectedSatellites);
     }
 
     /* USER CODE END WHILE */
