@@ -89,8 +89,7 @@ static lr1110_wifi_status_t _fetch_and_aggregate_all_results( const void* contex
             return ( lr1110_wifi_status_t ) local_hal_status;
         }
 
-        _generic_results_interpreter( results_to_read, index_result_start_writing, result_buffer, result_structures,
-                                     result_format_code ); {
+        _generic_results_interpreter( results_to_read, index_result_start_writing, result_buffer, result_structures, result_format_code ); {
         // Reset the content of the result_buffer in case there are still results to fetch
             for( uint16_t index = 0; index < 948; index++ ) {
                 result_buffer[index] = 0;
@@ -104,27 +103,30 @@ static lr1110_wifi_status_t _fetch_and_aggregate_all_results( const void* contex
     return ( lr1110_wifi_status_t ) LR1110_WIFI_STATUS_OK;
 }
 
-lr1110_wifi_status_t getWiFiFullResults( const void* context, const uint8_t start_result_index, const uint8_t nb_results, lr11xx_wifi_extended_full_result_t* results ) {
-    uint8_t result_buffer1[1020]            = { 0 };
+void getWiFiFullResults( const void* context, const uint8_t start_result_index, const uint8_t nb_results ) {
+    uint8_t result_buffer[1020]            = { 0 };
     const uint8_t nb_results_per_chunk_max  = 12;
 
+    lr11xx_wifi_extended_full_result_t results;
     lr11xx_wifi_result_interface_t result_interface = { 0 };
-    result_interface.extended_complete = results;
+    result_interface.extended_complete = &results;
 
-    return _fetch_and_aggregate_all_results( context, start_result_index, nb_results, nb_results_per_chunk_max, LR11XX_WIFI_RESULT_FORMAT_EXTENDED_FULL, result_buffer1, result_interface );
-
-    // HAL_DBG_TRACE_INFO( "WiFi %d: MAC: %02x:%02x:%02x:%02x:%02x:%02x, RSSI: %d, uptime: %d.%d day(s), SSID: %s\r\n", i, results.mac_address_3[0], results.mac_address_3[1], results.mac_address_3[2], results.mac_address_3[3], results.mac_address_3[4], results.mac_address_3[5], results.rssi, (uint8_t)(results.timestamp_us / 86400000000.0), (uint8_t)(((results.timestamp_us / 86400000000.0) - (uint8_t)(results.timestamp_us / 86400000000.0)) * 100), results.ssid_bytes );
-    // // HAL_DBG_TRACE_INFO( "rate: %d\r\n", wifi_scan_result.rate );
-    // // HAL_DBG_TRACE_INFO( "service: %d\r\n", wifi_scan_result.service );
-    // // HAL_DBG_TRACE_INFO( "length: %d\r\n", wifi_scan_result.length );
-    // // HAL_DBG_TRACE_INFO( "frame_control: %d\r\n", wifi_scan_result.frame_control );
-    // // HAL_DBG_TRACE_INFO( "beacon_period_tu: %d\r\n", wifi_scan_result.beacon_period_tu );
-    // // HAL_DBG_TRACE_INFO( "seq_control: %d\r\n", wifi_scan_result.seq_control );
-    // // HAL_DBG_TRACE_INFO( "current_channel: %d\r\n", wifi_scan_result.current_channel );
-    // // HAL_DBG_TRACE_INFO( "country_code: %c%c\r\n", wifi_scan_result.country_code[0], wifi_scan_result.country_code[1] );
-    // // HAL_DBG_TRACE_INFO( "io_regulation: %d\r\n", wifi_scan_result.io_regulation );
-    // // HAL_DBG_TRACE_INFO( "fcs_check_byte: %d\r\n", wifi_scan_result.fcs_check_byte.is_fcs_checked );
-    // // HAL_DBG_TRACE_INFO( "phi_offset: %d\r\n", wifi_scan_result.phi_offset );
+    if (_fetch_and_aggregate_all_results( context, start_result_index, nb_results, nb_results_per_chunk_max, LR11XX_WIFI_RESULT_FORMAT_EXTENDED_FULL, result_buffer, result_interface ) == LR1110_WIFI_STATUS_OK) {
+        HAL_DBG_TRACE_INFO( "WiFi %d: MAC: %02x:%02x:%02x:%02x:%02x:%02x, RSSI: %d, uptime: %d.%d day(s), SSID: %s\r\n", start_result_index, results.mac_address_3[0], results.mac_address_3[1], results.mac_address_3[2], results.mac_address_3[3], results.mac_address_3[4], results.mac_address_3[5], results.rssi, (uint8_t)(results.timestamp_us / 86400000000.0), (uint8_t)(((results.timestamp_us / 86400000000.0) - (uint8_t)(results.timestamp_us / 86400000000.0)) * 100), results.ssid_bytes );
+        // HAL_DBG_TRACE_INFO( "rate: %d\r\n", wifi_scan_result.rate );
+        // HAL_DBG_TRACE_INFO( "service: %d\r\n", wifi_scan_result.service );
+        // HAL_DBG_TRACE_INFO( "length: %d\r\n", wifi_scan_result.length );
+        // HAL_DBG_TRACE_INFO( "frame_control: %d\r\n", wifi_scan_result.frame_control );
+        // HAL_DBG_TRACE_INFO( "beacon_period_tu: %d\r\n", wifi_scan_result.beacon_period_tu );
+        // HAL_DBG_TRACE_INFO( "seq_control: %d\r\n", wifi_scan_result.seq_control );
+        // HAL_DBG_TRACE_INFO( "current_channel: %d\r\n", wifi_scan_result.current_channel );
+        // HAL_DBG_TRACE_INFO( "country_code: %c%c\r\n", wifi_scan_result.country_code[0], wifi_scan_result.country_code[1] );
+        // HAL_DBG_TRACE_INFO( "io_regulation: %d\r\n", wifi_scan_result.io_regulation );
+        // HAL_DBG_TRACE_INFO( "fcs_check_byte: %d\r\n", wifi_scan_result.fcs_check_byte.is_fcs_checked );
+        // HAL_DBG_TRACE_INFO( "phi_offset: %d\r\n", wifi_scan_result.phi_offset );
+    } else {
+        HAL_DBG_TRACE_ERROR("Failed to get WiFi results\r\n");
+    }
 }
 
 uint8_t getLR1110_WiFi_Number_of_Results( const void* context ) {

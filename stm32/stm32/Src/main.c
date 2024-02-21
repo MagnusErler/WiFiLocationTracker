@@ -198,22 +198,7 @@ int main(void)
 
 
     for( int i = 0; i < numberOfResults; i++ ) {
-      lr11xx_wifi_extended_full_result_t wifi_scan_result;
-      if (getWiFiFullResults( lr1110_context, i, 1, &wifi_scan_result ) != LR1110_WIFI_STATUS_OK) {
-          HAL_DBG_TRACE_ERROR( "Failed to read WiFi networks\r\n" );
-      }
-      HAL_DBG_TRACE_INFO( "WiFi %d: MAC: %02x:%02x:%02x:%02x:%02x:%02x, RSSI: %d, uptime: %d.%d day(s), SSID: %s\r\n", i, wifi_scan_result.mac_address_3[0], wifi_scan_result.mac_address_3[1], wifi_scan_result.mac_address_3[2], wifi_scan_result.mac_address_3[3], wifi_scan_result.mac_address_3[4], wifi_scan_result.mac_address_3[5], wifi_scan_result.rssi, (uint8_t)(wifi_scan_result.timestamp_us / 86400000000.0), (uint8_t)(((wifi_scan_result.timestamp_us / 86400000000.0) - (uint8_t)(wifi_scan_result.timestamp_us / 86400000000.0)) * 100), wifi_scan_result.ssid_bytes );
-      // HAL_DBG_TRACE_INFO( "rate: %d\r\n", wifi_scan_result.rate );
-      // HAL_DBG_TRACE_INFO( "service: %d\r\n", wifi_scan_result.service );
-      // HAL_DBG_TRACE_INFO( "length: %d\r\n", wifi_scan_result.length );
-      // HAL_DBG_TRACE_INFO( "frame_control: %d\r\n", wifi_scan_result.frame_control );
-      // HAL_DBG_TRACE_INFO( "beacon_period_tu: %d\r\n", wifi_scan_result.beacon_period_tu );
-      // HAL_DBG_TRACE_INFO( "seq_control: %d\r\n", wifi_scan_result.seq_control );
-      // HAL_DBG_TRACE_INFO( "current_channel: %d\r\n", wifi_scan_result.current_channel );
-      // HAL_DBG_TRACE_INFO( "country_code: %c%c\r\n", wifi_scan_result.country_code[0], wifi_scan_result.country_code[1] );
-      // HAL_DBG_TRACE_INFO( "io_regulation: %d\r\n", wifi_scan_result.io_regulation );
-      // HAL_DBG_TRACE_INFO( "fcs_check_byte: %d\r\n", wifi_scan_result.fcs_check_byte.is_fcs_checked );
-      // HAL_DBG_TRACE_INFO( "phi_offset: %d\r\n", wifi_scan_result.phi_offset );
+      getWiFiFullResults( lr1110_context, i, 1 );
     }
 
 
