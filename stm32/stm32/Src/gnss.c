@@ -35,7 +35,7 @@ void getLR1110_GNSS_Detected_Satellites( const void* context, uint8_t nb_of_sate
     cbuffer[0] = ( uint8_t )( LR1110_GET_SATELLITES_DETECTED_CMD >> 8 );
     cbuffer[1] = ( uint8_t )( LR1110_GET_SATELLITES_DETECTED_CMD >> 0 );
 
-    if (lr1110_spi_read( context, cbuffer, LR1110_GET_SATELLITES_DETECTED_CMD_LENGTH, rbuffer, LR1110_GET_SATELLITES_DETECTED_LENGTH ) == LR1110_SPI_STATUS_OK) {
+    if (lr1110_spi_read( context, cbuffer, LR1110_GET_SATELLITES_DETECTED_CMD_LENGTH, rbuffer, LR1110_GET_SATELLITES_DETECTED_LENGTH + nb_of_satellites ) == LR1110_SPI_STATUS_OK) {
         for (uint8_t i = 0; i < nb_of_satellites; i++) {
             HAL_DBG_TRACE_INFO_VALUE("Sattelite ID %d: %d, C/N0 %d\r\n", i, rbuffer[i], rbuffer[i+1]);
         }

@@ -132,13 +132,13 @@ void getWiFiFullResults( const void* context, const uint8_t start_result_index, 
 uint8_t getLR1110_WiFi_Number_of_Results( const void* context ) {
     HAL_DBG_TRACE_INFO("Getting number of WiFi networks found... ");
 
-    uint8_t cbuffer[LR1110_GET_NB_RESULTS_WIFI_CMD_LENGTH];
-    uint8_t rbuffer[LR1110_GET_NB_RESULTS_WIFI_LENGTH] = { 0 };
+    uint8_t cbuffer[LR1110_WIFI_CMD_LENGTH_GET_NUMBER_OF_RESULTS];
+    uint8_t rbuffer[LR1110_WIFI_LENGTH_GET_NUMBER_OF_RESULTS] = { 0 };
 
-    cbuffer[0] = ( uint8_t )( LR1110_WIFI_GET_NUMBER_OF_RESULTS_CMD >> 8 );
-    cbuffer[1] = ( uint8_t )( LR1110_WIFI_GET_NUMBER_OF_RESULTS_CMD >> 0 );
+    cbuffer[0] = ( uint8_t )( LR1110_WIFI_CMD_GET_NUMBER_OF_RESULTS >> 8 );
+    cbuffer[1] = ( uint8_t )( LR1110_WIFI_CMD_GET_NUMBER_OF_RESULTS >> 0 );
 
-    if ( lr1110_spi_read( context, cbuffer, LR1110_GET_NB_RESULTS_WIFI_CMD_LENGTH, rbuffer, LR1110_GET_NB_RESULTS_WIFI_LENGTH ) == LR1110_SPI_STATUS_OK ) {
+    if ( lr1110_spi_read( context, cbuffer, LR1110_WIFI_CMD_LENGTH_GET_NUMBER_OF_RESULTS, rbuffer, LR1110_WIFI_LENGTH_GET_NUMBER_OF_RESULTS ) == LR1110_SPI_STATUS_OK ) {
         HAL_DBG_TRACE_INFO_VALUE("%d\r\n", rbuffer[0]);
         return rbuffer[0];
     } else {
@@ -147,13 +147,39 @@ uint8_t getLR1110_WiFi_Number_of_Results( const void* context ) {
     }
 }
 
+void scanLR1110_WiFi_Country_Code( const void* context, const lr11xx_wifi_channel_mask_t chan_mask, const uint8_t nb_max_res, 
+                                  const uint8_t nb_scan_per_chan, const uint16_t timeout, const bool abort_on_timeout ) {
+    HAL_DBG_TRACE_INFO("Getting WiFi country code... ");
+
+    uint8_t cbuffer[LR1110_WIFI_CMD_LENGTH_GET_COUNTRY_CODE];
+
+    cbuffer[0] = ( uint8_t )( LR1110_WIFI_CMD_GET_COUNTRY_CODE >> 8 );
+    cbuffer[1] = ( uint8_t )( LR1110_WIFI_CMD_GET_COUNTRY_CODE >> 0 );
+    cbuffer[2] = ( uint8_t ) ( chan_mask >> 8 );
+    cbuffer[3] = ( uint8_t ) ( chan_mask >> 0 );
+    cbuffer[4] = nb_max_res;
+    cbuffer[5] = nb_scan_per_chan;
+    cbuffer[6] = ( uint8_t ) ( timeout >> 8 );
+    cbuffer[7] = ( uint8_t ) ( timeout >> 0 );
+    cbuffer[8] = ( uint8_t ) ( ( abort_on_timeout == true ) ? 1 : 0 );
+
+    turnOnLED(SNIFFING_LED_GPIO_Port, SNIFFING_LED_Pin);
+    if ( lr1110_spi_write( context, cbuffer, LR1110_WIFI_CMD_LENGTH_GET_COUNTRY_CODE ) == LR1110_SPI_STATUS_OK ) {
+        HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+        turnOffLED(SNIFFING_LED_GPIO_Port, SNIFFING_LED_Pin);
+    } else {
+        HAL_DBG_TRACE_ERROR("Failed to get WiFi country code\r\n");
+        turnOffLED(SNIFFING_LED_GPIO_Port, SNIFFING_LED_Pin);
+    }
+}
+
 void scanLR1110_WiFi_Networks( const void* context, const uint8_t signal_type, const lr11xx_wifi_channel_mask_t chan_mask, const uint8_t acq_mode, const uint8_t nb_max_res, const uint8_t nb_scan_per_chan, const uint16_t timeout, const bool abort_on_timeout ) {
     HAL_DBG_TRACE_INFO("Scanning WiFi networks... ");
 
-    uint8_t cbuffer[LR1110_SCAN_WIFI_CMD_LENGTH];
+    uint8_t cbuffer[LR1110_WIFI_CMD_LENGTH_SCAN_WIFI];
 
-    cbuffer[0] = ( uint8_t )( LR1110_WIFI_SCAN_WIFI_NETWORKS_CMD >> 8 );
-    cbuffer[1] = ( uint8_t )( LR1110_WIFI_SCAN_WIFI_NETWORKS_CMD >> 0 );
+    cbuffer[0] = ( uint8_t )( LR1110_WIFI_CMD_SCAN_WIFI_NETWORKS >> 8 );
+    cbuffer[1] = ( uint8_t )( LR1110_WIFI_CMD_SCAN_WIFI_NETWORKS >> 0 );
     cbuffer[2] = ( uint8_t ) signal_type;
     cbuffer[3] = ( uint8_t ) ( chan_mask >> 8 );
     cbuffer[4] = ( uint8_t ) ( chan_mask >> 0 );
@@ -165,7 +191,7 @@ void scanLR1110_WiFi_Networks( const void* context, const uint8_t signal_type, c
     cbuffer[10] = ( uint8_t ) ( ( abort_on_timeout == true ) ? 1 : 0 );
 
     turnOnLED(SNIFFING_LED_GPIO_Port, SNIFFING_LED_Pin);
-    if ( lr1110_spi_write( context, cbuffer, LR1110_SCAN_WIFI_CMD_LENGTH ) == LR1110_SPI_STATUS_OK ) {
+    if ( lr1110_spi_write( context, cbuffer, LR1110_WIFI_CMD_LENGTH_SCAN_WIFI ) == LR1110_SPI_STATUS_OK ) {
         HAL_Delay( 100 + timeout ); // wait for the scan to complete
 
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
@@ -176,16 +202,37 @@ void scanLR1110_WiFi_Networks( const void* context, const uint8_t signal_type, c
     }
 }
 
+void getLR1110_WiFi_Results( const void* context, const uint8_t index, const uint8_t nbResults, const uint8_t format ) {
+    HAL_DBG_TRACE_INFO("Getting WiFi results... ");
+
+    uint8_t cbuffer[LR1110_WIFI_CMD_LENGTH_GET_RESULTS];
+    uint8_t rbuffer[LR1110_WIFI_LENGTH_GET_RESULTS + nbResults];
+
+    cbuffer[0] = ( uint8_t )( LR1110_WIFI_CMD_GET_RESULTS >> 8 );
+    cbuffer[1] = ( uint8_t )( LR1110_WIFI_CMD_GET_RESULTS >> 0 );
+    cbuffer[2] = index;
+    cbuffer[3] = nbResults;
+    cbuffer[4] = format;
+
+    if (lr1110_spi_read( context, cbuffer, LR1110_WIFI_CMD_LENGTH_GET_RESULTS, rbuffer, LR1110_WIFI_LENGTH_GET_RESULTS + nbResults ) == LR1110_SPI_STATUS_OK) {
+        for (uint8_t i = 0; i < nbResults; i++) {
+            HAL_DBG_TRACE_INFO_VALUE("ResultsByte%d: %d\r\n", i, rbuffer[i]);
+        }
+    } else {
+        HAL_DBG_TRACE_ERROR("Failed to get WiFi results\r\n");
+    }
+}
+
 void getLR1110_WiFi_Version( const void* context ) {
     HAL_DBG_TRACE_INFO("Getting WiFi firmware version... ");
 
-    uint8_t cbuffer[LR1110_GET_WIFI_VERSION_CMD_LENGTH];
-    uint8_t rbuffer[LR1110_GET_WIFI_VERSION_LENGTH] = { 0 };
+    uint8_t cbuffer[LR1110_WIFI_CMD_LENGTH_GET_WIFI_VERSION];
+    uint8_t rbuffer[LR1110_WIFI_LENGTH_GET_WIFI_VERSION] = { 0 };
 
-    cbuffer[0] = ( uint8_t )( LR1110_WIFI_GET_FIRMWARE_WIFI_VERSION_CMD >> 8 );
-    cbuffer[1] = ( uint8_t )( LR1110_WIFI_GET_FIRMWARE_WIFI_VERSION_CMD >> 0 );
+    cbuffer[0] = ( uint8_t )( LR1110_WIFI_CMD_GET_FIRMWARE_WIFI_VERSION >> 8 );
+    cbuffer[1] = ( uint8_t )( LR1110_WIFI_CMD_GET_FIRMWARE_WIFI_VERSION >> 0 );
 
-    if (lr1110_spi_read( context, cbuffer, LR1110_GET_WIFI_VERSION_CMD_LENGTH, rbuffer, LR1110_GET_WIFI_VERSION_LENGTH ) == LR1110_SPI_STATUS_OK) {
+    if (lr1110_spi_read( context, cbuffer, LR1110_WIFI_CMD_LENGTH_GET_WIFI_VERSION, rbuffer, LR1110_WIFI_LENGTH_GET_WIFI_VERSION ) == LR1110_SPI_STATUS_OK) {
         HAL_DBG_TRACE_INFO_VALUE("%d.%d (0x%X.0x%X)\r\n", rbuffer[0], rbuffer[1], rbuffer[0], rbuffer[1]);
     } else {
         HAL_DBG_TRACE_ERROR("Failed to get WiFi firmware version\r\n");
