@@ -84,8 +84,10 @@ static void getLR1110_Bootloader_Version( const void* context );
  * @brief Get LR1110 temperature
  *
  * @param [in] context Radio abstraction
+ * 
+ * @return temperature in Celsius
  */
-static void getLR1110_Temperature( const void* context );
+static float getLR1110_Temperature( const void* context );
 
 /*!
  * @brief Get LR1110 Chip EUI
@@ -100,8 +102,9 @@ static void getLR1110_Chip_EUI( const void* context );
  *
  * @param [in] context Radio abstraction
  * 
+ * @return battery voltage in Volts
  */
-static void getLR1110_Battery_Voltage( const void* context );
+static float getLR1110_Battery_Voltage( const void* context );
 
 /*!
  * @brief Setup LR1110 TCXO
@@ -516,7 +519,7 @@ void getLR1110_Bootloader_Version( const void* context ) {
   }
 }
 
-void getLR1110_Temperature( const void* context ) {
+float getLR1110_Temperature( const void* context ) {
   HAL_DBG_TRACE_INFO("Getting LR1110 temperature... ");
 
   uint8_t cbuffer[LR1110_GET_TEMPERATURE_CMD_LENGTH];
@@ -534,8 +537,10 @@ void getLR1110_Temperature( const void* context ) {
     if ((uint8_t)temperature > 50) {
       HAL_DBG_TRACE_ERROR("LR1110 temperature is too high. TCXO mode is maybe not set up correctly\r\n");
     }
+    return temperature;
   } else {
     HAL_DBG_TRACE_ERROR("Failed to get LR1110 temperature\r\n");
+    return -1;
   }
 }
 
@@ -555,7 +560,7 @@ void getLR1110_Chip_EUI( const void* context ) {
   }
 }
 
-void getLR1110_Battery_Voltage( const void* context ) {
+float getLR1110_Battery_Voltage( const void* context ) {
   HAL_DBG_TRACE_INFO("Getting LR1110 battery voltage... ");
 
   uint8_t cbuffer[LR1110_GET_BATTERY_VOLTAGE_CMD_LENGTH];
@@ -568,8 +573,10 @@ void getLR1110_Battery_Voltage( const void* context ) {
 
     float batteryVoltage = (((5 * rbuffer[0])/255.0) - 1) * 1.35;
     HAL_DBG_TRACE_INFO_VALUE("%d.%d V\r\n", (uint8_t)batteryVoltage, (uint8_t)((batteryVoltage - (uint8_t)batteryVoltage) * 100));
+    return batteryVoltage;
   } else {
     HAL_DBG_TRACE_ERROR("Failed to get LR1110 battery voltage\r\n");
+    return -1;
   }
 }
 

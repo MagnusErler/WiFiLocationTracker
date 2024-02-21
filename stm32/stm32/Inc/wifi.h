@@ -169,10 +169,8 @@ typedef enum {
  * @param [in] nb_scan_per_chan Number of scan per channel
  * @param [in] timeout Timeout for the scan
  * @param [in] abort_on_timeout If true, the scan will be aborted on timeout
- * 
- * @return Operation status
  */
-lr1110_wifi_status_t scanLR1110_WiFi_Networks( const void* context, const lr11xx_wifi_signal_type_scan_t signal_type, 
+void scanLR1110_WiFi_Networks( const void* context, const lr11xx_wifi_signal_type_scan_t signal_type, 
                                     const lr11xx_wifi_channel_mask_t chan_mask, const lr11xx_wifi_mode_t acq_mode, 
                                     const uint8_t nb_max_res, const uint8_t nb_scan_per_chan, const uint16_t timeout, const bool abort_on_timeout );
 
@@ -180,16 +178,12 @@ lr1110_wifi_status_t scanLR1110_WiFi_Networks( const void* context, const lr11xx
  * @brief Get LR1110 WiFi version
  *
  * @param [in] context Radio abstraction
- * 
- * @return Operation status
  */
-lr1110_wifi_status_t getLR1110_WiFi_Version( const void* context);
+void getLR1110_WiFi_Version( const void* context);
 
 /*!
  * @brief Get the number of WiFi results
  *
  * @param [in] context Radio abstraction
- * 
- * @return Operation status
  */
-lr1110_wifi_status_t getLR1110_WiFi_Number_of_Results( const void* context );
+void getLR1110_WiFi_Number_of_Results( const void* context );

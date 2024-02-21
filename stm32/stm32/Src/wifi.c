@@ -114,7 +114,7 @@ static lr1110_wifi_status_t getWiFiFullResults( const void* context, const uint8
     return _fetch_and_aggregate_all_results( context, start_result_index, nb_results, nb_results_per_chunk_max, LR11XX_WIFI_RESULT_FORMAT_EXTENDED_FULL, result_buffer1, result_interface );
 }
 
-lr1110_wifi_status_t getLR1110_WiFi_Number_of_Results( const void* context ) {
+void getLR1110_WiFi_Number_of_Results( const void* context ) {
     HAL_DBG_TRACE_INFO("Getting number of WiFi networks found... ");
 
     uint8_t cbuffer[LR1110_GET_NB_RESULTS_WIFI_CMD_LENGTH];
@@ -131,7 +131,7 @@ lr1110_wifi_status_t getLR1110_WiFi_Number_of_Results( const void* context ) {
         for( int i = 0; i < nb_results; i++ ) {
             if (getWiFiFullResults( context, i, 1, &wifi_scan_result ) != LR1110_WIFI_STATUS_OK) {
                 HAL_DBG_TRACE_ERROR( "Failed to read WiFi networks\r\n" );
-                return LR1110_WIFI_STATUS_ERROR;
+                return;
             }
             HAL_DBG_TRACE_INFO( "WiFi %d: MAC: %02x:%02x:%02x:%02x:%02x:%02x, RSSI: %d, uptime: %d.%d day(s), SSID: %s\r\n", i, wifi_scan_result.mac_address_3[0], wifi_scan_result.mac_address_3[1], wifi_scan_result.mac_address_3[2], wifi_scan_result.mac_address_3[3], wifi_scan_result.mac_address_3[4], wifi_scan_result.mac_address_3[5], wifi_scan_result.rssi, (uint8_t)(wifi_scan_result.timestamp_us / 86400000000.0), (uint8_t)(((wifi_scan_result.timestamp_us / 86400000000.0) - (uint8_t)(wifi_scan_result.timestamp_us / 86400000000.0)) * 100), wifi_scan_result.ssid_bytes );
             // HAL_DBG_TRACE_INFO( "rate: %d\r\n", wifi_scan_result.rate );
@@ -146,14 +146,12 @@ lr1110_wifi_status_t getLR1110_WiFi_Number_of_Results( const void* context ) {
             // HAL_DBG_TRACE_INFO( "fcs_check_byte: %d\r\n", wifi_scan_result.fcs_check_byte.is_fcs_checked );
             // HAL_DBG_TRACE_INFO( "phi_offset: %d\r\n", wifi_scan_result.phi_offset );
         }
-        return LR1110_WIFI_STATUS_OK;
     } else {
         HAL_DBG_TRACE_ERROR("Failed to get WiFi networks count\r\n");
-        return LR1110_WIFI_STATUS_ERROR;
     }
 }
 
-lr1110_wifi_status_t scanLR1110_WiFi_Networks( const void* context, const lr11xx_wifi_signal_type_scan_t signal_type, const lr11xx_wifi_channel_mask_t chan_mask, const lr11xx_wifi_mode_t acq_mode, const uint8_t nb_max_res, const uint8_t nb_scan_per_chan, const uint16_t timeout, const bool abort_on_timeout ) {
+void scanLR1110_WiFi_Networks( const void* context, const lr11xx_wifi_signal_type_scan_t signal_type, const lr11xx_wifi_channel_mask_t chan_mask, const lr11xx_wifi_mode_t acq_mode, const uint8_t nb_max_res, const uint8_t nb_scan_per_chan, const uint16_t timeout, const bool abort_on_timeout ) {
     HAL_DBG_TRACE_INFO("Scanning WiFi networks... ");
 
     uint8_t cbuffer[LR1110_SCAN_WIFI_CMD_LENGTH];
@@ -176,16 +174,13 @@ lr1110_wifi_status_t scanLR1110_WiFi_Networks( const void* context, const lr11xx
 
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
         turnOffLED(SNIFFING_LED_GPIO_Port, SNIFFING_LED_Pin);
-
-        return LR1110_WIFI_STATUS_OK;
     } else {
         HAL_DBG_TRACE_ERROR("Failed to scan WiFi networks\r\n");
         turnOffLED(SNIFFING_LED_GPIO_Port, SNIFFING_LED_Pin);
-        return LR1110_WIFI_STATUS_ERROR;
     }
 }
 
-lr1110_wifi_status_t getLR1110_WiFi_Version( const void* context ) {
+void getLR1110_WiFi_Version( const void* context ) {
     HAL_DBG_TRACE_INFO("Getting WiFi firmware version... ");
 
     uint8_t cbuffer[LR1110_GET_WIFI_VERSION_CMD_LENGTH];
@@ -196,9 +191,7 @@ lr1110_wifi_status_t getLR1110_WiFi_Version( const void* context ) {
 
     if (lr1110_spi_read( context, cbuffer, LR1110_GET_WIFI_VERSION_CMD_LENGTH, rbuffer, LR1110_GET_WIFI_VERSION_LENGTH ) == LR1110_SPI_STATUS_OK) {
         HAL_DBG_TRACE_INFO_VALUE("%d.%d (0x%X.0x%X)\r\n", rbuffer[0], rbuffer[1], rbuffer[0], rbuffer[1]);
-        return LR1110_WIFI_STATUS_OK;
     } else {
         HAL_DBG_TRACE_ERROR("Failed to get WiFi firmware version\r\n");
-        return LR1110_WIFI_STATUS_ERROR;
     }
 }
