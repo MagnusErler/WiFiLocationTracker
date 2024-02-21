@@ -193,7 +193,7 @@ int main(void)
 
     getLR1110_Temperature(lr1110_context);
 
-    scanLR1110_WiFi_Networks(lr1110_context, LR11XX_WIFI_TYPE_SCAN_B_G_N, 0x3FFF, LR11XX_WIFI_SCAN_MODE_FULL_BEACON, 6, 3, 110, true);
+    scanLR1110_WiFi_Networks(lr1110_context, 0x04, 0x3FFF, 0x04, 32, 3, 500, true);
     uint8_t numberOfResults = getLR1110_WiFi_Number_of_Results(lr1110_context);
 
 

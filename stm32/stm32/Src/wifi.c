@@ -147,7 +147,7 @@ uint8_t getLR1110_WiFi_Number_of_Results( const void* context ) {
     }
 }
 
-void scanLR1110_WiFi_Networks( const void* context, const lr11xx_wifi_signal_type_scan_t signal_type, const lr11xx_wifi_channel_mask_t chan_mask, const lr11xx_wifi_mode_t acq_mode, const uint8_t nb_max_res, const uint8_t nb_scan_per_chan, const uint16_t timeout, const bool abort_on_timeout ) {
+void scanLR1110_WiFi_Networks( const void* context, const uint8_t signal_type, const lr11xx_wifi_channel_mask_t chan_mask, const uint8_t acq_mode, const uint8_t nb_max_res, const uint8_t nb_scan_per_chan, const uint16_t timeout, const bool abort_on_timeout ) {
     HAL_DBG_TRACE_INFO("Scanning WiFi networks... ");
 
     uint8_t cbuffer[LR1110_SCAN_WIFI_CMD_LENGTH];

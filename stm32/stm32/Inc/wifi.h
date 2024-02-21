@@ -137,27 +137,6 @@ typedef enum lr1110_wifi_status_e {
     LR1110_WIFI_STATUS_ERROR     = 0xFF,  //!< WIFI operation failed
 } lr1110_wifi_status_t;
 
-typedef enum {
-    LR11XX_WIFI_TYPE_SCAN_B     = 0x01,  //!< WiFi B
-    LR11XX_WIFI_TYPE_SCAN_G     = 0x02,  //!< WiFi G
-    LR11XX_WIFI_TYPE_SCAN_N     = 0x03,  //!< WiFi N
-    LR11XX_WIFI_TYPE_SCAN_B_G_N = 0x04,  //!< WiFi B and WiFi G/N
-} lr11xx_wifi_signal_type_scan_t;
-
-typedef enum {
-    LR11XX_WIFI_SCAN_MODE_BEACON =
-        1,  //!< Exposes Beacons and Probe Responses Access Points frames until Period Beacon field (Basic result)
-    LR11XX_WIFI_SCAN_MODE_BEACON_AND_PKT =
-        2,  //!< Exposes some Management Access Points frames until Period Beacon field, and some other packets frame
-            //!< until third Mac Address field (Basic result)
-    LR11XX_WIFI_SCAN_MODE_FULL_BEACON =
-        4,  //!< Exposes Beacons and Probes Responses Access Points frames until Frame Check Sequence (FCS) field
-            //!< (Extended result). In this mode, only signal type LR11XX_WIFI_TYPE_SCAN_B is executed and other signal
-            //!< types are silently discarded.
-    LR11XX_WIFI_SCAN_MODE_UNTIL_SSID = 5,  //!< Exposes Beacons and Probes Responses Access Points frames until the end
-                                           //!< of SSID field (Extended result) - available since firmware 0x0306
-} lr11xx_wifi_mode_t;
-
 /*!
  * @brief Scan WiFi networks
  *
@@ -170,9 +149,8 @@ typedef enum {
  * @param [in] timeout Timeout for the scan
  * @param [in] abort_on_timeout If true, the scan will be aborted on timeout
  */
-void scanLR1110_WiFi_Networks( const void* context, const lr11xx_wifi_signal_type_scan_t signal_type, 
-                                    const lr11xx_wifi_channel_mask_t chan_mask, const lr11xx_wifi_mode_t acq_mode, 
-                                    const uint8_t nb_max_res, const uint8_t nb_scan_per_chan, const uint16_t timeout, const bool abort_on_timeout );
+void scanLR1110_WiFi_Networks( const void* context, const uint8_t signal_type, const lr11xx_wifi_channel_mask_t chan_mask, const uint8_t acq_mode, 
+                               const uint8_t nb_max_res, const uint8_t nb_scan_per_chan, const uint16_t timeout, const bool abort_on_timeout );
 
 /*!
  * @brief Get LR1110 WiFi version
