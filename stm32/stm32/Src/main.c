@@ -193,13 +193,13 @@ int main(void)
 
     getLR1110_Temperature(lr1110_context);
 
-    scanLR1110_WiFi_Networks(lr1110_context, 0x04, 0x3FFF, 0x04, 32, 3, 500, true);
+    //scanLR1110_WiFi_Networks(lr1110_context, 0x04, 0x3FFF, 0x04, 32, 3, 500, true);
+    scanLR1110_WiFi_Country_Code(lr1110_context, 0x3FFF, 32, 3, 500, true);
     uint8_t numberOfResults = getLR1110_WiFi_Number_of_Results(lr1110_context);
 
-
-    for( int i = 0; i < numberOfResults; i++ ) {
-      getWiFiFullResults( lr1110_context, i, 1 );
-    }
+    // for( int i = 0; i < numberOfResults; i++ ) {
+    //   getWiFiFullResults( lr1110_context, i, 1 );
+    // }
 
 
     // scanLR1110_GNSS_Satellites(lr1110_context, 0, 0, 0);
@@ -211,6 +211,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    HAL_DBG_TRACE_MSG("Waiting for next while loop...\r\n")
     HAL_Delay(5000);
   }
   /* USER CODE END 3 */

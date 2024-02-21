@@ -147,6 +147,32 @@ uint8_t getLR1110_WiFi_Number_of_Results( const void* context ) {
     }
 }
 
+void scanLR1110_WiFi_Country_Code( const void* context, const lr11xx_wifi_channel_mask_t chan_mask, const uint8_t nb_max_res, 
+                                  const uint8_t nb_scan_per_chan, const uint16_t timeout, const bool abort_on_timeout ) {
+    HAL_DBG_TRACE_INFO("Getting WiFi country code... ");
+
+    uint8_t cbuffer[LR1110_GET_COUNTRY_CODE_CMD_LENGTH];
+
+    cbuffer[0] = ( uint8_t )( LR1110_WIFI_GET_COUNTRY_CODE_CMD >> 8 );
+    cbuffer[1] = ( uint8_t )( LR1110_WIFI_GET_COUNTRY_CODE_CMD >> 0 );
+    cbuffer[2] = ( uint8_t ) ( chan_mask >> 8 );
+    cbuffer[3] = ( uint8_t ) ( chan_mask >> 0 );
+    cbuffer[4] = nb_max_res;
+    cbuffer[5] = nb_scan_per_chan;
+    cbuffer[6] = ( uint8_t ) ( timeout >> 8 );
+    cbuffer[7] = ( uint8_t ) ( timeout >> 0 );
+    cbuffer[8] = ( uint8_t ) ( ( abort_on_timeout == true ) ? 1 : 0 );
+
+    turnOnLED(SNIFFING_LED_GPIO_Port, SNIFFING_LED_Pin);
+    if ( lr1110_spi_write( context, cbuffer, LR1110_GET_COUNTRY_CODE_CMD_LENGTH ) == LR1110_SPI_STATUS_OK ) {
+        HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+        turnOffLED(SNIFFING_LED_GPIO_Port, SNIFFING_LED_Pin);
+    } else {
+        HAL_DBG_TRACE_ERROR("Failed to get WiFi country code\r\n");
+        turnOffLED(SNIFFING_LED_GPIO_Port, SNIFFING_LED_Pin);
+    }
+}
+
 void scanLR1110_WiFi_Networks( const void* context, const uint8_t signal_type, const lr11xx_wifi_channel_mask_t chan_mask, const uint8_t acq_mode, const uint8_t nb_max_res, const uint8_t nb_scan_per_chan, const uint16_t timeout, const bool abort_on_timeout ) {
     HAL_DBG_TRACE_INFO("Scanning WiFi networks... ");
 

@@ -6,6 +6,7 @@
 #define LR1110_CMD_NO_PARAM_LENGTH                  2
 #define LR1110_GET_WIFI_VERSION_CMD_LENGTH          LR1110_CMD_NO_PARAM_LENGTH
 #define LR1110_GET_NB_RESULTS_WIFI_CMD_LENGTH       LR1110_CMD_NO_PARAM_LENGTH
+#define LR1110_GET_COUNTRY_CODE_CMD_LENGTH          LR1110_CMD_NO_PARAM_LENGTH + 7
 #define LR1110_SCAN_WIFI_CMD_LENGTH                 LR1110_CMD_NO_PARAM_LENGTH + 9
 
 // LENGTHS FOR RESPONSES
@@ -14,6 +15,7 @@
 #define LR1110_GET_NB_RESULTS_WIFI_LENGTH           LR1110_NO_PARAM_LENGTH
 
 // LR1110 WIFI COMMANDS
+#define LR1110_WIFI_GET_COUNTRY_CODE_CMD            0x0302
 #define LR1110_WIFI_GET_FIRMWARE_WIFI_VERSION_CMD   0x0320
 #define LR1110_WIFI_GET_NUMBER_OF_RESULTS_CMD       0x0305
 #define LR1110_WIFI_SCAN_WIFI_NETWORKS_CMD          0x0300
@@ -165,6 +167,14 @@ void getLR1110_WiFi_Version( const void* context);
  * @param [in] context Radio abstraction
  */
 uint8_t getLR1110_WiFi_Number_of_Results( const void* context );
+
+/*!
+ * @brief Get the country code
+ *
+ * @param [in] context Radio abstraction
+ */
+void scanLR1110_WiFi_Country_Code( const void* context, const lr11xx_wifi_channel_mask_t chan_mask, const uint8_t nb_max_res, 
+                                  const uint8_t nb_scan_per_chan, const uint16_t timeout, const bool abort_on_timeout );
 
 /*!
  * @brief Get WiFi results
