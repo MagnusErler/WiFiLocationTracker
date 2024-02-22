@@ -1,14 +1,13 @@
 /**
   ******************************************************************************
   * @file           : spi.c
-  * @brief          : Containing all SPI code
+  * @brief          : Containing all SPI functions
   ******************************************************************************
   */
 
 #include "spi.h"
 
 #include "led.h"
-
 #include "main.h"       // for HAL_DBG_TRACE-functions
 
 // Comment out the following line to disable debug messages

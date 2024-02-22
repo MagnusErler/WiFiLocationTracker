@@ -1,12 +1,15 @@
+/**
+  ******************************************************************************
+  * @file           : gnss.c
+  * @brief          : Containing all GNSS functions
+  ******************************************************************************
+  */
 
 #include "gnss.h"
 
 #include "spi.h"
-
 #include "led.h"
-
 #include "main.h"       // for HAL_DBG_TRACE-functions
-
 
 uint8_t getLR1110_GNSS_Number_of_Detected_Satellites( const void* context) {
     HAL_DBG_TRACE_INFO("Getting number of detected satellites... ");

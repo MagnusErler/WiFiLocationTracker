@@ -1,10 +1,14 @@
+/**
+  ******************************************************************************
+  * @file           : wifi.c
+  * @brief          : Containing all WiFi functions
+  ******************************************************************************
+  */
 
 #include "wifi.h"
 
 #include "spi.h"
-
 #include "main.h"   // for HAL_DBG_TRACE-functions
-
 #include "led.h"
 
 #include <stdint.h>
