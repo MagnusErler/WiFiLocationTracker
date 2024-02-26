@@ -89,11 +89,11 @@ static void getLR1110_Bootloader_Version( const void* context );
 static float getLR1110_Temperature( const void* context );
 
 /*!
- * @brief Get LR1110 Chip EUI
+ * @brief Get LR1110 DevEUI
  *
  * @param [in] context Radio abstraction
  */
-static void getLR1110_Chip_EUI( const void* context );
+static void getLR1110_DevEUI( const void* context );
 
 /*!
  * @brief Get LR1110 Semtech JoinEui
@@ -185,7 +185,7 @@ int main(void)
 
   getLR1110_Bootloader_Version(lr1110_context);
   getLR1110_WiFi_Version(lr1110_context);
-  getLR1110_Chip_EUI(lr1110_context);
+  getLR1110_DevEUI(lr1110_context);
   getLR1110_Semtech_JoinEui(lr1110_context);
   getLR1110_Temperature(lr1110_context);
   getLR1110_Battery_Voltage(lr1110_context);
@@ -555,19 +555,19 @@ float getLR1110_Temperature( const void* context ) {
   }
 }
 
-void getLR1110_Chip_EUI( const void* context ) {
-  HAL_DBG_TRACE_INFO("Getting LR1110 Chip EUI... ");
+void getLR1110_DevEUI( const void* context ) {
+  HAL_DBG_TRACE_INFO("Getting LR1110 DevEUI... ");
 
-  uint8_t cbuffer[LR1110_GET_CHIP_EUI_CMD_LENGTH];
-  uint8_t rbuffer[LR1110_GET_CHIP_EUI_LENGTH] = { 0 };
+  uint8_t cbuffer[LR1110_GET_DEVEUI_CMD_LENGTH];
+  uint8_t rbuffer[LR1110_GET_DEVEUI_LENGTH] = { 0 };
 
-  cbuffer[0] = ( uint8_t )( LR1110_GET_CHIP_EUI_CMD >> 8 );
-  cbuffer[1] = ( uint8_t )( LR1110_GET_CHIP_EUI_CMD >> 0 );
+  cbuffer[0] = ( uint8_t )( LR1110_GET_DEVEUI_CMD >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_GET_DEVEUI_CMD >> 0 );
 
-  if (lr1110_spi_read( context, cbuffer, LR1110_GET_CHIP_EUI_CMD_LENGTH, rbuffer, LR1110_GET_CHIP_EUI_LENGTH ) == LR1110_SPI_STATUS_OK) {
+  if (lr1110_spi_read( context, cbuffer, LR1110_GET_DEVEUI_CMD_LENGTH, rbuffer, LR1110_GET_DEVEUI_LENGTH ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_INFO_VALUE("%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X\r\n", rbuffer[0], rbuffer[1], rbuffer[2], rbuffer[3], rbuffer[4], rbuffer[5], rbuffer[6], rbuffer[7]);
   } else {
-    HAL_DBG_TRACE_ERROR("Failed to get LR1110 Chip EUI\r\n");
+    HAL_DBG_TRACE_ERROR("Failed to get LR1110 DevEUI\r\n");
   }
 }
 
