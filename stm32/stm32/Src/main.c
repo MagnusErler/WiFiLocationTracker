@@ -28,11 +28,8 @@
 #include <stdio.h>  // used for vsprintf function
 
 #include "led.h"
-
 #include "spi.h"
-
 #include "wifi.h"
-
 #include "gnss.h"
 
 

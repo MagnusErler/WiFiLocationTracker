@@ -1,7 +1,6 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-
 // LENGTHS FOR COMMANDS
 #define LR1110_WIFI_CMD_LENGTH_NO_PARAM                 2
 #define LR1110_WIFI_CMD_LENGTH_GET_WIFI_VERSION         LR1110_WIFI_CMD_LENGTH_NO_PARAM
