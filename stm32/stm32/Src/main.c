@@ -31,6 +31,7 @@
 #include "spi.h"
 #include "wifi.h"
 #include "gnss.h"
+#include "lora.h"
 
 
 /* USER CODE END Includes */
@@ -186,6 +187,12 @@ int main(void)
   getLR1110_Semtech_JoinEui(lr1110_context);
   getLR1110_Temperature(lr1110_context);
   getLR1110_Battery_Voltage(lr1110_context);
+
+  setLR1110_LoRa_Packet_Type(lr1110_context, 0x02);
+  setLR1110_LoRa_Modulation_Params(lr1110_context, 0x00, 0x00, 0x00, 0x00);   // DONT KNOW WHAT TO PUT HERE
+  setLR1110_LoRa_Packet_Params(lr1110_context, 0x00, 0x00, 0x00, 0x00, 0x00); // DONT KNOW WHAT TO PUT HERE
+  setLR1110_LoRa_PA_Config(lr1110_context, 0x00, 0x00, 0x00, 0x00);           // DONT KNOW WHAT TO PUT HERE
+  setLR1110_LoRa_TX_Params(lr1110_context, 0x00, 0x00);                       // DONT KNOW WHAT TO PUT HERE
 
   /* USER CODE END 2 */
 

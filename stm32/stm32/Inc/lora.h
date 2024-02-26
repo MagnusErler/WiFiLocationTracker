@@ -1,4 +1,4 @@
-
+#include <stdint.h>
 
 // LENGTHS FOR COMMANDS
 #define LR1110_LORA_CMD_LENGTH_NO_PARAM                 2
