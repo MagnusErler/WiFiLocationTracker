@@ -84,3 +84,20 @@ void setLR1110_LoRa_PA_Config( const void* context, uint8_t pa_sel, uint8_t reg_
         HAL_DBG_TRACE_ERROR("Failed to set LoRa PA configuation\r\n");
     }
 }
+
+void setLR1110_LoRa_TX_Params( const void* context, uint8_t tx_power, uint8_t ramp_time) {
+    HAL_DBG_TRACE_INFO("Setting LoRa TX parameters... ");
+
+    uint8_t cbuffer[LR1110_LORA_CMD_LENGTH_SET_TX_PARAMS];
+
+    cbuffer[0] = ( uint8_t )( LR1110_LORA_CMD_SET_TX_PARAMS >> 8 );
+    cbuffer[1] = ( uint8_t )( LR1110_LORA_CMD_SET_TX_PARAMS >> 0 );
+    cbuffer[2] = tx_power;
+    cbuffer[3] = ramp_time;
+
+    if ( lr1110_spi_write( context, cbuffer, LR1110_LORA_CMD_LENGTH_SET_TX_PARAMS ) == LR1110_SPI_STATUS_OK ) {
+        HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+    } else {
+        HAL_DBG_TRACE_ERROR("Failed to set LoRa TX parameters\r\n");
+    }
+}
