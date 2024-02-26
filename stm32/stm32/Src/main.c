@@ -76,7 +76,6 @@ static void MX_SPI1_Init(void);
  * @brief Get LR1110 version
  *
  * @param [in] context Radio abstraction
- * 
  */
 static void getLR1110_Bootloader_Version( const void* context );
 
@@ -93,9 +92,16 @@ static float getLR1110_Temperature( const void* context );
  * @brief Get LR1110 Chip EUI
  *
  * @param [in] context Radio abstraction
- * 
  */
 static void getLR1110_Chip_EUI( const void* context );
+
+/*!
+ * @brief Get LR1110 Semtech JoinEui
+ *
+ * @param [in] context Radio abstraction
+ * 
+ */
+static void getLR1110_Semtech_JoinEui( const void* context );
 
 /*!
  * @brief Get LR1110 Battery Voltage
@@ -110,7 +116,6 @@ static float getLR1110_Battery_Voltage( const void* context );
  * @brief Setup LR1110 TCXO
  *
  * @param [in] context Radio abstraction
- * 
  */
 static void setupLR1110_TCXO( const void* context );
 
@@ -118,7 +123,6 @@ static void setupLR1110_TCXO( const void* context );
  * @brief Reset LR1110
  *
  * @param [in] context Radio abstraction
- * 
  */
 static void resetLR1110( const void* context );
 
@@ -182,6 +186,7 @@ int main(void)
   getLR1110_Bootloader_Version(lr1110_context);
   getLR1110_WiFi_Version(lr1110_context);
   getLR1110_Chip_EUI(lr1110_context);
+  getLR1110_Semtech_JoinEui(lr1110_context);
   getLR1110_Temperature(lr1110_context);
   getLR1110_Battery_Voltage(lr1110_context);
 
@@ -563,6 +568,22 @@ void getLR1110_Chip_EUI( const void* context ) {
     HAL_DBG_TRACE_INFO_VALUE("%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X\r\n", rbuffer[0], rbuffer[1], rbuffer[2], rbuffer[3], rbuffer[4], rbuffer[5], rbuffer[6], rbuffer[7]);
   } else {
     HAL_DBG_TRACE_ERROR("Failed to get LR1110 Chip EUI\r\n");
+  }
+}
+
+void getLR1110_Semtech_JoinEui( const void* context ) {
+  HAL_DBG_TRACE_INFO("Getting LR1110 Semtech JoinEUI... ");
+
+  uint8_t cbuffer[LR1110_GET_SEMTECH_JOINEUI_CMD_LENGTH];
+  uint8_t rbuffer[LR1110_GET_SEMTECH_JOINEUI_LENGTH] = { 0 };
+
+  cbuffer[0] = ( uint8_t )( LR1110_GET_SEMTECH_JOINEUI_CMD >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_GET_SEMTECH_JOINEUI_CMD >> 0 );
+
+  if (lr1110_spi_read( context, cbuffer, LR1110_GET_SEMTECH_JOINEUI_CMD_LENGTH, rbuffer, LR1110_GET_SEMTECH_JOINEUI_LENGTH ) == LR1110_SPI_STATUS_OK) {
+    HAL_DBG_TRACE_INFO_VALUE("%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X\r\n", rbuffer[0], rbuffer[1], rbuffer[2], rbuffer[3], rbuffer[4], rbuffer[5], rbuffer[6], rbuffer[7]);
+  } else {
+    HAL_DBG_TRACE_ERROR("Failed to get LR1110 Semtech JoinEUI\r\n");
   }
 }
 
