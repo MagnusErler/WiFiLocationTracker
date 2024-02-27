@@ -28,12 +28,10 @@
 #include <stdio.h>  // used for vsprintf function
 
 #include "led.h"
-
 #include "spi.h"
-
 #include "wifi.h"
-
 #include "gnss.h"
+#include "lora.h"
 
 
 /* USER CODE END Includes */
@@ -89,11 +87,11 @@ static void getLR1110_Bootloader_Version( const void* context );
 static float getLR1110_Temperature( const void* context );
 
 /*!
- * @brief Get LR1110 DevEUI
+ * @brief Get LR1110 ChipEUI
  *
  * @param [in] context Radio abstraction
  */
-static void getLR1110_DevEUI( const void* context );
+static void getLR1110_ChipEUI( const void* context );
 
 /*!
  * @brief Get LR1110 Semtech JoinEui
@@ -185,10 +183,16 @@ int main(void)
 
   getLR1110_Bootloader_Version(lr1110_context);
   getLR1110_WiFi_Version(lr1110_context);
-  getLR1110_DevEUI(lr1110_context);
+  getLR1110_ChipEUI(lr1110_context);
   getLR1110_Semtech_JoinEui(lr1110_context);
   getLR1110_Temperature(lr1110_context);
   getLR1110_Battery_Voltage(lr1110_context);
+
+  setLR1110_LoRa_Packet_Type(lr1110_context, 0x02);
+  setLR1110_LoRa_Modulation_Params(lr1110_context, 0x07, 0x05, 0x01, 0x00);         // NOT SURE ABOUT TVALUE 4
+  setLR1110_LoRa_Packet_Params(lr1110_context, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00); // NOT SURE ABOUT VALUE 1,2,4 and 6
+  setLR1110_LoRa_PA_Config(lr1110_context, 0x00, 0x00, 0x00, 0x00);                 // DONT KNOW WHAT TO PUT HERE
+  setLR1110_LoRa_TX_Params(lr1110_context, 0x00, 0x00);                             // DONT KNOW WHAT TO PUT HERE
 
   /* USER CODE END 2 */
 
@@ -207,11 +211,15 @@ int main(void)
 
 
 
+    //gfsk
+    //Bitrate (bps): 150000
+    // Freq dev (hz): 50000
+
     scanLR1110_GNSS_Satellites(lr1110_context, 0, 0, 0);
     uint8_t numberOfDetectedSatellites = getLR1110_GNSS_Number_of_Detected_Satellites(lr1110_context);
     if (numberOfDetectedSatellites > 0) {
       getLR1110_GNSS_Detected_Satellites(lr1110_context, numberOfDetectedSatellites);
-      getLR1110_GNSS_GET_CONSUMPTION(lr1110_context);
+      getLR1110_GNSS_Consumption(lr1110_context);
     }
 
 
@@ -561,19 +569,19 @@ float getLR1110_Temperature( const void* context ) {
   }
 }
 
-void getLR1110_DevEUI( const void* context ) {
-  HAL_DBG_TRACE_INFO("Getting LR1110 DevEUI... ");
+void getLR1110_ChipEUI( const void* context ) {
+  HAL_DBG_TRACE_INFO("Getting LR1110 ChipEUI... ");
 
-  uint8_t cbuffer[LR1110_GET_DEVEUI_CMD_LENGTH];
-  uint8_t rbuffer[LR1110_GET_DEVEUI_LENGTH] = { 0 };
+  uint8_t cbuffer[LR1110_GET_CHIPEUI_CMD_LENGTH];
+  uint8_t rbuffer[LR1110_GET_CHIPEUI_LENGTH] = { 0 };
 
-  cbuffer[0] = ( uint8_t )( LR1110_GET_DEVEUI_CMD >> 8 );
-  cbuffer[1] = ( uint8_t )( LR1110_GET_DEVEUI_CMD >> 0 );
+  cbuffer[0] = ( uint8_t )( LR1110_GET_CHIPEUI_CMD >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_GET_CHIPEUI_CMD >> 0 );
 
-  if (lr1110_spi_read( context, cbuffer, LR1110_GET_DEVEUI_CMD_LENGTH, rbuffer, LR1110_GET_DEVEUI_LENGTH ) == LR1110_SPI_STATUS_OK) {
+  if (lr1110_spi_read( context, cbuffer, LR1110_GET_CHIPEUI_CMD_LENGTH, rbuffer, LR1110_GET_CHIPEUI_LENGTH ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_INFO_VALUE("%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X\r\n", rbuffer[0], rbuffer[1], rbuffer[2], rbuffer[3], rbuffer[4], rbuffer[5], rbuffer[6], rbuffer[7]);
   } else {
-    HAL_DBG_TRACE_ERROR("Failed to get LR1110 DevEUI\r\n");
+    HAL_DBG_TRACE_ERROR("Failed to get LR1110 ChipEUI\r\n");
   }
 }
 
