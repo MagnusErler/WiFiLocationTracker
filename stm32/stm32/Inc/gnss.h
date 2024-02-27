@@ -26,27 +26,6 @@
 #define LR1110_GET_CONSUMPTION_CMD                  0x0419
 
 /*!
- * @brief Representation of absolute time for GNSS operations
- *
- * The GNSS absolute time is represented as a 32 bits word that is the number of seconds elapsed since January 6th 1980,
- * 00:00:00
- *
- * The GNSS absolute time must take into account the Leap Seconds between UTC time and GPS time.
- */
-typedef uint32_t lr11xx_gnss_date_t;
-
-
-
-/*!
- * @brief Search mode for GNSS scan
- */
-typedef enum {
-    LR11XX_GNSS_OPTION_DEFAULT     = 0x00,  //!< Search all requested satellites or fail
-    LR11XX_GNSS_OPTION_BEST_EFFORT = 0x01,  //!< Add additional search if not all satellites are found
-} lr11xx_gnss_search_mode_t;
-
-
-/*!
  * @brief Scan for GNSS satellites
  *
  * @param [in] context Radio abstraction
@@ -59,8 +38,9 @@ uint8_t getLR1110_GNSS_Number_of_Detected_Satellites( const void* context );
  * @brief Scan for GNSS satellites
  *
  * @param [in] context Radio abstraction
+ * @param [in] nb_of_satellites Number of detected satellites
  */
-void getLR1110_GNSS_Detected_Satellites( const void* context );
+void getLR1110_GNSS_Detected_Satellites( const void* context, uint8_t nb_of_satellites );
 
 /*!
  * @brief Scan for GNSS satellites

@@ -76,7 +76,6 @@ static void MX_SPI1_Init(void);
  * @brief Get LR1110 version
  *
  * @param [in] context Radio abstraction
- * 
  */
 static void getLR1110_Bootloader_Version( const void* context );
 
@@ -90,12 +89,19 @@ static void getLR1110_Bootloader_Version( const void* context );
 static float getLR1110_Temperature( const void* context );
 
 /*!
- * @brief Get LR1110 Chip EUI
+ * @brief Get LR1110 DevEUI
+ *
+ * @param [in] context Radio abstraction
+ */
+static void getLR1110_DevEUI( const void* context );
+
+/*!
+ * @brief Get LR1110 Semtech JoinEui
  *
  * @param [in] context Radio abstraction
  * 
  */
-static void getLR1110_Chip_EUI( const void* context );
+static void getLR1110_Semtech_JoinEui( const void* context );
 
 /*!
  * @brief Get LR1110 Battery Voltage
@@ -110,7 +116,6 @@ static float getLR1110_Battery_Voltage( const void* context );
  * @brief Setup LR1110 TCXO
  *
  * @param [in] context Radio abstraction
- * 
  */
 static void setupLR1110_TCXO( const void* context );
 
@@ -118,7 +123,6 @@ static void setupLR1110_TCXO( const void* context );
  * @brief Reset LR1110
  *
  * @param [in] context Radio abstraction
- * 
  */
 static void resetLR1110( const void* context );
 
@@ -181,7 +185,8 @@ int main(void)
 
   getLR1110_Bootloader_Version(lr1110_context);
   getLR1110_WiFi_Version(lr1110_context);
-  getLR1110_Chip_EUI(lr1110_context);
+  getLR1110_DevEUI(lr1110_context);
+  getLR1110_Semtech_JoinEui(lr1110_context);
   getLR1110_Temperature(lr1110_context);
   getLR1110_Battery_Voltage(lr1110_context);
 
@@ -191,21 +196,30 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1) {
 
-    getLR1110_Temperature(lr1110_context);
+    scanLR1110_WiFi_Networks(lr1110_context, 0x04, 0x3FFF, 0x04, 32, 3, 500, true);
+    //scanLR1110_WiFi_Country_Code(lr1110_context, 0x3FFF, 32, 3, 500, true);
+    uint8_t numberOfResults = getLR1110_WiFi_Number_of_Results(lr1110_context);
+    //getLR1110_WiFi_Results(lr1110_context, 0, 6, 4);
 
-    //scanLR1110_WiFi_Networks(lr1110_context, LR11XX_WIFI_TYPE_SCAN_B_G_N, 0x3FFF, LR11XX_WIFI_SCAN_MODE_FULL_BEACON, 6, 3, 110, true);
-    //getLR1110_WiFi_Number_of_Results(lr1110_context);
-
-    scanLR1110_GNSS_Satellites(lr1110_context, 0, 0, 0);
-    if (getLR1110_GNSS_Number_of_Detected_Satellites(lr1110_context) > 0) {
-      getLR1110_GNSS_Detected_Satellites(lr1110_context);
+    for( int i = 0; i < numberOfResults; i++ ) {
+      getWiFiFullResults( lr1110_context, i, 1 );
     }
 
+
     getLR1110_GNSS_GET_CONSUMPTION(lr1110_context);
+
+
+    // scanLR1110_GNSS_Satellites(lr1110_context, 0, 0, 0);
+    // uint8_t numberOfDetectedSatellites = getLR1110_GNSS_Number_of_Detected_Satellites(lr1110_context);
+    // if (numberOfDetectedSatellites > 0) {
+    //   getLR1110_GNSS_Detected_Satellites(lr1110_context, numberOfDetectedSatellites);
+    // }
+
 
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    HAL_DBG_TRACE_MSG("Waiting for next while loop...\r\n")
     HAL_Delay(5000);
   }
   /* USER CODE END 3 */
@@ -545,19 +559,35 @@ float getLR1110_Temperature( const void* context ) {
   }
 }
 
-void getLR1110_Chip_EUI( const void* context ) {
-  HAL_DBG_TRACE_INFO("Getting LR1110 Chip EUI... ");
+void getLR1110_DevEUI( const void* context ) {
+  HAL_DBG_TRACE_INFO("Getting LR1110 DevEUI... ");
 
-  uint8_t cbuffer[LR1110_GET_CHIP_EUI_CMD_LENGTH];
-  uint8_t rbuffer[LR1110_GET_CHIP_EUI_LENGTH] = { 0 };
+  uint8_t cbuffer[LR1110_GET_DEVEUI_CMD_LENGTH];
+  uint8_t rbuffer[LR1110_GET_DEVEUI_LENGTH] = { 0 };
 
-  cbuffer[0] = ( uint8_t )( LR1110_GET_CHIP_EUI_CMD >> 8 );
-  cbuffer[1] = ( uint8_t )( LR1110_GET_CHIP_EUI_CMD >> 0 );
+  cbuffer[0] = ( uint8_t )( LR1110_GET_DEVEUI_CMD >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_GET_DEVEUI_CMD >> 0 );
 
-  if (lr1110_spi_read( context, cbuffer, LR1110_GET_CHIP_EUI_CMD_LENGTH, rbuffer, LR1110_GET_CHIP_EUI_LENGTH ) == LR1110_SPI_STATUS_OK) {
+  if (lr1110_spi_read( context, cbuffer, LR1110_GET_DEVEUI_CMD_LENGTH, rbuffer, LR1110_GET_DEVEUI_LENGTH ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_INFO_VALUE("%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X\r\n", rbuffer[0], rbuffer[1], rbuffer[2], rbuffer[3], rbuffer[4], rbuffer[5], rbuffer[6], rbuffer[7]);
   } else {
-    HAL_DBG_TRACE_ERROR("Failed to get LR1110 Chip EUI\r\n");
+    HAL_DBG_TRACE_ERROR("Failed to get LR1110 DevEUI\r\n");
+  }
+}
+
+void getLR1110_Semtech_JoinEui( const void* context ) {
+  HAL_DBG_TRACE_INFO("Getting LR1110 Semtech JoinEUI... ");
+
+  uint8_t cbuffer[LR1110_GET_SEMTECH_JOINEUI_CMD_LENGTH];
+  uint8_t rbuffer[LR1110_GET_SEMTECH_JOINEUI_LENGTH] = { 0 };
+
+  cbuffer[0] = ( uint8_t )( LR1110_GET_SEMTECH_JOINEUI_CMD >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_GET_SEMTECH_JOINEUI_CMD >> 0 );
+
+  if (lr1110_spi_read( context, cbuffer, LR1110_GET_SEMTECH_JOINEUI_CMD_LENGTH, rbuffer, LR1110_GET_SEMTECH_JOINEUI_LENGTH ) == LR1110_SPI_STATUS_OK) {
+    HAL_DBG_TRACE_INFO_VALUE("%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X\r\n", rbuffer[0], rbuffer[1], rbuffer[2], rbuffer[3], rbuffer[4], rbuffer[5], rbuffer[6], rbuffer[7]);
+  } else {
+    HAL_DBG_TRACE_ERROR("Failed to get LR1110 Semtech JoinEUI\r\n");
   }
 }
 

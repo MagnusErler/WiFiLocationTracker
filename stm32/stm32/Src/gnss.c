@@ -1,12 +1,15 @@
+/**
+  ******************************************************************************
+  * @file           : gnss.c
+  * @brief          : Containing all GNSS functions
+  ******************************************************************************
+  */
 
 #include "gnss.h"
 
 #include "spi.h"
-
 #include "led.h"
-
 #include "main.h"       // for HAL_DBG_TRACE-functions
-
 
 uint8_t getLR1110_GNSS_Number_of_Detected_Satellites( const void* context) {
     HAL_DBG_TRACE_INFO("Getting number of detected satellites... ");
@@ -26,18 +29,19 @@ uint8_t getLR1110_GNSS_Number_of_Detected_Satellites( const void* context) {
     }
 }
 
-void getLR1110_GNSS_Detected_Satellites( const void* context ) {
+void getLR1110_GNSS_Detected_Satellites( const void* context, uint8_t nb_of_satellites) {
     HAL_DBG_TRACE_INFO("Getting GNSS satellites detected... \r\n");
 
     uint8_t cbuffer[LR1110_GET_SATELLITES_DETECTED_CMD_LENGTH];
-    uint8_t rbuffer[LR1110_GET_SATELLITES_DETECTED_LENGTH] = { 0 };
+    uint8_t rbuffer[LR1110_GET_SATELLITES_DETECTED_LENGTH + nb_of_satellites];
 
     cbuffer[0] = ( uint8_t )( LR1110_GET_SATELLITES_DETECTED_CMD >> 8 );
     cbuffer[1] = ( uint8_t )( LR1110_GET_SATELLITES_DETECTED_CMD >> 0 );
 
-    if (lr1110_spi_read( context, cbuffer, LR1110_GET_SATELLITES_DETECTED_CMD_LENGTH, rbuffer, LR1110_GET_SATELLITES_DETECTED_LENGTH ) == LR1110_SPI_STATUS_OK) {
-        HAL_DBG_TRACE_INFO("GNSS SATELLITES detected 0: %d\r\n", rbuffer[0]);
-        HAL_DBG_TRACE_INFO("GNSS SATELLITES detected 1: %d\r\n", rbuffer[1]);
+    if (lr1110_spi_read( context, cbuffer, LR1110_GET_SATELLITES_DETECTED_CMD_LENGTH, rbuffer, LR1110_GET_SATELLITES_DETECTED_LENGTH + nb_of_satellites ) == LR1110_SPI_STATUS_OK) {
+        for (uint8_t i = 0; i < nb_of_satellites; i++) {
+            HAL_DBG_TRACE_INFO_VALUE("Sattelite ID %d: %d, C/N0 %d\r\n", i, rbuffer[i], rbuffer[i+1]);
+        }
     } else {
         HAL_DBG_TRACE_ERROR("Failed to get GNSS satellites detected\r\n");
     }

@@ -3,20 +3,25 @@
 
 
 // LENGTHS FOR COMMANDS
-#define LR1110_CMD_NO_PARAM_LENGTH                  2
-#define LR1110_GET_WIFI_VERSION_CMD_LENGTH          LR1110_CMD_NO_PARAM_LENGTH
-#define LR1110_GET_NB_RESULTS_WIFI_CMD_LENGTH       LR1110_CMD_NO_PARAM_LENGTH
-#define LR1110_SCAN_WIFI_CMD_LENGTH                 LR1110_CMD_NO_PARAM_LENGTH + 9
+#define LR1110_WIFI_CMD_LENGTH_NO_PARAM                 2
+#define LR1110_WIFI_CMD_LENGTH_GET_WIFI_VERSION         LR1110_WIFI_CMD_LENGTH_NO_PARAM
+#define LR1110_WIFI_CMD_LENGTH_GET_NUMBER_OF_RESULTS    LR1110_WIFI_CMD_LENGTH_NO_PARAM
+#define LR1110_WIFI_CMD_LENGTH_GET_COUNTRY_CODE         LR1110_WIFI_CMD_LENGTH_NO_PARAM + 7
+#define LR1110_WIFI_CMD_LENGTH_GET_RESULTS              LR1110_WIFI_CMD_LENGTH_NO_PARAM + 3
+#define LR1110_WIFI_CMD_LENGTH_SCAN_WIFI                LR1110_WIFI_CMD_LENGTH_NO_PARAM + 9
 
 // LENGTHS FOR RESPONSES
-#define LR1110_NO_PARAM_LENGTH                      1
-#define LR1110_GET_WIFI_VERSION_LENGTH              LR1110_NO_PARAM_LENGTH + 1
-#define LR1110_GET_NB_RESULTS_WIFI_LENGTH           LR1110_NO_PARAM_LENGTH
+#define LR1110_WIFI_LENGTH_NO_PARAM                     1
+#define LR1110_WIFI_LENGTH_GET_WIFI_VERSION             LR1110_WIFI_LENGTH_NO_PARAM + 1
+#define LR1110_WIFI_LENGTH_GET_NUMBER_OF_RESULTS        LR1110_WIFI_LENGTH_NO_PARAM
+#define LR1110_WIFI_LENGTH_GET_RESULTS                  LR1110_WIFI_LENGTH_NO_PARAM
 
 // LR1110 WIFI COMMANDS
-#define LR1110_WIFI_GET_FIRMWARE_WIFI_VERSION_CMD   0x0320
-#define LR1110_WIFI_GET_NUMBER_OF_RESULTS_CMD       0x0305
-#define LR1110_WIFI_SCAN_WIFI_NETWORKS_CMD          0x0300
+#define LR1110_WIFI_CMD_GET_COUNTRY_CODE                0x0302
+#define LR1110_WIFI_CMD_GET_FIRMWARE_WIFI_VERSION       0x0320
+#define LR1110_WIFI_CMD_GET_NUMBER_OF_RESULTS           0x0305
+#define LR1110_WIFI_CMD_GET_RESULTS                     0x0306
+#define LR1110_WIFI_CMD_SCAN_WIFI_NETWORKS              0x0300
 
 /*!
  * @brief Type to store a WiFi datarate info byte
@@ -137,27 +142,6 @@ typedef enum lr1110_wifi_status_e {
     LR1110_WIFI_STATUS_ERROR     = 0xFF,  //!< WIFI operation failed
 } lr1110_wifi_status_t;
 
-typedef enum {
-    LR11XX_WIFI_TYPE_SCAN_B     = 0x01,  //!< WiFi B
-    LR11XX_WIFI_TYPE_SCAN_G     = 0x02,  //!< WiFi G
-    LR11XX_WIFI_TYPE_SCAN_N     = 0x03,  //!< WiFi N
-    LR11XX_WIFI_TYPE_SCAN_B_G_N = 0x04,  //!< WiFi B and WiFi G/N
-} lr11xx_wifi_signal_type_scan_t;
-
-typedef enum {
-    LR11XX_WIFI_SCAN_MODE_BEACON =
-        1,  //!< Exposes Beacons and Probe Responses Access Points frames until Period Beacon field (Basic result)
-    LR11XX_WIFI_SCAN_MODE_BEACON_AND_PKT =
-        2,  //!< Exposes some Management Access Points frames until Period Beacon field, and some other packets frame
-            //!< until third Mac Address field (Basic result)
-    LR11XX_WIFI_SCAN_MODE_FULL_BEACON =
-        4,  //!< Exposes Beacons and Probes Responses Access Points frames until Frame Check Sequence (FCS) field
-            //!< (Extended result). In this mode, only signal type LR11XX_WIFI_TYPE_SCAN_B is executed and other signal
-            //!< types are silently discarded.
-    LR11XX_WIFI_SCAN_MODE_UNTIL_SSID = 5,  //!< Exposes Beacons and Probes Responses Access Points frames until the end
-                                           //!< of SSID field (Extended result) - available since firmware 0x0306
-} lr11xx_wifi_mode_t;
-
 /*!
  * @brief Scan WiFi networks
  *
@@ -170,9 +154,8 @@ typedef enum {
  * @param [in] timeout Timeout for the scan
  * @param [in] abort_on_timeout If true, the scan will be aborted on timeout
  */
-void scanLR1110_WiFi_Networks( const void* context, const lr11xx_wifi_signal_type_scan_t signal_type, 
-                                    const lr11xx_wifi_channel_mask_t chan_mask, const lr11xx_wifi_mode_t acq_mode, 
-                                    const uint8_t nb_max_res, const uint8_t nb_scan_per_chan, const uint16_t timeout, const bool abort_on_timeout );
+void scanLR1110_WiFi_Networks( const void* context, const uint8_t signal_type, const lr11xx_wifi_channel_mask_t chan_mask, const uint8_t acq_mode, 
+                               const uint8_t nb_max_res, const uint8_t nb_scan_per_chan, const uint16_t timeout, const bool abort_on_timeout );
 
 /*!
  * @brief Get LR1110 WiFi version
@@ -186,4 +169,29 @@ void getLR1110_WiFi_Version( const void* context);
  *
  * @param [in] context Radio abstraction
  */
-void getLR1110_WiFi_Number_of_Results( const void* context );
+uint8_t getLR1110_WiFi_Number_of_Results( const void* context );
+
+/*!
+ * @brief Get the country code
+ *
+ * @param [in] context Radio abstraction
+ */
+void scanLR1110_WiFi_Country_Code( const void* context, const lr11xx_wifi_channel_mask_t chan_mask, const uint8_t nb_max_res, 
+                                  const uint8_t nb_scan_per_chan, const uint16_t timeout, const bool abort_on_timeout );
+
+/*!
+ * @brief Get WiFi full results
+ *
+ * @param [in] context Radio abstraction
+ */
+void getWiFiFullResults( const void* context, const uint8_t start_result_index, const uint8_t nb_results );
+
+/*!
+ * @brief Get WiFi results
+ *
+ * @param [in] context Radio abstraction
+ * @param [in] index Index of the first result to get
+ * @param [in] nbResults Number of results to get
+ * @param [in] format Format of the results
+ */
+void getLR1110_WiFi_Results( const void* context, const uint8_t index, const uint8_t nbResults, const uint8_t format );
