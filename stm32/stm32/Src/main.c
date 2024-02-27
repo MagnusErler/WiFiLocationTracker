@@ -210,11 +210,17 @@ int main(void)
     }
 
 
-    // scanLR1110_GNSS_Satellites(lr1110_context, 0, 0, 0);
-    // uint8_t numberOfDetectedSatellites = getLR1110_GNSS_Number_of_Detected_Satellites(lr1110_context);
-    // if (numberOfDetectedSatellites > 0) {
-    //   getLR1110_GNSS_Detected_Satellites(lr1110_context, numberOfDetectedSatellites);
-    // }
+
+    scanLR1110_GNSS_Satellites(lr1110_context, 0, 0, 0);
+    uint8_t numberOfDetectedSatellites = getLR1110_GNSS_Number_of_Detected_Satellites(lr1110_context);
+    if (numberOfDetectedSatellites > 0) {
+      getLR1110_GNSS_Detected_Satellites(lr1110_context, numberOfDetectedSatellites);
+      getLR1110_GNSS_GET_CONSUMPTION(lr1110_context);
+    }
+
+
+    
+
 
     /* USER CODE END WHILE */
 

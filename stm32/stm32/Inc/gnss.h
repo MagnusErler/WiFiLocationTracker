@@ -7,13 +7,15 @@
 #define LR1110_GET_NUMBER_OF_SATELLITES_CMD_LENGTH  LR1110_CMD_NO_PARAM_LENGTH
 #define LR1110_GET_RESULTS_CMD_LENGTH               LR1110_CMD_NO_PARAM_LENGTH
 #define LR1110_GET_SATELLITES_DETECTED_CMD_LENGTH   LR1110_CMD_NO_PARAM_LENGTH
+#define LR1110_GET_CONSUMPTION_CMD_LENGTH           LR1110_CMD_NO_PARAM_LENGTH
 
 // LENGTHS FOR RESPONSES
 #define LR1110_NO_PARAM_LENGTH                      1
 #define LR1110_GET_GNSS_VERSION_LENGTH              LR1110_NO_PARAM_LENGTH + 1
 #define LR1110_GET_NUMBER_OF_SATELLITES_LENGTH      LR1110_NO_PARAM_LENGTH + 1
 #define LR1110_GET_RESULTS_LENGTH                   LR1110_NO_PARAM_LENGTH + 1
-#define LR1110_GET_SATELLITES_DETECTED_LENGTH       LR1110_NO_PARAM_LENGTH
+#define LR1110_GET_SATELLITES_DETECTED_LENGTH       LR1110_NO_PARAM_LENGTH + 1
+#define LR1110_GET_CONSUMPTION_LENGTH               LR1110_NO_PARAM_LENGTH + 8
 
 // LR1110 CHIP COMMANDS
 #define LR1110_GET_GNSS_VERSION_CMD                 0x0406
@@ -21,6 +23,7 @@
 #define LR1110_GET_RESULTS_CMD                      0x040D
 #define LR1110_GET_NUMBER_OF_SATELLITES_CMD         0x0417
 #define LR1110_GET_SATELLITES_DETECTED_CMD          0x0418
+#define LR1110_GET_CONSUMPTION_CMD                  0x0419
 
 /*!
  * @brief Scan for GNSS satellites
@@ -56,3 +59,11 @@ void scanLR1110_GNSS_Satellites( const void* context, uint8_t effort_mode, uint8
  */
 void getLR1110_GNSS_Version( const void* context);
 
+/*!
+ * @brief Reads the duration of the Radio capture and the CPU processing phases of the GNSS Scanning capture.
+ *
+ * @param [in] context Radio abstraction
+ * 
+ * @return Duration of Radio capture and CPU processing phases in microseconds.
+ */
+void getLR1110_GNSS_GET_CONSUMPTION( const void* context);
