@@ -46,7 +46,7 @@ void setLR1110_LoRa_Modulation_Params( const void* context, uint8_t sf, uint8_t 
     }
 }
 
-void setLR1110_LoRa_Packet_Params( const void* context, uint8_t pb_lenght_tx1, uint8_t pb_lenght_tx2, uint8_t header_type, uint8_t crc, uint8_t invert_iq) {
+void setLR1110_LoRa_Packet_Params( const void* context, uint8_t pb_lenght_tx1, uint8_t pb_lenght_tx2, uint8_t header_type, uint8_t payload_len, uint8_t crc, uint8_t invert_iq) {
     HAL_DBG_TRACE_INFO("Setting LoRa packet parameters... ");
 
     uint8_t cbuffer[LR1110_LORA_CMD_LENGTH_SET_PACKET_PARAMS];
@@ -104,9 +104,5 @@ void setLR1110_LoRa_TX_Params( const void* context, uint8_t tx_power, uint8_t ra
 
 
 
-//gfsk
-//Bitrate (bps): 150000
-// Freq dev (hz): 50000
-//
 
 

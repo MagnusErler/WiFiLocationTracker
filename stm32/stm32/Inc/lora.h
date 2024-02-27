@@ -47,7 +47,7 @@ void setLR1110_LoRa_Modulation_Params( const void* context, uint8_t sf, uint8_t 
  * @param [in] crc CRC
  * @param [in] invert_iq Invert IQ
  */
-void setLR1110_LoRa_Packet_Params( const void* context, uint8_t pb_lenght_tx1, uint8_t pb_lenght_tx2, uint8_t header_type, uint8_t crc, uint8_t invert_iq);
+void setLR1110_LoRa_Packet_Params( const void* context, uint8_t pb_lenght_tx1, uint8_t pb_lenght_tx2, uint8_t header_type, uint8_t payload_len, uint8_t crc, uint8_t invert_iq);
 
 /*!
  * @brief Set the LoRa packet parameters
