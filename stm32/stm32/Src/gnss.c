@@ -93,3 +93,43 @@ void getLR1110_GNSS_Version( const void* context ) {
         HAL_DBG_TRACE_ERROR("Failed to get GNSS version\r\n");
     }
 }
+
+void getLR1110_GNSS_GET_CONSUMPTION( const void* context ) {
+    HAL_DBG_TRACE_INFO("Getting GNSS consumption...  \r\n");
+
+    uint8_t cbuffer[LR1110_GET_CONSUMPTION_CMD_LENGTH];
+    uint8_t rbuffer[LR1110_GET_CONSUMPTION_LENGTH] = { 0 };
+
+    cbuffer[0] = ( uint8_t )( LR1110_GET_CONSUMPTION_CMD >> 8 );
+    cbuffer[1] = ( uint8_t )( LR1110_GET_CONSUMPTION_CMD >> 0 );
+
+    if (lr1110_spi_read( context, cbuffer, LR1110_GET_CONSUMPTION_CMD_LENGTH, rbuffer, LR1110_GET_CONSUMPTION_LENGTH ) == LR1110_SPI_STATUS_OK) {
+
+        uint32_t cpu_time_microseconds;
+        uint32_t radio_time_microseconds;
+
+        cpu_time_microseconds = (uint32_t)(rbuffer[0]) << 24 |
+                                (uint32_t)(rbuffer[1]) << 16 |
+                                (uint32_t)(rbuffer[2]) << 8 |
+                                (uint32_t)(rbuffer[3]);
+        radio_time_microseconds = (uint32_t)(rbuffer[4]) << 24 |
+                                  (uint32_t)(rbuffer[5]) << 16 |
+                                  (uint32_t)(rbuffer[6]) << 8 |
+                                  (uint32_t)(rbuffer[7]);
+
+        // Print the values in microseconds
+        HAL_DBG_TRACE_INFO_VALUE("GNSS consumption CPU time: %u microseconds \r\n", cpu_time_microseconds);
+        HAL_DBG_TRACE_INFO_VALUE("GNSS consumption radio time: %u microseconds \r\n", radio_time_microseconds);
+
+        // Convert microseconds to seconds
+        float cpu_time_seconds = (float)cpu_time_microseconds / 1000000;
+        float radio_time_seconds = (float)radio_time_microseconds / 1000000;
+
+        // Print the values in seconds
+        HAL_DBG_TRACE_INFO_VALUE("GNSS consumption CPU time: %d.%d seconds\r\n", (uint8_t)cpu_time_seconds, (uint8_t)((cpu_time_seconds - (uint8_t)cpu_time_seconds) * 100));
+        HAL_DBG_TRACE_INFO_VALUE("GNSS consumption radio time: %d.%d seconds\r\n", (uint8_t)radio_time_seconds, (uint8_t)((radio_time_seconds - (uint8_t)radio_time_seconds) * 100));
+
+    } else {
+        HAL_DBG_TRACE_ERROR("Failed to get GNSS consumption\r\n");
+    }
+}
