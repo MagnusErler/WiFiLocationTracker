@@ -63,7 +63,5 @@ void getLR1110_GNSS_Version( const void* context);
  * @brief Reads the duration of the Radio capture and the CPU processing phases of the GNSS Scanning capture.
  *
  * @param [in] context Radio abstraction
- * 
- * @return Duration of Radio capture and CPU processing phases in microseconds.
  */
-void getLR1110_GNSS_GET_CONSUMPTION( const void* context);
+void getLR1110_GNSS_Consumption( const void* context);

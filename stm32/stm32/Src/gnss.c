@@ -94,7 +94,7 @@ void getLR1110_GNSS_Version( const void* context ) {
     }
 }
 
-void getLR1110_GNSS_GET_CONSUMPTION( const void* context ) {
+void getLR1110_GNSS_Consumption( const void* context ) {
     HAL_DBG_TRACE_INFO("Getting GNSS consumption...  \r\n");
 
     uint8_t cbuffer[LR1110_GET_CONSUMPTION_CMD_LENGTH];
