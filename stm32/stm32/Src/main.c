@@ -201,6 +201,8 @@ int main(void)
       getLR1110_GNSS_Detected_Satellites(lr1110_context);
     }
 
+    getLR1110_GNSS_GET_CONSUMPTION(lr1110_context);
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
