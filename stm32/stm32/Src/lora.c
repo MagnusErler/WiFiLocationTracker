@@ -101,3 +101,12 @@ void setLR1110_LoRa_TX_Params( const void* context, uint8_t tx_power, uint8_t ra
         HAL_DBG_TRACE_ERROR("Failed to set LoRa TX parameters\r\n");
     }
 }
+
+
+
+//gfsk
+//Bitrate (bps): 150000
+// Freq dev (hz): 50000
+//
+
+
