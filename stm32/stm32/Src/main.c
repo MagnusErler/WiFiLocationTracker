@@ -628,7 +628,7 @@ void setupLR1110_TCXO( const void* context ) {
 
   cbuffer[0] = ( uint8_t )( LR1110_SET_TCXO_MODE_CMD >> 8 );
   cbuffer[1] = ( uint8_t )( LR1110_SET_TCXO_MODE_CMD >> 0 );
-  cbuffer[2] = ( uint8_t ) LR1110_TCXO_CTRL_1_8V;
+  cbuffer[2] = ( uint8_t ) 0x02;
 
   const uint8_t timeout = ( 5 * 1000 ) / 30.52;  // BOARD_TCXO_WAKEUP_TIME = 5               // 163
 

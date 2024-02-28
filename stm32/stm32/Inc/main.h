@@ -34,8 +34,6 @@ extern "C" {
 
 #include <stdbool.h>
 
-#include "constants.h"
-
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -179,6 +177,25 @@ void Error_Handler(void);
  * @param variadics arguments
  */
 void HAL_DBG_TRACE_PRINT( const char* fmt, ... );
+
+typedef struct configuration {
+    GPIO_TypeDef* port;
+    uint32_t      pin;
+} gpio_t;
+
+typedef struct hal_gpio_irq_s {
+    gpio_t irq1;
+    void*                context;
+    void ( *callback )( void* context );
+} hal_gpio_irq_t;
+
+typedef struct {
+    SPI_TypeDef*    spi;
+    gpio_t          nss;
+    gpio_t          reset;
+    hal_gpio_irq_t  event;
+    gpio_t          busy;
+} radio_t;
 
 /* USER CODE END Private defines */
 
