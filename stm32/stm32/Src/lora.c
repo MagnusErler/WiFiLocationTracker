@@ -27,6 +27,24 @@ void setLR1110_LoRa_Packet_Type( const void* context, uint8_t packet_type ) {
     }
 }
 
+uint8_t getLR1110_LoRa_Packet_Type( const void* context ) {
+    HAL_DBG_TRACE_INFO("Getting current protocol of the radio... ");
+
+    uint8_t cbuffer[LR1110_LORA_CMD_LENGTH_GET_PACKET_TYPE];
+    uint8_t rbuffer[LR1110_LORA_LENGTH_GET_PACKET_TYPE] = { 0 };
+
+    cbuffer[0] = ( uint8_t )( LR1110_LORA_CMD_GET_PACKET_TYPE >> 8 );
+    cbuffer[1] = ( uint8_t )( LR1110_LORA_CMD_GET_PACKET_TYPE >> 0 );
+
+    if (lr1110_spi_read( context, cbuffer, LR1110_LORA_CMD_LENGTH_GET_PACKET_TYPE, rbuffer, LR1110_LORA_LENGTH_GET_PACKET_TYPE ) == LR1110_SPI_STATUS_OK) {
+        HAL_DBG_TRACE_INFO_VALUE("0x%X", rbuffer[0]);
+        return rbuffer[0];
+    } else {
+        HAL_DBG_TRACE_ERROR("Failed to get current protocol of the radio\r\n");
+        return -1;
+    }
+}
+
 void setLR1110_LoRa_Modulation_Params( const void* context, uint8_t sf, uint8_t bwl, uint8_t cr, uint8_t low_data_rate_ptimize) {
     HAL_DBG_TRACE_INFO("Setting LoRa modulation parameters... ");
 

@@ -7,11 +7,14 @@
 #define LR1110_LORA_CMD_LENGTH_SET_PACKET_PARAMS        LR1110_LORA_CMD_LENGTH_NO_PARAM + 6
 #define LR1110_LORA_CMD_LENGTH_SET_PA_CONFIG            LR1110_LORA_CMD_LENGTH_NO_PARAM + 4
 #define LR1110_LORA_CMD_LENGTH_SET_TX_PARAMS            LR1110_LORA_CMD_LENGTH_NO_PARAM + 2
+#define LR1110_LORA_CMD_LENGTH_GET_PACKET_TYPE          LR1110_LORA_CMD_LENGTH_NO_PARAM
 
 // LENGTHS FOR RESPONSES
 #define LR1110_LORA_LENGTH_NO_PARAM                     1
+#define LR1110_LORA_LENGTH_GET_PACKET_TYPE              LR1110_LORA_LENGTH_NO_PARAM + 1
 
-// LR1110 WIFI COMMANDS
+// LR1110 LORA COMMANDS
+#define LR1110_LORA_CMD_GET_PACKET_TYPE                 0x0202
 #define LR1110_LORA_CMD_SET_PACKET_TYPE                 0x020E
 #define LR1110_LORA_CMD_SET_MODULATION_PARAMS           0x020F
 #define LR1110_LORA_CMD_SET_PACKET_PARAMS               0x0210
@@ -25,6 +28,15 @@
  * @param [in] packet_type LoRa packet type
  */
 void setLR1110_LoRa_Packet_Type( const void* context, uint8_t packet_type  );
+
+/*!
+ * @brief Get the LoRa packet type
+ *
+ * @param [in] context Radio abstraction
+ * 
+ * @return LoRa packet type
+ */
+uint8_t getLR1110_LoRa_Packet_Type( const void* context );
 
 /*!
  * @brief Set the LoRa modulation parameters

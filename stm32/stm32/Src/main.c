@@ -136,6 +136,7 @@ int main(void)
   getLR1110_Battery_Voltage(lr1110_context);
 
   setLR1110_LoRa_Packet_Type(lr1110_context, 0x02);
+  getLR1110_LoRa_Packet_Type(lr1110_context);
   setLR1110_LoRa_Modulation_Params(lr1110_context, 0x07, 0x05, 0x01, 0x00);         // NOT SURE ABOUT TVALUE 4
   setLR1110_LoRa_Packet_Params(lr1110_context, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00); // NOT SURE ABOUT VALUE 1,2,4 and 6
   setLR1110_LoRa_PA_Config(lr1110_context, 0x00, 0x00, 0x00, 0x00);                 // DONT KNOW WHAT TO PUT HERE
