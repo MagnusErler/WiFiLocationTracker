@@ -140,6 +140,8 @@ int main(void)
   getLR1110_Battery_Voltage(lr1110_context);
   //TODO: set GNSSSETCONSTELLATIONTOUSE
 
+  setLR1110_Dio_Irq_Params(lr1110_context, 0x00, 0x00);
+
   setLR1110_LoRa_Packet_Type(lr1110_context, 0x02);
   getLR1110_LoRa_Packet_Type(lr1110_context);
   setLR1110_LoRa_Modulation_Params(lr1110_context, 0x07, 0x05, 0x01, 0x00);         // NOT SURE ABOUT VALUE 4
@@ -157,8 +159,8 @@ int main(void)
   while (1) {
 
 
-    writeLR1110_Buffer8(lr1110_context, 0x02);
-    setLR1110_TX(lr1110_context, 0xFF);
+    //writeLR1110_Buffer8(lr1110_context, 0x02);
+    //setLR1110_TX(lr1110_context, 0xFF);
 
 
     //getLR1110_LoRa_Packet_Status(lr1110_context);
@@ -173,8 +175,8 @@ int main(void)
       getWiFiFullResults( lr1110_context, i, 1 );
     }
 
-    getStatus(lr1110_context);
-    getErrors(lr1110_context);
+    // getStatus(lr1110_context);
+    // getErrors(lr1110_context);
 
     // GNSS
     // scanLR1110_GNSS_Satellites(lr1110_context, 0, 0, 0);
@@ -189,7 +191,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    HAL_DBG_TRACE_MSG("Waiting for next while loop...\r\n")
+    HAL_DBG_TRACE_MSG_COLOR("\r\nWaiting for next while loop...\r\n", "\x1B[0;34m");
     HAL_Delay(5000);
   }
   /* USER CODE END 3 */

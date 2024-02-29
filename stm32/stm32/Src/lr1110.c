@@ -164,7 +164,7 @@ void getStatus( const void* context ) {
 // }
 
 void getErrors( const void* context ) {
-  HAL_DBG_TRACE_INFO("Getting LR1110 errors...\r\n");
+  HAL_DBG_TRACE_INFO("Getting LR1110 errors...");
 
   uint8_t cbuffer[LR1110_GET_ERRORS_CMD_LENGTH];
   uint8_t rbuffer[LR1110_GET_ERRORS_LENGTH] = { 0 };
@@ -249,4 +249,27 @@ void resetLR1110( const void* context ) {
   HAL_Delay(200);   // At least 100ms
   HAL_GPIO_WritePin(radio->reset.port, radio->reset.pin, GPIO_PIN_SET);
   HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+}
+
+void setLR1110_Dio_Irq_Params( const void* context, uint8_t irq1_to_enable, uint8_t irq2_to_enable) {
+  HAL_DBG_TRACE_INFO("Setting LR1110 DIO IRQ parameters... ");
+
+  uint8_t cbuffer[LR1110_SET_DIO_IRQ_PARAMS_CMD_LENGTH];
+
+  cbuffer[0] = ( uint8_t )( LR1110_SET_DIO_IRQ_PARAMS_CMD >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_SET_DIO_IRQ_PARAMS_CMD >> 0 );
+  cbuffer[2] = ( uint8_t )( irq1_to_enable >> 24 );
+  cbuffer[3] = ( uint8_t )( irq1_to_enable >> 16 );
+  cbuffer[4] = ( uint8_t )( irq1_to_enable >> 8 );
+  cbuffer[5] = ( uint8_t )( irq1_to_enable >> 0 );
+  cbuffer[6] = ( uint8_t )( irq2_to_enable >> 24 );
+  cbuffer[7] = ( uint8_t )( irq2_to_enable >> 16 );
+  cbuffer[8] = ( uint8_t )( irq2_to_enable >> 8 );
+  cbuffer[9] = ( uint8_t )( irq2_to_enable >> 0 );
+
+  if (lr1110_spi_write( context, cbuffer, LR1110_SET_DIO_IRQ_PARAMS_CMD_LENGTH, false ) == LR1110_SPI_STATUS_OK) {
+    HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+  } else {
+    HAL_DBG_TRACE_ERROR("Failed to set LR1110 DIO IRQ parameters\r\n");
+  }
 }
