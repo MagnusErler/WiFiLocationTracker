@@ -107,4 +107,4 @@ void getErrors( const void* context );
  * @param [in] irq1_to_enable DIO1 IRQ to enable
  * @param [in] irq2_to_enable DIO2 IRQ to enable
  */
-void setLR1110_Dio_Irq_Params( const void* context, uint8_t irq1_to_enable, uint8_t irq2_to_enable);
+void setLR1110_Dio_Irq_Params( const void* context, uint64_t irq1_to_enable, uint64_t irq2_to_enable);

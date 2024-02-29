@@ -27,6 +27,7 @@
 #include <stdarg.h> // used for va_list, va_start, va_end functions
 #include <stdio.h>  // used for vsprintf function
 
+#include "helper.h"
 #include "lr1110.h"
 #include "led.h"
 //#include "spi.h"
@@ -140,17 +141,16 @@ int main(void)
   getLR1110_Battery_Voltage(lr1110_context);
   //TODO: set GNSSSETCONSTELLATIONTOUSE
 
-  setLR1110_Dio_Irq_Params(lr1110_context, 20, 2);
+  setLR1110_Dio_Irq_Params(lr1110_context, set_bit_x_to_1(0, 20), set_bit_x_to_1(0, 0));
 
-  setLR1110_LoRa_Packet_Type(lr1110_context, 0x02);
-  getLR1110_LoRa_Packet_Type(lr1110_context);
-  setLR1110_LoRa_Modulation_Params(lr1110_context, 0x07, 0x05, 0x01, 0x00);         // NOT SURE ABOUT VALUE 4
-  setLR1110_LoRa_Packet_Params(lr1110_context, 0x00, 0x02, 0x01, 0x02, 0x01, 0x00); // NOT SURE ABOUT VALUE 1,2,4 and 6
-  setLR1110_LoRa_PA_Config(lr1110_context, 0x00, 0x00, 0x04, 0x00);                 // DONT KNOW WHAT TO PUT HERE
-  setLR1110_LoRa_TX_Params(lr1110_context, 0x0E, 0x02);                             // DONT KNOW WHAT TO PUT HERE
-
-  setLR1110_LoRa_Public_Network(lr1110_context, 0x01);
-  getLR1110_LoRa_Packet_Status(lr1110_context);
+  // setLR1110_LoRa_Packet_Type(lr1110_context, 0x02);
+  // getLR1110_LoRa_Packet_Type(lr1110_context);
+  // setLR1110_LoRa_Modulation_Params(lr1110_context, 0x07, 0x05, 0x01, 0x00);         // NOT SURE ABOUT VALUE 4
+  // setLR1110_LoRa_Packet_Params(lr1110_context, 0x00, 0x02, 0x01, 0x02, 0x01, 0x00); // NOT SURE ABOUT VALUE 1,2,4 and 6
+  // setLR1110_LoRa_PA_Config(lr1110_context, 0x00, 0x00, 0x04, 0x00);                 // DONT KNOW WHAT TO PUT HERE
+  // setLR1110_LoRa_TX_Params(lr1110_context, 0x0E, 0x02);                             // DONT KNOW WHAT TO PUT HERE
+  // setLR1110_LoRa_Public_Network(lr1110_context, 0x01);
+  // getLR1110_LoRa_Packet_Status(lr1110_context);
 
   /* USER CODE END 2 */
 
@@ -159,11 +159,11 @@ int main(void)
   while (1) {
 
 
-    writeLR1110_Buffer8(lr1110_context, 0x02);
-    setLR1110_TX(lr1110_context, 0xFF);
+    // writeLR1110_Buffer8(lr1110_context, 0x02);
+    // setLR1110_TX(lr1110_context, 0xFF);
 
 
-    getLR1110_LoRa_Packet_Status(lr1110_context);
+    // getLR1110_LoRa_Packet_Status(lr1110_context);
 
     // WIFI
     scanLR1110_WiFi_Networks(lr1110_context, 0x04, 0x3FFF, 0x04, 32, 3, 500, true);
@@ -459,8 +459,7 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
-{
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
   if(GPIO_Pin == EVENT_Pin) {
     getStatus( lr1110_context );
   } else {
