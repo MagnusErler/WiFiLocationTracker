@@ -39,7 +39,7 @@ lr1110_spi_status_t _waitForBusyState( GPIO_PinState state, uint32_t timeout_ms 
     return LR1110_SPI_STATUS_OK;
 }
 
-lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer, uint16_t cbuffer_length, uint32_t timeout_ms ) {
+lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer, uint16_t cbuffer_length, uint32_t timeout_ms, bool get_status ) {
 
     uint8_t rbuffer[cbuffer_length];
 
@@ -165,7 +165,7 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
     }
     #endif
 
-    #ifdef DEBUG
+    #ifdef DEBUG || get_status
     HAL_DBG_TRACE_PRINTF("\r\n---IRQ Status---\r\n");
     HAL_DBG_TRACE_PRINTF("IRQStat(31:24): 0x%X\r\n", rbuffer[2]);
     HAL_DBG_TRACE_PRINTF("IRQStat(23:16): 0x%X\r\n", rbuffer[3]);
@@ -222,7 +222,7 @@ lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer
 
     // Start of 1st SPI transaction
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_RESET );
-    if (_lr1110_spi_write( radio->spi, cbuffer, cbuffer_length, 1000 ) != LR1110_SPI_STATUS_OK) {
+    if (_lr1110_spi_write( radio->spi, cbuffer, cbuffer_length, 1000, false ) != LR1110_SPI_STATUS_OK) {
         return LR1110_SPI_STATUS_ERROR;
     }
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
@@ -235,7 +235,7 @@ lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer
 
     // Start of 2nd SPI transaction
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_RESET );
-    if (_lr1110_spi_write( radio->spi, &dummy_byte, 1, 1000 ) != LR1110_SPI_STATUS_OK) {
+    if (_lr1110_spi_write( radio->spi, &dummy_byte, 1, 1000, false ) != LR1110_SPI_STATUS_OK) {
         return LR1110_SPI_STATUS_ERROR;
     }
     if (_lr1110_spi_read_with_dummy_byte( radio->spi, rbuffer, rbuffer_length, 1000 ) != LR1110_SPI_STATUS_OK) {
@@ -252,7 +252,7 @@ lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer
     return LR1110_SPI_STATUS_OK;
 }
 
-lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffer, uint16_t cbuffer_length ) {
+lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffer, uint16_t cbuffer_length, bool get_status ) {
 
     lr1110_spi_status_t status = LR1110_SPI_STATUS_OK;
 
@@ -265,7 +265,7 @@ lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffe
 
     // Start of SPI transaction
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_RESET );
-    if (_lr1110_spi_write( radio->spi, cbuffer, cbuffer_length, 1000 ) != LR1110_SPI_STATUS_OK) {
+    if (_lr1110_spi_write( radio->spi, cbuffer, cbuffer_length, 1000, get_status ) != LR1110_SPI_STATUS_OK) {
         return LR1110_SPI_STATUS_ERROR;
     }
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );

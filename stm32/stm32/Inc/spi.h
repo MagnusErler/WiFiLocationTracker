@@ -14,7 +14,7 @@ typedef enum lr1110_spi_status_e {
 } lr1110_spi_status_t;
 
 /*!
- * @brief Wait for a GPIO pin to reach a specific state
+ * @brief Radio data transfer - write
  *
  * @param [in] context      Radio implementation parameters
  * @param [in] cbuffer      Pointer to the buffer to be transmitted
@@ -22,7 +22,7 @@ typedef enum lr1110_spi_status_e {
  * 
  * @returns Operation status
  */
-lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffer, uint16_t cbuffer_length );
+lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffer, uint16_t cbuffer_length, bool get_status );
 
 /*!
  * @brief Radio data transfer - read

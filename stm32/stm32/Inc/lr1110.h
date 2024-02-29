@@ -6,6 +6,7 @@
 #define LR1110_GET_CHIPEUI_CMD_LENGTH            LR1110_CMD_NO_PARAM_LENGTH
 #define LR1110_GET_SEMTECH_JOINEUI_CMD_LENGTH   LR1110_CMD_NO_PARAM_LENGTH
 #define LR1110_GET_BATTERY_VOLTAGE_CMD_LENGTH   LR1110_CMD_NO_PARAM_LENGTH
+#define LR1110_GET_STATUS_CMD_LENGTH            LR1110_CMD_NO_PARAM_LENGTH + 4
 #define LR1110_SET_TCXO_MODE_CMD_LENGTH         LR1110_CMD_NO_PARAM_LENGTH + 4
 
 // LENGTHS FOR RESPONSES
@@ -17,6 +18,7 @@
 #define LR1110_GET_BATTERY_VOLTAGE_LENGTH       LR1110_NO_PARAM_LENGTH
 
 // LR1110 CHIP COMMANDS
+#define LR1110_GET_STATUS_CMD                   0x0100
 #define LR1110_GET_VERSION_CMD                  0x0101
 #define LR1110_SET_TCXO_MODE_CMD                0x0117
 #define LR1110_GET_BATTERY_VOLTAGE_CMD          0x0119
@@ -77,3 +79,10 @@ void setupLR1110_TCXO( const void* context );
  * @param [in] context Radio abstraction
  */
 void resetLR1110( const void* context );
+
+/*!
+ * @brief Get LR1110 status
+ *
+ * @param [in] context Radio abstraction
+ */
+void getStatus( const void* context );

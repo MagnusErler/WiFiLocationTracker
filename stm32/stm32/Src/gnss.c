@@ -65,7 +65,7 @@ void scanLR1110_GNSS_Satellites( const void* context, uint8_t effort_mode, uint8
     cbuffer[7] = ( uint8_t )( result_mask >> 0 );
     cbuffer[8] = ( uint8_t )( nb_sv_max >> 0 );
 
-    if (lr1110_spi_write( context, cbuffer, LR1110_SCAN_GNSS_AUTONOMOUS_CMD_LENGTH ) == LR1110_SPI_STATUS_OK) {
+    if (lr1110_spi_write( context, cbuffer, LR1110_SCAN_GNSS_AUTONOMOUS_CMD_LENGTH, false ) == LR1110_SPI_STATUS_OK) {
         //HAL_Delay( 5000 );
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
     } else {

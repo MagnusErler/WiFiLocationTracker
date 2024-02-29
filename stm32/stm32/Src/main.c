@@ -76,6 +76,10 @@ static void MX_SPI1_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+radio_t lr1110_context_memory[sizeof(radio_t)]; // Assuming SIZE is the desired size
+
+void* lr1110_context = lr1110_context_memory;
+
 /* USER CODE END 0 */
 
 /**
@@ -95,7 +99,7 @@ int main(void)
 
   /* USER CODE BEGIN Init */
 
-  void* lr1110_context = (void*) malloc(sizeof(radio_t));
+  //void* lr1110_context = (void*) malloc(sizeof(radio_t));
   ((radio_t*)lr1110_context)->spi         = SPI1;
   ((radio_t*)lr1110_context)->nss.port    = NSS_GPIO_Port;
   ((radio_t*)lr1110_context)->nss.pin     = NSS_Pin;
@@ -134,6 +138,7 @@ int main(void)
   getLR1110_Semtech_JoinEui(lr1110_context);
   getLR1110_Temperature(lr1110_context);
   getLR1110_Battery_Voltage(lr1110_context);
+  //TODO: set GNSSSETCONSTELLATIONTOUSE
 
   setLR1110_LoRa_Packet_Type(lr1110_context, 0x02);
   getLR1110_LoRa_Packet_Type(lr1110_context);
@@ -150,6 +155,12 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1) {
+
+
+    writeLR1110_Buffer8(lr1110_context, 0x02);
+
+    setLR1110_TX(lr1110_context, 0xFF);
+
 
     getLR1110_LoRa_Packet_Status(lr1110_context);
 
@@ -444,10 +455,14 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
-/*
- * -----------------------------------------------------------------------------
- * --- PRIVATE FUNCTIONS DEFINITION --------------------------------------------
- */
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+  if(GPIO_Pin == EVENT_Pin) {
+    getStatus( lr1110_context );
+  } else {
+      __NOP();
+  }
+}
 
 void HAL_DBG_TRACE_PRINT( const char* fmt, ... ) {
   va_list argp;

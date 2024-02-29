@@ -100,3 +100,20 @@ void setLR1110_LoRa_Public_Network( const void* context, uint8_t public_network)
  * @param [in] context Radio abstraction
  */
 void getLR1110_LoRa_Packet_Status( const void* context);
+
+
+/*!
+ * @brief Write to the LR1110 buffer
+ *
+ * @param [in] context Radio implementation parameters
+ * @param [in] data    Data to be written
+ */
+void writeLR1110_Buffer8( const void* context, uint8_t data);
+
+/*!
+ * @brief Set the LoRa TX
+ *
+ * @param [in] context Radio abstraction
+ * @param [in] timeout Timeout
+ */
+void setLR1110_TX( const void* context, uint8_t timeout);

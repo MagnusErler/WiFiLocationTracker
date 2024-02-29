@@ -20,7 +20,7 @@ void setLR1110_LoRa_Packet_Type( const void* context, uint8_t packet_type ) {
     cbuffer[1] = ( uint8_t )( LR1110_LORA_CMD_SET_PACKET_TYPE >> 0 );
     cbuffer[2] = packet_type;
 
-    if ( lr1110_spi_write( context, cbuffer, LR1110_LORA_CMD_LENGTH_SET_PACKET_TYPE ) == LR1110_SPI_STATUS_OK ) {
+    if ( lr1110_spi_write( context, cbuffer, LR1110_LORA_CMD_LENGTH_SET_PACKET_TYPE, false ) == LR1110_SPI_STATUS_OK ) {
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
     } else {
         HAL_DBG_TRACE_ERROR("Failed to set LoRa packet type\r\n");
@@ -57,7 +57,7 @@ void setLR1110_LoRa_Modulation_Params( const void* context, uint8_t sf, uint8_t 
     cbuffer[4] = cr;
     cbuffer[5] = low_data_rate_ptimize;
 
-    if ( lr1110_spi_write( context, cbuffer, LR1110_LORA_CMD_LENGTH_SET_MODULATION_PARAMS ) == LR1110_SPI_STATUS_OK ) {
+    if ( lr1110_spi_write( context, cbuffer, LR1110_LORA_CMD_LENGTH_SET_MODULATION_PARAMS, false ) == LR1110_SPI_STATUS_OK ) {
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
     } else {
         HAL_DBG_TRACE_ERROR("Failed to set LoRa modulation parameters\r\n");
@@ -77,7 +77,7 @@ void setLR1110_LoRa_Packet_Params( const void* context, uint8_t pb_lenght_tx1, u
     cbuffer[5] = crc;           // Cycle Redundancy Check
     cbuffer[6] = invert_iq;
 
-    if ( lr1110_spi_write( context, cbuffer, LR1110_LORA_CMD_LENGTH_SET_PACKET_PARAMS ) == LR1110_SPI_STATUS_OK ) {
+    if ( lr1110_spi_write( context, cbuffer, LR1110_LORA_CMD_LENGTH_SET_PACKET_PARAMS, false ) == LR1110_SPI_STATUS_OK ) {
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
     } else {
         HAL_DBG_TRACE_ERROR("Failed to set LoRa packet parameters\r\n");
@@ -97,7 +97,7 @@ void setLR1110_LoRa_PA_Config( const void* context, uint8_t pa_sel, uint8_t reg_
     cbuffer[4] = pa_duty_cycle;
     cbuffer[5] = pa_hp_sel;
 
-    if ( lr1110_spi_write( context, cbuffer, LR1110_LORA_CMD_LENGTH_SET_PA_CONFIG ) == LR1110_SPI_STATUS_OK ) {
+    if ( lr1110_spi_write( context, cbuffer, LR1110_LORA_CMD_LENGTH_SET_PA_CONFIG, false ) == LR1110_SPI_STATUS_OK ) {
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
     } else {
         HAL_DBG_TRACE_ERROR("Failed to set LoRa PA configuation\r\n");
@@ -114,7 +114,7 @@ void setLR1110_LoRa_TX_Params( const void* context, uint8_t tx_power, uint8_t ra
     cbuffer[2] = tx_power;
     cbuffer[3] = ramp_time;
 
-    if ( lr1110_spi_write( context, cbuffer, LR1110_LORA_CMD_LENGTH_SET_TX_PARAMS ) == LR1110_SPI_STATUS_OK ) {
+    if ( lr1110_spi_write( context, cbuffer, LR1110_LORA_CMD_LENGTH_SET_TX_PARAMS, false ) == LR1110_SPI_STATUS_OK ) {
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
     } else {
         HAL_DBG_TRACE_ERROR("Failed to set LoRa TX parameters\r\n");
@@ -130,7 +130,7 @@ void setLR1110_LoRa_Public_Network( const void* context, uint8_t public_network)
     cbuffer[1] = ( uint8_t )( LR1110_LORA_CMD_SET_PUBLIC_NETWORK >> 0 );
     cbuffer[2] = public_network;
 
-    if ( lr1110_spi_write( context, cbuffer, LR1110_LORA_CMD_LENGTH_SET_PUBLIC_NETWORK ) == LR1110_SPI_STATUS_OK ) {
+    if ( lr1110_spi_write( context, cbuffer, LR1110_LORA_CMD_LENGTH_SET_PUBLIC_NETWORK, false ) == LR1110_SPI_STATUS_OK ) {
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
     } else {
         HAL_DBG_TRACE_ERROR("Failed to set LoRa Public Network\r\n");
@@ -155,7 +155,38 @@ void getLR1110_LoRa_Packet_Status( const void* context) {
     }
 }
 
+void writeLR1110_Buffer8( const void* context, uint8_t data) {
+    HAL_DBG_TRACE_INFO("Getting LoRa packet status... ");
 
+    uint8_t cbuffer[2 + 1];
 
+    cbuffer[0] = ( uint8_t )( 0x0109 >> 8 );
+    cbuffer[1] = ( uint8_t )( 0x0109 >> 0 );
+    cbuffer[2] = ( uint8_t )( data );
+
+    if ( lr1110_spi_write( context, cbuffer, 2+1, false ) == LR1110_SPI_STATUS_OK ) {
+        HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+    } else {
+        HAL_DBG_TRACE_ERROR("Failed to set LoRa Public Network\r\n");
+    }
+}
+
+void setLR1110_TX( const void* context, uint8_t timeout) {
+    HAL_DBG_TRACE_INFO("Setting LoRa TX... ");
+
+    uint8_t cbuffer[2+3];
+
+    cbuffer[0] = ( uint8_t )( 0x020A >> 8 );
+    cbuffer[1] = ( uint8_t )( 0x020A >> 0 );
+    cbuffer[2] = (uint8_t)(timeout >> 16);
+    cbuffer[3] = (uint8_t)(timeout >> 8);
+    cbuffer[4] = (uint8_t)(timeout >> 0);
+
+    if ( lr1110_spi_write( context, cbuffer, 2+3, false ) == LR1110_SPI_STATUS_OK ) {
+        HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+    } else {
+        HAL_DBG_TRACE_ERROR("Failed to set LoRa TX\r\n");
+    }
+}
 
 

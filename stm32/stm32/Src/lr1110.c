@@ -130,10 +130,29 @@ void setupLR1110_TCXO( const void* context ) {
   cbuffer[4] = ( uint8_t )( timeout >> 8 );
   cbuffer[5] = ( uint8_t )( timeout >> 0 );
 
-  if (lr1110_spi_write( context, cbuffer, LR1110_SET_TCXO_MODE_CMD_LENGTH ) == LR1110_SPI_STATUS_OK) {
+  if (lr1110_spi_write( context, cbuffer, LR1110_SET_TCXO_MODE_CMD_LENGTH, false ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
   } else {
     HAL_DBG_TRACE_ERROR("Failed to set LR1110 TCXO mode\r\n");
+  }
+}
+
+void getStatus( const void* context ) {
+  HAL_DBG_TRACE_INFO("Getting LR1110 status... ");
+
+  uint8_t cbuffer[LR1110_GET_STATUS_CMD_LENGTH];
+
+  cbuffer[0] = ( uint8_t )( LR1110_GET_STATUS_CMD >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_GET_STATUS_CMD >> 0 );
+  cbuffer[2] = 0x00;
+  cbuffer[3] = 0x00;
+  cbuffer[4] = 0x00;
+  cbuffer[5] = 0x00;
+
+  if (lr1110_spi_write( context, cbuffer, LR1110_GET_STATUS_CMD_LENGTH, false ) == LR1110_SPI_STATUS_OK) {
+    HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+  } else {
+    HAL_DBG_TRACE_ERROR("Failed to get LR1110 status\r\n");
   }
 }
 
