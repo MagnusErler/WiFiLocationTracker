@@ -140,7 +140,7 @@ int main(void)
   getLR1110_Battery_Voltage(lr1110_context);
   //TODO: set GNSSSETCONSTELLATIONTOUSE
 
-  setLR1110_Dio_Irq_Params(lr1110_context, 0x00, 0x00);
+  setLR1110_Dio_Irq_Params(lr1110_context, 20, 2);
 
   setLR1110_LoRa_Packet_Type(lr1110_context, 0x02);
   getLR1110_LoRa_Packet_Type(lr1110_context);
@@ -159,11 +159,11 @@ int main(void)
   while (1) {
 
 
-    //writeLR1110_Buffer8(lr1110_context, 0x02);
-    //setLR1110_TX(lr1110_context, 0xFF);
+    writeLR1110_Buffer8(lr1110_context, 0x02);
+    setLR1110_TX(lr1110_context, 0xFF);
 
 
-    //getLR1110_LoRa_Packet_Status(lr1110_context);
+    getLR1110_LoRa_Packet_Status(lr1110_context);
 
     // WIFI
     scanLR1110_WiFi_Networks(lr1110_context, 0x04, 0x3FFF, 0x04, 32, 3, 500, true);

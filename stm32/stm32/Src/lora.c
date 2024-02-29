@@ -122,7 +122,7 @@ void setLR1110_LoRa_TX_Params( const void* context, uint8_t tx_power, uint8_t ra
 }
 
 void setLR1110_LoRa_Public_Network( const void* context, uint8_t public_network) {
-    HAL_DBG_TRACE_INFO("Setting LoRa Public Network... ");
+    HAL_DBG_TRACE_INFO("Setting LoRa public Network... ");
 
     uint8_t cbuffer[LR1110_LORA_CMD_LENGTH_SET_PUBLIC_NETWORK];
 
@@ -133,7 +133,7 @@ void setLR1110_LoRa_Public_Network( const void* context, uint8_t public_network)
     if ( lr1110_spi_write( context, cbuffer, LR1110_LORA_CMD_LENGTH_SET_PUBLIC_NETWORK, false ) == LR1110_SPI_STATUS_OK ) {
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
     } else {
-        HAL_DBG_TRACE_ERROR("Failed to set LoRa Public Network\r\n");
+        HAL_DBG_TRACE_ERROR("Failed to set LoRa public network\r\n");
     }
 }
 

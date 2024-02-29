@@ -25,7 +25,6 @@ void toggleLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin) {
 }
 
 void blinkLED(GPIO_TypeDef* LED_GPIO_Port, uint16_t LED_Pin, uint32_t period, uint8_t count, bool start) {
-  //EXAMPLE: blinkLED(GPIOC, RX_LED_Pin|TX_LED_Pin, 100, 5, true);
   if (start) {
     for (uint8_t i = 0; i < count; i++) {
       turnOnLED(LED_GPIO_Port, LED_Pin);
