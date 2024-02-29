@@ -116,7 +116,7 @@ void getWiFiFullResults( const void* context, const uint8_t start_result_index, 
     result_interface.extended_complete = &results;
 
     if (_fetch_and_aggregate_all_results( context, start_result_index, nb_results, nb_results_per_chunk_max, LR11XX_WIFI_RESULT_FORMAT_EXTENDED_FULL, result_buffer, result_interface ) == LR1110_WIFI_STATUS_OK) {
-        HAL_DBG_TRACE_INFO( "WiFi %d: MAC: %02x:%02x:%02x:%02x:%02x:%02x, RSSI: %d, uptime: %d.%d day(s), SSID: %s\r\n", start_result_index, results.mac_address_3[0], results.mac_address_3[1], results.mac_address_3[2], results.mac_address_3[3], results.mac_address_3[4], results.mac_address_3[5], results.rssi, (uint8_t)(results.timestamp_us / 86400000000.0), (uint8_t)(((results.timestamp_us / 86400000000.0) - (uint8_t)(results.timestamp_us / 86400000000.0)) * 100), results.ssid_bytes );
+        HAL_DBG_TRACE_PRINTF( "WiFi %d: MAC: %02x:%02x:%02x:%02x:%02x:%02x, RSSI: %d, uptime: %d.%d day(s), SSID: %s\r\n", start_result_index, results.mac_address_3[0], results.mac_address_3[1], results.mac_address_3[2], results.mac_address_3[3], results.mac_address_3[4], results.mac_address_3[5], results.rssi, (uint8_t)(results.timestamp_us / 86400000000.0), (uint8_t)(((results.timestamp_us / 86400000000.0) - (uint8_t)(results.timestamp_us / 86400000000.0)) * 100), results.ssid_bytes );
         // HAL_DBG_TRACE_INFO( "rate: %d\r\n", wifi_scan_result.rate );
         // HAL_DBG_TRACE_INFO( "service: %d\r\n", wifi_scan_result.service );
         // HAL_DBG_TRACE_INFO( "length: %d\r\n", wifi_scan_result.length );

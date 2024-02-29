@@ -156,6 +156,90 @@ void getStatus( const void* context ) {
   }
 }
 
+// void print_binary(uint32_t num) {
+//     for(int i = 7; i >= 0; i--) {
+//         HAL_DBG_TRACE_PRINTF("%d", (num >> i) & 1);
+//     }
+//     HAL_DBG_TRACE_PRINTF(" ");
+// }
+
+void getErrors( const void* context ) {
+  HAL_DBG_TRACE_INFO("Getting LR1110 errors...\r\n");
+
+  uint8_t cbuffer[LR1110_GET_ERRORS_CMD_LENGTH];
+  uint8_t rbuffer[LR1110_GET_ERRORS_LENGTH] = { 0 };
+
+  cbuffer[0] = ( uint8_t )( LR1110_GET_ERRORS_CMD >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_GET_ERRORS_CMD >> 0 );
+
+  if (lr1110_spi_read( context, cbuffer, LR1110_GET_ERRORS_CMD_LENGTH, rbuffer, LR1110_GET_ERRORS_LENGTH ) == LR1110_SPI_STATUS_OK) {
+    #define BIT_0 0b00000001
+    #define BIT_1 0b00000010
+    #define BIT_8 0b00000100
+    #define BIT_12 0b00001000
+    #define BIT_16 0b00010000
+    #define BIT_20 0b00100000
+    #define BIT_24 0b01000000
+    #define BIT_28 0b10000000
+
+    // print_binary(rbuffer[1]);
+    // print_binary(rbuffer[2]);
+
+    HAL_DBG_TRACE_PRINTF("\r\n");
+    if (rbuffer[1] & BIT_0) {
+        HAL_DBG_TRACE_PRINTF("LF_RC_CALIB_ERR. Calibration of low frequency RC was not done. To fix it redo a calibration.\r\n");
+    }
+    if (rbuffer[1] & BIT_1) {
+        HAL_DBG_TRACE_PRINTF("HF_RC_CALIB_ERR. Calibration of high frequency RC was not done. To fix it redo a calibration.\r\n");
+    }
+    if (rbuffer[1] & BIT_8) {
+        HAL_DBG_TRACE_PRINTF("ADC_CALIB_ERR. Calibration of ADC was not done. To fix it redo a calibration.\r\n");
+    }
+    if (rbuffer[1] & BIT_12) {
+        HAL_DBG_TRACE_PRINTF("PLL_CALIB_ERR. Calibration of maximum and minimum frequencies was not done. To fix it redo the PLL calibration.\r\n");
+    }
+    if (rbuffer[1] & BIT_16) {
+        HAL_DBG_TRACE_PRINTF("IMG_CALIB_ERR. Calibration of the image rejection was not done. To fix it redo the image calibration.\r\n");
+    }
+    if (rbuffer[1] & BIT_20) {
+        HAL_DBG_TRACE_PRINTF("HF_XOSC_START_ERR. High frequency XOSC did not start correctly. To fix it redo a reset, or send SetTcxoCmd(...) if a TCXO is connected and redo calibrations.\r\n");
+    }
+    if (rbuffer[1] & BIT_24) {
+        HAL_DBG_TRACE_PRINTF("LF_XOSC_START_ERR. Low frequency XOSC did not start correctly. To fix it redo a reset.\r\n");
+    }
+    if (rbuffer[1] & BIT_28) {
+        HAL_DBG_TRACE_PRINTF("PLL_LOCK_ERR. The PLL did not lock. This can come from too high or too low frequency configuration, or if the PLL was not calibrated. To fix it redo a PLL calibration, or use other frequencies.\r\n");
+    }
+
+    if (rbuffer[2] & BIT_0) {
+        HAL_DBG_TRACE_PRINTF("RX_ADC_OFFSET_ERR. Calibration of ADC offset was not done. To fix it redo a calibration.\r\n");
+    }
+    if (rbuffer[2] & BIT_1) {
+        HAL_DBG_TRACE_PRINTF("RFU\r\n");
+    }
+    if (rbuffer[2] & BIT_8) {
+        HAL_DBG_TRACE_PRINTF("RFU\r\n");
+    }
+    if (rbuffer[2] & BIT_12) {
+        HAL_DBG_TRACE_PRINTF("RFU\r\n");
+    }
+    if (rbuffer[2] & BIT_16) {
+        HAL_DBG_TRACE_PRINTF("RFU\r\n");
+    }
+    if (rbuffer[2] & BIT_20) {
+        HAL_DBG_TRACE_PRINTF("RFU\r\n");
+    }
+    if (rbuffer[2] & BIT_24) {
+        HAL_DBG_TRACE_PRINTF("RFU\r\n");
+    }
+    if (rbuffer[2] & BIT_28) {
+        HAL_DBG_TRACE_PRINTF("RFU\r\n");
+    }
+  } else {
+    HAL_DBG_TRACE_ERROR("Failed to get LR1110 battery voltage\r\n");
+  }
+}
+
 void resetLR1110( const void* context ) {
 
   radio_t* radio = (radio_t*) context;

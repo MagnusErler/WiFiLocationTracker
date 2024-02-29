@@ -39,12 +39,12 @@ lr1110_spi_status_t _waitForBusyState( GPIO_PinState state, uint32_t timeout_ms 
     return LR1110_SPI_STATUS_OK;
 }
 
-void print_binary(uint32_t num) {
-    for(int i = 7; i >= 0; i--) {
-        HAL_DBG_TRACE_PRINTF("%d", (num >> i) & 1);
-    }
-    HAL_DBG_TRACE_PRINTF(" ");
-}
+// void print_binary(uint32_t num) {
+//     for(int i = 7; i >= 0; i--) {
+//         HAL_DBG_TRACE_PRINTF("%d", (num >> i) & 1);
+//     }
+//     HAL_DBG_TRACE_PRINTF(" ");
+// }
 
 lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer, uint16_t cbuffer_length, uint32_t timeout_ms, bool get_status ) {
 
@@ -183,7 +183,6 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
         #define BIT_24 0b01000000
         #define BIT_28 0b10000000
 
-        HAL_DBG_TRACE_PRINTF("\r\n---IRQ Status---\r\n");
         // HAL_DBG_TRACE_PRINTF("IRQStat(31:24): 0x%X\r\n", rbuffer[2]);
         // HAL_DBG_TRACE_PRINTF("IRQStat(23:16): 0x%X\r\n", rbuffer[3]);
         // HAL_DBG_TRACE_PRINTF("IRQStat(15:8): 0x%X\r\n", rbuffer[4]);
@@ -192,8 +191,8 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
         // print_binary(rbuffer[3]);
         // print_binary(rbuffer[4]);
         // print_binary(rbuffer[5]);
-        // HAL_DBG_TRACE_PRINTF("\r\n");
-
+        
+        HAL_DBG_TRACE_PRINTF("\r\n");
         if (rbuffer[5] & BIT_0) {
             HAL_DBG_TRACE_PRINTF("RFU\r\n");
         }

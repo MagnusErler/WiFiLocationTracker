@@ -147,9 +147,9 @@ void getLR1110_LoRa_Packet_Status( const void* context) {
     cbuffer[1] = ( uint8_t )( LR1110_LORA_CMD_GET_PACKET_STATUS >> 0 );
 
     if (lr1110_spi_read( context, cbuffer, LR1110_LORA_CMD_LENGTH_GET_PACKET_STATUS, rbuffer, LR1110_LORA_LENGTH_GET_PACKET_STATUS ) == LR1110_SPI_STATUS_OK) {
-        HAL_DBG_TRACE_INFO_VALUE("RssiPkt: %d\r\n", (int8_t)rbuffer[0]);
-        HAL_DBG_TRACE_INFO_VALUE("SnrPkt: %d\r\n", (int8_t)rbuffer[1]);
-        HAL_DBG_TRACE_INFO_VALUE("SignalRssiPkt: %d\r\n", (int8_t)rbuffer[2]);
+        HAL_DBG_TRACE_PRINTF("RssiPkt: %d\r\n", (int8_t)rbuffer[0]);
+        HAL_DBG_TRACE_PRINTF("SnrPkt: %d\r\n", (int8_t)rbuffer[1]);
+        HAL_DBG_TRACE_PRINTF("SignalRssiPkt: %d\r\n", (int8_t)rbuffer[2]);
     } else {
         HAL_DBG_TRACE_ERROR("Failed to get LoRa packet status\r\n");
     }

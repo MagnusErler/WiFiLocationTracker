@@ -174,6 +174,7 @@ int main(void)
     }
 
     getStatus(lr1110_context);
+    getErrors(lr1110_context);
 
     // GNSS
     // scanLR1110_GNSS_Satellites(lr1110_context, 0, 0, 0);
