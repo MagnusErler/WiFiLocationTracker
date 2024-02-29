@@ -158,21 +158,22 @@ int main(void)
 
 
     writeLR1110_Buffer8(lr1110_context, 0x02);
-
     setLR1110_TX(lr1110_context, 0xFF);
 
 
-    getLR1110_LoRa_Packet_Status(lr1110_context);
+    //getLR1110_LoRa_Packet_Status(lr1110_context);
 
     // WIFI
-    // scanLR1110_WiFi_Networks(lr1110_context, 0x04, 0x3FFF, 0x04, 32, 3, 500, true);
-    // //scanLR1110_WiFi_Country_Code(lr1110_context, 0x3FFF, 32, 3, 500, true);
-    // uint8_t numberOfResults = getLR1110_WiFi_Number_of_Results(lr1110_context);
-    // //getLR1110_WiFi_Results(lr1110_context, 0, 6, 4);
+    scanLR1110_WiFi_Networks(lr1110_context, 0x04, 0x3FFF, 0x04, 32, 3, 500, true);
+    //scanLR1110_WiFi_Country_Code(lr1110_context, 0x3FFF, 32, 3, 500, true);
+    uint8_t numberOfResults = getLR1110_WiFi_Number_of_Results(lr1110_context);
+    //getLR1110_WiFi_Results(lr1110_context, 0, 6, 4);
 
-    // for( int i = 0; i < numberOfResults; i++ ) {
-    //   getWiFiFullResults( lr1110_context, i, 1 );
-    // }
+    for( int i = 0; i < numberOfResults; i++ ) {
+      getWiFiFullResults( lr1110_context, i, 1 );
+    }
+
+    getStatus(lr1110_context);
 
     // GNSS
     // scanLR1110_GNSS_Satellites(lr1110_context, 0, 0, 0);

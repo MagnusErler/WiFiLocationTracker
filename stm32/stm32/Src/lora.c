@@ -138,7 +138,7 @@ void setLR1110_LoRa_Public_Network( const void* context, uint8_t public_network)
 }
 
 void getLR1110_LoRa_Packet_Status( const void* context) {
-    HAL_DBG_TRACE_INFO("Getting LoRa packet status... ");
+    HAL_DBG_TRACE_INFO("Getting LoRa packet status...\r\n");
 
     uint8_t cbuffer[LR1110_LORA_CMD_LENGTH_GET_PACKET_STATUS];
     uint8_t rbuffer[LR1110_LORA_LENGTH_GET_PACKET_STATUS] = { 0 };
@@ -156,7 +156,7 @@ void getLR1110_LoRa_Packet_Status( const void* context) {
 }
 
 void writeLR1110_Buffer8( const void* context, uint8_t data) {
-    HAL_DBG_TRACE_INFO("Getting LoRa packet status... ");
+    HAL_DBG_TRACE_INFO("Writing to buffer...");
 
     uint8_t cbuffer[2 + 1];
 
@@ -167,7 +167,7 @@ void writeLR1110_Buffer8( const void* context, uint8_t data) {
     if ( lr1110_spi_write( context, cbuffer, 2+1, false ) == LR1110_SPI_STATUS_OK ) {
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
     } else {
-        HAL_DBG_TRACE_ERROR("Failed to set LoRa Public Network\r\n");
+        HAL_DBG_TRACE_ERROR("Failed to write to buffer");
     }
 }
 

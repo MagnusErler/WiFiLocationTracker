@@ -149,7 +149,7 @@ void getStatus( const void* context ) {
   cbuffer[4] = 0x00;
   cbuffer[5] = 0x00;
 
-  if (lr1110_spi_write( context, cbuffer, LR1110_GET_STATUS_CMD_LENGTH, false ) == LR1110_SPI_STATUS_OK) {
+  if (lr1110_spi_write( context, cbuffer, LR1110_GET_STATUS_CMD_LENGTH, true ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
   } else {
     HAL_DBG_TRACE_ERROR("Failed to get LR1110 status\r\n");
