@@ -139,8 +139,8 @@ int main(void)
   getLR1110_LoRa_Packet_Type(lr1110_context);
   setLR1110_LoRa_Modulation_Params(lr1110_context, 0x07, 0x05, 0x01, 0x00);         // NOT SURE ABOUT VALUE 4
   setLR1110_LoRa_Packet_Params(lr1110_context, 0x00, 0x02, 0x01, 0x02, 0x01, 0x00); // NOT SURE ABOUT VALUE 1,2,4 and 6
-  setLR1110_LoRa_PA_Config(lr1110_context, 0x00, 0x00, 0x00, 0x00);                 // DONT KNOW WHAT TO PUT HERE
-  setLR1110_LoRa_TX_Params(lr1110_context, 0x00, 0x00);                             // DONT KNOW WHAT TO PUT HERE
+  setLR1110_LoRa_PA_Config(lr1110_context, 0x00, 0x00, 0x04, 0x00);                 // DONT KNOW WHAT TO PUT HERE
+  setLR1110_LoRa_TX_Params(lr1110_context, 0x0E, 0x02);                             // DONT KNOW WHAT TO PUT HERE
 
   setLR1110_LoRa_Public_Network(lr1110_context, 0x01);
   getLR1110_LoRa_Packet_Status(lr1110_context);
@@ -151,32 +151,28 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1) {
 
-    scanLR1110_WiFi_Networks(lr1110_context, 0x04, 0x3FFF, 0x04, 32, 3, 500, true);
-    //scanLR1110_WiFi_Country_Code(lr1110_context, 0x3FFF, 32, 3, 500, true);
-    uint8_t numberOfResults = getLR1110_WiFi_Number_of_Results(lr1110_context);
-    //getLR1110_WiFi_Results(lr1110_context, 0, 6, 4);
+    getLR1110_LoRa_Packet_Status(lr1110_context);
 
-    for( int i = 0; i < numberOfResults; i++ ) {
-      getWiFiFullResults( lr1110_context, i, 1 );
-    }
+    // WIFI
+    // scanLR1110_WiFi_Networks(lr1110_context, 0x04, 0x3FFF, 0x04, 32, 3, 500, true);
+    // //scanLR1110_WiFi_Country_Code(lr1110_context, 0x3FFF, 32, 3, 500, true);
+    // uint8_t numberOfResults = getLR1110_WiFi_Number_of_Results(lr1110_context);
+    // //getLR1110_WiFi_Results(lr1110_context, 0, 6, 4);
 
+    // for( int i = 0; i < numberOfResults; i++ ) {
+    //   getWiFiFullResults( lr1110_context, i, 1 );
+    // }
 
-
-    //gfsk
-    //Bitrate (bps): 150000
-    // Freq dev (hz): 50000
-
-    scanLR1110_GNSS_Satellites(lr1110_context, 0, 0, 0);
-    uint8_t numberOfDetectedSatellites = getLR1110_GNSS_Number_of_Detected_Satellites(lr1110_context);
-    if (numberOfDetectedSatellites > 0) {
-      getLR1110_GNSS_Detected_Satellites(lr1110_context, numberOfDetectedSatellites);
-      getLR1110_GNSS_Consumption(lr1110_context);
-    }
+    // GNSS
+    // scanLR1110_GNSS_Satellites(lr1110_context, 0, 0, 0);
+    // uint8_t numberOfDetectedSatellites = getLR1110_GNSS_Number_of_Detected_Satellites(lr1110_context);
+    // if (numberOfDetectedSatellites > 0) {
+    //   getLR1110_GNSS_Detected_Satellites(lr1110_context, numberOfDetectedSatellites);
+    //   getLR1110_GNSS_Consumption(lr1110_context);
+    // }
 
 
     
-
-
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

@@ -28,7 +28,7 @@ void setLR1110_LoRa_Packet_Type( const void* context, uint8_t packet_type ) {
 }
 
 uint8_t getLR1110_LoRa_Packet_Type( const void* context ) {
-    HAL_DBG_TRACE_INFO("Getting current protocol of the radio... ");
+    HAL_DBG_TRACE_INFO("Getting LoRa packet type... ");
 
     uint8_t cbuffer[LR1110_LORA_CMD_LENGTH_GET_PACKET_TYPE];
     uint8_t rbuffer[LR1110_LORA_LENGTH_GET_PACKET_TYPE] = { 0 };
@@ -37,10 +37,10 @@ uint8_t getLR1110_LoRa_Packet_Type( const void* context ) {
     cbuffer[1] = ( uint8_t )( LR1110_LORA_CMD_GET_PACKET_TYPE >> 0 );
 
     if (lr1110_spi_read( context, cbuffer, LR1110_LORA_CMD_LENGTH_GET_PACKET_TYPE, rbuffer, LR1110_LORA_LENGTH_GET_PACKET_TYPE ) == LR1110_SPI_STATUS_OK) {
-        HAL_DBG_TRACE_INFO_VALUE("0x%X", rbuffer[0]);
+        HAL_DBG_TRACE_INFO_VALUE("0x%X\r\n", rbuffer[0]);
         return rbuffer[0];
     } else {
-        HAL_DBG_TRACE_ERROR("Failed to get current protocol of the radio\r\n");
+        HAL_DBG_TRACE_ERROR("Failed to get LoRa packet type\r\n");
         return -1;
     }
 }
@@ -84,6 +84,7 @@ void setLR1110_LoRa_Packet_Params( const void* context, uint8_t pb_lenght_tx1, u
     }
 }
 
+// Power Amplifier (PA) configuration
 void setLR1110_LoRa_PA_Config( const void* context, uint8_t pa_sel, uint8_t reg_pa_supply, uint8_t pa_duty_cycle, uint8_t pa_hp_sel) {
     HAL_DBG_TRACE_INFO("Setting LoRa PA configuation... ");
 
@@ -146,7 +147,9 @@ void getLR1110_LoRa_Packet_Status( const void* context) {
     cbuffer[1] = ( uint8_t )( LR1110_LORA_CMD_GET_PACKET_STATUS >> 0 );
 
     if (lr1110_spi_read( context, cbuffer, LR1110_LORA_CMD_LENGTH_GET_PACKET_STATUS, rbuffer, LR1110_LORA_LENGTH_GET_PACKET_STATUS ) == LR1110_SPI_STATUS_OK) {
-        HAL_DBG_TRACE_INFO_VALUE("0x%X", rbuffer[0]);
+        HAL_DBG_TRACE_INFO_VALUE("RssiPkt: %d\r\n", (int8_t)rbuffer[0]);
+        HAL_DBG_TRACE_INFO_VALUE("SnrPkt: %d\r\n", (int8_t)rbuffer[1]);
+        HAL_DBG_TRACE_INFO_VALUE("SignalRssiPkt: %d\r\n", (int8_t)rbuffer[2]);
     } else {
         HAL_DBG_TRACE_ERROR("Failed to get LoRa packet status\r\n");
     }
