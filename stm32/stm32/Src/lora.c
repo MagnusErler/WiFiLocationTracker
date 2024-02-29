@@ -74,7 +74,7 @@ void setLR1110_LoRa_Packet_Params( const void* context, uint8_t pb_lenght_tx1, u
     cbuffer[2] = pb_lenght_tx1;
     cbuffer[3] = pb_lenght_tx2;
     cbuffer[4] = header_type;
-    cbuffer[5] = crc;
+    cbuffer[5] = crc;           // Cycle Redundancy Check
     cbuffer[6] = invert_iq;
 
     if ( lr1110_spi_write( context, cbuffer, LR1110_LORA_CMD_LENGTH_SET_PACKET_PARAMS ) == LR1110_SPI_STATUS_OK ) {
@@ -117,6 +117,38 @@ void setLR1110_LoRa_TX_Params( const void* context, uint8_t tx_power, uint8_t ra
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
     } else {
         HAL_DBG_TRACE_ERROR("Failed to set LoRa TX parameters\r\n");
+    }
+}
+
+void setLR1110_LoRa_Public_Network( const void* context, uint8_t public_network) {
+    HAL_DBG_TRACE_INFO("Setting LoRa Public Network... ");
+
+    uint8_t cbuffer[LR1110_LORA_CMD_LENGTH_SET_PUBLIC_NETWORK];
+
+    cbuffer[0] = ( uint8_t )( LR1110_LORA_CMD_SET_PUBLIC_NETWORK >> 8 );
+    cbuffer[1] = ( uint8_t )( LR1110_LORA_CMD_SET_PUBLIC_NETWORK >> 0 );
+    cbuffer[2] = public_network;
+
+    if ( lr1110_spi_write( context, cbuffer, LR1110_LORA_CMD_LENGTH_SET_PUBLIC_NETWORK ) == LR1110_SPI_STATUS_OK ) {
+        HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+    } else {
+        HAL_DBG_TRACE_ERROR("Failed to set LoRa Public Network\r\n");
+    }
+}
+
+void getLR1110_LoRa_Packet_Status( const void* context) {
+    HAL_DBG_TRACE_INFO("Getting LoRa packet status... ");
+
+    uint8_t cbuffer[LR1110_LORA_CMD_LENGTH_GET_PACKET_STATUS];
+    uint8_t rbuffer[LR1110_LORA_LENGTH_GET_PACKET_STATUS] = { 0 };
+
+    cbuffer[0] = ( uint8_t )( LR1110_LORA_CMD_GET_PACKET_STATUS >> 8 );
+    cbuffer[1] = ( uint8_t )( LR1110_LORA_CMD_GET_PACKET_STATUS >> 0 );
+
+    if (lr1110_spi_read( context, cbuffer, LR1110_LORA_CMD_LENGTH_GET_PACKET_STATUS, rbuffer, LR1110_LORA_LENGTH_GET_PACKET_STATUS ) == LR1110_SPI_STATUS_OK) {
+        HAL_DBG_TRACE_INFO_VALUE("0x%X", rbuffer[0]);
+    } else {
+        HAL_DBG_TRACE_ERROR("Failed to get LoRa packet status\r\n");
     }
 }
 

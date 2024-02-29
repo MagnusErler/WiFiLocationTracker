@@ -8,13 +8,18 @@
 #define LR1110_LORA_CMD_LENGTH_SET_PA_CONFIG            LR1110_LORA_CMD_LENGTH_NO_PARAM + 4
 #define LR1110_LORA_CMD_LENGTH_SET_TX_PARAMS            LR1110_LORA_CMD_LENGTH_NO_PARAM + 2
 #define LR1110_LORA_CMD_LENGTH_GET_PACKET_TYPE          LR1110_LORA_CMD_LENGTH_NO_PARAM
+#define LR1110_LORA_CMD_LENGTH_SET_PUBLIC_NETWORK       LR1110_LORA_CMD_LENGTH_NO_PARAM + 1
+#define LR1110_LORA_CMD_LENGTH_GET_PACKET_STATUS        LR1110_LORA_CMD_LENGTH_NO_PARAM
 
 // LENGTHS FOR RESPONSES
 #define LR1110_LORA_LENGTH_NO_PARAM                     1
 #define LR1110_LORA_LENGTH_GET_PACKET_TYPE              LR1110_LORA_LENGTH_NO_PARAM + 1
+#define LR1110_LORA_LENGTH_GET_PACKET_STATUS            LR1110_LORA_LENGTH_NO_PARAM + 3
 
 // LR1110 LORA COMMANDS
 #define LR1110_LORA_CMD_GET_PACKET_TYPE                 0x0202
+#define LR1110_LORA_CMD_GET_PACKET_STATUS               0x0204
+#define LR1110_LORA_CMD_SET_PUBLIC_NETWORK              0x0208
 #define LR1110_LORA_CMD_SET_PACKET_TYPE                 0x020E
 #define LR1110_LORA_CMD_SET_MODULATION_PARAMS           0x020F
 #define LR1110_LORA_CMD_SET_PACKET_PARAMS               0x0210
@@ -62,7 +67,7 @@ void setLR1110_LoRa_Modulation_Params( const void* context, uint8_t sf, uint8_t 
 void setLR1110_LoRa_Packet_Params( const void* context, uint8_t pb_lenght_tx1, uint8_t pb_lenght_tx2, uint8_t header_type, uint8_t payload_len, uint8_t crc, uint8_t invert_iq);
 
 /*!
- * @brief Set the LoRa packet parameters
+ * @brief Set the LoRa PA configuration
  *
  * @param [in] context Radio abstraction
  * @param [in] pa_sel PA selection
@@ -73,10 +78,25 @@ void setLR1110_LoRa_Packet_Params( const void* context, uint8_t pb_lenght_tx1, u
 void setLR1110_LoRa_PA_Config( const void* context, uint8_t pa_sel, uint8_t reg_pa_supply, uint8_t pa_duty_cycle, uint8_t pa_hp_sel);
 
 /*!
- * @brief Set the LoRa packet parameters
+ * @brief Set the LoRa TX parameters
  *
  * @param [in] context Radio abstraction
  * @param [in] tx_power TX power
  * @param [in] ramp_time Ramp time
  */
 void setLR1110_LoRa_TX_Params( const void* context, uint8_t tx_power, uint8_t ramp_time);
+
+/*!
+ * @brief Set the LoRa public network
+ *
+ * @param [in] context Radio abstraction
+ * @param [in] public_network Public network
+ */
+void setLR1110_LoRa_Public_Network( const void* context, uint8_t public_network);
+
+/*!
+ * @brief Get the LoRa packet status
+ *
+ * @param [in] context Radio abstraction
+ */
+void getLR1110_LoRa_Packet_Status( const void* context);

@@ -137,10 +137,13 @@ int main(void)
 
   setLR1110_LoRa_Packet_Type(lr1110_context, 0x02);
   getLR1110_LoRa_Packet_Type(lr1110_context);
-  setLR1110_LoRa_Modulation_Params(lr1110_context, 0x07, 0x05, 0x01, 0x00);         // NOT SURE ABOUT TVALUE 4
-  setLR1110_LoRa_Packet_Params(lr1110_context, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00); // NOT SURE ABOUT VALUE 1,2,4 and 6
+  setLR1110_LoRa_Modulation_Params(lr1110_context, 0x07, 0x05, 0x01, 0x00);         // NOT SURE ABOUT VALUE 4
+  setLR1110_LoRa_Packet_Params(lr1110_context, 0x00, 0x02, 0x01, 0x02, 0x01, 0x00); // NOT SURE ABOUT VALUE 1,2,4 and 6
   setLR1110_LoRa_PA_Config(lr1110_context, 0x00, 0x00, 0x00, 0x00);                 // DONT KNOW WHAT TO PUT HERE
   setLR1110_LoRa_TX_Params(lr1110_context, 0x00, 0x00);                             // DONT KNOW WHAT TO PUT HERE
+
+  setLR1110_LoRa_Public_Network(lr1110_context, 0x01);
+  getLR1110_LoRa_Packet_Status(lr1110_context);
 
   /* USER CODE END 2 */
 
