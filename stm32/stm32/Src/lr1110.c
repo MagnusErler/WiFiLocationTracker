@@ -157,12 +157,12 @@ void getStatus( const void* context ) {
   }
 }
 
-// void print_binary(uint32_t num) {
-//     for(int i = 7; i >= 0; i--) {
-//         HAL_DBG_TRACE_PRINTF("%d", (num >> i) & 1);
-//     }
-//     HAL_DBG_TRACE_PRINTF(" ");
-// }
+void print_binary(uint32_t num) {
+    for(int i = 7; i >= 0; i--) {
+        HAL_DBG_TRACE_PRINTF("%d", (num >> i) & 1);
+    }
+    HAL_DBG_TRACE_PRINTF(" ");
+}
 
 void calibrateLR1110_Image( const void* context, uint8_t freq1, uint8_t freq2) {
   HAL_DBG_TRACE_INFO("Calibrating LR1110 image... ");
@@ -197,6 +197,21 @@ void calibrateLR1110( const void* context, uint8_t calib_params) {
   }
 }
 
+void clearLR1110_Errors( const void* context) {
+  HAL_DBG_TRACE_INFO("Clearing LR1110 errors... ");
+
+  uint8_t cbuffer[LR1110_CLEAR_ERRORS_CMD_LENGTH];
+
+  cbuffer[0] = ( uint8_t )( LR1110_CLEAR_ERRORS_CMD >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_CLEAR_ERRORS_CMD >> 0 );
+
+  if (lr1110_spi_write( context, cbuffer, LR1110_CLEAR_ERRORS_CMD_LENGTH, false ) == LR1110_SPI_STATUS_OK) {
+    HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+  } else {
+    HAL_DBG_TRACE_ERROR("Failed to clear LR1110 errors\r\n");
+  }
+}
+
 void getErrors( const void* context ) {
   HAL_DBG_TRACE_INFO("Getting LR1110 errors...");
 
@@ -216,8 +231,8 @@ void getErrors( const void* context ) {
     #define BIT_24 0b01000000
     #define BIT_28 0b10000000
 
-    // print_binary(rbuffer[1]);
-    // print_binary(rbuffer[2]);
+    print_binary(rbuffer[1]);
+    print_binary(rbuffer[2]);
 
     HAL_DBG_TRACE_PRINTF("\r\n");
     if (rbuffer[1] & BIT_0) {

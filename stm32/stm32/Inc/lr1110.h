@@ -8,6 +8,7 @@
 #define LR1110_GET_CHIPEUI_CMD_LENGTH           LR1110_CMD_NO_PARAM_LENGTH
 #define LR1110_CALIBRATE_IMAGE_CMD_LENGTH       LR1110_CMD_NO_PARAM_LENGTH + 2
 #define LR1110_CALIBRATE_CMD_LENGTH             LR1110_CMD_NO_PARAM_LENGTH + 2
+#define LR1110_CLEAR_ERRORS_CMD_LENGTH          LR1110_CMD_NO_PARAM_LENGTH
 #define LR1110_GET_SEMTECH_JOINEUI_CMD_LENGTH   LR1110_CMD_NO_PARAM_LENGTH
 #define LR1110_GET_BATTERY_VOLTAGE_CMD_LENGTH   LR1110_CMD_NO_PARAM_LENGTH
 #define LR1110_GET_STATUS_CMD_LENGTH            LR1110_CMD_NO_PARAM_LENGTH + 4
@@ -29,6 +30,7 @@
 #define LR1110_GET_STATUS_CMD                   0x0100
 #define LR1110_GET_VERSION_CMD                  0x0101
 #define LR1110_GET_ERRORS_CMD                   0x010D
+#define LR1110_CLEAR_ERRORS_CMD                 0x010E
 #define LR1110_CALIBRATE_CMD                    0x010F
 #define LR1110_CALIBRATE_IMAGE_CMD              0x0111
 #define LR1110_SET_DIO_IRQ_PARAMS_CMD           0x0113
@@ -108,6 +110,13 @@ void getStatus( const void* context );
  * @param [in] context Radio abstraction
  */
 void getErrors( const void* context );
+
+/*!
+ * @brief Clear LR1110 errors
+ *
+ * @param [in] context Radio abstraction
+ */
+void clearLR1110_Errors( const void* context);
 
 /*!
  * @brief Set LR1110 DIO IRQ parameters

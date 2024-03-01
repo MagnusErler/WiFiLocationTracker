@@ -126,34 +126,40 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   HAL_DBG_TRACE_MSG("\r\n\r\n-----------------------------------------------------\r\n\r\n");
+
   resetLR1110(lr1110_context, 0);
 
-  setLR1110_Standby_Mode(lr1110_context, 0x01);
+  clearLR1110_Errors(lr1110_context);
 
-  blinkLED(GPIOC, RX_LED_Pin|TX_LED_Pin, 100, 5, true);
+  getErrors(lr1110_context);
 
-  setupLR1110_TCXO(lr1110_context);    // Seems like the first time LR1110 is called it returns with an error, so we call it twice
-  setupLR1110_TCXO(lr1110_context);
+  //blinkLED(GPIOC, RX_LED_Pin|TX_LED_Pin, 100, 5, true);
 
-  calibrateLR1110_Image( lr1110_context, 0xD7, 0xDB );
-  calibrateLR1110( lr1110_context, 0x00);
-  calibrateLR1110( lr1110_context, 0x01);
-  calibrateLR1110( lr1110_context, 0x02);
-  calibrateLR1110( lr1110_context, 0x03);
-  calibrateLR1110( lr1110_context, 0x04);
-  calibrateLR1110( lr1110_context, 0x05);
+  // setLR1110_Standby_Mode(lr1110_context, 0x00);
+  // setLR1110_Standby_Mode(lr1110_context, 0x00);
 
-  setupLR1110_TCXO(lr1110_context);
+  // setupLR1110_TCXO(lr1110_context);    // Seems like the first time LR1110 is called it returns with an error, so we call it twice
+  // setupLR1110_TCXO(lr1110_context);
 
-  getLR1110_Bootloader_Version(lr1110_context);
-  getLR1110_WiFi_Version(lr1110_context);
-  getLR1110_ChipEUI(lr1110_context);
-  getLR1110_Semtech_JoinEui(lr1110_context);
-  getLR1110_Temperature(lr1110_context);
-  getLR1110_Battery_Voltage(lr1110_context);
+  // calibrateLR1110_Image( lr1110_context, 0xD7, 0xDB );
+  // calibrateLR1110( lr1110_context, 0x00);
+  // calibrateLR1110( lr1110_context, 0x01);
+  // calibrateLR1110( lr1110_context, 0x02);
+  // calibrateLR1110( lr1110_context, 0x03);
+  // calibrateLR1110( lr1110_context, 0x04);
+  // calibrateLR1110( lr1110_context, 0x05);
+
+  // setupLR1110_TCXO(lr1110_context);
+
+  // getLR1110_Bootloader_Version(lr1110_context);
+  // getLR1110_WiFi_Version(lr1110_context);
+  // getLR1110_ChipEUI(lr1110_context);
+  // getLR1110_Semtech_JoinEui(lr1110_context);
+  // getLR1110_Temperature(lr1110_context);
+  // getLR1110_Battery_Voltage(lr1110_context);
   //TODO: set GNSSSETCONSTELLATIONTOUSE
 
-  setLR1110_Dio_Irq_Params(lr1110_context, set_bit_x_to_1(2), set_bit_x_to_1(6));
+  // setLR1110_Dio_Irq_Params(lr1110_context, set_bit_x_to_1(2), set_bit_x_to_1(6));
 
   // setLR1110_LoRa_Packet_Type(lr1110_context, 0x02);
   // getLR1110_LoRa_Packet_Type(lr1110_context);

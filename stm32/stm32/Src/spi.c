@@ -172,6 +172,7 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
     }
     #endif
 
+    // TODO: Implement the following code in a separate function
     //#if defined(DEBUG) || defined(get_status)
     if (get_status) {
         #define BIT_0 0b00000001
