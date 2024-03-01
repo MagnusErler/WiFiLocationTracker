@@ -126,21 +126,19 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   HAL_DBG_TRACE_MSG("\r\n\r\n-----------------------------------------------------\r\n\r\n");
-
   resetLR1110(lr1110_context, 0);
+  blinkLED(GPIOC, RX_LED_Pin|TX_LED_Pin, 100, 5, true);
+
+  setupLR1110_TCXO(lr1110_context);
+
+  setLR1110_Standby_Mode(lr1110_context, 0x01);
+
+  
 
   clearLR1110_Errors(lr1110_context);
   clearLR1110_Errors(lr1110_context);
 
   getErrors(lr1110_context);
-
-  //blinkLED(GPIOC, RX_LED_Pin|TX_LED_Pin, 100, 5, true);
-
-  // setLR1110_Standby_Mode(lr1110_context, 0x00);
-  // setLR1110_Standby_Mode(lr1110_context, 0x00);
-
-  // setupLR1110_TCXO(lr1110_context);    // Seems like the first time LR1110 is called it returns with an error, so we call it twice
-  // setupLR1110_TCXO(lr1110_context);
 
   // calibrateLR1110_Image( lr1110_context, 0xD7, 0xDB );
   // calibrateLR1110( lr1110_context, 0x00);
@@ -150,14 +148,12 @@ int main(void)
   // calibrateLR1110( lr1110_context, 0x04);
   // calibrateLR1110( lr1110_context, 0x05);
 
-  // setupLR1110_TCXO(lr1110_context);
-
-  // getLR1110_Bootloader_Version(lr1110_context);
-  // getLR1110_WiFi_Version(lr1110_context);
-  // getLR1110_ChipEUI(lr1110_context);
-  // getLR1110_Semtech_JoinEui(lr1110_context);
-  // getLR1110_Temperature(lr1110_context);
-  // getLR1110_Battery_Voltage(lr1110_context);
+  getLR1110_Bootloader_Version(lr1110_context);
+  getLR1110_WiFi_Version(lr1110_context);
+  getLR1110_ChipEUI(lr1110_context);
+  getLR1110_Semtech_JoinEui(lr1110_context);
+  getLR1110_Temperature(lr1110_context);
+  getLR1110_Battery_Voltage(lr1110_context);
   //TODO: set GNSSSETCONSTELLATIONTOUSE
 
   // setLR1110_Dio_Irq_Params(lr1110_context, set_bit_x_to_1(2), set_bit_x_to_1(6));
@@ -170,6 +166,8 @@ int main(void)
   // setLR1110_LoRa_TX_Params(lr1110_context, 0x0E, 0x02);                             // DONT KNOW WHAT TO PUT HERE
   // setLR1110_LoRa_Public_Network(lr1110_context, 0x01);
   //getLR1110_LoRa_Packet_Status(lr1110_context);
+
+  getLR1110_GNSS_Almanac_Status(lr1110_context);
 
   /* USER CODE END 2 */
 

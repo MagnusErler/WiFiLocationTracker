@@ -3,6 +3,7 @@
 // LENGTHS FOR COMMANDS
 #define LR1110_CMD_NO_PARAM_LENGTH                  2
 #define LR1110_GET_GNSS_VERSION_CMD_LENGTH          LR1110_CMD_NO_PARAM_LENGTH
+#define LR1110_GET_GNSS_ALMANAC_STATUS_CMD_LENGTH   LR1110_CMD_NO_PARAM_LENGTH
 #define LR1110_SCAN_GNSS_AUTONOMOUS_CMD_LENGTH      LR1110_CMD_NO_PARAM_LENGTH + 7
 #define LR1110_GET_NUMBER_OF_SATELLITES_CMD_LENGTH  LR1110_CMD_NO_PARAM_LENGTH
 #define LR1110_GET_RESULTS_CMD_LENGTH               LR1110_CMD_NO_PARAM_LENGTH
@@ -16,6 +17,7 @@
 #define LR1110_GET_RESULTS_LENGTH                   LR1110_NO_PARAM_LENGTH + 1
 #define LR1110_GET_SATELLITES_DETECTED_LENGTH       LR1110_NO_PARAM_LENGTH + 1
 #define LR1110_GET_CONSUMPTION_LENGTH               LR1110_NO_PARAM_LENGTH + 8
+#define LR1110_GET_GNSS_ALMANAC_STATUS_LENGTH       LR1110_NO_PARAM_LENGTH + 52
 
 // LR1110 CHIP COMMANDS
 #define LR1110_GET_GNSS_VERSION_CMD                 0x0406
@@ -24,6 +26,7 @@
 #define LR1110_GET_NUMBER_OF_SATELLITES_CMD         0x0417
 #define LR1110_GET_SATELLITES_DETECTED_CMD          0x0418
 #define LR1110_GET_CONSUMPTION_CMD                  0x0419
+#define LR1110_GET_GNSS_ALMANAC_STATUS_CMD          0x0457
 
 /*!
  * @brief Scan for GNSS satellites
@@ -65,3 +68,10 @@ void getLR1110_GNSS_Version( const void* context);
  * @param [in] context Radio abstraction
  */
 void getLR1110_GNSS_Consumption( const void* context);
+
+/*!
+ * @brief Get the status of the GNSS Almanac
+ *
+ * @param [in] context Radio abstraction
+ */
+void getLR1110_GNSS_Almanac_Status( const void* context );

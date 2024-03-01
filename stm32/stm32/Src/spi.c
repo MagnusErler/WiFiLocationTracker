@@ -183,10 +183,15 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
         // HAL_DBG_TRACE_PRINTF("IRQStat(23:16): 0x%X\r\n", rbuffer[3]);
         // HAL_DBG_TRACE_PRINTF("IRQStat(15:8): 0x%X\r\n", rbuffer[4]);
         // HAL_DBG_TRACE_PRINTF("IRQStat(7:0): 0x%X\r\n", rbuffer[5]);
-        print_binary(rbuffer[2]);
-        print_binary(rbuffer[3]);
-        print_binary(rbuffer[4]);
-        print_binary(rbuffer[5]);
+        // HAL_DBG_TRACE_PRINTF("get status: ");
+        // HAL_DBG_TRACE_PRINTF("rbuffer[2]: ");
+        // print_binary(rbuffer[2]);
+        // HAL_DBG_TRACE_PRINTF("rbuffer[3]: ");
+        // print_binary(rbuffer[3]);
+        // HAL_DBG_TRACE_PRINTF("rbuffer[4]: ");
+        // print_binary(rbuffer[4]);
+        // HAL_DBG_TRACE_PRINTF("rbuffer[5]: ");
+        // print_binary(rbuffer[5]);
         
         HAL_DBG_TRACE_PRINTF("\r\n");
         if (rbuffer[5] & BIT_0) {

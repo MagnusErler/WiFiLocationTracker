@@ -225,57 +225,60 @@ void getErrors( const void* context ) {
     #define BIT_24 0b01000000
     #define BIT_28 0b10000000
 
-    print_binary(rbuffer[1]);
-    print_binary(rbuffer[2]);
+    // HAL_DBG_TRACE_PRINTF("get errors: ");
+    // HAL_DBG_TRACE_PRINTF("rbuffer[1]: ");
+    // print_binary(rbuffer[1]);
+    // HAL_DBG_TRACE_PRINTF("rbuffer[1]: ");
+    // print_binary(rbuffer[2]);
 
     HAL_DBG_TRACE_PRINTF("\r\n");
-    if (rbuffer[1] & BIT_0) {
+    if (rbuffer[2] & BIT_0) {
         HAL_DBG_TRACE_PRINTF("LF_RC_CALIB_ERR. Calibration of low frequency RC was not done. To fix it redo a calibration.\r\n");
     }
-    if (rbuffer[1] & BIT_1) {
+    if (rbuffer[2] & BIT_1) {
         HAL_DBG_TRACE_PRINTF("HF_RC_CALIB_ERR. Calibration of high frequency RC was not done. To fix it redo a calibration.\r\n");
     }
-    if (rbuffer[1] & BIT_8) {
+    if (rbuffer[2] & BIT_8) {
         HAL_DBG_TRACE_PRINTF("ADC_CALIB_ERR. Calibration of ADC was not done. To fix it redo a calibration.\r\n");
     }
-    if (rbuffer[1] & BIT_12) {
+    if (rbuffer[2] & BIT_12) {
         HAL_DBG_TRACE_PRINTF("PLL_CALIB_ERR. Calibration of maximum and minimum frequencies was not done. To fix it redo the PLL calibration.\r\n");
     }
-    if (rbuffer[1] & BIT_16) {
+    if (rbuffer[2] & BIT_16) {
         HAL_DBG_TRACE_PRINTF("IMG_CALIB_ERR. Calibration of the image rejection was not done. To fix it redo the image calibration.\r\n");
     }
-    if (rbuffer[1] & BIT_20) {
+    if (rbuffer[2] & BIT_20) {
         HAL_DBG_TRACE_PRINTF("HF_XOSC_START_ERR. High frequency XOSC did not start correctly. To fix it redo a reset, or send SetTcxoCmd(...) if a TCXO is connected and redo calibrations.\r\n");
     }
-    if (rbuffer[1] & BIT_24) {
+    if (rbuffer[2] & BIT_24) {
         HAL_DBG_TRACE_PRINTF("LF_XOSC_START_ERR. Low frequency XOSC did not start correctly. To fix it redo a reset.\r\n");
     }
-    if (rbuffer[1] & BIT_28) {
+    if (rbuffer[2] & BIT_28) {
         HAL_DBG_TRACE_PRINTF("PLL_LOCK_ERR. The PLL did not lock. This can come from too high or too low frequency configuration, or if the PLL was not calibrated. To fix it redo a PLL calibration, or use other frequencies.\r\n");
     }
 
-    if (rbuffer[2] & BIT_0) {
+    if (rbuffer[1] & BIT_0) {
         HAL_DBG_TRACE_PRINTF("RX_ADC_OFFSET_ERR. Calibration of ADC offset was not done. To fix it redo a calibration.\r\n");
     }
-    if (rbuffer[2] & BIT_1) {
+    if (rbuffer[1] & BIT_1) {
         HAL_DBG_TRACE_PRINTF("RFU\r\n");
     }
-    if (rbuffer[2] & BIT_8) {
+    if (rbuffer[1] & BIT_8) {
         HAL_DBG_TRACE_PRINTF("RFU\r\n");
     }
-    if (rbuffer[2] & BIT_12) {
+    if (rbuffer[1] & BIT_12) {
         HAL_DBG_TRACE_PRINTF("RFU\r\n");
     }
-    if (rbuffer[2] & BIT_16) {
+    if (rbuffer[1] & BIT_16) {
         HAL_DBG_TRACE_PRINTF("RFU\r\n");
     }
-    if (rbuffer[2] & BIT_20) {
+    if (rbuffer[1] & BIT_20) {
         HAL_DBG_TRACE_PRINTF("RFU\r\n");
     }
-    if (rbuffer[2] & BIT_24) {
+    if (rbuffer[1] & BIT_24) {
         HAL_DBG_TRACE_PRINTF("RFU\r\n");
     }
-    if (rbuffer[2] & BIT_28) {
+    if (rbuffer[1] & BIT_28) {
         HAL_DBG_TRACE_PRINTF("RFU\r\n");
     }
   } else {
