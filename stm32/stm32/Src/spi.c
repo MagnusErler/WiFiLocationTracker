@@ -168,8 +168,8 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
     #endif
 
     // TODO: Implement the following code in a separate function
-    //#if defined(DEBUG) || defined(get_status)
-    if (get_status) {
+    #if defined(DEBUG) || defined(get_status)
+    //if (get_status) {
         #define BIT_0 0b00000001
         #define BIT_1 0b00000010
         #define BIT_8 0b00000100
@@ -293,15 +293,15 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
         if (rbuffer[2] & BIT_28) {
             HAL_DBG_TRACE_PRINTF("RFU\r\n");
         }
-    }
-    //#endif
+    //}
+    #endif
 
     return LR1110_SPI_STATUS_OK;
 }
 
 lr1110_spi_status_t _lr1110_spi_read_with_dummy_byte( SPI_TypeDef* spi, uint8_t* rbuffer, uint16_t rbuffer_length, uint32_t timeout_ms ) {
 
-    for( uint16_t i = 0; i < rbuffer_length; i++ ) {
+    for( uint16_t i = 1; i < rbuffer_length; i++ ) {
 
         uint32_t start = HAL_GetTick( );
 

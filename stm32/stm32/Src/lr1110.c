@@ -21,17 +21,17 @@ void getLR1110_Bootloader_Version( const void* context ) {
   cbuffer[1] = ( uint8_t )( LR1110_GET_VERSION_CMD >> 0 );
   
   if (lr1110_spi_read(context, cbuffer, LR1110_GET_VERSION_CMD_LENGTH, rbuffer, LR1110_GET_VERSION_LENGTH ) == LR1110_SPI_STATUS_OK) {
-    HAL_DBG_TRACE_INFO_VALUE("HW: %d (0x%X), ", rbuffer[0], rbuffer[0]);
-    HAL_DBG_TRACE_INFO_VALUE("FW: %d.%d (0x%X.0x%X), ", rbuffer[2], rbuffer[3], rbuffer[2], rbuffer[3]);
-    switch (rbuffer[1]) {
+    HAL_DBG_TRACE_INFO_VALUE("HW: %d (0x%X), ", rbuffer[1], rbuffer[1]);
+    HAL_DBG_TRACE_INFO_VALUE("FW: %d.%d (0x%X.0x%X), ", rbuffer[3], rbuffer[4], rbuffer[3], rbuffer[4]);
+    switch (rbuffer[2]) {
         case 1:
-            HAL_DBG_TRACE_INFO_VALUE("Bootloader type: LR1110 (0x%X)\r\n", rbuffer[1]);
+            HAL_DBG_TRACE_INFO_VALUE("Bootloader type: LR1110 (0x%X)\r\n", rbuffer[2]);
             break;
         case 2:
-            HAL_DBG_TRACE_INFO_VALUE("Bootloader type: LR1120 (0x%X)\r\n", rbuffer[1]);
+            HAL_DBG_TRACE_INFO_VALUE("Bootloader type: LR1120 (0x%X)\r\n", rbuffer[2]);
             break;
         case 3:
-            HAL_DBG_TRACE_INFO_VALUE("Bootloader type: LR1121 (0x%X)\r\n", rbuffer[1]);
+            HAL_DBG_TRACE_INFO_VALUE("Bootloader type: LR1121 (0x%X)\r\n", rbuffer[2]);
             break;
     }
   } else {
@@ -50,7 +50,7 @@ float getLR1110_Temperature( const void* context ) {
 
   if (lr1110_spi_read( context, cbuffer, LR1110_GET_TEMPERATURE_CMD_LENGTH, rbuffer, LR1110_GET_TEMPERATURE_LENGTH ) == LR1110_SPI_STATUS_OK) {
 
-    uint16_t temp_10_0 = ((rbuffer[0] << 8) | rbuffer[1]) & 0x7FF;
+    uint16_t temp_10_0 = ((rbuffer[1] << 8) | rbuffer[2]) & 0x7FF;
     float temperature = 25 + (1000/(-1.7)) * ((temp_10_0/2047.0) * 1.35 - 0.7295);
     
     HAL_DBG_TRACE_INFO_VALUE("%d.%d °C\r\n", (uint8_t)temperature, (uint8_t)((temperature - (uint8_t)temperature) * 100));
@@ -74,7 +74,7 @@ void getLR1110_ChipEUI( const void* context ) {
   cbuffer[1] = ( uint8_t )( LR1110_GET_CHIPEUI_CMD >> 0 );
 
   if (lr1110_spi_read( context, cbuffer, LR1110_GET_CHIPEUI_CMD_LENGTH, rbuffer, LR1110_GET_CHIPEUI_LENGTH ) == LR1110_SPI_STATUS_OK) {
-    HAL_DBG_TRACE_INFO_VALUE("%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X\r\n", rbuffer[0], rbuffer[1], rbuffer[2], rbuffer[3], rbuffer[4], rbuffer[5], rbuffer[6], rbuffer[7]);
+    HAL_DBG_TRACE_INFO_VALUE("%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X\r\n", rbuffer[1], rbuffer[2], rbuffer[3], rbuffer[4], rbuffer[5], rbuffer[6], rbuffer[7], rbuffer[8]);
   } else {
     HAL_DBG_TRACE_ERROR("Failed to get LR1110 ChipEUI\r\n");
   }
@@ -90,7 +90,7 @@ void getLR1110_Semtech_JoinEui( const void* context ) {
   cbuffer[1] = ( uint8_t )( LR1110_GET_SEMTECH_JOINEUI_CMD >> 0 );
 
   if (lr1110_spi_read( context, cbuffer, LR1110_GET_SEMTECH_JOINEUI_CMD_LENGTH, rbuffer, LR1110_GET_SEMTECH_JOINEUI_LENGTH ) == LR1110_SPI_STATUS_OK) {
-    HAL_DBG_TRACE_INFO_VALUE("%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X\r\n", rbuffer[0], rbuffer[1], rbuffer[2], rbuffer[3], rbuffer[4], rbuffer[5], rbuffer[6], rbuffer[7]);
+    HAL_DBG_TRACE_INFO_VALUE("%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X\r\n", rbuffer[1], rbuffer[2], rbuffer[3], rbuffer[4], rbuffer[5], rbuffer[6], rbuffer[7], rbuffer[8]);
   } else {
     HAL_DBG_TRACE_ERROR("Failed to get LR1110 Semtech JoinEUI\r\n");
   }
@@ -107,7 +107,7 @@ float getLR1110_Battery_Voltage( const void* context ) {
 
   if (lr1110_spi_read( context, cbuffer, LR1110_GET_BATTERY_VOLTAGE_CMD_LENGTH, rbuffer, LR1110_GET_BATTERY_VOLTAGE_LENGTH ) == LR1110_SPI_STATUS_OK) {
 
-    float batteryVoltage = (((5 * rbuffer[0])/255.0) - 1) * 1.35;
+    float batteryVoltage = (((5 * rbuffer[1])/255.0) - 1) * 1.35;
     HAL_DBG_TRACE_INFO_VALUE("%d.%d V\r\n", (uint8_t)batteryVoltage, (uint8_t)((batteryVoltage - (uint8_t)batteryVoltage) * 100));
     return batteryVoltage;
   } else {

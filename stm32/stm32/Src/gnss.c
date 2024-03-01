@@ -21,7 +21,7 @@ uint8_t getLR1110_GNSS_Number_of_Detected_Satellites( const void* context) {
     cbuffer[1] = ( uint8_t )( LR1110_GET_NUMBER_OF_SATELLITES_CMD >> 0 );
 
     if (lr1110_spi_read( context, cbuffer, LR1110_GET_NUMBER_OF_SATELLITES_CMD_LENGTH, rbuffer, LR1110_GET_NUMBER_OF_SATELLITES_LENGTH ) == LR1110_SPI_STATUS_OK) {
-        HAL_DBG_TRACE_INFO_VALUE("%d\r\n", (uint8_t)rbuffer[0]);
+        HAL_DBG_TRACE_INFO_VALUE("%d\r\n", (uint8_t)rbuffer[1]);
         return (uint8_t)rbuffer[0];
     } else {
         HAL_DBG_TRACE_ERROR("Failed to get number of detected satellites\r\n");
@@ -39,7 +39,7 @@ void getLR1110_GNSS_Detected_Satellites( const void* context, uint8_t nb_of_sate
     cbuffer[1] = ( uint8_t )( LR1110_GET_SATELLITES_DETECTED_CMD >> 0 );
 
     if (lr1110_spi_read( context, cbuffer, LR1110_GET_SATELLITES_DETECTED_CMD_LENGTH, rbuffer, LR1110_GET_SATELLITES_DETECTED_LENGTH + nb_of_satellites ) == LR1110_SPI_STATUS_OK) {
-        for (uint8_t i = 0; i < nb_of_satellites; i++) {
+        for (uint8_t i = 1; i < nb_of_satellites; i++) {
             HAL_DBG_TRACE_INFO_VALUE("Sattelite ID %d: %d, C/N0 %d\r\n", i, rbuffer[i], rbuffer[i+1]);
         }
     } else {
@@ -87,8 +87,8 @@ void getLR1110_GNSS_Version( const void* context ) {
     cbuffer[1] = ( uint8_t )( LR1110_GET_GNSS_VERSION_CMD >> 0 );
 
     if (lr1110_spi_read( context, cbuffer, LR1110_GET_GNSS_VERSION_CMD_LENGTH, rbuffer, LR1110_GET_GNSS_VERSION_LENGTH ) == LR1110_SPI_STATUS_OK) {
-        HAL_DBG_TRACE_INFO_VALUE("firmware version: %d, ", rbuffer[0]);
-        HAL_DBG_TRACE_INFO_VALUE("almanac version: %d\n\r", rbuffer[1]);
+        HAL_DBG_TRACE_INFO_VALUE("firmware version: %d, ", rbuffer[1]);
+        HAL_DBG_TRACE_INFO_VALUE("almanac version: %d\n\r", rbuffer[2]);
     } else {
         HAL_DBG_TRACE_ERROR("Failed to get GNSS version\r\n");
     }
@@ -104,14 +104,14 @@ void getLR1110_GNSS_Consumption( const void* context ) {
     cbuffer[1] = ( uint8_t )( LR1110_GET_CONSUMPTION_CMD >> 0 );
 
     if (lr1110_spi_read( context, cbuffer, LR1110_GET_CONSUMPTION_CMD_LENGTH, rbuffer, LR1110_GET_CONSUMPTION_LENGTH ) == LR1110_SPI_STATUS_OK) {
-        uint32_t cpu_time_microseconds = (uint32_t)(rbuffer[0]) << 24 |
-                                         (uint32_t)(rbuffer[1]) << 16 |
-                                         (uint32_t)(rbuffer[2]) << 8 |
-                                         (uint32_t)(rbuffer[3]);
-        uint32_t radio_time_microseconds = (uint32_t)(rbuffer[4]) << 24 |
-                                           (uint32_t)(rbuffer[5]) << 16 |
-                                           (uint32_t)(rbuffer[6]) << 8 |
-                                           (uint32_t)(rbuffer[7]);
+        uint32_t cpu_time_microseconds = (uint32_t)(rbuffer[1]) << 24 |
+                                         (uint32_t)(rbuffer[2]) << 16 |
+                                         (uint32_t)(rbuffer[3]) << 8 |
+                                         (uint32_t)(rbuffer[4]);
+        uint32_t radio_time_microseconds = (uint32_t)(rbuffer[5]) << 24 |
+                                           (uint32_t)(rbuffer[6]) << 16 |
+                                           (uint32_t)(rbuffer[7]) << 8 |
+                                           (uint32_t)(rbuffer[8]);
 
         // Convert microseconds to seconds
         float cpu_time_seconds = cpu_time_microseconds / 1000000.0;
@@ -135,7 +135,7 @@ void getLR1110_GNSS_Almanac_Status( const void* context ) {
     cbuffer[1] = ( uint8_t )( LR1110_GET_GNSS_ALMANAC_STATUS_CMD >> 0 );
 
     if (lr1110_spi_read( context, cbuffer, LR1110_GET_GNSS_ALMANAC_STATUS_CMD_LENGTH, rbuffer, LR1110_GET_GNSS_ALMANAC_STATUS_LENGTH ) == LR1110_SPI_STATUS_OK) {
-        HAL_DBG_TRACE_INFO_VALUE("rbuffer[0]: %d\r\n", rbuffer[0]);
+        HAL_DBG_TRACE_INFO_VALUE("rbuffer[0]: %d\r\n", rbuffer[1]);
     } else {
         HAL_DBG_TRACE_ERROR("Failed to get GNSS Almanac status\r\n");
     }
