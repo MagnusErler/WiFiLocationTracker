@@ -89,7 +89,7 @@ float getLR1110_Battery_Voltage( const void* context );
  *
  * @param [in] context Radio abstraction
  */
-void setupLR1110_TCXO( const void* context );
+void setLR1110_TCXO_Mode( const void* context );
 
 /*!
  * @brief Reset LR1110

@@ -116,7 +116,7 @@ float getLR1110_Battery_Voltage( const void* context ) {
   }
 }
 
-void setupLR1110_TCXO( const void* context ) {
+void setLR1110_TCXO_Mode( const void* context ) {
   HAL_DBG_TRACE_INFO( "Setting LR1110 TCXO mode... " );
 
   uint8_t cbuffer[LR1110_SET_TCXO_MODE_CMD_LENGTH];
