@@ -336,7 +336,6 @@ lr1110_spi_status_t _lr1110_spi_read_with_dummy_byte( SPI_TypeDef* spi, uint8_t*
 lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer, const uint16_t cbuffer_length, uint8_t* rbuffer, const uint16_t rbuffer_length ) {
 
     radio = (radio_t*) context;
-    uint8_t dummy_byte = 0x00;
 
     // Wait for BUSY to become LOW -> LR1110 is ready for a new command
     if (_waitForBusyState( GPIO_PIN_RESET, 2000 ) != LR1110_SPI_STATUS_OK) {
@@ -358,7 +357,7 @@ lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer
 
     // Start of 2nd SPI transaction
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_RESET );
-    if (_lr1110_spi_write( radio->spi, &dummy_byte, 1, 1000, false ) != LR1110_SPI_STATUS_OK) {
+    if (_lr1110_spi_write( radio->spi, 0x00, 1, 1000, false ) != LR1110_SPI_STATUS_OK) {
         return LR1110_SPI_STATUS_ERROR;
     }
     if (_lr1110_spi_read_with_dummy_byte( radio->spi, rbuffer, rbuffer_length, 1000 ) != LR1110_SPI_STATUS_OK) {
@@ -376,8 +375,6 @@ lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer
 }
 
 lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffer, uint16_t cbuffer_length, bool get_status ) {
-
-    lr1110_spi_status_t status = LR1110_SPI_STATUS_OK;
 
     radio = (radio_t*) context;
 
@@ -399,5 +396,5 @@ lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffe
         return LR1110_SPI_STATUS_TIMEOUT;
     }
     
-    return status;
+    return LR1110_SPI_STATUS_OK;
 }
