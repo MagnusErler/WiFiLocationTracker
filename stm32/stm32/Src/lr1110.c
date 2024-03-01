@@ -324,3 +324,20 @@ void setLR1110_Dio_Irq_Params( const void* context, uint64_t irq1_to_enable, uin
     HAL_DBG_TRACE_ERROR("Failed to set LR1110 DIO IRQ parameters\r\n");
   }
 }
+
+void setLR1110_Standby_Mode( const void* context, uint8_t stdby_config) {
+  HAL_DBG_TRACE_INFO("Setting LR1110 standby mode... ");
+
+  uint8_t cbuffer[LR1110_SET_STANDBY_MODE_CMD_LENGTH];
+
+  cbuffer[0] = ( uint8_t )( LR1110_SET_STANDBY_MODE_CMD >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_SET_STANDBY_MODE_CMD >> 0 );
+  cbuffer[2] = stdby_config;
+
+  if (lr1110_spi_write( context, cbuffer, LR1110_SET_STANDBY_MODE_CMD_LENGTH, false ) == LR1110_SPI_STATUS_OK) {
+    HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+  } else {
+    HAL_DBG_TRACE_ERROR("Failed to set LR1110 standby mode\r\n");
+  }
+}
+

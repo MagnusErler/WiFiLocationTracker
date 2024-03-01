@@ -128,6 +128,8 @@ int main(void)
   HAL_DBG_TRACE_MSG("\r\n\r\n-----------------------------------------------------\r\n\r\n");
   resetLR1110(lr1110_context, 0);
 
+  setLR1110_Standby_Mode(lr1110_context, 0x01);
+
   blinkLED(GPIOC, RX_LED_Pin|TX_LED_Pin, 100, 5, true);
 
   setupLR1110_TCXO(lr1110_context);    // Seems like the first time LR1110 is called it returns with an error, so we call it twice
