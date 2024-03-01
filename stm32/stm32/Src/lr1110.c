@@ -163,6 +163,23 @@ void getStatus( const void* context ) {
 //     HAL_DBG_TRACE_PRINTF(" ");
 // }
 
+void calibLR1110_Image( const void* context, uint8_t freq1, uint8_t freq2) {
+  HAL_DBG_TRACE_INFO("Calibrating LR1110 image... ");
+
+  uint8_t cbuffer[LR1110_CALIBRATE_CMD_LENGTH];
+
+  cbuffer[0] = ( uint8_t )( LR1110_CALIBRATE_CMD >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_CALIBRATE_CMD >> 0 );
+  cbuffer[2] = freq1;
+  cbuffer[3] = freq2;
+
+  if (lr1110_spi_write( context, cbuffer, LR1110_CALIBRATE_CMD_LENGTH, false ) == LR1110_SPI_STATUS_OK) {
+    HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+  } else {
+    HAL_DBG_TRACE_ERROR("Failed to calibrate LR1110 image\r\n");
+  }
+}
+
 void getErrors( const void* context ) {
   HAL_DBG_TRACE_INFO("Getting LR1110 errors...");
 
@@ -240,14 +257,29 @@ void getErrors( const void* context ) {
   }
 }
 
-void resetLR1110( const void* context ) {
-
-  radio_t* radio = (radio_t*) context;
-
+void resetLR1110( const void* context, uint8_t reset_type) {
   HAL_DBG_TRACE_INFO("Resetting LR1110... ");
+  
+  
+  radio_t* radio = (radio_t*) context;
   HAL_GPIO_WritePin(radio->reset.port, radio->reset.pin, GPIO_PIN_RESET);
   HAL_Delay(200);   // At least 100ms
   HAL_GPIO_WritePin(radio->reset.port, radio->reset.pin, GPIO_PIN_SET);
+
+
+  // /////////// DO IT WITH SPI
+  // uint8_t cbuffer[LR1110_REBOOT_CMD_LENGTH];
+
+  // cbuffer[0] = ( uint8_t )( LR1110_REBOOT_CMD >> 8 );
+  // cbuffer[1] = ( uint8_t )( LR1110_REBOOT_CMD >> 0 );
+  // cbuffer[2] = reset_type;
+
+  // if (lr1110_spi_write( context, cbuffer, LR1110_REBOOT_CMD_LENGTH, false ) != LR1110_SPI_STATUS_OK) {
+  //   HAL_DBG_TRACE_ERROR("Failed to reset LR1110\r\n");
+  //   return;
+  // }
+  // ///////////
+
   HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
 }
 
