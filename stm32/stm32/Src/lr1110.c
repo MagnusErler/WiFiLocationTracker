@@ -353,3 +353,17 @@ void setLR1110_Standby_Mode( const void* context, uint8_t stdby_config) {
   }
 }
 
+void clearLR1110_RX_Buffer( const void* context) {
+    HAL_DBG_TRACE_INFO("Clearing RX buffer... ");
+
+    uint8_t cbuffer[LR1110_CMD_LENGTH_CLEAR_RX_BUFFER];
+
+    cbuffer[0] = ( uint8_t )( LR1110_CLEAR_RX_BUFFER >> 8 );
+    cbuffer[1] = ( uint8_t )( LR1110_CLEAR_RX_BUFFER >> 0 );
+
+    if ( lr1110_spi_write( context, cbuffer, LR1110_CMD_LENGTH_CLEAR_RX_BUFFER, false ) == LR1110_SPI_STATUS_OK ) {
+        HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+    } else {
+        HAL_DBG_TRACE_ERROR("Failed to clear RX buffer\r\n");
+    }
+}

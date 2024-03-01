@@ -129,9 +129,13 @@ int main(void)
   resetLR1110(lr1110_context, 0);
   blinkLED(GPIOC, RX_LED_Pin|TX_LED_Pin, 100, 5, true);
 
+  clearLR1110_RX_Buffer(lr1110_context);
+  clearLR1110_RX_Buffer(lr1110_context);
+
+  setupLR1110_TCXO(lr1110_context);
   setupLR1110_TCXO(lr1110_context);
 
-  setLR1110_Standby_Mode(lr1110_context, 0x01);
+  //setLR1110_Standby_Mode(lr1110_context, 0x01);
 
   
 

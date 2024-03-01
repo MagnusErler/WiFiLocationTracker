@@ -188,5 +188,3 @@ void setLR1110_TX( const void* context, uint8_t timeout) {
         HAL_DBG_TRACE_ERROR("Failed to set LoRa TX\r\n");
     }
 }
-
-

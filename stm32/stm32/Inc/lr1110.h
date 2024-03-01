@@ -16,6 +16,7 @@
 #define LR1110_SET_DIO_IRQ_PARAMS_CMD_LENGTH    LR1110_CMD_NO_PARAM_LENGTH + 8
 #define LR1110_SET_STANDBY_MODE_CMD_LENGTH      LR1110_CMD_NO_PARAM_LENGTH + 1
 #define LR1110_SET_TCXO_MODE_CMD_LENGTH         LR1110_CMD_NO_PARAM_LENGTH + 4
+#define LR1110_CMD_LENGTH_CLEAR_RX_BUFFER       LR1110_CMD_NO_PARAM_LENGTH
 
 // LENGTHS FOR RESPONSES
 #define LR1110_NO_PARAM_LENGTH                  1
@@ -29,12 +30,13 @@
 // LR1110 CHIP COMMANDS
 #define LR1110_GET_STATUS_CMD                   0x0100
 #define LR1110_GET_VERSION_CMD                  0x0101
+#define LR1110_CLEAR_RX_BUFFER                  0x010B
 #define LR1110_GET_ERRORS_CMD                   0x010D
 #define LR1110_CLEAR_ERRORS_CMD                 0x010E
 #define LR1110_CALIBRATE_CMD                    0x010F
 #define LR1110_CALIBRATE_IMAGE_CMD              0x0111
 #define LR1110_SET_DIO_IRQ_PARAMS_CMD           0x0113
-#define LR1110_SET_TCXO_MODE_CMD                0x0117
+#define LR1110_SET_TCXO_MODE_CMD                0x0197
 #define LR1110_REBOOT_CMD                       0x0118
 #define LR1110_GET_BATTERY_VOLTAGE_CMD          0x0119
 #define LR1110_GET_TEMPERATURE_CMD              0x011A
@@ -151,3 +153,11 @@ void calibrateLR1110( const void* context, uint8_t calib_params);
  * @param [in] stdby_config Standby configuration
  */
 void setLR1110_Standby_Mode( const void* context, uint8_t stdby_config);
+
+/*!
+ * @brief Clear LR1110 RX Buffer
+ *
+ * @param [in] context Radio abstraction
+ */
+void clearLR1110_RX_Buffer( const void* context);
+
