@@ -141,7 +141,7 @@ int main(void)
   getLR1110_Battery_Voltage(lr1110_context);
   //TODO: set GNSSSETCONSTELLATIONTOUSE
 
-  setLR1110_Dio_Irq_Params(lr1110_context, set_bit_x_to_1(0, 20), set_bit_x_to_1(0, 0));
+  setLR1110_Dio_Irq_Params(lr1110_context, set_bit_x_to_1(20), set_bit_x_to_1(0));
 
   // setLR1110_LoRa_Packet_Type(lr1110_context, 0x02);
   // getLR1110_LoRa_Packet_Type(lr1110_context);

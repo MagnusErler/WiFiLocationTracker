@@ -259,15 +259,15 @@ void setLR1110_Dio_Irq_Params( const void* context, uint64_t irq1_to_enable, uin
   cbuffer[0] = ( uint8_t )( LR1110_SET_DIO_IRQ_PARAMS_CMD >> 8 );
   cbuffer[1] = ( uint8_t )( LR1110_SET_DIO_IRQ_PARAMS_CMD >> 0 );
   // Bit 20 is set to 1
-  cbuffer[2] = ( uint8_t ) 0b00000000;
-  cbuffer[3] = ( uint8_t ) 0b00010000;
-  cbuffer[4] = ( uint8_t ) 0b00000000;
-  cbuffer[5] = ( uint8_t ) 0b00000000;
+  cbuffer[2] = ( uint8_t )( irq1_to_enable >> 24 );
+  cbuffer[3] = ( uint8_t )( irq1_to_enable >> 16 );
+  cbuffer[4] = ( uint8_t )( irq1_to_enable >> 8 );
+  cbuffer[5] = ( uint8_t )( irq1_to_enable >> 0 );
 
-  cbuffer[6] = ( uint8_t ) 0b00000000;
-  cbuffer[7] = ( uint8_t ) 0b00000000;
-  cbuffer[8] = ( uint8_t ) 0b00000000;
-  cbuffer[9] = ( uint8_t ) 0b00000000;
+  cbuffer[6] = ( uint8_t )( irq2_to_enable >> 24 );
+  cbuffer[7] = ( uint8_t )( irq2_to_enable >> 16 );
+  cbuffer[8] = ( uint8_t )( irq2_to_enable >> 8 );
+  cbuffer[9] = ( uint8_t )( irq2_to_enable >> 0 );
 
   if (lr1110_spi_write( context, cbuffer, LR1110_SET_DIO_IRQ_PARAMS_CMD_LENGTH, false ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
