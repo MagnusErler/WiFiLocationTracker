@@ -83,6 +83,7 @@ void Error_Handler(void);
 #define BUSY_GPIO_Port GPIOB
 #define EVENT_Pin GPIO_PIN_4
 #define EVENT_GPIO_Port GPIOB
+#define EVENT_EXTI_IRQn EXTI4_IRQn
 #define SNIFFING_LED_Pin GPIO_PIN_5
 #define SNIFFING_LED_GPIO_Port GPIOB
 

@@ -168,12 +168,12 @@ int main(void)
     // WIFI
     scanLR1110_WiFi_Networks(lr1110_context, 0x04, 0x3FFF, 0x04, 32, 3, 500, true);
     //scanLR1110_WiFi_Country_Code(lr1110_context, 0x3FFF, 32, 3, 500, true);
-    uint8_t numberOfResults = getLR1110_WiFi_Number_of_Results(lr1110_context);
+    // uint8_t numberOfResults = getLR1110_WiFi_Number_of_Results(lr1110_context);
     //getLR1110_WiFi_Results(lr1110_context, 0, 6, 4);
 
-    for( int i = 0; i < numberOfResults; i++ ) {
-      getWiFiFullResults( lr1110_context, i, 1 );
-    }
+    // for( int i = 0; i < numberOfResults; i++ ) {
+    //   getWiFiFullResults( lr1110_context, i, 1 );
+    // }
 
     // getStatus(lr1110_context);
     // getErrors(lr1110_context);
@@ -450,8 +450,12 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin : EVENT_Pin */
   GPIO_InitStruct.Pin = EVENT_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(EVENT_GPIO_Port, &GPIO_InitStruct);
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI4_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI4_IRQn);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
