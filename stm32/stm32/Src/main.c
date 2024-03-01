@@ -130,6 +130,7 @@ int main(void)
   resetLR1110(lr1110_context, 0);
 
   clearLR1110_Errors(lr1110_context);
+  clearLR1110_Errors(lr1110_context);
 
   getErrors(lr1110_context);
 

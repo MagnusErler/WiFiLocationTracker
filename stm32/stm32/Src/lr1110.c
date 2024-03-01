@@ -9,6 +9,7 @@
 
 #include "spi.h"
 #include "main.h"       // for HAL_DBG_TRACE-functions
+#include "helper.h"
 
 void getLR1110_Bootloader_Version( const void* context ) {
   HAL_DBG_TRACE_INFO("Getting LR1110 version... ");
@@ -155,13 +156,6 @@ void getStatus( const void* context ) {
   } else {
     HAL_DBG_TRACE_ERROR("Failed to get LR1110 status\r\n");
   }
-}
-
-void print_binary(uint32_t num) {
-    for(int i = 7; i >= 0; i--) {
-        HAL_DBG_TRACE_PRINTF("%d", (num >> i) & 1);
-    }
-    HAL_DBG_TRACE_PRINTF(" ");
 }
 
 void calibrateLR1110_Image( const void* context, uint8_t freq1, uint8_t freq2) {

@@ -10,6 +10,8 @@
 #include "led.h"
 #include "main.h"       // for HAL_DBG_TRACE-functions
 
+#include "helper.h"
+
 // Comment out the following line to disable debug messages
 //#define DEBUG
 
@@ -38,13 +40,6 @@ lr1110_spi_status_t _waitForBusyState( GPIO_PinState state, uint32_t timeout_ms 
     }
     return LR1110_SPI_STATUS_OK;
 }
-
-// void print_binary(uint32_t num) {
-//     for(int i = 7; i >= 0; i--) {
-//         HAL_DBG_TRACE_PRINTF("%d", (num >> i) & 1);
-//     }
-//     HAL_DBG_TRACE_PRINTF(" ");
-// }
 
 lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer, uint16_t cbuffer_length, uint32_t timeout_ms, bool get_status ) {
 
@@ -188,10 +183,10 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
         // HAL_DBG_TRACE_PRINTF("IRQStat(23:16): 0x%X\r\n", rbuffer[3]);
         // HAL_DBG_TRACE_PRINTF("IRQStat(15:8): 0x%X\r\n", rbuffer[4]);
         // HAL_DBG_TRACE_PRINTF("IRQStat(7:0): 0x%X\r\n", rbuffer[5]);
-        // print_binary(rbuffer[2]);
-        // print_binary(rbuffer[3]);
-        // print_binary(rbuffer[4]);
-        // print_binary(rbuffer[5]);
+        print_binary(rbuffer[2]);
+        print_binary(rbuffer[3]);
+        print_binary(rbuffer[4]);
+        print_binary(rbuffer[5]);
         
         HAL_DBG_TRACE_PRINTF("\r\n");
         if (rbuffer[5] & BIT_0) {
