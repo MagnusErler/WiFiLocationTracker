@@ -129,6 +129,7 @@ void setupLR1110_TCXO( const void* context ) {
   cbuffer[3] = ( uint8_t )( timeout >> 16 );
   cbuffer[4] = ( uint8_t )( timeout >> 8 );
   cbuffer[5] = ( uint8_t )( timeout >> 0 );
+  cbuffer[5] = ( uint8_t ) 0xA3;
 
   if (lr1110_spi_write( context, cbuffer, LR1110_SET_TCXO_MODE_CMD_LENGTH, false ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
@@ -163,20 +164,36 @@ void getStatus( const void* context ) {
 //     HAL_DBG_TRACE_PRINTF(" ");
 // }
 
-void calibLR1110_Image( const void* context, uint8_t freq1, uint8_t freq2) {
+void calibrateLR1110_Image( const void* context, uint8_t freq1, uint8_t freq2) {
   HAL_DBG_TRACE_INFO("Calibrating LR1110 image... ");
+
+  uint8_t cbuffer[LR1110_CALIBRATE_IMAGE_CMD_LENGTH];
+
+  cbuffer[0] = ( uint8_t )( LR1110_CALIBRATE_IMAGE_CMD >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_CALIBRATE_IMAGE_CMD >> 0 );
+  cbuffer[2] = freq1;
+  cbuffer[3] = freq2;
+
+  if (lr1110_spi_write( context, cbuffer, LR1110_CALIBRATE_IMAGE_CMD_LENGTH, false ) == LR1110_SPI_STATUS_OK) {
+    HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+  } else {
+    HAL_DBG_TRACE_ERROR("Failed to calibrate LR1110 image\r\n");
+  }
+}
+
+void calibrateLR1110( const void* context, uint8_t calib_params) {
+  HAL_DBG_TRACE_INFO("Calibrating LR1110... ");
 
   uint8_t cbuffer[LR1110_CALIBRATE_CMD_LENGTH];
 
   cbuffer[0] = ( uint8_t )( LR1110_CALIBRATE_CMD >> 8 );
   cbuffer[1] = ( uint8_t )( LR1110_CALIBRATE_CMD >> 0 );
-  cbuffer[2] = freq1;
-  cbuffer[3] = freq2;
+  cbuffer[2] = calib_params;
 
   if (lr1110_spi_write( context, cbuffer, LR1110_CALIBRATE_CMD_LENGTH, false ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
   } else {
-    HAL_DBG_TRACE_ERROR("Failed to calibrate LR1110 image\r\n");
+    HAL_DBG_TRACE_ERROR("Failed to calibrate LR1110\r\n");
   }
 }
 
