@@ -36,7 +36,7 @@
 #define LR1110_CALIBRATE_CMD                    0x010F
 #define LR1110_CALIBRATE_IMAGE_CMD              0x0111
 #define LR1110_SET_DIO_IRQ_PARAMS_CMD           0x0113
-#define LR1110_SET_TCXO_MODE_CMD                0x0197
+#define LR1110_SET_TCXO_MODE_CMD                0x0117
 #define LR1110_REBOOT_CMD                       0x0118
 #define LR1110_GET_BATTERY_VOLTAGE_CMD          0x0119
 #define LR1110_GET_TEMPERATURE_CMD              0x011A

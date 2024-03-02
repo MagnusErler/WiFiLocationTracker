@@ -281,7 +281,7 @@ void getErrors( const void* context ) {
         HAL_DBG_TRACE_PRINTF("RFU\r\n");
     }
   } else {
-    HAL_DBG_TRACE_ERROR("Failed to get LR1110 battery voltage\r\n");
+    HAL_DBG_TRACE_ERROR("Failed to get LR1110 errors\r\n");
   }
 }
 
