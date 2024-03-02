@@ -12,6 +12,8 @@
 
 #include "helper.h"
 
+#include <string.h>     // for memset
+
 // Comment out the following line to disable debug messages
 //#define DEBUG
 
@@ -41,12 +43,12 @@ lr1110_spi_status_t _waitForBusyState( GPIO_PinState state, uint32_t timeout_ms 
     return LR1110_SPI_STATUS_OK;
 }
 
-lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer, uint16_t cbuffer_length, uint32_t timeout_ms, bool get_status ) {
+lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer, const uint16_t cbuffer_length, const uint32_t timeout_ms, const bool get_status ) {
 
     uint8_t rbuffer[cbuffer_length];
+    memset(rbuffer, 0x00, cbuffer_length);
 
     for( uint16_t i = 0; i < cbuffer_length; i++ ) {
-
         uint32_t start = HAL_GetTick();
 
         turnOnLED(TX_LED_GPIO_Port, TX_LED_Pin);
@@ -348,12 +350,11 @@ lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer
         return LR1110_SPI_STATUS_ERROR;
     }
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
-    // End of 1st SPI transaction
-
     // Wait for BUSY to become LOW -> LR1110 is ready for a new command
     if (_waitForBusyState( GPIO_PIN_RESET, 2000 ) != LR1110_SPI_STATUS_OK) {
         return LR1110_SPI_STATUS_ERROR;
     }
+    // End of 1st SPI transaction
 
     // Start of 2nd SPI transaction
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_RESET );
@@ -364,22 +365,21 @@ lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer
         return LR1110_SPI_STATUS_ERROR;
     }
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
-    // End of 2nd SPI transaction
-
     // Wait for BUSY to become LOW -> LR1110 is ready for a new command
     if (_waitForBusyState( GPIO_PIN_RESET, 2000 ) != LR1110_SPI_STATUS_OK) {
         return LR1110_SPI_STATUS_ERROR;
     }
+    // End of 2nd SPI transaction
 
     return LR1110_SPI_STATUS_OK;
 }
 
-lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffer, uint16_t cbuffer_length, bool get_status ) {
+lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffer, const uint16_t cbuffer_length, const bool get_status ) {
 
     radio = (radio_t*) context;
 
     // Wait for BUSY to become LOW -> LR1110 is ready for a new command
-    if (_waitForBusyState( GPIO_PIN_RESET, 10000 ) != LR1110_SPI_STATUS_OK) {
+    if (_waitForBusyState( GPIO_PIN_RESET, 2000 ) != LR1110_SPI_STATUS_OK) {
         return LR1110_SPI_STATUS_TIMEOUT;
     }
 
@@ -389,12 +389,11 @@ lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffe
         return LR1110_SPI_STATUS_ERROR;
     }
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
-    // End of SPI transaction
-
     // Wait for BUSY to become LOW -> LR1110 is ready for a new command
-    if (_waitForBusyState( GPIO_PIN_RESET, 10000 ) != LR1110_SPI_STATUS_OK) {
+    if (_waitForBusyState( GPIO_PIN_RESET, 2000 ) != LR1110_SPI_STATUS_OK) {
         return LR1110_SPI_STATUS_TIMEOUT;
     }
+    // End of SPI transaction
     
     return LR1110_SPI_STATUS_OK;
 }

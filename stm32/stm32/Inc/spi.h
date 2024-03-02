@@ -22,7 +22,7 @@ typedef enum lr1110_spi_status_e {
  * 
  * @returns Operation status
  */
-lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffer, uint16_t cbuffer_length, bool get_status );
+lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffer, const uint16_t cbuffer_length, const bool get_status );
 
 /*!
  * @brief Radio data transfer - read
