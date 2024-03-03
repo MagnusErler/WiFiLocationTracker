@@ -78,6 +78,9 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
 
     #ifdef DEBUG
     HAL_DBG_TRACE_PRINTF("\r\n---Stat1 Results---\r\n");
+    HAL_DBG_TRACE_PRINTF("rbuffer[0]: ");
+    print_binary(rbuffer[0]);
+    HAL_DBG_TRACE_PRINTF("\r\n");
     switch ( rbuffer[0] & 0x01 ) {
         case 0:
             HAL_DBG_TRACE_PRINTF("No interrupt active\r\n");
@@ -107,7 +110,10 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
 
     #ifdef DEBUG
     HAL_DBG_TRACE_PRINTF("\r\n---Stat2 Results---\r\n");
-    switch( ( rbuffer[1] & 0x0F ) >> 4 ) {
+    HAL_DBG_TRACE_PRINTF("rbuffer[1]: ");
+    print_binary(rbuffer[1]);
+    HAL_DBG_TRACE_PRINTF("\r\n");
+    switch ( rbuffer[1] & 0x01 ) {
         case 0:
             HAL_DBG_TRACE_PRINTF("Bootloader: currently executes from boot-loader\r\n");
             break;
@@ -144,7 +150,7 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
     #endif
 
     #ifdef DEBUG
-    switch( rbuffer[1] & 0x0F ) {
+    switch( ( rbuffer[1] & 0x70 ) >> 4 ) {
         case 0:
             HAL_DBG_TRACE_PRINTF("Reset status: Cleared (no active reset)\r\n");
             break;
@@ -152,7 +158,7 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
             HAL_DBG_TRACE_PRINTF("Reset status: Analog reset (Power On Reset, Brown-Out Reset)\r\n");
             break;
         case 2:
-            HAL_DBG_TRACE_PRINTF("eset status: External reset (NRESET pin)\r\n");
+            HAL_DBG_TRACE_PRINTF("Reset status: External reset (NRESET pin)\r\n");
             break;
         case 3:
             HAL_DBG_TRACE_PRINTF("Reset status: System reset\r\n");
@@ -185,15 +191,14 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
         // HAL_DBG_TRACE_PRINTF("IRQStat(23:16): 0x%X\r\n", rbuffer[3]);
         // HAL_DBG_TRACE_PRINTF("IRQStat(15:8): 0x%X\r\n", rbuffer[4]);
         // HAL_DBG_TRACE_PRINTF("IRQStat(7:0): 0x%X\r\n", rbuffer[5]);
-        // HAL_DBG_TRACE_PRINTF("get status: ");
-        // HAL_DBG_TRACE_PRINTF("rbuffer[2]: ");
-        // print_binary(rbuffer[2]);
-        // HAL_DBG_TRACE_PRINTF("rbuffer[3]: ");
-        // print_binary(rbuffer[3]);
-        // HAL_DBG_TRACE_PRINTF("rbuffer[4]: ");
-        // print_binary(rbuffer[4]);
-        // HAL_DBG_TRACE_PRINTF("rbuffer[5]: ");
-        // print_binary(rbuffer[5]);
+        HAL_DBG_TRACE_PRINTF("rbuffer[2]: ");
+        print_binary(rbuffer[2]);
+        HAL_DBG_TRACE_PRINTF("\r\nrbuffer[3]: ");
+        print_binary(rbuffer[3]);
+        HAL_DBG_TRACE_PRINTF("\r\nrbuffer[4]: ");
+        print_binary(rbuffer[4]);
+        HAL_DBG_TRACE_PRINTF("\r\nrbuffer[5]: ");
+        print_binary(rbuffer[5]);
         
         HAL_DBG_TRACE_PRINTF("\r\n");
         if (rbuffer[5] & BIT_0) {
