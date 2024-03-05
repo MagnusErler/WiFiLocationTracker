@@ -124,12 +124,11 @@ void setLR1110_TCXO_Mode( const void* context ) {
   cbuffer[0] = ( uint8_t )( LR1110_SET_TCXO_MODE_CMD >> 8 );
   cbuffer[1] = ( uint8_t )( LR1110_SET_TCXO_MODE_CMD >> 0 );
 
-  const uint8_t timeout = ( 5 * 1000 ) / 30.52;  // BOARD_TCXO_WAKEUP_TIME = 5               // 163
+  const uint8_t timeout = ( 5 * 1000 ) / 30.52;  // BOARD_TCXO_WAKEUP_TIME = 5               // 163 (163.826998689)
   cbuffer[2] = ( uint8_t ) 0x02;
   cbuffer[3] = ( uint8_t )( timeout >> 16 );
   cbuffer[4] = ( uint8_t )( timeout >> 8 );
   cbuffer[5] = ( uint8_t )( timeout >> 0 );
-  cbuffer[5] = ( uint8_t ) 0xA3;
 
   if (lr1110_spi_write( context, cbuffer, LR1110_CMD_LENGTH_SET_TCXO_MODE, false ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
@@ -296,13 +295,14 @@ void resetLR1110( const void* context, uint8_t reset_type) {
 
 
   // /////////// DO IT WITH SPI
-  // uint8_t cbuffer[LR1110_REBOOT_CMD_LENGTH];
+  // REMEMBER THAT BUSY STAYS HIGH WHILE THE CHIP IS REBOOTING
+  // uint8_t cbuffer[LR1110_CMD_LENGTH_REBOOT];
 
   // cbuffer[0] = ( uint8_t )( LR1110_REBOOT_CMD >> 8 );
   // cbuffer[1] = ( uint8_t )( LR1110_REBOOT_CMD >> 0 );
   // cbuffer[2] = reset_type;
 
-  // if (lr1110_spi_write( context, cbuffer, LR1110_REBOOT_CMD_LENGTH, false ) != LR1110_SPI_STATUS_OK) {
+  // if (lr1110_spi_write( context, cbuffer, LR1110_CMD_LENGTH_REBOOT, false, true ) != LR1110_SPI_STATUS_OK) {
   //   HAL_DBG_TRACE_ERROR("Failed to reset LR1110\r\n");
   //   return;
   // }

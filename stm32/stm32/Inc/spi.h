@@ -19,6 +19,7 @@ typedef enum lr1110_spi_status_e {
  * @param [in] context      Radio implementation parameters
  * @param [in] cbuffer      Pointer to the buffer to be transmitted
  * @param [in] cbuffer_length   Buffer size to be transmitted
+ * @param [in] get_status   Get status after the transfer
  * 
  * @returns Operation status
  */
