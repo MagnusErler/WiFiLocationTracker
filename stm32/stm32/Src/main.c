@@ -135,7 +135,7 @@ int main(void)
 
   //setLR1110_Standby_Mode(lr1110_context, 0x01);
 
-  calibrateLR1110_Image( lr1110_context, 0xD7, 0xDB );
+  //calibrateLR1110_Image( lr1110_context, 0xD7, 0xDB );
   // calibrateLR1110( lr1110_context, 0x00);
   // calibrateLR1110( lr1110_context, 0x01);
   // calibrateLR1110( lr1110_context, 0x02);
