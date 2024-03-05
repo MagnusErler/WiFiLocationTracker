@@ -71,12 +71,12 @@ void getLR1110_GNSS_Version( const void* context);
  */
 void getLR1110_GNSS_Consumption( const void* context);
 
-/*!
- * @brief Get the status of the GNSS Almanac
- *
- * @param [in] context Radio abstraction
- */
-void getLR1110_GNSS_Almanac_Status( const void* context );
+// /*!
+//  * @brief Get the status of the GNSS Almanac
+//  *
+//  * @param [in] context Radio abstraction
+//  */
+// void getLR1110_GNSS_Almanac_Status( const void* context );
 
 /*!
  * @brief Set the GNSS constellation to be used

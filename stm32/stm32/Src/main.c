@@ -175,7 +175,7 @@ int main(void)
   // setLR1110_LoRa_Public_Network(lr1110_context, 0x01);
   //getLR1110_LoRa_Packet_Status(lr1110_context);
 
-  getLR1110_GNSS_Almanac_Status(lr1110_context);
+  getLR1110_GNSS_Version(lr1110_context);
 
   /* USER CODE END 2 */
 
