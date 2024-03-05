@@ -140,3 +140,19 @@ void getLR1110_GNSS_Almanac_Status( const void* context ) {
         HAL_DBG_TRACE_ERROR("Failed to get GNSS Almanac status\r\n");
     }
 }
+
+void setLR1110_GNSS_Constellation( const void* context, uint8_t constellation ) {
+    HAL_DBG_TRACE_INFO("Setting GNSS constellation... ");
+
+    uint8_t cbuffer[LR1110_GNSS_CMD_LENGTH_SET_CONSTELLATION];
+
+    cbuffer[0] = ( uint8_t )( LR1110_GNSS_CMD_SET_CONSTELLATION >> 8 );
+    cbuffer[1] = ( uint8_t )( LR1110_GNSS_CMD_SET_CONSTELLATION >> 0 );
+    cbuffer[2] = ( uint8_t )( constellation >> 0 );
+
+    if (lr1110_spi_write( context, cbuffer, LR1110_GNSS_CMD_LENGTH_SET_CONSTELLATION, false ) == LR1110_SPI_STATUS_OK) {
+        HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+    } else {
+        HAL_DBG_TRACE_ERROR("Failed to set GNSS constellation\r\n");
+    }
+}

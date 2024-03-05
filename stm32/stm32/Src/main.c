@@ -77,8 +77,7 @@ static void MX_SPI1_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-radio_t lr1110_context_memory[sizeof(radio_t)]; // Assuming SIZE is the desired size
-
+radio_t lr1110_context_memory[sizeof(radio_t)];
 void* lr1110_context = lr1110_context_memory;
 
 /* USER CODE END 0 */
@@ -161,7 +160,9 @@ int main(void)
   getLR1110_Semtech_JoinEui(lr1110_context);
   getLR1110_Temperature(lr1110_context);
   getLR1110_Battery_Voltage(lr1110_context);
-  //TODO: set GNSSSETCONSTELLATIONTOUSE
+
+
+  setLR1110_GNSS_Constellation(lr1110_context, 0b11);
 
   // setLR1110_Dio_Irq_Params(lr1110_context, set_bit_x_to_1(2), set_bit_x_to_1(6));
 
