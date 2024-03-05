@@ -104,18 +104,18 @@ void getLR1110_GNSS_Consumption( const void* context ) {
     cbuffer[1] = ( uint8_t )( LR1110_GET_CONSUMPTION_CMD >> 0 );
 
     if (lr1110_spi_read( context, cbuffer, LR1110_GET_CONSUMPTION_CMD_LENGTH, rbuffer, LR1110_GET_CONSUMPTION_LENGTH ) == LR1110_SPI_STATUS_OK) {
-        uint32_t cpu_time_microseconds = (uint32_t)(rbuffer[1]) << 24 |
+        const uint32_t cpu_time_microseconds = (uint32_t)(rbuffer[1]) << 24 |
                                          (uint32_t)(rbuffer[2]) << 16 |
                                          (uint32_t)(rbuffer[3]) << 8 |
                                          (uint32_t)(rbuffer[4]);
-        uint32_t radio_time_microseconds = (uint32_t)(rbuffer[5]) << 24 |
+        const uint32_t radio_time_microseconds = (uint32_t)(rbuffer[5]) << 24 |
                                            (uint32_t)(rbuffer[6]) << 16 |
                                            (uint32_t)(rbuffer[7]) << 8 |
                                            (uint32_t)(rbuffer[8]);
 
         // Convert microseconds to seconds
-        float cpu_time_seconds = cpu_time_microseconds / 1000000.0;
-        float radio_time_seconds = radio_time_microseconds / 1000000.0;
+        const float cpu_time_seconds = cpu_time_microseconds / 1000000.0;
+        const float radio_time_seconds = radio_time_microseconds / 1000000.0;
 
         HAL_DBG_TRACE_INFO_VALUE("GNSS consumption CPU time: %d.%d seconds\r\n", (uint8_t)cpu_time_seconds, (uint8_t)((cpu_time_seconds - (uint8_t)cpu_time_seconds) * 1000));
         HAL_DBG_TRACE_INFO_VALUE("GNSS consumption radio time: %d.%d seconds\r\n", (uint8_t)radio_time_seconds, (uint8_t)((radio_time_seconds - (uint8_t)radio_time_seconds) * 1000));

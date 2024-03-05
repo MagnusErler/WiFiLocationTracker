@@ -51,7 +51,7 @@ float getLR1110_Temperature( const void* context ) {
   if (lr1110_spi_read( context, cbuffer, LR1110_CMD_LENGTH_GET_TEMPERATURE, rbuffer, LR1110_LENGTH_GET_TEMPERATURE ) == LR1110_SPI_STATUS_OK) {
 
     uint16_t temp_10_0 = ((rbuffer[1] << 8) | rbuffer[2]) & 0x7FF;
-    float temperature = 25 + (1000/(-1.7)) * ((temp_10_0/2047.0) * 1.35 - 0.7295);
+    const float temperature = 25 + (1000/(-1.7)) * ((temp_10_0/2047.0) * 1.35 - 0.7295);
     
     HAL_DBG_TRACE_INFO_VALUE("%d.%d °C\r\n", (uint8_t)temperature, (uint8_t)((temperature - (uint8_t)temperature) * 100));
     if ((uint8_t)temperature > 50) {
@@ -106,8 +106,7 @@ float getLR1110_Battery_Voltage( const void* context ) {
   cbuffer[1] = ( uint8_t )( LR1110_GET_BATTERY_VOLTAGE_CMD >> 0 );
 
   if (lr1110_spi_read( context, cbuffer, LR1110_CMD_LENGTH_GET_BATTERY_VOLTAGE, rbuffer, LR1110_LENGTH_GET_BATTERY_VOLTAGE ) == LR1110_SPI_STATUS_OK) {
-
-    float batteryVoltage = (((5 * rbuffer[1])/255.0) - 1) * 1.35;
+    const float batteryVoltage = (((5 * rbuffer[1])/255.0) - 1) * 1.35;
     HAL_DBG_TRACE_INFO_VALUE("%d.%d V\r\n", (uint8_t)batteryVoltage, (uint8_t)((batteryVoltage - (uint8_t)batteryVoltage) * 100));
     return batteryVoltage;
   } else {
@@ -124,7 +123,7 @@ void setLR1110_TCXO_Mode( const void* context ) {
   cbuffer[0] = ( uint8_t )( LR1110_SET_TCXO_MODE_CMD >> 8 );
   cbuffer[1] = ( uint8_t )( LR1110_SET_TCXO_MODE_CMD >> 0 );
 
-  const uint8_t timeout = ( 5 * 1000 ) / 30.52;  // BOARD_TCXO_WAKEUP_TIME = 5               // 163 (163.826998689)
+  const uint8_t timeout = ( 5 * 1000 ) / 30.52;  // BOARD_TCXO_WAKEUP_TIME = 5  // 163 (163.826998689)
   cbuffer[2] = ( uint8_t ) 0x02;
   cbuffer[3] = ( uint8_t )( timeout >> 16 );
   cbuffer[4] = ( uint8_t )( timeout >> 8 );

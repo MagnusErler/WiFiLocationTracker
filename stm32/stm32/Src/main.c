@@ -132,25 +132,27 @@ int main(void)
   // clearLR1110_RX_Buffer(lr1110_context);
   // clearLR1110_RX_Buffer(lr1110_context);
 
-  setLR1110_TCXO_Mode(lr1110_context);
-  setLR1110_TCXO_Mode(lr1110_context);
-
   //setLR1110_Standby_Mode(lr1110_context, 0x01);
 
-  
-
-  clearLR1110_Errors(lr1110_context);
-  clearLR1110_Errors(lr1110_context);
-
-  getErrors(lr1110_context);
-
-  // calibrateLR1110_Image( lr1110_context, 0xD7, 0xDB );
+  calibrateLR1110_Image( lr1110_context, 0xD7, 0xDB );
   // calibrateLR1110( lr1110_context, 0x00);
   // calibrateLR1110( lr1110_context, 0x01);
   // calibrateLR1110( lr1110_context, 0x02);
   // calibrateLR1110( lr1110_context, 0x03);
   // calibrateLR1110( lr1110_context, 0x04);
   // calibrateLR1110( lr1110_context, 0x05);
+
+  setLR1110_TCXO_Mode(lr1110_context);
+  setLR1110_TCXO_Mode(lr1110_context);
+
+  
+
+  // clearLR1110_Errors(lr1110_context);
+  // clearLR1110_Errors(lr1110_context);
+
+  // getErrors(lr1110_context);
+
+  
 
   getLR1110_Bootloader_Version(lr1110_context);
   getLR1110_WiFi_Version(lr1110_context);
@@ -213,7 +215,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
     HAL_DBG_TRACE_MSG_COLOR("\r\nWaiting for next while loop...\r\n", "\x1B[0;34m");
-    HAL_Delay(5000);
+    HAL_Delay(10000);
   }
   /* USER CODE END 3 */
 }

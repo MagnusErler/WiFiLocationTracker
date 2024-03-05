@@ -142,7 +142,7 @@ void Error_Handler(void);
     do                                                       \
     {                                                        \
         HAL_DBG_TRACE_PRINTF( HAL_DBG_TRACE_COLOR_RED );     \
-        HAL_DBG_TRACE_PRINTF( "ERROR: " );                   \
+        HAL_DBG_TRACE_PRINTF( "ERROR : " );                   \
         HAL_DBG_TRACE_PRINTF( __VA_ARGS__ );                 \
         HAL_DBG_TRACE_PRINTF( HAL_DBG_TRACE_COLOR_DEFAULT ); \
     } while( 0 );

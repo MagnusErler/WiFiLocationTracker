@@ -16,7 +16,7 @@
 #include <string.h>     // for memset
 
 // Comment out the following line to disable debug messages
-//#define DEBUG
+#define DEBUG
 
 radio_t* radio;
 void* context;
@@ -49,6 +49,8 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
 
     uint8_t rbuffer[cbuffer_length];
     memset(rbuffer, 0x00, cbuffer_length);
+
+    // HAL_SPI_TransmitReceive( spi, ( uint8_t* ) cbuffer, rbuffer, cbuffer_length, timeout_ms );
 
     for( uint16_t i = 0; i < cbuffer_length; i++ ) {
         uint32_t start = HAL_GetTick();
@@ -247,7 +249,7 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
         }
         if (rbuffer[3] & BIT_28) {
             HAL_DBG_TRACE_ERROR("Error (An error other than a command error occurred (see GetErrors))\r\n");
-            getErrors(context);
+            //getErrors(context);
         }
 
         HAL_DBG_TRACE_PRINTF("\r\nrbuffer[4] (15:8): ");
@@ -311,6 +313,11 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
 }
 
 lr1110_spi_status_t _lr1110_spi_read_with_dummy_byte( SPI_TypeDef* spi, uint8_t* rbuffer, uint16_t rbuffer_length, uint32_t timeout_ms ) {
+
+    // uint8_t cbuffer[rbuffer_length-1];
+    // memset(cbuffer, 0x00, rbuffer_length-1);
+
+    // HAL_SPI_TransmitReceive( spi, cbuffer, rbuffer, rbuffer_length-1, timeout_ms );
 
     for( uint16_t i = 1; i < rbuffer_length; i++ ) {
 
@@ -385,12 +392,12 @@ lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer
 
 lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffer, const uint16_t cbuffer_length, const bool get_status ) {
 
-    radio = (radio_t*) context;
-
     // Wait for BUSY to become LOW -> LR1110 is ready for a new command
     if (_waitForBusyState( GPIO_PIN_RESET, 2000 ) != LR1110_SPI_STATUS_OK) {
         return LR1110_SPI_STATUS_TIMEOUT;
     }
+
+    radio = (radio_t*) context;
 
     // Start of SPI transaction
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_RESET );
