@@ -108,6 +108,7 @@ int main(void)
   ((radio_t*)lr1110_context)->reset.pin   = RESET_Pin;
   ((radio_t*)lr1110_context)->busy.port   = BUSY_GPIO_Port;
   ((radio_t*)lr1110_context)->busy.pin    = BUSY_Pin;
+  ((radio_t*)lr1110_context)->hspi        = &hspi1;
 
   /* USER CODE END Init */
 

@@ -166,11 +166,12 @@ typedef struct hal_gpio_irq_s {
 } hal_gpio_irq_t;
 
 typedef struct {
-    SPI_TypeDef*    spi;
-    gpio_t          nss;
-    gpio_t          reset;
-    hal_gpio_irq_t  event;
-    gpio_t          busy;
+    SPI_TypeDef*        spi;
+    gpio_t              nss;
+    gpio_t              reset;
+    hal_gpio_irq_t      event;
+    gpio_t              busy;
+    SPI_HandleTypeDef * hspi;
 } radio_t;
 
 /* USER CODE END Private defines */
