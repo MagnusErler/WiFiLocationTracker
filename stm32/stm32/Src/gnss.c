@@ -14,13 +14,13 @@
 uint8_t getLR1110_GNSS_Number_of_Detected_Satellites( const void* context) {
     HAL_DBG_TRACE_INFO("Getting number of detected satellites... ");
 
-    uint8_t cbuffer[LR1110_GET_NUMBER_OF_SATELLITES_CMD_LENGTH];
-    uint8_t rbuffer[LR1110_GET_NUMBER_OF_SATELLITES_LENGTH] = { 0 };
+    uint8_t cbuffer[LR1110_GNSS_CMD_LENGTH_GET_NUMBER_OF_SATELLITES];
+    uint8_t rbuffer[LR1110_GNSS_LENGTH_GET_NUMBER_OF_SATELLITES] = { 0 };
 
-    cbuffer[0] = ( uint8_t )( LR1110_GET_NUMBER_OF_SATELLITES_CMD >> 8 );
-    cbuffer[1] = ( uint8_t )( LR1110_GET_NUMBER_OF_SATELLITES_CMD >> 0 );
+    cbuffer[0] = ( uint8_t )( LR1110_GNSS_CMD_GET_NUMBER_OF_SATELLITES >> 8 );
+    cbuffer[1] = ( uint8_t )( LR1110_GNSS_CMD_GET_NUMBER_OF_SATELLITES >> 0 );
 
-    if (lr1110_spi_read( context, cbuffer, LR1110_GET_NUMBER_OF_SATELLITES_CMD_LENGTH, rbuffer, LR1110_GET_NUMBER_OF_SATELLITES_LENGTH ) == LR1110_SPI_STATUS_OK) {
+    if (lr1110_spi_read( context, cbuffer, LR1110_GNSS_CMD_LENGTH_GET_NUMBER_OF_SATELLITES, rbuffer, LR1110_GNSS_LENGTH_GET_NUMBER_OF_SATELLITES ) == LR1110_SPI_STATUS_OK) {
         HAL_DBG_TRACE_INFO_VALUE("%d\r\n", (uint8_t)rbuffer[1]);
         return (uint8_t)rbuffer[0];
     } else {
@@ -32,13 +32,13 @@ uint8_t getLR1110_GNSS_Number_of_Detected_Satellites( const void* context) {
 void getLR1110_GNSS_Detected_Satellites( const void* context, uint8_t nb_of_satellites) {
     HAL_DBG_TRACE_INFO("Getting GNSS satellites detected... \r\n");
 
-    uint8_t cbuffer[LR1110_GET_SATELLITES_DETECTED_CMD_LENGTH];
-    uint8_t rbuffer[LR1110_GET_SATELLITES_DETECTED_LENGTH + nb_of_satellites];
+    uint8_t cbuffer[LR1110_GNSS_CMD_LENGTH_GET_SATELLITES_DETECTED];
+    uint8_t rbuffer[LR1110_GNSS_LENGTH_GET_SATELLITES_DETECTED + nb_of_satellites];
 
-    cbuffer[0] = ( uint8_t )( LR1110_GET_SATELLITES_DETECTED_CMD >> 8 );
-    cbuffer[1] = ( uint8_t )( LR1110_GET_SATELLITES_DETECTED_CMD >> 0 );
+    cbuffer[0] = ( uint8_t )( LR1110_GNSS_CMD_GET_SATELLITES_DETECTED >> 8 );
+    cbuffer[1] = ( uint8_t )( LR1110_GNSS_CMD_GET_SATELLITES_DETECTED >> 0 );
 
-    if (lr1110_spi_read( context, cbuffer, LR1110_GET_SATELLITES_DETECTED_CMD_LENGTH, rbuffer, LR1110_GET_SATELLITES_DETECTED_LENGTH + nb_of_satellites ) == LR1110_SPI_STATUS_OK) {
+    if (lr1110_spi_read( context, cbuffer, LR1110_GNSS_CMD_LENGTH_GET_SATELLITES_DETECTED, rbuffer, LR1110_GNSS_LENGTH_GET_SATELLITES_DETECTED + nb_of_satellites ) == LR1110_SPI_STATUS_OK) {
         for (uint8_t i = 1; i < nb_of_satellites; i++) {
             HAL_DBG_TRACE_INFO_VALUE("Sattelite ID %d: %d, C/N0 %d\r\n", i, rbuffer[i], rbuffer[i+1]);
         }
@@ -53,10 +53,10 @@ void scanLR1110_GNSS_Satellites( const void* context, uint8_t effort_mode, uint8
     HAL_GPIO_WritePin(LNA_CTRL_GPIO_Port, LNA_CTRL_Pin, GPIO_PIN_SET);
     turnOnLED(SNIFFING_LED_GPIO_Port, SNIFFING_LED_Pin);
 
-    uint8_t cbuffer[LR1110_SCAN_GNSS_AUTONOMOUS_CMD_LENGTH];
+    uint8_t cbuffer[LR1110_GNSS_CMD_LENGTH_SCAN_GNSS_AUTONOMOUS];
 
-    cbuffer[0] = ( uint8_t )( LR1110_SCAN_GNSS_AUTONOMOUS_CMD >> 8 );
-    cbuffer[1] = ( uint8_t )( LR1110_SCAN_GNSS_AUTONOMOUS_CMD >> 0 );
+    cbuffer[0] = ( uint8_t )( LR1110_GNSS_CMD_SCAN_GNSS_AUTONOMOUS >> 8 );
+    cbuffer[1] = ( uint8_t )( LR1110_GNSS_CMD_SCAN_GNSS_AUTONOMOUS >> 0 );
     cbuffer[2] = ( uint8_t )( 0x52FFD96B >> 24 );
     cbuffer[3] = ( uint8_t )( 0x52FFD96B >> 16 );
     cbuffer[4] = ( uint8_t )( 0x52FFD96B >> 8 );
@@ -65,7 +65,7 @@ void scanLR1110_GNSS_Satellites( const void* context, uint8_t effort_mode, uint8
     cbuffer[7] = ( uint8_t )( result_mask >> 0 );
     cbuffer[8] = ( uint8_t )( nb_sv_max >> 0 );
 
-    if (lr1110_spi_write( context, cbuffer, LR1110_SCAN_GNSS_AUTONOMOUS_CMD_LENGTH, false ) == LR1110_SPI_STATUS_OK) {
+    if (lr1110_spi_write( context, cbuffer, LR1110_GNSS_CMD_LENGTH_SCAN_GNSS_AUTONOMOUS, false ) == LR1110_SPI_STATUS_OK) {
         //HAL_Delay( 5000 );
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
     } else {
@@ -80,13 +80,13 @@ void scanLR1110_GNSS_Satellites( const void* context, uint8_t effort_mode, uint8
 void getLR1110_GNSS_Version( const void* context ) {
     HAL_DBG_TRACE_INFO("Getting GNSS version... ");
 
-    uint8_t cbuffer[LR1110_GET_GNSS_VERSION_CMD_LENGTH];
-    uint8_t rbuffer[LR1110_GET_GNSS_VERSION_LENGTH] = { 0 };
+    uint8_t cbuffer[LR1110_GNSS_CMD_LENGTH_GET_GNSS_VERSION];
+    uint8_t rbuffer[LR1110_GNSS_LENGTH_GET_GNSS_VERSION] = { 0 };
 
-    cbuffer[0] = ( uint8_t )( LR1110_GET_GNSS_VERSION_CMD >> 8 );
-    cbuffer[1] = ( uint8_t )( LR1110_GET_GNSS_VERSION_CMD >> 0 );
+    cbuffer[0] = ( uint8_t )( LR1110_GNSS_CMD_GET_GNSS_VERSION >> 8 );
+    cbuffer[1] = ( uint8_t )( LR1110_GNSS_CMD_GET_GNSS_VERSION >> 0 );
 
-    if (lr1110_spi_read( context, cbuffer, LR1110_GET_GNSS_VERSION_CMD_LENGTH, rbuffer, LR1110_GET_GNSS_VERSION_LENGTH ) == LR1110_SPI_STATUS_OK) {
+    if (lr1110_spi_read( context, cbuffer, LR1110_GNSS_CMD_LENGTH_GET_GNSS_VERSION, rbuffer, LR1110_GNSS_LENGTH_GET_GNSS_VERSION ) == LR1110_SPI_STATUS_OK) {
         HAL_DBG_TRACE_INFO_VALUE("firmware version: %d, ", rbuffer[1]);
         HAL_DBG_TRACE_INFO_VALUE("almanac version: %d\n\r", rbuffer[2]);
     } else {
@@ -97,13 +97,13 @@ void getLR1110_GNSS_Version( const void* context ) {
 void getLR1110_GNSS_Consumption( const void* context ) {
     HAL_DBG_TRACE_INFO("Getting GNSS consumption...  \r\n");
 
-    uint8_t cbuffer[LR1110_GET_CONSUMPTION_CMD_LENGTH];
-    uint8_t rbuffer[LR1110_GET_CONSUMPTION_LENGTH] = { 0 };
+    uint8_t cbuffer[LR1110_GNSS_CMD_LENGTH_GET_CONSUMPTION];
+    uint8_t rbuffer[LR1110_GNSS_LENGTH_GET_CONSUMPTION] = { 0 };
 
-    cbuffer[0] = ( uint8_t )( LR1110_GET_CONSUMPTION_CMD >> 8 );
-    cbuffer[1] = ( uint8_t )( LR1110_GET_CONSUMPTION_CMD >> 0 );
+    cbuffer[0] = ( uint8_t )( LR1110_GNSS_CMD_GET_CONSUMPTION >> 8 );
+    cbuffer[1] = ( uint8_t )( LR1110_GNSS_CMD_GET_CONSUMPTION >> 0 );
 
-    if (lr1110_spi_read( context, cbuffer, LR1110_GET_CONSUMPTION_CMD_LENGTH, rbuffer, LR1110_GET_CONSUMPTION_LENGTH ) == LR1110_SPI_STATUS_OK) {
+    if (lr1110_spi_read( context, cbuffer, LR1110_GNSS_CMD_LENGTH_GET_CONSUMPTION, rbuffer, LR1110_GNSS_LENGTH_GET_CONSUMPTION ) == LR1110_SPI_STATUS_OK) {
         const uint32_t cpu_time_microseconds = (uint32_t)(rbuffer[1]) << 24 |
                                          (uint32_t)(rbuffer[2]) << 16 |
                                          (uint32_t)(rbuffer[3]) << 8 |
@@ -128,13 +128,13 @@ void getLR1110_GNSS_Consumption( const void* context ) {
 void getLR1110_GNSS_Almanac_Status( const void* context ) {
     HAL_DBG_TRACE_INFO("Getting GNSS Almanac status... ");
 
-    uint8_t cbuffer[LR1110_GET_GNSS_ALMANAC_STATUS_CMD_LENGTH];
-    uint8_t rbuffer[LR1110_GET_GNSS_ALMANAC_STATUS_LENGTH] = { 0 };
+    uint8_t cbuffer[LR1110_GNSS_CMD_LENGTH_GET_GNSS_ALMANAC_STATUS];
+    uint8_t rbuffer[LR1110_GNSS_LENGTH_GET_GNSS_ALMANAC_STATUS] = { 0 };
 
-    cbuffer[0] = ( uint8_t )( LR1110_GET_GNSS_ALMANAC_STATUS_CMD >> 8 );
-    cbuffer[1] = ( uint8_t )( LR1110_GET_GNSS_ALMANAC_STATUS_CMD >> 0 );
+    cbuffer[0] = ( uint8_t )( LR1110_GNSS_CMD_GET_GNSS_ALMANAC_STATUS >> 8 );
+    cbuffer[1] = ( uint8_t )( LR1110_GNSS_CMD_GET_GNSS_ALMANAC_STATUS >> 0 );
 
-    if (lr1110_spi_read( context, cbuffer, LR1110_GET_GNSS_ALMANAC_STATUS_CMD_LENGTH, rbuffer, LR1110_GET_GNSS_ALMANAC_STATUS_LENGTH ) == LR1110_SPI_STATUS_OK) {
+    if (lr1110_spi_read( context, cbuffer, LR1110_GNSS_CMD_LENGTH_GET_GNSS_ALMANAC_STATUS, rbuffer, LR1110_GNSS_LENGTH_GET_GNSS_ALMANAC_STATUS ) == LR1110_SPI_STATUS_OK) {
         HAL_DBG_TRACE_INFO_VALUE("rbuffer[0]: %d\r\n", rbuffer[1]);
     } else {
         HAL_DBG_TRACE_ERROR("Failed to get GNSS Almanac status\r\n");
