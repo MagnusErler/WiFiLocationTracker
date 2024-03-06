@@ -125,21 +125,21 @@ void getLR1110_GNSS_Consumption( const void* context ) {
     }
 }
 
-// void getLR1110_GNSS_Almanac_Status( const void* context ) {
-//     HAL_DBG_TRACE_INFO("Getting GNSS Almanac status... ");
+void getLR1110_GNSS_Almanac_Status( const void* context ) {
+    HAL_DBG_TRACE_INFO("Getting GNSS Almanac status... ");
 
-//     uint8_t cbuffer[LR1110_GNSS_CMD_LENGTH_GET_GNSS_ALMANAC_STATUS];
-//     uint8_t rbuffer[LR1110_GNSS_LENGTH_GET_GNSS_ALMANAC_STATUS] = { 0 };
+    uint8_t cbuffer[LR1110_GNSS_CMD_LENGTH_GET_GNSS_ALMANAC_STATUS];
+    uint8_t rbuffer[LR1110_GNSS_LENGTH_GET_GNSS_ALMANAC_STATUS] = { 0 };
 
-//     cbuffer[0] = ( uint8_t )( LR1110_GNSS_CMD_GET_GNSS_ALMANAC_STATUS >> 8 );
-//     cbuffer[1] = ( uint8_t )( LR1110_GNSS_CMD_GET_GNSS_ALMANAC_STATUS >> 0 );
+    cbuffer[0] = ( uint8_t )( LR1110_GNSS_CMD_GET_GNSS_ALMANAC_STATUS >> 8 );
+    cbuffer[1] = ( uint8_t )( LR1110_GNSS_CMD_GET_GNSS_ALMANAC_STATUS >> 0 );
 
-//     if (lr1110_spi_read( context, cbuffer, LR1110_GNSS_CMD_LENGTH_GET_GNSS_ALMANAC_STATUS, rbuffer, LR1110_GNSS_LENGTH_GET_GNSS_ALMANAC_STATUS ) == LR1110_SPI_STATUS_OK) {
-//         HAL_DBG_TRACE_INFO_VALUE("rbuffer[0]: %d\r\n", rbuffer[1]);
-//     } else {
-//         HAL_DBG_TRACE_ERROR("Failed to get GNSS Almanac status\r\n");
-//     }
-// }
+    if (lr1110_spi_read( context, cbuffer, LR1110_GNSS_CMD_LENGTH_GET_GNSS_ALMANAC_STATUS, rbuffer, LR1110_GNSS_LENGTH_GET_GNSS_ALMANAC_STATUS ) == LR1110_SPI_STATUS_OK) {
+        HAL_DBG_TRACE_INFO_VALUE("rbuffer[0]: %d\r\n", rbuffer[1]);
+    } else {
+        HAL_DBG_TRACE_ERROR("Failed to get GNSS Almanac status\r\n");
+    }
+}
 
 void setLR1110_GNSS_Constellation( const void* context, uint8_t constellation ) {
     HAL_DBG_TRACE_INFO("Setting GNSS constellation... ");

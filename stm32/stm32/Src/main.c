@@ -132,9 +132,9 @@ int main(void)
   // clearLR1110_RX_Buffer(lr1110_context);
   // clearLR1110_RX_Buffer(lr1110_context);
 
-  //setLR1110_Standby_Mode(lr1110_context, 0x01);
+  // setLR1110_Standby_Mode(lr1110_context, 0x01);
 
-  //calibrateLR1110_Image( lr1110_context, 0xD7, 0xDB );
+  // calibrateLR1110_Image( lr1110_context, 0xD7, 0xDB );
   // calibrateLR1110( lr1110_context, 0x00);
   // calibrateLR1110( lr1110_context, 0x01);
   // calibrateLR1110( lr1110_context, 0x02);
@@ -169,6 +169,7 @@ int main(void)
   getLR1110_LoRa_Packet_Status(lr1110_context);
 
   getLR1110_GNSS_Version(lr1110_context);
+  //getLR1110_GNSS_Almanac_Status(lr1110_context);
   //setLR1110_GNSS_Constellation(lr1110_context, 0b11);
 
   /* USER CODE END 2 */
