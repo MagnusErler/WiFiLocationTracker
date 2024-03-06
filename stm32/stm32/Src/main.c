@@ -143,7 +143,6 @@ int main(void)
   // calibrateLR1110( lr1110_context, 0x05);
 
   setLR1110_TCXO_Mode(lr1110_context);
-  setLR1110_TCXO_Mode(lr1110_context);
 
   
 
@@ -434,10 +433,13 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOC, RX_LED_Pin|TX_LED_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, RESET_Pin|NSS_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(RESET_GPIO_Port, RESET_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, LNA_CTRL_Pin|SNIFFING_LED_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(NSS_GPIO_Port, NSS_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin : B1_Pin */
   GPIO_InitStruct.Pin = B1_Pin;
