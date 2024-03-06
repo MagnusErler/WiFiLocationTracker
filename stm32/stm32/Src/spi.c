@@ -16,7 +16,8 @@
 #include <string.h>     // for memset
 
 // Comment out the following line to disable debug messages
-const bool _debug = true;
+const bool _debug = false;
+//#define DEBUG
 
 radio_t* radio;
 void* context;
@@ -83,20 +84,20 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
         turnOffLED(RX_LED_GPIO_Port, RX_LED_Pin);
     }
 
-    if (_debug) {
-        HAL_DBG_TRACE_PRINTF("\r\n---Stat1 Results---\r\n");
-        HAL_DBG_TRACE_PRINTF("rbuffer[0]: ");
-        print_binary(rbuffer[0]);
-        HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", rbuffer[0]);
-        switch ( rbuffer[0] & 0x01 ) {
-            case 0:
-                HAL_DBG_TRACE_PRINTF("No interrupt active\r\n");
-                break;
-            case 1:
-                HAL_DBG_TRACE_PRINTF("At least 1 interrupt active\r\n");
-                break;
-        }
+    #ifdef DEBUG
+    HAL_DBG_TRACE_PRINTF("\r\n---Stat1 Results---\r\n");
+    HAL_DBG_TRACE_PRINTF("rbuffer[0]: ");
+    print_binary(rbuffer[0]);
+    HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", rbuffer[0]);
+    switch ( rbuffer[0] & 0x01 ) {
+        case 0:
+            HAL_DBG_TRACE_PRINTF("No interrupt active\r\n");
+            break;
+        case 1:
+            HAL_DBG_TRACE_PRINTF("At least 1 interrupt active\r\n");
+            break;
     }
+    #endif
 
     switch( ( rbuffer[0] & 0x0E ) >> 1 ) {
         case 0:
@@ -105,14 +106,14 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
         case 1:
             HAL_DBG_TRACE_WARNING("CMD_PERR: The last command could not be processed (wrong opcode, arguments). It is possible to generate an interrupt on DIO if a command error occurred\r\n");
             break;
-        if (_debug) {
+        #ifdef DEBUG
         case 2:
             HAL_DBG_TRACE_PRINTF("CMD_OK: The last command was processed successfully\r\n");
             break;
         case 3:
             HAL_DBG_TRACE_PRINTF("CMD_DAT: The last command was successfully processed, and data is currently transmitted instead of IRQ status\r\n");
             break;
-        }
+        #endif
     }
 
     if(_debug && enableStat2) {
