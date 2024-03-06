@@ -28,7 +28,7 @@ void setLR1110_LoRa_Packet_Type( const void* context, uint8_t packet_type ) {
 }
 
 uint8_t getLR1110_LoRa_Packet_Type( const void* context ) {
-    HAL_DBG_TRACE_INFO("Getting LoRa packet type... ");
+    HAL_DBG_TRACE_INFO("Getting packet type... ");
 
     uint8_t cbuffer[LR1110_LORA_CMD_LENGTH_GET_PACKET_TYPE];
     uint8_t rbuffer[LR1110_LORA_LENGTH_GET_PACKET_TYPE] = { 0 };
@@ -37,36 +37,34 @@ uint8_t getLR1110_LoRa_Packet_Type( const void* context ) {
     cbuffer[1] = ( uint8_t )( LR1110_LORA_CMD_GET_PACKET_TYPE >> 0 );
 
     if (lr1110_spi_read( context, cbuffer, LR1110_LORA_CMD_LENGTH_GET_PACKET_TYPE, rbuffer, LR1110_LORA_LENGTH_GET_PACKET_TYPE ) == LR1110_SPI_STATUS_OK) {
-        HAL_DBG_TRACE_INFO_VALUE("0x%X\r\n", rbuffer[1]);
-
         switch (rbuffer[1]) {
-        case 0:
-            HAL_DBG_TRACE_INFO_VALUE("None");
-            break;
-        case 1:
-            HAL_DBG_TRACE_INFO_VALUE("(G)FSK");
-            break;
-        case 2:
-            HAL_DBG_TRACE_INFO_VALUE("LoRa");
-            break;
-        case 3:
-            HAL_DBG_TRACE_INFO_VALUE("Sigfox Uplink");
-            break;
-        case 4:
-            HAL_DBG_TRACE_INFO_VALUE("LR-FHSS");
-            break;
-        case 5:
-            HAL_DBG_TRACE_INFO_VALUE("Ranging");
-            break;
-        default:
-            HAL_DBG_TRACE_ERROR("Unknown packet type");
-            break;
+            case 0:
+                HAL_DBG_TRACE_INFO_VALUE("None");
+                break;
+            case 1:
+                HAL_DBG_TRACE_INFO_VALUE("(G)FSK");
+                break;
+            case 2:
+                HAL_DBG_TRACE_INFO_VALUE("LoRa");
+                break;
+            case 3:
+                HAL_DBG_TRACE_INFO_VALUE("Sigfox Uplink");
+                break;
+            case 4:
+                HAL_DBG_TRACE_INFO_VALUE("LR-FHSS");
+                break;
+            case 5:
+                HAL_DBG_TRACE_INFO_VALUE("Ranging");
+                break;
+            default:
+                HAL_DBG_TRACE_ERROR("Unknown packet type");
+                break;
         }
         HAL_DBG_TRACE_INFO_VALUE(" (0x%X)\r\n", rbuffer[1]);
 
         return rbuffer[0];
     } else {
-        HAL_DBG_TRACE_ERROR("Failed to get LoRa packet type\r\n");
+        HAL_DBG_TRACE_ERROR("Failed to get packet type\r\n");
         return -1;
     }
 }
@@ -148,7 +146,7 @@ void setLR1110_LoRa_TX_Params( const void* context, uint8_t tx_power, uint8_t ra
 }
 
 void setLR1110_LoRa_Public_Network( const void* context, uint8_t public_network) {
-    HAL_DBG_TRACE_INFO("Setting LoRa public Network... ");
+    HAL_DBG_TRACE_INFO("Setting LoRa public network... ");
 
     uint8_t cbuffer[LR1110_LORA_CMD_LENGTH_SET_PUBLIC_NETWORK];
 
