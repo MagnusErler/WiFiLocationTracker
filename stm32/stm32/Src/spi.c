@@ -16,7 +16,7 @@
 #include <string.h>     // for memset
 
 // Comment out the following line to disable debug messages
-//#define DEBUG
+#define DEBUG
 
 radio_t* radio;
 void* context;
@@ -45,7 +45,7 @@ lr1110_spi_status_t _waitForBusyState( GPIO_PinState state, uint32_t timeout_ms 
     return LR1110_SPI_STATUS_OK;
 }
 
-lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer, const uint16_t cbuffer_length, const uint32_t timeout_ms, const bool get_status ) {
+lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer, const uint16_t cbuffer_length, const uint32_t timeout_ms, const bool get_status, const bool enableStat2 ) {
 
     uint8_t rbuffer[cbuffer_length];
     memset(rbuffer, 0x00, cbuffer_length);
@@ -87,7 +87,7 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
     HAL_DBG_TRACE_PRINTF("\r\n---Stat1 Results---\r\n");
     HAL_DBG_TRACE_PRINTF("rbuffer[0]: ");
     print_binary(rbuffer[0]);
-    HAL_DBG_TRACE_PRINTF("\r\n");
+    HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", rbuffer[0]);
     switch ( rbuffer[0] & 0x01 ) {
         case 0:
             HAL_DBG_TRACE_PRINTF("No interrupt active\r\n");
@@ -115,11 +115,12 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
         #endif
     }
 
-    #ifdef DEBUG
+    //#if defined(DEBUG)
+    if(enableStat2) {
     HAL_DBG_TRACE_PRINTF("\r\n---Stat2 Results---\r\n");
     HAL_DBG_TRACE_PRINTF("rbuffer[1]: ");
     print_binary(rbuffer[1]);
-    HAL_DBG_TRACE_PRINTF("\r\n");
+    HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", rbuffer[1]);
     switch ( rbuffer[1] & 0x01 ) {
         case 0:
             HAL_DBG_TRACE_PRINTF("Bootloader: currently executes from boot-loader\r\n");
@@ -128,9 +129,11 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
             HAL_DBG_TRACE_PRINTF("Bootloader: currently executes from flash. The ResetStatus field is cleared on the first GetStatus() command after a reset. It is not cleared by any other command\r\n");
             break;
     }
-    #endif
+    //#endif
+    }
 
-    #ifdef DEBUG
+    //#if defined(DEBUG)
+    if (enableStat2) {
     switch( ( rbuffer[1] & 0x0E ) >> 1 ) {
         case 0:
             HAL_DBG_TRACE_PRINTF("Chip mode: Sleep\r\n");
@@ -154,9 +157,11 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
             HAL_DBG_TRACE_PRINTF("Chip mode: WiFi or GNSS geolocation\r\n");
             break;
     }
-    #endif
+    //#endif
+    }
 
-    #ifdef DEBUG
+    //#if defined(DEBUG)
+    if (enableStat2) {
     switch( ( rbuffer[1] & 0x70 ) >> 4 ) {
         case 0:
             HAL_DBG_TRACE_PRINTF("Reset status: Cleared (no active reset)\r\n");
@@ -180,9 +185,12 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
             HAL_DBG_TRACE_PRINTF("Reset status: RTC restart\r\n");
             break;
     }
-    #endif
+    //#endif
+    }
 
-    #if defined(DEBUG) || defined(get_status)
+    //#if defined(get_status) || (defined(DEBUG) && defined(enableStat2))
+    //#if defined(DEBUG)
+    if (enableIRQ) {
         #define BIT_0 0b00000001
         #define BIT_1 0b00000010
         #define BIT_8 0b00000100
@@ -200,7 +208,7 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
 
         HAL_DBG_TRACE_PRINTF("rbuffer[2] (31:24): ");
         print_binary(rbuffer[2]);
-        HAL_DBG_TRACE_PRINTF("\r\n");
+        HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", rbuffer[2]);
         if (rbuffer[2] & BIT_0) {
             HAL_DBG_TRACE_PRINTF("FskLenError (IRQ raised if the packet was received with a length error)\r\n");
         }
@@ -228,7 +236,7 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
 
         HAL_DBG_TRACE_PRINTF("\r\nrbuffer[3] (23:16): ");
         print_binary(rbuffer[3]);
-        HAL_DBG_TRACE_PRINTF("\r\n");
+        HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", rbuffer[3]);
         if (rbuffer[3] & BIT_0) {
             HAL_DBG_TRACE_PRINTF("RFU\r\n");
         }
@@ -257,7 +265,7 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
 
         HAL_DBG_TRACE_PRINTF("\r\nrbuffer[4] (15:8): ");
         print_binary(rbuffer[4]);
-        HAL_DBG_TRACE_PRINTF("\r\n");
+        HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", rbuffer[4]);
         if (rbuffer[4] & BIT_0) {
             HAL_DBG_TRACE_PRINTF("CadDone (LoRa Channel activity detection finished)\r\n");
         }
@@ -285,7 +293,7 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
 
         HAL_DBG_TRACE_PRINTF("\r\nrbuffer[5] (7:0): ");
         print_binary(rbuffer[5]);
-        HAL_DBG_TRACE_PRINTF("\r\n");
+        HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", rbuffer[5]);
         if (rbuffer[5] & BIT_0) {
             HAL_DBG_TRACE_PRINTF("RFU\r\n");
         }
@@ -310,7 +318,8 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
         if (rbuffer[5] & BIT_28) {
             HAL_DBG_TRACE_ERROR("Err (Packet received with error. LoRa: Wrong CRC received)\r\n");
         }
-    #endif
+    //#endif
+    }
 
     return LR1110_SPI_STATUS_OK;
 }
@@ -368,7 +377,8 @@ lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer
 
     // Start of 1st SPI transaction
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_RESET );
-    if (_lr1110_spi_write( radio->spi, cbuffer, cbuffer_length, 1000, false ) != LR1110_SPI_STATUS_OK) {
+    if (_lr1110_spi_write( radio->spi, cbuffer, cbuffer_length, 1000, false, true ) != LR1110_SPI_STATUS_OK) {
+        HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
         return LR1110_SPI_STATUS_ERROR;
     }
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
@@ -380,10 +390,12 @@ lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer
 
     // Start of 2nd SPI transaction
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_RESET );
-    if (_lr1110_spi_write( radio->spi, 0x00, 1, 1000, false ) != LR1110_SPI_STATUS_OK) {
+    if (_lr1110_spi_write( radio->spi, 0x00, 1, 1000, false, false ) != LR1110_SPI_STATUS_OK) {
+        HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
         return LR1110_SPI_STATUS_ERROR;
     }
     if (_lr1110_spi_read_with_dummy_byte( radio->spi, rbuffer, rbuffer_length, 1000 ) != LR1110_SPI_STATUS_OK) {
+        HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
         return LR1110_SPI_STATUS_ERROR;
     }
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
@@ -407,7 +419,8 @@ lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffe
 
     // Start of SPI transaction
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_RESET );
-    if (_lr1110_spi_write( radio->spi, cbuffer, cbuffer_length, 1000, get_status ) != LR1110_SPI_STATUS_OK) {
+    if (_lr1110_spi_write( radio->spi, cbuffer, cbuffer_length, 1000, get_status, false ) != LR1110_SPI_STATUS_OK) {
+        HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
         return LR1110_SPI_STATUS_ERROR;
     }
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
