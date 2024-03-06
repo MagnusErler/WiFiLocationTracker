@@ -16,7 +16,7 @@
 #include <string.h>     // for memset
 
 // Comment out the following line to disable debug messages
-#define DEBUG
+const bool _debug = true;
 
 radio_t* radio;
 void* context;
@@ -45,7 +45,7 @@ lr1110_spi_status_t _waitForBusyState( GPIO_PinState state, uint32_t timeout_ms 
     return LR1110_SPI_STATUS_OK;
 }
 
-lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer, const uint16_t cbuffer_length, const uint32_t timeout_ms, const bool get_status, const bool enableStat2 ) {
+lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer, const uint16_t cbuffer_length, const uint32_t timeout_ms, const bool get_status, const bool enableStat2, const bool enableIRQ ) {
 
     uint8_t rbuffer[cbuffer_length];
     memset(rbuffer, 0x00, cbuffer_length);
@@ -83,20 +83,20 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
         turnOffLED(RX_LED_GPIO_Port, RX_LED_Pin);
     }
 
-    #ifdef DEBUG
-    HAL_DBG_TRACE_PRINTF("\r\n---Stat1 Results---\r\n");
-    HAL_DBG_TRACE_PRINTF("rbuffer[0]: ");
-    print_binary(rbuffer[0]);
-    HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", rbuffer[0]);
-    switch ( rbuffer[0] & 0x01 ) {
-        case 0:
-            HAL_DBG_TRACE_PRINTF("No interrupt active\r\n");
-            break;
-        case 1:
-            HAL_DBG_TRACE_PRINTF("At least 1 interrupt active\r\n");
-            break;
+    if (_debug) {
+        HAL_DBG_TRACE_PRINTF("\r\n---Stat1 Results---\r\n");
+        HAL_DBG_TRACE_PRINTF("rbuffer[0]: ");
+        print_binary(rbuffer[0]);
+        HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", rbuffer[0]);
+        switch ( rbuffer[0] & 0x01 ) {
+            case 0:
+                HAL_DBG_TRACE_PRINTF("No interrupt active\r\n");
+                break;
+            case 1:
+                HAL_DBG_TRACE_PRINTF("At least 1 interrupt active\r\n");
+                break;
+        }
     }
-    #endif
 
     switch( ( rbuffer[0] & 0x0E ) >> 1 ) {
         case 0:
@@ -105,92 +105,84 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
         case 1:
             HAL_DBG_TRACE_WARNING("CMD_PERR: The last command could not be processed (wrong opcode, arguments). It is possible to generate an interrupt on DIO if a command error occurred\r\n");
             break;
-        #ifdef DEBUG
+        if (_debug) {
         case 2:
             HAL_DBG_TRACE_PRINTF("CMD_OK: The last command was processed successfully\r\n");
             break;
         case 3:
             HAL_DBG_TRACE_PRINTF("CMD_DAT: The last command was successfully processed, and data is currently transmitted instead of IRQ status\r\n");
             break;
-        #endif
+        }
     }
 
-    //#if defined(DEBUG)
-    if(enableStat2) {
-    HAL_DBG_TRACE_PRINTF("\r\n---Stat2 Results---\r\n");
-    HAL_DBG_TRACE_PRINTF("rbuffer[1]: ");
-    print_binary(rbuffer[1]);
-    HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", rbuffer[1]);
-    switch ( rbuffer[1] & 0x01 ) {
-        case 0:
-            HAL_DBG_TRACE_PRINTF("Bootloader: currently executes from boot-loader\r\n");
-            break;
-        case 1:
-            HAL_DBG_TRACE_PRINTF("Bootloader: currently executes from flash. The ResetStatus field is cleared on the first GetStatus() command after a reset. It is not cleared by any other command\r\n");
-            break;
-    }
-    //#endif
+    if(_debug && enableStat2) {
+        HAL_DBG_TRACE_PRINTF("\r\n---Stat2 Results---\r\n");
+        HAL_DBG_TRACE_PRINTF("rbuffer[1]: ");
+        print_binary(rbuffer[1]);
+        HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", rbuffer[1]);
+        switch ( rbuffer[1] & 0x01 ) {
+            case 0:
+                HAL_DBG_TRACE_PRINTF("Bootloader: currently executes from boot-loader\r\n");
+                break;
+            case 1:
+                HAL_DBG_TRACE_PRINTF("Bootloader: currently executes from flash. The ResetStatus field is cleared on the first GetStatus() command after a reset. It is not cleared by any other command\r\n");
+                break;
+        }
     }
 
-    //#if defined(DEBUG)
-    if (enableStat2) {
-    switch( ( rbuffer[1] & 0x0E ) >> 1 ) {
-        case 0:
-            HAL_DBG_TRACE_PRINTF("Chip mode: Sleep\r\n");
-            break;
-        case 1:
-            HAL_DBG_TRACE_PRINTF("Chip mode: Standby with RC Oscillator\r\n");
-            break;
-        case 2:
-            HAL_DBG_TRACE_PRINTF("Chip mode: Standby with external Oscillator\r\n");
-            break;
-        case 3:
-            HAL_DBG_TRACE_PRINTF("Chip mode: FS\r\n");
-            break;
-        case 4:
-            HAL_DBG_TRACE_PRINTF("Chip mode: RX\r\n");
-            break;
-        case 5:
-            HAL_DBG_TRACE_PRINTF("Chip mode: TX\r\n");
-            break;
-        case 6:
-            HAL_DBG_TRACE_PRINTF("Chip mode: WiFi or GNSS geolocation\r\n");
-            break;
-    }
-    //#endif
+    if (_debug && enableStat2) {
+        switch( ( rbuffer[1] & 0x0E ) >> 1 ) {
+            case 0:
+                HAL_DBG_TRACE_PRINTF("Chip mode: Sleep\r\n");
+                break;
+            case 1:
+                HAL_DBG_TRACE_PRINTF("Chip mode: Standby with RC Oscillator\r\n");
+                break;
+            case 2:
+                HAL_DBG_TRACE_PRINTF("Chip mode: Standby with external Oscillator\r\n");
+                break;
+            case 3:
+                HAL_DBG_TRACE_PRINTF("Chip mode: FS\r\n");
+                break;
+            case 4:
+                HAL_DBG_TRACE_PRINTF("Chip mode: RX\r\n");
+                break;
+            case 5:
+                HAL_DBG_TRACE_PRINTF("Chip mode: TX\r\n");
+                break;
+            case 6:
+                HAL_DBG_TRACE_PRINTF("Chip mode: WiFi or GNSS geolocation\r\n");
+                break;
+        }
     }
 
-    //#if defined(DEBUG)
-    if (enableStat2) {
-    switch( ( rbuffer[1] & 0x70 ) >> 4 ) {
-        case 0:
-            HAL_DBG_TRACE_PRINTF("Reset status: Cleared (no active reset)\r\n");
-            break;
-        case 1:
-            HAL_DBG_TRACE_PRINTF("Reset status: Analog reset (Power On Reset, Brown-Out Reset)\r\n");
-            break;
-        case 2:
-            HAL_DBG_TRACE_PRINTF("Reset status: External reset (NRESET pin)\r\n");
-            break;
-        case 3:
-            HAL_DBG_TRACE_PRINTF("Reset status: System reset\r\n");
-            break;
-        case 4:
-            HAL_DBG_TRACE_PRINTF("Reset status: Watchdog reset\r\n");
-            break;
-        case 5:
-            HAL_DBG_TRACE_PRINTF("Reset status: Wakeup NSS toggling\r\n");
-            break;
-        case 6:
-            HAL_DBG_TRACE_PRINTF("Reset status: RTC restart\r\n");
-            break;
-    }
-    //#endif
+    if (_debug && enableStat2) {
+        switch( ( rbuffer[1] & 0x70 ) >> 4 ) {
+            case 0:
+                HAL_DBG_TRACE_PRINTF("Reset status: Cleared (no active reset)\r\n");
+                break;
+            case 1:
+                HAL_DBG_TRACE_PRINTF("Reset status: Analog reset (Power On Reset, Brown-Out Reset)\r\n");
+                break;
+            case 2:
+                HAL_DBG_TRACE_PRINTF("Reset status: External reset (NRESET pin)\r\n");
+                break;
+            case 3:
+                HAL_DBG_TRACE_PRINTF("Reset status: System reset\r\n");
+                break;
+            case 4:
+                HAL_DBG_TRACE_PRINTF("Reset status: Watchdog reset\r\n");
+                break;
+            case 5:
+                HAL_DBG_TRACE_PRINTF("Reset status: Wakeup NSS toggling\r\n");
+                break;
+            case 6:
+                HAL_DBG_TRACE_PRINTF("Reset status: RTC restart\r\n");
+                break;
+        }
     }
 
-    //#if defined(get_status) || (defined(DEBUG) && defined(enableStat2))
-    //#if defined(DEBUG)
-    if (enableIRQ) {
+    if (_debug && enableIRQ) {
         #define BIT_0 0b00000001
         #define BIT_1 0b00000010
         #define BIT_8 0b00000100
@@ -318,7 +310,6 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
         if (rbuffer[5] & BIT_28) {
             HAL_DBG_TRACE_ERROR("Err (Packet received with error. LoRa: Wrong CRC received)\r\n");
         }
-    //#endif
     }
 
     return LR1110_SPI_STATUS_OK;
@@ -377,7 +368,7 @@ lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer
 
     // Start of 1st SPI transaction
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_RESET );
-    if (_lr1110_spi_write( radio->spi, cbuffer, cbuffer_length, 1000, false, true ) != LR1110_SPI_STATUS_OK) {
+    if (_lr1110_spi_write( radio->spi, cbuffer, cbuffer_length, 1000, false, true, false ) != LR1110_SPI_STATUS_OK) {
         HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
         return LR1110_SPI_STATUS_ERROR;
     }
@@ -390,7 +381,7 @@ lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer
 
     // Start of 2nd SPI transaction
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_RESET );
-    if (_lr1110_spi_write( radio->spi, 0x00, 1, 1000, false, false ) != LR1110_SPI_STATUS_OK) {
+    if (_lr1110_spi_write( radio->spi, 0x00, 1, 1000, false, false, false ) != LR1110_SPI_STATUS_OK) {
         HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
         return LR1110_SPI_STATUS_ERROR;
     }
@@ -419,7 +410,7 @@ lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffe
 
     // Start of SPI transaction
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_RESET );
-    if (_lr1110_spi_write( radio->spi, cbuffer, cbuffer_length, 1000, get_status, false ) != LR1110_SPI_STATUS_OK) {
+    if (_lr1110_spi_write( radio->spi, cbuffer, cbuffer_length, 1000, get_status, false, false ) != LR1110_SPI_STATUS_OK) {
         HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
         return LR1110_SPI_STATUS_ERROR;
     }
