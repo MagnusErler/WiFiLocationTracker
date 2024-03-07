@@ -16,14 +16,16 @@
 #include <string.h>     // for memset
 
 // Comment out the following line to disable debug messages
-const bool _debug = true;
+const bool _debugStat1 = true;
+const bool _debugStat2 = true;
+const bool _printResponse = false;
 
 radio_t* radio;
 void* context;
 
 lr1110_spi_status_t _waitForBusyState( GPIO_PinState state, uint32_t timeout_ms ) {
 
-    uint32_t start = HAL_GetTick();
+    uint32_t start = HAL_GetTick(); // Start of timeout measurement
 
     if( state == GPIO_PIN_RESET ) {
         while( HAL_GPIO_ReadPin( radio->busy.port, radio->busy.pin ) == GPIO_PIN_SET ) {
@@ -47,8 +49,8 @@ lr1110_spi_status_t _waitForBusyState( GPIO_PinState state, uint32_t timeout_ms 
 
 lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer, const uint16_t cbuffer_length, const uint32_t timeout_ms, const bool get_status, const bool enableStat2, const bool enableIRQ ) {
 
-    uint8_t rbuffer[cbuffer_length];
-    memset(rbuffer, 0x00, cbuffer_length);
+    uint8_t rbuffer[cbuffer_length]; // rbuffer always has the same length as cbuffer
+    memset(rbuffer, 0x00, cbuffer_length); // Initialize rbuffer with 0x00
 
     // if (HAL_SPI_TransmitReceive( radio->hspi, ( uint8_t* ) cbuffer, rbuffer, cbuffer_length, timeout_ms ) != HAL_OK) {
     //     HAL_DBG_TRACE_ERROR("_lr1110_spi_write(): Error while transmitting and receiving data\r\n");
@@ -56,9 +58,11 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
     // }
 
     for( uint16_t i = 0; i < cbuffer_length; i++ ) {
-        uint32_t start = HAL_GetTick();
+        uint32_t start = HAL_GetTick(); // Start of timeout measurement
 
-        turnOnLED(TX_LED_GPIO_Port, TX_LED_Pin);
+        turnOnLED(TX_LED_GPIO_Port, TX_LED_Pin); // Turn on TX LED to show that the SPI is transmitting
+
+        // Wait for TXE to become HIGH -> SPI is ready for transmission
         while( LL_SPI_IsActiveFlag_TXE( spi ) == 0 ) {
             if( ( uint32_t )( HAL_GetTick() - start ) > ( uint32_t ) timeout_ms ) {
                 HAL_DBG_TRACE_PRINTF("\r\n");
@@ -67,10 +71,15 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
                 return LR1110_SPI_STATUS_TIMEOUT;
             }
         };
-        LL_SPI_TransmitData8( spi, cbuffer[i] );
-        turnOffLED(TX_LED_GPIO_Port, TX_LED_Pin);
+        LL_SPI_TransmitData8( spi, cbuffer[i] ); // Transmit data
 
-        turnOnLED(RX_LED_GPIO_Port, RX_LED_Pin);
+        // Er det her vi skal tjekke stat1 og stat2?
+        // Vi skal lave en variable der hedder noget med, om vi forventer svar fra kommandoen (formentlig hasResponse)
+
+        turnOffLED(TX_LED_GPIO_Port, TX_LED_Pin); // Turn off TX LED to show that the SPI is done transmitting
+        turnOnLED(RX_LED_GPIO_Port, RX_LED_Pin); // Turn on RX LED to show that the SPI is receiving
+
+        // Wait for RXNE to become HIGH -> SPI is ready for reception
         while( LL_SPI_IsActiveFlag_RXNE( spi ) == 0 ) {
             if( ( uint32_t )( HAL_GetTick() - start ) > ( uint32_t ) timeout_ms ) {
                 HAL_DBG_TRACE_PRINTF("\r\n");
@@ -79,240 +88,375 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
                 return LR1110_SPI_STATUS_TIMEOUT;
             }
         };
-        rbuffer[i] = LL_SPI_ReceiveData8( spi );
-        turnOffLED(RX_LED_GPIO_Port, RX_LED_Pin);
+        rbuffer[i] = LL_SPI_ReceiveData8( spi ); // Receive data
+
+        turnOffLED(RX_LED_GPIO_Port, RX_LED_Pin); // Turn off RX LED to show that the SPI is done receiving
     }
 
-    if (_debug) {
-        HAL_DBG_TRACE_PRINTF("\r\n---Stat1 Results---\r\n");
-        HAL_DBG_TRACE_PRINTF("rbuffer[0]: ");
-        print_binary(rbuffer[0]);
-        HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", rbuffer[0]);
-        switch ( rbuffer[0] & 0x01 ) {
-            case 0:
-                HAL_DBG_TRACE_PRINTF("No interrupt active\r\n");
-                break;
-            case 1:
-                HAL_DBG_TRACE_PRINTF("At least 1 interrupt active\r\n");
-                break;
-        }
+    if(_debugStat1) {
+        printStat1(rbuffer[0]);
+    }
+    
+
+    if(_debugStat2) {
+        printStat2(rbuffer[1]);
+    }
+    
+
+    // if (_debug) {
+    //     HAL_DBG_TRACE_PRINTF("\r\n---Stat1 Results---\r\n");
+    //     HAL_DBG_TRACE_PRINTF("rbuffer[0]: ");
+    //     print_binary(rbuffer[0]);
+    //     HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", rbuffer[0]);
+    //     switch ( rbuffer[0] & 0x01 ) {
+    //         case 0:
+    //             HAL_DBG_TRACE_PRINTF("No interrupt active\r\n");
+    //             break;
+    //         case 1:
+    //             HAL_DBG_TRACE_PRINTF("At least 1 interrupt active\r\n");
+    //             break;
+    //     }
+    // }
+
+    // switch( ( rbuffer[0] & 0x0E ) >> 1 ) {
+    //     case 0:
+    //         HAL_DBG_TRACE_ERROR("CMD_FAIL: The last command could not be executed\r\n");
+    //         break;
+    //     case 1:
+    //         HAL_DBG_TRACE_WARNING("CMD_PERR: The last command could not be processed (wrong opcode, arguments). It is possible to generate an interrupt on DIO if a command error occurred\r\n");
+    //         break;
+    //     if (_debug) {
+    //     case 2:
+    //         HAL_DBG_TRACE_PRINTF("CMD_OK: The last command was processed successfully\r\n");
+    //         break;
+    //     case 3:
+    //         HAL_DBG_TRACE_PRINTF("CMD_DAT: The last command was successfully processed, and data is currently transmitted instead of IRQ status\r\n");
+    //         break;
+    //     }
+    // }
+
+    // if(_debug && enableStat2) {
+    //     HAL_DBG_TRACE_PRINTF("\r\n---Stat2 Results---\r\n");
+    //     HAL_DBG_TRACE_PRINTF("rbuffer[1]: ");
+    //     print_binary(rbuffer[1]);
+    //     HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", rbuffer[1]);
+    //     switch ( rbuffer[1] & 0x01 ) {
+    //         case 0:
+    //             HAL_DBG_TRACE_PRINTF("Bootloader: currently executes from boot-loader\r\n");
+    //             break;
+    //         case 1:
+    //             HAL_DBG_TRACE_PRINTF("Bootloader: currently executes from flash. The ResetStatus field is cleared on the first GetStatus() command after a reset. It is not cleared by any other command\r\n");
+    //             break;
+    //     }
+    // }
+
+    // if (_debug && enableStat2) {
+    //     switch( ( rbuffer[1] & 0x0E ) >> 1 ) {
+    //         case 0:
+    //             HAL_DBG_TRACE_PRINTF("Chip mode: Sleep\r\n");
+    //             break;
+    //         case 1:
+    //             HAL_DBG_TRACE_PRINTF("Chip mode: Standby with RC Oscillator\r\n");
+    //             break;
+    //         case 2:
+    //             HAL_DBG_TRACE_PRINTF("Chip mode: Standby with external Oscillator\r\n");
+    //             break;
+    //         case 3:
+    //             HAL_DBG_TRACE_PRINTF("Chip mode: FS\r\n");
+    //             break;
+    //         case 4:
+    //             HAL_DBG_TRACE_PRINTF("Chip mode: RX\r\n");
+    //             break;
+    //         case 5:
+    //             HAL_DBG_TRACE_PRINTF("Chip mode: TX\r\n");
+    //             break;
+    //         case 6:
+    //             HAL_DBG_TRACE_PRINTF("Chip mode: WiFi or GNSS geolocation\r\n");
+    //             break;
+    //     }
+    // }
+
+    // if (_debug && enableStat2) {
+    //     switch( ( rbuffer[1] & 0x70 ) >> 4 ) {
+    //         case 0:
+    //             HAL_DBG_TRACE_PRINTF("Reset status: Cleared (no active reset)\r\n");
+    //             break;
+    //         case 1:
+    //             HAL_DBG_TRACE_PRINTF("Reset status: Analog reset (Power On Reset, Brown-Out Reset)\r\n");
+    //             break;
+    //         case 2:
+    //             HAL_DBG_TRACE_PRINTF("Reset status: External reset (NRESET pin)\r\n");
+    //             break;
+    //         case 3:
+    //             HAL_DBG_TRACE_PRINTF("Reset status: System reset\r\n");
+    //             break;
+    //         case 4:
+    //             HAL_DBG_TRACE_PRINTF("Reset status: Watchdog reset\r\n");
+    //             break;
+    //         case 5:
+    //             HAL_DBG_TRACE_PRINTF("Reset status: Wakeup NSS toggling\r\n");
+    //             break;
+    //         case 6:
+    //             HAL_DBG_TRACE_PRINTF("Reset status: RTC restart\r\n");
+    //             break;
+    //     }
+    // }
+
+    // if (_debug && enableIRQ) {
+    //     #define BIT_0 0b00000001
+    //     #define BIT_1 0b00000010
+    //     #define BIT_8 0b00000100
+    //     #define BIT_12 0b00001000
+    //     #define BIT_16 0b00010000
+    //     #define BIT_20 0b00100000
+    //     #define BIT_24 0b01000000
+    //     #define BIT_28 0b10000000
+
+    //     HAL_DBG_TRACE_PRINTF("\r\n---Irq Status Results---\r\n");
+    //     // HAL_DBG_TRACE_PRINTF("IRQStat(31:24): 0x%X\r\n", rbuffer[2]);
+    //     // HAL_DBG_TRACE_PRINTF("IRQStat(23:16): 0x%X\r\n", rbuffer[3]);
+    //     // HAL_DBG_TRACE_PRINTF("IRQStat(15:8): 0x%X\r\n", rbuffer[4]);
+    //     // HAL_DBG_TRACE_PRINTF("IRQStat(7:0): 0x%X\r\n", rbuffer[5]);
+
+    //     HAL_DBG_TRACE_PRINTF("rbuffer[2] (31:24): ");
+    //     print_binary(rbuffer[2]);
+    //     HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", rbuffer[2]);
+    //     if (rbuffer[2] & BIT_0) {
+    //         HAL_DBG_TRACE_PRINTF("FskLenError (IRQ raised if the packet was received with a length error)\r\n");
+    //     }
+    //     if (rbuffer[2] & BIT_1) {
+    //         HAL_DBG_TRACE_PRINTF("FskAddrError (IRQ raised if the packet was received with an address error)\r\n");
+    //     }
+    //     if (rbuffer[2] & BIT_8) {
+    //         HAL_DBG_TRACE_PRINTF("RFU\r\n");
+    //     }
+    //     if (rbuffer[2] & BIT_12) {
+    //         HAL_DBG_TRACE_PRINTF("LoRaRxTimestamp (Last LoRa symbol received. To be used for time-stamping the received packet. The device is still in RX mode)\r\n");
+    //     }
+    //     if (rbuffer[2] & BIT_16) {
+    //         HAL_DBG_TRACE_PRINTF("RFU\r\n");
+    //     }
+    //     if (rbuffer[2] & BIT_20) {
+    //         HAL_DBG_TRACE_PRINTF("RFU\r\n");
+    //     }
+    //     if (rbuffer[2] & BIT_24) {
+    //         HAL_DBG_TRACE_PRINTF("RFU\r\n");
+    //     }
+    //     if (rbuffer[2] & BIT_28) {
+    //         HAL_DBG_TRACE_PRINTF("RFU\r\n");
+    //     }
+
+    //     HAL_DBG_TRACE_PRINTF("\r\nrbuffer[3] (23:16): ");
+    //     print_binary(rbuffer[3]);
+    //     HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", rbuffer[3]);
+    //     if (rbuffer[3] & BIT_0) {
+    //         HAL_DBG_TRACE_PRINTF("RFU\r\n");
+    //     }
+    //     if (rbuffer[3] & BIT_1) {
+    //         HAL_DBG_TRACE_PRINTF("RFU\r\n");
+    //     }
+    //     if (rbuffer[3] & BIT_8) {
+    //         HAL_DBG_TRACE_PRINTF("RFU\r\n");
+    //     }
+    //     if (rbuffer[3] & BIT_12) {
+    //         HAL_DBG_TRACE_PRINTF("GNSSDone (GNSS Scan finished)\r\n");
+    //     }
+    //     if (rbuffer[3] & BIT_16) {
+    //         HAL_DBG_TRACE_PRINTF("WifiDone (Wi-Fi Scan finished)\r\n");
+    //     }
+    //     if (rbuffer[3] & BIT_20) {
+    //         HAL_DBG_TRACE_PRINTF("LBD (Low Battery Detection)\r\n");
+    //     }
+    //     if (rbuffer[3] & BIT_24) {
+    //         HAL_DBG_TRACE_ERROR("CmdError (Host command error)\r\n");
+    //     }
+    //     if (rbuffer[3] & BIT_28) {
+    //         HAL_DBG_TRACE_ERROR("Error (An error other than a command error occurred (see GetErrors))\r\n");
+    //         //getErrors(context);
+    //     }
+
+    //     HAL_DBG_TRACE_PRINTF("\r\nrbuffer[4] (15:8): ");
+    //     print_binary(rbuffer[4]);
+    //     HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", rbuffer[4]);
+    //     if (rbuffer[4] & BIT_0) {
+    //         HAL_DBG_TRACE_PRINTF("CadDone (LoRa Channel activity detection finished)\r\n");
+    //     }
+    //     if (rbuffer[4] & BIT_1) {
+    //         HAL_DBG_TRACE_PRINTF("CadDetected (LoRa Channel activity detected)\r\n");
+    //     }
+    //     if (rbuffer[4] & BIT_8) {
+    //         HAL_DBG_TRACE_WARNING("Timeout (RX or TX timeout)\r\n");
+    //     }
+    //     if (rbuffer[4] & BIT_12) {
+    //         HAL_DBG_TRACE_PRINTF("LrFhssHop (LR-FHSS intra-packet hopping)\r\n");
+    //     }
+    //     if (rbuffer[4] & BIT_16) {
+    //         HAL_DBG_TRACE_PRINTF("RFU\r\n");
+    //     }
+    //     if (rbuffer[4] & BIT_20) {
+    //         HAL_DBG_TRACE_PRINTF("RFU\r\n");
+    //     }
+    //     if (rbuffer[4] & BIT_24) {
+    //         HAL_DBG_TRACE_PRINTF("RFU\r\n");
+    //     }
+    //     if (rbuffer[4] & BIT_28) {
+    //         HAL_DBG_TRACE_PRINTF("RFU\r\n");
+    //     }
+
+    //     HAL_DBG_TRACE_PRINTF("\r\nrbuffer[5] (7:0): ");
+    //     print_binary(rbuffer[5]);
+    //     HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", rbuffer[5]);
+    //     if (rbuffer[5] & BIT_0) {
+    //         HAL_DBG_TRACE_PRINTF("RFU\r\n");
+    //     }
+    //     if (rbuffer[5] & BIT_1) {
+    //         HAL_DBG_TRACE_PRINTF("RFU\r\n");
+    //     }
+    //     if (rbuffer[5] & BIT_8) {
+    //         HAL_DBG_TRACE_PRINTF("TxDone (Packet transmission completed)\r\n");
+    //     }
+    //     if (rbuffer[5] & BIT_12) {
+    //         HAL_DBG_TRACE_PRINTF("RxDone (Packet received)\r\n");
+    //     }
+    //     if (rbuffer[5] & BIT_16) {
+    //         HAL_DBG_TRACE_PRINTF("PreambleDetected (Preamble detected)\r\n");
+    //     }
+    //     if (rbuffer[5] & BIT_20) {
+    //         HAL_DBG_TRACE_PRINTF("SyncWordValid / HeaderValid (Valid sync word / LoRa header detected)\r\n");
+    //     }
+    //     if (rbuffer[5] & BIT_24) {
+    //         HAL_DBG_TRACE_ERROR("HeaderErr (LoRa header CRC error)\r\n");
+    //     }
+    //     if (rbuffer[5] & BIT_28) {
+    //         HAL_DBG_TRACE_ERROR("Err (Packet received with error. LoRa: Wrong CRC received)\r\n");
+    //     }
+    // }
+
+    return LR1110_SPI_STATUS_OK;
+}
+
+void printStat1(uint8_t stat1) {
+    HAL_DBG_TRACE_MSG_COLOR("\r\nStat1\r\n", HAL_DBG_TRACE_COLOR_YELLOW);
+    HAL_DBG_TRACE_PRINTF("rbuffer[0] ");
+    print_binary(stat1);
+    HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", stat1);
+
+    // Extracting interrupt status (bit 0)
+    unsigned char interruptStatus = (stat1 & 0x01) ? 1 : 0;
+    
+    // Printing interrupt status
+    if (interruptStatus == 0) {
+        HAL_DBG_TRACE_PRINTF("Interrupt Status: No interrupt active\r\n");
+    } else {
+        HAL_DBG_TRACE_PRINTF("Interrupt Status: At least 1 interrupt active\r\n");
     }
 
-    switch( ( rbuffer[0] & 0x0E ) >> 1 ) {
+    // Extracting command status (bits 3:1)
+    unsigned char commandStatus = (stat1 >> 1) & 0x07;
+
+    // Determining command status string based on the value
+    switch (commandStatus) {
         case 0:
             HAL_DBG_TRACE_ERROR("CMD_FAIL: The last command could not be executed\r\n");
             break;
         case 1:
-            HAL_DBG_TRACE_WARNING("CMD_PERR: The last command could not be processed (wrong opcode, arguments). It is possible to generate an interrupt on DIO if a command error occurred\r\n");
+            HAL_DBG_TRACE_ERROR("CMD_PERR: The last command could not be processed (wrong opcode, arguments)\r\n");
             break;
-        if (_debug) {
         case 2:
             HAL_DBG_TRACE_PRINTF("CMD_OK: The last command was processed successfully\r\n");
             break;
         case 3:
             HAL_DBG_TRACE_PRINTF("CMD_DAT: The last command was successfully processed, and data is currently transmitted instead of IRQ status\r\n");
             break;
-        }
+        default:
+            HAL_DBG_TRACE_ERROR("Unknown stat1 command status recieved\r\n");
+            break;
+    }
+}
+
+void printStat2(uint8_t stat2) {
+    HAL_DBG_TRACE_MSG_COLOR("\r\nStat2\r\n", HAL_DBG_TRACE_COLOR_YELLOW);
+    HAL_DBG_TRACE_PRINTF("rbuffer[1] ");
+    print_binary(stat2);
+    HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", stat2);
+
+    // Extracting reset source (bits 7-4)
+    unsigned char resetSource = (stat2 >> 4) & 0x0F;
+
+    // Printing reset source
+    switch (resetSource) {
+        case 0:
+            HAL_DBG_TRACE_PRINTF("Reset Source: Cleared (no active reset)\r\n");
+            break;
+        case 1:
+            HAL_DBG_TRACE_PRINTF("Reset Source: Analog reset (Power On Reset, Brown-Out Reset)\r\n");
+            break;
+        case 2:
+            HAL_DBG_TRACE_PRINTF("Reset Source: External reset (NRESET pin)\r\n");
+            break;
+        case 3:
+            HAL_DBG_TRACE_PRINTF("Reset Source: System reset\r\n");
+            break;
+        case 4:
+            HAL_DBG_TRACE_PRINTF("Reset Source: Watchdog reset\r\n");
+            break;
+        case 5:
+            HAL_DBG_TRACE_PRINTF("Reset Source: Wakeup NSS toggling\r\n");
+            break;
+        case 6:
+            HAL_DBG_TRACE_PRINTF("Reset Source: RTC restart\r\n");
+            break;
+        case 7:
+            HAL_DBG_TRACE_PRINTF("Reset Source: RFU\r\n");
+            break;
+        default:
+            HAL_DBG_TRACE_ERROR("Unknown reset source received\r\n");
+            break;
     }
 
-    if(_debug && enableStat2) {
-        HAL_DBG_TRACE_PRINTF("\r\n---Stat2 Results---\r\n");
-        HAL_DBG_TRACE_PRINTF("rbuffer[1]: ");
-        print_binary(rbuffer[1]);
-        HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", rbuffer[1]);
-        switch ( rbuffer[1] & 0x01 ) {
-            case 0:
-                HAL_DBG_TRACE_PRINTF("Bootloader: currently executes from boot-loader\r\n");
-                break;
-            case 1:
-                HAL_DBG_TRACE_PRINTF("Bootloader: currently executes from flash. The ResetStatus field is cleared on the first GetStatus() command after a reset. It is not cleared by any other command\r\n");
-                break;
-        }
+    // Extracting system mode (bits 3-1)
+    unsigned char systemMode = (stat2 >> 1) & 0x07;
+
+    // Printing system mode
+    switch (systemMode) {
+        case 0:
+            HAL_DBG_TRACE_PRINTF("System Mode: Sleep\r\n");
+            break;
+        case 1:
+            HAL_DBG_TRACE_PRINTF("System Mode: Standby with RC Oscillator\r\n");
+            break;
+        case 2:
+            HAL_DBG_TRACE_PRINTF("System Mode: Standby with external Oscillator\r\n");
+            break;
+        case 3:
+            HAL_DBG_TRACE_PRINTF("System Mode: FS\r\n");
+            break;
+        case 4:
+            HAL_DBG_TRACE_PRINTF("System Mode: RX\r\n");
+            break;
+        case 5:
+            HAL_DBG_TRACE_PRINTF("System Mode: TX\r\n");
+            break;
+        case 6:
+            HAL_DBG_TRACE_PRINTF("System Mode: Wi-Fi og GNSS geolocation\r\n");
+            break;
+        case 7:
+            HAL_DBG_TRACE_PRINTF("System Mode: RFU\r\n");
+            break;
+        default:
+            HAL_DBG_TRACE_ERROR("Unknown system mode received\r\n");
+            break;
     }
 
-    if (_debug && enableStat2) {
-        switch( ( rbuffer[1] & 0x0E ) >> 1 ) {
-            case 0:
-                HAL_DBG_TRACE_PRINTF("Chip mode: Sleep\r\n");
-                break;
-            case 1:
-                HAL_DBG_TRACE_PRINTF("Chip mode: Standby with RC Oscillator\r\n");
-                break;
-            case 2:
-                HAL_DBG_TRACE_PRINTF("Chip mode: Standby with external Oscillator\r\n");
-                break;
-            case 3:
-                HAL_DBG_TRACE_PRINTF("Chip mode: FS\r\n");
-                break;
-            case 4:
-                HAL_DBG_TRACE_PRINTF("Chip mode: RX\r\n");
-                break;
-            case 5:
-                HAL_DBG_TRACE_PRINTF("Chip mode: TX\r\n");
-                break;
-            case 6:
-                HAL_DBG_TRACE_PRINTF("Chip mode: WiFi or GNSS geolocation\r\n");
-                break;
-        }
+    // Extracting execution source (bit 0)
+    unsigned char execSource = stat2 & 0x01;
+
+    // Printing execution source
+    if (execSource == 0) {
+        HAL_DBG_TRACE_PRINTF("Execution Source: Currently executing from boot-loader\r\n");
+    } else {
+        HAL_DBG_TRACE_PRINTF("Execution Source: Currently executing from flash\r\n");
     }
-
-    if (_debug && enableStat2) {
-        switch( ( rbuffer[1] & 0x70 ) >> 4 ) {
-            case 0:
-                HAL_DBG_TRACE_PRINTF("Reset status: Cleared (no active reset)\r\n");
-                break;
-            case 1:
-                HAL_DBG_TRACE_PRINTF("Reset status: Analog reset (Power On Reset, Brown-Out Reset)\r\n");
-                break;
-            case 2:
-                HAL_DBG_TRACE_PRINTF("Reset status: External reset (NRESET pin)\r\n");
-                break;
-            case 3:
-                HAL_DBG_TRACE_PRINTF("Reset status: System reset\r\n");
-                break;
-            case 4:
-                HAL_DBG_TRACE_PRINTF("Reset status: Watchdog reset\r\n");
-                break;
-            case 5:
-                HAL_DBG_TRACE_PRINTF("Reset status: Wakeup NSS toggling\r\n");
-                break;
-            case 6:
-                HAL_DBG_TRACE_PRINTF("Reset status: RTC restart\r\n");
-                break;
-        }
-    }
-
-    if (_debug && enableIRQ) {
-        #define BIT_0 0b00000001
-        #define BIT_1 0b00000010
-        #define BIT_8 0b00000100
-        #define BIT_12 0b00001000
-        #define BIT_16 0b00010000
-        #define BIT_20 0b00100000
-        #define BIT_24 0b01000000
-        #define BIT_28 0b10000000
-
-        HAL_DBG_TRACE_PRINTF("\r\n---Irq Status Results---\r\n");
-        // HAL_DBG_TRACE_PRINTF("IRQStat(31:24): 0x%X\r\n", rbuffer[2]);
-        // HAL_DBG_TRACE_PRINTF("IRQStat(23:16): 0x%X\r\n", rbuffer[3]);
-        // HAL_DBG_TRACE_PRINTF("IRQStat(15:8): 0x%X\r\n", rbuffer[4]);
-        // HAL_DBG_TRACE_PRINTF("IRQStat(7:0): 0x%X\r\n", rbuffer[5]);
-
-        HAL_DBG_TRACE_PRINTF("rbuffer[2] (31:24): ");
-        print_binary(rbuffer[2]);
-        HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", rbuffer[2]);
-        if (rbuffer[2] & BIT_0) {
-            HAL_DBG_TRACE_PRINTF("FskLenError (IRQ raised if the packet was received with a length error)\r\n");
-        }
-        if (rbuffer[2] & BIT_1) {
-            HAL_DBG_TRACE_PRINTF("FskAddrError (IRQ raised if the packet was received with an address error)\r\n");
-        }
-        if (rbuffer[2] & BIT_8) {
-            HAL_DBG_TRACE_PRINTF("RFU\r\n");
-        }
-        if (rbuffer[2] & BIT_12) {
-            HAL_DBG_TRACE_PRINTF("LoRaRxTimestamp (Last LoRa symbol received. To be used for time-stamping the received packet. The device is still in RX mode)\r\n");
-        }
-        if (rbuffer[2] & BIT_16) {
-            HAL_DBG_TRACE_PRINTF("RFU\r\n");
-        }
-        if (rbuffer[2] & BIT_20) {
-            HAL_DBG_TRACE_PRINTF("RFU\r\n");
-        }
-        if (rbuffer[2] & BIT_24) {
-            HAL_DBG_TRACE_PRINTF("RFU\r\n");
-        }
-        if (rbuffer[2] & BIT_28) {
-            HAL_DBG_TRACE_PRINTF("RFU\r\n");
-        }
-
-        HAL_DBG_TRACE_PRINTF("\r\nrbuffer[3] (23:16): ");
-        print_binary(rbuffer[3]);
-        HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", rbuffer[3]);
-        if (rbuffer[3] & BIT_0) {
-            HAL_DBG_TRACE_PRINTF("RFU\r\n");
-        }
-        if (rbuffer[3] & BIT_1) {
-            HAL_DBG_TRACE_PRINTF("RFU\r\n");
-        }
-        if (rbuffer[3] & BIT_8) {
-            HAL_DBG_TRACE_PRINTF("RFU\r\n");
-        }
-        if (rbuffer[3] & BIT_12) {
-            HAL_DBG_TRACE_PRINTF("GNSSDone (GNSS Scan finished)\r\n");
-        }
-        if (rbuffer[3] & BIT_16) {
-            HAL_DBG_TRACE_PRINTF("WifiDone (Wi-Fi Scan finished)\r\n");
-        }
-        if (rbuffer[3] & BIT_20) {
-            HAL_DBG_TRACE_PRINTF("LBD (Low Battery Detection)\r\n");
-        }
-        if (rbuffer[3] & BIT_24) {
-            HAL_DBG_TRACE_ERROR("CmdError (Host command error)\r\n");
-        }
-        if (rbuffer[3] & BIT_28) {
-            HAL_DBG_TRACE_ERROR("Error (An error other than a command error occurred (see GetErrors))\r\n");
-            //getErrors(context);
-        }
-
-        HAL_DBG_TRACE_PRINTF("\r\nrbuffer[4] (15:8): ");
-        print_binary(rbuffer[4]);
-        HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", rbuffer[4]);
-        if (rbuffer[4] & BIT_0) {
-            HAL_DBG_TRACE_PRINTF("CadDone (LoRa Channel activity detection finished)\r\n");
-        }
-        if (rbuffer[4] & BIT_1) {
-            HAL_DBG_TRACE_PRINTF("CadDetected (LoRa Channel activity detected)\r\n");
-        }
-        if (rbuffer[4] & BIT_8) {
-            HAL_DBG_TRACE_WARNING("Timeout (RX or TX timeout)\r\n");
-        }
-        if (rbuffer[4] & BIT_12) {
-            HAL_DBG_TRACE_PRINTF("LrFhssHop (LR-FHSS intra-packet hopping)\r\n");
-        }
-        if (rbuffer[4] & BIT_16) {
-            HAL_DBG_TRACE_PRINTF("RFU\r\n");
-        }
-        if (rbuffer[4] & BIT_20) {
-            HAL_DBG_TRACE_PRINTF("RFU\r\n");
-        }
-        if (rbuffer[4] & BIT_24) {
-            HAL_DBG_TRACE_PRINTF("RFU\r\n");
-        }
-        if (rbuffer[4] & BIT_28) {
-            HAL_DBG_TRACE_PRINTF("RFU\r\n");
-        }
-
-        HAL_DBG_TRACE_PRINTF("\r\nrbuffer[5] (7:0): ");
-        print_binary(rbuffer[5]);
-        HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", rbuffer[5]);
-        if (rbuffer[5] & BIT_0) {
-            HAL_DBG_TRACE_PRINTF("RFU\r\n");
-        }
-        if (rbuffer[5] & BIT_1) {
-            HAL_DBG_TRACE_PRINTF("RFU\r\n");
-        }
-        if (rbuffer[5] & BIT_8) {
-            HAL_DBG_TRACE_PRINTF("TxDone (Packet transmission completed)\r\n");
-        }
-        if (rbuffer[5] & BIT_12) {
-            HAL_DBG_TRACE_PRINTF("RxDone (Packet received)\r\n");
-        }
-        if (rbuffer[5] & BIT_16) {
-            HAL_DBG_TRACE_PRINTF("PreambleDetected (Preamble detected)\r\n");
-        }
-        if (rbuffer[5] & BIT_20) {
-            HAL_DBG_TRACE_PRINTF("SyncWordValid / HeaderValid (Valid sync word / LoRa header detected)\r\n");
-        }
-        if (rbuffer[5] & BIT_24) {
-            HAL_DBG_TRACE_ERROR("HeaderErr (LoRa header CRC error)\r\n");
-        }
-        if (rbuffer[5] & BIT_28) {
-            HAL_DBG_TRACE_ERROR("Err (Packet received with error. LoRa: Wrong CRC received)\r\n");
-        }
-    }
-
-    return LR1110_SPI_STATUS_OK;
 }
 
 lr1110_spi_status_t _lr1110_spi_read_with_dummy_byte( SPI_TypeDef* spi, uint8_t* rbuffer, uint16_t rbuffer_length, uint32_t timeout_ms ) {
