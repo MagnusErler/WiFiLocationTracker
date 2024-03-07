@@ -15,12 +15,12 @@ void getLR1110_Bootloader_Version( const void* context ) {
   HAL_DBG_TRACE_INFO("Getting LR1110 version... ");
 
   uint8_t cbuffer[LR1110_CMD_LENGTH_GET_VERSION];
-  uint8_t rbuffer[LR1110_LENGTH_GET_VERSION] = { 0 };
+  uint8_t rbuffer[LR1110_RES_LENGTH_GET_VERSION] = { 0 };
 
   cbuffer[0] = ( uint8_t )( LR1110_GET_VERSION_CMD >> 8 );
   cbuffer[1] = ( uint8_t )( LR1110_GET_VERSION_CMD >> 0 );
   
-  if (lr1110_spi_read(context, cbuffer, LR1110_CMD_LENGTH_GET_VERSION, rbuffer, LR1110_LENGTH_GET_VERSION ) == LR1110_SPI_STATUS_OK) {
+  if (lr1110_spi_read(context, cbuffer, LR1110_CMD_LENGTH_GET_VERSION, rbuffer, LR1110_RES_LENGTH_GET_VERSION ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_INFO_VALUE("HW: %d (0x%X), ", rbuffer[1], rbuffer[1]);
     HAL_DBG_TRACE_INFO_VALUE("FW: %d.%d (0x%X.0x%X), ", rbuffer[3], rbuffer[4], rbuffer[3], rbuffer[4]);
     switch (rbuffer[2]) {
@@ -43,12 +43,12 @@ float getLR1110_Temperature( const void* context ) {
   HAL_DBG_TRACE_INFO("Getting LR1110 temperature... ");
 
   uint8_t cbuffer[LR1110_CMD_LENGTH_GET_TEMPERATURE];
-  uint8_t rbuffer[LR1110_LENGTH_GET_TEMPERATURE] = { 0 };
+  uint8_t rbuffer[LR1110_RES_LENGTH_GET_TEMPERATURE] = { 0 };
 
   cbuffer[0] = ( uint8_t )( LR1110_GET_TEMPERATURE_CMD >> 8 );
   cbuffer[1] = ( uint8_t )( LR1110_GET_TEMPERATURE_CMD >> 0 );
 
-  if (lr1110_spi_read( context, cbuffer, LR1110_CMD_LENGTH_GET_TEMPERATURE, rbuffer, LR1110_LENGTH_GET_TEMPERATURE ) == LR1110_SPI_STATUS_OK) {
+  if (lr1110_spi_read( context, cbuffer, LR1110_CMD_LENGTH_GET_TEMPERATURE, rbuffer, LR1110_RES_LENGTH_GET_TEMPERATURE ) == LR1110_SPI_STATUS_OK) {
 
     uint16_t temp_10_0 = ((rbuffer[1] << 8) | rbuffer[2]) & 0x7FF;
     const float temperature = 25 + (1000/(-1.7)) * ((temp_10_0/2047.0) * 1.35 - 0.7295);
@@ -68,12 +68,12 @@ void getLR1110_ChipEUI( const void* context ) {
   HAL_DBG_TRACE_INFO("Getting LR1110 ChipEUI... ");
 
   uint8_t cbuffer[LR1110_CMD_LENGTH_GET_CHIPEUI];
-  uint8_t rbuffer[LR1110_LENGTH_GET_CHIPEUI] = { 0 };
+  uint8_t rbuffer[LR1110_RES_LENGTH_GET_CHIPEUI] = { 0 };
 
   cbuffer[0] = ( uint8_t )( LR1110_GET_CHIPEUI_CMD >> 8 );
   cbuffer[1] = ( uint8_t )( LR1110_GET_CHIPEUI_CMD >> 0 );
 
-  if (lr1110_spi_read( context, cbuffer, LR1110_CMD_LENGTH_GET_CHIPEUI, rbuffer, LR1110_LENGTH_GET_CHIPEUI ) == LR1110_SPI_STATUS_OK) {
+  if (lr1110_spi_read( context, cbuffer, LR1110_CMD_LENGTH_GET_CHIPEUI, rbuffer, LR1110_RES_LENGTH_GET_CHIPEUI ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_INFO_VALUE("%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X\r\n", rbuffer[1], rbuffer[2], rbuffer[3], rbuffer[4], rbuffer[5], rbuffer[6], rbuffer[7], rbuffer[8]);
   } else {
     HAL_DBG_TRACE_ERROR("Failed to get LR1110 ChipEUI\r\n");
@@ -84,12 +84,12 @@ void getLR1110_Semtech_JoinEui( const void* context ) {
   HAL_DBG_TRACE_INFO("Getting LR1110 Semtech JoinEUI... ");
 
   uint8_t cbuffer[LR1110_CMD_LENGTH_GET_SEMTECH_JOINEUI];
-  uint8_t rbuffer[LR1110_LENGTH_GET_SEMTECH_JOINEUI] = { 0 };
+  uint8_t rbuffer[LR1110_RES_LENGTH_GET_SEMTECH_JOINEUI] = { 0 };
 
   cbuffer[0] = ( uint8_t )( LR1110_GET_SEMTECH_JOINEUI_CMD >> 8 );
   cbuffer[1] = ( uint8_t )( LR1110_GET_SEMTECH_JOINEUI_CMD >> 0 );
 
-  if (lr1110_spi_read( context, cbuffer, LR1110_CMD_LENGTH_GET_SEMTECH_JOINEUI, rbuffer, LR1110_LENGTH_GET_SEMTECH_JOINEUI ) == LR1110_SPI_STATUS_OK) {
+  if (lr1110_spi_read( context, cbuffer, LR1110_CMD_LENGTH_GET_SEMTECH_JOINEUI, rbuffer, LR1110_RES_LENGTH_GET_SEMTECH_JOINEUI ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_INFO_VALUE("%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X\r\n", rbuffer[1], rbuffer[2], rbuffer[3], rbuffer[4], rbuffer[5], rbuffer[6], rbuffer[7], rbuffer[8]);
   } else {
     HAL_DBG_TRACE_ERROR("Failed to get LR1110 Semtech JoinEUI\r\n");
@@ -100,12 +100,12 @@ float getLR1110_Battery_Voltage( const void* context ) {
   HAL_DBG_TRACE_INFO("Getting LR1110 battery voltage... ");
 
   uint8_t cbuffer[LR1110_CMD_LENGTH_GET_BATTERY_VOLTAGE];
-  uint8_t rbuffer[LR1110_LENGTH_GET_BATTERY_VOLTAGE] = { 0 };
+  uint8_t rbuffer[LR1110_RES_LENGTH_GET_BATTERY_VOLTAGE] = { 0 };
 
   cbuffer[0] = ( uint8_t )( LR1110_GET_BATTERY_VOLTAGE_CMD >> 8 );
   cbuffer[1] = ( uint8_t )( LR1110_GET_BATTERY_VOLTAGE_CMD >> 0 );
 
-  if (lr1110_spi_read( context, cbuffer, LR1110_CMD_LENGTH_GET_BATTERY_VOLTAGE, rbuffer, LR1110_LENGTH_GET_BATTERY_VOLTAGE ) == LR1110_SPI_STATUS_OK) {
+  if (lr1110_spi_read( context, cbuffer, LR1110_CMD_LENGTH_GET_BATTERY_VOLTAGE, rbuffer, LR1110_RES_LENGTH_GET_BATTERY_VOLTAGE ) == LR1110_SPI_STATUS_OK) {
     const float batteryVoltage = (((5 * rbuffer[1])/255.0) - 1) * 1.35;
     HAL_DBG_TRACE_INFO_VALUE("%d.%d V\r\n", (uint8_t)batteryVoltage, (uint8_t)((batteryVoltage - (uint8_t)batteryVoltage) * 100));
     return batteryVoltage;
@@ -207,12 +207,12 @@ void getErrors( const void* context ) {
   HAL_DBG_TRACE_INFO("Getting LR1110 errors...");
 
   uint8_t cbuffer[LR1110_CMD_LENGTH_GET_ERRORS];
-  uint8_t rbuffer[LR1110_LENGTH_GET_ERRORS] = { 0 };
+  uint8_t rbuffer[LR1110_RES_LENGTH_GET_ERRORS] = { 0 };
 
   cbuffer[0] = ( uint8_t )( LR1110_GET_ERRORS_CMD >> 8 );
   cbuffer[1] = ( uint8_t )( LR1110_GET_ERRORS_CMD >> 0 );
 
-  if (lr1110_spi_read( context, cbuffer, LR1110_CMD_LENGTH_GET_ERRORS, rbuffer, LR1110_LENGTH_GET_ERRORS ) == LR1110_SPI_STATUS_OK) {
+  if (lr1110_spi_read( context, cbuffer, LR1110_CMD_LENGTH_GET_ERRORS, rbuffer, LR1110_RES_LENGTH_GET_ERRORS ) == LR1110_SPI_STATUS_OK) {
     #define BIT_0 0b00000001
     #define BIT_1 0b00000010
     #define BIT_8 0b00000100
