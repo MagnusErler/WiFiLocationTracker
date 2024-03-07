@@ -4,6 +4,11 @@
 #include "stm32l4xx_ll_gpio.h"
 #include "stm32l4xx_ll_spi.h"
 
+extern const bool _showStat1CMD;
+extern const bool _showStat2CMD;
+extern const bool _printExtraDataCMD;
+extern const bool _showStat1RES;
+
 /*!
  * @brief Status code of SPI operations
  */

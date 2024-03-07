@@ -15,11 +15,6 @@
 
 #include <string.h>     // for memset
 
-// Comment out the following line to disable debug messages
-const bool _debugStat1 = true;
-const bool _debugStat2 = true;
-const bool _printExtraData = true;
-
 radio_t* radio;
 void* context;
 
@@ -73,8 +68,7 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
         };
         LL_SPI_TransmitData8( spi, cbuffer[i] ); // Transmit data
 
-        // Er det her vi skal tjekke stat1 og stat2?
-        // Vi skal lave en variable der hedder noget med, om vi forventer svar fra kommandoen (formentlig hasResponse)
+        // TODO: Vi skal lave en variable der hedder noget med, om vi forventer svar fra kommandoen (formentlig hasResponse)
 
         turnOffLED(TX_LED_GPIO_Port, TX_LED_Pin); // Turn off TX LED to show that the SPI is done transmitting
         turnOnLED(RX_LED_GPIO_Port, RX_LED_Pin); // Turn on RX LED to show that the SPI is receiving
@@ -93,16 +87,15 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
         turnOffLED(RX_LED_GPIO_Port, RX_LED_Pin); // Turn off RX LED to show that the SPI is done receiving
     }
 
-    if(_debugStat1) {
+    if(_showStat1CMD) {
         printStat1(rbuffer[0]);
     }
-    
 
-    if(_debugStat2) {
+    if(_showStat2CMD) {
         printStat2(rbuffer[1]);
     }
 
-    if(cbuffer_length > 2 && _printExtraData) {
+    if(cbuffer_length > 2 && _printExtraDataCMD) {
         HAL_DBG_TRACE_MSG_COLOR("\r\nExtra debugging data\r\n", HAL_DBG_TRACE_COLOR_YELLOW);
         for (uint16_t i = 2; i < cbuffer_length; i++) {
             HAL_DBG_TRACE_PRINTF("rbuffer[%d] ", i);
@@ -112,136 +105,6 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
 
         printIrq(rbuffer, cbuffer_length);
     }
-    
-    // if (_debug && enableIRQ) {
-    //     #define BIT_0 0b00000001
-    //     #define BIT_1 0b00000010
-    //     #define BIT_8 0b00000100
-    //     #define BIT_12 0b00001000
-    //     #define BIT_16 0b00010000
-    //     #define BIT_20 0b00100000
-    //     #define BIT_24 0b01000000
-    //     #define BIT_28 0b10000000
-
-    //     HAL_DBG_TRACE_PRINTF("\r\n---Irq Status Results---\r\n");
-    //     // HAL_DBG_TRACE_PRINTF("IRQStat(31:24): 0x%X\r\n", rbuffer[2]);
-    //     // HAL_DBG_TRACE_PRINTF("IRQStat(23:16): 0x%X\r\n", rbuffer[3]);
-    //     // HAL_DBG_TRACE_PRINTF("IRQStat(15:8): 0x%X\r\n", rbuffer[4]);
-    //     // HAL_DBG_TRACE_PRINTF("IRQStat(7:0): 0x%X\r\n", rbuffer[5]);
-
-    //     HAL_DBG_TRACE_PRINTF("rbuffer[2] (31:24): ");
-    //     print_binary(rbuffer[2]);
-    //     HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", rbuffer[2]);
-    //     if (rbuffer[2] & BIT_0) {
-    //         HAL_DBG_TRACE_PRINTF("FskLenError (IRQ raised if the packet was received with a length error)\r\n");
-    //     }
-    //     if (rbuffer[2] & BIT_1) {
-    //         HAL_DBG_TRACE_PRINTF("FskAddrError (IRQ raised if the packet was received with an address error)\r\n");
-    //     }
-    //     if (rbuffer[2] & BIT_8) {
-    //         HAL_DBG_TRACE_PRINTF("RFU\r\n");
-    //     }
-    //     if (rbuffer[2] & BIT_12) {
-    //         HAL_DBG_TRACE_PRINTF("LoRaRxTimestamp (Last LoRa symbol received. To be used for time-stamping the received packet. The device is still in RX mode)\r\n");
-    //     }
-    //     if (rbuffer[2] & BIT_16) {
-    //         HAL_DBG_TRACE_PRINTF("RFU\r\n");
-    //     }
-    //     if (rbuffer[2] & BIT_20) {
-    //         HAL_DBG_TRACE_PRINTF("RFU\r\n");
-    //     }
-    //     if (rbuffer[2] & BIT_24) {
-    //         HAL_DBG_TRACE_PRINTF("RFU\r\n");
-    //     }
-    //     if (rbuffer[2] & BIT_28) {
-    //         HAL_DBG_TRACE_PRINTF("RFU\r\n");
-    //     }
-
-    //     HAL_DBG_TRACE_PRINTF("\r\nrbuffer[3] (23:16): ");
-    //     print_binary(rbuffer[3]);
-    //     HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", rbuffer[3]);
-    //     if (rbuffer[3] & BIT_0) {
-    //         HAL_DBG_TRACE_PRINTF("RFU\r\n");
-    //     }
-    //     if (rbuffer[3] & BIT_1) {
-    //         HAL_DBG_TRACE_PRINTF("RFU\r\n");
-    //     }
-    //     if (rbuffer[3] & BIT_8) {
-    //         HAL_DBG_TRACE_PRINTF("RFU\r\n");
-    //     }
-    //     if (rbuffer[3] & BIT_12) {
-    //         HAL_DBG_TRACE_PRINTF("GNSSDone (GNSS Scan finished)\r\n");
-    //     }
-    //     if (rbuffer[3] & BIT_16) {
-    //         HAL_DBG_TRACE_PRINTF("WifiDone (Wi-Fi Scan finished)\r\n");
-    //     }
-    //     if (rbuffer[3] & BIT_20) {
-    //         HAL_DBG_TRACE_PRINTF("LBD (Low Battery Detection)\r\n");
-    //     }
-    //     if (rbuffer[3] & BIT_24) {
-    //         HAL_DBG_TRACE_ERROR("CmdError (Host command error)\r\n");
-    //     }
-    //     if (rbuffer[3] & BIT_28) {
-    //         HAL_DBG_TRACE_ERROR("Error (An error other than a command error occurred (see GetErrors))\r\n");
-    //         //getErrors(context);
-    //     }
-
-    //     HAL_DBG_TRACE_PRINTF("\r\nrbuffer[4] (15:8): ");
-    //     print_binary(rbuffer[4]);
-    //     HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", rbuffer[4]);
-    //     if (rbuffer[4] & BIT_0) {
-    //         HAL_DBG_TRACE_PRINTF("CadDone (LoRa Channel activity detection finished)\r\n");
-    //     }
-    //     if (rbuffer[4] & BIT_1) {
-    //         HAL_DBG_TRACE_PRINTF("CadDetected (LoRa Channel activity detected)\r\n");
-    //     }
-    //     if (rbuffer[4] & BIT_8) {
-    //         HAL_DBG_TRACE_WARNING("Timeout (RX or TX timeout)\r\n");
-    //     }
-    //     if (rbuffer[4] & BIT_12) {
-    //         HAL_DBG_TRACE_PRINTF("LrFhssHop (LR-FHSS intra-packet hopping)\r\n");
-    //     }
-    //     if (rbuffer[4] & BIT_16) {
-    //         HAL_DBG_TRACE_PRINTF("RFU\r\n");
-    //     }
-    //     if (rbuffer[4] & BIT_20) {
-    //         HAL_DBG_TRACE_PRINTF("RFU\r\n");
-    //     }
-    //     if (rbuffer[4] & BIT_24) {
-    //         HAL_DBG_TRACE_PRINTF("RFU\r\n");
-    //     }
-    //     if (rbuffer[4] & BIT_28) {
-    //         HAL_DBG_TRACE_PRINTF("RFU\r\n");
-    //     }
-
-    //     HAL_DBG_TRACE_PRINTF("\r\nrbuffer[5] (7:0): ");
-    //     print_binary(rbuffer[5]);
-    //     HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", rbuffer[5]);
-    //     if (rbuffer[5] & BIT_0) {
-    //         HAL_DBG_TRACE_PRINTF("RFU\r\n");
-    //     }
-    //     if (rbuffer[5] & BIT_1) {
-    //         HAL_DBG_TRACE_PRINTF("RFU\r\n");
-    //     }
-    //     if (rbuffer[5] & BIT_8) {
-    //         HAL_DBG_TRACE_PRINTF("TxDone (Packet transmission completed)\r\n");
-    //     }
-    //     if (rbuffer[5] & BIT_12) {
-    //         HAL_DBG_TRACE_PRINTF("RxDone (Packet received)\r\n");
-    //     }
-    //     if (rbuffer[5] & BIT_16) {
-    //         HAL_DBG_TRACE_PRINTF("PreambleDetected (Preamble detected)\r\n");
-    //     }
-    //     if (rbuffer[5] & BIT_20) {
-    //         HAL_DBG_TRACE_PRINTF("SyncWordValid / HeaderValid (Valid sync word / LoRa header detected)\r\n");
-    //     }
-    //     if (rbuffer[5] & BIT_24) {
-    //         HAL_DBG_TRACE_ERROR("HeaderErr (LoRa header CRC error)\r\n");
-    //     }
-    //     if (rbuffer[5] & BIT_28) {
-    //         HAL_DBG_TRACE_ERROR("Err (Packet received with error. LoRa: Wrong CRC received)\r\n");
-    //     }
-    // }
 
     return LR1110_SPI_STATUS_OK;
 }
@@ -572,7 +435,7 @@ void printIrq(const uint8_t* buffer, const uint16_t buffer_length) {
     }
 
     if (otherErrorDetected) {
-        //checkErrors(); //Implement this function to get the errors
+        getErrors(context);
         otherErrorDetected = false; // Reset the variable
     }
 }
