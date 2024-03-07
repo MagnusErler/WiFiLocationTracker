@@ -21,6 +21,9 @@ void getLR1110_Bootloader_Version( const void* context ) {
   cbuffer[1] = ( uint8_t )( LR1110_GET_VERSION_CMD >> 0 );
   
   if (lr1110_spi_read(context, cbuffer, LR1110_CMD_LENGTH_GET_VERSION, rbuffer, LR1110_RES_LENGTH_GET_VERSION ) == LR1110_SPI_STATUS_OK) {
+    if(_showStat1) {
+      printStat1(rbuffer[0]);
+    }
     HAL_DBG_TRACE_INFO_VALUE("HW: %d (0x%X), ", rbuffer[1], rbuffer[1]);
     HAL_DBG_TRACE_INFO_VALUE("FW: %d.%d (0x%X.0x%X), ", rbuffer[3], rbuffer[4], rbuffer[3], rbuffer[4]);
     switch (rbuffer[2]) {
@@ -49,7 +52,9 @@ float getLR1110_Temperature( const void* context ) {
   cbuffer[1] = ( uint8_t )( LR1110_GET_TEMPERATURE_CMD >> 0 );
 
   if (lr1110_spi_read( context, cbuffer, LR1110_CMD_LENGTH_GET_TEMPERATURE, rbuffer, LR1110_RES_LENGTH_GET_TEMPERATURE ) == LR1110_SPI_STATUS_OK) {
-
+    if(_showStat1) {
+      printStat1(rbuffer[0]);
+    }
     uint16_t temp_10_0 = ((rbuffer[1] << 8) | rbuffer[2]) & 0x7FF;
     const float temperature = 25 + (1000/(-1.7)) * ((temp_10_0/2047.0) * 1.35 - 0.7295);
     
@@ -74,6 +79,9 @@ void getLR1110_ChipEUI( const void* context ) {
   cbuffer[1] = ( uint8_t )( LR1110_GET_CHIPEUI_CMD >> 0 );
 
   if (lr1110_spi_read( context, cbuffer, LR1110_CMD_LENGTH_GET_CHIPEUI, rbuffer, LR1110_RES_LENGTH_GET_CHIPEUI ) == LR1110_SPI_STATUS_OK) {
+    if(_showStat1) {
+      printStat1(rbuffer[0]);
+    }
     HAL_DBG_TRACE_INFO_VALUE("%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X\r\n", rbuffer[1], rbuffer[2], rbuffer[3], rbuffer[4], rbuffer[5], rbuffer[6], rbuffer[7], rbuffer[8]);
   } else {
     HAL_DBG_TRACE_ERROR("Failed to get LR1110 ChipEUI\r\n");
@@ -90,6 +98,9 @@ void getLR1110_Semtech_JoinEui( const void* context ) {
   cbuffer[1] = ( uint8_t )( LR1110_GET_SEMTECH_JOINEUI_CMD >> 0 );
 
   if (lr1110_spi_read( context, cbuffer, LR1110_CMD_LENGTH_GET_SEMTECH_JOINEUI, rbuffer, LR1110_RES_LENGTH_GET_SEMTECH_JOINEUI ) == LR1110_SPI_STATUS_OK) {
+    if(_showStat1) {
+      printStat1(rbuffer[0]);
+    }
     HAL_DBG_TRACE_INFO_VALUE("%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X\r\n", rbuffer[1], rbuffer[2], rbuffer[3], rbuffer[4], rbuffer[5], rbuffer[6], rbuffer[7], rbuffer[8]);
   } else {
     HAL_DBG_TRACE_ERROR("Failed to get LR1110 Semtech JoinEUI\r\n");
@@ -106,6 +117,9 @@ float getLR1110_Battery_Voltage( const void* context ) {
   cbuffer[1] = ( uint8_t )( LR1110_GET_BATTERY_VOLTAGE_CMD >> 0 );
 
   if (lr1110_spi_read( context, cbuffer, LR1110_CMD_LENGTH_GET_BATTERY_VOLTAGE, rbuffer, LR1110_RES_LENGTH_GET_BATTERY_VOLTAGE ) == LR1110_SPI_STATUS_OK) {
+    if(_showStat1) {
+      printStat1(rbuffer[0]);
+    }
     const float batteryVoltage = (((5 * rbuffer[1])/255.0) - 1) * 1.35;
     HAL_DBG_TRACE_INFO_VALUE("%d.%d V\r\n", (uint8_t)batteryVoltage, (uint8_t)((batteryVoltage - (uint8_t)batteryVoltage) * 100));
     return batteryVoltage;
