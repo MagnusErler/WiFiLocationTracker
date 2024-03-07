@@ -27,13 +27,14 @@
 #include <stdarg.h> // used for va_list, va_start, va_end functions
 #include <stdio.h>  // used for vsprintf function
 
+#include "accelerometer.h"
+#include "gnss.h"
 #include "helper.h"
-#include "lr1110.h"
 #include "led.h"
+#include "lora.h"
+#include "lr1110.h"
 //#include "spi.h"
 #include "wifi.h"
-#include "gnss.h"
-#include "lora.h"
 
 
 /* USER CODE END Includes */
@@ -165,7 +166,7 @@ int main(void)
   getLR1110_Battery_Voltage(lr1110_context);
 
 
-  setLR1110_GNSS_Constellation(lr1110_context, 0b11);
+  // setLR1110_GNSS_Constellation(lr1110_context, 0b11);
 
   // setLR1110_Dio_Irq_Params(lr1110_context, set_bit_x_to_1(2), set_bit_x_to_1(6));
 
@@ -178,13 +179,20 @@ int main(void)
   // setLR1110_LoRa_Public_Network(lr1110_context, 0x01);
   //getLR1110_LoRa_Packet_Status(lr1110_context);
 
-  getLR1110_GNSS_Version(lr1110_context);
+  // getLR1110_GNSS_Version(lr1110_context);
+
+
+  //init_accelerometer(hi2c1);
+  uint8_t who_am_i;
+  HAL_I2C_Mem_Read(&hi2c1, 0x31U, 0x0FU, I2C_MEMADD_SIZE_8BIT, &who_am_i, 1, HAL_MAX_DELAY);
+
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1) {
+
 
 
     // writeLR1110_Buffer8(lr1110_context, 0x02);
@@ -203,8 +211,8 @@ int main(void)
     //   getWiFiFullResults( lr1110_context, i, 1 );
     // }
 
-    getStatus(lr1110_context);
-    getErrors(lr1110_context);
+    // getStatus(lr1110_context);
+    // getErrors(lr1110_context);
 
     // GNSS
     // scanLR1110_GNSS_Satellites(lr1110_context, 0, 0, 0);
@@ -220,7 +228,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
     HAL_DBG_TRACE_MSG_COLOR("\r\nWaiting for next while loop...\r\n", "\x1B[0;34m");
-    HAL_Delay(10000);
+    HAL_Delay(5000);
   }
   /* USER CODE END 3 */
 }
