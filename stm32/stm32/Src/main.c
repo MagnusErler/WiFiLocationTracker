@@ -129,10 +129,12 @@ int main(void)
   resetLR1110(lr1110_context, 0);
   blinkLED(GPIOC, RX_LED_Pin|TX_LED_Pin, 100, 5, true);
 
+  getStatus(lr1110_context);
+
   // clearLR1110_RX_Buffer(lr1110_context);
   // clearLR1110_RX_Buffer(lr1110_context);
 
-  //setLR1110_Standby_Mode(lr1110_context, 0x01);
+  // setLR1110_Standby_Mode(lr1110_context, 0x01);
 
   // calibrateLR1110_Image( lr1110_context, 0xD7, 0xDB );
   // calibrateLR1110( lr1110_context, 0x00);
@@ -153,7 +155,7 @@ int main(void)
 
   
 
-  getLR1110_Bootloader_Version(lr1110_context);
+  // getLR1110_Bootloader_Version(lr1110_context);
   // getLR1110_WiFi_Version(lr1110_context);
   // getLR1110_ChipEUI(lr1110_context);
   // getLR1110_Semtech_JoinEui(lr1110_context);
