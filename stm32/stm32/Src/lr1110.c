@@ -239,6 +239,7 @@ void getErrors( const void* context ) {
     HAL_DBG_TRACE_MSG_COLOR("\r\nError Status\r\n", HAL_DBG_TRACE_COLOR_YELLOW);
 
     // Print binary representation of error status
+    // TODO: Make a function for this and put it into helpers
     HAL_DBG_TRACE_PRINTF("Error Status: ");
     for (int i = 15; i >= 0; --i) {
         HAL_DBG_TRACE_PRINTF("%d", (error_status >> i) & 0x01);

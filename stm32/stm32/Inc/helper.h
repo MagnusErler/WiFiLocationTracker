@@ -10,3 +10,5 @@
 uint64_t set_bit_x_to_1(uint8_t position);
 
 void print_binary(uint32_t num);
+
+void print_bits(unsigned int error_status, int length);

@@ -13,3 +13,20 @@ void print_binary(uint32_t num) {
     }
     HAL_DBG_TRACE_PRINTF(" ");
 }
+
+// Function to print the binary representation of an error status
+// Inputs:
+//   error_status: The error status to be printed in binary
+//   length: The length of the bit sequence to be printed
+void print_bits(unsigned int error_status, int length) {
+    // Iterate through each bit of the error status starting from the most significant bit
+    for (int i = length - 1; i >= 0; --i) {
+        // Print the current bit by shifting and masking
+        printf("%d", (error_status >> i) & 0x01);
+        
+        // Insert a space after every 4 bits for better readability, except for the last group of bits
+        if ((length - i) % 4 == 0 && i != 0) {
+            printf(" ");
+        }
+    }
+}
