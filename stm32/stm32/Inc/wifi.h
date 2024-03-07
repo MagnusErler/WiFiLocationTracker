@@ -16,11 +16,11 @@
 #define LR1110_WIFI_LENGTH_GET_RESULTS                  LR1110_WIFI_LENGTH_NO_PARAM             // Variable length
 
 // LR1110 WIFI COMMANDS
+#define LR1110_WIFI_CMD_SCAN_WIFI_NETWORKS              0x0300
 #define LR1110_WIFI_CMD_GET_COUNTRY_CODE                0x0302
 #define LR1110_WIFI_CMD_GET_FIRMWARE_WIFI_VERSION       0x0320
 #define LR1110_WIFI_CMD_GET_NUMBER_OF_RESULTS           0x0305
 #define LR1110_WIFI_CMD_GET_RESULTS                     0x0306
-#define LR1110_WIFI_CMD_SCAN_WIFI_NETWORKS              0x0300
 
 /*!
  * @brief Type to store a WiFi datarate info byte

@@ -228,6 +228,8 @@ void getErrors( const void* context ) {
     // HAL_DBG_TRACE_PRINTF("rbuffer[1]: ");
     // print_binary(rbuffer[2]);
 
+    HAL_DBG_TRACE_PRINTF("rbuffer[2]: ");
+    print_binary(rbuffer[2]);
     HAL_DBG_TRACE_PRINTF("\r\n");
     if (rbuffer[2] & BIT_0) {
         HAL_DBG_TRACE_PRINTF("LF_RC_CALIB_ERR. Calibration of low frequency RC was not done. To fix it redo a calibration.\r\n");
@@ -254,6 +256,9 @@ void getErrors( const void* context ) {
         HAL_DBG_TRACE_PRINTF("PLL_LOCK_ERR. The PLL did not lock. This can come from too high or too low frequency configuration, or if the PLL was not calibrated. To fix it redo a PLL calibration, or use other frequencies.\r\n");
     }
 
+    HAL_DBG_TRACE_PRINTF("rbuffer[1]: ");
+    print_binary(rbuffer[1]);
+    HAL_DBG_TRACE_PRINTF("\r\n");
     if (rbuffer[1] & BIT_0) {
         HAL_DBG_TRACE_PRINTF("RX_ADC_OFFSET_ERR. Calibration of ADC offset was not done. To fix it redo a calibration.\r\n");
     }
