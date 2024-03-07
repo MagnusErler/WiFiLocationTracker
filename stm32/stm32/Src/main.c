@@ -134,13 +134,16 @@ int main(void)
 
   // setLR1110_Standby_Mode(lr1110_context, 0x01);
 
-  // calibrateLR1110_Image( lr1110_context, 0xD7, 0xDB );
-  // calibrateLR1110( lr1110_context, 0x00);
-  // calibrateLR1110( lr1110_context, 0x01);
-  // calibrateLR1110( lr1110_context, 0x02);
-  // calibrateLR1110( lr1110_context, 0x03);
-  // calibrateLR1110( lr1110_context, 0x04);
-  // calibrateLR1110( lr1110_context, 0x05);
+  calibrateLR1110_Image( lr1110_context, 0xD7, 0xDB );
+  calibrateLR1110( lr1110_context, 0b000001);
+  calibrateLR1110( lr1110_context, 0b000010);
+  calibrateLR1110( lr1110_context, 0b000100);
+  calibrateLR1110( lr1110_context, 0b001000);
+  calibrateLR1110( lr1110_context, 0b010000);
+  calibrateLR1110( lr1110_context, 0b100000);
+
+  getStatus(lr1110_context);
+  getErrors(lr1110_context);
 
   
   // clearLR1110_Errors(lr1110_context);

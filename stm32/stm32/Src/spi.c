@@ -16,8 +16,8 @@
 #include <string.h>     // for memset
 
 // Comment out the following line to disable debug messages
-const bool _debug = false;
-//#define DEBUG
+const bool _debug = true;
+#define DEBUG
 
 radio_t* radio;
 void* context;
