@@ -8,7 +8,7 @@ Tested on a ESP32 developer board to retrieve MAC-addresses of nearby WiFi acces
 
 ###### Python
 
-Able to run in a Python environment and approximate the location of the device. It uses a `GOOGLE_API_KEY` (described in **Setup**).
+Able to run in a Python environment and approximate the location of the device. It uses a `GOOGLE_API_KEY` (described in [Setup](#setup)).
 
 ###### STM32
 
