@@ -45,7 +45,7 @@ uint8_t getLR1110_GNSS_Number_of_Detected_Satellites( const void* context );
  * @param [in] context Radio abstraction
  * @param [in] nb_of_satellites Number of detected satellites
  */
-void getLR1110_GNSS_Detected_Satellites( const void* context, uint8_t nb_of_satellites );
+void getLR1110_GNSS_Detected_Satellites( const void* context, const uint8_t nb_of_satellites );
 
 /*!
  * @brief Scan for GNSS satellites
@@ -55,7 +55,7 @@ void getLR1110_GNSS_Detected_Satellites( const void* context, uint8_t nb_of_sate
  * @param [in] result_mask Bit mask to select which results to include in the response
  * @param [in] nb_sv_max Maximum number of satellites to search for
  */
-void scanLR1110_GNSS_Satellites( const void* context, uint8_t effort_mode, uint8_t result_mask, uint8_t nb_sv_max );
+void scanLR1110_GNSS_Satellites( const void* context, const uint8_t effort_mode, const uint8_t result_mask, const uint8_t nb_sv_max );
 
 /*!
  * @brief Get LR1110 GNSS version
@@ -84,4 +84,4 @@ void getLR1110_GNSS_Consumption( const void* context);
  * @param [in] context Radio abstraction
  * @param [in] constellation GNSS constellation to be used
  */
-void setLR1110_GNSS_Constellation( const void* context, uint8_t constellation );
+void setLR1110_GNSS_Constellation( const void* context, const uint8_t constellation );

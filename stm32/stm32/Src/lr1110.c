@@ -222,12 +222,6 @@ void getErrors( const void* context ) {
     #define BIT_24 0b01000000
     #define BIT_28 0b10000000
 
-    // HAL_DBG_TRACE_PRINTF("get errors: ");
-    // HAL_DBG_TRACE_PRINTF("rbuffer[1]: ");
-    // print_binary(rbuffer[1]);
-    // HAL_DBG_TRACE_PRINTF("rbuffer[1]: ");
-    // print_binary(rbuffer[2]);
-
     HAL_DBG_TRACE_PRINTF("rbuffer[2]: ");
     print_binary(rbuffer[2]);
     HAL_DBG_TRACE_PRINTF("\r\n");
@@ -288,7 +282,7 @@ void getErrors( const void* context ) {
   }
 }
 
-void resetLR1110( const void* context, uint8_t reset_type) {
+void resetLR1110( const void* context, const uint8_t reset_type) {
   HAL_DBG_TRACE_INFO("Resetting LR1110... ");
   
   
@@ -315,14 +309,14 @@ void resetLR1110( const void* context, uint8_t reset_type) {
   HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
 }
 
-void setLR1110_Dio_Irq_Params( const void* context, uint64_t irq1_to_enable, uint64_t irq2_to_enable) {
+void setLR1110_Dio_Irq_Params( const void* context, const uint64_t irq1_to_enable, const uint64_t irq2_to_enable) {
   HAL_DBG_TRACE_INFO("Setting LR1110 DIO IRQ parameters... ");
 
   uint8_t cbuffer[LR1110_CMD_LENGTH_SET_DIO_IRQ_PARAMS];
 
   cbuffer[0] = ( uint8_t )( LR1110_SET_DIO_IRQ_PARAMS_CMD >> 8 );
   cbuffer[1] = ( uint8_t )( LR1110_SET_DIO_IRQ_PARAMS_CMD >> 0 );
-  // Bit 20 is set to 1
+
   cbuffer[2] = ( uint8_t )( irq1_to_enable >> 24 );
   cbuffer[3] = ( uint8_t )( irq1_to_enable >> 16 );
   cbuffer[4] = ( uint8_t )( irq1_to_enable >> 8 );
@@ -340,7 +334,7 @@ void setLR1110_Dio_Irq_Params( const void* context, uint64_t irq1_to_enable, uin
   }
 }
 
-void setLR1110_Standby_Mode( const void* context, uint8_t stdby_config) {
+void setLR1110_Standby_Mode( const void* context, const uint8_t stdby_config) {
   HAL_DBG_TRACE_INFO("Setting LR1110 standby mode... ");
 
   uint8_t cbuffer[LR1110_CMD_LENGTH_SET_STANDBY_MODE];

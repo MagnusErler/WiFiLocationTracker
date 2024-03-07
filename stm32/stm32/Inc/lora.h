@@ -32,7 +32,7 @@
  * @param [in] context Radio abstraction
  * @param [in] packet_type LoRa packet type
  */
-void setLR1110_LoRa_Packet_Type( const void* context, uint8_t packet_type  );
+void setLR1110_LoRa_Packet_Type( const void* context, const uint8_t packet_type  );
 
 /*!
  * @brief Get the LoRa packet type
@@ -52,7 +52,7 @@ uint8_t getLR1110_LoRa_Packet_Type( const void* context );
  * @param [in] cr Coding rate
  * @param [in] low_data_rate_ptimize Low data rate optimize
  */
-void setLR1110_LoRa_Modulation_Params( const void* context, uint8_t sf, uint8_t bwl, uint8_t cr, uint8_t low_data_rate_ptimize);
+void setLR1110_LoRa_Modulation_Params( const void* context, const uint8_t sf, const uint8_t bwl, const uint8_t cr, const uint8_t low_data_rate_ptimize);
 
 /*!
  * @brief Set the LoRa packet parameters
@@ -64,7 +64,7 @@ void setLR1110_LoRa_Modulation_Params( const void* context, uint8_t sf, uint8_t 
  * @param [in] crc CRC
  * @param [in] invert_iq Invert IQ
  */
-void setLR1110_LoRa_Packet_Params( const void* context, uint8_t pb_lenght_tx1, uint8_t pb_lenght_tx2, uint8_t header_type, uint8_t payload_len, uint8_t crc, uint8_t invert_iq);
+void setLR1110_LoRa_Packet_Params( const void* context, const uint8_t pb_lenght_tx1, const uint8_t pb_lenght_tx2, const uint8_t header_type, const uint8_t payload_len, const uint8_t crc, const uint8_t invert_iq);
 
 /*!
  * @brief Set the LoRa PA configuration
@@ -75,7 +75,7 @@ void setLR1110_LoRa_Packet_Params( const void* context, uint8_t pb_lenght_tx1, u
  * @param [in] pa_duty_cycle PA duty cycle
  * @param [in] pa_hp_sel PA HP selection
  */
-void setLR1110_LoRa_PA_Config( const void* context, uint8_t pa_sel, uint8_t reg_pa_supply, uint8_t pa_duty_cycle, uint8_t pa_hp_sel);
+void setLR1110_LoRa_PA_Config( const void* context, const uint8_t pa_sel, const uint8_t reg_pa_supply, const uint8_t pa_duty_cycle, const uint8_t pa_hp_sel);
 
 /*!
  * @brief Set the LoRa TX parameters
@@ -84,7 +84,7 @@ void setLR1110_LoRa_PA_Config( const void* context, uint8_t pa_sel, uint8_t reg_
  * @param [in] tx_power TX power
  * @param [in] ramp_time Ramp time
  */
-void setLR1110_LoRa_TX_Params( const void* context, uint8_t tx_power, uint8_t ramp_time);
+void setLR1110_LoRa_TX_Params( const void* context, const uint8_t tx_power, const uint8_t ramp_time);
 
 /*!
  * @brief Set the LoRa public network
@@ -92,7 +92,7 @@ void setLR1110_LoRa_TX_Params( const void* context, uint8_t tx_power, uint8_t ra
  * @param [in] context Radio abstraction
  * @param [in] public_network Public network
  */
-void setLR1110_LoRa_Public_Network( const void* context, uint8_t public_network);
+void setLR1110_LoRa_Public_Network( const void* context, const uint8_t public_network);
 
 /*!
  * @brief Get the LoRa packet status
@@ -108,7 +108,7 @@ void getLR1110_LoRa_Packet_Status( const void* context);
  * @param [in] context Radio implementation parameters
  * @param [in] data    Data to be written
  */
-void writeLR1110_Buffer8( const void* context, uint8_t data);
+void writeLR1110_Buffer8( const void* context, const uint8_t data);
 
 /*!
  * @brief Set the LoRa TX
@@ -116,4 +116,4 @@ void writeLR1110_Buffer8( const void* context, uint8_t data);
  * @param [in] context Radio abstraction
  * @param [in] timeout Timeout
  */
-void setLR1110_TX( const void* context, uint8_t timeout);
+void setLR1110_TX( const void* context, const uint8_t timeout);

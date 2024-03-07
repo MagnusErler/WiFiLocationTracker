@@ -29,7 +29,7 @@ uint8_t getLR1110_GNSS_Number_of_Detected_Satellites( const void* context) {
     }
 }
 
-void getLR1110_GNSS_Detected_Satellites( const void* context, uint8_t nb_of_satellites) {
+void getLR1110_GNSS_Detected_Satellites( const void* context, const uint8_t nb_of_satellites) {
     HAL_DBG_TRACE_INFO("Getting GNSS satellites detected... \r\n");
 
     uint8_t cbuffer[LR1110_GNSS_CMD_LENGTH_GET_SATELLITES_DETECTED];
@@ -47,7 +47,7 @@ void getLR1110_GNSS_Detected_Satellites( const void* context, uint8_t nb_of_sate
     }
 }
 
-void scanLR1110_GNSS_Satellites( const void* context, uint8_t effort_mode, uint8_t result_mask, uint8_t nb_sv_max ) {
+void scanLR1110_GNSS_Satellites( const void* context, const uint8_t effort_mode, const uint8_t result_mask, const uint8_t nb_sv_max ) {
     HAL_DBG_TRACE_INFO("Scanning GNSS satellites... ");
 
     HAL_GPIO_WritePin(LNA_CTRL_GPIO_Port, LNA_CTRL_Pin, GPIO_PIN_SET);
@@ -141,7 +141,7 @@ void getLR1110_GNSS_Consumption( const void* context ) {
 //     }
 // }
 
-void setLR1110_GNSS_Constellation( const void* context, uint8_t constellation ) {
+void setLR1110_GNSS_Constellation( const void* context, const uint8_t constellation ) {
     HAL_DBG_TRACE_INFO("Setting GNSS constellation... ");
 
     uint8_t cbuffer[LR1110_GNSS_CMD_LENGTH_SET_CONSTELLATION];
