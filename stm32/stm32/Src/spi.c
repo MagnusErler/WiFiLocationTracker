@@ -18,7 +18,7 @@
 // VARIABLES FOR DEBUGGING
 const bool _showStat1 = true; // Print out stat1 when sending commands   _debugStat1
 const bool _showStat2 = true; // Print out stat2 when sending commands
-const bool _printExtraData = true; // Print out extra data (if any) when sending commands
+const bool _printIRQ = true; // Print out extra data (if any) when sending commands
 
 radio_t* radio;
 void* context;
@@ -47,7 +47,7 @@ lr1110_spi_status_t _waitForBusyState( GPIO_PinState state, uint32_t timeout_ms 
     return LR1110_SPI_STATUS_OK;
 }
 
-lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer, const uint16_t cbuffer_length, const uint32_t timeout_ms, const bool get_status, const bool enableStat2, const bool enableIRQ ) {
+lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer, const uint16_t cbuffer_length, const uint32_t timeout_ms ) {
 
     uint8_t rbuffer[cbuffer_length]; // rbuffer always has the same length as cbuffer
     memset(rbuffer, 0x00, cbuffer_length); // Initialize rbuffer with 0x00
@@ -94,11 +94,11 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
 
     printStat1(rbuffer[0]);
 
-    if(_showStat2 && cbuffer_length > 1) {
+    if(_showStat2 && cbuffer_length > 1 || (cbuffer[0] == 0x01 && cbuffer[1] == 0x00)) { // Print stat2 if debugging is enabled or getStatus cmd has been called (opcode 0x0100)
         printStat2(rbuffer[1]);
     }
 
-    if(cbuffer_length > 2 && _printExtraData) {
+    if(cbuffer_length > 2 && _printIRQ || (cbuffer[0] == 0x01 && cbuffer[1] == 0x00)) { // Print IRQ if debugging is enabled or getStatus cmd has been called (opcode 0x0100)
         HAL_DBG_TRACE_MSG_COLOR("\r\nExtra debugging data\r\n", HAL_DBG_TRACE_COLOR_YELLOW);
         for (uint16_t i = 2; i < cbuffer_length; i++) {
             HAL_DBG_TRACE_PRINTF("rbuffer[%d] ", i);
@@ -165,7 +165,7 @@ lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer
 
     // Start of 1st SPI transaction
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_RESET );
-    if (_lr1110_spi_write( radio->spi, cbuffer, cbuffer_length, 1000, false, true, false ) != LR1110_SPI_STATUS_OK) {
+    if (_lr1110_spi_write( radio->spi, cbuffer, cbuffer_length, 1000 ) != LR1110_SPI_STATUS_OK) {
         HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
         return LR1110_SPI_STATUS_ERROR;
     }
@@ -178,7 +178,7 @@ lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer
 
     // Start of 2nd SPI transaction
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_RESET );
-    if (_lr1110_spi_write( radio->spi, 0x00, 1, 1000, false, false, false ) != LR1110_SPI_STATUS_OK) {
+    if (_lr1110_spi_write( radio->spi, 0x00, 1, 1000 ) != LR1110_SPI_STATUS_OK) {
         HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
         return LR1110_SPI_STATUS_ERROR;
     }
@@ -196,7 +196,7 @@ lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer
     return LR1110_SPI_STATUS_OK;
 }
 
-lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffer, const uint16_t cbuffer_length, const bool get_status ) {
+lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffer, const uint16_t cbuffer_length ) {
 
     // Wait for BUSY to become LOW -> LR1110 is ready for a new command
     if (_waitForBusyState( GPIO_PIN_RESET, 2000 ) != LR1110_SPI_STATUS_OK) {
@@ -207,7 +207,7 @@ lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffe
 
     // Start of SPI transaction
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_RESET );
-    if (_lr1110_spi_write( radio->spi, cbuffer, cbuffer_length, 1000, get_status, false, false ) != LR1110_SPI_STATUS_OK) {
+    if (_lr1110_spi_write( radio->spi, cbuffer, cbuffer_length, 1000 ) != LR1110_SPI_STATUS_OK) {
         HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
         return LR1110_SPI_STATUS_ERROR;
     }

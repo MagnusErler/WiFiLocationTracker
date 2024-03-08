@@ -65,7 +65,7 @@ void scanLR1110_GNSS_Satellites( const void* context, uint8_t effort_mode, uint8
     cbuffer[7] = ( uint8_t )( result_mask >> 0 );
     cbuffer[8] = ( uint8_t )( nb_sv_max >> 0 );
 
-    if (lr1110_spi_write( context, cbuffer, LR1110_GNSS_CMD_LENGTH_SCAN_GNSS_AUTONOMOUS, false ) == LR1110_SPI_STATUS_OK) {
+    if (lr1110_spi_write( context, cbuffer, LR1110_GNSS_CMD_LENGTH_SCAN_GNSS_AUTONOMOUS ) == LR1110_SPI_STATUS_OK) {
         //HAL_Delay( 5000 );
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
     } else {
@@ -150,7 +150,7 @@ void setLR1110_GNSS_Constellation( const void* context, uint8_t constellation ) 
     cbuffer[1] = ( uint8_t )( LR1110_GNSS_CMD_SET_CONSTELLATION >> 0 );
     cbuffer[2] = ( uint8_t )( constellation >> 0 );
 
-    if (lr1110_spi_write( context, cbuffer, LR1110_GNSS_CMD_LENGTH_SET_CONSTELLATION, false ) == LR1110_SPI_STATUS_OK) {
+    if (lr1110_spi_write( context, cbuffer, LR1110_GNSS_CMD_LENGTH_SET_CONSTELLATION ) == LR1110_SPI_STATUS_OK) {
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
     } else {
         HAL_DBG_TRACE_ERROR("Failed to set GNSS constellation\r\n");

@@ -168,7 +168,7 @@ void scanLR1110_WiFi_Country_Code( const void* context, const lr11xx_wifi_channe
     cbuffer[8] = ( uint8_t ) ( ( abort_on_timeout == true ) ? 1 : 0 );
 
     turnOnLED(SNIFFING_LED_GPIO_Port, SNIFFING_LED_Pin);
-    if ( lr1110_spi_write( context, cbuffer, LR1110_WIFI_CMD_LENGTH_GET_COUNTRY_CODE, false ) == LR1110_SPI_STATUS_OK ) {
+    if ( lr1110_spi_write( context, cbuffer, LR1110_WIFI_CMD_LENGTH_GET_COUNTRY_CODE ) == LR1110_SPI_STATUS_OK ) {
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
         turnOffLED(SNIFFING_LED_GPIO_Port, SNIFFING_LED_Pin);
     } else {
@@ -195,7 +195,7 @@ void scanLR1110_WiFi_Networks( const void* context, const uint8_t signal_type, c
     cbuffer[10] = ( uint8_t ) ( ( abort_on_timeout == true ) ? 1 : 0 );
 
     turnOnLED(SNIFFING_LED_GPIO_Port, SNIFFING_LED_Pin);
-    if ( lr1110_spi_write( context, cbuffer, LR1110_WIFI_CMD_LENGTH_SCAN_WIFI, false ) == LR1110_SPI_STATUS_OK ) {
+    if ( lr1110_spi_write( context, cbuffer, LR1110_WIFI_CMD_LENGTH_SCAN_WIFI ) == LR1110_SPI_STATUS_OK ) {
         HAL_Delay( 100 + timeout ); // wait for the scan to complete
 
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
