@@ -155,6 +155,7 @@ int main(void)
   // clearLR1110_Errors(lr1110_context);
 
   // getErrors(lr1110_context);
+  // getStatus(lr1110_context);
 
   
 
@@ -207,6 +208,8 @@ int main(void)
     //   }
     // }
 
+    acc_get_temperature();
+
 
 
     // writeLR1110_Buffer8(lr1110_context, 0x02);
@@ -242,7 +245,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
     HAL_DBG_TRACE_MSG_COLOR("\r\nWaiting for next while loop...\r\n", "\x1B[0;34m");
-    HAL_Delay(5000);
+    HAL_Delay(2000);
   }
   /* USER CODE END 3 */
 }

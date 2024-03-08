@@ -130,9 +130,23 @@ typedef struct {
   uint8_t not_used_01       : 1;
 } lis2de12_int1_duration_t;
 
+#define LIS2DE12_STATUS_REG_AUX        0x07U
+typedef struct {
+  uint8_t not_used_01       : 2;
+  uint8_t tda               : 1;
+  uint8_t not_used_02       : 3;
+  uint8_t tor               : 1;
+  uint8_t not_used_03       : 1;
+} lis2de12_status_reg_aux_t;
+
 #define LIS2DE12_CTRL_REG1             0x20U
 
 #define PROPERTY_ENABLE                 (1U)
 
+#define LIS2DE12_OUT_TEMP_L            0x0CU
+#define LIS2DE12_OUT_TEMP_H            0x0DU
+#define LIS2DE12_WHO_AM_I              0x0FU
 
 void init_accelerometer(I2C_HandleTypeDef hi2c1);
+
+int16_t acc_get_temperature( void );

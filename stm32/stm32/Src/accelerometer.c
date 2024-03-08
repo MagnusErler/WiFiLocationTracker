@@ -92,7 +92,7 @@ int32_t lis2de12_write_reg( uint8_t reg, uint8_t* data, uint16_t len ) {
 }
 
 int32_t lis2de12_data_rate_set( lis2de12_odr_t val ) {
-    HAL_DBG_TRACE_INFO("Setting data rate...");
+    HAL_DBG_TRACE_INFO("Setting accelerometer data rate...");
     lis2de12_ctrl_reg1_t ctrl_reg1;
 
     if( lis2de12_read_reg( LIS2DE12_CTRL_REG1, ( uint8_t* ) &ctrl_reg1, 1 ) == 0 ) {
@@ -102,7 +102,7 @@ int32_t lis2de12_data_rate_set( lis2de12_odr_t val ) {
             HAL_DBG_TRACE_INFO_VALUE("DONE\r\n");
             return 0;
         } else {
-            HAL_DBG_TRACE_ERROR("Failed to set data rate\r\n");
+            HAL_DBG_TRACE_ERROR("Failed to set accelerometer data rate\r\n");
             return -1;
         }
     } else {
@@ -332,4 +332,60 @@ void init_accelerometer(I2C_HandleTypeDef hi2c1) {
     lis2de12_int1_gen_threshold_set( 4 );
 
     lis2de12_int1_gen_duration_set( 3 );
+}
+
+int32_t lis2de12_temp_data_ready_get( uint8_t* val ) {
+    HAL_DBG_TRACE_INFO("Checking if temperature data is ready... ");
+
+    lis2de12_status_reg_aux_t status_reg_aux;
+
+    if ( lis2de12_read_reg( LIS2DE12_STATUS_REG_AUX, ( uint8_t* ) &status_reg_aux, 1 ) != 0 ) {
+        HAL_DBG_TRACE_ERROR("Failed to check if temperature data is ready\r\n");
+        return -1;
+    }
+    *val = status_reg_aux.tda;
+    if ( *val == 1 ) {
+        HAL_DBG_TRACE_WARNING("NOT READY\r\n");
+        return -1;
+    } else {
+        HAL_DBG_TRACE_INFO_VALUE("READY\r\n");
+        return 0;
+    }
+}
+
+int32_t lis2de12_temperature_raw_get( uint16_t* raw_temp ) {
+    HAL_DBG_TRACE_INFO("Getting raw temperature...");
+
+    uint8_t buf_tmp;
+    if( lis2de12_read_reg( LIS2DE12_OUT_TEMP_L, &buf_tmp, 1 ) != 0 ) {
+        HAL_DBG_TRACE_ERROR("Failed to get raw temperature\r\n");
+        return -1;
+    }
+    *raw_temp = buf_tmp;
+
+    HAL_DBG_TRACE_INFO_VALUE("%d\r\n", *raw_temp);
+
+    if( lis2de12_read_reg( LIS2DE12_OUT_TEMP_H, &buf_tmp, 1 ) != 0 ) {
+        HAL_DBG_TRACE_ERROR("Failed to get raw temperature\r\n");
+        return -1;
+    }
+    *raw_temp += buf_tmp << 8;
+
+    HAL_DBG_TRACE_INFO_VALUE("%d\r\n", *raw_temp);
+
+    return 0;
+}
+
+int16_t acc_get_temperature( void ) {
+    uint16_t temperature;
+    uint8_t  is_ready = 0;
+
+    lis2de12_temp_data_ready_get( &is_ready );
+
+    if (is_ready == 0) {
+        lis2de12_temperature_raw_get( &temperature );
+    }
+
+    /* Build the raw tmp */
+    return ( int16_t ) temperature;
 }
