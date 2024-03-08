@@ -129,12 +129,14 @@ int main(void)
   resetLR1110(lr1110_context, 0);
   blinkLED(GPIOC, RX_LED_Pin|TX_LED_Pin, 100, 5);
 
+  getStatus(lr1110_context);
+
   // clearLR1110_RX_Buffer(lr1110_context);
   // clearLR1110_RX_Buffer(lr1110_context);
 
-  //setLR1110_Standby_Mode(lr1110_context, 0x01);
+  // setLR1110_Standby_Mode(lr1110_context, 0x01);
 
-  //calibrateLR1110_Image( lr1110_context, 0xD7, 0xDB );
+  // calibrateLR1110_Image( lr1110_context, 0xD7, 0xDB );
   // calibrateLR1110( lr1110_context, 0x00);
   // calibrateLR1110( lr1110_context, 0x01);
   // calibrateLR1110( lr1110_context, 0x02);
@@ -142,7 +144,7 @@ int main(void)
   // calibrateLR1110( lr1110_context, 0x04);
   // calibrateLR1110( lr1110_context, 0x05);
 
-  setLR1110_TCXO_Mode(lr1110_context);
+  // setLR1110_TCXO_Mode(lr1110_context);
 
   
 
@@ -153,15 +155,15 @@ int main(void)
 
   
 
-  getLR1110_Bootloader_Version(lr1110_context);
-  getLR1110_WiFi_Version(lr1110_context);
-  getLR1110_ChipEUI(lr1110_context);
-  getLR1110_Semtech_JoinEui(lr1110_context);
-  getLR1110_Temperature(lr1110_context);
-  getLR1110_Battery_Voltage(lr1110_context);
+  // getLR1110_Bootloader_Version(lr1110_context);
+  // getLR1110_WiFi_Version(lr1110_context);
+  // getLR1110_ChipEUI(lr1110_context);
+  // getLR1110_Semtech_JoinEui(lr1110_context);
+  // getLR1110_Temperature(lr1110_context);
+  // getLR1110_Battery_Voltage(lr1110_context);
 
 
-  setLR1110_GNSS_Constellation(lr1110_context, 0b11);
+  // setLR1110_GNSS_Constellation(lr1110_context, 0b11);
 
   // setLR1110_Dio_Irq_Params(lr1110_context, set_bit_x_to_1(2), set_bit_x_to_1(6));
 
@@ -172,9 +174,9 @@ int main(void)
   // setLR1110_LoRa_PA_Config(lr1110_context, 0x00, 0x00, 0x04, 0x00);                 // DONT KNOW WHAT TO PUT HERE
   // setLR1110_LoRa_TX_Params(lr1110_context, 0x0E, 0x02);                             // DONT KNOW WHAT TO PUT HERE
   // setLR1110_LoRa_Public_Network(lr1110_context, 0x01);
-  //getLR1110_LoRa_Packet_Status(lr1110_context);
+  // getLR1110_LoRa_Packet_Status(lr1110_context);
 
-  getLR1110_GNSS_Version(lr1110_context);
+  // getLR1110_GNSS_Version(lr1110_context);
 
   /* USER CODE END 2 */
 
@@ -199,8 +201,8 @@ int main(void)
     //   getWiFiFullResults( lr1110_context, i, 1 );
     // }
 
-    getStatus(lr1110_context);
-    getErrors(lr1110_context);
+    // getStatus(lr1110_context);
+    // getErrors(lr1110_context);
 
     // GNSS
     // scanLR1110_GNSS_Satellites(lr1110_context, 0, 0, 0);
