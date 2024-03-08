@@ -184,8 +184,6 @@ void printIrq(const uint8_t* buffer, const uint16_t buffer_length) {
         return;
     }
 
-    HAL_DBG_TRACE_MSG_COLOR("\r\nIRQ Status\r\n", HAL_DBG_TRACE_COLOR_YELLOW);
-
     // Calculate the number of bytes to read from the buffer. If >= 6 set to 6, else set to buffer_length
     uint16_t length_to_read = (buffer_length >= 6) ? 6 : buffer_length;
 
@@ -289,9 +287,11 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
     }
 
     if(((cbuffer_length > 2) && _printIRQ) || (cbuffer[0] == 0x01 && cbuffer[1] == 0x00)) { // Print IRQ if debugging is enabled or getStatus cmd has been called (opcode 0x0100)
-        HAL_DBG_TRACE_MSG_COLOR("\r\nExtra debugging data\r\n", HAL_DBG_TRACE_COLOR_YELLOW);
+        HAL_DBG_TRACE_MSG_COLOR("\r\nIRQ Status\r\n", HAL_DBG_TRACE_COLOR_YELLOW);
         for (uint16_t i = 2; i < cbuffer_length; i++) {
-            HAL_DBG_TRACE_PRINTF("rbuffer[%d] ", i);
+            int start_bit = (cbuffer_length - i - 1) * 8;
+            int end_bit = start_bit + 7;
+            HAL_DBG_TRACE_PRINTF("rbuffer[%d] (%d:%d) ", i, end_bit, start_bit);
             print_binary(rbuffer[i]);
             HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", rbuffer[i]);
         }

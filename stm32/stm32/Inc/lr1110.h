@@ -1,5 +1,4 @@
 #include <stdint.h>
-#include <stdbool.h>
 
 // LENGTHS FOR COMMANDS
 #define LR1110_CMD_LENGTH_NO_PARAM   2
