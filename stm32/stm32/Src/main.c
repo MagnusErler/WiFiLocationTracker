@@ -130,6 +130,8 @@ int main(void)
   blinkLED(GPIOC, RX_LED_Pin|TX_LED_Pin, 100, 5);
 
   getStatus(lr1110_context);
+  //clearLR1110_Errors(lr1110_context);
+  //getStatus(lr1110_context);
 
   // clearLR1110_RX_Buffer(lr1110_context);
   // clearLR1110_RX_Buffer(lr1110_context);
