@@ -73,8 +73,6 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
         };
         LL_SPI_TransmitData8( spi, cbuffer[i] ); // Transmit data
 
-        // TODO: Vi skal lave en variable der hedder noget med, om vi forventer svar fra kommandoen (formentlig hasResponse)
-
         turnOffLED(TX_LED_GPIO_Port, TX_LED_Pin); // Turn off TX LED to show that the SPI is done transmitting
         turnOnLED(RX_LED_GPIO_Port, RX_LED_Pin); // Turn on RX LED to show that the SPI is receiving
 
