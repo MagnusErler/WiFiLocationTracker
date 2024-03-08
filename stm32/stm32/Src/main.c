@@ -181,10 +181,15 @@ int main(void)
 
   // getLR1110_GNSS_Version(lr1110_context);
 
+  // uint8_t data;
+  // lis2de12_device_id_get(&hi2c1, &data);
 
-  //init_accelerometer(hi2c1);
-  uint8_t who_am_i;
-  HAL_I2C_Mem_Read(&hi2c1, 0x31U, 0x0FU, I2C_MEMADD_SIZE_8BIT, &who_am_i, 1, HAL_MAX_DELAY);
+
+
+
+  init_accelerometer(hi2c1);
+  // uint8_t who_am_i = 0;
+  // HAL_I2C_Mem_Read(&hi2c1, 0x33U, 0x0FU, I2C_MEMADD_SIZE_8BIT, &who_am_i, 1, HAL_MAX_DELAY);
 
 
   /* USER CODE END 2 */
@@ -192,6 +197,15 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1) {
+
+    // for (uint8_t address = 0; address <= 127; address++) {
+    //   HAL_StatusTypeDef result;
+    //   result = HAL_I2C_IsDeviceReady(&hi2c1, address << 1, 1, 100);
+
+    //   if (result == HAL_OK) {
+    //     HAL_DBG_TRACE_INFO("I2C device found at address: 0x%02X\r\n", address);
+    //   }
+    // }
 
 
 
@@ -562,8 +576,10 @@ static void MX_GPIO_Init(void)
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
   if(GPIO_Pin == EVENT_Pin) {
     getStatus( lr1110_context );
+  } else if(GPIO_Pin == ACC_INT1_Pin) {
+    HAL_DBG_TRACE_INFO("ACC_INT1_Pin\r\n");
   } else {
-      __NOP();
+    __NOP();
   }
 }
 
