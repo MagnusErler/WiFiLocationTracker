@@ -37,25 +37,3 @@ lr1110_spi_status_t lr1110_spi_write(const void* context, const uint8_t* cbuffer
  * @returns Operation status
  */
 lr1110_spi_status_t lr1110_spi_read(const void* context, const uint8_t* cbuffer, const uint16_t cbuffer_length, uint8_t* rbuffer, const uint16_t rbuffer_length);
-
-/**
- * @brief Prints interrupt and command status information received from the LR1110 radio chip.
- *
- * @param [in] stat1    Status byte received from the LR1110 radio chip.
- */
-void printStat1(uint8_t stat1);
-
-/**
- * @brief Prints if chip is in bootloader execution, chip mode and reset status information received from the LR1110 radio chip. 
- *
- * @param [in] stat2    Status byte received from the LR1110 radio chip.
- */
-void printStat2(uint8_t stat2);
-
-/**
- * @brief Prints the IRQ buffer received from the LR1110 radio chip.
- *
- * @param [in] buffer          Pointer to the buffer to be received
- * @param [in] buffer_length   Buffer size to be received
- */
-void printIrq(const uint8_t* buffer, const uint16_t buffer_length);
