@@ -47,178 +47,6 @@ lr1110_spi_status_t _waitForBusyState( GPIO_PinState state, uint32_t timeout_ms 
     return LR1110_SPI_STATUS_OK;
 }
 
-lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer, const uint16_t cbuffer_length, const uint32_t timeout_ms ) {
-
-    uint8_t rbuffer[cbuffer_length]; // rbuffer always has the same length as cbuffer
-    memset(rbuffer, 0x00, cbuffer_length); // Initialize rbuffer with 0x00
-
-    // if (HAL_SPI_TransmitReceive( radio->hspi, ( uint8_t* ) cbuffer, rbuffer, cbuffer_length, timeout_ms ) != HAL_OK) {
-    //     HAL_DBG_TRACE_ERROR("_lr1110_spi_write(): Error while transmitting and receiving data\r\n");
-    //     return LR1110_SPI_STATUS_ERROR;
-    // }
-
-    for( uint16_t i = 0; i < cbuffer_length; i++ ) {
-        uint32_t start = HAL_GetTick(); // Start of timeout measurement
-
-        turnOnLED(TX_LED_GPIO_Port, TX_LED_Pin); // Turn on TX LED to show that the SPI is transmitting
-
-        // Wait for TXE to become HIGH -> SPI is ready for transmission
-        while( LL_SPI_IsActiveFlag_TXE( spi ) == 0 ) {
-            if( ( uint32_t )( HAL_GetTick() - start ) > ( uint32_t ) timeout_ms ) {
-                HAL_DBG_TRACE_PRINTF("\r\n");
-                HAL_DBG_TRACE_ERROR("_lr1110_spi_write(): Timeout occured while waiting for SPI to become ready for transmission\r\n");
-                turnOffLED(TX_LED_GPIO_Port, TX_LED_Pin);
-                return LR1110_SPI_STATUS_TIMEOUT;
-            }
-        };
-        LL_SPI_TransmitData8( spi, cbuffer[i] ); // Transmit data
-
-        turnOffLED(TX_LED_GPIO_Port, TX_LED_Pin); // Turn off TX LED to show that the SPI is done transmitting
-        turnOnLED(RX_LED_GPIO_Port, RX_LED_Pin); // Turn on RX LED to show that the SPI is receiving
-
-        // Wait for RXNE to become HIGH -> SPI is ready for reception
-        while( LL_SPI_IsActiveFlag_RXNE( spi ) == 0 ) {
-            if( ( uint32_t )( HAL_GetTick() - start ) > ( uint32_t ) timeout_ms ) {
-                HAL_DBG_TRACE_PRINTF("\r\n");
-                HAL_DBG_TRACE_ERROR("_lr1110_spi_write(): Timeout occured while waiting for SPI to become ready for reception\r\n");
-                turnOffLED(RX_LED_GPIO_Port, RX_LED_Pin);
-                return LR1110_SPI_STATUS_TIMEOUT;
-            }
-        };
-        rbuffer[i] = LL_SPI_ReceiveData8( spi ); // Receive data
-
-        turnOffLED(RX_LED_GPIO_Port, RX_LED_Pin); // Turn off RX LED to show that the SPI is done receiving
-    }
-
-    printStat1(rbuffer[0]);
-
-    if(_showStat2 && cbuffer_length > 1 || (cbuffer[0] == 0x01 && cbuffer[1] == 0x00)) { // Print stat2 if debugging is enabled or getStatus cmd has been called (opcode 0x0100)
-        printStat2(rbuffer[1]);
-    }
-
-    if(cbuffer_length > 2 && _printIRQ || (cbuffer[0] == 0x01 && cbuffer[1] == 0x00)) { // Print IRQ if debugging is enabled or getStatus cmd has been called (opcode 0x0100)
-        HAL_DBG_TRACE_MSG_COLOR("\r\nExtra debugging data\r\n", HAL_DBG_TRACE_COLOR_YELLOW);
-        for (uint16_t i = 2; i < cbuffer_length; i++) {
-            HAL_DBG_TRACE_PRINTF("rbuffer[%d] ", i);
-            print_binary(rbuffer[i]);
-            HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", rbuffer[i]);
-        }
-
-        printIrq(rbuffer, cbuffer_length);
-    }
-
-    return LR1110_SPI_STATUS_OK;
-}
-
-lr1110_spi_status_t _lr1110_spi_read_with_dummy_byte( SPI_TypeDef* spi, uint8_t* rbuffer, uint16_t rbuffer_length, uint32_t timeout_ms ) {
-
-    // uint8_t cbuffer[rbuffer_length-1];
-    // memset(cbuffer, 0x00, rbuffer_length-1);
-
-    // if (HAL_SPI_TransmitReceive( radio->hspi, cbuffer, rbuffer, rbuffer_length-1, timeout_ms ) != HAL_OK) {
-    //     HAL_DBG_TRACE_ERROR("_lr1110_spi_read_with_dummy_byte(): Error while transmitting and receiving data\r\n");
-    //     return LR1110_SPI_STATUS_ERROR;
-    // }
-
-    for( uint16_t i = 1; i < rbuffer_length; i++ ) {
-
-        uint32_t start = HAL_GetTick( );
-
-        turnOnLED(TX_LED_GPIO_Port, TX_LED_Pin);
-        while( LL_SPI_IsActiveFlag_TXE( spi ) == 0 ) {
-            if( ( uint32_t )( HAL_GetTick() - start ) > ( uint32_t ) timeout_ms ) {
-                HAL_DBG_TRACE_PRINTF("\r\n");
-                HAL_DBG_TRACE_ERROR("_lr1110_spi_read_with_dummy_byte(): Timeout occured while waiting for SPI to become ready for transmission\r\n");
-                turnOffLED(TX_LED_GPIO_Port, TX_LED_Pin);
-                return LR1110_SPI_STATUS_TIMEOUT;
-            }
-        };
-        LL_SPI_TransmitData8( spi, 0x00 );
-        turnOffLED(TX_LED_GPIO_Port, TX_LED_Pin);
-
-        turnOnLED(RX_LED_GPIO_Port, RX_LED_Pin);
-        while( LL_SPI_IsActiveFlag_RXNE( spi ) == 0 ) {
-            if( ( uint32_t )( HAL_GetTick() - start ) > ( uint32_t ) timeout_ms ) {
-                HAL_DBG_TRACE_PRINTF("\r\n");
-                HAL_DBG_TRACE_ERROR("_lr1110_spi_read_with_dummy_byte(): Timeout occured while waiting for SPI to become ready for reception\r\n");
-                turnOffLED(RX_LED_GPIO_Port, RX_LED_Pin);
-                return LR1110_SPI_STATUS_TIMEOUT;
-            }
-        };
-        rbuffer[i] = LL_SPI_ReceiveData8( spi );
-        turnOffLED(RX_LED_GPIO_Port, RX_LED_Pin);
-    }
-
-    return LR1110_SPI_STATUS_OK;
-}
-
-lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer, const uint16_t cbuffer_length, uint8_t* rbuffer, const uint16_t rbuffer_length ) {
-
-    radio = (radio_t*) context;
-
-    // Wait for BUSY to become LOW -> LR1110 is ready for a new command
-    if (_waitForBusyState( GPIO_PIN_RESET, 2000 ) != LR1110_SPI_STATUS_OK) {
-        return LR1110_SPI_STATUS_ERROR;
-    }
-
-    // Start of 1st SPI transaction
-    HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_RESET );
-    if (_lr1110_spi_write( radio->spi, cbuffer, cbuffer_length, 1000 ) != LR1110_SPI_STATUS_OK) {
-        HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
-        return LR1110_SPI_STATUS_ERROR;
-    }
-    HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
-    // Wait for BUSY to become LOW -> LR1110 is ready for a new command
-    if (_waitForBusyState( GPIO_PIN_RESET, 2000 ) != LR1110_SPI_STATUS_OK) {
-        return LR1110_SPI_STATUS_ERROR;
-    }
-    // End of 1st SPI transaction
-
-    // Start of 2nd SPI transaction
-    HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_RESET );
-    if (_lr1110_spi_write( radio->spi, 0x00, 1, 1000 ) != LR1110_SPI_STATUS_OK) {
-        HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
-        return LR1110_SPI_STATUS_ERROR;
-    }
-    if (_lr1110_spi_read_with_dummy_byte( radio->spi, rbuffer, rbuffer_length, 1000 ) != LR1110_SPI_STATUS_OK) {
-        HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
-        return LR1110_SPI_STATUS_ERROR;
-    }
-    HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
-    // Wait for BUSY to become LOW -> LR1110 is ready for a new command
-    if (_waitForBusyState( GPIO_PIN_RESET, 2000 ) != LR1110_SPI_STATUS_OK) {
-        return LR1110_SPI_STATUS_ERROR;
-    }
-    // End of 2nd SPI transaction
-
-    return LR1110_SPI_STATUS_OK;
-}
-
-lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffer, const uint16_t cbuffer_length ) {
-
-    // Wait for BUSY to become LOW -> LR1110 is ready for a new command
-    if (_waitForBusyState( GPIO_PIN_RESET, 2000 ) != LR1110_SPI_STATUS_OK) {
-        return LR1110_SPI_STATUS_TIMEOUT;
-    }
-
-    radio = (radio_t*) context;
-
-    // Start of SPI transaction
-    HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_RESET );
-    if (_lr1110_spi_write( radio->spi, cbuffer, cbuffer_length, 1000 ) != LR1110_SPI_STATUS_OK) {
-        HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
-        return LR1110_SPI_STATUS_ERROR;
-    }
-    HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
-    // Wait for BUSY to become LOW -> LR1110 is ready for a new command
-    if (_waitForBusyState( GPIO_PIN_RESET, 2000 ) != LR1110_SPI_STATUS_OK) {
-        return LR1110_SPI_STATUS_TIMEOUT;
-    }
-    // End of SPI transaction
-    
-    return LR1110_SPI_STATUS_OK;
-}
-
 void printStat1(uint8_t stat1) {
     HAL_DBG_TRACE_MSG_COLOR("\r\nStat1\r\n", HAL_DBG_TRACE_COLOR_YELLOW);
     HAL_DBG_TRACE_PRINTF("rbuffer[0] ");
@@ -408,4 +236,176 @@ void printIrq(const uint8_t* buffer, const uint16_t buffer_length) {
         getErrors(context);
         otherErrorDetected = false; // Reset the variable
     }
+}
+
+lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer, const uint16_t cbuffer_length, const uint32_t timeout_ms ) {
+
+    uint8_t rbuffer[cbuffer_length]; // rbuffer always has the same length as cbuffer
+    memset(rbuffer, 0x00, cbuffer_length); // Initialize rbuffer with 0x00
+
+    // if (HAL_SPI_TransmitReceive( radio->hspi, ( uint8_t* ) cbuffer, rbuffer, cbuffer_length, timeout_ms ) != HAL_OK) {
+    //     HAL_DBG_TRACE_ERROR("_lr1110_spi_write(): Error while transmitting and receiving data\r\n");
+    //     return LR1110_SPI_STATUS_ERROR;
+    // }
+
+    for( uint16_t i = 0; i < cbuffer_length; i++ ) {
+        uint32_t start = HAL_GetTick(); // Start of timeout measurement
+
+        turnOnLED(TX_LED_GPIO_Port, TX_LED_Pin); // Turn on TX LED to show that the SPI is transmitting
+
+        // Wait for TXE to become HIGH -> SPI is ready for transmission
+        while( LL_SPI_IsActiveFlag_TXE( spi ) == 0 ) {
+            if( ( uint32_t )( HAL_GetTick() - start ) > ( uint32_t ) timeout_ms ) {
+                HAL_DBG_TRACE_PRINTF("\r\n");
+                HAL_DBG_TRACE_ERROR("_lr1110_spi_write(): Timeout occured while waiting for SPI to become ready for transmission\r\n");
+                turnOffLED(TX_LED_GPIO_Port, TX_LED_Pin);
+                return LR1110_SPI_STATUS_TIMEOUT;
+            }
+        };
+        LL_SPI_TransmitData8( spi, cbuffer[i] ); // Transmit data
+
+        turnOffLED(TX_LED_GPIO_Port, TX_LED_Pin); // Turn off TX LED to show that the SPI is done transmitting
+        turnOnLED(RX_LED_GPIO_Port, RX_LED_Pin); // Turn on RX LED to show that the SPI is receiving
+
+        // Wait for RXNE to become HIGH -> SPI is ready for reception
+        while( LL_SPI_IsActiveFlag_RXNE( spi ) == 0 ) {
+            if( ( uint32_t )( HAL_GetTick() - start ) > ( uint32_t ) timeout_ms ) {
+                HAL_DBG_TRACE_PRINTF("\r\n");
+                HAL_DBG_TRACE_ERROR("_lr1110_spi_write(): Timeout occured while waiting for SPI to become ready for reception\r\n");
+                turnOffLED(RX_LED_GPIO_Port, RX_LED_Pin);
+                return LR1110_SPI_STATUS_TIMEOUT;
+            }
+        };
+        rbuffer[i] = LL_SPI_ReceiveData8( spi ); // Receive data
+
+        turnOffLED(RX_LED_GPIO_Port, RX_LED_Pin); // Turn off RX LED to show that the SPI is done receiving
+    }
+
+    printStat1(rbuffer[0]);
+
+    if(_showStat2 && cbuffer_length > 1 || (cbuffer[0] == 0x01 && cbuffer[1] == 0x00)) { // Print stat2 if debugging is enabled or getStatus cmd has been called (opcode 0x0100)
+        printStat2(rbuffer[1]);
+    }
+
+    if(cbuffer_length > 2 && _printIRQ || (cbuffer[0] == 0x01 && cbuffer[1] == 0x00)) { // Print IRQ if debugging is enabled or getStatus cmd has been called (opcode 0x0100)
+        HAL_DBG_TRACE_MSG_COLOR("\r\nExtra debugging data\r\n", HAL_DBG_TRACE_COLOR_YELLOW);
+        for (uint16_t i = 2; i < cbuffer_length; i++) {
+            HAL_DBG_TRACE_PRINTF("rbuffer[%d] ", i);
+            print_binary(rbuffer[i]);
+            HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", rbuffer[i]);
+        }
+
+        printIrq(rbuffer, cbuffer_length);
+    }
+
+    return LR1110_SPI_STATUS_OK;
+}
+
+lr1110_spi_status_t _lr1110_spi_read_with_dummy_byte( SPI_TypeDef* spi, uint8_t* rbuffer, uint16_t rbuffer_length, uint32_t timeout_ms ) {
+
+    // uint8_t cbuffer[rbuffer_length-1];
+    // memset(cbuffer, 0x00, rbuffer_length-1);
+
+    // if (HAL_SPI_TransmitReceive( radio->hspi, cbuffer, rbuffer, rbuffer_length-1, timeout_ms ) != HAL_OK) {
+    //     HAL_DBG_TRACE_ERROR("_lr1110_spi_read_with_dummy_byte(): Error while transmitting and receiving data\r\n");
+    //     return LR1110_SPI_STATUS_ERROR;
+    // }
+
+    for( uint16_t i = 1; i < rbuffer_length; i++ ) {
+
+        uint32_t start = HAL_GetTick( );
+
+        turnOnLED(TX_LED_GPIO_Port, TX_LED_Pin);
+        while( LL_SPI_IsActiveFlag_TXE( spi ) == 0 ) {
+            if( ( uint32_t )( HAL_GetTick() - start ) > ( uint32_t ) timeout_ms ) {
+                HAL_DBG_TRACE_PRINTF("\r\n");
+                HAL_DBG_TRACE_ERROR("_lr1110_spi_read_with_dummy_byte(): Timeout occured while waiting for SPI to become ready for transmission\r\n");
+                turnOffLED(TX_LED_GPIO_Port, TX_LED_Pin);
+                return LR1110_SPI_STATUS_TIMEOUT;
+            }
+        };
+        LL_SPI_TransmitData8( spi, 0x00 );
+        turnOffLED(TX_LED_GPIO_Port, TX_LED_Pin);
+
+        turnOnLED(RX_LED_GPIO_Port, RX_LED_Pin);
+        while( LL_SPI_IsActiveFlag_RXNE( spi ) == 0 ) {
+            if( ( uint32_t )( HAL_GetTick() - start ) > ( uint32_t ) timeout_ms ) {
+                HAL_DBG_TRACE_PRINTF("\r\n");
+                HAL_DBG_TRACE_ERROR("_lr1110_spi_read_with_dummy_byte(): Timeout occured while waiting for SPI to become ready for reception\r\n");
+                turnOffLED(RX_LED_GPIO_Port, RX_LED_Pin);
+                return LR1110_SPI_STATUS_TIMEOUT;
+            }
+        };
+        rbuffer[i] = LL_SPI_ReceiveData8( spi );
+        turnOffLED(RX_LED_GPIO_Port, RX_LED_Pin);
+    }
+
+    return LR1110_SPI_STATUS_OK;
+}
+
+lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer, const uint16_t cbuffer_length, uint8_t* rbuffer, const uint16_t rbuffer_length ) {
+
+    radio = (radio_t*) context;
+
+    // Wait for BUSY to become LOW -> LR1110 is ready for a new command
+    if (_waitForBusyState( GPIO_PIN_RESET, 2000 ) != LR1110_SPI_STATUS_OK) {
+        return LR1110_SPI_STATUS_ERROR;
+    }
+
+    // Start of 1st SPI transaction
+    HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_RESET );
+    if (_lr1110_spi_write( radio->spi, cbuffer, cbuffer_length, 1000 ) != LR1110_SPI_STATUS_OK) {
+        HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
+        return LR1110_SPI_STATUS_ERROR;
+    }
+    HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
+    // Wait for BUSY to become LOW -> LR1110 is ready for a new command
+    if (_waitForBusyState( GPIO_PIN_RESET, 2000 ) != LR1110_SPI_STATUS_OK) {
+        return LR1110_SPI_STATUS_ERROR;
+    }
+    // End of 1st SPI transaction
+
+    // Start of 2nd SPI transaction
+    HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_RESET );
+    if (_lr1110_spi_write( radio->spi, 0x00, 1, 1000 ) != LR1110_SPI_STATUS_OK) {
+        HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
+        return LR1110_SPI_STATUS_ERROR;
+    }
+    if (_lr1110_spi_read_with_dummy_byte( radio->spi, rbuffer, rbuffer_length, 1000 ) != LR1110_SPI_STATUS_OK) {
+        HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
+        return LR1110_SPI_STATUS_ERROR;
+    }
+    HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
+    // Wait for BUSY to become LOW -> LR1110 is ready for a new command
+    if (_waitForBusyState( GPIO_PIN_RESET, 2000 ) != LR1110_SPI_STATUS_OK) {
+        return LR1110_SPI_STATUS_ERROR;
+    }
+    // End of 2nd SPI transaction
+
+    return LR1110_SPI_STATUS_OK;
+}
+
+lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffer, const uint16_t cbuffer_length ) {
+
+    // Wait for BUSY to become LOW -> LR1110 is ready for a new command
+    if (_waitForBusyState( GPIO_PIN_RESET, 2000 ) != LR1110_SPI_STATUS_OK) {
+        return LR1110_SPI_STATUS_TIMEOUT;
+    }
+
+    radio = (radio_t*) context;
+
+    // Start of SPI transaction
+    HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_RESET );
+    if (_lr1110_spi_write( radio->spi, cbuffer, cbuffer_length, 1000 ) != LR1110_SPI_STATUS_OK) {
+        HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
+        return LR1110_SPI_STATUS_ERROR;
+    }
+    HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
+    // Wait for BUSY to become LOW -> LR1110 is ready for a new command
+    if (_waitForBusyState( GPIO_PIN_RESET, 2000 ) != LR1110_SPI_STATUS_OK) {
+        return LR1110_SPI_STATUS_TIMEOUT;
+    }
+    // End of SPI transaction
+    
+    return LR1110_SPI_STATUS_OK;
 }

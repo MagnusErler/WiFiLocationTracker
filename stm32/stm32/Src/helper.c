@@ -14,6 +14,8 @@ void print_binary(uint32_t num) {
     HAL_DBG_TRACE_PRINTF(" ");
 }
 
+// TODO: Implement these/this functions in the other files
+
 // Function to print the binary representation of an error status
 // Inputs:
 //   error_status: The error status to be printed in binary
