@@ -31,12 +31,12 @@ uint8_t getLR1110_LoRa_Packet_Type( const void* context ) {
     HAL_DBG_TRACE_INFO("Getting LoRa packet type... ");
 
     uint8_t cbuffer[LR1110_LORA_CMD_LENGTH_GET_PACKET_TYPE];
-    uint8_t rbuffer[LR1110_LORA_LENGTH_GET_PACKET_TYPE] = { 0 };
+    uint8_t rbuffer[LR1110_LORA_RES_LENGTH_GET_PACKET_TYPE] = { 0 };
 
     cbuffer[0] = ( uint8_t )( LR1110_LORA_CMD_GET_PACKET_TYPE >> 8 );
     cbuffer[1] = ( uint8_t )( LR1110_LORA_CMD_GET_PACKET_TYPE >> 0 );
 
-    if (lr1110_spi_read( context, cbuffer, LR1110_LORA_CMD_LENGTH_GET_PACKET_TYPE, rbuffer, LR1110_LORA_LENGTH_GET_PACKET_TYPE ) == LR1110_SPI_STATUS_OK) {
+    if (lr1110_spi_read( context, cbuffer, LR1110_LORA_CMD_LENGTH_GET_PACKET_TYPE, rbuffer, LR1110_LORA_RES_LENGTH_GET_PACKET_TYPE ) == LR1110_SPI_STATUS_OK) {
         HAL_DBG_TRACE_INFO_VALUE("0x%X\r\n", rbuffer[1]);
         return rbuffer[0];
     } else {
@@ -141,12 +141,12 @@ void getLR1110_LoRa_Packet_Status( const void* context) {
     HAL_DBG_TRACE_INFO("Getting LoRa packet status...\r\n");
 
     uint8_t cbuffer[LR1110_LORA_CMD_LENGTH_GET_PACKET_STATUS];
-    uint8_t rbuffer[LR1110_LORA_LENGTH_GET_PACKET_STATUS] = { 0 };
+    uint8_t rbuffer[LR1110_LORA_RES_LENGTH_GET_PACKET_STATUS] = { 0 };
 
     cbuffer[0] = ( uint8_t )( LR1110_LORA_CMD_GET_PACKET_STATUS >> 8 );
     cbuffer[1] = ( uint8_t )( LR1110_LORA_CMD_GET_PACKET_STATUS >> 0 );
 
-    if (lr1110_spi_read( context, cbuffer, LR1110_LORA_CMD_LENGTH_GET_PACKET_STATUS, rbuffer, LR1110_LORA_LENGTH_GET_PACKET_STATUS ) == LR1110_SPI_STATUS_OK) {
+    if (lr1110_spi_read( context, cbuffer, LR1110_LORA_CMD_LENGTH_GET_PACKET_STATUS, rbuffer, LR1110_LORA_RES_LENGTH_GET_PACKET_STATUS ) == LR1110_SPI_STATUS_OK) {
         HAL_DBG_TRACE_PRINTF("RssiPkt: %d\r\n", (int8_t)rbuffer[1]);
         HAL_DBG_TRACE_PRINTF("SnrPkt: %d\r\n", (int8_t)rbuffer[2]);
         HAL_DBG_TRACE_PRINTF("SignalRssiPkt: %d\r\n", (int8_t)rbuffer[3]);
