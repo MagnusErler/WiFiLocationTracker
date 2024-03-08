@@ -127,7 +127,7 @@ int main(void)
 
   HAL_DBG_TRACE_MSG("\r\n\r\n-----------------------------------------------------\r\n\r\n");
   resetLR1110(lr1110_context, 0);
-  blinkLED(GPIOC, RX_LED_Pin|TX_LED_Pin, 100, 5, true);
+  blinkLED(GPIOC, RX_LED_Pin|TX_LED_Pin, 100, 5);
 
   getStatus(lr1110_context);
 

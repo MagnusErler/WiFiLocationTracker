@@ -6,9 +6,9 @@ Still in progress of implementation
 
 * [X] Communication with host-computer for debugging (UART)
 * [X] Communication with LR1110 (SPI)
-* [ ] Implement WiFi scanner
+* [X] Implement WiFi scanner
 * [ ] Implement LoRaWAN
-* [ ] Implement Satellite scanner
+* [X] Implement Satellite scanner
 
 ## Setup
 
@@ -30,7 +30,6 @@ Currently using a [NUCLEO-L476RG](https://www.st.com/en/evaluation-tools/nucleo-
 * Semtech provide a Cloud API (fees apply)
 
 When using the Semtech LR1110 shield for STM32 Nucleo board is is also possible to use that shields with an Arduino Uno (see [arduino.ino](arduino/arduino.ino)).
-
 
 The setup can be done in either STM32CubeIDE og Visual Studio Code.
 
@@ -58,8 +57,8 @@ Install:
 ##### Visual Studio Code
 
 1. Open the stm32-folder in VSC
-3. Click on **Run and Debug** and click on **Launch**
-4. Another window pops up, click continue in the debug-menu (You can close the ned window now)
+2. Click on **Run and Debug** and click on **Launch**
+3. Another window pops up, click continue in the debug-menu (You can close the ned window now)
 
 To receive UART-messages for e.g. debugging use in Linux `cu`
 

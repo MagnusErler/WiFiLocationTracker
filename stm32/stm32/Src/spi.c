@@ -23,7 +23,7 @@ const bool _printIRQ = true; // Print out extra data (if any) when sending comma
 radio_t* radio;
 void* _context;
 
-lr1110_spi_status_t _waitForBusyState( GPIO_PinState state, uint32_t timeout_ms ) {
+lr1110_spi_status_t _waitForBusyState( const GPIO_PinState state, const uint32_t timeout_ms ) {
 
     uint32_t start = HAL_GetTick(); // Start of timeout measurement
 
@@ -302,7 +302,7 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
     return LR1110_SPI_STATUS_OK;
 }
 
-lr1110_spi_status_t _lr1110_spi_read_with_dummy_byte( SPI_TypeDef* spi, uint8_t* rbuffer, uint16_t rbuffer_length, uint32_t timeout_ms ) {
+lr1110_spi_status_t _lr1110_spi_read_with_dummy_byte( SPI_TypeDef* spi, uint8_t* rbuffer, const uint16_t rbuffer_length, const uint32_t timeout_ms ) {
 
     // uint8_t cbuffer[rbuffer_length-1];
     // memset(cbuffer, 0x00, rbuffer_length-1);

@@ -7,8 +7,13 @@
  * 
  * @return The modified byte
  */
-uint64_t set_bit_x_to_1(uint8_t position);
-
-void print_binary(uint32_t num);
+uint64_t set_bit_x_to_1(const uint8_t position);
 
 void print_bits(unsigned int error_status, int length);
+
+/*!
+ * @brief Print a number in binary format
+ *
+ * @param num The number to print in binary format
+ */
+void print_binary(const uint32_t num);

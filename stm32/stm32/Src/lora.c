@@ -11,7 +11,7 @@
 #include "main.h"   // for HAL_DBG_TRACE-functions
 #include "led.h"
 
-void setLR1110_LoRa_Packet_Type( const void* context, uint8_t packet_type ) {
+void setLR1110_LoRa_Packet_Type( const void* context, const uint8_t packet_type ) {
     HAL_DBG_TRACE_INFO("Setting LoRa packet type... ");
 
     uint8_t cbuffer[LR1110_LORA_CMD_LENGTH_SET_PACKET_TYPE];
@@ -45,7 +45,7 @@ uint8_t getLR1110_LoRa_Packet_Type( const void* context ) {
     }
 }
 
-void setLR1110_LoRa_Modulation_Params( const void* context, uint8_t sf, uint8_t bwl, uint8_t cr, uint8_t low_data_rate_ptimize) {
+void setLR1110_LoRa_Modulation_Params( const void* context, const uint8_t sf, const uint8_t bwl, const uint8_t cr, const uint8_t low_data_rate_ptimize) {
     HAL_DBG_TRACE_INFO("Setting LoRa modulation parameters... ");
 
     uint8_t cbuffer[LR1110_LORA_CMD_LENGTH_SET_MODULATION_PARAMS];
@@ -64,7 +64,7 @@ void setLR1110_LoRa_Modulation_Params( const void* context, uint8_t sf, uint8_t 
     }
 }
 
-void setLR1110_LoRa_Packet_Params( const void* context, uint8_t pb_lenght_tx1, uint8_t pb_lenght_tx2, uint8_t header_type, uint8_t payload_len, uint8_t crc, uint8_t invert_iq) {
+void setLR1110_LoRa_Packet_Params( const void* context, const uint8_t pb_lenght_tx1, const uint8_t pb_lenght_tx2, const uint8_t header_type, const uint8_t payload_len, const uint8_t crc, const uint8_t invert_iq) {
     HAL_DBG_TRACE_INFO("Setting LoRa packet parameters... ");
 
     uint8_t cbuffer[LR1110_LORA_CMD_LENGTH_SET_PACKET_PARAMS];
@@ -85,7 +85,7 @@ void setLR1110_LoRa_Packet_Params( const void* context, uint8_t pb_lenght_tx1, u
 }
 
 // Power Amplifier (PA) configuration
-void setLR1110_LoRa_PA_Config( const void* context, uint8_t pa_sel, uint8_t reg_pa_supply, uint8_t pa_duty_cycle, uint8_t pa_hp_sel) {
+void setLR1110_LoRa_PA_Config( const void* context, const uint8_t pa_sel, const uint8_t reg_pa_supply, const uint8_t pa_duty_cycle, const uint8_t pa_hp_sel) {
     HAL_DBG_TRACE_INFO("Setting LoRa PA configuation... ");
 
     uint8_t cbuffer[LR1110_LORA_CMD_LENGTH_SET_PA_CONFIG];
@@ -104,7 +104,7 @@ void setLR1110_LoRa_PA_Config( const void* context, uint8_t pa_sel, uint8_t reg_
     }
 }
 
-void setLR1110_LoRa_TX_Params( const void* context, uint8_t tx_power, uint8_t ramp_time) {
+void setLR1110_LoRa_TX_Params( const void* context, const uint8_t tx_power, const uint8_t ramp_time) {
     HAL_DBG_TRACE_INFO("Setting LoRa TX parameters... ");
 
     uint8_t cbuffer[LR1110_LORA_CMD_LENGTH_SET_TX_PARAMS];
@@ -121,7 +121,7 @@ void setLR1110_LoRa_TX_Params( const void* context, uint8_t tx_power, uint8_t ra
     }
 }
 
-void setLR1110_LoRa_Public_Network( const void* context, uint8_t public_network) {
+void setLR1110_LoRa_Public_Network( const void* context, const uint8_t public_network) {
     HAL_DBG_TRACE_INFO("Setting LoRa public Network... ");
 
     uint8_t cbuffer[LR1110_LORA_CMD_LENGTH_SET_PUBLIC_NETWORK];
@@ -155,7 +155,7 @@ void getLR1110_LoRa_Packet_Status( const void* context) {
     }
 }
 
-void writeLR1110_Buffer8( const void* context, uint8_t data) {
+void writeLR1110_Buffer8( const void* context, const uint8_t data) {
     HAL_DBG_TRACE_INFO("Writing to buffer...");
 
     uint8_t cbuffer[2 + 1];
@@ -171,7 +171,7 @@ void writeLR1110_Buffer8( const void* context, uint8_t data) {
     }
 }
 
-void setLR1110_TX( const void* context, uint8_t timeout) {
+void setLR1110_TX( const void* context, const uint8_t timeout) {
     HAL_DBG_TRACE_INFO("Setting LoRa TX... ");
 
     uint8_t cbuffer[2+3];
