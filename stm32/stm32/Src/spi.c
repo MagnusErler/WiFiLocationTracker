@@ -21,7 +21,7 @@ const bool _showStat2 = true; // Print out stat2 when sending commands
 const bool _printIRQ = true; // Print out extra data (if any) when sending commands
 
 radio_t* radio;
-void* context;
+void* _context;
 
 lr1110_spi_status_t _waitForBusyState( GPIO_PinState state, uint32_t timeout_ms ) {
 
@@ -233,7 +233,8 @@ void printIrq(const uint8_t* buffer, const uint16_t buffer_length) {
     if (irq_status & (1 << 2)) { HAL_DBG_TRACE_PRINTF("TxDone: Packet transmission completed\r\n"); }
 
     if (otherErrorDetected) {
-        getErrors(context);
+        HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
+        getErrors(_context);
         otherErrorDetected = false; // Reset the variable
     }
 }
@@ -283,11 +284,11 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
 
     printStat1(rbuffer[0]);
 
-    if(_showStat2 && cbuffer_length > 1 || (cbuffer[0] == 0x01 && cbuffer[1] == 0x00)) { // Print stat2 if debugging is enabled or getStatus cmd has been called (opcode 0x0100)
+    if((_showStat2 && (cbuffer_length > 1)) || (cbuffer[0] == 0x01 && cbuffer[1] == 0x00)) { // Print stat2 if debugging is enabled or getStatus cmd has been called (opcode 0x0100)
         printStat2(rbuffer[1]);
     }
 
-    if(cbuffer_length > 2 && _printIRQ || (cbuffer[0] == 0x01 && cbuffer[1] == 0x00)) { // Print IRQ if debugging is enabled or getStatus cmd has been called (opcode 0x0100)
+    if(((cbuffer_length > 2) && _printIRQ) || (cbuffer[0] == 0x01 && cbuffer[1] == 0x00)) { // Print IRQ if debugging is enabled or getStatus cmd has been called (opcode 0x0100)
         HAL_DBG_TRACE_MSG_COLOR("\r\nExtra debugging data\r\n", HAL_DBG_TRACE_COLOR_YELLOW);
         for (uint16_t i = 2; i < cbuffer_length; i++) {
             HAL_DBG_TRACE_PRINTF("rbuffer[%d] ", i);
@@ -346,6 +347,7 @@ lr1110_spi_status_t _lr1110_spi_read_with_dummy_byte( SPI_TypeDef* spi, uint8_t*
 lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer, const uint16_t cbuffer_length, uint8_t* rbuffer, const uint16_t rbuffer_length ) {
 
     radio = (radio_t*) context;
+    _context = (void*) context;
 
     // Wait for BUSY to become LOW -> LR1110 is ready for a new command
     if (_waitForBusyState( GPIO_PIN_RESET, 2000 ) != LR1110_SPI_STATUS_OK) {
@@ -393,6 +395,7 @@ lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffe
     }
 
     radio = (radio_t*) context;
+    _context = (void*) context;
 
     // Start of SPI transaction
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_RESET );
