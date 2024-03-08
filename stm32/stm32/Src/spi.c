@@ -89,11 +89,9 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
         turnOffLED(RX_LED_GPIO_Port, RX_LED_Pin); // Turn off RX LED to show that the SPI is done receiving
     }
 
-    if(_showStat1CMD) {
-        printStat1(rbuffer[0]);
-    }
+    printStat1(rbuffer[0]);
 
-    if(_showStat2CMD) {
+    if(_showStat2CMD && cbuffer_length > 1) {
         printStat2(rbuffer[1]);
     }
 
@@ -230,11 +228,13 @@ void printStat1(uint8_t stat1) {
     unsigned char interruptStatus = (stat1 & 0x01) ? 1 : 0;
     
     // Printing interrupt status
-    if (interruptStatus == 0) {
-        HAL_DBG_TRACE_PRINTF("Interrupt Status: No interrupt active\r\n");
-    } else {
-        HAL_DBG_TRACE_PRINTF("Interrupt Status: At least 1 interrupt active\r\n");
-    }
+    if(_showStat1CMD) {
+        if (interruptStatus == 0) {
+            HAL_DBG_TRACE_PRINTF("Interrupt Status: No interrupt active\r\n");
+        } else {
+            HAL_DBG_TRACE_PRINTF("Interrupt Status: At least 1 interrupt active\r\n");
+        }
+    }   
 
     // Extracting command status (bits 3:1)
     unsigned char commandStatus = (stat1 >> 1) & 0x07;
@@ -245,16 +245,20 @@ void printStat1(uint8_t stat1) {
             HAL_DBG_TRACE_ERROR("CMD_FAIL: The last command could not be executed\r\n");
             break;
         case 1:
-            HAL_DBG_TRACE_ERROR("CMD_PERR: The last command could not be processed (wrong opcode, arguments)\r\n");
+            HAL_DBG_TRACE_WARNING("CMD_PERR: The last command could not be processed (wrong opcode, arguments)\r\n");
             break;
         case 2:
-            HAL_DBG_TRACE_PRINTF("CMD_OK: The last command was processed successfully\r\n");
+            if (_showStat1CMD) {
+                HAL_DBG_TRACE_PRINTF("CMD_OK: The last command was processed successfully\r\n");
+            }
             break;
         case 3:
-            HAL_DBG_TRACE_PRINTF("CMD_DAT: The last command was successfully processed, and data is currently transmitted instead of IRQ status\r\n");
+            if (_showStat1CMD) {
+                HAL_DBG_TRACE_PRINTF("CMD_DAT: The last command was successfully processed, and data is currently transmitted instead of IRQ status\r\n");
+            }
             break;
         default:
-            HAL_DBG_TRACE_ERROR("Unknown stat1 command status recieved\r\n");
+            HAL_DBG_TRACE_ERROR("Unknown command status received\r\n");
             break;
     }
 }
