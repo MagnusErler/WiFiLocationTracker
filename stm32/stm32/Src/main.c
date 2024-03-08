@@ -61,12 +61,6 @@ SPI_HandleTypeDef hspi1;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-// VARIABLES FOR DEBUGGING
-const bool _showStat1CMD = true; // Print out stat1 when sending commands   _debugStat1
-const bool _showStat2CMD = true; // Print out stat2 when sending commands
-const bool _printExtraDataCMD = true; // Print out extra data (if any) when sending commands
-const bool _showStat1RES = true; // Print out stat1 when receiving responses
-
 
 /* USER CODE END PV */
 

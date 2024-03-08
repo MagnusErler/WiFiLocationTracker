@@ -5,8 +5,6 @@
   ******************************************************************************
   */
 
-  //TODO: Remove extra arguments from functions
-
 #include "spi.h"
 
 #include "led.h"
@@ -16,6 +14,11 @@
 #include "helper.h"
 
 #include <string.h>     // for memset
+
+// VARIABLES FOR DEBUGGING
+const bool _showStat1 = true; // Print out stat1 when sending commands   _debugStat1
+const bool _showStat2 = true; // Print out stat2 when sending commands
+const bool _printExtraData = true; // Print out extra data (if any) when sending commands
 
 radio_t* radio;
 void* context;
@@ -91,11 +94,11 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
 
     printStat1(rbuffer[0]);
 
-    if(_showStat2CMD && cbuffer_length > 1) {
+    if(_showStat2 && cbuffer_length > 1) {
         printStat2(rbuffer[1]);
     }
 
-    if(cbuffer_length > 2 && _printExtraDataCMD) {
+    if(cbuffer_length > 2 && _printExtraData) {
         HAL_DBG_TRACE_MSG_COLOR("\r\nExtra debugging data\r\n", HAL_DBG_TRACE_COLOR_YELLOW);
         for (uint16_t i = 2; i < cbuffer_length; i++) {
             HAL_DBG_TRACE_PRINTF("rbuffer[%d] ", i);
@@ -228,7 +231,7 @@ void printStat1(uint8_t stat1) {
     unsigned char interruptStatus = (stat1 & 0x01) ? 1 : 0;
     
     // Printing interrupt status
-    if(_showStat1CMD) {
+    if(_showStat1) {
         if (interruptStatus == 0) {
             HAL_DBG_TRACE_PRINTF("Interrupt Status: No interrupt active\r\n");
         } else {
@@ -248,12 +251,12 @@ void printStat1(uint8_t stat1) {
             HAL_DBG_TRACE_WARNING("CMD_PERR: The last command could not be processed (wrong opcode, arguments)\r\n");
             break;
         case 2:
-            if (_showStat1CMD) {
+            if (_showStat1) {
                 HAL_DBG_TRACE_PRINTF("CMD_OK: The last command was processed successfully\r\n");
             }
             break;
         case 3:
-            if (_showStat1CMD) {
+            if (_showStat1) {
                 HAL_DBG_TRACE_PRINTF("CMD_DAT: The last command was successfully processed, and data is currently transmitted instead of IRQ status\r\n");
             }
             break;
