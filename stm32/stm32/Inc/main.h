@@ -77,6 +77,7 @@ void Error_Handler(void);
 #define NSS_GPIO_Port GPIOA
 #define ACC_INT1_Pin GPIO_PIN_9
 #define ACC_INT1_GPIO_Port GPIOA
+#define ACC_INT1_EXTI_IRQn EXTI9_5_IRQn
 #define TMS_Pin GPIO_PIN_13
 #define TMS_GPIO_Port GPIOA
 #define TCK_Pin GPIO_PIN_14
