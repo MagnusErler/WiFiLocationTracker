@@ -17,6 +17,7 @@
 #define LR1110_CMD_LENGTH_CALIBRATE             LR1110_CMD_LENGTH_NO_PARAM + 2
 #define LR1110_CMD_LENGTH_CLEAR_ERRORS          LR1110_CMD_LENGTH_NO_PARAM
 #define LR1110_CMD_LENGTH_REBOOT                LR1110_CMD_LENGTH_NO_PARAM + 1
+#define LR1110_CMD_LENGTH_CLEAR_INTERRUPTS      LR1110_CMD_LENGTH_NO_PARAM + 4
 
 // LENGTHS FOR RESPONSES
 #define LR1110_RES_LENGTH_NO_PARAM              1
@@ -36,6 +37,7 @@
 #define LR1110_CALIBRATE_CMD                    0x010F
 #define LR1110_CALIBRATE_IMAGE_CMD              0x0111
 #define LR1110_SET_DIO_IRQ_PARAMS_CMD           0x0113
+#define LR1110_CLEAR_INTERRUPTS_CMD             0x0114
 #define LR1110_SET_TCXO_MODE_CMD                0x0117
 #define LR1110_REBOOT_CMD                       0x0118
 #define LR1110_GET_BATTERY_VOLTAGE_CMD          0x0119
@@ -119,6 +121,13 @@ void getErrors( const void* context );
  * @param [in] context Radio abstraction
  */
 void clearLR1110_Errors( const void* context);
+
+/*!
+ * @brief Clear LR1110 IRQ
+ *
+ * @param [in] context Radio abstraction
+ */
+void clearLR1110_IRQ( const void* context);
 
 /*!
  * @brief Set LR1110 DIO IRQ parameters
