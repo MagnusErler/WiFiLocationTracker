@@ -135,7 +135,7 @@ void setLR1110_TCXO_Mode( const void* context ) {
   }
 }
 
-void getStatus( const void* context ) {
+void getLR1110_Status( const void* context ) {
   HAL_DBG_TRACE_INFO("Getting LR1110 status... ");
 
   uint8_t cbuffer[LR1110_CMD_LENGTH_GET_STATUS];
@@ -221,7 +221,7 @@ void clearLR1110_IRQ( const void* context) {
   }
 }
 
-void getErrors( const void* context ) {
+void getLR1110_Errors( const void* context ) {
   HAL_DBG_TRACE_INFO("Getting LR1110 errors...");
 
   uint8_t cbuffer[LR1110_CMD_LENGTH_GET_ERRORS];

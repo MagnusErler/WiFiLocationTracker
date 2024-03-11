@@ -9,14 +9,14 @@
 
 #include "led.h"
 #include "main.h"       // for HAL_DBG_TRACE-functions
-#include "lr1110.h"     // for getErrors()
+#include "lr1110.h"     // for getLR1110_Errors()
 
 #include "helper.h"
 
 #include <string.h>     // for memset
 
 // VARIABLES FOR DEBUGGING
-const bool _debug = true;
+const bool _debug = false;
 const bool _showStat1 = _debug; // Print out stat1 when sending commands   _debugStat1
 const bool _showStat2 = _debug; // Print out stat2 when sending commands
 const bool _printIRQ = _debug; // Print out extra data (if any) when sending commands
@@ -233,7 +233,7 @@ void printIrq(const uint8_t* buffer, const uint16_t buffer_length) {
 
     if (otherErrorDetected) {
         HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
-        getErrors(_context);
+        getLR1110_Errors(_context);
         otherErrorDetected = false; // Reset the variable
     }
 }
@@ -283,11 +283,11 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
 
     printStat1(rbuffer[0]);
 
-    if((_showStat2 && (cbuffer_length > 1)) || (cbuffer[0] == 0x01 && cbuffer[1] == 0x00)) { // Print stat2 if debugging is enabled or getStatus cmd has been called (opcode 0x0100)
+    if((_showStat2 && (cbuffer_length > 1)) || (cbuffer[0] == 0x01 && cbuffer[1] == 0x00)) { // Print stat2 if debugging is enabled or getLR1110_Status cmd has been called (opcode 0x0100)
         printStat2(rbuffer[1]);
     }
 
-    if(((cbuffer_length > 2) && _printIRQ) || (cbuffer[0] == 0x01 && cbuffer[1] == 0x00)) { // Print IRQ if debugging is enabled or getStatus cmd has been called (opcode 0x0100)
+    if(((cbuffer_length > 2) && _printIRQ) || (cbuffer[0] == 0x01 && cbuffer[1] == 0x00)) { // Print IRQ if debugging is enabled or getLR1110_Status cmd has been called (opcode 0x0100)
         HAL_DBG_TRACE_MSG_COLOR("\r\nIRQ Status\r\n", HAL_DBG_TRACE_COLOR_YELLOW);
         for (uint16_t i = 2; i < cbuffer_length; i++) {
             int start_bit = (cbuffer_length - i - 1) * 8;

@@ -106,14 +106,14 @@ void resetLR1110( const void* context, const uint8_t reset_type);
  *
  * @param [in] context Radio abstraction
  */
-void getStatus( const void* context );
+void getLR1110_Status( const void* context );
 
 /*!
  * @brief Get LR1110 errors (non command errors)
  *
  * @param [in] context Radio abstraction
  */
-void getErrors( const void* context );
+void getLR1110_Errors( const void* context );
 
 /*!
  * @brief Clear LR1110 errors
