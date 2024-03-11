@@ -291,7 +291,7 @@ void resetLR1110( const void* context, const uint8_t reset_type) {
 }
 
 void setLR1110_Dio_Irq_Params( const void* context, const uint64_t irq1_to_enable, const uint64_t irq2_to_enable) {
-  HAL_DBG_TRACE_INFO("Setting LR1110 DIO IRQ parameters... ");
+  HAL_DBG_TRACE_INFO("Setting LR1110 IRQs... ");
 
   uint8_t cbuffer[LR1110_CMD_LENGTH_SET_DIO_IRQ_PARAMS];
 

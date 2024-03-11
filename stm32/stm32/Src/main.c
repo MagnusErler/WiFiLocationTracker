@@ -180,9 +180,10 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1) {
 
+    setLR1110_Dio_Irq_Params(lr1110_context, set_bit_x_to_1(2), set_bit_x_to_1(10));
 
     writeLR1110_Buffer8(lr1110_context, 0x02);
-    setLR1110_TX(lr1110_context, 0x10);
+    setLR1110_TX(lr1110_context, 100);
 
     // WIFI
     //scanLR1110_WiFi_Networks(lr1110_context, 0x04, 0x3FFF, 0x04, 32, 3, 500, true);
@@ -487,8 +488,9 @@ static void MX_GPIO_Init(void)
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
   if(GPIO_Pin == EVENT_Pin) {
-    HAL_DBG_TRACE_MSG_COLOR("\r\nINTERRUPT DETECTED\r\n", HAL_DBG_TRACE_COLOR_RED);
+    HAL_DBG_TRACE_MSG_COLOR("INTERRUPT DETECTED\r\n", HAL_DBG_TRACE_COLOR_CUSTOM);
     getLR1110_Status( lr1110_context );
+    setLR1110_Dio_Irq_Params(lr1110_context, set_bit_x_to_1(2), set_bit_x_to_1(10));
   } else {
       __NOP();
   }

@@ -171,8 +171,9 @@ void writeLR1110_Buffer8( const void* context, const uint8_t data) {
     }
 }
 
-void setLR1110_TX( const void* context, const uint8_t timeout) {
-    HAL_DBG_TRACE_INFO("Setting TX mode with timeout of %d... ", timeout);
+void setLR1110_TX( const void* context, const uint8_t timeout_ms) {
+    uint32_t timeout = timeout_ms * 32768;
+    HAL_DBG_TRACE_INFO("Setting TX mode with timeout of %d ms... ", timeout_ms);
 
     uint8_t cbuffer[2+3];
 
