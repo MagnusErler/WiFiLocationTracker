@@ -12,13 +12,13 @@
 #define LR1110_GNSS_CMD_LENGTH_SET_CONSTELLATION        LR1110_GNSS_CMD_LENGTH_NO_PARAM + 1
 
 // LENGTHS FOR RESPONSES
-#define LR1110_GNSS_LENGTH_NO_PARAM                     1
-#define LR1110_GNSS_LENGTH_GET_GNSS_VERSION             LR1110_GNSS_LENGTH_NO_PARAM + 2
-#define LR1110_GNSS_LENGTH_GET_NUMBER_OF_SATELLITES     LR1110_GNSS_LENGTH_NO_PARAM + 1
-#define LR1110_GNSS_LENGTH_GET_RESULTS                  LR1110_GNSS_LENGTH_NO_PARAM + 2
-#define LR1110_GNSS_LENGTH_GET_SATELLITES_DETECTED      LR1110_GNSS_LENGTH_NO_PARAM + 1      // longer than 1 byte
-#define LR1110_GNSS_LENGTH_GET_CONSUMPTION              LR1110_GNSS_LENGTH_NO_PARAM + 8
-#define LR1110_GNSS_LENGTH_GET_GNSS_ALMANAC_STATUS      LR1110_GNSS_LENGTH_NO_PARAM + 52
+#define LR1110_GNSS_RES_LENGTH_NO_PARAM                 1
+#define LR1110_GNSS_RES_LENGTH_GET_GNSS_VERSION         LR1110_GNSS_RES_LENGTH_NO_PARAM + 2
+#define LR1110_GNSS_RES_LENGTH_GET_NUMBER_OF_SATELLITES LR1110_GNSS_RES_LENGTH_NO_PARAM + 1
+#define LR1110_GNSS_RES_LENGTH_GET_RESULTS              LR1110_GNSS_RES_LENGTH_NO_PARAM + 2
+#define LR1110_GNSS_RES_LENGTH_GET_SATELLITES_DETECTED  LR1110_GNSS_RES_LENGTH_NO_PARAM + 1      // longer than 1 byte
+#define LR1110_GNSS_RES_LENGTH_GET_CONSUMPTION          LR1110_GNSS_RES_LENGTH_NO_PARAM + 8
+#define LR1110_GNSS_RES_LENGTH_GET_GNSS_ALMANAC_STATUS  LR1110_GNSS_RES_LENGTH_NO_PARAM + 52
 
 // LR1110 CHIP COMMANDS
 #define LR1110_GNSS_CMD_SET_CONSTELLATION               0x0400
@@ -45,7 +45,7 @@ uint8_t getLR1110_GNSS_Number_of_Detected_Satellites( const void* context );
  * @param [in] context Radio abstraction
  * @param [in] nb_of_satellites Number of detected satellites
  */
-void getLR1110_GNSS_Detected_Satellites( const void* context, uint8_t nb_of_satellites );
+void getLR1110_GNSS_Detected_Satellites( const void* context, const uint8_t nb_of_satellites );
 
 /*!
  * @brief Scan for GNSS satellites
@@ -55,7 +55,7 @@ void getLR1110_GNSS_Detected_Satellites( const void* context, uint8_t nb_of_sate
  * @param [in] result_mask Bit mask to select which results to include in the response
  * @param [in] nb_sv_max Maximum number of satellites to search for
  */
-void scanLR1110_GNSS_Satellites( const void* context, uint8_t effort_mode, uint8_t result_mask, uint8_t nb_sv_max );
+void scanLR1110_GNSS_Satellites( const void* context, const uint8_t effort_mode, const uint8_t result_mask, const uint8_t nb_sv_max );
 
 /*!
  * @brief Get LR1110 GNSS version
@@ -84,4 +84,4 @@ void getLR1110_GNSS_Almanac_Status( const void* context );
  * @param [in] context Radio abstraction
  * @param [in] constellation GNSS constellation to be used
  */
-void setLR1110_GNSS_Constellation( const void* context, uint8_t constellation );
+void setLR1110_GNSS_Constellation( const void* context, const uint8_t constellation );

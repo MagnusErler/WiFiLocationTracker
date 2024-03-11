@@ -1,14 +1,14 @@
-# WiFiLocationTracker
+# WiFi and Satellite Scanner for Geolocation
 
 Three different **wifi location tracker** are implemented; [ESP](esp/README.md) for ESP-devices, [Python](python/README.md) for desktop, and [STM32 ](stm32/README.md)for STM32-chip with LR1110.
 
 ###### Esp
 
-Tested on a ESP32 developer board to retrieve MAC-addresses of nearby WiFi access point and sending those to Google to approximate the location of the ESP32. It uses a `GOOGLE_API_KEY` (described in **Setup**).
+Tested on a ESP32 developer board to retrieve MAC-addresses of nearby WiFi access point and sending those to Google to approximate the location of the ESP32. It uses a `GOOGLE_API_KEY` (described in [Setup](#setup)).
 
 ###### Python
 
-Able to run in a Python environment and approximate the location of the device. It uses a `GOOGLE_API_KEY` (described in **Setup**).
+Able to run in a Python environment and approximate the location of the device. It uses a `GOOGLE_API_KEY` (described in [Setup](#setup)).
 
 ###### STM32
 

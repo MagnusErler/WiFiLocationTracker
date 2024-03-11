@@ -16,14 +16,14 @@ typedef enum lr1110_spi_status_e {
 /*!
  * @brief Radio data transfer - write
  *
- * @param [in] context      Radio implementation parameters
- * @param [in] cbuffer      Pointer to the buffer to be transmitted
+ * @param [in] context          Radio implementation parameters
+ * @param [in] cbuffer          Pointer to the buffer to be transmitted
  * @param [in] cbuffer_length   Buffer size to be transmitted
- * @param [in] get_status   Get status after the transfer
+ * @param [in] get_status       Get status after the transfer
  * 
  * @returns Operation status
  */
-lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffer, const uint16_t cbuffer_length, const bool get_status );
+lr1110_spi_status_t lr1110_spi_write(const void* context, const uint8_t* cbuffer, const uint16_t cbuffer_length);
 
 /*!
  * @brief Radio data transfer - read
@@ -36,4 +36,4 @@ lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffe
  *
  * @returns Operation status
  */
-lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer, const uint16_t cbuffer_length, uint8_t* rbuffer, const uint16_t rbuffer_length );
+lr1110_spi_status_t lr1110_spi_read(const void* context, const uint8_t* cbuffer, const uint16_t cbuffer_length, uint8_t* rbuffer, const uint16_t rbuffer_length);
