@@ -135,7 +135,7 @@ void setLR1110_TCXO_Mode( const void* context ) {
   }
 }
 
-void getStatus( const void* context ) {
+void getLR1110_Status( const void* context ) {
   HAL_DBG_TRACE_INFO("Getting LR1110 status... ");
 
   uint8_t cbuffer[LR1110_CMD_LENGTH_GET_STATUS];
@@ -188,7 +188,7 @@ void calibrateLR1110( const void* context, uint8_t calib_params) {
 }
 
 void clearLR1110_Errors( const void* context) {
-  HAL_DBG_TRACE_INFO("Clearing LR1110 errors... ");
+  HAL_DBG_TRACE_INFO("Clearing all pending error flags...");
 
   uint8_t cbuffer[LR1110_CMD_LENGTH_CLEAR_ERRORS];
 
@@ -202,7 +202,26 @@ void clearLR1110_Errors( const void* context) {
   }
 }
 
-void getErrors( const void* context ) {
+void clearLR1110_IRQ( const void* context) {
+  HAL_DBG_TRACE_INFO("Clearing LR1110 interrupts... ");
+
+  uint8_t cbuffer[LR1110_CMD_LENGTH_CLEAR_INTERRUPTS];
+
+  cbuffer[0] = ( uint8_t )( LR1110_CLEAR_INTERRUPTS_CMD >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_CLEAR_INTERRUPTS_CMD >> 0 );
+  cbuffer[2] = 0b11111111;
+  cbuffer[3] = 0b11111111;
+  cbuffer[4] = 0b11111111;
+  cbuffer[5] = 0b11111111;
+
+  if (lr1110_spi_write( context, cbuffer, LR1110_CMD_LENGTH_CLEAR_INTERRUPTS ) == LR1110_SPI_STATUS_OK) {
+    HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+  } else {
+    HAL_DBG_TRACE_ERROR("Failed to clear LR1110 interrupts\r\n");
+  }
+}
+
+void getLR1110_Errors( const void* context ) {
   HAL_DBG_TRACE_INFO("Getting LR1110 errors...");
 
   uint8_t cbuffer[LR1110_CMD_LENGTH_GET_ERRORS];
@@ -272,7 +291,7 @@ void resetLR1110( const void* context, const uint8_t reset_type) {
 }
 
 void setLR1110_Dio_Irq_Params( const void* context, const uint64_t irq1_to_enable, const uint64_t irq2_to_enable) {
-  HAL_DBG_TRACE_INFO("Setting LR1110 DIO IRQ parameters... ");
+  HAL_DBG_TRACE_INFO("Setting LR1110 IRQs... ");
 
   uint8_t cbuffer[LR1110_CMD_LENGTH_SET_DIO_IRQ_PARAMS];
 

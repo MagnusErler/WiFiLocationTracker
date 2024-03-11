@@ -9,16 +9,17 @@
 
 #include "led.h"
 #include "main.h"       // for HAL_DBG_TRACE-functions
-#include "lr1110.h"     // for getErrors()
+#include "lr1110.h"     // for getLR1110_Errors()
 
 #include "helper.h"
 
 #include <string.h>     // for memset
 
 // VARIABLES FOR DEBUGGING
-const bool _showStat1 = true; // Print out stat1 when sending commands   _debugStat1
-const bool _showStat2 = true; // Print out stat2 when sending commands
-const bool _printIRQ = true; // Print out extra data (if any) when sending commands
+const bool _debug = false;
+const bool _showStat1 = _debug; // Print out stat1 when sending commands   _debugStat1
+const bool _showStat2 = _debug; // Print out stat2 when sending commands
+const bool _printIRQ = _debug; // Print out extra data (if any) when sending commands
 
 radio_t* radio;
 void* _context;
@@ -48,16 +49,16 @@ lr1110_spi_status_t _waitForBusyState( const GPIO_PinState state, const uint32_t
 }
 
 void printStat1(uint8_t stat1) {
-    HAL_DBG_TRACE_MSG_COLOR("\r\nStat1\r\n", HAL_DBG_TRACE_COLOR_YELLOW);
-    HAL_DBG_TRACE_PRINTF("rbuffer[0] ");
-    print_binary(stat1);
-    HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", stat1);
-
-    // Extracting interrupt status (bit 0)
-    unsigned char interruptStatus = (stat1 & 0x01) ? 1 : 0;
-    
-    // Printing interrupt status
     if(_showStat1) {
+        HAL_DBG_TRACE_MSG_COLOR("\r\nStat1\r\n", HAL_DBG_TRACE_COLOR_YELLOW);
+        HAL_DBG_TRACE_PRINTF("rbuffer[0] ");
+        print_binary(stat1);
+        HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", stat1);
+
+        // Extracting interrupt status (bit 0)
+        unsigned char interruptStatus = (stat1 & 0x01) ? 1 : 0;
+        
+        // Printing interrupt status
         if (interruptStatus == 0) {
             HAL_DBG_TRACE_PRINTF("Interrupt Status: No interrupt active\r\n");
         } else {
@@ -179,7 +180,6 @@ void printStat2(uint8_t stat2) {
 
 void printIrq(const uint8_t* buffer, const uint16_t buffer_length) {
     if (buffer_length < 3) {
-        // Insufficient data to extract IRQ status
         HAL_DBG_TRACE_PRINTF("Insufficient data to extract IRQ status\r\n");
         return;
     }
@@ -193,16 +193,6 @@ void printIrq(const uint8_t* buffer, const uint16_t buffer_length) {
         irq_status |= (uint32_t)buffer[i] << (8 * (length_to_read - i - 1));
     }
 
-    // Print binary representation of IRQ status
-    HAL_DBG_TRACE_PRINTF("IRQ Status: ");
-    for (int i = 31; i >= 0; --i) {
-        HAL_DBG_TRACE_PRINTF("%d", (irq_status >> i) & 0x01);
-        if (i % 4 == 0) {
-            HAL_DBG_TRACE_PRINTF(" ");
-        }
-    }
-    HAL_DBG_TRACE_PRINTF("(0x%08X)\r\n", irq_status);
-
     // Interpretations
     bool otherErrorDetected = false; //An error other than a command error occurred
     if (irq_status & ((1 << 31) | (1 << 30) | (1 << 29) | (1 << 26) | (1 << 18) | (1 << 17) | (1 << 16) | (1 << 15) | (1 << 14) | (1 << 13) | (1 << 12) | (1 << 1) | (1 << 0))) {
@@ -210,21 +200,21 @@ void printIrq(const uint8_t* buffer, const uint16_t buffer_length) {
     }
     if (irq_status & (1 << 28)) { HAL_DBG_TRACE_PRINTF("GnssAbort: Command GnssScan, GnssFetchTime, or GnssAlmanacUpdateFromSat aborted\r\n"); }
     if (irq_status & (1 << 27)) { HAL_DBG_TRACE_PRINTF("LoRaRxTimestamp: Last LoRa symbol received. To be used for time-stamping the received packet. The device is still in RX mode\r\n"); }
-    if (irq_status & (1 << 25)) { HAL_DBG_TRACE_PRINTF("FskAddrError: IRQ raised if the packet was received with an address error\r\n"); }
-    if (irq_status & (1 << 24)) { HAL_DBG_TRACE_PRINTF("FskLenError: IRQ raised if the packet was received with a length error\r\n"); }
-    if (irq_status & (1 << 23)) { HAL_DBG_TRACE_PRINTF("Error: An error other than a command error occurred (see GetErrors)\r\n");
+    if (irq_status & (1 << 25)) { HAL_DBG_TRACE_ERROR("FskAddrError: IRQ raised if the packet was received with an address error\r\n"); }
+    if (irq_status & (1 << 24)) { HAL_DBG_TRACE_ERROR("FskLenError: IRQ raised if the packet was received with a length error\r\n"); }
+    if (irq_status & (1 << 23)) { HAL_DBG_TRACE_ERROR("Error: An error other than a command error occurred (see GetErrors)\r\n");
         otherErrorDetected = true;
     }
-    if (irq_status & (1 << 22)) { HAL_DBG_TRACE_PRINTF("CmdError: Host command error\r\n"); }
+    if (irq_status & (1 << 22)) { HAL_DBG_TRACE_ERROR("CmdError: Host command error\r\n"); }
     if (irq_status & (1 << 21)) { HAL_DBG_TRACE_PRINTF("LBD: Low Battery Detection\r\n"); }
     if (irq_status & (1 << 20)) { HAL_DBG_TRACE_PRINTF("WifiDone: Wi-Fi Scan finished\r\n"); }
     if (irq_status & (1 << 19)) { HAL_DBG_TRACE_PRINTF("GNSSDone: GNSS Scan finished\r\n"); }
     if (irq_status & (1 << 11)) { HAL_DBG_TRACE_PRINTF("LrFhssHop: LR-FHSS intra-packet hopping\r\n"); }
-    if (irq_status & (1 << 10)) { HAL_DBG_TRACE_PRINTF("Timeout: RX or TX timeout\r\n"); }
+    if (irq_status & (1 << 10)) { HAL_DBG_TRACE_WARNING("Timeout: RX or TX timeout\r\n"); }
     if (irq_status & (1 << 9)) { HAL_DBG_TRACE_PRINTF("CadDetected: LoRa Channel activity detected\r\n"); }
     if (irq_status & (1 << 8)) { HAL_DBG_TRACE_PRINTF("CadDone: LoRa Channel activity detection finished\r\n"); }
-    if (irq_status & (1 << 7)) { HAL_DBG_TRACE_PRINTF("Err: LoRa: Wrong CRC received\r\n"); }
-    if (irq_status & (1 << 6)) { HAL_DBG_TRACE_PRINTF("HeaderErr: LoRa header CRC error\r\n"); }
+    if (irq_status & (1 << 7)) { HAL_DBG_TRACE_ERROR("Err: LoRa: Wrong CRC received\r\n"); }
+    if (irq_status & (1 << 6)) { HAL_DBG_TRACE_ERROR("HeaderErr: LoRa header CRC error\r\n"); }
     if (irq_status & (1 << 5)) { HAL_DBG_TRACE_PRINTF("Valid sync word / LoRa® header detected\r\n"); }
     if (irq_status & (1 << 4)) { HAL_DBG_TRACE_PRINTF("Preamble detected\r\n"); }
     if (irq_status & (1 << 3)) { HAL_DBG_TRACE_PRINTF("RxDone: Packet received\r\n"); }
@@ -232,7 +222,7 @@ void printIrq(const uint8_t* buffer, const uint16_t buffer_length) {
 
     if (otherErrorDetected) {
         HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
-        getErrors(_context);
+        getLR1110_Errors(_context);
         otherErrorDetected = false; // Reset the variable
     }
 }
@@ -282,11 +272,11 @@ lr1110_spi_status_t _lr1110_spi_write( SPI_TypeDef* spi, const uint8_t* cbuffer,
 
     printStat1(rbuffer[0]);
 
-    if((_showStat2 && (cbuffer_length > 1)) || (cbuffer[0] == 0x01 && cbuffer[1] == 0x00)) { // Print stat2 if debugging is enabled or getStatus cmd has been called (opcode 0x0100)
+    if((_showStat2 && (cbuffer_length > 1)) || (cbuffer[0] == 0x01 && cbuffer[1] == 0x00)) { // Print stat2 if debugging is enabled or getLR1110_Status cmd has been called (opcode 0x0100)
         printStat2(rbuffer[1]);
     }
 
-    if(((cbuffer_length > 2) && _printIRQ) || (cbuffer[0] == 0x01 && cbuffer[1] == 0x00)) { // Print IRQ if debugging is enabled or getStatus cmd has been called (opcode 0x0100)
+    if(((cbuffer_length > 2) && _printIRQ) || (cbuffer[0] == 0x01 && cbuffer[1] == 0x00)) { // Print IRQ if debugging is enabled or getLR1110_Status cmd has been called (opcode 0x0100)
         HAL_DBG_TRACE_MSG_COLOR("\r\nIRQ Status\r\n", HAL_DBG_TRACE_COLOR_YELLOW);
         for (uint16_t i = 2; i < cbuffer_length; i++) {
             int start_bit = (cbuffer_length - i - 1) * 8;
@@ -356,6 +346,7 @@ lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer
 
     // Start of 1st SPI transaction
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_RESET );
+    if(_showStat1 || _showStat2) {HAL_DBG_TRACE_MSG_COLOR("\r\nCOMMAND:", HAL_DBG_TRACE_COLOR_PURPLE);}
     if (_lr1110_spi_write( radio->spi, cbuffer, cbuffer_length, 1000 ) != LR1110_SPI_STATUS_OK) {
         HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
         return LR1110_SPI_STATUS_ERROR;
@@ -369,6 +360,7 @@ lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer
 
     // Start of 2nd SPI transaction
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_RESET );
+    if(_showStat1 || _showStat2) {HAL_DBG_TRACE_MSG_COLOR("\r\nRESPONSE:", HAL_DBG_TRACE_COLOR_PURPLE);}
     if (_lr1110_spi_write( radio->spi, 0x00, 1, 1000 ) != LR1110_SPI_STATUS_OK) {
         HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
         return LR1110_SPI_STATUS_ERROR;
@@ -399,6 +391,7 @@ lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffe
 
     // Start of SPI transaction
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_RESET );
+    if(_showStat1 || _showStat2) {HAL_DBG_TRACE_MSG_COLOR("\r\nCOMMAND:", HAL_DBG_TRACE_COLOR_PURPLE);}
     if (_lr1110_spi_write( radio->spi, cbuffer, cbuffer_length, 1000 ) != LR1110_SPI_STATUS_OK) {
         HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
         return LR1110_SPI_STATUS_ERROR;

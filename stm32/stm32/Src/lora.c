@@ -12,7 +12,7 @@
 #include "led.h"
 
 void setLR1110_LoRa_Packet_Type( const void* context, const uint8_t packet_type ) {
-    HAL_DBG_TRACE_INFO("Setting LoRa packet type... ");
+    HAL_DBG_TRACE_INFO("Setting LoRa packet type to 0x%0X... ", packet_type);
 
     uint8_t cbuffer[LR1110_LORA_CMD_LENGTH_SET_PACKET_TYPE];
 
@@ -138,7 +138,7 @@ void setLR1110_LoRa_Public_Network( const void* context, const uint8_t public_ne
 }
 
 void getLR1110_LoRa_Packet_Status( const void* context) {
-    HAL_DBG_TRACE_INFO("Getting LoRa packet status...\r\n");
+    HAL_DBG_TRACE_INFO("Getting LoRa packet status... \r\n");
 
     uint8_t cbuffer[LR1110_LORA_CMD_LENGTH_GET_PACKET_STATUS];
     uint8_t rbuffer[LR1110_LORA_RES_LENGTH_GET_PACKET_STATUS] = { 0 };
@@ -156,7 +156,7 @@ void getLR1110_LoRa_Packet_Status( const void* context) {
 }
 
 void writeLR1110_Buffer8( const void* context, const uint8_t data) {
-    HAL_DBG_TRACE_INFO("Writing to buffer...");
+    HAL_DBG_TRACE_INFO("Writing 0x%0X to buffer... ", data);
 
     uint8_t cbuffer[2 + 1];
 
@@ -171,8 +171,9 @@ void writeLR1110_Buffer8( const void* context, const uint8_t data) {
     }
 }
 
-void setLR1110_TX( const void* context, const uint8_t timeout) {
-    HAL_DBG_TRACE_INFO("Setting LoRa TX... ");
+void setLR1110_TX( const void* context, const uint8_t timeout_ms) {
+    uint32_t timeout = timeout_ms * 32768;
+    HAL_DBG_TRACE_INFO("Setting TX mode with timeout of %d ms... ", timeout_ms);
 
     uint8_t cbuffer[2+3];
 
@@ -185,6 +186,6 @@ void setLR1110_TX( const void* context, const uint8_t timeout) {
     if ( lr1110_spi_write( context, cbuffer, 2+3 ) == LR1110_SPI_STATUS_OK ) {
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
     } else {
-        HAL_DBG_TRACE_ERROR("Failed to set LoRa TX\r\n");
+        HAL_DBG_TRACE_ERROR("Failed to set TX mode\r\n");
     }
 }
