@@ -129,16 +129,19 @@ int main(void)
   resetLR1110(lr1110_context, 0);
   blinkLED(GPIOC, RX_LED_Pin|TX_LED_Pin, 100, 5);
 
-  getStatus(lr1110_context);
-  //clearLR1110_Errors(lr1110_context);
-  //getStatus(lr1110_context);
+
+  clearLR1110_Errors(lr1110_context);
+  clearLR1110_IRQ(lr1110_context);
+
+  setLR1110_TCXO_Mode(lr1110_context);
+
 
   // clearLR1110_RX_Buffer(lr1110_context);
   // clearLR1110_RX_Buffer(lr1110_context);
 
-  // setLR1110_Standby_Mode(lr1110_context, 0x01);
+  setLR1110_Standby_Mode(lr1110_context, 0x01);
 
-  // calibrateLR1110_Image( lr1110_context, 0xD7, 0xDB );
+  calibrateLR1110_Image( lr1110_context, 0xD7, 0xDB );
   // calibrateLR1110( lr1110_context, 0x00);
   // calibrateLR1110( lr1110_context, 0x01);
   // calibrateLR1110( lr1110_context, 0x02);
@@ -146,11 +149,11 @@ int main(void)
   // calibrateLR1110( lr1110_context, 0x04);
   // calibrateLR1110( lr1110_context, 0x05);
 
-  // setLR1110_TCXO_Mode(lr1110_context);
+  
 
   
 
-  // clearLR1110_Errors(lr1110_context);
+  
   // clearLR1110_Errors(lr1110_context);
 
   // getErrors(lr1110_context);
@@ -203,7 +206,7 @@ int main(void)
     //   getWiFiFullResults( lr1110_context, i, 1 );
     // }
 
-    // getStatus(lr1110_context);
+    getStatus(lr1110_context);
     // getErrors(lr1110_context);
 
     // GNSS
@@ -220,7 +223,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
     HAL_DBG_TRACE_MSG_COLOR("\r\nWaiting for next while loop...\r\n", "\x1B[0;34m");
-    HAL_Delay(10000);
+    HAL_Delay(1000);
   }
   /* USER CODE END 3 */
 }
