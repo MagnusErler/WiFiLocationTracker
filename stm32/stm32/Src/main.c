@@ -166,7 +166,7 @@ int main(void)
 
   setLR1110_Dio_Irq_Params(lr1110_context, set_bit_x_to_1(2), set_bit_x_to_1(10));
 
-  // setLR1110_LoRa_Packet_Type(lr1110_context, 0x02);
+  setLR1110_LoRa_Packet_Type(lr1110_context, 0x02);
   // getLR1110_LoRa_Packet_Type(lr1110_context);
   // setLR1110_LoRa_Modulation_Params(lr1110_context, 0x07, 0x05, 0x01, 0x00);         // NOT SURE ABOUT VALUE 4
   // setLR1110_LoRa_Packet_Params(lr1110_context, 0x00, 0x02, 0x01, 0x02, 0x01, 0x00); // NOT SURE ABOUT VALUE 1,2,4 and 6
@@ -184,8 +184,8 @@ int main(void)
   while (1) {
 
 
-    // writeLR1110_Buffer8(lr1110_context, 0x02);
-    // setLR1110_TX(lr1110_context, 0x10);
+    writeLR1110_Buffer8(lr1110_context, 0x02);
+    setLR1110_TX(lr1110_context, 0x10);
 
 
     //getLR1110_LoRa_Packet_Status(lr1110_context);
