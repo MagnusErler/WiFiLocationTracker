@@ -129,11 +129,10 @@ int main(void)
   resetLR1110(lr1110_context, 0);
   blinkLED(GPIOC, RX_LED_Pin|TX_LED_Pin, 100, 5);
 
+  setLR1110_TCXO_Mode(lr1110_context);
 
   clearLR1110_Errors(lr1110_context);
   clearLR1110_IRQ(lr1110_context);
-
-  setLR1110_TCXO_Mode(lr1110_context);
 
 
   // clearLR1110_RX_Buffer(lr1110_context);
@@ -141,14 +140,9 @@ int main(void)
 
   setLR1110_Standby_Mode(lr1110_context, 0x01);
 
-  calibrateLR1110_Image( lr1110_context, 0xD7, 0xDB );
-  // calibrateLR1110( lr1110_context, 0x00);
-  // calibrateLR1110( lr1110_context, 0x01);
-  // calibrateLR1110( lr1110_context, 0x02);
-  // calibrateLR1110( lr1110_context, 0x03);
-  // calibrateLR1110( lr1110_context, 0x04);
-  // calibrateLR1110( lr1110_context, 0x05);
+  calibrateLR1110( lr1110_context, 0x3F);
 
+  calibrateLR1110_Image( lr1110_context, 0xD7, 0xDB );
   
 
   
@@ -170,7 +164,7 @@ int main(void)
 
   // setLR1110_GNSS_Constellation(lr1110_context, 0b11);
 
-  // setLR1110_Dio_Irq_Params(lr1110_context, set_bit_x_to_1(2), set_bit_x_to_1(6));
+  setLR1110_Dio_Irq_Params(lr1110_context, set_bit_x_to_1(2), set_bit_x_to_1(10));
 
   // setLR1110_LoRa_Packet_Type(lr1110_context, 0x02);
   // getLR1110_LoRa_Packet_Type(lr1110_context);
@@ -222,8 +216,8 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    HAL_DBG_TRACE_MSG_COLOR("\r\nWaiting for next while loop...\r\n", "\x1B[0;34m");
-    HAL_Delay(1000);
+    HAL_DBG_TRACE_MSG_COLOR("\r\nWaiting for next while loop...\r\n", HAL_DBG_TRACE_COLOR_BLUE);
+    HAL_Delay(5000);
   }
   /* USER CODE END 3 */
 }
@@ -499,6 +493,7 @@ static void MX_GPIO_Init(void)
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
   if(GPIO_Pin == EVENT_Pin) {
+    HAL_DBG_TRACE_MSG_COLOR("\r\nINTERRUPT DETECTED\r\n", HAL_DBG_TRACE_COLOR_RED);
     getStatus( lr1110_context );
   } else {
       __NOP();
