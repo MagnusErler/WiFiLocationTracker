@@ -148,7 +148,7 @@ int main(void)
   
 
 
-  getLR1110_Errors(lr1110_context);
+  // getLR1110_Errors(lr1110_context);
 
   
   // BOOTLOADER

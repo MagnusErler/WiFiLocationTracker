@@ -180,7 +180,6 @@ void printStat2(uint8_t stat2) {
 
 void printIrq(const uint8_t* buffer, const uint16_t buffer_length) {
     if (buffer_length < 3) {
-        // Insufficient data to extract IRQ status
         HAL_DBG_TRACE_PRINTF("Insufficient data to extract IRQ status\r\n");
         return;
     }
@@ -194,16 +193,6 @@ void printIrq(const uint8_t* buffer, const uint16_t buffer_length) {
         irq_status |= (uint32_t)buffer[i] << (8 * (length_to_read - i - 1));
     }
 
-    // // Print binary representation of IRQ status
-    // HAL_DBG_TRACE_PRINTF("IRQ Status: ");
-    // for (int i = 31; i >= 0; --i) {
-    //     HAL_DBG_TRACE_PRINTF("%d", (irq_status >> i) & 0x01);
-    //     if (i % 4 == 0) {
-    //         HAL_DBG_TRACE_PRINTF(" ");
-    //     }
-    // }
-    // HAL_DBG_TRACE_PRINTF("(0x%08X)\r\n", irq_status);
-
     // Interpretations
     bool otherErrorDetected = false; //An error other than a command error occurred
     if (irq_status & ((1 << 31) | (1 << 30) | (1 << 29) | (1 << 26) | (1 << 18) | (1 << 17) | (1 << 16) | (1 << 15) | (1 << 14) | (1 << 13) | (1 << 12) | (1 << 1) | (1 << 0))) {
@@ -211,21 +200,21 @@ void printIrq(const uint8_t* buffer, const uint16_t buffer_length) {
     }
     if (irq_status & (1 << 28)) { HAL_DBG_TRACE_PRINTF("GnssAbort: Command GnssScan, GnssFetchTime, or GnssAlmanacUpdateFromSat aborted\r\n"); }
     if (irq_status & (1 << 27)) { HAL_DBG_TRACE_PRINTF("LoRaRxTimestamp: Last LoRa symbol received. To be used for time-stamping the received packet. The device is still in RX mode\r\n"); }
-    if (irq_status & (1 << 25)) { HAL_DBG_TRACE_PRINTF("FskAddrError: IRQ raised if the packet was received with an address error\r\n"); }
-    if (irq_status & (1 << 24)) { HAL_DBG_TRACE_PRINTF("FskLenError: IRQ raised if the packet was received with a length error\r\n"); }
-    if (irq_status & (1 << 23)) { HAL_DBG_TRACE_PRINTF("Error: An error other than a command error occurred (see GetErrors)\r\n");
+    if (irq_status & (1 << 25)) { HAL_DBG_TRACE_ERROR("FskAddrError: IRQ raised if the packet was received with an address error\r\n"); }
+    if (irq_status & (1 << 24)) { HAL_DBG_TRACE_ERROR("FskLenError: IRQ raised if the packet was received with a length error\r\n"); }
+    if (irq_status & (1 << 23)) { HAL_DBG_TRACE_ERROR("Error: An error other than a command error occurred (see GetErrors)\r\n");
         otherErrorDetected = true;
     }
-    if (irq_status & (1 << 22)) { HAL_DBG_TRACE_PRINTF("CmdError: Host command error\r\n"); }
+    if (irq_status & (1 << 22)) { HAL_DBG_TRACE_ERROR("CmdError: Host command error\r\n"); }
     if (irq_status & (1 << 21)) { HAL_DBG_TRACE_PRINTF("LBD: Low Battery Detection\r\n"); }
     if (irq_status & (1 << 20)) { HAL_DBG_TRACE_PRINTF("WifiDone: Wi-Fi Scan finished\r\n"); }
     if (irq_status & (1 << 19)) { HAL_DBG_TRACE_PRINTF("GNSSDone: GNSS Scan finished\r\n"); }
     if (irq_status & (1 << 11)) { HAL_DBG_TRACE_PRINTF("LrFhssHop: LR-FHSS intra-packet hopping\r\n"); }
-    if (irq_status & (1 << 10)) { HAL_DBG_TRACE_PRINTF("Timeout: RX or TX timeout\r\n"); }
+    if (irq_status & (1 << 10)) { HAL_DBG_TRACE_WARNING("Timeout: RX or TX timeout\r\n"); }
     if (irq_status & (1 << 9)) { HAL_DBG_TRACE_PRINTF("CadDetected: LoRa Channel activity detected\r\n"); }
     if (irq_status & (1 << 8)) { HAL_DBG_TRACE_PRINTF("CadDone: LoRa Channel activity detection finished\r\n"); }
-    if (irq_status & (1 << 7)) { HAL_DBG_TRACE_PRINTF("Err: LoRa: Wrong CRC received\r\n"); }
-    if (irq_status & (1 << 6)) { HAL_DBG_TRACE_PRINTF("HeaderErr: LoRa header CRC error\r\n"); }
+    if (irq_status & (1 << 7)) { HAL_DBG_TRACE_ERROR("Err: LoRa: Wrong CRC received\r\n"); }
+    if (irq_status & (1 << 6)) { HAL_DBG_TRACE_ERROR("HeaderErr: LoRa header CRC error\r\n"); }
     if (irq_status & (1 << 5)) { HAL_DBG_TRACE_PRINTF("Valid sync word / LoRa® header detected\r\n"); }
     if (irq_status & (1 << 4)) { HAL_DBG_TRACE_PRINTF("Preamble detected\r\n"); }
     if (irq_status & (1 << 3)) { HAL_DBG_TRACE_PRINTF("RxDone: Packet received\r\n"); }
