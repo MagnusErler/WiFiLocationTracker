@@ -30,8 +30,26 @@ typedef enum
 static i2c_addr_size i2c_internal_addr_size;
 
 
-static uint8_t i2c_read_buffer( uint8_t device_addr, uint16_t addr, uint8_t* buffer, uint16_t size )
-{
+// static uint8_t i2c_read_buffer( uint8_t device_addr, uint16_t addr, uint8_t* buffer, uint16_t size )
+// {
+//     uint8_t  readStatus = SMTC_FAIL;
+//     uint16_t memAddSize = 0u;
+
+//     if( i2c_internal_addr_size == I2C_ADDR_SIZE_8 ) {
+//         memAddSize = I2C_MEMADD_SIZE_8BIT;
+//     } else {
+//         memAddSize = I2C_MEMADD_SIZE_16BIT;
+//     }
+//     if (HAL_I2C_Mem_Read(&_hi2c1, device_addr, addr, memAddSize, buffer, size, 2000) == HAL_OK) {
+//         readStatus = SMTC_SUCCESS;
+//     }
+
+//     return readStatus;
+// }
+
+uint8_t hal_i2c_read_buffer( uint8_t device_addr, uint16_t addr, uint8_t* buffer, uint16_t size ) {
+    //return ( i2c_read_buffer( device_addr, addr, buffer, size ) );
+
     uint8_t  readStatus = SMTC_FAIL;
     uint16_t memAddSize = 0u;
 
@@ -45,10 +63,6 @@ static uint8_t i2c_read_buffer( uint8_t device_addr, uint16_t addr, uint8_t* buf
     }
 
     return readStatus;
-}
-
-uint8_t hal_i2c_read_buffer( uint8_t device_addr, uint16_t addr, uint8_t* buffer, uint16_t size ) {
-    return ( i2c_read_buffer( device_addr, addr, buffer, size ) );
 }
 
 int32_t lis2de12_read_reg( uint8_t reg, uint8_t* data, uint16_t len ) {
@@ -91,8 +105,8 @@ int32_t lis2de12_write_reg( uint8_t reg, uint8_t* data, uint16_t len ) {
     return !hal_i2c_write_buffer( 1, LIS2DE12_I2C_ADD_H, reg, data, len );
 }
 
-int32_t lis2de12_data_rate_set( lis2de12_odr_t val ) {
-    HAL_DBG_TRACE_INFO("Setting accelerometer data rate...");
+int32_t setLIS2DE12_Data_Rate( lis2de12_odr_t val ) {
+    HAL_DBG_TRACE_INFO("Setting data rate... ");
     lis2de12_ctrl_reg1_t ctrl_reg1;
 
     if( lis2de12_read_reg( LIS2DE12_CTRL_REG1, ( uint8_t* ) &ctrl_reg1, 1 ) == 0 ) {
@@ -101,37 +115,29 @@ int32_t lis2de12_data_rate_set( lis2de12_odr_t val ) {
         if( lis2de12_write_reg( LIS2DE12_CTRL_REG1, ( uint8_t* ) &ctrl_reg1, 1 ) == 0 ) {
             HAL_DBG_TRACE_INFO_VALUE("DONE\r\n");
             return 0;
-        } else {
-            HAL_DBG_TRACE_ERROR("Failed to set accelerometer data rate\r\n");
-            return -1;
         }
-    } else {
-        HAL_DBG_TRACE_ERROR("Failed to set data rate\r\n");
-        return -1;
     }
+    HAL_DBG_TRACE_ERROR("Failed to set data rate\r\n");
+    return -1;
 }
 
-int32_t lis2de12_block_data_update_set( uint8_t val ) {
-    HAL_DBG_TRACE_INFO("Setting block data update...");
+int32_t setLIS2DE12_Block_Data_Update( uint8_t val ) {
+    HAL_DBG_TRACE_INFO("Setting block data update... ");
 
     lis2de12_ctrl_reg4_t ctrl_reg4;
     if( lis2de12_read_reg( LIS2DE12_CTRL_REG4, ( uint8_t* ) &ctrl_reg4, 1 ) == 0 ) {
-        ctrl_reg4.bdu = !val;
+        ctrl_reg4.bdu = 1;
         if ( lis2de12_write_reg( LIS2DE12_CTRL_REG4, ( uint8_t* ) &ctrl_reg4, 1 ) == 0 ) {
             HAL_DBG_TRACE_INFO_VALUE("DONE\r\n");
             return 0;
-        } else {
-            HAL_DBG_TRACE_ERROR("Failed to set block data update\r\n");
-            return -1;
         }
-    } else {
-        HAL_DBG_TRACE_ERROR("Failed to set block data update\r\n");
-        return -1;
     }
+    HAL_DBG_TRACE_ERROR("Failed to set block data update\r\n");
+    return -1;
 }
 
-int32_t lis2de12_fifo_mode_set( lis2de12_fm_t val ) {
-    HAL_DBG_TRACE_INFO("Setting FIFO mode...");
+int32_t setLIS2DE12_Fifo_Mode( lis2de12_fm_t val ) {
+    HAL_DBG_TRACE_INFO("Setting FIFO mode... ");
 
     lis2de12_fifo_ctrl_reg_t fifo_ctrl_reg;
     if( lis2de12_read_reg( LIS2DE12_FIFO_CTRL_REG, ( uint8_t* ) &fifo_ctrl_reg, 1 ) == 0 ) {
@@ -139,18 +145,14 @@ int32_t lis2de12_fifo_mode_set( lis2de12_fm_t val ) {
         if ( lis2de12_write_reg( LIS2DE12_FIFO_CTRL_REG, ( uint8_t* ) &fifo_ctrl_reg, 1 ) == 0 ) {
             HAL_DBG_TRACE_INFO_VALUE("DONE\r\n");
             return 0;
-        } else {
-            HAL_DBG_TRACE_ERROR("Failed to set FIFO mode\r\n");
-            return -1;
         }
-    } else {
-        HAL_DBG_TRACE_ERROR("Failed to set FIFO mode\r\n");
-        return -1;
     }
+    HAL_DBG_TRACE_ERROR("Failed to set FIFO mode\r\n");
+    return -1;
 }
 
-int32_t lis2de12_full_scale_set( lis2de12_fs_t val ) {
-    HAL_DBG_TRACE_INFO("Setting full scale...");
+int32_t setLIS2DE12_Full_Scale( lis2de12_fs_t val ) {
+    HAL_DBG_TRACE_INFO("Setting full scale... ");
 
     lis2de12_ctrl_reg4_t ctrl_reg4;
     if( lis2de12_read_reg( LIS2DE12_CTRL_REG4, ( uint8_t* ) &ctrl_reg4, 1 ) == 0 ) {
@@ -158,18 +160,14 @@ int32_t lis2de12_full_scale_set( lis2de12_fs_t val ) {
         if ( lis2de12_write_reg( LIS2DE12_CTRL_REG4, ( uint8_t* ) &ctrl_reg4, 1 ) == 0 ) {
             HAL_DBG_TRACE_INFO_VALUE("DONE\r\n");
             return 0;
-        } else {
-            HAL_DBG_TRACE_ERROR("Failed to set full scale\r\n");
-            return -1;
         }
-    } else {
-        HAL_DBG_TRACE_ERROR("Failed to set full scale\r\n");
-        return -1;
     }
+    HAL_DBG_TRACE_ERROR("Failed to set full scale\r\n");
+    return -1;
 }
 
-int32_t lis2de12_high_pass_int_conf_set( lis2de12_hp_t val ) {
-    HAL_DBG_TRACE_INFO("Setting high pass filter...");
+int32_t setLIS2DE12_High_Pass_Int_Conf( lis2de12_hp_t val ) {
+    HAL_DBG_TRACE_INFO("Setting high pass filter... ");
 
     lis2de12_ctrl_reg2_t ctrl_reg2;
     if( lis2de12_read_reg( LIS2DE12_CTRL_REG2, ( uint8_t* ) &ctrl_reg2, 1 ) == 0 ) {
@@ -177,29 +175,24 @@ int32_t lis2de12_high_pass_int_conf_set( lis2de12_hp_t val ) {
         if ( lis2de12_write_reg( LIS2DE12_CTRL_REG2, ( uint8_t* ) &ctrl_reg2, 1 ) == 0 ) {
             HAL_DBG_TRACE_INFO_VALUE("DONE\r\n");
             return 0;
-        } else {
-            HAL_DBG_TRACE_ERROR("Failed to set high pass filter\r\n");
-            return -1;
         }
-    } else {
-        HAL_DBG_TRACE_ERROR("Failed to set high pass filter\r\n");
-        return -1;
     }
+    HAL_DBG_TRACE_ERROR("Failed to set high pass filter\r\n");
+    return -1;
 }
 
 int32_t lis2de12_pin_int1_config_set( lis2de12_ctrl_reg3_t* val ) {
-    HAL_DBG_TRACE_INFO("Setting pin int1 config...");
-    if (lis2de12_write_reg( LIS2DE12_CTRL_REG3, ( uint8_t* ) val, 1 ) != 0) {
+    HAL_DBG_TRACE_INFO("Setting pin int1 config... ");
+    if (lis2de12_write_reg( LIS2DE12_CTRL_REG3, ( uint8_t* ) val, 1 ) == 0) {
         HAL_DBG_TRACE_INFO_VALUE("DONE\r\n");
         return 0;
-    } else {
-        HAL_DBG_TRACE_ERROR("Failed to set pin int1 config\r\n");
-        return -1;
     }
+    HAL_DBG_TRACE_ERROR("Failed to set pin int1 config\r\n");
+    return -1;
 }
 
 int32_t lis2de12_int1_pin_notification_mode_set( lis2de12_lir_int1_t val ) {
-    HAL_DBG_TRACE_INFO("Setting int1 pin notification mode...");
+    HAL_DBG_TRACE_INFO("Setting int1 pin notification mode... ");
     lis2de12_ctrl_reg5_t ctrl_reg5;
 
     if( lis2de12_read_reg( LIS2DE12_CTRL_REG5, ( uint8_t* ) &ctrl_reg5, 1 ) == 0 ) {
@@ -207,29 +200,24 @@ int32_t lis2de12_int1_pin_notification_mode_set( lis2de12_lir_int1_t val ) {
         if ( lis2de12_write_reg( LIS2DE12_CTRL_REG5, ( uint8_t* ) &ctrl_reg5, 1 ) == 0 ) {
             HAL_DBG_TRACE_INFO_VALUE("DONE\r\n");
             return 0;
-        } else {
-            HAL_DBG_TRACE_ERROR("Failed to set int1 pin notification mode\r\n");
-            return -1;
         }
-    } else {
-        HAL_DBG_TRACE_ERROR("Failed to set int1 pin notification mode\r\n");
-        return -1;
     }
+    HAL_DBG_TRACE_ERROR("Failed to set int1 pin notification mode\r\n");
+    return -1;
 }
 
 int32_t lis2de12_int1_gen_conf_set( lis2de12_int1_cfg_t* val ) {
-    HAL_DBG_TRACE_INFO("Setting int1 gen conf...");
-    if (lis2de12_write_reg( LIS2DE12_INT1_CFG, ( uint8_t* ) val, 1 ) != 0) {
+    HAL_DBG_TRACE_INFO("Setting int1 gen conf... ");
+    if (lis2de12_write_reg( LIS2DE12_INT1_CFG, ( uint8_t* ) val, 1 ) == 0) {
         HAL_DBG_TRACE_INFO_VALUE("DONE\r\n");
         return 0;
-    } else {
-        HAL_DBG_TRACE_ERROR("Failed to set int1 gen conf\r\n");
-        return -1;
     }
+    HAL_DBG_TRACE_ERROR("Failed to set int1 gen conf\r\n");
+    return -1;
 }
 
 int32_t lis2de12_int1_gen_threshold_set( uint8_t val ) {
-    HAL_DBG_TRACE_INFO("Setting int1 gen threshold...");
+    HAL_DBG_TRACE_INFO("Setting int1 gen threshold... ");
 
     lis2de12_int1_ths_t int1_ths;
     if( lis2de12_read_reg( LIS2DE12_INT1_THS, ( uint8_t* ) &int1_ths, 1 ) == 0 ) {
@@ -237,18 +225,14 @@ int32_t lis2de12_int1_gen_threshold_set( uint8_t val ) {
         if ( lis2de12_write_reg( LIS2DE12_INT1_THS, ( uint8_t* ) &int1_ths, 1 ) == 0 ) {
             HAL_DBG_TRACE_INFO_VALUE("DONE\r\n");
             return 0;
-        } else {
-            HAL_DBG_TRACE_ERROR("Failed to set int1 gen threshold\r\n");
-            return -1;
         }
-    } else {
-        HAL_DBG_TRACE_ERROR("Failed to set int1 gen threshold\r\n");
-        return -1;
     }
+    HAL_DBG_TRACE_ERROR("Failed to set int1 gen threshold\r\n");
+    return -1;
 }
 
 int32_t lis2de12_int1_gen_duration_set( uint8_t val ) {
-    HAL_DBG_TRACE_INFO("Setting int1 gen duration...");
+    HAL_DBG_TRACE_INFO("Setting int1 gen duration... ");
 
     lis2de12_int1_duration_t int1_duration;
     if( lis2de12_read_reg( LIS2DE12_INT1_DURATION, ( uint8_t* ) &int1_duration, 1 ) == 0 ) {
@@ -256,30 +240,25 @@ int32_t lis2de12_int1_gen_duration_set( uint8_t val ) {
         if ( lis2de12_write_reg( LIS2DE12_INT1_DURATION, ( uint8_t* ) &int1_duration, 1 ) == 0 ) {
             HAL_DBG_TRACE_INFO_VALUE("DONE\r\n");
             return 0;
-        } else {
-            HAL_DBG_TRACE_ERROR("Failed to set int1 gen duration\r\n");
-            return -1;
         }
-    } else {
-        HAL_DBG_TRACE_ERROR("Failed to set int1 gen duration\r\n");
-        return -1;
     }
+    HAL_DBG_TRACE_ERROR("Failed to set int1 gen duration\r\n");
+    return -1;
 }
 
-void init_accelerometer(I2C_HandleTypeDef hi2c1) {
-    HAL_DBG_TRACE_INFO("Initilizing accelerometer...");
+void initLIS2DE12(I2C_HandleTypeDef hi2c1) {
+    HAL_DBG_TRACE_INFO("Initilizing LIS2DE12... ");
 
     _hi2c1 = hi2c1;
 
+    /* Check device ID */
     int i = 0;
     uint8_t who_am_i;
-
-    /* Check device ID */
     while( ( i <= 5 ) && ( who_am_i != LIS2DE12_ID ) ) {
         HAL_I2C_Mem_Read(&_hi2c1, LIS2DE12_I2C_ADD_H, LIS2DE12_WHO_AM_I, I2C_MEMADD_SIZE_8BIT, &who_am_i, 1, 5000);
         if( who_am_i != LIS2DE12_ID ) {
             if( i == 5 ) {
-                HAL_DBG_TRACE_ERROR("LIS2DE12 not found\r\n");
+                HAL_DBG_TRACE_ERROR("Failed to initilize LIS2DE12");
                 break;
             }
         }
@@ -287,54 +266,59 @@ void init_accelerometer(I2C_HandleTypeDef hi2c1) {
     }
     HAL_DBG_TRACE_INFO_VALUE("DONE (Device ID: 0x%02X)\r\n", who_am_i);
 
-    /* Set Output Data Rate to 10Hz */
-    lis2de12_data_rate_set( LIS2DE12_ODR_10Hz );
+    enableLIS2DE12_Temperature_Sensor( );
+
+    /* Set Output Data Rate to 1Hz */
+    setLIS2DE12_Data_Rate( LIS2DE12_ODR_1Hz );
 
     /* Enable Block Data Update */
-    lis2de12_block_data_update_set( PROPERTY_ENABLE );
+    setLIS2DE12_Block_Data_Update( PROPERTY_ENABLE );
 
-    /* Enable bypass mode */
-    lis2de12_fifo_mode_set( LIS2DE12_BYPASS_MODE );
+    // /* Enable bypass mode */
+    // setLIS2DE12_Fifo_Mode( LIS2DE12_BYPASS_MODE );
 
-    /* Set full scale to 2g */
-    lis2de12_full_scale_set( LIS2DE12_2g );
 
-    /* Motion detection setup */
-    lis2de12_ctrl_reg1_t ctrl_reg1;
-    lis2de12_read_reg( LIS2DE12_CTRL_REG1, ( uint8_t* ) &ctrl_reg1, 1 );
-    ctrl_reg1.xen  = 1;
-    ctrl_reg1.yen  = 1;
-    ctrl_reg1.zen  = 1;
-    ctrl_reg1.lpen = 1;
-    lis2de12_write_reg( LIS2DE12_CTRL_REG1, ( uint8_t* ) &ctrl_reg1, 1 );
+    
 
-    lis2de12_high_pass_int_conf_set( LIS2DE12_ON_INT1_GEN );
+    // /* Set full scale to 2g */
+    // setLIS2DE12_Full_Scale( LIS2DE12_2g );
 
-    lis2de12_ctrl_reg3_t ctrl_reg3;
-    ctrl_reg3.i1_zyxda    = 0;
-    ctrl_reg3.i1_ia1      = 1;
-    ctrl_reg3.i1_ia2      = 0;
-    ctrl_reg3.i1_click    = 0;
-    ctrl_reg3.i1_overrun  = 0;
-    ctrl_reg3.i1_wtm      = 0;
-    ctrl_reg3.not_used_01 = 0;
-    ctrl_reg3.not_used_02 = 0;
-    lis2de12_pin_int1_config_set( &ctrl_reg3 );
+    // /* Motion detection setup */
+    // lis2de12_ctrl_reg1_t ctrl_reg1;
+    // lis2de12_read_reg( LIS2DE12_CTRL_REG1, ( uint8_t* ) &ctrl_reg1, 1 );
+    // ctrl_reg1.xen  = 1;
+    // ctrl_reg1.yen  = 1;
+    // ctrl_reg1.zen  = 1;
+    // ctrl_reg1.lpen = 1;
+    // lis2de12_write_reg( LIS2DE12_CTRL_REG1, ( uint8_t* ) &ctrl_reg1, 1 );
 
-    lis2de12_int1_pin_notification_mode_set( LIS2DE12_INT1_LATCHED );
+    // setLIS2DE12_High_Pass_Int_Conf( LIS2DE12_ON_INT1_GEN );
 
-    lis2de12_int1_cfg_t  lis2de12_int1_cfg;
-    lis2de12_int1_cfg.xhie = 1;
-    lis2de12_int1_cfg.yhie = 1;
-    lis2de12_int1_cfg.zhie = 1;
-    lis2de12_int1_gen_conf_set( &lis2de12_int1_cfg );
+    // lis2de12_ctrl_reg3_t ctrl_reg3;
+    // ctrl_reg3.i1_zyxda    = 0;
+    // ctrl_reg3.i1_ia1      = 1;
+    // ctrl_reg3.i1_ia2      = 0;
+    // ctrl_reg3.i1_click    = 0;
+    // ctrl_reg3.i1_overrun  = 0;
+    // ctrl_reg3.i1_wtm      = 0;
+    // ctrl_reg3.not_used_01 = 0;
+    // ctrl_reg3.not_used_02 = 0;
+    // lis2de12_pin_int1_config_set( &ctrl_reg3 );
 
-    lis2de12_int1_gen_threshold_set( 4 );
+    // lis2de12_int1_pin_notification_mode_set( LIS2DE12_INT1_LATCHED );
 
-    lis2de12_int1_gen_duration_set( 3 );
+    // lis2de12_int1_cfg_t  lis2de12_int1_cfg;
+    // lis2de12_int1_cfg.xhie = 1;
+    // lis2de12_int1_cfg.yhie = 1;
+    // lis2de12_int1_cfg.zhie = 1;
+    // lis2de12_int1_gen_conf_set( &lis2de12_int1_cfg );
+
+    // lis2de12_int1_gen_threshold_set( 4 );
+
+    // lis2de12_int1_gen_duration_set( 3 );
 }
 
-int32_t lis2de12_temp_data_ready_get( uint8_t* val ) {
+int32_t checkLIS2DE12_Temperature_Data_is_Ready( ) {
     HAL_DBG_TRACE_INFO("Checking if temperature data is ready... ");
 
     lis2de12_status_reg_aux_t status_reg_aux;
@@ -343,14 +327,34 @@ int32_t lis2de12_temp_data_ready_get( uint8_t* val ) {
         HAL_DBG_TRACE_ERROR("Failed to check if temperature data is ready\r\n");
         return -1;
     }
-    *val = status_reg_aux.tda;
-    if ( *val == 1 ) {
-        HAL_DBG_TRACE_WARNING("NOT READY\r\n");
-        return -1;
-    } else {
+
+    if ( status_reg_aux.tda == 1 && status_reg_aux.tor == 0) {
         HAL_DBG_TRACE_INFO_VALUE("READY\r\n");
         return 0;
     }
+    HAL_DBG_TRACE_WARNING("NOT READY (STATUS_REG_AUX: 0x%02X)\r\n", status_reg_aux);
+    return -1;
+}
+
+int32_t enableLIS2DE12_Temperature_Sensor( ) {
+    HAL_DBG_TRACE_INFO("Enabeling LIS2DE12 internal temperature sensor... ");
+    
+    lis2de12_temp_cfg_reg_t temp_cfg_reg;
+    if (lis2de12_read_reg( LIS2DE12_TEMP_CFG_REG, ( uint8_t* ) &temp_cfg_reg, 1 ) != 0 ) {
+        HAL_DBG_TRACE_ERROR("Failed to enable LIS2DE12 internal temperature sensor\r\n");
+        return -1;
+    }
+    HAL_DBG_TRACE_INFO_VALUE("DONE\r\n");
+    return 0;
+
+    // temp_cfg_reg.temp_en = ( uint8_t ) val;
+    // if ( lis2de12_write_reg( LIS2DE12_TEMP_CFG_REG, ( uint8_t* ) &temp_cfg_reg, 1 ) == 0 ) {
+    //     HAL_DBG_TRACE_INFO_VALUE("DONE\r\n");
+    //     return 0;
+    // } else {
+    //     HAL_DBG_TRACE_ERROR("Failed to enable LIS2DE12 internal temperature sensor\r\n");
+    //     return -1;
+    // }
 }
 
 int32_t lis2de12_temperature_raw_get( uint16_t* raw_temp ) {
@@ -378,11 +382,8 @@ int32_t lis2de12_temperature_raw_get( uint16_t* raw_temp ) {
 
 int16_t acc_get_temperature( void ) {
     uint16_t temperature;
-    uint8_t  is_ready = 0;
 
-    lis2de12_temp_data_ready_get( &is_ready );
-
-    if (is_ready == 0) {
+    if (checkLIS2DE12_Temperature_Data_is_Ready( ) == 0) {
         lis2de12_temperature_raw_get( &temperature );
     }
 

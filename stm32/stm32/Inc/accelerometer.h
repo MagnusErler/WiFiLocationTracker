@@ -147,6 +147,19 @@ typedef struct {
 #define LIS2DE12_OUT_TEMP_H            0x0DU
 #define LIS2DE12_WHO_AM_I              0x0FU
 
-void init_accelerometer(I2C_HandleTypeDef hi2c1);
+typedef enum {
+  LIS2DE12_TEMP_DISABLE  = 0,
+  LIS2DE12_TEMP_ENABLE   = 3,
+} lis2de12_temp_en_t;
+
+#define LIS2DE12_TEMP_CFG_REG          0x1FU
+typedef struct {
+  uint8_t not_used_01       : 6;
+  uint8_t temp_en           : 2;
+} lis2de12_temp_cfg_reg_t;
+
+void initLIS2DE12(I2C_HandleTypeDef hi2c1);
 
 int16_t acc_get_temperature( void );
+
+int32_t enableLIS2DE12_Temperature_Sensor( void );

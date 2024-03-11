@@ -188,7 +188,8 @@ int main(void)
 
 
 
-  init_accelerometer(hi2c1);
+  initLIS2DE12(hi2c1);
+
   // uint8_t who_am_i = 0;
   // HAL_I2C_Mem_Read(&hi2c1, 0x33U, 0x0FU, I2C_MEMADD_SIZE_8BIT, &who_am_i, 1, HAL_MAX_DELAY);
 
@@ -245,7 +246,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
     HAL_DBG_TRACE_MSG_COLOR("\r\nWaiting for next while loop...\r\n", "\x1B[0;34m");
-    HAL_Delay(2000);
+    HAL_Delay(5000);
   }
   /* USER CODE END 3 */
 }
