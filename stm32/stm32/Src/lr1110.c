@@ -188,7 +188,7 @@ void calibrateLR1110( const void* context, uint8_t calib_params) {
 }
 
 void clearLR1110_Errors( const void* context) {
-  HAL_DBG_TRACE_INFO("Clearing LR1110 errors... ");
+  HAL_DBG_TRACE_INFO("Clearing all pending error flags...");
 
   uint8_t cbuffer[LR1110_CMD_LENGTH_CLEAR_ERRORS];
 

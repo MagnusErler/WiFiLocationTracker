@@ -357,6 +357,7 @@ lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer
 
     // Start of 1st SPI transaction
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_RESET );
+    if(_showStat1 || _showStat2) {HAL_DBG_TRACE_MSG_COLOR("\r\nCOMMAND:", HAL_DBG_TRACE_COLOR_PURPLE);}
     if (_lr1110_spi_write( radio->spi, cbuffer, cbuffer_length, 1000 ) != LR1110_SPI_STATUS_OK) {
         HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
         return LR1110_SPI_STATUS_ERROR;
@@ -370,6 +371,7 @@ lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer
 
     // Start of 2nd SPI transaction
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_RESET );
+    if(_showStat1 || _showStat2) {HAL_DBG_TRACE_MSG_COLOR("\r\nRESPONSE:", HAL_DBG_TRACE_COLOR_PURPLE);}
     if (_lr1110_spi_write( radio->spi, 0x00, 1, 1000 ) != LR1110_SPI_STATUS_OK) {
         HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
         return LR1110_SPI_STATUS_ERROR;
@@ -400,6 +402,7 @@ lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffe
 
     // Start of SPI transaction
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_RESET );
+    if(_showStat1 || _showStat2) {HAL_DBG_TRACE_MSG_COLOR("\r\nCOMMAND:", HAL_DBG_TRACE_COLOR_PURPLE);}
     if (_lr1110_spi_write( radio->spi, cbuffer, cbuffer_length, 1000 ) != LR1110_SPI_STATUS_OK) {
         HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
         return LR1110_SPI_STATUS_ERROR;
