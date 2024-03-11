@@ -16,9 +16,10 @@
 #include <string.h>     // for memset
 
 // VARIABLES FOR DEBUGGING
-const bool _showStat1 = true; // Print out stat1 when sending commands   _debugStat1
-const bool _showStat2 = true; // Print out stat2 when sending commands
-const bool _printIRQ = true; // Print out extra data (if any) when sending commands
+const bool _debug = false;
+const bool _showStat1 = _debug; // Print out stat1 when sending commands   _debugStat1
+const bool _showStat2 = _debug; // Print out stat2 when sending commands
+const bool _printIRQ = _debug; // Print out extra data (if any) when sending commands
 
 radio_t* radio;
 void* _context;
@@ -48,16 +49,16 @@ lr1110_spi_status_t _waitForBusyState( const GPIO_PinState state, const uint32_t
 }
 
 void printStat1(uint8_t stat1) {
-    HAL_DBG_TRACE_MSG_COLOR("\r\nStat1\r\n", HAL_DBG_TRACE_COLOR_YELLOW);
-    HAL_DBG_TRACE_PRINTF("rbuffer[0] ");
-    print_binary(stat1);
-    HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", stat1);
-
-    // Extracting interrupt status (bit 0)
-    unsigned char interruptStatus = (stat1 & 0x01) ? 1 : 0;
-    
-    // Printing interrupt status
     if(_showStat1) {
+        HAL_DBG_TRACE_MSG_COLOR("\r\nStat1\r\n", HAL_DBG_TRACE_COLOR_YELLOW);
+        HAL_DBG_TRACE_PRINTF("rbuffer[0] ");
+        print_binary(stat1);
+        HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", stat1);
+
+        // Extracting interrupt status (bit 0)
+        unsigned char interruptStatus = (stat1 & 0x01) ? 1 : 0;
+        
+        // Printing interrupt status
         if (interruptStatus == 0) {
             HAL_DBG_TRACE_PRINTF("Interrupt Status: No interrupt active\r\n");
         } else {
@@ -193,15 +194,15 @@ void printIrq(const uint8_t* buffer, const uint16_t buffer_length) {
         irq_status |= (uint32_t)buffer[i] << (8 * (length_to_read - i - 1));
     }
 
-    // Print binary representation of IRQ status
-    HAL_DBG_TRACE_PRINTF("IRQ Status: ");
-    for (int i = 31; i >= 0; --i) {
-        HAL_DBG_TRACE_PRINTF("%d", (irq_status >> i) & 0x01);
-        if (i % 4 == 0) {
-            HAL_DBG_TRACE_PRINTF(" ");
-        }
-    }
-    HAL_DBG_TRACE_PRINTF("(0x%08X)\r\n", irq_status);
+    // // Print binary representation of IRQ status
+    // HAL_DBG_TRACE_PRINTF("IRQ Status: ");
+    // for (int i = 31; i >= 0; --i) {
+    //     HAL_DBG_TRACE_PRINTF("%d", (irq_status >> i) & 0x01);
+    //     if (i % 4 == 0) {
+    //         HAL_DBG_TRACE_PRINTF(" ");
+    //     }
+    // }
+    // HAL_DBG_TRACE_PRINTF("(0x%08X)\r\n", irq_status);
 
     // Interpretations
     bool otherErrorDetected = false; //An error other than a command error occurred
