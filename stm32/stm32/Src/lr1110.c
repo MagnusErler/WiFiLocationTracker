@@ -209,6 +209,10 @@ void clearLR1110_IRQ( const void* context) {
 
   cbuffer[0] = ( uint8_t )( LR1110_CLEAR_INTERRUPTS_CMD >> 8 );
   cbuffer[1] = ( uint8_t )( LR1110_CLEAR_INTERRUPTS_CMD >> 0 );
+  cbuffer[2] = 0b11111111;
+  cbuffer[3] = 0b11111111;
+  cbuffer[4] = 0b11111111;
+  cbuffer[5] = 0b11111111;
 
   if (lr1110_spi_write( context, cbuffer, LR1110_CMD_LENGTH_CLEAR_INTERRUPTS ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
