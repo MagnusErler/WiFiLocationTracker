@@ -76,10 +76,10 @@ void setLR1110_LoRa_Modulation_Params( const void* context, const uint8_t sf, co
 
     cbuffer[0] = ( uint8_t )( LR1110_LORA_CMD_SET_MODULATION_PARAMS >> 8 );
     cbuffer[1] = ( uint8_t )( LR1110_LORA_CMD_SET_MODULATION_PARAMS >> 0 );
-    cbuffer[2] = sf;
-    cbuffer[3] = bwl;
-    cbuffer[4] = cr;
-    cbuffer[5] = low_data_rate_ptimize;
+    cbuffer[2] = ( uint8_t ) sf;
+    cbuffer[3] = ( uint8_t ) bwl;
+    cbuffer[4] = ( uint8_t ) cr;
+    cbuffer[5] = ( uint8_t ) low_data_rate_ptimize;
 
     if ( lr1110_spi_write( context, cbuffer, LR1110_LORA_CMD_LENGTH_SET_MODULATION_PARAMS ) == LR1110_SPI_STATUS_OK ) {
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
@@ -95,11 +95,11 @@ void setLR1110_LoRa_Packet_Params( const void* context, const uint8_t pb_lenght_
 
     cbuffer[0] = ( uint8_t )( LR1110_LORA_CMD_SET_PACKET_PARAMS >> 8 );
     cbuffer[1] = ( uint8_t )( LR1110_LORA_CMD_SET_PACKET_PARAMS >> 0 );
-    cbuffer[2] = pb_lenght_tx1;
-    cbuffer[3] = pb_lenght_tx2;
-    cbuffer[4] = header_type;
-    cbuffer[5] = crc;           // Cycle Redundancy Check
-    cbuffer[6] = invert_iq;
+    cbuffer[2] = ( uint8_t ) pb_lenght_tx1;
+    cbuffer[3] = ( uint8_t ) pb_lenght_tx2;
+    cbuffer[4] = ( uint8_t ) header_type;
+    cbuffer[5] = ( uint8_t ) crc;           // Cycle Redundancy Check
+    cbuffer[6] = ( uint8_t ) invert_iq;
 
     if ( lr1110_spi_write( context, cbuffer, LR1110_LORA_CMD_LENGTH_SET_PACKET_PARAMS ) == LR1110_SPI_STATUS_OK ) {
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
@@ -116,10 +116,10 @@ void setLR1110_LoRa_PA_Config( const void* context, const uint8_t pa_sel, const 
 
     cbuffer[0] = ( uint8_t )( LR1110_LORA_CMD_SET_PA_CONFIG >> 8 );
     cbuffer[1] = ( uint8_t )( LR1110_LORA_CMD_SET_PA_CONFIG >> 0 );
-    cbuffer[2] = pa_sel;
-    cbuffer[3] = reg_pa_supply;
-    cbuffer[4] = pa_duty_cycle;
-    cbuffer[5] = pa_hp_sel;
+    cbuffer[2] = ( uint8_t ) pa_sel;
+    cbuffer[3] = ( uint8_t ) reg_pa_supply;
+    cbuffer[4] = ( uint8_t ) pa_duty_cycle;
+    cbuffer[5] = ( uint8_t ) pa_hp_sel;
 
     if ( lr1110_spi_write( context, cbuffer, LR1110_LORA_CMD_LENGTH_SET_PA_CONFIG ) == LR1110_SPI_STATUS_OK ) {
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
@@ -135,8 +135,8 @@ void setLR1110_LoRa_TX_Params( const void* context, const uint8_t tx_power, cons
 
     cbuffer[0] = ( uint8_t )( LR1110_LORA_CMD_SET_TX_PARAMS >> 8 );
     cbuffer[1] = ( uint8_t )( LR1110_LORA_CMD_SET_TX_PARAMS >> 0 );
-    cbuffer[2] = tx_power;
-    cbuffer[3] = ramp_time;
+    cbuffer[2] = ( uint8_t ) tx_power;
+    cbuffer[3] = ( uint8_t ) ramp_time;
 
     if ( lr1110_spi_write( context, cbuffer, LR1110_LORA_CMD_LENGTH_SET_TX_PARAMS ) == LR1110_SPI_STATUS_OK ) {
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
@@ -152,7 +152,7 @@ void setLR1110_LoRa_Public_Network( const void* context, const uint8_t public_ne
 
     cbuffer[0] = ( uint8_t )( LR1110_LORA_CMD_SET_PUBLIC_NETWORK >> 8 );
     cbuffer[1] = ( uint8_t )( LR1110_LORA_CMD_SET_PUBLIC_NETWORK >> 0 );
-    cbuffer[2] = public_network;
+    cbuffer[2] = ( uint8_t ) public_network;
 
     if ( lr1110_spi_write( context, cbuffer, LR1110_LORA_CMD_LENGTH_SET_PUBLIC_NETWORK ) == LR1110_SPI_STATUS_OK ) {
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
@@ -203,9 +203,16 @@ void setLR1110_TX( const void* context, const uint32_t timeout_ms) {
 
     cbuffer[0] = ( uint8_t )( 0x020A >> 8 );
     cbuffer[1] = ( uint8_t )( 0x020A >> 0 );
-    cbuffer[2] = (uint8_t)(timeout >> 16);
-    cbuffer[3] = (uint8_t)(timeout >> 8);
-    cbuffer[4] = (uint8_t)(timeout >> 0);
+    cbuffer[2] = ( uint8_t )( timeout >> 16 );
+    cbuffer[3] = ( uint8_t )( timeout >> 8 );
+    cbuffer[4] = ( uint8_t )( timeout >> 0 );
+
+    if ( lr1110_spi_write( context, cbuffer, 2+3 ) == LR1110_SPI_STATUS_OK ) {
+        HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+    } else {
+        HAL_DBG_TRACE_ERROR("Failed to set TX mode\r\n");
+    }
+}
 
     if ( lr1110_spi_write( context, cbuffer, 2+3 ) == LR1110_SPI_STATUS_OK ) {
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
