@@ -117,3 +117,5 @@ void writeLR1110_Buffer8( const void* context, const uint8_t data);
  * @param [in] timeout Timeout
  */
 void setLR1110_TX( const void* context, const uint32_t timeout);
+
+void joinAccepts( const void* context, const uint8_t dec_key_id, const uint8_t ver_key_id, const uint8_t lorawan_ver );

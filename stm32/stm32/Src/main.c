@@ -170,6 +170,8 @@ int main(void)
   getLR1110_Temperature(lr1110_context);
   getLR1110_Battery_Voltage(lr1110_context);
 
+  joinAccepts(lr1110_context, 0x00, 0x00, 1);
+
   // GNSS
   // setLR1110_GNSS_Constellation(lr1110_context, 0b11);
   // getLR1110_GNSS_Version(lr1110_context);
