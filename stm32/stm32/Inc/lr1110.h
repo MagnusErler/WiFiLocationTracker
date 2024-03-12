@@ -78,7 +78,7 @@ void getLR1110_ChipEUI( const void* context );
  * @param [in] context Radio abstraction
  * 
  */
-void getLR1110_Semtech_JoinEui( const void* context );
+void getLR1110_Semtech_JoinEui( const void* context, uint8_t* join_eui  );
 
 /*!
  * @brief Get LR1110 Root Keys and Pin

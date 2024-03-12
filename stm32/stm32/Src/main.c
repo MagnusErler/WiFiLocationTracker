@@ -161,7 +161,9 @@ int main(void)
   getLR1110_Bootloader_Version(lr1110_context);
   getLR1110_WiFi_Version(lr1110_context);
   getLR1110_ChipEUI(lr1110_context);
-  getLR1110_Semtech_JoinEui(lr1110_context);
+  uint8_t join_eui[8] = {0};
+  getLR1110_Semtech_JoinEui(lr1110_context, join_eui);
+  HAL_DBG_TRACE_INFO("JoinEUI: %02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X\r\n", join_eui[0], join_eui[1], join_eui[2], join_eui[3], join_eui[4], join_eui[5], join_eui[6], join_eui[7]);
   getLR1110_Root_Keys_And_Pin(lr1110_context);
   getLR1110_Temperature(lr1110_context);
   getLR1110_Battery_Voltage(lr1110_context);

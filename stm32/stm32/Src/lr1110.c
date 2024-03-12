@@ -79,7 +79,7 @@ void getLR1110_ChipEUI( const void* context ) {
   }
 }
 
-void getLR1110_Semtech_JoinEui( const void* context ) {
+void getLR1110_Semtech_JoinEui( const void* context, uint8_t* join_eui ) {
   HAL_DBG_TRACE_INFO("Getting LR1110 Semtech JoinEUI... ");
 
   uint8_t cbuffer[LR1110_CMD_LENGTH_GET_SEMTECH_JOINEUI];
@@ -90,6 +90,9 @@ void getLR1110_Semtech_JoinEui( const void* context ) {
 
   if (lr1110_spi_read( context, cbuffer, LR1110_CMD_LENGTH_GET_SEMTECH_JOINEUI, rbuffer, LR1110_RES_LENGTH_GET_SEMTECH_JOINEUI ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_INFO_VALUE("%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X\r\n", rbuffer[1], rbuffer[2], rbuffer[3], rbuffer[4], rbuffer[5], rbuffer[6], rbuffer[7], rbuffer[8]);
+    for (int i = 0; i < 8; i++) {
+      join_eui[i] = rbuffer[i+1];
+    }
   } else {
     HAL_DBG_TRACE_ERROR("Failed to get LR1110 Semtech JoinEUI\r\n");
   }
