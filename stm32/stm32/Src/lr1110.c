@@ -102,7 +102,7 @@ void getLR1110_Semtech_JoinEui( const void* context, uint8_t* join_eui ) {
 }
 
 void getLR1110_Root_Keys_And_Pin( const void* context, uint8_t* pin ) {
-  HAL_DBG_TRACE_INFO("Getting LR1110 APPKey and NwkKey, and clauclating the corresponding PIN... ");
+  HAL_DBG_TRACE_INFO("Getting LR1110 APPKey and NwkKey, and calculating the corresponding PIN... ");
 
   uint8_t cbuffer[LR1110_CMD_LENGTH_GET_ROOT_KEY_AND_PIN];
   uint8_t rbuffer[LR1110_RES_LENGTH_GET_ROOT_KEY_AND_PIN] = { 0 };

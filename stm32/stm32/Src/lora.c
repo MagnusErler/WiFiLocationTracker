@@ -217,7 +217,7 @@ void setLR1110_TX( const void* context, const uint32_t timeout_ms) {
 void joinAccepts( const void* context, const uint8_t dec_key_id, const uint8_t ver_key_id, const uint8_t lorawan_ver ) {
     HAL_DBG_TRACE_INFO("Joining network... ");
 
-    uint8_t cbuffer[2+3];
+    uint8_t cbuffer[2+3+12+16];
     uint8_t rbuffer[1+2] = { 0 };
 
     cbuffer[0] = ( uint8_t )( 0x0504 >> 8 );
@@ -225,6 +225,12 @@ void joinAccepts( const void* context, const uint8_t dec_key_id, const uint8_t v
     cbuffer[2] = ( uint8_t )( dec_key_id );
     cbuffer[3] = ( uint8_t )( ver_key_id );
     cbuffer[4] = ( uint8_t )( lorawan_ver );
+    for (int i = 0; i < 12; i++) {
+        cbuffer[5+i] = ( uint8_t )( 0x01 );
+    }
+    for (int i = 0; i < 16; i++) {
+        cbuffer[5+12+i] = ( uint8_t )( 0x02 );
+    }
 
     if (lr1110_spi_read( context, cbuffer, LR1110_LORA_CMD_LENGTH_GET_PACKET_STATUS, rbuffer, LR1110_LORA_RES_LENGTH_GET_PACKET_STATUS ) == LR1110_SPI_STATUS_OK) {
         switch (rbuffer[1]) {
@@ -250,5 +256,24 @@ void joinAccepts( const void* context, const uint8_t dec_key_id, const uint8_t v
         HAL_DBG_TRACE_PRINTF("Data1: %d\r\n", (int8_t)rbuffer[2]);
     } else {
         HAL_DBG_TRACE_ERROR("Failed to get LoRa packet status\r\n");
+    }
+}
+
+void setLR1110_RF_Frequency( const void* context, const uint32_t rf_frequency) {
+    HAL_DBG_TRACE_INFO("Setting RF frequency... ");
+
+    uint8_t cbuffer[LR1110_LORA_CMD_LENGTH_SET_RF_FREQUENCY];
+
+    cbuffer[0] = ( uint8_t )( LR1110_LORA_CMD_SET_RF_FREQUENCY >> 8 );
+    cbuffer[1] = ( uint8_t )( LR1110_LORA_CMD_SET_RF_FREQUENCY >> 0 );
+    cbuffer[2] = ( uint8_t )( rf_frequency >> 24 );
+    cbuffer[3] = ( uint8_t )( rf_frequency >> 16 );
+    cbuffer[4] = ( uint8_t )( rf_frequency >> 8 );
+    cbuffer[5] = ( uint8_t )( rf_frequency >> 0 );
+
+    if (lr1110_spi_write( context, cbuffer, LR1110_LORA_CMD_LENGTH_SET_RF_FREQUENCY ) == LR1110_SPI_STATUS_OK ) {
+        HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+    } else {
+        HAL_DBG_TRACE_ERROR("Failed to set RF frequency\r\n");
     }
 }

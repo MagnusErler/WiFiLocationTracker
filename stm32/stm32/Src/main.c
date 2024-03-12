@@ -151,7 +151,9 @@ int main(void)
 
   calibrateLR1110( lr1110_context, 0x3F);
 
-  calibrateLR1110_Image( lr1110_context, 0xD7, 0xDB );
+  //calibrateLR1110_Image( lr1110_context, 0xD7, 0xDB );
+
+  setLR1110_RF_Frequency(lr1110_context, 868000000);
   
 
   setLR1110_Dio_Irq_Params(lr1110_context, set_bit_x_to_1(2), set_bit_x_to_1(10));
@@ -170,7 +172,7 @@ int main(void)
   getLR1110_Temperature(lr1110_context);
   getLR1110_Battery_Voltage(lr1110_context);
 
-  joinAccepts(lr1110_context, 0x00, 0x00, 1);
+  joinAccepts(lr1110_context, 0x02, 0x00, 1);
 
   // GNSS
   // setLR1110_GNSS_Constellation(lr1110_context, 0b11);
