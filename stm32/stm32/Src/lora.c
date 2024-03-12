@@ -146,7 +146,7 @@ void setLR1110_LoRa_TX_Params( const void* context, const uint8_t tx_power, cons
 }
 
 void setLR1110_LoRa_Public_Network( const void* context, const uint8_t public_network) {
-    HAL_DBG_TRACE_INFO("Setting LoRa public Network... ");
+    HAL_DBG_TRACE_INFO("Setting LoRa public network... ");
 
     uint8_t cbuffer[LR1110_LORA_CMD_LENGTH_SET_PUBLIC_NETWORK];
 
@@ -195,7 +195,7 @@ void writeLR1110_Buffer8( const void* context, const uint8_t data) {
     }
 }
 
-void setLR1110_TX( const void* context, const uint8_t timeout_ms) {
+void setLR1110_TX( const void* context, const uint32_t timeout_ms) {
     uint32_t timeout = timeout_ms * 32768;
     HAL_DBG_TRACE_INFO("Setting TX mode with timeout of %d ms... ", timeout_ms);
 

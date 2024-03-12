@@ -116,4 +116,4 @@ void writeLR1110_Buffer8( const void* context, const uint8_t data);
  * @param [in] context Radio abstraction
  * @param [in] timeout Timeout
  */
-void setLR1110_TX( const void* context, const uint8_t timeout);
+void setLR1110_TX( const void* context, const uint32_t timeout);

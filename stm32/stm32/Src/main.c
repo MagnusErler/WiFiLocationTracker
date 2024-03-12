@@ -158,12 +158,12 @@ int main(void)
 
   
   // BOOTLOADER
-  // getLR1110_Bootloader_Version(lr1110_context);
-  // getLR1110_WiFi_Version(lr1110_context);
-  // getLR1110_ChipEUI(lr1110_context);
-  // getLR1110_Semtech_JoinEui(lr1110_context);
-  // getLR1110_Temperature(lr1110_context);
-  // getLR1110_Battery_Voltage(lr1110_context);
+  getLR1110_Bootloader_Version(lr1110_context);
+  getLR1110_WiFi_Version(lr1110_context);
+  getLR1110_ChipEUI(lr1110_context);
+  getLR1110_Semtech_JoinEui(lr1110_context);
+  getLR1110_Temperature(lr1110_context);
+  getLR1110_Battery_Voltage(lr1110_context);
 
   // GNSS
   // setLR1110_GNSS_Constellation(lr1110_context, 0b11);
@@ -542,6 +542,7 @@ static void MX_GPIO_Init(void)
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
   if(GPIO_Pin == EVENT_Pin) {
     toggleLED( GPIOB, SNIFFING_LED_Pin );
+    HAL_DBG_TRACE_MSG_COLOR("\r\nINTERRUPT\r\n", HAL_DBG_TRACE_COLOR_CUSTOM);
     getLR1110_Status( lr1110_context );
   } else {
       __NOP();
