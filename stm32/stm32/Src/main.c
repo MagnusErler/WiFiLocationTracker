@@ -162,6 +162,7 @@ int main(void)
   getLR1110_WiFi_Version(lr1110_context);
   getLR1110_ChipEUI(lr1110_context);
   getLR1110_Semtech_JoinEui(lr1110_context);
+  getLR1110_Root_Keys_And_Pin(lr1110_context);
   getLR1110_Temperature(lr1110_context);
   getLR1110_Battery_Voltage(lr1110_context);
 
