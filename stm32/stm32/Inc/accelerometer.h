@@ -158,6 +158,9 @@ typedef struct {
   uint8_t temp_en           : 2;
 } lis2de12_temp_cfg_reg_t;
 
+#define LIS2DE12_ID          0x33U
+#define LIS2DE12_WHO_AM_I    0x0FU
+
 void initLIS2DE12(I2C_HandleTypeDef hi2c1);
 
 int16_t acc_get_temperature( void );
