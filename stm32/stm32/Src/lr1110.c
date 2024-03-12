@@ -101,7 +101,7 @@ void getLR1110_Semtech_JoinEui( const void* context, uint8_t* join_eui ) {
   }
 }
 
-void getLR1110_Root_Keys_And_Pin( const void* context ) {
+void getLR1110_Root_Keys_And_Pin( const void* context, uint8_t* pin ) {
   HAL_DBG_TRACE_INFO("Getting LR1110 APPKey and NwkKey, and clauclating the corresponding PIN... ");
 
   uint8_t cbuffer[LR1110_CMD_LENGTH_GET_ROOT_KEY_AND_PIN];
@@ -112,6 +112,9 @@ void getLR1110_Root_Keys_And_Pin( const void* context ) {
 
   if (lr1110_spi_read( context, cbuffer, LR1110_CMD_LENGTH_GET_ROOT_KEY_AND_PIN, rbuffer, LR1110_RES_LENGTH_GET_ROOT_KEY_AND_PIN ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_INFO_VALUE("PIN: %02X:%02X:%02X:%02X\r\n", rbuffer[1], rbuffer[2], rbuffer[3], rbuffer[4]);
+    for (int i = 0; i < 4; i++) {
+      pin[i] = rbuffer[i+1];
+    }
   } else {
     HAL_DBG_TRACE_ERROR("Failed to get LR1110 APPKey and NwkKey, and calculate the corresponding PIN\r\n");
   }

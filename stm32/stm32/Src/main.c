@@ -112,6 +112,10 @@ int main(void)
   ((radio_t*)lr1110_context)->busy.pin    = BUSY_Pin;
   ((radio_t*)lr1110_context)->hspi        = &hspi1;
 
+  uint8_t chip_eui[8] = {0};
+  uint8_t join_eui[8] = {0};
+  uint8_t pin[4]      = {0};
+
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -160,11 +164,9 @@ int main(void)
   // BOOTLOADER
   getLR1110_Bootloader_Version(lr1110_context);
   getLR1110_WiFi_Version(lr1110_context);
-  uint8_t chip_eui[8] = {0};
   getLR1110_ChipEUI(lr1110_context, chip_eui);
-  uint8_t join_eui[8] = {0};
   getLR1110_Semtech_JoinEui(lr1110_context, join_eui);
-  getLR1110_Root_Keys_And_Pin(lr1110_context);
+  getLR1110_Root_Keys_And_Pin(lr1110_context, pin);
   getLR1110_Temperature(lr1110_context);
   getLR1110_Battery_Voltage(lr1110_context);
 

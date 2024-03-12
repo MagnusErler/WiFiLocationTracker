@@ -85,8 +85,9 @@ void getLR1110_Semtech_JoinEui( const void* context, uint8_t* join_eui  );
  * @brief Get LR1110 Root Keys and Pin
  *
  * @param [in] context Radio abstraction
+ * @param [out] pin Pin
  */
-void getLR1110_Root_Keys_And_Pin( const void* context );
+void getLR1110_Root_Keys_And_Pin( const void* context, uint8_t* pin  );
 
 /*!
  * @brief Get LR1110 Battery Voltage
