@@ -54,7 +54,7 @@ float getLR1110_Temperature( const void* context ) {
     
     HAL_DBG_TRACE_INFO_VALUE("%d.%d °C\r\n", (uint8_t)temperature, (uint8_t)((temperature - (uint8_t)temperature) * 100));
     if ((uint8_t)temperature > 50) {
-      HAL_DBG_TRACE_ERROR("LR1110 temperature is too high. TCXO mode is maybe not set up correctly\r\n");
+      HAL_DBG_TRACE_ERROR("LR1110 temperature is too high. TCXO mode is may not be set up correctly\r\n");
     }
     return temperature;
   } else {
@@ -213,7 +213,7 @@ void calibrateLR1110( const void* context, uint8_t calib_params) {
 }
 
 void clearLR1110_Errors( const void* context) {
-  HAL_DBG_TRACE_INFO("Clearing all pending error flags...");
+  HAL_DBG_TRACE_INFO("Clearing all pending error flags... ");
 
   uint8_t cbuffer[LR1110_CMD_LENGTH_CLEAR_ERRORS];
 
@@ -247,7 +247,7 @@ void clearLR1110_IRQ( const void* context) {
 }
 
 void getLR1110_Errors( const void* context ) {
-  HAL_DBG_TRACE_INFO("Getting LR1110 errors...");
+  HAL_DBG_TRACE_INFO("Getting LR1110 errors... ");
 
   uint8_t cbuffer[LR1110_CMD_LENGTH_GET_ERRORS];
   uint8_t rbuffer[LR1110_RES_LENGTH_GET_ERRORS] = { 0 };

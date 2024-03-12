@@ -312,7 +312,7 @@ int32_t setLIS2DE12_Data_Rate( ) {
 }
 
 int32_t lis2de12_temperature_raw_get( uint16_t* raw_temp ) {
-    HAL_DBG_TRACE_INFO("Getting raw temperature...");
+    HAL_DBG_TRACE_INFO("Getting raw temperature... ");
 
     uint8_t buf_tmp;
     if( lis2de12_read_reg( LIS2DE12_OUT_TEMP_L, &buf_tmp, 1 ) != 0 ) {

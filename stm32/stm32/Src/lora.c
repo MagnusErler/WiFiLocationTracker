@@ -253,7 +253,7 @@ void joinAccepts( const void* context, const uint8_t dec_key_id, const uint8_t v
             HAL_DBG_TRACE_ERROR("RFU\r\n")
             break;
         }
-        HAL_DBG_TRACE_PRINTF("Data1: %d\r\n", (int8_t)rbuffer[2]);
+        HAL_DBG_TRACE_INFO("Data1: %d\r\n", (int8_t)rbuffer[2]);
     } else {
         HAL_DBG_TRACE_ERROR("Failed to get LoRa packet status\r\n");
     }

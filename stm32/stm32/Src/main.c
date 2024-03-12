@@ -152,7 +152,6 @@ int main(void)
   calibrateLR1110( lr1110_context, 0x3F);
 
   // calibrateLR1110_Image( lr1110_context, 0xD7, 0xDB );
-
   setLR1110_RF_Frequency(lr1110_context, 868000000);
   
 
