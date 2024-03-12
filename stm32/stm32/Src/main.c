@@ -145,23 +145,19 @@ int main(void)
 
 
   // clearLR1110_RX_Buffer(lr1110_context);
-  // clearLR1110_RX_Buffer(lr1110_context);
 
   setLR1110_Standby_Mode(lr1110_context, 0x01);
 
   calibrateLR1110( lr1110_context, 0x3F);
 
-  //calibrateLR1110_Image( lr1110_context, 0xD7, 0xDB );
+  // calibrateLR1110_Image( lr1110_context, 0xD7, 0xDB );
 
   setLR1110_RF_Frequency(lr1110_context, 868000000);
   
 
   setLR1110_Dio_Irq_Params(lr1110_context, set_bit_x_to_1(2), set_bit_x_to_1(10));
   
-
-
   // getLR1110_Errors(lr1110_context);
-
   
   // BOOTLOADER
   getLR1110_Bootloader_Version(lr1110_context);
