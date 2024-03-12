@@ -10,16 +10,18 @@
 #define LR1110_LORA_CMD_LENGTH_GET_PACKET_TYPE          LR1110_LORA_CMD_LENGTH_NO_PARAM
 #define LR1110_LORA_CMD_LENGTH_SET_PUBLIC_NETWORK       LR1110_LORA_CMD_LENGTH_NO_PARAM + 1
 #define LR1110_LORA_CMD_LENGTH_GET_PACKET_STATUS        LR1110_LORA_CMD_LENGTH_NO_PARAM
+#define LR1110_LORA_CMD_LENGTH_SET_RF_FREQUENCY         LR1110_LORA_CMD_LENGTH_NO_PARAM + 4
 
 // LENGTHS FOR RESPONSES
-#define LR1110_LORA_LENGTH_NO_PARAM                     1
-#define LR1110_LORA_LENGTH_GET_PACKET_TYPE              LR1110_LORA_LENGTH_NO_PARAM + 1
-#define LR1110_LORA_LENGTH_GET_PACKET_STATUS            LR1110_LORA_LENGTH_NO_PARAM + 3
+#define LR1110_LORA_RES_LENGTH_NO_PARAM                     1
+#define LR1110_LORA_RES_LENGTH_GET_PACKET_TYPE              LR1110_LORA_RES_LENGTH_NO_PARAM + 1
+#define LR1110_LORA_RES_LENGTH_GET_PACKET_STATUS            LR1110_LORA_RES_LENGTH_NO_PARAM + 3
 
 // LR1110 LORA COMMANDS
 #define LR1110_LORA_CMD_GET_PACKET_TYPE                 0x0202
 #define LR1110_LORA_CMD_GET_PACKET_STATUS               0x0204
 #define LR1110_LORA_CMD_SET_PUBLIC_NETWORK              0x0208
+#define LR1110_LORA_CMD_SET_RF_FREQUENCY                0x020B
 #define LR1110_LORA_CMD_SET_PACKET_TYPE                 0x020E
 #define LR1110_LORA_CMD_SET_MODULATION_PARAMS           0x020F
 #define LR1110_LORA_CMD_SET_PACKET_PARAMS               0x0210
@@ -116,4 +118,14 @@ void writeLR1110_Buffer8( const void* context, const uint8_t data);
  * @param [in] context Radio abstraction
  * @param [in] timeout Timeout
  */
-void setLR1110_TX( const void* context, const uint8_t timeout);
+void setLR1110_TX( const void* context, const uint32_t timeout);
+
+/*!
+ * @brief Set the LoRa TX
+ *
+ * @param [in] context Radio abstraction
+ * @param [in] rf_frequency RF frequency
+ */
+void setLR1110_RF_Frequency( const void* context, const uint32_t rf_frequency);
+
+void joinAccepts( const void* context, const uint8_t dec_key_id, const uint8_t ver_key_id, const uint8_t lorawan_ver );

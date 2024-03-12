@@ -113,6 +113,10 @@ int main(void)
   ((radio_t*)lr1110_context)->busy.pin    = BUSY_Pin;
   ((radio_t*)lr1110_context)->hspi        = &hspi1;
 
+  uint8_t chip_eui[8] = {0};
+  uint8_t join_eui[8] = {0};
+  uint8_t pin[4]      = {0};
+
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -134,65 +138,52 @@ int main(void)
   resetLR1110(lr1110_context, 0);
   blinkLED(GPIOC, RX_LED_Pin|TX_LED_Pin, 100, 5);
 
-  // clearLR1110_RX_Buffer(lr1110_context);
-  // clearLR1110_RX_Buffer(lr1110_context);
 
-  //setLR1110_Standby_Mode(lr1110_context, 0x01);
-
-  //calibrateLR1110_Image( lr1110_context, 0xD7, 0xDB );
-  // calibrateLR1110( lr1110_context, 0x00);
-  // calibrateLR1110( lr1110_context, 0x01);
-  // calibrateLR1110( lr1110_context, 0x02);
-  // calibrateLR1110( lr1110_context, 0x03);
-  // calibrateLR1110( lr1110_context, 0x04);
-  // calibrateLR1110( lr1110_context, 0x05);
+  clearLR1110_Errors(lr1110_context);
+  clearLR1110_IRQ(lr1110_context);
 
   setLR1110_TCXO_Mode(lr1110_context);
 
+
+  // clearLR1110_RX_Buffer(lr1110_context);
+
+  setLR1110_Standby_Mode(lr1110_context, 0x01);
+
+  calibrateLR1110( lr1110_context, 0x3F);
+
+  // calibrateLR1110_Image( lr1110_context, 0xD7, 0xDB );
+
+  setLR1110_RF_Frequency(lr1110_context, 868000000);
   
 
-  // clearLR1110_Errors(lr1110_context);
-  // clearLR1110_Errors(lr1110_context);
-
-  // getErrors(lr1110_context);
-  // getStatus(lr1110_context);
-
+  setLR1110_Dio_Irq_Params(lr1110_context, set_bit_x_to_1(2), set_bit_x_to_1(10));
   
-
+  // getLR1110_Errors(lr1110_context);
+  
+  // BOOTLOADER
   getLR1110_Bootloader_Version(lr1110_context);
   getLR1110_WiFi_Version(lr1110_context);
-  getLR1110_ChipEUI(lr1110_context);
-  getLR1110_Semtech_JoinEui(lr1110_context);
+  getLR1110_ChipEUI(lr1110_context, chip_eui);
+  getLR1110_Semtech_JoinEui(lr1110_context, join_eui);
+  getLR1110_Root_Keys_And_Pin(lr1110_context, pin);
   getLR1110_Temperature(lr1110_context);
   getLR1110_Battery_Voltage(lr1110_context);
 
-
-  // setLR1110_GNSS_Constellation(lr1110_context, 0b11);
-
-  // setLR1110_Dio_Irq_Params(lr1110_context, set_bit_x_to_1(2), set_bit_x_to_1(6));
-
-  // setLR1110_LoRa_Packet_Type(lr1110_context, 0x02);
-  // getLR1110_LoRa_Packet_Type(lr1110_context);
-  // setLR1110_LoRa_Modulation_Params(lr1110_context, 0x07, 0x05, 0x01, 0x00);         // NOT SURE ABOUT VALUE 4
-  // setLR1110_LoRa_Packet_Params(lr1110_context, 0x00, 0x02, 0x01, 0x02, 0x01, 0x00); // NOT SURE ABOUT VALUE 1,2,4 and 6
-  // setLR1110_LoRa_PA_Config(lr1110_context, 0x00, 0x00, 0x04, 0x00);                 // DONT KNOW WHAT TO PUT HERE
-  // setLR1110_LoRa_TX_Params(lr1110_context, 0x0E, 0x02);                             // DONT KNOW WHAT TO PUT HERE
-  // setLR1110_LoRa_Public_Network(lr1110_context, 0x01);
-  //getLR1110_LoRa_Packet_Status(lr1110_context);
-
-  // getLR1110_GNSS_Version(lr1110_context);
-
-  // uint8_t data;
-  // lis2de12_device_id_get(&hi2c1, &data);
-
-
-
-
   initLIS2DE12(hi2c1);
 
-  // uint8_t who_am_i = 0;
-  // HAL_I2C_Mem_Read(&hi2c1, 0x33U, 0x0FU, I2C_MEMADD_SIZE_8BIT, &who_am_i, 1, HAL_MAX_DELAY);
+  // GNSS
+  // setLR1110_GNSS_Constellation(lr1110_context, 0b11);
+  // getLR1110_GNSS_Version(lr1110_context);
 
+  // LORA
+  setLR1110_LoRa_Packet_Type(lr1110_context, 0x02);
+  getLR1110_LoRa_Packet_Type(lr1110_context);
+  setLR1110_LoRa_Modulation_Params(lr1110_context, 0x0C, 0x06, 0x01, 0x00);         // (lr1110_context, 0x07, 0x05, 0x01, 0x00); NOT SURE ABOUT VALUE 4
+  setLR1110_LoRa_Packet_Params(lr1110_context, 0x00, 0x08, 0x00, 0x00, 0x01, 0x00); // NOT SURE ABOUT VALUE 1,2,4 and 6
+  setLR1110_LoRa_PA_Config(lr1110_context, 0x01, 0x01, 0x04, 0x07);                 // DONT KNOW WHAT TO PUT HERE
+  setLR1110_LoRa_TX_Params(lr1110_context, 0x16, 0x02);                             // DONT KNOW WHAT TO PUT HERE
+  setLR1110_LoRa_Public_Network(lr1110_context, 0x01);
+  joinAccepts(lr1110_context, 0x02, 0x00, 1);
 
   /* USER CODE END 2 */
 
@@ -214,23 +205,25 @@ int main(void)
 
 
     // writeLR1110_Buffer8(lr1110_context, 0x02);
-    // setLR1110_TX(lr1110_context, 0x10);
+    // setLR1110_TX(lr1110_context, 5000);
 
 
-    //getLR1110_LoRa_Packet_Status(lr1110_context);
+    // getLR1110_Status(lr1110_context);
+    // getLR1110_Errors(lr1110_context);
 
-    // WIFI
-    //scanLR1110_WiFi_Networks(lr1110_context, 0x04, 0x3FFF, 0x04, 32, 3, 500, true);
-    //scanLR1110_WiFi_Country_Code(lr1110_context, 0x3FFF, 32, 3, 500, true);
+
+
+    //WIFI
+    // scanLR1110_WiFi_Networks(lr1110_context, 0x04, 0x3FFF, 0x04, 32, 3, 500, true);
+    // scanLR1110_WiFi_Country_Code(lr1110_context, 0x3FFF, 32, 3, 500, true);
     // uint8_t numberOfResults = getLR1110_WiFi_Number_of_Results(lr1110_context);
-    //getLR1110_WiFi_Results(lr1110_context, 0, 6, 4);
-
+    // getLR1110_WiFi_Results(lr1110_context, 0, 6, 4);
     // for( int i = 0; i < numberOfResults; i++ ) {
     //   getWiFiFullResults( lr1110_context, i, 1 );
     // }
 
-    // getStatus(lr1110_context);
-    // getErrors(lr1110_context);
+    // getLR1110_Status(lr1110_context);
+    // getLR1110_Errors(lr1110_context);
 
     // GNSS
     // scanLR1110_GNSS_Satellites(lr1110_context, 0, 0, 0);
@@ -239,13 +232,11 @@ int main(void)
     //   getLR1110_GNSS_Detected_Satellites(lr1110_context, numberOfDetectedSatellites);
     //   getLR1110_GNSS_Consumption(lr1110_context);
     // }
-
-
     
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    HAL_DBG_TRACE_MSG_COLOR("\r\nWaiting for next while loop...\r\n", "\x1B[0;34m");
+    HAL_DBG_TRACE_MSG_COLOR("\r\nWaiting for next while loop...\r\n", HAL_DBG_TRACE_COLOR_BLUE);
     HAL_Delay(5000);
   }
   /* USER CODE END 3 */
@@ -579,7 +570,9 @@ static void MX_GPIO_Init(void)
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
   if(GPIO_Pin == EVENT_Pin) {
-    getStatus( lr1110_context );
+    toggleLED( GPIOB, SNIFFING_LED_Pin );
+    HAL_DBG_TRACE_MSG_COLOR("\r\nINTERRUPT\r\n", HAL_DBG_TRACE_COLOR_CUSTOM);
+    getLR1110_Status( lr1110_context );
   } else if(GPIO_Pin == ACC_INT1_Pin) {
     HAL_DBG_TRACE_INFO("ACC_INT1_Pin\r\n");
   } else {

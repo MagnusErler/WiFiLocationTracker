@@ -12,13 +12,13 @@
 #define LR1110_GNSS_CMD_LENGTH_SET_CONSTELLATION        LR1110_GNSS_CMD_LENGTH_NO_PARAM + 1
 
 // LENGTHS FOR RESPONSES
-#define LR1110_GNSS_LENGTH_NO_PARAM                     1
-#define LR1110_GNSS_LENGTH_GET_GNSS_VERSION             LR1110_GNSS_LENGTH_NO_PARAM + 2
-#define LR1110_GNSS_LENGTH_GET_NUMBER_OF_SATELLITES     LR1110_GNSS_LENGTH_NO_PARAM + 1
-#define LR1110_GNSS_LENGTH_GET_RESULTS                  LR1110_GNSS_LENGTH_NO_PARAM + 2
-#define LR1110_GNSS_LENGTH_GET_SATELLITES_DETECTED      LR1110_GNSS_LENGTH_NO_PARAM + 1      // longer than 1 byte
-#define LR1110_GNSS_LENGTH_GET_CONSUMPTION              LR1110_GNSS_LENGTH_NO_PARAM + 8
-#define LR1110_GNSS_LENGTH_GET_GNSS_ALMANAC_STATUS      LR1110_GNSS_LENGTH_NO_PARAM + 52
+#define LR1110_GNSS_RES_LENGTH_NO_PARAM                 1
+#define LR1110_GNSS_RES_LENGTH_GET_GNSS_VERSION         LR1110_GNSS_RES_LENGTH_NO_PARAM + 2
+#define LR1110_GNSS_RES_LENGTH_GET_NUMBER_OF_SATELLITES LR1110_GNSS_RES_LENGTH_NO_PARAM + 1
+#define LR1110_GNSS_RES_LENGTH_GET_RESULTS              LR1110_GNSS_RES_LENGTH_NO_PARAM + 2
+#define LR1110_GNSS_RES_LENGTH_GET_SATELLITES_DETECTED  LR1110_GNSS_RES_LENGTH_NO_PARAM + 1      // longer than 1 byte
+#define LR1110_GNSS_RES_LENGTH_GET_CONSUMPTION          LR1110_GNSS_RES_LENGTH_NO_PARAM + 8
+#define LR1110_GNSS_RES_LENGTH_GET_GNSS_ALMANAC_STATUS  LR1110_GNSS_RES_LENGTH_NO_PARAM + 52
 
 // LR1110 CHIP COMMANDS
 #define LR1110_GNSS_CMD_SET_CONSTELLATION               0x0400
@@ -71,12 +71,12 @@ void getLR1110_GNSS_Version( const void* context);
  */
 void getLR1110_GNSS_Consumption( const void* context);
 
-// /*!
-//  * @brief Get the status of the GNSS Almanac
-//  *
-//  * @param [in] context Radio abstraction
-//  */
-// void getLR1110_GNSS_Almanac_Status( const void* context );
+/*!
+ * @brief Get the status of the GNSS Almanac
+ *
+ * @param [in] context Radio abstraction
+ */
+void getLR1110_GNSS_Almanac_Status( const void* context );
 
 /*!
  * @brief Set the GNSS constellation to be used
