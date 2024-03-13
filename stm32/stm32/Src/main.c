@@ -282,7 +282,7 @@ static void MX_I2C1_Init(void)
 {
 
   /* USER CODE BEGIN I2C1_Init 0 */
-
+  HAL_DBG_TRACE_INFO("Setting up I2C... \r\n");
   /* USER CODE END I2C1_Init 0 */
 
   /* USER CODE BEGIN I2C1_Init 1 */
@@ -316,7 +316,7 @@ static void MX_I2C1_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN I2C1_Init 2 */
-
+  HAL_DBG_TRACE_INFO_VALUE("DONE\r\n");
   /* USER CODE END I2C1_Init 2 */
 
 }
@@ -330,7 +330,7 @@ static void MX_RTC_Init(void)
 {
 
   /* USER CODE BEGIN RTC_Init 0 */
-
+  HAL_DBG_TRACE_INFO("Setting up RTC... \r\n");
   /* USER CODE END RTC_Init 0 */
 
   RTC_TimeTypeDef sTime = {0};
@@ -380,7 +380,7 @@ static void MX_RTC_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN RTC_Init 2 */
-
+  HAL_DBG_TRACE_INFO_VALUE("DONE\r\n");
   /* USER CODE END RTC_Init 2 */
 
 }
@@ -394,7 +394,7 @@ static void MX_SPI1_Init(void)
 {
 
   /* USER CODE BEGIN SPI1_Init 0 */
-
+  HAL_DBG_TRACE_INFO("Setting up SPI... \r\n");
   /* USER CODE END SPI1_Init 0 */
 
   /* USER CODE BEGIN SPI1_Init 1 */
@@ -420,9 +420,8 @@ static void MX_SPI1_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN SPI1_Init 2 */
-
   __HAL_SPI_ENABLE( &hspi1 );
-
+  HAL_DBG_TRACE_INFO_VALUE("DONE\r\n");
   /* USER CODE END SPI1_Init 2 */
 
 }
@@ -457,7 +456,6 @@ static void MX_USART2_UART_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN USART2_Init 2 */
-
   /* USER CODE END USART2_Init 2 */
 
 }
@@ -471,6 +469,7 @@ static void MX_GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
 /* USER CODE BEGIN MX_GPIO_Init_1 */
+// TODO: ADD external Reset and set to pull-up
 /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
