@@ -216,6 +216,8 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
     HAL_DBG_TRACE_MSG_COLOR("\r\nWaiting for next while loop...\r\n", HAL_DBG_TRACE_COLOR_BLUE);
+
+    setLR1110_Sleep(lr1110_context, 5000);
     HAL_Delay(5000);
   }
   /* USER CODE END 3 */

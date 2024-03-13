@@ -202,7 +202,7 @@ void clearLR1110_Errors( const void* context) {
   }
 }
 
-void clearLR1110_IRQ( const void* context) {
+void clearLR1110_IRQ( const void* context ) {
   HAL_DBG_TRACE_INFO("Clearing LR1110 interrupts... ");
 
   uint8_t cbuffer[LR1110_CMD_LENGTH_CLEAR_INTERRUPTS];
@@ -290,7 +290,7 @@ void resetLR1110( const void* context, const uint8_t reset_type) {
   HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
 }
 
-void setLR1110_Dio_Irq_Params( const void* context, const uint64_t irq1_to_enable, const uint64_t irq2_to_enable) {
+void setLR1110_Dio_Irq_Params( const void* context, const uint64_t irq1_to_enable, const uint64_t irq2_to_enable ) {
   HAL_DBG_TRACE_INFO("Setting LR1110 IRQs... ");
 
   uint8_t cbuffer[LR1110_CMD_LENGTH_SET_DIO_IRQ_PARAMS];
@@ -308,14 +308,14 @@ void setLR1110_Dio_Irq_Params( const void* context, const uint64_t irq1_to_enabl
   cbuffer[8] = ( uint8_t )( irq2_to_enable >> 8 );
   cbuffer[9] = ( uint8_t )( irq2_to_enable >> 0 );
 
-  if (lr1110_spi_write( context, cbuffer, LR1110_CMD_LENGTH_SET_DIO_IRQ_PARAMS ) == LR1110_SPI_STATUS_OK) {
+  if (lr1110_spi_write( context, cbuffer, LR1110_CMD_LENGTH_SET_DIO_IRQ_PARAMS ) == LR1110_SPI_STATUS_OK ) {
     HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
   } else {
     HAL_DBG_TRACE_ERROR("Failed to set LR1110 DIO IRQ parameters\r\n");
   }
 }
 
-void setLR1110_Standby_Mode( const void* context, const uint8_t stdby_config) {
+void setLR1110_Standby_Mode( const void* context, const uint8_t stdby_config ) {
   HAL_DBG_TRACE_INFO("Setting LR1110 standby mode... ");
 
   uint8_t cbuffer[LR1110_CMD_LENGTH_SET_STANDBY_MODE];
@@ -324,24 +324,45 @@ void setLR1110_Standby_Mode( const void* context, const uint8_t stdby_config) {
   cbuffer[1] = ( uint8_t )( LR1110_SET_STANDBY_MODE_CMD >> 0 );
   cbuffer[2] = stdby_config;
 
-  if (lr1110_spi_write( context, cbuffer, LR1110_CMD_LENGTH_SET_STANDBY_MODE ) == LR1110_SPI_STATUS_OK) {
+  if (lr1110_spi_write( context, cbuffer, LR1110_CMD_LENGTH_SET_STANDBY_MODE ) == LR1110_SPI_STATUS_OK ) {
     HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
   } else {
     HAL_DBG_TRACE_ERROR("Failed to set LR1110 standby mode\r\n");
   }
 }
 
-void clearLR1110_RX_Buffer( const void* context) {
-    HAL_DBG_TRACE_INFO("Clearing RX buffer... ");
+void clearLR1110_RX_Buffer( const void* context ) {
+  HAL_DBG_TRACE_INFO("Clearing RX buffer... ");
 
-    uint8_t cbuffer[LR1110_CMD_LENGTH_CLEAR_RX_BUFFER];
+  uint8_t cbuffer[LR1110_CMD_LENGTH_CLEAR_RX_BUFFER];
 
-    cbuffer[0] = ( uint8_t )( LR1110_CLEAR_RX_BUFFER >> 8 );
-    cbuffer[1] = ( uint8_t )( LR1110_CLEAR_RX_BUFFER >> 0 );
+  cbuffer[0] = ( uint8_t )( LR1110_CMD_CLEAR_RX_BUFFER >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_CMD_CLEAR_RX_BUFFER >> 0 );
 
-    if ( lr1110_spi_write( context, cbuffer, LR1110_CMD_LENGTH_CLEAR_RX_BUFFER ) == LR1110_SPI_STATUS_OK ) {
-        HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
-    } else {
-        HAL_DBG_TRACE_ERROR("Failed to clear RX buffer\r\n");
-    }
+  if (lr1110_spi_write( context, cbuffer, LR1110_CMD_LENGTH_CLEAR_RX_BUFFER ) == LR1110_SPI_STATUS_OK ) {
+    HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+  } else {
+    HAL_DBG_TRACE_ERROR("Failed to clear RX buffer\r\n");
+  }
+}
+
+void setLR1110_Sleep( const void* context, const uint32_t sleep_time_ms ) {
+  uint32_t sleep_time = sleep_time_ms * 32768;
+  HAL_DBG_TRACE_INFO("Setting LR1110 to sleep for %d s... ", sleep_time_ms);
+
+  uint8_t cbuffer[LR1110_CMD_LENGTH_SET_SLEEP];
+
+  cbuffer[0] = ( uint8_t )( LR1110_CMD_SET_SLEEP >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_CMD_SET_SLEEP >> 0 );
+  cbuffer[2] = ( uint8_t ) 0b10;
+  cbuffer[3] = ( uint8_t )( sleep_time >> 24 );
+  cbuffer[4] = ( uint8_t )( sleep_time >> 16 );
+  cbuffer[5] = ( uint8_t )( sleep_time >> 8 );
+  cbuffer[6] = ( uint8_t )( sleep_time >> 0 );
+
+  if (lr1110_spi_write( context, cbuffer, LR1110_CMD_LENGTH_SET_SLEEP ) == LR1110_SPI_STATUS_OK ) {
+    HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+  } else {
+    HAL_DBG_TRACE_ERROR("Failed to set LR1110 to sleep\r\n");
+  }
 }
