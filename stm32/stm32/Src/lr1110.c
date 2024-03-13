@@ -17,8 +17,8 @@ void getLR1110_Bootloader_Version( const void* context ) {
   uint8_t cbuffer[LR1110_CMD_LENGTH_GET_VERSION];
   uint8_t rbuffer[LR1110_RES_LENGTH_GET_VERSION] = { 0 };
 
-  cbuffer[0] = ( uint8_t )(LR1110_CMD_GET_VERSION >> 8 );
-  cbuffer[1] = ( uint8_t )(LR1110_CMD_GET_VERSION >> 0 );
+  cbuffer[0] = ( uint8_t )( LR1110_CMD_GET_VERSION >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_CMD_GET_VERSION >> 0 );
   
   if (lr1110_spi_read(context, cbuffer, LR1110_CMD_LENGTH_GET_VERSION, rbuffer, LR1110_RES_LENGTH_GET_VERSION ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_INFO_VALUE("HW: %d (0x%X), ", rbuffer[1], rbuffer[1]);
@@ -45,8 +45,8 @@ float getLR1110_Temperature( const void* context ) {
   uint8_t cbuffer[LR1110_CMD_LENGTH_GET_TEMPERATURE];
   uint8_t rbuffer[LR1110_RES_LENGTH_GET_TEMPERATURE] = { 0 };
 
-  cbuffer[0] = ( uint8_t )(LR1110_CMD_GET_TEMPERATURE >> 8 );
-  cbuffer[1] = ( uint8_t )(LR1110_CMD_GET_TEMPERATURE >> 0 );
+  cbuffer[0] = ( uint8_t )( LR1110_CMD_GET_TEMPERATURE >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_CMD_GET_TEMPERATURE >> 0 );
 
   if (lr1110_spi_read( context, cbuffer, LR1110_CMD_LENGTH_GET_TEMPERATURE, rbuffer, LR1110_RES_LENGTH_GET_TEMPERATURE ) == LR1110_SPI_STATUS_OK) {
     uint16_t temp_10_0 = ((rbuffer[1] << 8) | rbuffer[2]) & 0x7FF;
@@ -69,8 +69,8 @@ void getLR1110_ChipEUI( const void* context, uint8_t* chip_eui ) {
   uint8_t cbuffer[LR1110_CMD_LENGTH_GET_CHIPEUI];
   uint8_t rbuffer[LR1110_RES_LENGTH_GET_CHIPEUI] = { 0 };
 
-  cbuffer[0] = ( uint8_t )(LR1110_CMD_GET_CHIPEUI >> 8 );
-  cbuffer[1] = ( uint8_t )(LR1110_CMD_GET_CHIPEUI >> 0 );
+  cbuffer[0] = ( uint8_t )( LR1110_CMD_GET_CHIPEUI >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_CMD_GET_CHIPEUI >> 0 );
 
   if (lr1110_spi_read( context, cbuffer, LR1110_CMD_LENGTH_GET_CHIPEUI, rbuffer, LR1110_RES_LENGTH_GET_CHIPEUI ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_INFO_VALUE("%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X\r\n", rbuffer[1], rbuffer[2], rbuffer[3], rbuffer[4], rbuffer[5], rbuffer[6], rbuffer[7], rbuffer[8]);
@@ -88,8 +88,8 @@ void getLR1110_Semtech_JoinEui( const void* context, uint8_t* join_eui ) {
   uint8_t cbuffer[LR1110_CMD_LENGTH_GET_SEMTECH_JOINEUI];
   uint8_t rbuffer[LR1110_RES_LENGTH_GET_SEMTECH_JOINEUI] = { 0 };
 
-  cbuffer[0] = ( uint8_t )(LR1110_CMD_GET_SEMTECH_JOINEUI >> 8 );
-  cbuffer[1] = ( uint8_t )(LR1110_CMD_GET_SEMTECH_JOINEUI >> 0 );
+  cbuffer[0] = ( uint8_t )( LR1110_CMD_GET_SEMTECH_JOINEUI >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_CMD_GET_SEMTECH_JOINEUI >> 0 );
 
   if (lr1110_spi_read( context, cbuffer, LR1110_CMD_LENGTH_GET_SEMTECH_JOINEUI, rbuffer, LR1110_RES_LENGTH_GET_SEMTECH_JOINEUI ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_INFO_VALUE("%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X\r\n", rbuffer[1], rbuffer[2], rbuffer[3], rbuffer[4], rbuffer[5], rbuffer[6], rbuffer[7], rbuffer[8]);
@@ -107,8 +107,8 @@ void getLR1110_Root_Keys_And_Pin( const void* context, uint8_t* pin ) {
   uint8_t cbuffer[LR1110_CMD_LENGTH_GET_ROOT_KEY_AND_PIN];
   uint8_t rbuffer[LR1110_RES_LENGTH_GET_ROOT_KEY_AND_PIN] = { 0 };
 
-  cbuffer[0] = ( uint8_t )(LR1110_CMD_GET_ROOT_KEY_AND_PIN >> 8 );
-  cbuffer[1] = ( uint8_t )(LR1110_CMD_GET_ROOT_KEY_AND_PIN >> 0 );
+  cbuffer[0] = ( uint8_t )( LR1110_CMD_GET_ROOT_KEY_AND_PIN >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_CMD_GET_ROOT_KEY_AND_PIN >> 0 );
 
   if (lr1110_spi_read( context, cbuffer, LR1110_CMD_LENGTH_GET_ROOT_KEY_AND_PIN, rbuffer, LR1110_RES_LENGTH_GET_ROOT_KEY_AND_PIN ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_INFO_VALUE("PIN: %02X:%02X:%02X:%02X\r\n", rbuffer[1], rbuffer[2], rbuffer[3], rbuffer[4]);
@@ -126,8 +126,8 @@ float getLR1110_Battery_Voltage( const void* context ) {
   uint8_t cbuffer[LR1110_CMD_LENGTH_GET_BATTERY_VOLTAGE];
   uint8_t rbuffer[LR1110_RES_LENGTH_GET_BATTERY_VOLTAGE] = { 0 };
 
-  cbuffer[0] = ( uint8_t )(LR1110_CMD_GET_BATTERY_VOLTAGE >> 8 );
-  cbuffer[1] = ( uint8_t )(LR1110_CMD_GET_BATTERY_VOLTAGE >> 0 );
+  cbuffer[0] = ( uint8_t )( LR1110_CMD_GET_BATTERY_VOLTAGE >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_CMD_GET_BATTERY_VOLTAGE >> 0 );
 
   if (lr1110_spi_read( context, cbuffer, LR1110_CMD_LENGTH_GET_BATTERY_VOLTAGE, rbuffer, LR1110_RES_LENGTH_GET_BATTERY_VOLTAGE ) == LR1110_SPI_STATUS_OK) {
     const float batteryVoltage = (((5 * rbuffer[1])/255.0) - 1) * 1.35;
@@ -144,8 +144,8 @@ void setLR1110_TCXO_Mode( const void* context ) {
 
   uint8_t cbuffer[LR1110_CMD_LENGTH_SET_TCXO_MODE];
 
-  cbuffer[0] = ( uint8_t )(LR1110_CMD_SET_TCXO_MODE >> 8 );
-  cbuffer[1] = ( uint8_t )(LR1110_CMD_SET_TCXO_MODE >> 0 );
+  cbuffer[0] = ( uint8_t )( LR1110_CMD_SET_TCXO_MODE >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_CMD_SET_TCXO_MODE >> 0 );
 
   const uint8_t timeout = ( 5 * 1000 ) / 30.52;  // BOARD_TCXO_WAKEUP_TIME = 5  // 163 (163.826998689)
   cbuffer[2] = ( uint8_t ) 0x02;
@@ -165,12 +165,12 @@ void getLR1110_Status( const void* context ) {
 
   uint8_t cbuffer[LR1110_CMD_LENGTH_GET_STATUS];
 
-  cbuffer[0] = ( uint8_t )(LR1110_CMD_GET_STATUS >> 8 );
-  cbuffer[1] = ( uint8_t )(LR1110_CMD_GET_STATUS >> 0 );
-  cbuffer[2] = 0x00;
-  cbuffer[3] = 0x00;
-  cbuffer[4] = 0x00;
-  cbuffer[5] = 0x00;
+  cbuffer[0] = ( uint8_t )( LR1110_CMD_GET_STATUS >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_CMD_GET_STATUS >> 0 );
+  cbuffer[2] = ( uint8_t ) 0x00;
+  cbuffer[3] = ( uint8_t ) 0x00;
+  cbuffer[4] = ( uint8_t ) 0x00;
+  cbuffer[5] = ( uint8_t ) 0x00;
 
   if (lr1110_spi_write( context, cbuffer, LR1110_CMD_LENGTH_GET_STATUS ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
@@ -184,10 +184,10 @@ void calibrateLR1110_Image( const void* context, uint8_t freq1, uint8_t freq2) {
 
   uint8_t cbuffer[LR1110_CMD_LENGTH_CALIBRATE_IMAGE];
 
-  cbuffer[0] = ( uint8_t )(LR1110_CMD_CALIBRATE_IMAGE >> 8 );
-  cbuffer[1] = ( uint8_t )(LR1110_CMD_CALIBRATE_IMAGE >> 0 );
-  cbuffer[2] = freq1;
-  cbuffer[3] = freq2;
+  cbuffer[0] = ( uint8_t )( LR1110_CMD_CALIBRATE_IMAGE >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_CMD_CALIBRATE_IMAGE >> 0 );
+  cbuffer[2] = ( uint8_t ) freq1;
+  cbuffer[3] = ( uint8_t ) freq2;
 
   if (lr1110_spi_write( context, cbuffer, LR1110_CMD_LENGTH_CALIBRATE_IMAGE ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
@@ -201,9 +201,9 @@ void calibrateLR1110( const void* context, uint8_t calib_params) {
 
   uint8_t cbuffer[LR1110_CMD_LENGTH_CALIBRATE];
 
-  cbuffer[0] = ( uint8_t )(LR1110_CMD_CALIBRATE >> 8 );
-  cbuffer[1] = ( uint8_t )(LR1110_CMD_CALIBRATE >> 0 );
-  cbuffer[2] = calib_params;
+  cbuffer[0] = ( uint8_t )( LR1110_CMD_CALIBRATE >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_CMD_CALIBRATE >> 0 );
+  cbuffer[2] = ( uint8_t ) calib_params;
 
   if (lr1110_spi_write( context, cbuffer, LR1110_CMD_LENGTH_CALIBRATE ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
@@ -232,12 +232,12 @@ void clearLR1110_IRQ( const void* context) {
 
   uint8_t cbuffer[LR1110_CMD_LENGTH_CLEAR_INTERRUPTS];
 
-  cbuffer[0] = ( uint8_t )(LR1110_CMD_CLEAR_INTERRUPTS >> 8 );
-  cbuffer[1] = ( uint8_t )(LR1110_CMD_CLEAR_INTERRUPTS >> 0 );
-  cbuffer[2] = 0b11111111;
-  cbuffer[3] = 0b11111111;
-  cbuffer[4] = 0b11111111;
-  cbuffer[5] = 0b11111111;
+  cbuffer[0] = ( uint8_t )( LR1110_CMD_CLEAR_INTERRUPTS >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_CMD_CLEAR_INTERRUPTS >> 0 );
+  cbuffer[2] = ( uint8_t ) 0b11111111;
+  cbuffer[3] = ( uint8_t ) 0b11111111;
+  cbuffer[4] = ( uint8_t ) 0b11111111;
+  cbuffer[5] = ( uint8_t ) 0b11111111;
 
   if (lr1110_spi_write( context, cbuffer, LR1110_CMD_LENGTH_CLEAR_INTERRUPTS ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
@@ -252,8 +252,8 @@ void getLR1110_Errors( const void* context ) {
   uint8_t cbuffer[LR1110_CMD_LENGTH_GET_ERRORS];
   uint8_t rbuffer[LR1110_RES_LENGTH_GET_ERRORS] = { 0 };
 
-  cbuffer[0] = ( uint8_t )(LR1110_CMD_GET_ERRORS >> 8 );
-  cbuffer[1] = ( uint8_t )(LR1110_CMD_GET_ERRORS >> 0 );
+  cbuffer[0] = ( uint8_t )( LR1110_CMD_GET_ERRORS >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_CMD_GET_ERRORS >> 0 );
 
   if (lr1110_spi_read( context, cbuffer, LR1110_CMD_LENGTH_GET_ERRORS, rbuffer, LR1110_RES_LENGTH_GET_ERRORS ) == LR1110_SPI_STATUS_OK) {
     // Extracting error status bits
@@ -320,8 +320,8 @@ void setLR1110_Dio_Irq_Params( const void* context, const uint64_t irq1_to_enabl
 
   uint8_t cbuffer[LR1110_CMD_LENGTH_SET_DIO_IRQ_PARAMS];
 
-  cbuffer[0] = ( uint8_t )(LR1110_CMD_SET_DIO_IRQ_PARAMS >> 8 );
-  cbuffer[1] = ( uint8_t )(LR1110_CMD_SET_DIO_IRQ_PARAMS >> 0 );
+  cbuffer[0] = ( uint8_t )( LR1110_CMD_SET_DIO_IRQ_PARAMS >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_CMD_SET_DIO_IRQ_PARAMS >> 0 );
 
   cbuffer[2] = ( uint8_t )( irq1_to_enable >> 24 );
   cbuffer[3] = ( uint8_t )( irq1_to_enable >> 16 );
@@ -345,9 +345,9 @@ void setLR1110_Standby_Mode( const void* context, const uint8_t stdby_config) {
 
   uint8_t cbuffer[LR1110_CMD_LENGTH_SET_STANDBY_MODE];
 
-  cbuffer[0] = ( uint8_t )(LR1110_CMD_SET_STANDBY_MODE >> 8 );
-  cbuffer[1] = ( uint8_t )(LR1110_CMD_SET_STANDBY_MODE >> 0 );
-  cbuffer[2] = stdby_config;
+  cbuffer[0] = ( uint8_t )( LR1110_CMD_SET_STANDBY_MODE >> 8 );
+  cbuffer[1] = ( uint8_t )( LR1110_CMD_SET_STANDBY_MODE >> 0 );
+  cbuffer[2] = ( uint8_t ) stdby_config;
 
   if (lr1110_spi_write( context, cbuffer, LR1110_CMD_LENGTH_SET_STANDBY_MODE ) == LR1110_SPI_STATUS_OK) {
     HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
@@ -361,8 +361,8 @@ void clearLR1110_RX_Buffer( const void* context) {
 
     uint8_t cbuffer[LR1110_CMD_LENGTH_CLEAR_RX_BUFFER];
 
-    cbuffer[0] = ( uint8_t )(LR1110_CMD_CLEAR_RX_BUFFER >> 8 );
-    cbuffer[1] = ( uint8_t )(LR1110_CMD_CLEAR_RX_BUFFER >> 0 );
+    cbuffer[0] = ( uint8_t )( LR1110_CMD_CLEAR_RX_BUFFER >> 8 );
+    cbuffer[1] = ( uint8_t )( LR1110_CMD_CLEAR_RX_BUFFER >> 0 );
 
     if (lr1110_spi_write( context, cbuffer, LR1110_CMD_LENGTH_CLEAR_RX_BUFFER ) == LR1110_SPI_STATUS_OK ) {
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);

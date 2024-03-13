@@ -61,9 +61,9 @@ void scanLR1110_GNSS_Satellites( const void* context, const uint8_t effort_mode,
     cbuffer[3] = ( uint8_t )( 0x52FFD96B >> 16 );
     cbuffer[4] = ( uint8_t )( 0x52FFD96B >> 8 );
     cbuffer[5] = ( uint8_t )( 0x52FFD96B >> 0 );
-    cbuffer[6] = ( uint8_t )( effort_mode >> 0 );
-    cbuffer[7] = ( uint8_t )( result_mask >> 0 );
-    cbuffer[8] = ( uint8_t )( nb_sv_max >> 0 );
+    cbuffer[6] = ( uint8_t ) effort_mode;
+    cbuffer[7] = ( uint8_t ) result_mask;
+    cbuffer[8] = ( uint8_t ) nb_sv_max;
 
     if (lr1110_spi_write( context, cbuffer, LR1110_GNSS_CMD_LENGTH_SCAN_GNSS_AUTONOMOUS ) == LR1110_SPI_STATUS_OK) {
         //HAL_Delay( 5000 );

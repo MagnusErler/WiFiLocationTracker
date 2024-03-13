@@ -36,7 +36,6 @@
 //#include "spi.h"
 #include "wifi.h"
 
-
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
