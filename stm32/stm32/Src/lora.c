@@ -62,7 +62,7 @@ uint8_t getLR1110_LoRa_Packet_Type( const void* context ) {
         }
         HAL_DBG_TRACE_INFO_VALUE(" (0x%X)\r\n", rbuffer[1]);
 
-        return rbuffer[0];
+        return rbuffer[1];
     } else {
         HAL_DBG_TRACE_ERROR("Failed to get LR1110 packet type\r\n");
         return -1;
@@ -217,7 +217,7 @@ void setLR1110_TX( const void* context, const uint32_t timeout_ms) {
 void joinAccepts( const void* context, const uint8_t dec_key_id, const uint8_t ver_key_id, const uint8_t lorawan_ver ) {
     HAL_DBG_TRACE_INFO("Joining network... ");
 
-    uint8_t cbuffer[2+3+12+16];
+    uint8_t cbuffer[2+3+1+16];
     uint8_t rbuffer[1+2] = { 0 };
 
     cbuffer[0] = ( uint8_t )( 0x0504 >> 8 );
@@ -225,17 +225,17 @@ void joinAccepts( const void* context, const uint8_t dec_key_id, const uint8_t v
     cbuffer[2] = ( uint8_t )( dec_key_id );
     cbuffer[3] = ( uint8_t )( ver_key_id );
     cbuffer[4] = ( uint8_t )( lorawan_ver );
-    for (int i = 0; i < 12; i++) {
+    for (int i = 0; i < 1; i++) {
         cbuffer[5+i] = ( uint8_t )( 0x01 );
     }
     for (int i = 0; i < 16; i++) {
-        cbuffer[5+12+i] = ( uint8_t )( 0x02 );
+        cbuffer[5+1+i] = ( uint8_t )( 0x02 );
     }
 
-    if (lr1110_spi_read( context, cbuffer, LR1110_LORA_CMD_LENGTH_GET_PACKET_STATUS, rbuffer, LR1110_LORA_RES_LENGTH_GET_PACKET_STATUS ) == LR1110_SPI_STATUS_OK) {
+    if (lr1110_spi_read( context, cbuffer, 2+3+1+16, rbuffer, 1+2 ) == LR1110_SPI_STATUS_OK) {
         switch (rbuffer[1]) {
         case 0:
-            HAL_DBG_TRACE_INFO("0: CRYP_API_SUCCESS. The previous command was successful\r\n");
+            HAL_DBG_TRACE_INFO_VALUE("0: CRYP_API_SUCCESS. The previous command was successful\r\n");
             break;
         case 1:
             HAL_DBG_TRACE_ERROR("1: CRYP_API_FAIL_CMAC. MIC (first 4 bytes of the CMAC) comparison failed\r\n");
@@ -257,6 +257,59 @@ void joinAccepts( const void* context, const uint8_t dec_key_id, const uint8_t v
     } else {
         HAL_DBG_TRACE_ERROR("Failed to join network\r\n");
     }
+}
+
+void setLR1110_Crypto_Key( const void* context ) {
+    HAL_DBG_TRACE_INFO("Setting LR1110 crypto key... ");
+
+    uint8_t cbuffer[2+1+16];
+    uint8_t rbuffer[1+1] = { 0 };
+
+    cbuffer[0] = ( uint8_t )( 0x0502 >> 8 );
+    cbuffer[1] = ( uint8_t )( 0x0502 >> 0 );
+    cbuffer[2] = ( uint8_t ) 2;
+    cbuffer[3] = ( uint8_t ) 1;
+    cbuffer[4] = ( uint8_t ) 2;
+    cbuffer[5] = ( uint8_t ) 3;
+    cbuffer[6] = ( uint8_t ) 4;
+    cbuffer[7] = ( uint8_t ) 5;
+    cbuffer[8] = ( uint8_t ) 6;
+    cbuffer[9] = ( uint8_t ) 7;
+    cbuffer[10] = ( uint8_t ) 8;
+    cbuffer[11] = ( uint8_t ) 9;
+    cbuffer[12] = ( uint8_t ) 10;
+    cbuffer[13] = ( uint8_t ) 11;
+    cbuffer[14] = ( uint8_t ) 12;
+    cbuffer[15] = ( uint8_t ) 13;
+    cbuffer[16] = ( uint8_t ) 14;
+    cbuffer[17] = ( uint8_t ) 15;
+    cbuffer[18] = ( uint8_t ) 16;
+
+    if (lr1110_spi_read( context, cbuffer, 2+1+16, rbuffer, 1+1 ) == LR1110_SPI_STATUS_OK) {
+        switch (rbuffer[1]) {
+        case 0:
+            HAL_DBG_TRACE_INFO_VALUE("0: CRYP_API_SUCCESS. The previous command was successful\r\n");
+            break;
+        case 1:
+            HAL_DBG_TRACE_ERROR("1: CRYP_API_FAIL_CMAC. MIC (first 4 bytes of the CMAC) comparison failed\r\n");
+            break;
+        case 3:
+            HAL_DBG_TRACE_ERROR("3: CRYP_API_INV_KEY_ID. Key/Param Source or Destination ID error\r\n");
+            break;
+        case 5:
+            HAL_DBG_TRACE_ERROR("5: CRYP_API_BUF_SIZE. Data buffer size is invalid. For CryptoAesEncrypt(...) the buffer size must be multiple of 16 bytes\r\n");
+            break;
+        case 6:
+            HAL_DBG_TRACE_ERROR("6: CRYP_API_ERROR. Any other error\r\n");
+            break;
+        default:
+            HAL_DBG_TRACE_ERROR("RFU\r\n")
+            break;
+        }
+    } else {
+        HAL_DBG_TRACE_ERROR("Failed to set LR1110 crypto key\r\n");
+    }
+
 }
 
 void setLR1110_RF_Frequency( const void* context, const uint32_t rf_frequency) {
