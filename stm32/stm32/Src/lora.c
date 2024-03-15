@@ -426,6 +426,78 @@ void getLR1110_MIC( const void* context ) {
     }
 }
 
+void getLR1110_Encrypted_Data( const void* context ) {
+    HAL_DBG_TRACE_INFO("Getting LR1110 encrypted data... ");
+
+    uint8_t cbuffer[2+1+16];
+    uint8_t rbuffer[1+1+16] = { 0 };
+
+    cbuffer[0] = ( uint8_t )( 0x0507 >> 8 );
+    cbuffer[1] = ( uint8_t )( 0x0507 >> 0 );
+
+    cbuffer[2] = ( uint8_t ) 5;
+
+    // 6BC1BEE2 2E409F96 E93D7E11 7393172A
+    cbuffer[3] = ( uint8_t ) ( 0x6B >> 0 );
+    cbuffer[4] = ( uint8_t ) ( 0xC1 >> 0 );
+    cbuffer[5] = ( uint8_t ) ( 0xBE >> 0 );
+    cbuffer[6] = ( uint8_t ) ( 0xE2 >> 0 );
+    cbuffer[7] = ( uint8_t ) ( 0x2E >> 0 );
+    cbuffer[8] = ( uint8_t ) ( 0x40 >> 0 );
+    cbuffer[9] = ( uint8_t ) ( 0x9F >> 0 );
+    cbuffer[10] = ( uint8_t ) ( 0x96 >> 0 );
+    cbuffer[11] = ( uint8_t ) ( 0xE9 >> 0 );
+    cbuffer[12] = ( uint8_t ) ( 0x3D >> 0 );
+    cbuffer[13] = ( uint8_t ) ( 0x7E >> 0 );
+    cbuffer[14] = ( uint8_t ) ( 0x11 >> 0 );
+    cbuffer[15] = ( uint8_t ) ( 0x73 >> 0 );
+    cbuffer[16] = ( uint8_t ) ( 0x93 >> 0 );
+    cbuffer[17] = ( uint8_t ) ( 0x17 >> 0 );
+    cbuffer[18] = ( uint8_t ) ( 0x2A >> 0 );
+
+    if (lr1110_spi_read( context, cbuffer, 2+1+16, rbuffer, 1+1+16 ) == LR1110_SPI_STATUS_OK) {
+        switch (rbuffer[1]) {
+        case 0:
+            HAL_DBG_TRACE_INFO_VALUE("DONE\r\n");
+            //HAL_DBG_TRACE_INFO_VALUE("0: CRYP_API_SUCCESS. The previous command was successful\r\n");
+            break;
+        case 1:
+            HAL_DBG_TRACE_ERROR("1: CRYP_API_FAIL_CMAC. MIC (first 4 bytes of the CMAC) comparison failed\r\n");
+            break;
+        case 3:
+            HAL_DBG_TRACE_ERROR("3: CRYP_API_INV_KEY_ID. Key/Param Source or Destination ID error\r\n");
+            break;
+        case 5:
+            HAL_DBG_TRACE_ERROR("5: CRYP_API_BUF_SIZE. Data buffer size is invalid. For CryptoAesEncrypt(...) the buffer size must be multiple of 16 bytes\r\n");
+            break;
+        case 6:
+            HAL_DBG_TRACE_ERROR("6: CRYP_API_ERROR. Any other error\r\n");
+            break;
+        default:
+            HAL_DBG_TRACE_ERROR("RFU\r\n")
+            break;
+        }
+        HAL_DBG_TRACE_INFO_VALUE("EncryptedData1: 0x%X\r\n", rbuffer[2]);
+        HAL_DBG_TRACE_INFO_VALUE("EncryptedData2: 0x%X\r\n", rbuffer[3]);
+        HAL_DBG_TRACE_INFO_VALUE("EncryptedData3: 0x%X\r\n", rbuffer[4]);
+        HAL_DBG_TRACE_INFO_VALUE("EncryptedData4: 0x%X\r\n", rbuffer[5]);
+        HAL_DBG_TRACE_INFO_VALUE("EncryptedData5: 0x%X\r\n", rbuffer[6]);
+        HAL_DBG_TRACE_INFO_VALUE("EncryptedData6: 0x%X\r\n", rbuffer[7]);
+        HAL_DBG_TRACE_INFO_VALUE("EncryptedData7: 0x%X\r\n", rbuffer[8]);
+        HAL_DBG_TRACE_INFO_VALUE("EncryptedData8: 0x%X\r\n", rbuffer[9]);
+        HAL_DBG_TRACE_INFO_VALUE("EncryptedData9: 0x%X\r\n", rbuffer[10]);
+        HAL_DBG_TRACE_INFO_VALUE("EncryptedData10: 0x%X\r\n", rbuffer[11]);
+        HAL_DBG_TRACE_INFO_VALUE("EncryptedData11: 0x%X\r\n", rbuffer[12]);
+        HAL_DBG_TRACE_INFO_VALUE("EncryptedData12: 0x%X\r\n", rbuffer[13]);
+        HAL_DBG_TRACE_INFO_VALUE("EncryptedData13: 0x%X\r\n", rbuffer[14]);
+        HAL_DBG_TRACE_INFO_VALUE("EncryptedData14: 0x%X\r\n", rbuffer[15]);
+        HAL_DBG_TRACE_INFO_VALUE("EncryptedData15: 0x%X\r\n", rbuffer[16]);
+        HAL_DBG_TRACE_INFO_VALUE("EncryptedData16: 0x%X\r\n", rbuffer[17]);
+    } else {
+        HAL_DBG_TRACE_ERROR("Failed to get LR1110 encrypted data\r\n");
+    }
+}
+
 void setLR1110_RF_Frequency( const void* context, const uint32_t rf_frequency) {
     HAL_DBG_TRACE_INFO("Setting LR1110 RF frequency... ");
 

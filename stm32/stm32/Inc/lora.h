@@ -143,3 +143,5 @@ void joinAccepts( const void* context, const uint8_t dec_key_id, const uint8_t v
 void setLR1110_Crypto_Key( const void* context );
 
 void getLR1110_MIC( const void* context );
+
+void getLR1110_Encrypted_Data( const void* context );

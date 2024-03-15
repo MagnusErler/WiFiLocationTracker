@@ -185,6 +185,8 @@ int main(void)
 
   getLR1110_MIC(lr1110_context);
 
+  //getLR1110_Encrypted_Data(lr1110_context);
+
   joinAccepts(lr1110_context, 5, 5, 0);
 
   getLR1110_RF_Status(lr1110_context);
