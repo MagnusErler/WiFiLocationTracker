@@ -214,6 +214,26 @@ void setLR1110_TX( const void* context, const uint32_t timeout_ms) {
     }
 }
 
+void getLR1110_RF_Status( const void* context) {
+    HAL_DBG_TRACE_INFO("Getting LR1110 RF status... ");
+
+    uint8_t cbuffer[LR1110_LORA_CMD_LENGTH_GET_STATUS];
+    uint8_t rbuffer[LR1110_LORA_RES_LENGTH_GET_STATUS] = { 0 };
+
+    cbuffer[0] = ( uint8_t )( LR1110_LORA_CMD_GET_STATUS >> 8 );
+    cbuffer[1] = ( uint8_t )( LR1110_LORA_CMD_GET_STATUS >> 0 );
+
+    if (lr1110_spi_read( context, cbuffer, LR1110_LORA_CMD_LENGTH_GET_PACKET_STATUS, rbuffer, LR1110_LORA_RES_LENGTH_GET_PACKET_STATUS ) == LR1110_SPI_STATUS_OK) {
+        // combine rbuffer[1] and rbuffer[2] to get received packet
+        HAL_DBG_TRACE_PRINTF("\r\nReceived packet: %d\r\n", (int16_t)(rbuffer[1] << 8 | rbuffer[2]));
+        HAL_DBG_TRACE_PRINTF("Received packet with a CRC error: %d\r\n", (int16_t)(rbuffer[3] << 8 | rbuffer[4]));
+        HAL_DBG_TRACE_PRINTF("Number of packets with a Header error: %d\r\n", (int16_t)(rbuffer[5] << 8 | rbuffer[6]));
+        HAL_DBG_TRACE_PRINTF("Number of false synchronizations.: %d\r\n", (int16_t)(rbuffer[7] << 8 | rbuffer[8]));
+    } else {
+        HAL_DBG_TRACE_ERROR("Failed to get LR1110 LoRa packet status\r\n");
+    }
+}
+
 void joinAccepts( const void* context, const uint8_t dec_key_id, const uint8_t ver_key_id, const uint8_t lorawan_ver ) {
     HAL_DBG_TRACE_INFO("Joining network... ");
 
@@ -222,28 +242,45 @@ void joinAccepts( const void* context, const uint8_t dec_key_id, const uint8_t v
 
     cbuffer[0] = ( uint8_t )( 0x0504 >> 8 );
     cbuffer[1] = ( uint8_t )( 0x0504 >> 0 );
-    cbuffer[2] = ( uint8_t )( dec_key_id );
-    cbuffer[3] = ( uint8_t )( ver_key_id );
-    cbuffer[4] = ( uint8_t )( lorawan_ver );
-    for (int i = 0; i < 1; i++) {
-        cbuffer[5+i] = ( uint8_t )( 0x01 );
-    }
-    cbuffer[6] = ( uint8_t ) ( 0x6B >> 0 );
-    cbuffer[7] = ( uint8_t ) ( 0xC1 >> 0 );
-    cbuffer[8] = ( uint8_t ) ( 0xBE >> 0 );
-    cbuffer[9] = ( uint8_t ) ( 0xE2 >> 0 );
-    cbuffer[10] = ( uint8_t ) ( 0x2E >> 0 );
-    cbuffer[11] = ( uint8_t ) ( 0x40 >> 0 );
-    cbuffer[12] = ( uint8_t ) ( 0x9F >> 0 );
-    cbuffer[13] = ( uint8_t ) ( 0x96 >> 0 );
-    cbuffer[14] = ( uint8_t ) ( 0xE9 >> 0 );
-    cbuffer[15] = ( uint8_t ) ( 0x3D >> 0 );
-    cbuffer[16] = ( uint8_t ) ( 0x7E >> 0 );
-    cbuffer[17] = ( uint8_t ) ( 0x11 >> 0 );
-    cbuffer[18] = ( uint8_t ) ( 0x73 >> 0 );
-    cbuffer[19] = ( uint8_t ) ( 0x93 >> 0 );
-    cbuffer[20] = ( uint8_t ) ( 0x17 >> 0 );
-    cbuffer[21] = ( uint8_t ) ( 0x2A >> 0 );
+
+    cbuffer[2] = ( uint8_t ) dec_key_id;
+    cbuffer[3] = ( uint8_t ) ver_key_id;
+    cbuffer[4] = ( uint8_t ) lorawan_ver;
+
+    cbuffer[5] = ( uint8_t ) 16 ;
+
+    // cbuffer[6] = ( uint8_t ) ( 0x07 >> 0 );
+    // cbuffer[7] = ( uint8_t ) ( 0x0A >> 0 );
+    // cbuffer[8] = ( uint8_t ) ( 0x16 >> 0 );
+    // cbuffer[9] = ( uint8_t ) ( 0xB4 >> 0 );
+    // cbuffer[10] = ( uint8_t ) ( 0x2E >> 0 );
+    // cbuffer[11] = ( uint8_t ) ( 0x40 >> 0 );
+    // cbuffer[12] = ( uint8_t ) ( 0x9F >> 0 );
+    // cbuffer[13] = ( uint8_t ) ( 0x96 >> 0 );
+    // cbuffer[14] = ( uint8_t ) ( 0xE9 >> 0 );
+    // cbuffer[15] = ( uint8_t ) ( 0x3D >> 0 );
+    // cbuffer[16] = ( uint8_t ) ( 0x7E >> 0 );
+    // cbuffer[17] = ( uint8_t ) ( 0x11 >> 0 );
+    // cbuffer[18] = ( uint8_t ) ( 0x73 >> 0 );
+    // cbuffer[19] = ( uint8_t ) ( 0x93 >> 0 );
+    // cbuffer[20] = ( uint8_t ) ( 0x17 >> 0 );
+    // cbuffer[21] = ( uint8_t ) ( 0x2A >> 0 );
+    cbuffer[6] = ( uint8_t ) ( 0x07 >> 0 );
+    cbuffer[7] = ( uint8_t ) ( 0x0A >> 0 );
+    cbuffer[8] = ( uint8_t ) ( 0x16 >> 0 );
+    cbuffer[9] = ( uint8_t ) ( 0xB4 >> 0 );
+    cbuffer[10] = ( uint8_t ) ( 0x07 >> 0 );
+    cbuffer[11] = ( uint8_t ) ( 0x0A >> 0 );
+    cbuffer[12] = ( uint8_t ) ( 0x16 >> 0 );
+    cbuffer[13] = ( uint8_t ) ( 0xB4 >> 0 );
+    cbuffer[14] = ( uint8_t ) ( 0x07 >> 0 );
+    cbuffer[15] = ( uint8_t ) ( 0x0A >> 0 );
+    cbuffer[16] = ( uint8_t ) ( 0x16 >> 0 );
+    cbuffer[17] = ( uint8_t ) ( 0xB4 >> 0 );
+    cbuffer[18] = ( uint8_t ) ( 0x07 >> 0 );
+    cbuffer[19] = ( uint8_t ) ( 0x0A >> 0 );
+    cbuffer[20] = ( uint8_t ) ( 0x16 >> 0 );
+    cbuffer[21] = ( uint8_t ) ( 0xB4 >> 0 );
 
     if (lr1110_spi_read( context, cbuffer, 2+3+1+16, rbuffer, 1+2 ) == LR1110_SPI_STATUS_OK) {
         switch (rbuffer[1]) {
@@ -281,7 +318,9 @@ void setLR1110_Crypto_Key( const void* context ) {
 
     cbuffer[0] = ( uint8_t )( 0x0502 >> 8 );
     cbuffer[1] = ( uint8_t )( 0x0502 >> 0 );
-    cbuffer[2] = ( uint8_t ) 0x02;
+
+    cbuffer[2] = ( uint8_t ) 5;
+
     cbuffer[3] = ( uint8_t ) ( 0x2b >> 0 );
     cbuffer[4] = ( uint8_t ) ( 0x7e >> 0 );
     cbuffer[5] = ( uint8_t ) ( 0x15 >> 0 );
@@ -334,7 +373,9 @@ void getLR1110_MIC( const void* context ) {
 
     cbuffer[0] = ( uint8_t )( 0x0505 >> 8 );
     cbuffer[1] = ( uint8_t )( 0x0505 >> 0 );
-    cbuffer[2] = ( uint8_t ) 0x02;
+
+    cbuffer[2] = ( uint8_t ) 5;
+
     // 6BC1BEE2 2E409F96 E93D7E11 7393172A
     // 2b7e1516 28aed2a6abf71588 09cf4f3c
     cbuffer[3] = ( uint8_t ) ( 0x6B >> 0 );

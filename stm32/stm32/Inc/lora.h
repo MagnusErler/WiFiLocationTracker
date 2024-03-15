@@ -11,13 +11,16 @@
 #define LR1110_LORA_CMD_LENGTH_SET_PUBLIC_NETWORK       LR1110_LORA_CMD_LENGTH_NO_PARAM + 1
 #define LR1110_LORA_CMD_LENGTH_GET_PACKET_STATUS        LR1110_LORA_CMD_LENGTH_NO_PARAM
 #define LR1110_LORA_CMD_LENGTH_SET_RF_FREQUENCY         LR1110_LORA_CMD_LENGTH_NO_PARAM + 4
+#define LR1110_LORA_CMD_LENGTH_GET_STATUS               LR1110_LORA_CMD_LENGTH_NO_PARAM
 
 // LENGTHS FOR RESPONSES
 #define LR1110_LORA_RES_LENGTH_NO_PARAM                     1
 #define LR1110_LORA_RES_LENGTH_GET_PACKET_TYPE              LR1110_LORA_RES_LENGTH_NO_PARAM + 1
 #define LR1110_LORA_RES_LENGTH_GET_PACKET_STATUS            LR1110_LORA_RES_LENGTH_NO_PARAM + 3
+#define LR1110_LORA_RES_LENGTH_GET_STATUS                   LR1110_LORA_RES_LENGTH_NO_PARAM + 8
 
 // LR1110 LORA COMMANDS
+#define LR1110_LORA_CMD_GET_STATUS                      0x0201
 #define LR1110_LORA_CMD_GET_PACKET_TYPE                 0x0202
 #define LR1110_LORA_CMD_GET_PACKET_STATUS               0x0204
 #define LR1110_LORA_CMD_SET_PUBLIC_NETWORK              0x0208
@@ -127,6 +130,13 @@ void setLR1110_TX( const void* context, const uint32_t timeout);
  * @param [in] rf_frequency RF frequency
  */
 void setLR1110_RF_Frequency( const void* context, const uint32_t rf_frequency);
+
+/*!
+ * @brief Get the RF status
+ *
+ * @param [in] context Radio abstraction
+ */
+void getLR1110_RF_Status( const void* context);
 
 void joinAccepts( const void* context, const uint8_t dec_key_id, const uint8_t ver_key_id, const uint8_t lorawan_ver );
 

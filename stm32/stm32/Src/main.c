@@ -155,7 +155,7 @@ int main(void)
   setLR1110_RF_Frequency(lr1110_context, 868000000);
   
 
-  setLR1110_Dio_Irq_Params(lr1110_context, set_bit_x_to_1(2), set_bit_x_to_1(10));
+  setLR1110_Dio_Irq_Params(lr1110_context, set_bit_x_to_1(2), set_bit_x_to_1(6));
   
   // getLR1110_Errors(lr1110_context);
   
@@ -185,7 +185,9 @@ int main(void)
 
   getLR1110_MIC(lr1110_context);
 
-  joinAccepts(lr1110_context, 0x02, 0x02, 0);
+  joinAccepts(lr1110_context, 5, 5, 0);
+
+  getLR1110_RF_Status(lr1110_context);
 
   /* USER CODE END 2 */
 
