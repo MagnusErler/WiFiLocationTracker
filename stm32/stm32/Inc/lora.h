@@ -131,3 +131,5 @@ void setLR1110_RF_Frequency( const void* context, const uint32_t rf_frequency);
 void joinAccepts( const void* context, const uint8_t dec_key_id, const uint8_t ver_key_id, const uint8_t lorawan_ver );
 
 void setLR1110_Crypto_Key( const void* context );
+
+void getLR1110_MIC( const void* context );

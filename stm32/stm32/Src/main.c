@@ -168,8 +168,6 @@ int main(void)
   getLR1110_Temperature(lr1110_context);
   getLR1110_Battery_Voltage(lr1110_context);
 
-  joinAccepts(lr1110_context, 0x02, 0x00, 1);
-
   // GNSS
   // setLR1110_GNSS_Constellation(lr1110_context, 0b11);
   // getLR1110_GNSS_Version(lr1110_context);
@@ -182,6 +180,12 @@ int main(void)
   setLR1110_LoRa_PA_Config(lr1110_context, 0x01, 0x01, 0x04, 0x07);                 // DONT KNOW WHAT TO PUT HERE
   setLR1110_LoRa_TX_Params(lr1110_context, 0x16, 0x02);                             // DONT KNOW WHAT TO PUT HERE
   setLR1110_LoRa_Public_Network(lr1110_context, 0x01);
+
+  setLR1110_Crypto_Key(lr1110_context);
+
+  getLR1110_MIC(lr1110_context);
+
+  joinAccepts(lr1110_context, 0x02, 0x02, 0);
 
   /* USER CODE END 2 */
 
