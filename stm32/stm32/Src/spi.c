@@ -16,7 +16,7 @@
 #include <string.h>     // for memset
 
 // VARIABLES FOR DEBUGGING
-const bool _debug = false;
+const bool _debug = true;
 const bool _showStat1 = _debug; // Print out stat1 when sending commands   _debugStat1
 const bool _showStat2 = _debug; // Print out stat2 when sending commands
 const bool _printIRQ = _debug; // Print out extra data (if any) when sending commands
@@ -64,13 +64,10 @@ void printStat1(uint8_t stat1) {
         } else {
             HAL_DBG_TRACE_PRINTF("Interrupt Status: At least 1 interrupt active\r\n");
         }
-    }   
+    }
 
-    // Extracting command status (bits 3:1)
-    unsigned char commandStatus = (stat1 >> 1) & 0x07;
-
-    // Determining command status string based on the value
-    switch (commandStatus) {
+    // Determining command status (bits 3:1) based on the value
+    switch ((stat1 >> 1) & 0x07) {
         case 0:
             HAL_DBG_TRACE_ERROR("CMD_FAIL: The last command could not be executed\r\n");
             break;
@@ -99,11 +96,8 @@ void printStat2(uint8_t stat2) {
     print_binary(stat2);
     HAL_DBG_TRACE_PRINTF("(0x%X)\r\n", stat2);
 
-    // Extracting reset source (bits 7-4)
-    unsigned char resetSource = (stat2 >> 4) & 0x0F;
-
-    // Printing reset source
-    switch (resetSource) {
+    // Printing reset source (bits 7-4)
+    switch ((stat2 >> 4) & 0x0F) {
         case 0:
             HAL_DBG_TRACE_PRINTF("Reset Source: Cleared (no active reset)\r\n");
             break;
@@ -133,11 +127,8 @@ void printStat2(uint8_t stat2) {
             break;
     }
 
-    // Extracting system mode (bits 3-1)
-    unsigned char systemMode = (stat2 >> 1) & 0x07;
-
-    // Printing system mode
-    switch (systemMode) {
+    // Printing system mode (bits 3-1)
+    switch ((stat2 >> 1) & 0x07) {
         case 0:
             HAL_DBG_TRACE_PRINTF("System Mode: Sleep\r\n");
             break;
@@ -167,11 +158,8 @@ void printStat2(uint8_t stat2) {
             break;
     }
 
-    // Extracting execution source (bit 0)
-    unsigned char execSource = stat2 & 0x01;
-
-    // Printing execution source
-    if (execSource == 0) {
+    // Printing execution source (bit 0)
+    if ((stat2 & 0x01) == 0) {
         HAL_DBG_TRACE_PRINTF("Execution Source: Currently executing from boot-loader\r\n");
     } else {
         HAL_DBG_TRACE_PRINTF("Execution Source: Currently executing from flash\r\n");
