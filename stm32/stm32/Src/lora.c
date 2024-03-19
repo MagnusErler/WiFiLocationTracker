@@ -12,7 +12,7 @@
 #include "led.h"
 
 void setLR1110_LoRa_Packet_Type( const void* context, const uint8_t packet_type ) {
-    HAL_DBG_TRACE_INFO("Setting LR1110 LoRa packet type to 0x%0X... ", packet_type);
+    HAL_DBG_TRACE_INFO("Setting LR1110 packet type to 0x%0X... ", packet_type);
 
     uint8_t cbuffer[LR1110_LORA_CMD_LENGTH_SET_PACKET_TYPE];
 
@@ -23,7 +23,7 @@ void setLR1110_LoRa_Packet_Type( const void* context, const uint8_t packet_type 
     if ( lr1110_spi_write( context, cbuffer, LR1110_LORA_CMD_LENGTH_SET_PACKET_TYPE ) == LR1110_SPI_STATUS_OK ) {
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
     } else {
-        HAL_DBG_TRACE_ERROR("Failed to set LR1110 LoRa packet type\r\n");
+        HAL_DBG_TRACE_ERROR("Failed to set LR1110 packet type\r\n");
     }
 }
 
@@ -145,7 +145,7 @@ void setLR1110_LoRa_TX_Params( const void* context, const uint8_t tx_power, cons
     }
 }
 
-void setLR1110_LoRa_Public_Network( const void* context, const uint8_t public_network) {
+void setLR1110_LoRa_Public_Network( const void* context, const uint8_t public_network ) {
     HAL_DBG_TRACE_INFO("Setting LR1110 LoRa public network... ");
 
     uint8_t cbuffer[LR1110_LORA_CMD_LENGTH_SET_PUBLIC_NETWORK];
@@ -161,7 +161,7 @@ void setLR1110_LoRa_Public_Network( const void* context, const uint8_t public_ne
     }
 }
 
-void getLR1110_LoRa_Packet_Status( const void* context) {
+void getLR1110_LoRa_Packet_Status( const void* context ) {
     HAL_DBG_TRACE_INFO("Getting LR1110 LoRa packet status... \r\n");
 
     uint8_t cbuffer[LR1110_LORA_CMD_LENGTH_GET_PACKET_STATUS];
@@ -179,7 +179,7 @@ void getLR1110_LoRa_Packet_Status( const void* context) {
     }
 }
 
-void writeLR1110_Buffer8( const void* context, const uint8_t data) {
+void writeLR1110_Buffer8( const void* context, const uint8_t data ) {
     HAL_DBG_TRACE_INFO("Writing 0x%0X to buffer... ", data);
 
     uint8_t cbuffer[2 + 1];
@@ -195,7 +195,7 @@ void writeLR1110_Buffer8( const void* context, const uint8_t data) {
     }
 }
 
-void setLR1110_TX( const void* context, const uint32_t timeout_ms) {
+void setLR1110_TX( const void* context, const uint32_t timeout_ms ) {
     uint32_t timeout = timeout_ms * 32768;
     HAL_DBG_TRACE_INFO("Setting LR1110 TX mode with timeout of %d ms... ", timeout_ms);
 
@@ -214,7 +214,7 @@ void setLR1110_TX( const void* context, const uint32_t timeout_ms) {
     }
 }
 
-void getLR1110_RF_Status( const void* context) {
+void getLR1110_RF_Status( const void* context ) {
     HAL_DBG_TRACE_INFO("Getting LR1110 RF status... ");
 
     uint8_t cbuffer[LR1110_LORA_CMD_LENGTH_GET_STATUS];
@@ -231,6 +231,21 @@ void getLR1110_RF_Status( const void* context) {
         HAL_DBG_TRACE_PRINTF("Number of false synchronizations.: %d\r\n", (int16_t)(rbuffer[7] << 8 | rbuffer[8]));
     } else {
         HAL_DBG_TRACE_ERROR("Failed to get LR1110 LoRa packet status\r\n");
+    }
+}
+
+void setLR1110_TX_Continuous_Wave( const void* context ) {
+    HAL_DBG_TRACE_INFO("Setting LR1110 in continuous TX wave mode... ");
+
+    uint8_t cbuffer[2];
+
+    cbuffer[0] = ( uint8_t )( 0x0219 >> 8 );
+    cbuffer[1] = ( uint8_t )( 0x0219 >> 0 );
+
+    if ( lr1110_spi_write( context, cbuffer, 2 ) == LR1110_SPI_STATUS_OK ) {
+        HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+    } else {
+        HAL_DBG_TRACE_ERROR("Failed to set LR1110 in continuous TX wave mode\r\n");
     }
 }
 

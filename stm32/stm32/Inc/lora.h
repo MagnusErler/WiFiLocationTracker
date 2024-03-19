@@ -145,3 +145,10 @@ void setLR1110_Crypto_Key( const void* context );
 void getLR1110_MIC( const void* context );
 
 void getLR1110_Encrypted_Data( const void* context );
+
+/*!
+ * @brief Set LR1110 in continuous wave mode
+ *
+ * @param [in] context Radio abstraction
+ */
+void setLR1110_TX_Continuous_Wave( const void* context );

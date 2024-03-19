@@ -162,9 +162,9 @@ int main(void)
   // BOOTLOADER
   getLR1110_Bootloader_Version(lr1110_context);
   getLR1110_WiFi_Version(lr1110_context);
-  getLR1110_ChipEUI(lr1110_context, chip_eui);
-  getLR1110_Semtech_JoinEui(lr1110_context, join_eui);
   getLR1110_Root_Keys_And_Pin(lr1110_context, pin);
+  getLR1110_Semtech_JoinEui(lr1110_context, join_eui);
+  getLR1110_ChipEUI(lr1110_context, chip_eui);
   getLR1110_Temperature(lr1110_context);
   getLR1110_Battery_Voltage(lr1110_context);
 
@@ -188,6 +188,8 @@ int main(void)
   //getLR1110_Encrypted_Data(lr1110_context);
 
   joinAccepts(lr1110_context, 5, 5, 0);
+
+  setLR1110_TX_Continuous_Wave(lr1110_context);
 
   getLR1110_RF_Status(lr1110_context);
 
