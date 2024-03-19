@@ -199,7 +199,6 @@ int main(void)
     // }
 
     getLIS2DE12_Temperature();
-
     getLIS2DE12_Acceleration();
 
     

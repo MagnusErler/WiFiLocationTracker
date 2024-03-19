@@ -308,13 +308,25 @@ void setLIS2DE12_Data_Rate( ) {
     HAL_DBG_TRACE_INFO_VALUE("DONE\r\n");
 }
 
+void enableLIS2DE12_FIFO( ) {
+    HAL_DBG_TRACE_INFO("Enabling LIS2DE12 FIFO... ");
+
+    lis2de12_ctrl_reg5_t ctrl_reg5;
+    if( lis2de12_read_reg( LIS2DE12_CTRL_REG5, (uint8_t *) &ctrl_reg5, 1 ) == 0 ) {
+        ctrl_reg5.fifo_en = 1;
+        if ( lis2de12_write_reg( LIS2DE12_CTRL_REG5, ( uint8_t* ) &ctrl_reg5, 1 ) == 0 ) {
+            HAL_DBG_TRACE_INFO_VALUE("DONE\r\n");
+            return;
+        }
+    }
+    HAL_DBG_TRACE_ERROR("Failed to enable LIS2DE12 FIFO\r\n");
+}
+
 uint8_t getLIS2DE12_Temperature( void ) {
 
     uint16_t temperature = 0;
 
     if (checkLIS2DE12_Temperature_Data_is_Ready( ) == 0) {
-        //lis2de12_temperature_raw_get( &temperature );
-
         HAL_DBG_TRACE_INFO("Getting LIS2DE12 temperature... ");
 
         uint8_t buf_tmp = 0;
@@ -324,19 +336,15 @@ uint8_t getLIS2DE12_Temperature( void ) {
         }
         temperature = buf_tmp;
 
-        HAL_DBG_TRACE_INFO_VALUE("%d\r\n", temperature);
-
         if( lis2de12_read_reg( LIS2DE12_OUT_TEMP_H, &buf_tmp, 1 ) != 0 ) {
             HAL_DBG_TRACE_ERROR("Failed to get LIS2DE12 temperature\r\n");
             return 0;
         }
         temperature += buf_tmp << 8;
 
-        HAL_DBG_TRACE_INFO_VALUE("%d\r\n", temperature);
-
         temperature = (temperature / 256.0) + 25.0;
 
-        HAL_DBG_TRACE_INFO_VALUE("%d\r\n", temperature);
+        HAL_DBG_TRACE_INFO_VALUE("%d °C\r\n", temperature);
     }
 
     return ( int8_t ) temperature;
@@ -363,7 +371,7 @@ uint8_t getLIS2DE12_Acceleration( void ) {
 
     HAL_DBG_TRACE_INFO_VALUE("X: %d, Y: %d, Z: %d\r\n", val[0], val[1], val[2]);
 
-    return val;
+    return ( int8_t ) val[0];
 }
 
 void initLIS2DE12(I2C_HandleTypeDef hi2c1) {
@@ -385,7 +393,9 @@ void initLIS2DE12(I2C_HandleTypeDef hi2c1) {
     setLIS2DE12_Block_Data_Update( PROPERTY_ENABLE );
 
     // /* Enable bypass mode */
-    // setLIS2DE12_Fifo_Mode( LIS2DE12_BYPASS_MODE );
+    setLIS2DE12_Fifo_Mode( LIS2DE12_FIFO_MODE );
+
+    enableLIS2DE12_FIFO( );
 
 
     
