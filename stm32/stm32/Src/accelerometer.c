@@ -254,14 +254,13 @@ int32_t lis2de12_int1_gen_duration_set( uint8_t val ) {
 int32_t checkLIS2DE12_Temperature_Data_is_Ready( ) {
     HAL_DBG_TRACE_INFO("Checking if temperature data is ready... ");
 
-    lis2de12_status_reg_aux_t status_reg_aux;
-
+    lis2de12_status_reg_aux_t status_reg_aux = {0};
     if ( lis2de12_read_reg( LIS2DE12_STATUS_REG_AUX, ( uint8_t* ) &status_reg_aux, 1 ) != 0 ) {
         HAL_DBG_TRACE_ERROR("Failed to check if temperature data is ready\r\n");
         return -1;
     }
 
-    if ( status_reg_aux.tda == 1 && status_reg_aux.tor == 0) {
+    if ( status_reg_aux.tda == 1) { //&& status_reg_aux.tor == 0) {
         HAL_DBG_TRACE_INFO_VALUE("READY\r\n");
         return 0;
     }
@@ -269,7 +268,7 @@ int32_t checkLIS2DE12_Temperature_Data_is_Ready( ) {
     return -1;
 }
 
-int32_t enableLIS2DE12_Temperature_Sensor( ) {
+void enableLIS2DE12_Temperature_Sensor( ) {
     HAL_DBG_TRACE_INFO("Enabling LIS2DE12 internal temperature sensor... ");
     // uint8_t rbuffer = 0;
     // if (lis2de12_read_reg( LIS2DE12_TEMP_CFG_REG, ( uint8_t* ) &rbuffer, 1 ) != 0 ) {
@@ -279,15 +278,14 @@ int32_t enableLIS2DE12_Temperature_Sensor( ) {
     // HAL_DBG_TRACE_INFO_VALUE("DONE\r\n");
     // HAL_DBG_TRACE_INFO_VALUE("rbuffer: 0x%02X\r\n", rbuffer);
 
-    uint8_t buffer = 0xC0;
+    uint8_t buffer = 0b11000000;
     if ( lis2de12_write_reg( LIS2DE12_TEMP_CFG_REG, ( uint8_t* ) &buffer, 1 ) != 0 ) {
         HAL_DBG_TRACE_ERROR("Failed to enable LIS2DE12 internal temperature sensor\r\n");
-        return -1;
     }
     HAL_DBG_TRACE_INFO_VALUE("DONE\r\n");
 }
 
-int32_t setLIS2DE12_Data_Rate( ) {
+void setLIS2DE12_Data_Rate( ) {
     HAL_DBG_TRACE_INFO("Setting data rate... ");
     // lis2de12_ctrl_reg1_t ctrl_reg1;
 
@@ -306,7 +304,6 @@ int32_t setLIS2DE12_Data_Rate( ) {
     uint8_t buffer = 0x18;  //0b00011000
     if ( lis2de12_write_reg( LIS2DE12_CTRL_REG1, ( uint8_t* ) &buffer, 1 ) != 0 ) {
         HAL_DBG_TRACE_ERROR("Failed to set data rate\r\n");
-        return -1;
     }
     HAL_DBG_TRACE_INFO_VALUE("DONE\r\n");
 }
@@ -314,8 +311,9 @@ int32_t setLIS2DE12_Data_Rate( ) {
 int32_t lis2de12_temperature_raw_get( uint16_t* raw_temp ) {
     HAL_DBG_TRACE_INFO("Getting raw temperature... ");
 
-    uint8_t buf_tmp;
-    if( lis2de12_read_reg( LIS2DE12_OUT_TEMP_L, &buf_tmp, 1 ) != 0 ) {
+    uint8_t buf_tmp = 0;
+    //uint8_t buf_tmp[2];
+    if( lis2de12_read_reg( LIS2DE12_OUT_TEMP_L, &buf_tmp, 2 ) != 0 ) {
         HAL_DBG_TRACE_ERROR("Failed to get raw temperature\r\n");
         return -1;
     }
@@ -334,15 +332,16 @@ int32_t lis2de12_temperature_raw_get( uint16_t* raw_temp ) {
     return 0;
 }
 
-int16_t acc_get_temperature( void ) {
-    uint16_t temperature;
+int8_t acc_get_temperature( void ) {
+    uint16_t temperature = 0;
 
     if (checkLIS2DE12_Temperature_Data_is_Ready( ) == 0) {
         lis2de12_temperature_raw_get( &temperature );
     }
 
-    /* Build the raw tmp */
-    return ( int16_t ) temperature;
+    temperature = (temperature / 256.0) + 25.0;
+
+    return ( int8_t ) temperature;
 }
 
 void initLIS2DE12(I2C_HandleTypeDef hi2c1) {
