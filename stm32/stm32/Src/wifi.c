@@ -188,8 +188,8 @@ void scanLR1110_WiFi_Networks( const void* context, const uint8_t signal_type, c
     cbuffer[3] = ( uint8_t ) ( chan_mask >> 8 );
     cbuffer[4] = ( uint8_t ) ( chan_mask >> 0 );
     cbuffer[5] = ( uint8_t ) acq_mode;
-    cbuffer[6] = nb_max_res;
-    cbuffer[7] = nb_scan_per_chan;
+    cbuffer[6] = ( uint8_t ) nb_max_res;
+    cbuffer[7] = ( uint8_t ) nb_scan_per_chan;
     cbuffer[8] = ( uint8_t ) ( timeout >> 8 );
     cbuffer[9] = ( uint8_t ) ( timeout >> 0 );
     cbuffer[10] = ( uint8_t ) ( ( abort_on_timeout == true ) ? 1 : 0 );

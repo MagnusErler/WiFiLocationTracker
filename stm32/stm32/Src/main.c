@@ -148,7 +148,7 @@ int main(void)
 
   setLR1110_Standby_Mode(lr1110_context, 0x01);
 
-  calibrateLR1110( lr1110_context, 0x3F);
+  calibrateLR1110( lr1110_context, 0b00111111);
 
   // calibrateLR1110_Image( lr1110_context, 0xD7, 0xDB );
 
@@ -207,7 +207,7 @@ int main(void)
 
 
     //WIFI
-    // scanLR1110_WiFi_Networks(lr1110_context, 0x04, 0x3FFF, 0x04, 32, 3, 500, true);
+    // scanLR1110_WiFi_Networks(lr1110_context, 0x04, 0b0011111111111111, 0x04, 32, 3, 5000, true);
     // scanLR1110_WiFi_Country_Code(lr1110_context, 0x3FFF, 32, 3, 500, true);
     // uint8_t numberOfResults = getLR1110_WiFi_Number_of_Results(lr1110_context);
     // getLR1110_WiFi_Results(lr1110_context, 0, 6, 4);
