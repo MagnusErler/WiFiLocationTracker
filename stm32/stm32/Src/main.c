@@ -198,8 +198,11 @@ int main(void)
     //   }
     // }
 
-    uint8_t temperature = acc_get_temperature();
-    HAL_DBG_TRACE_INFO("Temperature: %d\r\n", temperature);
+    getLIS2DE12_Temperature();
+
+    getLIS2DE12_Acceleration();
+
+    
 
 
 

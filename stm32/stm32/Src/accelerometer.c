@@ -308,40 +308,62 @@ void setLIS2DE12_Data_Rate( ) {
     HAL_DBG_TRACE_INFO_VALUE("DONE\r\n");
 }
 
-int32_t lis2de12_temperature_raw_get( uint16_t* raw_temp ) {
-    HAL_DBG_TRACE_INFO("Getting raw temperature... ");
+uint8_t getLIS2DE12_Temperature( void ) {
 
-    uint8_t buf_tmp = 0;
-    //uint8_t buf_tmp[2];
-    if( lis2de12_read_reg( LIS2DE12_OUT_TEMP_L, &buf_tmp, 2 ) != 0 ) {
-        HAL_DBG_TRACE_ERROR("Failed to get raw temperature\r\n");
-        return -1;
-    }
-    *raw_temp = buf_tmp;
-
-    HAL_DBG_TRACE_INFO_VALUE("%d\r\n", *raw_temp);
-
-    if( lis2de12_read_reg( LIS2DE12_OUT_TEMP_H, &buf_tmp, 1 ) != 0 ) {
-        HAL_DBG_TRACE_ERROR("Failed to get raw temperature\r\n");
-        return -1;
-    }
-    *raw_temp += buf_tmp << 8;
-
-    HAL_DBG_TRACE_INFO_VALUE("%d\r\n", *raw_temp);
-
-    return 0;
-}
-
-int8_t acc_get_temperature( void ) {
     uint16_t temperature = 0;
 
     if (checkLIS2DE12_Temperature_Data_is_Ready( ) == 0) {
-        lis2de12_temperature_raw_get( &temperature );
+        //lis2de12_temperature_raw_get( &temperature );
+
+        HAL_DBG_TRACE_INFO("Getting LIS2DE12 temperature... ");
+
+        uint8_t buf_tmp = 0;
+        if( lis2de12_read_reg( LIS2DE12_OUT_TEMP_L, &buf_tmp, 2 ) != 0 ) {
+            HAL_DBG_TRACE_ERROR("Failed to get LIS2DE12 temperature\r\n");
+            return 0;
+        }
+        temperature = buf_tmp;
+
+        HAL_DBG_TRACE_INFO_VALUE("%d\r\n", temperature);
+
+        if( lis2de12_read_reg( LIS2DE12_OUT_TEMP_H, &buf_tmp, 1 ) != 0 ) {
+            HAL_DBG_TRACE_ERROR("Failed to get LIS2DE12 temperature\r\n");
+            return 0;
+        }
+        temperature += buf_tmp << 8;
+
+        HAL_DBG_TRACE_INFO_VALUE("%d\r\n", temperature);
+
+        temperature = (temperature / 256.0) + 25.0;
+
+        HAL_DBG_TRACE_INFO_VALUE("%d\r\n", temperature);
     }
 
-    temperature = (temperature / 256.0) + 25.0;
-
     return ( int8_t ) temperature;
+}
+
+uint8_t getLIS2DE12_Acceleration( void ) {
+    HAL_DBG_TRACE_INFO("Getting LIS2DE12 acceleration... ");
+
+    uint8_t buff[6];
+
+    if( lis2de12_read_reg(LIS2DE12_FIFO_READ_START, buff, 6) != 0 ) {
+        HAL_DBG_TRACE_ERROR("Failed to get LIS2DE12 acceleration\r\n");
+        return 0;
+    }
+
+    int16_t val[3];
+
+    val[0] = (int16_t)buff[1];
+    val[0] = (val[0] * 256) + (int16_t)buff[0];
+    val[1] = (int16_t)buff[3];
+    val[1] = (val[1] * 256) + (int16_t)buff[2];
+    val[2] = (int16_t)buff[5];
+    val[2] = (val[2] * 256) + (int16_t)buff[4];
+
+    HAL_DBG_TRACE_INFO_VALUE("X: %d, Y: %d, Z: %d\r\n", val[0], val[1], val[2]);
+
+    return val;
 }
 
 void initLIS2DE12(I2C_HandleTypeDef hi2c1) {

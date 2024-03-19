@@ -163,6 +163,8 @@ typedef struct {
 
 void initLIS2DE12(I2C_HandleTypeDef hi2c1);
 
-int8_t acc_get_temperature( void );
+uint8_t getLIS2DE12_Temperature( void );
+
+uint8_t getLIS2DE12_Acceleration( void );
 
 void enableLIS2DE12_Temperature_Sensor( void );
