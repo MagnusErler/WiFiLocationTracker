@@ -7,12 +7,6 @@
 /** I2C Device Address 8 bit format if SA0=0 -> 31 if SA0=1 -> 33 **/
 #define LIS2DE12_I2C_ADD_H   0x33U
 
-
-
-
-#define SMTC_FAIL 0
-#define SMTC_SUCCESS 1
-
 I2C_HandleTypeDef _hi2c1;
 
 /*!
@@ -26,28 +20,9 @@ typedef enum
 
 static i2c_addr_size i2c_internal_addr_size;
 
-
-// static uint8_t i2c_read_buffer( uint8_t device_addr, uint16_t addr, uint8_t* buffer, uint16_t size )
-// {
-//     uint8_t  readStatus = SMTC_FAIL;
-//     uint16_t memAddSize = 0u;
-
-//     if( i2c_internal_addr_size == I2C_ADDR_SIZE_8 ) {
-//         memAddSize = I2C_MEMADD_SIZE_8BIT;
-//     } else {
-//         memAddSize = I2C_MEMADD_SIZE_16BIT;
-//     }
-//     if (HAL_I2C_Mem_Read(&_hi2c1, device_addr, addr, memAddSize, buffer, size, 2000) == HAL_OK) {
-//         readStatus = SMTC_SUCCESS;
-//     }
-
-//     return readStatus;
-// }
-
 uint8_t hal_i2c_read_buffer( uint8_t device_addr, uint16_t addr, uint8_t* buffer, uint16_t size ) {
     //return ( i2c_read_buffer( device_addr, addr, buffer, size ) );
 
-    uint8_t  readStatus = SMTC_FAIL;
     uint16_t memAddSize = 0u;
 
     if( i2c_internal_addr_size == I2C_ADDR_SIZE_8 ) {
@@ -56,10 +31,9 @@ uint8_t hal_i2c_read_buffer( uint8_t device_addr, uint16_t addr, uint8_t* buffer
         memAddSize = I2C_MEMADD_SIZE_16BIT;
     }
     if (HAL_I2C_Mem_Read(&_hi2c1, device_addr, addr, memAddSize, buffer, size, 2000) == HAL_OK) {
-        readStatus = SMTC_SUCCESS;
+        return 1;
     }
-
-    return readStatus;
+    return 0;
 }
 
 int32_t lis2de12_read_reg( uint8_t reg, uint8_t* data, uint16_t len ) {
@@ -79,7 +53,6 @@ int8_t getLIS2DE12_Device_ID( ) {
 }
 
 static uint8_t i2c_write_buffer( const uint32_t id, uint8_t device_addr, uint16_t addr, uint8_t* buffer, uint16_t size ) {
-    uint8_t  write_status = SMTC_FAIL;
     uint16_t memAddSize   = 0u;
 
     if( i2c_internal_addr_size == I2C_ADDR_SIZE_8 ) {
@@ -88,22 +61,19 @@ static uint8_t i2c_write_buffer( const uint32_t id, uint8_t device_addr, uint16_
         memAddSize = I2C_MEMADD_SIZE_16BIT;
     }
     if (HAL_I2C_Mem_Write(&_hi2c1, device_addr, addr, memAddSize, buffer, size, 2000u) == HAL_OK) {
-        write_status = SMTC_SUCCESS;
+        return 1;
     }
-    return write_status;
+    return 0;
 }
 
 uint8_t hal_i2c_write_buffer( const uint32_t id, uint8_t device_addr, uint16_t addr, uint8_t* buffer, uint16_t size ) {
-    if( i2c_write_buffer( id, device_addr, addr, buffer, size ) == SMTC_FAIL ) {
+    if( i2c_write_buffer( id, device_addr, addr, buffer, size ) == 0 ) {
         // if first attempt fails due to an IRQ, try a second time
-        if( i2c_write_buffer( id, device_addr, addr, buffer, size ) == SMTC_FAIL ) {
-            return SMTC_FAIL;
-        } else {
-            return SMTC_SUCCESS;
+        if( i2c_write_buffer( id, device_addr, addr, buffer, size ) == 0 ) {
+            return 0;
         }
-    } else {
-        return SMTC_SUCCESS;
     }
+    return 1;
 }
 
 int32_t lis2de12_write_reg( uint8_t reg, uint8_t* data, uint16_t len ) {
@@ -111,17 +81,6 @@ int32_t lis2de12_write_reg( uint8_t reg, uint8_t* data, uint16_t len ) {
 
     //use HAL_I2C_Mem_Write instead of i2c_write_buffer
     return HAL_I2C_Mem_Write(&_hi2c1, LIS2DE12_I2C_ADD_H, reg, I2C_MEMADD_SIZE_8BIT, data, len, 2000u);
-
-    // if( i2c_write_buffer( id, device_addr, addr, buffer, size ) == SMTC_FAIL ) {
-    //     // if first attempt fails due to an IRQ, try a second time
-    //     if( i2c_write_buffer( id, device_addr, addr, buffer, size ) == SMTC_FAIL ) {
-    //         return SMTC_FAIL;
-    //     } else {
-    //         return SMTC_SUCCESS;
-    //     }
-    // } else {
-    //     return SMTC_SUCCESS;
-    // }
 }
 
 int32_t setLIS2DE12_Block_Data_Update( uint8_t val ) {
@@ -251,32 +210,25 @@ int32_t lis2de12_int1_gen_duration_set( uint8_t val ) {
 
 
 
-int32_t checkLIS2DE12_Temperature_Data_is_Ready( ) {
+uint8_t checkLIS2DE12_Temperature_Data_is_Ready( ) {
     HAL_DBG_TRACE_INFO("Checking if temperature data is ready... ");
 
     lis2de12_status_reg_aux_t status_reg_aux = {0};
     if ( lis2de12_read_reg( LIS2DE12_STATUS_REG_AUX, ( uint8_t* ) &status_reg_aux, 1 ) != 0 ) {
         HAL_DBG_TRACE_ERROR("Failed to check if temperature data is ready\r\n");
-        return -1;
+        return 0;
     }
 
     if ( status_reg_aux.tda == 1) { //&& status_reg_aux.tor == 0) {
         HAL_DBG_TRACE_INFO_VALUE("READY\r\n");
-        return 0;
+        return 1;
     }
     HAL_DBG_TRACE_WARNING("NOT READY (STATUS_REG_AUX: 0x%02X)\r\n", status_reg_aux);
-    return -1;
+    return 0;
 }
 
 void enableLIS2DE12_Temperature_Sensor( ) {
     HAL_DBG_TRACE_INFO("Enabling LIS2DE12 internal temperature sensor... ");
-    // uint8_t rbuffer = 0;
-    // if (lis2de12_read_reg( LIS2DE12_TEMP_CFG_REG, ( uint8_t* ) &rbuffer, 1 ) != 0 ) {
-    //     HAL_DBG_TRACE_ERROR("Failed to enable LIS2DE12 internal temperature sensor\r\n");
-    //     return -1;
-    // }
-    // HAL_DBG_TRACE_INFO_VALUE("DONE\r\n");
-    // HAL_DBG_TRACE_INFO_VALUE("rbuffer: 0x%02X\r\n", rbuffer);
 
     uint8_t buffer = 0b11000000;
     if ( lis2de12_write_reg( LIS2DE12_TEMP_CFG_REG, ( uint8_t* ) &buffer, 1 ) != 0 ) {
@@ -285,27 +237,46 @@ void enableLIS2DE12_Temperature_Sensor( ) {
     HAL_DBG_TRACE_INFO_VALUE("DONE\r\n");
 }
 
-void setLIS2DE12_Data_Rate( ) {
-    HAL_DBG_TRACE_INFO("Setting data rate... ");
-    // lis2de12_ctrl_reg1_t ctrl_reg1;
+void setLIS2DE12_Data_Rate( uint8_t data_rate ) {
+    HAL_DBG_TRACE_INFO("Setting LIS2DE12 data rate... ");
+    
+    lis2de12_ctrl_reg1_t ctrl_reg1;
 
-    // if( lis2de12_read_reg( LIS2DE12_CTRL_REG1, ( uint8_t* ) &ctrl_reg1, 1 ) == 0 ) {
-    //     ctrl_reg1.lpen = 1U;
-    //     ctrl_reg1.odr  = ( uint8_t ) val;
-    //     if( lis2de12_write_reg( LIS2DE12_CTRL_REG1, ( uint8_t* ) &ctrl_reg1, 1 ) == 0 ) {
-    //         HAL_DBG_TRACE_INFO_VALUE("DONE\r\n");
-    //         return 0;
-    //     }
-    // }
-    // HAL_DBG_TRACE_ERROR("Failed to set data rate\r\n");
-    // return -1;
-
-
-    uint8_t buffer = 0x18;  //0b00011000
-    if ( lis2de12_write_reg( LIS2DE12_CTRL_REG1, ( uint8_t* ) &buffer, 1 ) != 0 ) {
-        HAL_DBG_TRACE_ERROR("Failed to set data rate\r\n");
+    if( lis2de12_read_reg( LIS2DE12_CTRL_REG1, ( uint8_t* ) &ctrl_reg1, 1 ) == 0 ) {
+        ctrl_reg1.lpen = ( uint8_t ) 1;
+        ctrl_reg1.odr  = ( uint8_t ) data_rate;
+        if( lis2de12_write_reg( LIS2DE12_CTRL_REG1, ( uint8_t* ) &ctrl_reg1, 1 ) == 0 ) {
+            HAL_DBG_TRACE_INFO_VALUE("DONE\r\n");
+            return;
+        }
     }
-    HAL_DBG_TRACE_INFO_VALUE("DONE\r\n");
+    HAL_DBG_TRACE_ERROR("Failed to set LIS2DE12 data rate\r\n");
+    return;
+
+
+    // //uint8_t buffer = 0x18;  //0b00011000
+    // if ( lis2de12_write_reg( LIS2DE12_CTRL_REG1, data_rate, 1 ) != 0 ) {
+    //     HAL_DBG_TRACE_ERROR("Failed to set LIS2DE12 data rate\r\n");
+    // }
+    // HAL_DBG_TRACE_INFO_VALUE("DONE\r\n");
+}
+
+void enableLIS2DE12_Axis( ) {
+    HAL_DBG_TRACE_INFO("Enabling LIS2DE12 axis... ");
+    
+    lis2de12_ctrl_reg1_t ctrl_reg1;
+    if( lis2de12_read_reg( LIS2DE12_CTRL_REG1, ( uint8_t* ) &ctrl_reg1, 1 ) == 0 ) {
+        ctrl_reg1.lpen = ( uint8_t ) 1;
+        ctrl_reg1.xen  = ( uint8_t ) 1;
+        ctrl_reg1.yen  = ( uint8_t ) 1;
+        ctrl_reg1.zen  = ( uint8_t ) 1;
+        if( lis2de12_write_reg( LIS2DE12_CTRL_REG1, ( uint8_t* ) &ctrl_reg1, 1 ) == 0 ) {
+            HAL_DBG_TRACE_INFO_VALUE("DONE\r\n");
+            return;
+        }
+    }
+    HAL_DBG_TRACE_ERROR("Failed to enable LIS2DE12 axis\r\n");
+    return;
 }
 
 void enableLIS2DE12_FIFO( ) {
@@ -326,7 +297,7 @@ uint8_t getLIS2DE12_Temperature( void ) {
 
     uint16_t temperature = 0;
 
-    if (checkLIS2DE12_Temperature_Data_is_Ready( ) == 0) {
+    if (checkLIS2DE12_Temperature_Data_is_Ready( ) == 1) {
         HAL_DBG_TRACE_INFO("Getting LIS2DE12 temperature... ");
 
         uint8_t buf_tmp = 0;
@@ -386,8 +357,11 @@ void initLIS2DE12(I2C_HandleTypeDef hi2c1) {
 
     enableLIS2DE12_Temperature_Sensor( );
 
-    /* Set Output Data Rate to 1Hz */
-    setLIS2DE12_Data_Rate( );
+    setLIS2DE12_Data_Rate( LIS2DE12_ODR_1Hz );
+
+    enableLIS2DE12_Axis( );
+
+
 
     /* Enable Block Data Update */
     setLIS2DE12_Block_Data_Update( PROPERTY_ENABLE );
