@@ -32,7 +32,7 @@ lr1110_spi_status_t _waitForBusyState( const GPIO_PinState state, const uint32_t
         while( HAL_GPIO_ReadPin( radio->busy.port, radio->busy.pin ) == GPIO_PIN_SET ) {
             if( ( uint32_t )( HAL_GetTick() - start ) > ( uint32_t ) timeout_ms ) {
                 HAL_DBG_TRACE_PRINTF("\r\n");
-                HAL_DBG_TRACE_ERROR("Timeout occured while waiting for BUSY to become LOW\r\n");
+                HAL_DBG_TRACE_ERROR("Timeout (%dms) occured while waiting for BUSY to become LOW\r\n", timeout_ms);
                 return LR1110_SPI_STATUS_TIMEOUT;
             }
         };
@@ -40,7 +40,7 @@ lr1110_spi_status_t _waitForBusyState( const GPIO_PinState state, const uint32_t
         while( HAL_GPIO_ReadPin( radio->busy.port, radio->busy.pin ) == GPIO_PIN_RESET ) {
             if( ( uint32_t )( HAL_GetTick() - start ) > ( uint32_t ) timeout_ms ) {
                 HAL_DBG_TRACE_PRINTF("\r\n");
-                HAL_DBG_TRACE_ERROR("Timeout occured while waiting for BUSY to become HIGH\r\n");
+                HAL_DBG_TRACE_ERROR("Timeout (%dms) occured while waiting for BUSY to become HIGH\r\n", timeout_ms);
                 return LR1110_SPI_STATUS_TIMEOUT;
             }
         };
@@ -383,6 +383,7 @@ lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffe
 
     // Wait for BUSY to become LOW -> LR1110 is ready for a new command
     if (_waitForBusyState( GPIO_PIN_RESET, 10000 ) != LR1110_SPI_STATUS_OK) {
+        HAL_DBG_TRACE_MSG_COLOR(" - Before SPI transaction\r\n", HAL_DBG_TRACE_COLOR_RED);
         return LR1110_SPI_STATUS_TIMEOUT;
     }
 
@@ -399,6 +400,7 @@ lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffe
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
     // Wait for BUSY to become LOW -> LR1110 is ready for a new command
     if (_waitForBusyState( GPIO_PIN_RESET, 10000 ) != LR1110_SPI_STATUS_OK) {
+        HAL_DBG_TRACE_MSG_COLOR(" - After SPI transaction\r\n", HAL_DBG_TRACE_COLOR_RED);
         return LR1110_SPI_STATUS_TIMEOUT;
     }
     // End of SPI transaction
