@@ -128,8 +128,8 @@ int main(void)
 
   setLR1110_TCXO_Mode(lr1110_context);
 
-  clearLR1110_Errors(lr1110_context);
-  clearLR1110_IRQ(lr1110_context);
+  // clearLR1110_Errors(lr1110_context);
+  // clearLR1110_IRQ(lr1110_context);
 
 
   // clearLR1110_RX_Buffer(lr1110_context);
@@ -137,7 +137,7 @@ int main(void)
 
   // setLR1110_Standby_Mode(lr1110_context, 0x01);
 
-  // calibrateLR1110( lr1110_context, 0x3F);
+  calibrateLR1110( lr1110_context, 0b00111111);
 
   // calibrateLR1110_Image( lr1110_context, 0xD7, 0xDB );
   

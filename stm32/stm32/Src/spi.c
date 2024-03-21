@@ -16,7 +16,7 @@
 #include <string.h>     // for memset
 
 // VARIABLES FOR DEBUGGING
-const bool _debug = false;
+const bool _debug = true;
 const bool _showStat1 = _debug; // Print out stat1 when sending commands   _debugStat1
 const bool _showStat2 = _debug; // Print out stat2 when sending commands
 const bool _printIRQ = _debug; // Print out extra data (if any) when sending commands
@@ -341,6 +341,7 @@ lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer
 
     // Wait for BUSY to become LOW -> LR1110 is ready for a new command
     if (_waitForBusyState( GPIO_PIN_RESET, 2000 ) != LR1110_SPI_STATUS_OK) {
+        HAL_DBG_TRACE_MSG_COLOR(" - Before first SPI transaction\r\n", HAL_DBG_TRACE_COLOR_RED);
         return LR1110_SPI_STATUS_ERROR;
     }
 
@@ -354,6 +355,7 @@ lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
     // Wait for BUSY to become LOW -> LR1110 is ready for a new command
     if (_waitForBusyState( GPIO_PIN_RESET, 2000 ) != LR1110_SPI_STATUS_OK) {
+        HAL_DBG_TRACE_MSG_COLOR(" - After first SPI transaction\r\n", HAL_DBG_TRACE_COLOR_RED);
         return LR1110_SPI_STATUS_ERROR;
     }
     // End of 1st SPI transaction
@@ -372,6 +374,7 @@ lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
     // Wait for BUSY to become LOW -> LR1110 is ready for a new command
     if (_waitForBusyState( GPIO_PIN_RESET, 2000 ) != LR1110_SPI_STATUS_OK) {
+        HAL_DBG_TRACE_MSG_COLOR(" - After second SPI transaction\r\n", HAL_DBG_TRACE_COLOR_RED);
         return LR1110_SPI_STATUS_ERROR;
     }
     // End of 2nd SPI transaction
