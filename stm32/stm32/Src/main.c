@@ -138,60 +138,60 @@ int main(void)
   blinkLED(GPIOC, RX_LED_Pin|TX_LED_Pin, 100, 5);
 
 
-  clearLR1110_Errors(lr1110_context);
-  clearLR1110_IRQ(lr1110_context);
+  // clearLR1110_Errors(lr1110_context);
+  // clearLR1110_IRQ(lr1110_context);
 
   setLR1110_TCXO_Mode(lr1110_context);
 
 
   // clearLR1110_RX_Buffer(lr1110_context);
 
-  setLR1110_Standby_Mode(lr1110_context, 0x01);
+  // setLR1110_Standby_Mode(lr1110_context, 0x01);
 
-  calibrateLR1110( lr1110_context, 0b00111111);
+  // calibrateLR1110( lr1110_context, 0b00111111);
 
   // calibrateLR1110_Image( lr1110_context, 0xD7, 0xDB );
 
-  setLR1110_RF_Frequency(lr1110_context, 868000000);
+  // setLR1110_RF_Frequency(lr1110_context, 868000000);
   
 
-  setLR1110_Dio_Irq_Params(lr1110_context, set_bit_x_to_1(2), set_bit_x_to_1(6));
+  // setLR1110_Dio_Irq_Params(lr1110_context, set_bit_x_to_1(2), set_bit_x_to_1(6));
   
   // getLR1110_Errors(lr1110_context);
   
   // BOOTLOADER
-  getLR1110_Bootloader_Version(lr1110_context);
-  getLR1110_WiFi_Version(lr1110_context);
-  getLR1110_Root_Keys_And_Pin(lr1110_context, pin);
-  getLR1110_Semtech_JoinEui(lr1110_context, join_eui);
-  getLR1110_ChipEUI(lr1110_context, chip_eui);
-  getLR1110_Temperature(lr1110_context);
-  getLR1110_Battery_Voltage(lr1110_context);
+  // getLR1110_Bootloader_Version(lr1110_context);
+  // getLR1110_WiFi_Version(lr1110_context);
+  // getLR1110_Root_Keys_And_Pin(lr1110_context, pin);
+  // getLR1110_Semtech_JoinEui(lr1110_context, join_eui);
+  // getLR1110_ChipEUI(lr1110_context, chip_eui);
+  // getLR1110_Temperature(lr1110_context);
+  // getLR1110_Battery_Voltage(lr1110_context);
 
   // GNSS
   // setLR1110_GNSS_Constellation(lr1110_context, 0b11);
   // getLR1110_GNSS_Version(lr1110_context);
 
   // LORA
-  setLR1110_LoRa_Packet_Type(lr1110_context, 0x02);
-  getLR1110_LoRa_Packet_Type(lr1110_context);
-  setLR1110_LoRa_Modulation_Params(lr1110_context, 0x0C, 0x06, 0x01, 0x00);         // (lr1110_context, 0x07, 0x05, 0x01, 0x00); NOT SURE ABOUT VALUE 4
-  setLR1110_LoRa_Packet_Params(lr1110_context, 0x00, 0x08, 0x00, 0x00, 0x01, 0x00); // NOT SURE ABOUT VALUE 1,2,4 and 6
-  setLR1110_LoRa_PA_Config(lr1110_context, 0x01, 0x01, 0x04, 0x07);                 // DONT KNOW WHAT TO PUT HERE
-  setLR1110_LoRa_TX_Params(lr1110_context, 0x16, 0x02);                             // DONT KNOW WHAT TO PUT HERE
-  setLR1110_LoRa_Public_Network(lr1110_context, 0x01);
+  // setLR1110_LoRa_Packet_Type(lr1110_context, 0x02);
+  // getLR1110_LoRa_Packet_Type(lr1110_context);
+  // setLR1110_LoRa_Modulation_Params(lr1110_context, 0x0C, 0x06, 0x01, 0x00);         // (lr1110_context, 0x07, 0x05, 0x01, 0x00); NOT SURE ABOUT VALUE 4
+  // setLR1110_LoRa_Packet_Params(lr1110_context, 0x00, 0x08, 0x00, 0x00, 0x01, 0x00); // NOT SURE ABOUT VALUE 1,2,4 and 6
+  // setLR1110_LoRa_PA_Config(lr1110_context, 0x01, 0x01, 0x04, 0x07);                 // DONT KNOW WHAT TO PUT HERE
+  // setLR1110_LoRa_TX_Params(lr1110_context, 0x16, 0x02);                             // DONT KNOW WHAT TO PUT HERE
+  // setLR1110_LoRa_Public_Network(lr1110_context, 0x01);
 
-  setLR1110_Crypto_Key(lr1110_context);
+  // setLR1110_Crypto_Key(lr1110_context);
 
-  getLR1110_MIC(lr1110_context);
+  // getLR1110_MIC(lr1110_context);
 
-  //getLR1110_Encrypted_Data(lr1110_context);
+  // //getLR1110_Encrypted_Data(lr1110_context);
 
-  joinAccepts(lr1110_context, 5, 5, 0);
+  // joinAccepts(lr1110_context, 5, 5, 0);
 
-  setLR1110_TX_Continuous_Wave(lr1110_context);
+  // setLR1110_TX_Continuous_Wave(lr1110_context);
 
-  getLR1110_RF_Status(lr1110_context);
+  // getLR1110_RF_Status(lr1110_context);
 
   /* USER CODE END 2 */
 
@@ -199,8 +199,8 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1) {
 
-    writeLR1110_Buffer8(lr1110_context, 0x02);
-    setLR1110_TX(lr1110_context, 5000);
+    // writeLR1110_Buffer8(lr1110_context, 0x02);
+    // setLR1110_TX(lr1110_context, 5000);
 
 
     // getLR1110_Status(lr1110_context);
@@ -209,13 +209,13 @@ int main(void)
 
 
     //WIFI
-    // scanLR1110_WiFi_Networks(lr1110_context, 0x04, 0b0011111111111111, 0x04, 32, 3, 5000, true);
+    scanLR1110_WiFi_Networks(lr1110_context, 0x04, 0b0011111111111111, 0x04, 32, 3, 100, true);
     // scanLR1110_WiFi_Country_Code(lr1110_context, 0x3FFF, 32, 3, 500, true);
-    // uint8_t numberOfResults = getLR1110_WiFi_Number_of_Results(lr1110_context);
+    uint8_t numberOfResults = getLR1110_WiFi_Number_of_Results(lr1110_context);
     // getLR1110_WiFi_Results(lr1110_context, 0, 6, 4);
-    // for( int i = 0; i < numberOfResults; i++ ) {
-    //   getWiFiFullResults( lr1110_context, i, 1 );
-    // }
+    for( int i = 0; i < numberOfResults; i++ ) {
+      getWiFiFullResults( lr1110_context, i, 1 );
+    }
 
     // getLR1110_Status(lr1110_context);
     // getLR1110_Errors(lr1110_context);
@@ -232,7 +232,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
     HAL_DBG_TRACE_MSG_COLOR("\r\nWaiting for next while loop...\r\n", HAL_DBG_TRACE_COLOR_BLUE);
-    HAL_Delay(5000);
+    HAL_Delay(2000);
   }
   /* USER CODE END 3 */
 }
