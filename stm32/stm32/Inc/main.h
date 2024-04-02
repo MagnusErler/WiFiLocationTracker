@@ -75,6 +75,10 @@ void Error_Handler(void);
 #define LNA_CTRL_GPIO_Port GPIOB
 #define NSS_Pin GPIO_PIN_8
 #define NSS_GPIO_Port GPIOA
+#define ACC_INT1_Pin GPIO_PIN_9
+#define ACC_INT1_GPIO_Port GPIOA
+#define ACC_INT2_Pin GPIO_PIN_10
+#define ACC_INT2_GPIO_Port GPIOA
 #define TMS_Pin GPIO_PIN_13
 #define TMS_GPIO_Port GPIOA
 #define TCK_Pin GPIO_PIN_14
