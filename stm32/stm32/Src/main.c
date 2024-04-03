@@ -27,6 +27,7 @@
 #include <stdarg.h> // used for va_list, va_start, va_end functions
 #include <stdio.h>  // used for vsprintf function
 
+#include "constants.h"
 #include "helper.h"
 #include "lr1110.h"
 #include "led.h"
@@ -183,7 +184,7 @@ int main(void)
     // setLR1110_TX(lr1110_context, 100);
 
     // WIFI
-    scanLR1110_WiFi_Networks(lr1110_context, 0x04, 0x3FFF, 0x04, 32, 3, 500, true);
+    scanLR1110_WiFi_Networks(lr1110_context, LR1110_WIFI_TYPE_SCAN_B_G_N, LR1110_WIFI_ALL_CHANNELS, LR1110_WIFI_SCAN_MODE_FULL_BEACON, 32, 3, 500, true);
     //scanLR1110_WiFi_Country_Code(lr1110_context, 0x3FFF, 32, 3, 500, true);
     uint8_t numberOfResults = getLR1110_WiFi_Number_of_Results(lr1110_context);
     //getLR1110_WiFi_Results(lr1110_context, 0, 6, 4);
