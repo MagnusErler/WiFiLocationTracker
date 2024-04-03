@@ -161,6 +161,22 @@ typedef struct {
 #define LIS2DE12_ID          0x33U
 #define LIS2DE12_WHO_AM_I    0x0FU
 
+#define LIS2DE12_FIFO_SRC_REG         0x2FU
+typedef struct
+{
+#if DRV_BYTE_ORDER == DRV_LITTLE_ENDIAN
+  uint8_t fss               : 5;
+  uint8_t empty             : 1;
+  uint8_t ovrn_fifo         : 1;
+  uint8_t wtm               : 1;
+#elif DRV_BYTE_ORDER == DRV_BIG_ENDIAN
+  uint8_t wtm               : 1;
+  uint8_t ovrn_fifo         : 1;
+  uint8_t empty             : 1;
+  uint8_t fss               : 5;
+#endif /* DRV_BYTE_ORDER */
+} lis2de12_fifo_src_reg_t;
+
 void initLIS2DE12(I2C_HandleTypeDef hi2c1);
 
 uint8_t getLIS2DE12_Temperature( void );

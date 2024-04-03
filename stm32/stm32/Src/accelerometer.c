@@ -128,6 +128,19 @@ int32_t setLIS2DE12_Full_Scale( lis2de12_fs_t val ) {
     return -1;
 }
 
+int32_t getLIS2DE12_FIFO_Data_Level( uint8_t *val) {
+    HAL_DBG_TRACE_INFO("Getting FIFO data level... ");
+
+    lis2de12_fifo_src_reg_t fifo_src_reg;
+    if( lis2de12_read_reg( LIS2DE12_FIFO_SRC_REG, ( uint8_t* ) &fifo_src_reg, 1 ) == 0 ) {
+        HAL_DBG_TRACE_INFO_VALUE("DONE\r\n");
+        *val = (uint8_t)fifo_src_reg.fss;
+        return 0;
+    }
+    HAL_DBG_TRACE_ERROR("Failed to get FIFO data level\r\n");
+    return -1;
+}
+
 // int32_t setLIS2DE12_High_Pass_Int_Conf( lis2de12_hp_t val ) {
 //     HAL_DBG_TRACE_INFO("Setting high pass filter... ");
 
@@ -322,15 +335,21 @@ uint8_t getLIS2DE12_Temperature( void ) {
 uint8_t getLIS2DE12_Acceleration( void ) {
     HAL_DBG_TRACE_INFO("Getting LIS2DE12 acceleration... ");
 
-    uint8_t buff[6];
+    uint8_t dummy;
+
+    // getLIS2DE12_FIFO_Data_Level( &dummy );
+    
+
+    // while ( dummy > 0) {
+
+    uint8_t buff[6] = {0};
 
     if( lis2de12_read_reg(LIS2DE12_FIFO_READ_START, buff, 6) != 0 ) {
         HAL_DBG_TRACE_ERROR("Failed to get LIS2DE12 acceleration\r\n");
         return 0;
     }
 
-    int16_t val[3];
-
+    int16_t val[3] = {0};
     val[0] = (int16_t)buff[1];
     val[0] = (val[0] * 256) + (int16_t)buff[0];
     val[1] = (int16_t)buff[3];
@@ -340,7 +359,10 @@ uint8_t getLIS2DE12_Acceleration( void ) {
 
     HAL_DBG_TRACE_INFO_VALUE("X: %d, Y: %d, Z: %d\r\n", val[0], val[1], val[2]);
 
-    return ( int8_t ) val[0];
+    // dummy--;
+    // }
+
+    //return ( int8_t ) val[0];
 }
 
 void initLIS2DE12(I2C_HandleTypeDef hi2c1) {
@@ -363,7 +385,7 @@ void initLIS2DE12(I2C_HandleTypeDef hi2c1) {
 
     enableLIS2DE12_FIFO( );
 
-    setLIS2DE12_Fifo_Mode( LIS2DE12_FIFO_MODE );
+    setLIS2DE12_Fifo_Mode( LIS2DE12_DYNAMIC_STREAM_MODE );
     
 
     // /* Set full scale to 2g */
