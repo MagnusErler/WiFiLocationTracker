@@ -166,9 +166,9 @@ int main(void)
   // LORA
   // setLR1110_LoRa_Packet_Type(lr1110_context, 0x02);
   // getLR1110_LoRa_Packet_Type(lr1110_context);
-  // setLR1110_LoRa_Modulation_Params(lr1110_context, 0x07, 0x05, 0x01, 0x00);         // NOT SURE ABOUT VALUE 4
-  // setLR1110_LoRa_Packet_Params(lr1110_context, 0x00, 0x02, 0x01, 0x02, 0x01, 0x00); // NOT SURE ABOUT VALUE 1,2,4 and 6
-  // setLR1110_LoRa_PA_Config(lr1110_context, 0x00, 0x00, 0x04, 0x00);                 // DONT KNOW WHAT TO PUT HERE
+  // setLR1110_LoRa_Modulation_Params(lr1110_context, LR1110_LORA_SF7, LR1110_LORA_BW_250, LR1110_LORA_SHORT_CR_1_25, LR1110_LORA_LOW_DATA_RATE_OPTIMIZE_OFF);         // NOT SURE ABOUT VALUE 4
+  // setLR1110_LoRa_Packet_Params(lr1110_context, 0x00, 0x02, LR1110_LORA_HEADER_TYPE_IMPLICIT, 0x02, LR1110_LORA_CRC_ON, LR1110_LORA_INVERT_Q_NOT_INVERTED); // NOT SURE ABOUT VALUE 1,2,4 and 6
+  // setLR1110_LoRa_PA_Config(lr1110_context, LR1110_LORA_PA_LOW_POWER, LR1110_LORA_REG_PA_SUPPLY_INTERNAL_REGULATOR, 0x04, 0x00);                 // DONT KNOW WHAT TO PUT HERE
   // setLR1110_LoRa_TX_Params(lr1110_context, 0x0E, 0x02);                             // DONT KNOW WHAT TO PUT HERE
   // setLR1110_LoRa_Public_Network(lr1110_context, 0x01);
 
