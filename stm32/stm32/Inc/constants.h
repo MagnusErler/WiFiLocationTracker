@@ -99,5 +99,44 @@ typedef enum {
 typedef enum {
     LR1110_LORA_REG_PA_SUPPLY_INTERNAL_REGULATOR = 0x00,
     LR1110_LORA_REG_PA_SUPPLY_VBAT = 0x01,      // THe user must use RefPaSupply = 0x01 whenever TxPower > 14
-} lr1110_lora_reg_pa_supply_y
+} lr1110_lora_reg_pa_supply_t;
 
+typedef enum {
+    LR1110_LORA_TX_POWER_17_14 = 0x0E,
+    LR1110_LORA_TX_POWER_9_22 = 0x16,
+    LR1110_LORA_TX_POWER_18_13 = 0x0F,      // if TXPower > 14, the user must select VBAT supply
+} lr1110_lora_tx_power_t;
+
+typedef enum {
+    LR1110_LORA_RAMP_TIME_16 = 0x00,
+    LR1110_LORA_RAMP_TIME_32 = 0x01,
+    LR1110_LORA_RAMP_TIME_48 = 0x02,
+    LR1110_LORA_RAMP_TIME_64 = 0x03,
+    LR1110_LORA_RAMP_TIME_80 = 0x04,
+    LR1110_LORA_RAMP_TIME_96 = 0x05,
+    LR1110_LORA_RAMP_TIME_112 = 0x06,
+    LR1110_LORA_RAMP_TIME_128 = 0x07,
+    LR1110_LORA_RAMP_TIME_144 = 0x08,
+    LR1110_LORA_RAMP_TIME_160 = 0x09,
+    LR1110_LORA_RAMP_TIME_176 = 0x0A,
+    LR1110_LORA_RAMP_TIME_192 = 0x0B,
+    LR1110_LORA_RAMP_TIME_208 = 0x0C,
+    LR1110_LORA_RAMP_TIME_240 = 0x0D,
+    LR1110_LORA_RAMP_TIME_272 = 0x0E,
+    LR1110_LORA_RAMP_TIME_304 = 0x0F,
+} lr1110_lora_ramp_time_t;
+
+typedef enum {
+    LR1110_LORA_PRIVATE_NETWORK = 0x00,
+    LR1110_LORA_PUBLIC_NETWORK = 0x01,
+} lr1110_lora_public_network_t;
+
+typedef enum {
+    LR1110_LORA_PACKET_TYPE_NONE = 0x00,
+    LR1110_LORA_PACKET_TYPE_GFSK = 0x01,
+    LR1110_LORA_PACKET_TYPE_LORA = 0x02,
+    LR1110_LORA_PACKET_TYPE_SIGFOX = 0x03,
+    LR1110_LORA_PACKET_TYPE_GMSK = 0x04,
+    LR1110_LORA_PACKET_TYPE_RANGING = 0x05,
+    LR1110_LORA_PACKET_TYPE_BLE = 0x06,
+} lr1110_lora_packet_type_t;
