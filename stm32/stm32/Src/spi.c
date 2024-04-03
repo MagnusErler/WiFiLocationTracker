@@ -16,7 +16,7 @@
 #include <string.h>     // for memset
 
 // VARIABLES FOR DEBUGGING
-const bool _debug = true;
+const bool _debug = false;
 const bool _showStat1 = _debug; // Print out stat1 when sending commands   _debugStat1
 const bool _showStat2 = _debug; // Print out stat2 when sending commands
 const bool _printIRQ = _debug; // Print out extra data (if any) when sending commands

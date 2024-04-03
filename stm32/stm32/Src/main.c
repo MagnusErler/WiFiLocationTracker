@@ -181,17 +181,15 @@ int main(void)
   setLR1110_LoRa_TX_Params(lr1110_context, 0x16, 0x02);                             // DONT KNOW WHAT TO PUT HERE
   setLR1110_LoRa_Public_Network(lr1110_context, 0x01);
 
-  setLR1110_Crypto_Key(lr1110_context);
+  // setLR1110_Crypto_Key(lr1110_context);
 
-  getLR1110_MIC(lr1110_context);
+  // getLR1110_MIC(lr1110_context);
 
   //getLR1110_Encrypted_Data(lr1110_context);
 
-  joinAccepts(lr1110_context, 5, 5, 0);
+  // joinAccepts(lr1110_context, 5, 5, 0);
 
-  setLR1110_TX_Continuous_Wave(lr1110_context);
-
-  getLR1110_RF_Status(lr1110_context);
+  // setLR1110_TX_Continuous_Wave(lr1110_context);
 
   /* USER CODE END 2 */
 
@@ -201,6 +199,8 @@ int main(void)
 
     writeLR1110_Buffer8(lr1110_context, 0x02);
     setLR1110_TX(lr1110_context, 5000);
+
+    getLR1110_RF_Status(lr1110_context);
 
 
     // getLR1110_Status(lr1110_context);
@@ -232,7 +232,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
     HAL_DBG_TRACE_MSG_COLOR("\r\nWaiting for next while loop...\r\n", HAL_DBG_TRACE_COLOR_BLUE);
-    HAL_Delay(2000);
+    HAL_Delay(5000);
   }
   /* USER CODE END 3 */
 }
