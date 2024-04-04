@@ -382,7 +382,7 @@ lr1110_spi_status_t lr1110_spi_read( const void* context, const uint8_t* cbuffer
 lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffer, const uint16_t cbuffer_length ) {
 
     // Wait for BUSY to become LOW -> LR1110 is ready for a new command
-    if (_waitForBusyState( GPIO_PIN_RESET, 2000 ) != LR1110_SPI_STATUS_OK) {
+    if (_waitForBusyState( GPIO_PIN_RESET, 20000 ) != LR1110_SPI_STATUS_OK) {
         return LR1110_SPI_STATUS_TIMEOUT;
     }
 
@@ -398,7 +398,7 @@ lr1110_spi_status_t lr1110_spi_write( const void* context, const uint8_t* cbuffe
     }
     HAL_GPIO_WritePin( radio->nss.port, radio->nss.pin, GPIO_PIN_SET );
     // Wait for BUSY to become LOW -> LR1110 is ready for a new command
-    if (_waitForBusyState( GPIO_PIN_RESET, 2000 ) != LR1110_SPI_STATUS_OK) {
+    if (_waitForBusyState( GPIO_PIN_RESET, 20000 ) != LR1110_SPI_STATUS_OK) {
         return LR1110_SPI_STATUS_TIMEOUT;
     }
     // End of SPI transaction

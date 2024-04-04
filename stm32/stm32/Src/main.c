@@ -146,9 +146,9 @@ int main(void)
 
   // clearLR1110_RX_Buffer(lr1110_context);
 
-  setLR1110_Standby_Mode(lr1110_context, 0x01);
+  // setLR1110_Standby_Mode(lr1110_context, 0x01);    //comment out for custom PCB
 
-  calibrateLR1110( lr1110_context, 0x3F);
+  // calibrateLR1110( lr1110_context, 0x3F);    //comment out for custom PCB
 
   // calibrateLR1110_Image( lr1110_context, 0xD7, 0xDB );
   setLR1110_RF_Frequency(lr1110_context, 868000000);
@@ -165,7 +165,7 @@ int main(void)
   getLR1110_Semtech_JoinEui(lr1110_context, join_eui);
   getLR1110_Root_Keys_And_Pin(lr1110_context, pin);
   getLR1110_Temperature(lr1110_context);
-  getLR1110_Battery_Voltage(lr1110_context);
+  getLR1110_Battery_Voltage(lr1110_context);    //comment out the last few commands for custom PCB
 
   initLIS2DE12(hi2c1);
 
@@ -216,9 +216,9 @@ int main(void)
 
     //WIFI
     // scanLR1110_WiFi_Networks(lr1110_context, 0x04, 0x3FFF, 0x04, 32, 3, 500, true);
-    // scanLR1110_WiFi_Country_Code(lr1110_context, 0x3FFF, 32, 3, 500, true);
+    // // scanLR1110_WiFi_Country_Code(lr1110_context, 0x3FFF, 32, 3, 500, true);
     // uint8_t numberOfResults = getLR1110_WiFi_Number_of_Results(lr1110_context);
-    // getLR1110_WiFi_Results(lr1110_context, 0, 6, 4);
+    // // getLR1110_WiFi_Results(lr1110_context, 0, 6, 4);
     // for( int i = 0; i < numberOfResults; i++ ) {
     //   getWiFiFullResults( lr1110_context, i, 1 );
     // }

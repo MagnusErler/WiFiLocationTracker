@@ -144,7 +144,7 @@ uint8_t getLR1110_WiFi_Number_of_Results( const void* context ) {
 
     if ( lr1110_spi_read( context, cbuffer, LR1110_WIFI_CMD_LENGTH_GET_NUMBER_OF_RESULTS, rbuffer, LR1110_WIFI_RES_LENGTH_GET_NUMBER_OF_RESULTS ) == LR1110_SPI_STATUS_OK ) {
         HAL_DBG_TRACE_INFO_VALUE("%d\r\n", rbuffer[1]);
-        return rbuffer[0];
+        return rbuffer[1];
     } else {
         HAL_DBG_TRACE_ERROR("Failed to get WiFi networks count\r\n");
         return 0;
