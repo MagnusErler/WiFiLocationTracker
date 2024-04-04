@@ -1,0 +1,1675 @@
+ARM GAS  /tmp/ccz1jFcy.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"lr1110_bootloader.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.min,"ax",%progbits
+  18              		.align	1
+  19              		.global	min
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	min:
+  27              	.LFB0:
+  28              		.file 1 "../Src/radio/lr1110_modem/src/lr1110_bootloader.c"
+   1:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** /*!
+   2:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * @file      lr1110_bootloader.c
+   3:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  *
+   4:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * @brief     Bootloader driver implementation for LR1110
+   5:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  *
+   6:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * Revised BSD License
+   7:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * Copyright Semtech Corporation 2020. All rights reserved.
+   8:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  *
+   9:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * Redistribution and use in source and binary forms, with or without
+  10:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * modification, are permitted provided that the following conditions are met:
+  11:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  *     * Redistributions of source code must retain the above copyright
+  12:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  *       notice, this list of conditions and the following disclaimer.
+  13:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  *     * Redistributions in binary form must reproduce the above copyright
+  14:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  *       notice, this list of conditions and the following disclaimer in the
+  15:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  *       documentation and/or other materials provided with the distribution.
+  16:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  *     * Neither the name of the Semtech corporation nor the
+  17:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  *       names of its contributors may be used to endorse or promote products
+  18:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  *       derived from this software without specific prior written permission.
+  19:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  *
+  20:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  21:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  22:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  23:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * ARE DISCLAIMED. IN NO EVENT SHALL SEMTECH CORPORATION BE LIABLE FOR ANY
+  24:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+  25:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  26:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+  27:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  28:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  29:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  30:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  */
+ARM GAS  /tmp/ccz1jFcy.s 			page 2
+
+
+  31:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+  32:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** /*
+  33:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * -----------------------------------------------------------------------------
+  34:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * --- DEPENDENCIES ------------------------------------------------------------
+  35:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  */
+  36:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+  37:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** #include "lr1110_bootloader.h"
+  38:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** #include "lr1110_hal.h"
+  39:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+  40:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** /*
+  41:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * -----------------------------------------------------------------------------
+  42:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * --- PRIVATE MACROS-----------------------------------------------------------
+  43:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  */
+  44:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+  45:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** /*
+  46:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * -----------------------------------------------------------------------------
+  47:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * --- PRIVATE CONSTANTS -------------------------------------------------------
+  48:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  */
+  49:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+  50:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** /*!
+  51:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * @brief Maximal number of uint32_t elements writable per SPI burst for flash update
+  52:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  */
+  53:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** #define LR1110_FLASH_DATA_UINT32_MAX ( 64 )
+  54:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+  55:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** /*!
+  56:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * @brief Maximal number of uint8_t elements writable per SPI burst for flash update
+  57:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  */
+  58:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** #define LR1110_FLASH_DATA_UINT8_MAX ( LR1110_FLASH_DATA_UINT32_MAX * 4 )
+  59:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+  60:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** /*!
+  61:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * @brief Length of command buffer for commands that have no parameter
+  62:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  */
+  63:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** #define LR1110_BL_CMD_NO_PARAM_LENGTH 2
+  64:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+  65:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** /*!
+  66:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * @brief Length of command buffer for bootloader get version command
+  67:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  */
+  68:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** #define LR1110_BL_VERSION_CMD_LENGTH LR1110_BL_CMD_NO_PARAM_LENGTH
+  69:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+  70:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** /*!
+  71:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * @brief Length of command buffer for flash erase command
+  72:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  */
+  73:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** #define LR1110_BL_ERASE_FLASH_CMD_LENGTH LR1110_BL_CMD_NO_PARAM_LENGTH
+  74:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+  75:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** /*!
+  76:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * @brief Length of command buffer for flash page erase command
+  77:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  */
+  78:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** #define LR1110_BL_ERASE_PAGE_CMD_LENGTH ( LR1110_BL_CMD_NO_PARAM_LENGTH + 1 )
+  79:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+  80:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** /*!
+  81:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * @brief Length of command buffer for flash write command
+  82:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  */
+  83:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** #define LR1110_BL_WRITE_FLASH_CMD_LENGTH ( LR1110_BL_CMD_NO_PARAM_LENGTH + 4 )
+  84:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+  85:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** /*!
+  86:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * @brief Length of command buffer for write encrypted flash command
+  87:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  */
+ARM GAS  /tmp/ccz1jFcy.s 			page 3
+
+
+  88:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** #define LR1110_BL_WRITE_FLASH_ENCRYPTED_CMD_LENGTH ( LR1110_BL_CMD_NO_PARAM_LENGTH + 4 )
+  89:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+  90:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** /*!
+  91:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * @brief Length of command buffer for flash hash getter command
+  92:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  */
+  93:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** #define LR1110_BL_GET_HASH_CMD_LENGTH ( LR1110_BL_CMD_NO_PARAM_LENGTH )
+  94:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+  95:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** /*!
+  96:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * @brief Length of command buffer for reboot command
+  97:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  */
+  98:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** #define LR1110_BL_REBOOT_CMD_LENGTH ( LR1110_BL_CMD_NO_PARAM_LENGTH + 1 )
+  99:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 100:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** /*!
+ 101:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * @brief Length of command buffer for PIN read command
+ 102:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  */
+ 103:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** #define LR1110_BL_GET_PIN_CMD_LENGTH ( LR1110_BL_CMD_NO_PARAM_LENGTH )
+ 104:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 105:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** /*!
+ 106:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * @brief Length of command buffer for EUI read command
+ 107:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  */
+ 108:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** #define LR1110_BL_GET_CHIP_EUI_CMD_LENGTH ( LR1110_BL_CMD_NO_PARAM_LENGTH )
+ 109:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 110:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** /*!
+ 111:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * @brief
+ 112:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  */
+ 113:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 114:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** /*
+ 115:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * -----------------------------------------------------------------------------
+ 116:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * --- PRIVATE TYPES -----------------------------------------------------------
+ 117:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  */
+ 118:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 119:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** enum
+ 120:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** {
+ 121:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     LR1110_BL_GET_STATUS_OC            = 0x0100,  //!< Operation code for get status command
+ 122:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     LR1110_BL_GET_VERSION_OC           = 0x0101,  //!< Operation code for get version command
+ 123:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     LR1110_BL_ERASE_FLASH_OC           = 0x8000,  //!< Operation code for flash erase command
+ 124:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     LR1110_BL_ERASE_PAGE_OC            = 0x8001,  //!< Operation code for flash page erase command
+ 125:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     LR1110_BL_WRITE_FLASH_OC           = 0x8002,  //!< Operation code for write flash command
+ 126:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     LR1110_BL_WRITE_FLASH_ENCRYPTED_OC = 0x8003,  //!< Operation code for encrypted flash write com
+ 127:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     LR1110_BL_GET_HASH_OC              = 0x8004,  //!< Operation code for hash getter command
+ 128:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     LR1110_BL_REBOOT_OC                = 0x8005,  //!< Operation code for  reboot command
+ 129:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     LR1110_BL_GET_PIN_OC               = 0x800B,  //!< Operation code for PIN read command
+ 130:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     LR1110_BL_GET_CHIP_EUI_OC          = 0x800C,  //!< Operation code for EUI read command
+ 131:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** };
+ 132:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 133:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** /*
+ 134:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * -----------------------------------------------------------------------------
+ 135:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * --- PRIVATE VARIABLES -------------------------------------------------------
+ 136:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  */
+ 137:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 138:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** /*
+ 139:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * -----------------------------------------------------------------------------
+ 140:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * --- PRIVATE FUNCTIONS DECLARATION -------------------------------------------
+ 141:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  */
+ 142:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 143:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** /*!
+ 144:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * @brief Return minimal value of arguments
+ARM GAS  /tmp/ccz1jFcy.s 			page 4
+
+
+ 145:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  *
+ 146:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * @param [in] a First operand
+ 147:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * @param [in] b Second operand
+ 148:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  *
+ 149:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * @returns The minimal value between a and b, interpreted as uint32_t.
+ 150:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  */
+ 151:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** uint32_t min( uint32_t a, uint32_t b )
+ 152:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** {
+  29              		.loc 1 152 1
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 16
+  32              		@ frame_needed = 1, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  34 0000 80B4     		push	{r7}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 4
+  37              		.cfi_offset 7, -4
+  38 0002 85B0     		sub	sp, sp, #20
+  39              	.LCFI1:
+  40              		.cfi_def_cfa_offset 24
+  41 0004 00AF     		add	r7, sp, #0
+  42              	.LCFI2:
+  43              		.cfi_def_cfa_register 7
+  44 0006 7860     		str	r0, [r7, #4]
+  45 0008 3960     		str	r1, [r7]
+ 153:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     uint32_t min = a;
+  46              		.loc 1 153 14
+  47 000a 7B68     		ldr	r3, [r7, #4]
+  48 000c FB60     		str	r3, [r7, #12]
+ 154:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 155:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     if( a > b )
+  49              		.loc 1 155 7
+  50 000e 7A68     		ldr	r2, [r7, #4]
+  51 0010 3B68     		ldr	r3, [r7]
+  52 0012 9A42     		cmp	r2, r3
+  53 0014 01D9     		bls	.L2
+ 156:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     {
+ 157:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****         min = b;
+  54              		.loc 1 157 13
+  55 0016 3B68     		ldr	r3, [r7]
+  56 0018 FB60     		str	r3, [r7, #12]
+  57              	.L2:
+ 158:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     }
+ 159:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 160:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     return min;
+  58              		.loc 1 160 12
+  59 001a FB68     		ldr	r3, [r7, #12]
+ 161:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** }
+  60              		.loc 1 161 1
+  61 001c 1846     		mov	r0, r3
+  62 001e 1437     		adds	r7, r7, #20
+  63              	.LCFI3:
+  64              		.cfi_def_cfa_offset 4
+  65 0020 BD46     		mov	sp, r7
+  66              	.LCFI4:
+  67              		.cfi_def_cfa_register 13
+  68              		@ sp needed
+ARM GAS  /tmp/ccz1jFcy.s 			page 5
+
+
+  69 0022 5DF8047B 		ldr	r7, [sp], #4
+  70              	.LCFI5:
+  71              		.cfi_restore 7
+  72              		.cfi_def_cfa_offset 0
+  73 0026 7047     		bx	lr
+  74              		.cfi_endproc
+  75              	.LFE0:
+  77              		.section	.text.lr1110_bootloader_get_version,"ax",%progbits
+  78              		.align	1
+  79              		.global	lr1110_bootloader_get_version
+  80              		.syntax unified
+  81              		.thumb
+  82              		.thumb_func
+  83              		.fpu fpv4-sp-d16
+  85              	lr1110_bootloader_get_version:
+  86              	.LFB1:
+ 162:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 163:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** /*!
+ 164:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * @brief Helper function to fill cbuffer with opcode and offset
+ 165:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  *
+ 166:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * Typically used in write flash functions.
+ 167:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  *
+ 168:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * @warning It is up to the caller to ensure the size of cbuffer is big enough to contain all infor
+ 169:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  */
+ 170:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** static void lr1110_bootloader_fill_cbuffer_opcode_offset_flash( uint8_t* cbuffer, uint16_t opcode, 
+ 171:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 172:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** /*!
+ 173:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * @brief Helper function to fill cdata with data
+ 174:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  *
+ 175:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * Typically used in write flash functions.
+ 176:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  *
+ 177:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * @warning It is up to the caller to ensure the size of cdata is big enough to contain all data!
+ 178:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  */
+ 179:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** static void lr1110_bootloader_fill_cdata_flash( uint8_t* cdata, const uint32_t* data, uint8_t data_
+ 180:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 181:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** /*!
+ 182:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * @brief Helper function to fill cbuffer and cdata with information to write flash
+ 183:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  *
+ 184:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * Typically used in write flash functions. Internally calls lr1110_bootloader_fill_cbuffer_opcode_
+ 185:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * lr1110_bootloader_fill_cdata_flash.
+ 186:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  *
+ 187:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * @warning It is up to the caller to ensure the sizes of cbuffer and cdata are big enough to conta
+ 188:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * information!
+ 189:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  */
+ 190:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** static void lr1110_bootloader_fill_cbuffer_cdata_flash( uint8_t* cbuffer, uint8_t* cdata, uint16_t 
+ 191:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****                                                         uint32_t offset, const uint32_t* data, uint
+ 192:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 193:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** /*
+ 194:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * -----------------------------------------------------------------------------
+ 195:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * --- PUBLIC FUNCTIONS DEFINITION ---------------------------------------------
+ 196:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  */
+ 197:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 198:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** lr1110_status_t lr1110_bootloader_get_version( const void* context, lr1110_bootloader_version_t* ve
+ 199:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** {
+  87              		.loc 1 199 1
+  88              		.cfi_startproc
+  89              		@ args = 0, pretend = 0, frame = 16
+ARM GAS  /tmp/ccz1jFcy.s 			page 6
+
+
+  90              		@ frame_needed = 1, uses_anonymous_args = 0
+  91 0000 80B5     		push	{r7, lr}
+  92              	.LCFI6:
+  93              		.cfi_def_cfa_offset 8
+  94              		.cfi_offset 7, -8
+  95              		.cfi_offset 14, -4
+  96 0002 86B0     		sub	sp, sp, #24
+  97              	.LCFI7:
+  98              		.cfi_def_cfa_offset 32
+  99 0004 02AF     		add	r7, sp, #8
+ 100              	.LCFI8:
+ 101              		.cfi_def_cfa 7, 24
+ 102 0006 7860     		str	r0, [r7, #4]
+ 103 0008 3960     		str	r1, [r7]
+ 200:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     uint8_t         cbuffer[LR1110_BL_VERSION_CMD_LENGTH];
+ 201:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     uint8_t         rbuffer[LR1110_BL_VERSION_LENGTH] = { 0x00 };
+ 104              		.loc 1 201 21
+ 105 000a 0023     		movs	r3, #0
+ 106 000c BB60     		str	r3, [r7, #8]
+ 202:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     lr1110_status_t status                            = LR1110_STATUS_ERROR;
+ 107              		.loc 1 202 21
+ 108 000e 0323     		movs	r3, #3
+ 109 0010 FB73     		strb	r3, [r7, #15]
+ 203:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 204:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     cbuffer[0] = ( uint8_t )( LR1110_BL_GET_VERSION_OC >> 8 );
+ 110              		.loc 1 204 16
+ 111 0012 0123     		movs	r3, #1
+ 112 0014 3B73     		strb	r3, [r7, #12]
+ 205:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     cbuffer[1] = ( uint8_t )( LR1110_BL_GET_VERSION_OC >> 0 );
+ 113              		.loc 1 205 16
+ 114 0016 0123     		movs	r3, #1
+ 115 0018 7B73     		strb	r3, [r7, #13]
+ 206:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 207:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     status = ( lr1110_status_t ) lr1110_hal_read( context, cbuffer, LR1110_BL_VERSION_CMD_LENGTH, r
+ 116              		.loc 1 207 34
+ 117 001a 07F10803 		add	r3, r7, #8
+ 118 001e 07F10C01 		add	r1, r7, #12
+ 119 0022 0422     		movs	r2, #4
+ 120 0024 0092     		str	r2, [sp]
+ 121 0026 0222     		movs	r2, #2
+ 122 0028 7868     		ldr	r0, [r7, #4]
+ 123 002a FFF7FEFF 		bl	lr1110_hal_read
+ 124 002e 0346     		mov	r3, r0
+ 125 0030 FB73     		strb	r3, [r7, #15]
+ 208:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****                                                   LR1110_BL_VERSION_LENGTH );
+ 209:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 210:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     if( status == LR1110_STATUS_OK )
+ 126              		.loc 1 210 7
+ 127 0032 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 128 0034 002B     		cmp	r3, #0
+ 129 0036 0FD1     		bne	.L5
+ 211:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     {
+ 212:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****         version->hw   = rbuffer[0];
+ 130              		.loc 1 212 32
+ 131 0038 3A7A     		ldrb	r2, [r7, #8]	@ zero_extendqisi2
+ 132              		.loc 1 212 23
+ 133 003a 3B68     		ldr	r3, [r7]
+ARM GAS  /tmp/ccz1jFcy.s 			page 7
+
+
+ 134 003c 1A70     		strb	r2, [r3]
+ 213:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****         version->type = rbuffer[1];
+ 135              		.loc 1 213 32
+ 136 003e 7A7A     		ldrb	r2, [r7, #9]	@ zero_extendqisi2
+ 137              		.loc 1 213 23
+ 138 0040 3B68     		ldr	r3, [r7]
+ 139 0042 5A70     		strb	r2, [r3, #1]
+ 214:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****         version->fw   = ( ( uint16_t ) rbuffer[2] << 8 ) + ( uint16_t ) rbuffer[3];
+ 140              		.loc 1 214 47
+ 141 0044 BB7A     		ldrb	r3, [r7, #10]	@ zero_extendqisi2
+ 142 0046 9BB2     		uxth	r3, r3
+ 143              		.loc 1 214 51
+ 144 0048 1B02     		lsls	r3, r3, #8
+ 145 004a 9AB2     		uxth	r2, r3
+ 146              		.loc 1 214 80
+ 147 004c FB7A     		ldrb	r3, [r7, #11]	@ zero_extendqisi2
+ 148 004e 9BB2     		uxth	r3, r3
+ 149              		.loc 1 214 58
+ 150 0050 1344     		add	r3, r3, r2
+ 151 0052 9AB2     		uxth	r2, r3
+ 152              		.loc 1 214 23
+ 153 0054 3B68     		ldr	r3, [r7]
+ 154 0056 5A80     		strh	r2, [r3, #2]	@ movhi
+ 155              	.L5:
+ 215:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     }
+ 216:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 217:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     return status;
+ 156              		.loc 1 217 12
+ 157 0058 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 218:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** }
+ 158              		.loc 1 218 1
+ 159 005a 1846     		mov	r0, r3
+ 160 005c 1037     		adds	r7, r7, #16
+ 161              	.LCFI9:
+ 162              		.cfi_def_cfa_offset 8
+ 163 005e BD46     		mov	sp, r7
+ 164              	.LCFI10:
+ 165              		.cfi_def_cfa_register 13
+ 166              		@ sp needed
+ 167 0060 80BD     		pop	{r7, pc}
+ 168              		.cfi_endproc
+ 169              	.LFE1:
+ 171              		.section	.text.lr1110_bootloader_erase_flash,"ax",%progbits
+ 172              		.align	1
+ 173              		.global	lr1110_bootloader_erase_flash
+ 174              		.syntax unified
+ 175              		.thumb
+ 176              		.thumb_func
+ 177              		.fpu fpv4-sp-d16
+ 179              	lr1110_bootloader_erase_flash:
+ 180              	.LFB2:
+ 219:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 220:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** lr1110_status_t lr1110_bootloader_erase_flash( const void* context )
+ 221:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** {
+ 181              		.loc 1 221 1
+ 182              		.cfi_startproc
+ 183              		@ args = 0, pretend = 0, frame = 16
+ARM GAS  /tmp/ccz1jFcy.s 			page 8
+
+
+ 184              		@ frame_needed = 1, uses_anonymous_args = 0
+ 185 0000 80B5     		push	{r7, lr}
+ 186              	.LCFI11:
+ 187              		.cfi_def_cfa_offset 8
+ 188              		.cfi_offset 7, -8
+ 189              		.cfi_offset 14, -4
+ 190 0002 86B0     		sub	sp, sp, #24
+ 191              	.LCFI12:
+ 192              		.cfi_def_cfa_offset 32
+ 193 0004 02AF     		add	r7, sp, #8
+ 194              	.LCFI13:
+ 195              		.cfi_def_cfa 7, 24
+ 196 0006 7860     		str	r0, [r7, #4]
+ 222:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     uint8_t cbuffer[LR1110_BL_ERASE_FLASH_CMD_LENGTH];
+ 223:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 224:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     cbuffer[0] = ( uint8_t )( LR1110_BL_ERASE_FLASH_OC >> 8 );
+ 197              		.loc 1 224 16
+ 198 0008 8023     		movs	r3, #128
+ 199 000a 3B73     		strb	r3, [r7, #12]
+ 225:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     cbuffer[1] = ( uint8_t )( LR1110_BL_ERASE_FLASH_OC >> 0 );
+ 200              		.loc 1 225 16
+ 201 000c 0023     		movs	r3, #0
+ 202 000e 7B73     		strb	r3, [r7, #13]
+ 226:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 227:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     return ( lr1110_status_t ) lr1110_hal_write( context, cbuffer, LR1110_BL_ERASE_FLASH_CMD_LENGTH
+ 203              		.loc 1 227 32
+ 204 0010 07F10C01 		add	r1, r7, #12
+ 205 0014 0023     		movs	r3, #0
+ 206 0016 0093     		str	r3, [sp]
+ 207 0018 0023     		movs	r3, #0
+ 208 001a 0222     		movs	r2, #2
+ 209 001c 7868     		ldr	r0, [r7, #4]
+ 210 001e FFF7FEFF 		bl	lr1110_hal_write
+ 211 0022 0346     		mov	r3, r0
+ 228:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** }
+ 212              		.loc 1 228 1
+ 213 0024 1846     		mov	r0, r3
+ 214 0026 1037     		adds	r7, r7, #16
+ 215              	.LCFI14:
+ 216              		.cfi_def_cfa_offset 8
+ 217 0028 BD46     		mov	sp, r7
+ 218              	.LCFI15:
+ 219              		.cfi_def_cfa_register 13
+ 220              		@ sp needed
+ 221 002a 80BD     		pop	{r7, pc}
+ 222              		.cfi_endproc
+ 223              	.LFE2:
+ 225              		.section	.text.lr1110_bootloader_erase_page,"ax",%progbits
+ 226              		.align	1
+ 227              		.global	lr1110_bootloader_erase_page
+ 228              		.syntax unified
+ 229              		.thumb
+ 230              		.thumb_func
+ 231              		.fpu fpv4-sp-d16
+ 233              	lr1110_bootloader_erase_page:
+ 234              	.LFB3:
+ 229:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ARM GAS  /tmp/ccz1jFcy.s 			page 9
+
+
+ 230:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** lr1110_status_t lr1110_bootloader_erase_page( const void* context, const uint8_t page_number )
+ 231:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** {
+ 235              		.loc 1 231 1
+ 236              		.cfi_startproc
+ 237              		@ args = 0, pretend = 0, frame = 16
+ 238              		@ frame_needed = 1, uses_anonymous_args = 0
+ 239 0000 80B5     		push	{r7, lr}
+ 240              	.LCFI16:
+ 241              		.cfi_def_cfa_offset 8
+ 242              		.cfi_offset 7, -8
+ 243              		.cfi_offset 14, -4
+ 244 0002 86B0     		sub	sp, sp, #24
+ 245              	.LCFI17:
+ 246              		.cfi_def_cfa_offset 32
+ 247 0004 02AF     		add	r7, sp, #8
+ 248              	.LCFI18:
+ 249              		.cfi_def_cfa 7, 24
+ 250 0006 7860     		str	r0, [r7, #4]
+ 251 0008 0B46     		mov	r3, r1
+ 252 000a FB70     		strb	r3, [r7, #3]
+ 232:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     uint8_t cbuffer[LR1110_BL_ERASE_PAGE_CMD_LENGTH];
+ 233:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 234:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     cbuffer[0] = ( uint8_t )( LR1110_BL_ERASE_PAGE_OC >> 8 );
+ 253              		.loc 1 234 16
+ 254 000c 8023     		movs	r3, #128
+ 255 000e 3B73     		strb	r3, [r7, #12]
+ 235:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     cbuffer[1] = ( uint8_t )( LR1110_BL_ERASE_PAGE_OC >> 0 );
+ 256              		.loc 1 235 16
+ 257 0010 0123     		movs	r3, #1
+ 258 0012 7B73     		strb	r3, [r7, #13]
+ 236:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 237:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     cbuffer[2] = page_number;
+ 259              		.loc 1 237 16
+ 260 0014 FB78     		ldrb	r3, [r7, #3]
+ 261 0016 BB73     		strb	r3, [r7, #14]
+ 238:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 239:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     return ( lr1110_status_t ) lr1110_hal_write( context, cbuffer, LR1110_BL_ERASE_PAGE_CMD_LENGTH,
+ 262              		.loc 1 239 32
+ 263 0018 07F10C01 		add	r1, r7, #12
+ 264 001c 0023     		movs	r3, #0
+ 265 001e 0093     		str	r3, [sp]
+ 266 0020 0023     		movs	r3, #0
+ 267 0022 0322     		movs	r2, #3
+ 268 0024 7868     		ldr	r0, [r7, #4]
+ 269 0026 FFF7FEFF 		bl	lr1110_hal_write
+ 270 002a 0346     		mov	r3, r0
+ 240:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** }
+ 271              		.loc 1 240 1
+ 272 002c 1846     		mov	r0, r3
+ 273 002e 1037     		adds	r7, r7, #16
+ 274              	.LCFI19:
+ 275              		.cfi_def_cfa_offset 8
+ 276 0030 BD46     		mov	sp, r7
+ 277              	.LCFI20:
+ 278              		.cfi_def_cfa_register 13
+ 279              		@ sp needed
+ 280 0032 80BD     		pop	{r7, pc}
+ARM GAS  /tmp/ccz1jFcy.s 			page 10
+
+
+ 281              		.cfi_endproc
+ 282              	.LFE3:
+ 284              		.section	.text.lr1110_bootloader_write_flash,"ax",%progbits
+ 285              		.align	1
+ 286              		.global	lr1110_bootloader_write_flash
+ 287              		.syntax unified
+ 288              		.thumb
+ 289              		.thumb_func
+ 290              		.fpu fpv4-sp-d16
+ 292              	lr1110_bootloader_write_flash:
+ 293              	.LFB4:
+ 241:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 242:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** lr1110_status_t lr1110_bootloader_write_flash( const void* context, const uint32_t offset, const ui
+ 243:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****                                                uint8_t length )
+ 244:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** {
+ 294              		.loc 1 244 1
+ 295              		.cfi_startproc
+ 296              		@ args = 0, pretend = 0, frame = 280
+ 297              		@ frame_needed = 1, uses_anonymous_args = 0
+ 298 0000 90B5     		push	{r4, r7, lr}
+ 299              	.LCFI21:
+ 300              		.cfi_def_cfa_offset 12
+ 301              		.cfi_offset 4, -12
+ 302              		.cfi_offset 7, -8
+ 303              		.cfi_offset 14, -4
+ 304 0002 C9B0     		sub	sp, sp, #292
+ 305              	.LCFI22:
+ 306              		.cfi_def_cfa_offset 304
+ 307 0004 02AF     		add	r7, sp, #8
+ 308              	.LCFI23:
+ 309              		.cfi_def_cfa 7, 296
+ 310 0006 07F58C74 		add	r4, r7, #280
+ 311 000a A4F58674 		sub	r4, r4, #268
+ 312 000e 2060     		str	r0, [r4]
+ 313 0010 07F58C70 		add	r0, r7, #280
+ 314 0014 A0F58870 		sub	r0, r0, #272
+ 315 0018 0160     		str	r1, [r0]
+ 316 001a 07F58C71 		add	r1, r7, #280
+ 317 001e A1F58A71 		sub	r1, r1, #276
+ 318 0022 0A60     		str	r2, [r1]
+ 319 0024 1A46     		mov	r2, r3
+ 320 0026 07F58C73 		add	r3, r7, #280
+ 321 002a A3F21513 		subw	r3, r3, #277
+ 322 002e 1A70     		strb	r2, [r3]
+ 245:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     uint8_t cbuffer[LR1110_BL_WRITE_FLASH_CMD_LENGTH];
+ 246:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     uint8_t cdata[256];
+ 247:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 248:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     lr1110_bootloader_fill_cbuffer_cdata_flash( cbuffer, cdata, LR1110_BL_WRITE_FLASH_OC, offset, d
+ 323              		.loc 1 248 5
+ 324 0030 07F58C73 		add	r3, r7, #280
+ 325 0034 A3F58873 		sub	r3, r3, #272
+ 326 0038 07F11001 		add	r1, r7, #16
+ 327 003c 07F58870 		add	r0, r7, #272
+ 328 0040 07F58C72 		add	r2, r7, #280
+ 329 0044 A2F21512 		subw	r2, r2, #277
+ 330 0048 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 331 004a 0192     		str	r2, [sp, #4]
+ARM GAS  /tmp/ccz1jFcy.s 			page 11
+
+
+ 332 004c 07F58C72 		add	r2, r7, #280
+ 333 0050 A2F58A72 		sub	r2, r2, #276
+ 334 0054 1268     		ldr	r2, [r2]
+ 335 0056 0092     		str	r2, [sp]
+ 336 0058 1B68     		ldr	r3, [r3]
+ 337 005a 48F20202 		movw	r2, #32770
+ 338 005e FFF7FEFF 		bl	lr1110_bootloader_fill_cbuffer_cdata_flash
+ 249:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 250:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     return ( lr1110_status_t ) lr1110_hal_write( context, cbuffer, LR1110_BL_WRITE_FLASH_CMD_LENGTH
+ 339              		.loc 1 250 32
+ 340 0062 07F58C73 		add	r3, r7, #280
+ 341 0066 A3F21513 		subw	r3, r3, #277
+ 342 006a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 343 006c 9BB2     		uxth	r3, r3
+ 344 006e 9B00     		lsls	r3, r3, #2
+ 345 0070 9BB2     		uxth	r3, r3
+ 346 0072 07F11002 		add	r2, r7, #16
+ 347 0076 07F58871 		add	r1, r7, #272
+ 348 007a 07F58C70 		add	r0, r7, #280
+ 349 007e A0F58670 		sub	r0, r0, #268
+ 350 0082 0093     		str	r3, [sp]
+ 351 0084 1346     		mov	r3, r2
+ 352 0086 0622     		movs	r2, #6
+ 353 0088 0068     		ldr	r0, [r0]
+ 354 008a FFF7FEFF 		bl	lr1110_hal_write
+ 355 008e 0346     		mov	r3, r0
+ 251:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****                                                  length * sizeof( uint32_t ) );
+ 252:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** }
+ 356              		.loc 1 252 1
+ 357 0090 1846     		mov	r0, r3
+ 358 0092 07F58E77 		add	r7, r7, #284
+ 359              	.LCFI24:
+ 360              		.cfi_def_cfa_offset 12
+ 361 0096 BD46     		mov	sp, r7
+ 362              	.LCFI25:
+ 363              		.cfi_def_cfa_register 13
+ 364              		@ sp needed
+ 365 0098 90BD     		pop	{r4, r7, pc}
+ 366              		.cfi_endproc
+ 367              	.LFE4:
+ 369              		.section	.text.lr1110_bootloader_write_flash_full,"ax",%progbits
+ 370              		.align	1
+ 371              		.global	lr1110_bootloader_write_flash_full
+ 372              		.syntax unified
+ 373              		.thumb
+ 374              		.thumb_func
+ 375              		.fpu fpv4-sp-d16
+ 377              	lr1110_bootloader_write_flash_full:
+ 378              	.LFB5:
+ 253:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 254:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** lr1110_status_t lr1110_bootloader_write_flash_full( const void* context, const uint32_t offset, con
+ 255:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****                                                     const uint32_t length )
+ 256:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** {
+ 379              		.loc 1 256 1
+ 380              		.cfi_startproc
+ 381              		@ args = 0, pretend = 0, frame = 32
+ 382              		@ frame_needed = 1, uses_anonymous_args = 0
+ARM GAS  /tmp/ccz1jFcy.s 			page 12
+
+
+ 383 0000 90B5     		push	{r4, r7, lr}
+ 384              	.LCFI26:
+ 385              		.cfi_def_cfa_offset 12
+ 386              		.cfi_offset 4, -12
+ 387              		.cfi_offset 7, -8
+ 388              		.cfi_offset 14, -4
+ 389 0002 89B0     		sub	sp, sp, #36
+ 390              	.LCFI27:
+ 391              		.cfi_def_cfa_offset 48
+ 392 0004 00AF     		add	r7, sp, #0
+ 393              	.LCFI28:
+ 394              		.cfi_def_cfa_register 7
+ 395 0006 F860     		str	r0, [r7, #12]
+ 396 0008 B960     		str	r1, [r7, #8]
+ 397 000a 7A60     		str	r2, [r7, #4]
+ 398 000c 3B60     		str	r3, [r7]
+ 257:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     lr1110_status_t status           = LR1110_STATUS_OK;
+ 399              		.loc 1 257 21
+ 400 000e 0023     		movs	r3, #0
+ 401 0010 FB77     		strb	r3, [r7, #31]
+ 258:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     uint32_t        remaining_length = length;
+ 402              		.loc 1 258 21
+ 403 0012 3B68     		ldr	r3, [r7]
+ 404 0014 BB61     		str	r3, [r7, #24]
+ 259:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     uint32_t        local_offset     = offset;
+ 405              		.loc 1 259 21
+ 406 0016 BB68     		ldr	r3, [r7, #8]
+ 407 0018 7B61     		str	r3, [r7, #20]
+ 260:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     uint32_t        loop             = 0;
+ 408              		.loc 1 260 21
+ 409 001a 0023     		movs	r3, #0
+ 410 001c 3B61     		str	r3, [r7, #16]
+ 261:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 262:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     while( ( remaining_length != 0 ) && ( status == LR1110_STATUS_OK ) )
+ 411              		.loc 1 262 10
+ 412 001e 1DE0     		b	.L14
+ 413              	.L16:
+ 263:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     {
+ 264:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****         status = ( lr1110_status_t ) lr1110_bootloader_write_flash( context, local_offset, buffer +
+ 414              		.loc 1 264 99
+ 415 0020 3B69     		ldr	r3, [r7, #16]
+ 416 0022 1B02     		lsls	r3, r3, #8
+ 417              		.loc 1 264 38
+ 418 0024 7A68     		ldr	r2, [r7, #4]
+ 419 0026 D418     		adds	r4, r2, r3
+ 265:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****                                                                     min( remaining_length, 64 ) );
+ 420              		.loc 1 265 69
+ 421 0028 4021     		movs	r1, #64
+ 422 002a B869     		ldr	r0, [r7, #24]
+ 423 002c FFF7FEFF 		bl	min
+ 424 0030 0346     		mov	r3, r0
+ 264:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****                                                                     min( remaining_length, 64 ) );
+ 425              		.loc 1 264 38
+ 426 0032 DBB2     		uxtb	r3, r3
+ 427 0034 2246     		mov	r2, r4
+ 428 0036 7969     		ldr	r1, [r7, #20]
+ 429 0038 F868     		ldr	r0, [r7, #12]
+ARM GAS  /tmp/ccz1jFcy.s 			page 13
+
+
+ 430 003a FFF7FEFF 		bl	lr1110_bootloader_write_flash
+ 431 003e 0346     		mov	r3, r0
+ 432 0040 FB77     		strb	r3, [r7, #31]
+ 266:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 267:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****         local_offset += LR1110_FLASH_DATA_UINT8_MAX;
+ 433              		.loc 1 267 22
+ 434 0042 7B69     		ldr	r3, [r7, #20]
+ 435 0044 03F58073 		add	r3, r3, #256
+ 436 0048 7B61     		str	r3, [r7, #20]
+ 268:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****         remaining_length = ( remaining_length < 64 ) ? 0 : ( remaining_length - 64 );
+ 437              		.loc 1 268 58
+ 438 004a BB69     		ldr	r3, [r7, #24]
+ 439 004c 402B     		cmp	r3, #64
+ 440 004e 38BF     		it	cc
+ 441 0050 4023     		movcc	r3, #64
+ 442              		.loc 1 268 26
+ 443 0052 403B     		subs	r3, r3, #64
+ 444 0054 BB61     		str	r3, [r7, #24]
+ 269:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 270:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****         loop++;
+ 445              		.loc 1 270 13
+ 446 0056 3B69     		ldr	r3, [r7, #16]
+ 447 0058 0133     		adds	r3, r3, #1
+ 448 005a 3B61     		str	r3, [r7, #16]
+ 449              	.L14:
+ 262:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     {
+ 450              		.loc 1 262 10
+ 451 005c BB69     		ldr	r3, [r7, #24]
+ 452 005e 002B     		cmp	r3, #0
+ 453 0060 02D0     		beq	.L15
+ 262:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     {
+ 454              		.loc 1 262 38 discriminator 1
+ 455 0062 FB7F     		ldrb	r3, [r7, #31]	@ zero_extendqisi2
+ 456 0064 002B     		cmp	r3, #0
+ 457 0066 DBD0     		beq	.L16
+ 458              	.L15:
+ 271:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     }
+ 272:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 273:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     return status;
+ 459              		.loc 1 273 12
+ 460 0068 FB7F     		ldrb	r3, [r7, #31]	@ zero_extendqisi2
+ 274:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** }
+ 461              		.loc 1 274 1
+ 462 006a 1846     		mov	r0, r3
+ 463 006c 2437     		adds	r7, r7, #36
+ 464              	.LCFI29:
+ 465              		.cfi_def_cfa_offset 12
+ 466 006e BD46     		mov	sp, r7
+ 467              	.LCFI30:
+ 468              		.cfi_def_cfa_register 13
+ 469              		@ sp needed
+ 470 0070 90BD     		pop	{r4, r7, pc}
+ 471              		.cfi_endproc
+ 472              	.LFE5:
+ 474              		.section	.text.lr1110_bootloader_write_flash_encrypted,"ax",%progbits
+ 475              		.align	1
+ 476              		.global	lr1110_bootloader_write_flash_encrypted
+ARM GAS  /tmp/ccz1jFcy.s 			page 14
+
+
+ 477              		.syntax unified
+ 478              		.thumb
+ 479              		.thumb_func
+ 480              		.fpu fpv4-sp-d16
+ 482              	lr1110_bootloader_write_flash_encrypted:
+ 483              	.LFB6:
+ 275:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 276:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** lr1110_status_t lr1110_bootloader_write_flash_encrypted( const void* context, const uint32_t offset
+ 277:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****                                                          const uint32_t* data, uint8_t length )
+ 278:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** {
+ 484              		.loc 1 278 1
+ 485              		.cfi_startproc
+ 486              		@ args = 0, pretend = 0, frame = 280
+ 487              		@ frame_needed = 1, uses_anonymous_args = 0
+ 488 0000 90B5     		push	{r4, r7, lr}
+ 489              	.LCFI31:
+ 490              		.cfi_def_cfa_offset 12
+ 491              		.cfi_offset 4, -12
+ 492              		.cfi_offset 7, -8
+ 493              		.cfi_offset 14, -4
+ 494 0002 C9B0     		sub	sp, sp, #292
+ 495              	.LCFI32:
+ 496              		.cfi_def_cfa_offset 304
+ 497 0004 02AF     		add	r7, sp, #8
+ 498              	.LCFI33:
+ 499              		.cfi_def_cfa 7, 296
+ 500 0006 07F58C74 		add	r4, r7, #280
+ 501 000a A4F58674 		sub	r4, r4, #268
+ 502 000e 2060     		str	r0, [r4]
+ 503 0010 07F58C70 		add	r0, r7, #280
+ 504 0014 A0F58870 		sub	r0, r0, #272
+ 505 0018 0160     		str	r1, [r0]
+ 506 001a 07F58C71 		add	r1, r7, #280
+ 507 001e A1F58A71 		sub	r1, r1, #276
+ 508 0022 0A60     		str	r2, [r1]
+ 509 0024 1A46     		mov	r2, r3
+ 510 0026 07F58C73 		add	r3, r7, #280
+ 511 002a A3F21513 		subw	r3, r3, #277
+ 512 002e 1A70     		strb	r2, [r3]
+ 279:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     uint8_t cbuffer[LR1110_BL_WRITE_FLASH_ENCRYPTED_CMD_LENGTH];
+ 280:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     uint8_t cdata[256];
+ 281:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 282:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     lr1110_bootloader_fill_cbuffer_cdata_flash( cbuffer, cdata, LR1110_BL_WRITE_FLASH_ENCRYPTED_OC,
+ 513              		.loc 1 282 5
+ 514 0030 07F58C73 		add	r3, r7, #280
+ 515 0034 A3F58873 		sub	r3, r3, #272
+ 516 0038 07F11001 		add	r1, r7, #16
+ 517 003c 07F58870 		add	r0, r7, #272
+ 518 0040 07F58C72 		add	r2, r7, #280
+ 519 0044 A2F21512 		subw	r2, r2, #277
+ 520 0048 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 521 004a 0192     		str	r2, [sp, #4]
+ 522 004c 07F58C72 		add	r2, r7, #280
+ 523 0050 A2F58A72 		sub	r2, r2, #276
+ 524 0054 1268     		ldr	r2, [r2]
+ 525 0056 0092     		str	r2, [sp]
+ 526 0058 1B68     		ldr	r3, [r3]
+ARM GAS  /tmp/ccz1jFcy.s 			page 15
+
+
+ 527 005a 48F20302 		movw	r2, #32771
+ 528 005e FFF7FEFF 		bl	lr1110_bootloader_fill_cbuffer_cdata_flash
+ 283:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****                                                 length );
+ 284:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 285:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     return ( lr1110_status_t ) lr1110_hal_write( context, cbuffer, LR1110_BL_WRITE_FLASH_ENCRYPTED_
+ 529              		.loc 1 285 32
+ 530 0062 07F58C73 		add	r3, r7, #280
+ 531 0066 A3F21513 		subw	r3, r3, #277
+ 532 006a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 533 006c 9BB2     		uxth	r3, r3
+ 534 006e 9B00     		lsls	r3, r3, #2
+ 535 0070 9BB2     		uxth	r3, r3
+ 536 0072 07F11002 		add	r2, r7, #16
+ 537 0076 07F58871 		add	r1, r7, #272
+ 538 007a 07F58C70 		add	r0, r7, #280
+ 539 007e A0F58670 		sub	r0, r0, #268
+ 540 0082 0093     		str	r3, [sp]
+ 541 0084 1346     		mov	r3, r2
+ 542 0086 0622     		movs	r2, #6
+ 543 0088 0068     		ldr	r0, [r0]
+ 544 008a FFF7FEFF 		bl	lr1110_hal_write
+ 545 008e 0346     		mov	r3, r0
+ 286:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****                                                  length * sizeof( uint32_t ) );
+ 287:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** }
+ 546              		.loc 1 287 1
+ 547 0090 1846     		mov	r0, r3
+ 548 0092 07F58E77 		add	r7, r7, #284
+ 549              	.LCFI34:
+ 550              		.cfi_def_cfa_offset 12
+ 551 0096 BD46     		mov	sp, r7
+ 552              	.LCFI35:
+ 553              		.cfi_def_cfa_register 13
+ 554              		@ sp needed
+ 555 0098 90BD     		pop	{r4, r7, pc}
+ 556              		.cfi_endproc
+ 557              	.LFE6:
+ 559              		.section	.text.lr1110_bootloader_write_flash_encrypted_full,"ax",%progbits
+ 560              		.align	1
+ 561              		.global	lr1110_bootloader_write_flash_encrypted_full
+ 562              		.syntax unified
+ 563              		.thumb
+ 564              		.thumb_func
+ 565              		.fpu fpv4-sp-d16
+ 567              	lr1110_bootloader_write_flash_encrypted_full:
+ 568              	.LFB7:
+ 288:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 289:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** lr1110_status_t lr1110_bootloader_write_flash_encrypted_full( const void* context, const uint32_t o
+ 290:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****                                                               const uint32_t* buffer, const uint32_
+ 291:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** {
+ 569              		.loc 1 291 1
+ 570              		.cfi_startproc
+ 571              		@ args = 0, pretend = 0, frame = 32
+ 572              		@ frame_needed = 1, uses_anonymous_args = 0
+ 573 0000 90B5     		push	{r4, r7, lr}
+ 574              	.LCFI36:
+ 575              		.cfi_def_cfa_offset 12
+ 576              		.cfi_offset 4, -12
+ARM GAS  /tmp/ccz1jFcy.s 			page 16
+
+
+ 577              		.cfi_offset 7, -8
+ 578              		.cfi_offset 14, -4
+ 579 0002 89B0     		sub	sp, sp, #36
+ 580              	.LCFI37:
+ 581              		.cfi_def_cfa_offset 48
+ 582 0004 00AF     		add	r7, sp, #0
+ 583              	.LCFI38:
+ 584              		.cfi_def_cfa_register 7
+ 585 0006 F860     		str	r0, [r7, #12]
+ 586 0008 B960     		str	r1, [r7, #8]
+ 587 000a 7A60     		str	r2, [r7, #4]
+ 588 000c 3B60     		str	r3, [r7]
+ 292:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     lr1110_status_t status           = LR1110_STATUS_OK;
+ 589              		.loc 1 292 21
+ 590 000e 0023     		movs	r3, #0
+ 591 0010 FB77     		strb	r3, [r7, #31]
+ 293:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     uint32_t        remaining_length = length;
+ 592              		.loc 1 293 21
+ 593 0012 3B68     		ldr	r3, [r7]
+ 594 0014 BB61     		str	r3, [r7, #24]
+ 294:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     uint32_t        local_offset     = offset;
+ 595              		.loc 1 294 21
+ 596 0016 BB68     		ldr	r3, [r7, #8]
+ 597 0018 7B61     		str	r3, [r7, #20]
+ 295:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     uint32_t        loop             = 0;
+ 598              		.loc 1 295 21
+ 599 001a 0023     		movs	r3, #0
+ 600 001c 3B61     		str	r3, [r7, #16]
+ 296:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 297:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     while( ( remaining_length != 0 ) && ( status == LR1110_STATUS_OK ) )
+ 601              		.loc 1 297 10
+ 602 001e 1DE0     		b	.L21
+ 603              	.L23:
+ 298:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     {
+ 299:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****         status = ( lr1110_status_t ) lr1110_bootloader_write_flash_encrypted( context, local_offset
+ 604              		.loc 1 299 109
+ 605 0020 3B69     		ldr	r3, [r7, #16]
+ 606 0022 1B02     		lsls	r3, r3, #8
+ 607              		.loc 1 299 38
+ 608 0024 7A68     		ldr	r2, [r7, #4]
+ 609 0026 D418     		adds	r4, r2, r3
+ 300:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****                                                                               min( remaining_length
+ 610              		.loc 1 300 79
+ 611 0028 4021     		movs	r1, #64
+ 612 002a B869     		ldr	r0, [r7, #24]
+ 613 002c FFF7FEFF 		bl	min
+ 614 0030 0346     		mov	r3, r0
+ 299:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****                                                                               min( remaining_length
+ 615              		.loc 1 299 38
+ 616 0032 DBB2     		uxtb	r3, r3
+ 617 0034 2246     		mov	r2, r4
+ 618 0036 7969     		ldr	r1, [r7, #20]
+ 619 0038 F868     		ldr	r0, [r7, #12]
+ 620 003a FFF7FEFF 		bl	lr1110_bootloader_write_flash_encrypted
+ 621 003e 0346     		mov	r3, r0
+ 622 0040 FB77     		strb	r3, [r7, #31]
+ 301:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ARM GAS  /tmp/ccz1jFcy.s 			page 17
+
+
+ 302:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****         local_offset += LR1110_FLASH_DATA_UINT8_MAX;
+ 623              		.loc 1 302 22
+ 624 0042 7B69     		ldr	r3, [r7, #20]
+ 625 0044 03F58073 		add	r3, r3, #256
+ 626 0048 7B61     		str	r3, [r7, #20]
+ 303:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****         remaining_length = ( remaining_length < 64 ) ? 0 : ( remaining_length - 64 );
+ 627              		.loc 1 303 58
+ 628 004a BB69     		ldr	r3, [r7, #24]
+ 629 004c 402B     		cmp	r3, #64
+ 630 004e 38BF     		it	cc
+ 631 0050 4023     		movcc	r3, #64
+ 632              		.loc 1 303 26
+ 633 0052 403B     		subs	r3, r3, #64
+ 634 0054 BB61     		str	r3, [r7, #24]
+ 304:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 305:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****         loop++;
+ 635              		.loc 1 305 13
+ 636 0056 3B69     		ldr	r3, [r7, #16]
+ 637 0058 0133     		adds	r3, r3, #1
+ 638 005a 3B61     		str	r3, [r7, #16]
+ 639              	.L21:
+ 297:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     {
+ 640              		.loc 1 297 10
+ 641 005c BB69     		ldr	r3, [r7, #24]
+ 642 005e 002B     		cmp	r3, #0
+ 643 0060 02D0     		beq	.L22
+ 297:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     {
+ 644              		.loc 1 297 38 discriminator 1
+ 645 0062 FB7F     		ldrb	r3, [r7, #31]	@ zero_extendqisi2
+ 646 0064 002B     		cmp	r3, #0
+ 647 0066 DBD0     		beq	.L23
+ 648              	.L22:
+ 306:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     }
+ 307:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 308:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     return status;
+ 649              		.loc 1 308 12
+ 650 0068 FB7F     		ldrb	r3, [r7, #31]	@ zero_extendqisi2
+ 309:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** }
+ 651              		.loc 1 309 1
+ 652 006a 1846     		mov	r0, r3
+ 653 006c 2437     		adds	r7, r7, #36
+ 654              	.LCFI39:
+ 655              		.cfi_def_cfa_offset 12
+ 656 006e BD46     		mov	sp, r7
+ 657              	.LCFI40:
+ 658              		.cfi_def_cfa_register 13
+ 659              		@ sp needed
+ 660 0070 90BD     		pop	{r4, r7, pc}
+ 661              		.cfi_endproc
+ 662              	.LFE7:
+ 664              		.section	.text.lr1110_bootloader_get_hash,"ax",%progbits
+ 665              		.align	1
+ 666              		.global	lr1110_bootloader_get_hash
+ 667              		.syntax unified
+ 668              		.thumb
+ 669              		.thumb_func
+ 670              		.fpu fpv4-sp-d16
+ARM GAS  /tmp/ccz1jFcy.s 			page 18
+
+
+ 672              	lr1110_bootloader_get_hash:
+ 673              	.LFB8:
+ 310:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 311:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** lr1110_status_t lr1110_bootloader_get_hash( const void* context, lr1110_bootloader_hash_t hash )
+ 312:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** {
+ 674              		.loc 1 312 1
+ 675              		.cfi_startproc
+ 676              		@ args = 0, pretend = 0, frame = 16
+ 677              		@ frame_needed = 1, uses_anonymous_args = 0
+ 678 0000 80B5     		push	{r7, lr}
+ 679              	.LCFI41:
+ 680              		.cfi_def_cfa_offset 8
+ 681              		.cfi_offset 7, -8
+ 682              		.cfi_offset 14, -4
+ 683 0002 86B0     		sub	sp, sp, #24
+ 684              	.LCFI42:
+ 685              		.cfi_def_cfa_offset 32
+ 686 0004 02AF     		add	r7, sp, #8
+ 687              	.LCFI43:
+ 688              		.cfi_def_cfa 7, 24
+ 689 0006 7860     		str	r0, [r7, #4]
+ 690 0008 3960     		str	r1, [r7]
+ 313:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     uint8_t cbuffer[LR1110_BL_GET_HASH_CMD_LENGTH];
+ 314:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 315:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     cbuffer[0] = ( uint8_t )( LR1110_BL_GET_HASH_OC >> 8 );
+ 691              		.loc 1 315 16
+ 692 000a 8023     		movs	r3, #128
+ 693 000c 3B73     		strb	r3, [r7, #12]
+ 316:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     cbuffer[1] = ( uint8_t )( LR1110_BL_GET_HASH_OC >> 0 );
+ 694              		.loc 1 316 16
+ 695 000e 0423     		movs	r3, #4
+ 696 0010 7B73     		strb	r3, [r7, #13]
+ 317:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 318:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     return ( lr1110_status_t ) lr1110_hal_read( context, cbuffer, LR1110_BL_GET_HASH_CMD_LENGTH, ha
+ 697              		.loc 1 318 32
+ 698 0012 07F10C01 		add	r1, r7, #12
+ 699 0016 1023     		movs	r3, #16
+ 700 0018 0093     		str	r3, [sp]
+ 701 001a 3B68     		ldr	r3, [r7]
+ 702 001c 0222     		movs	r2, #2
+ 703 001e 7868     		ldr	r0, [r7, #4]
+ 704 0020 FFF7FEFF 		bl	lr1110_hal_read
+ 705 0024 0346     		mov	r3, r0
+ 319:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****                                                 LR1110_BL_HASH_LENGTH );
+ 320:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** }
+ 706              		.loc 1 320 1
+ 707 0026 1846     		mov	r0, r3
+ 708 0028 1037     		adds	r7, r7, #16
+ 709              	.LCFI44:
+ 710              		.cfi_def_cfa_offset 8
+ 711 002a BD46     		mov	sp, r7
+ 712              	.LCFI45:
+ 713              		.cfi_def_cfa_register 13
+ 714              		@ sp needed
+ 715 002c 80BD     		pop	{r7, pc}
+ 716              		.cfi_endproc
+ 717              	.LFE8:
+ARM GAS  /tmp/ccz1jFcy.s 			page 19
+
+
+ 719              		.section	.text.lr1110_bootloader_reboot,"ax",%progbits
+ 720              		.align	1
+ 721              		.global	lr1110_bootloader_reboot
+ 722              		.syntax unified
+ 723              		.thumb
+ 724              		.thumb_func
+ 725              		.fpu fpv4-sp-d16
+ 727              	lr1110_bootloader_reboot:
+ 728              	.LFB9:
+ 321:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 322:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** lr1110_status_t lr1110_bootloader_reboot( const void* context, const bool stay_in_bootloader )
+ 323:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** {
+ 729              		.loc 1 323 1
+ 730              		.cfi_startproc
+ 731              		@ args = 0, pretend = 0, frame = 16
+ 732              		@ frame_needed = 1, uses_anonymous_args = 0
+ 733 0000 80B5     		push	{r7, lr}
+ 734              	.LCFI46:
+ 735              		.cfi_def_cfa_offset 8
+ 736              		.cfi_offset 7, -8
+ 737              		.cfi_offset 14, -4
+ 738 0002 86B0     		sub	sp, sp, #24
+ 739              	.LCFI47:
+ 740              		.cfi_def_cfa_offset 32
+ 741 0004 02AF     		add	r7, sp, #8
+ 742              	.LCFI48:
+ 743              		.cfi_def_cfa 7, 24
+ 744 0006 7860     		str	r0, [r7, #4]
+ 745 0008 0B46     		mov	r3, r1
+ 746 000a FB70     		strb	r3, [r7, #3]
+ 324:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     uint8_t cbuffer[LR1110_BL_REBOOT_CMD_LENGTH];
+ 325:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 326:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     cbuffer[0] = ( uint8_t )( LR1110_BL_REBOOT_OC >> 8 );
+ 747              		.loc 1 326 16
+ 748 000c 8023     		movs	r3, #128
+ 749 000e 3B73     		strb	r3, [r7, #12]
+ 327:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     cbuffer[1] = ( uint8_t )( LR1110_BL_REBOOT_OC >> 0 );
+ 750              		.loc 1 327 16
+ 751 0010 0523     		movs	r3, #5
+ 752 0012 7B73     		strb	r3, [r7, #13]
+ 328:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 329:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     cbuffer[2] = ( stay_in_bootloader == true ) ? 0x03 : 0x00;
+ 753              		.loc 1 329 16
+ 754 0014 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 755 0016 002B     		cmp	r3, #0
+ 756 0018 01D0     		beq	.L28
+ 757              		.loc 1 329 16 is_stmt 0 discriminator 1
+ 758 001a 0323     		movs	r3, #3
+ 759 001c 00E0     		b	.L29
+ 760              	.L28:
+ 761              		.loc 1 329 16 discriminator 2
+ 762 001e 0023     		movs	r3, #0
+ 763              	.L29:
+ 764              		.loc 1 329 16 discriminator 4
+ 765 0020 BB73     		strb	r3, [r7, #14]
+ 330:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 331:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     return ( lr1110_status_t ) lr1110_hal_write( context, cbuffer, LR1110_BL_REBOOT_CMD_LENGTH, 0, 
+ARM GAS  /tmp/ccz1jFcy.s 			page 20
+
+
+ 766              		.loc 1 331 32 is_stmt 1 discriminator 4
+ 767 0022 07F10C01 		add	r1, r7, #12
+ 768 0026 0023     		movs	r3, #0
+ 769 0028 0093     		str	r3, [sp]
+ 770 002a 0023     		movs	r3, #0
+ 771 002c 0322     		movs	r2, #3
+ 772 002e 7868     		ldr	r0, [r7, #4]
+ 773 0030 FFF7FEFF 		bl	lr1110_hal_write
+ 774 0034 0346     		mov	r3, r0
+ 332:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** }
+ 775              		.loc 1 332 1 discriminator 4
+ 776 0036 1846     		mov	r0, r3
+ 777 0038 1037     		adds	r7, r7, #16
+ 778              	.LCFI49:
+ 779              		.cfi_def_cfa_offset 8
+ 780 003a BD46     		mov	sp, r7
+ 781              	.LCFI50:
+ 782              		.cfi_def_cfa_register 13
+ 783              		@ sp needed
+ 784 003c 80BD     		pop	{r7, pc}
+ 785              		.cfi_endproc
+ 786              	.LFE9:
+ 788              		.section	.text.lr1110_bootloader_read_pin,"ax",%progbits
+ 789              		.align	1
+ 790              		.global	lr1110_bootloader_read_pin
+ 791              		.syntax unified
+ 792              		.thumb
+ 793              		.thumb_func
+ 794              		.fpu fpv4-sp-d16
+ 796              	lr1110_bootloader_read_pin:
+ 797              	.LFB10:
+ 333:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 334:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** lr1110_status_t lr1110_bootloader_read_pin( const void* context, lr1110_bootloader_pin_t pin )
+ 335:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** {
+ 798              		.loc 1 335 1
+ 799              		.cfi_startproc
+ 800              		@ args = 0, pretend = 0, frame = 16
+ 801              		@ frame_needed = 1, uses_anonymous_args = 0
+ 802 0000 80B5     		push	{r7, lr}
+ 803              	.LCFI51:
+ 804              		.cfi_def_cfa_offset 8
+ 805              		.cfi_offset 7, -8
+ 806              		.cfi_offset 14, -4
+ 807 0002 86B0     		sub	sp, sp, #24
+ 808              	.LCFI52:
+ 809              		.cfi_def_cfa_offset 32
+ 810 0004 02AF     		add	r7, sp, #8
+ 811              	.LCFI53:
+ 812              		.cfi_def_cfa 7, 24
+ 813 0006 7860     		str	r0, [r7, #4]
+ 814 0008 3960     		str	r1, [r7]
+ 336:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     uint8_t cbuffer[LR1110_BL_GET_PIN_CMD_LENGTH];
+ 337:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 338:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     cbuffer[0] = ( uint8_t )( LR1110_BL_GET_PIN_OC >> 8 );
+ 815              		.loc 1 338 16
+ 816 000a 8023     		movs	r3, #128
+ 817 000c 3B73     		strb	r3, [r7, #12]
+ARM GAS  /tmp/ccz1jFcy.s 			page 21
+
+
+ 339:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     cbuffer[1] = ( uint8_t )( LR1110_BL_GET_PIN_OC >> 0 );
+ 818              		.loc 1 339 16
+ 819 000e 0B23     		movs	r3, #11
+ 820 0010 7B73     		strb	r3, [r7, #13]
+ 340:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 341:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     return ( lr1110_status_t ) lr1110_hal_read( context, cbuffer, LR1110_BL_GET_PIN_CMD_LENGTH, pin
+ 821              		.loc 1 341 32
+ 822 0012 07F10C01 		add	r1, r7, #12
+ 823 0016 0423     		movs	r3, #4
+ 824 0018 0093     		str	r3, [sp]
+ 825 001a 3B68     		ldr	r3, [r7]
+ 826 001c 0222     		movs	r2, #2
+ 827 001e 7868     		ldr	r0, [r7, #4]
+ 828 0020 FFF7FEFF 		bl	lr1110_hal_read
+ 829 0024 0346     		mov	r3, r0
+ 342:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****                                                 LR1110_BL_PIN_LENGTH );
+ 343:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** }
+ 830              		.loc 1 343 1
+ 831 0026 1846     		mov	r0, r3
+ 832 0028 1037     		adds	r7, r7, #16
+ 833              	.LCFI54:
+ 834              		.cfi_def_cfa_offset 8
+ 835 002a BD46     		mov	sp, r7
+ 836              	.LCFI55:
+ 837              		.cfi_def_cfa_register 13
+ 838              		@ sp needed
+ 839 002c 80BD     		pop	{r7, pc}
+ 840              		.cfi_endproc
+ 841              	.LFE10:
+ 843              		.section	.text.lr1110_bootloader_read_chip_eui,"ax",%progbits
+ 844              		.align	1
+ 845              		.global	lr1110_bootloader_read_chip_eui
+ 846              		.syntax unified
+ 847              		.thumb
+ 848              		.thumb_func
+ 849              		.fpu fpv4-sp-d16
+ 851              	lr1110_bootloader_read_chip_eui:
+ 852              	.LFB11:
+ 344:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 345:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** lr1110_status_t lr1110_bootloader_read_chip_eui( const void* context, lr1110_bootloader_chip_eui_t 
+ 346:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** {
+ 853              		.loc 1 346 1
+ 854              		.cfi_startproc
+ 855              		@ args = 0, pretend = 0, frame = 16
+ 856              		@ frame_needed = 1, uses_anonymous_args = 0
+ 857 0000 80B5     		push	{r7, lr}
+ 858              	.LCFI56:
+ 859              		.cfi_def_cfa_offset 8
+ 860              		.cfi_offset 7, -8
+ 861              		.cfi_offset 14, -4
+ 862 0002 86B0     		sub	sp, sp, #24
+ 863              	.LCFI57:
+ 864              		.cfi_def_cfa_offset 32
+ 865 0004 02AF     		add	r7, sp, #8
+ 866              	.LCFI58:
+ 867              		.cfi_def_cfa 7, 24
+ 868 0006 7860     		str	r0, [r7, #4]
+ARM GAS  /tmp/ccz1jFcy.s 			page 22
+
+
+ 869 0008 3960     		str	r1, [r7]
+ 347:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     uint8_t cbuffer[LR1110_BL_GET_CHIP_EUI_CMD_LENGTH];
+ 348:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 349:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     cbuffer[0] = ( uint8_t )( LR1110_BL_GET_CHIP_EUI_OC >> 8 );
+ 870              		.loc 1 349 16
+ 871 000a 8023     		movs	r3, #128
+ 872 000c 3B73     		strb	r3, [r7, #12]
+ 350:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     cbuffer[1] = ( uint8_t )( LR1110_BL_GET_CHIP_EUI_OC >> 0 );
+ 873              		.loc 1 350 16
+ 874 000e 0C23     		movs	r3, #12
+ 875 0010 7B73     		strb	r3, [r7, #13]
+ 351:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 352:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     return ( lr1110_status_t ) lr1110_hal_read( context, cbuffer, LR1110_BL_GET_CHIP_EUI_CMD_LENGTH
+ 876              		.loc 1 352 32
+ 877 0012 07F10C01 		add	r1, r7, #12
+ 878 0016 0823     		movs	r3, #8
+ 879 0018 0093     		str	r3, [sp]
+ 880 001a 3B68     		ldr	r3, [r7]
+ 881 001c 0222     		movs	r2, #2
+ 882 001e 7868     		ldr	r0, [r7, #4]
+ 883 0020 FFF7FEFF 		bl	lr1110_hal_read
+ 884 0024 0346     		mov	r3, r0
+ 353:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****                                                 LR1110_BL_CHIP_EUI_LENGTH );
+ 354:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** }
+ 885              		.loc 1 354 1
+ 886 0026 1846     		mov	r0, r3
+ 887 0028 1037     		adds	r7, r7, #16
+ 888              	.LCFI59:
+ 889              		.cfi_def_cfa_offset 8
+ 890 002a BD46     		mov	sp, r7
+ 891              	.LCFI60:
+ 892              		.cfi_def_cfa_register 13
+ 893              		@ sp needed
+ 894 002c 80BD     		pop	{r7, pc}
+ 895              		.cfi_endproc
+ 896              	.LFE11:
+ 898              		.section	.text.lr1110_bootloader_fill_cbuffer_opcode_offset_flash,"ax",%progbits
+ 899              		.align	1
+ 900              		.syntax unified
+ 901              		.thumb
+ 902              		.thumb_func
+ 903              		.fpu fpv4-sp-d16
+ 905              	lr1110_bootloader_fill_cbuffer_opcode_offset_flash:
+ 906              	.LFB12:
+ 355:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 356:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** /*
+ 357:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * -----------------------------------------------------------------------------
+ 358:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  * --- PRIVATE FUNCTIONS DEFINITION --------------------------------------------
+ 359:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****  */
+ 360:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 361:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** void lr1110_bootloader_fill_cbuffer_opcode_offset_flash( uint8_t* cbuffer, uint16_t opcode, uint32_
+ 362:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** {
+ 907              		.loc 1 362 1
+ 908              		.cfi_startproc
+ 909              		@ args = 0, pretend = 0, frame = 16
+ 910              		@ frame_needed = 1, uses_anonymous_args = 0
+ 911              		@ link register save eliminated.
+ARM GAS  /tmp/ccz1jFcy.s 			page 23
+
+
+ 912 0000 80B4     		push	{r7}
+ 913              	.LCFI61:
+ 914              		.cfi_def_cfa_offset 4
+ 915              		.cfi_offset 7, -4
+ 916 0002 85B0     		sub	sp, sp, #20
+ 917              	.LCFI62:
+ 918              		.cfi_def_cfa_offset 24
+ 919 0004 00AF     		add	r7, sp, #0
+ 920              	.LCFI63:
+ 921              		.cfi_def_cfa_register 7
+ 922 0006 F860     		str	r0, [r7, #12]
+ 923 0008 0B46     		mov	r3, r1
+ 924 000a 7A60     		str	r2, [r7, #4]
+ 925 000c 7B81     		strh	r3, [r7, #10]	@ movhi
+ 363:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     cbuffer[0] = ( uint8_t )( opcode >> 8 );
+ 926              		.loc 1 363 18
+ 927 000e 7B89     		ldrh	r3, [r7, #10]
+ 928 0010 1B0A     		lsrs	r3, r3, #8
+ 929 0012 9BB2     		uxth	r3, r3
+ 930 0014 DAB2     		uxtb	r2, r3
+ 931              		.loc 1 363 16
+ 932 0016 FB68     		ldr	r3, [r7, #12]
+ 933 0018 1A70     		strb	r2, [r3]
+ 364:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     cbuffer[1] = ( uint8_t )( opcode >> 0 );
+ 934              		.loc 1 364 12
+ 935 001a FB68     		ldr	r3, [r7, #12]
+ 936 001c 0133     		adds	r3, r3, #1
+ 937              		.loc 1 364 18
+ 938 001e 7A89     		ldrh	r2, [r7, #10]	@ movhi
+ 939 0020 D2B2     		uxtb	r2, r2
+ 940              		.loc 1 364 16
+ 941 0022 1A70     		strb	r2, [r3]
+ 365:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 366:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     cbuffer[2] = ( uint8_t )( offset >> 24 );
+ 942              		.loc 1 366 38
+ 943 0024 7B68     		ldr	r3, [r7, #4]
+ 944 0026 1A0E     		lsrs	r2, r3, #24
+ 945              		.loc 1 366 12
+ 946 0028 FB68     		ldr	r3, [r7, #12]
+ 947 002a 0233     		adds	r3, r3, #2
+ 948              		.loc 1 366 18
+ 949 002c D2B2     		uxtb	r2, r2
+ 950              		.loc 1 366 16
+ 951 002e 1A70     		strb	r2, [r3]
+ 367:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     cbuffer[3] = ( uint8_t )( offset >> 16 );
+ 952              		.loc 1 367 38
+ 953 0030 7B68     		ldr	r3, [r7, #4]
+ 954 0032 1A0C     		lsrs	r2, r3, #16
+ 955              		.loc 1 367 12
+ 956 0034 FB68     		ldr	r3, [r7, #12]
+ 957 0036 0333     		adds	r3, r3, #3
+ 958              		.loc 1 367 18
+ 959 0038 D2B2     		uxtb	r2, r2
+ 960              		.loc 1 367 16
+ 961 003a 1A70     		strb	r2, [r3]
+ 368:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     cbuffer[4] = ( uint8_t )( offset >> 8 );
+ 962              		.loc 1 368 38
+ARM GAS  /tmp/ccz1jFcy.s 			page 24
+
+
+ 963 003c 7B68     		ldr	r3, [r7, #4]
+ 964 003e 1A0A     		lsrs	r2, r3, #8
+ 965              		.loc 1 368 12
+ 966 0040 FB68     		ldr	r3, [r7, #12]
+ 967 0042 0433     		adds	r3, r3, #4
+ 968              		.loc 1 368 18
+ 969 0044 D2B2     		uxtb	r2, r2
+ 970              		.loc 1 368 16
+ 971 0046 1A70     		strb	r2, [r3]
+ 369:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     cbuffer[5] = ( uint8_t )( offset >> 0 );
+ 972              		.loc 1 369 12
+ 973 0048 FB68     		ldr	r3, [r7, #12]
+ 974 004a 0533     		adds	r3, r3, #5
+ 975              		.loc 1 369 18
+ 976 004c 7A68     		ldr	r2, [r7, #4]
+ 977 004e D2B2     		uxtb	r2, r2
+ 978              		.loc 1 369 16
+ 979 0050 1A70     		strb	r2, [r3]
+ 370:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** }
+ 980              		.loc 1 370 1
+ 981 0052 00BF     		nop
+ 982 0054 1437     		adds	r7, r7, #20
+ 983              	.LCFI64:
+ 984              		.cfi_def_cfa_offset 4
+ 985 0056 BD46     		mov	sp, r7
+ 986              	.LCFI65:
+ 987              		.cfi_def_cfa_register 13
+ 988              		@ sp needed
+ 989 0058 5DF8047B 		ldr	r7, [sp], #4
+ 990              	.LCFI66:
+ 991              		.cfi_restore 7
+ 992              		.cfi_def_cfa_offset 0
+ 993 005c 7047     		bx	lr
+ 994              		.cfi_endproc
+ 995              	.LFE12:
+ 997              		.section	.text.lr1110_bootloader_fill_cdata_flash,"ax",%progbits
+ 998              		.align	1
+ 999              		.syntax unified
+ 1000              		.thumb
+ 1001              		.thumb_func
+ 1002              		.fpu fpv4-sp-d16
+ 1004              	lr1110_bootloader_fill_cdata_flash:
+ 1005              	.LFB13:
+ 371:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 372:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** void lr1110_bootloader_fill_cdata_flash( uint8_t* cdata, const uint32_t* data, uint8_t data_length 
+ 373:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** {
+ 1006              		.loc 1 373 1
+ 1007              		.cfi_startproc
+ 1008              		@ args = 0, pretend = 0, frame = 24
+ 1009              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1010              		@ link register save eliminated.
+ 1011 0000 80B4     		push	{r7}
+ 1012              	.LCFI67:
+ 1013              		.cfi_def_cfa_offset 4
+ 1014              		.cfi_offset 7, -4
+ 1015 0002 87B0     		sub	sp, sp, #28
+ 1016              	.LCFI68:
+ARM GAS  /tmp/ccz1jFcy.s 			page 25
+
+
+ 1017              		.cfi_def_cfa_offset 32
+ 1018 0004 00AF     		add	r7, sp, #0
+ 1019              	.LCFI69:
+ 1020              		.cfi_def_cfa_register 7
+ 1021 0006 F860     		str	r0, [r7, #12]
+ 1022 0008 B960     		str	r1, [r7, #8]
+ 1023 000a 1346     		mov	r3, r2
+ 1024 000c FB71     		strb	r3, [r7, #7]
+ 1025              	.LBB2:
+ 374:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     for( uint8_t index = 0; index < data_length; index++ )
+ 1026              		.loc 1 374 18
+ 1027 000e 0023     		movs	r3, #0
+ 1028 0010 FB75     		strb	r3, [r7, #23]
+ 1029              		.loc 1 374 5
+ 1030 0012 2DE0     		b	.L37
+ 1031              	.L38:
+ 1032              	.LBB3:
+ 375:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     {
+ 376:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****         uint8_t* cdata_local = &cdata[index * sizeof( uint32_t )];
+ 1033              		.loc 1 376 45 discriminator 3
+ 1034 0014 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 1035 0016 9B00     		lsls	r3, r3, #2
+ 1036              		.loc 1 376 18 discriminator 3
+ 1037 0018 FA68     		ldr	r2, [r7, #12]
+ 1038 001a 1344     		add	r3, r3, r2
+ 1039 001c 3B61     		str	r3, [r7, #16]
+ 377:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 378:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****         cdata_local[0] = ( uint8_t )( data[index] >> 24 );
+ 1040              		.loc 1 378 43 discriminator 3
+ 1041 001e FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 1042 0020 9B00     		lsls	r3, r3, #2
+ 1043 0022 BA68     		ldr	r2, [r7, #8]
+ 1044 0024 1344     		add	r3, r3, r2
+ 1045 0026 1B68     		ldr	r3, [r3]
+ 1046              		.loc 1 378 51 discriminator 3
+ 1047 0028 1B0E     		lsrs	r3, r3, #24
+ 1048              		.loc 1 378 26 discriminator 3
+ 1049 002a DAB2     		uxtb	r2, r3
+ 1050              		.loc 1 378 24 discriminator 3
+ 1051 002c 3B69     		ldr	r3, [r7, #16]
+ 1052 002e 1A70     		strb	r2, [r3]
+ 379:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****         cdata_local[1] = ( uint8_t )( data[index] >> 16 );
+ 1053              		.loc 1 379 43 discriminator 3
+ 1054 0030 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 1055 0032 9B00     		lsls	r3, r3, #2
+ 1056 0034 BA68     		ldr	r2, [r7, #8]
+ 1057 0036 1344     		add	r3, r3, r2
+ 1058 0038 1B68     		ldr	r3, [r3]
+ 1059              		.loc 1 379 51 discriminator 3
+ 1060 003a 1A0C     		lsrs	r2, r3, #16
+ 1061              		.loc 1 379 20 discriminator 3
+ 1062 003c 3B69     		ldr	r3, [r7, #16]
+ 1063 003e 0133     		adds	r3, r3, #1
+ 1064              		.loc 1 379 26 discriminator 3
+ 1065 0040 D2B2     		uxtb	r2, r2
+ 1066              		.loc 1 379 24 discriminator 3
+ 1067 0042 1A70     		strb	r2, [r3]
+ARM GAS  /tmp/ccz1jFcy.s 			page 26
+
+
+ 380:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****         cdata_local[2] = ( uint8_t )( data[index] >> 8 );
+ 1068              		.loc 1 380 43 discriminator 3
+ 1069 0044 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 1070 0046 9B00     		lsls	r3, r3, #2
+ 1071 0048 BA68     		ldr	r2, [r7, #8]
+ 1072 004a 1344     		add	r3, r3, r2
+ 1073 004c 1B68     		ldr	r3, [r3]
+ 1074              		.loc 1 380 51 discriminator 3
+ 1075 004e 1A0A     		lsrs	r2, r3, #8
+ 1076              		.loc 1 380 20 discriminator 3
+ 1077 0050 3B69     		ldr	r3, [r7, #16]
+ 1078 0052 0233     		adds	r3, r3, #2
+ 1079              		.loc 1 380 26 discriminator 3
+ 1080 0054 D2B2     		uxtb	r2, r2
+ 1081              		.loc 1 380 24 discriminator 3
+ 1082 0056 1A70     		strb	r2, [r3]
+ 381:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****         cdata_local[3] = ( uint8_t )( data[index] >> 0 );
+ 1083              		.loc 1 381 43 discriminator 3
+ 1084 0058 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 1085 005a 9B00     		lsls	r3, r3, #2
+ 1086 005c BA68     		ldr	r2, [r7, #8]
+ 1087 005e 1344     		add	r3, r3, r2
+ 1088 0060 1A68     		ldr	r2, [r3]
+ 1089              		.loc 1 381 20 discriminator 3
+ 1090 0062 3B69     		ldr	r3, [r7, #16]
+ 1091 0064 0333     		adds	r3, r3, #3
+ 1092              		.loc 1 381 26 discriminator 3
+ 1093 0066 D2B2     		uxtb	r2, r2
+ 1094              		.loc 1 381 24 discriminator 3
+ 1095 0068 1A70     		strb	r2, [r3]
+ 1096              	.LBE3:
+ 374:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     {
+ 1097              		.loc 1 374 55 discriminator 3
+ 1098 006a FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 1099 006c 0133     		adds	r3, r3, #1
+ 1100 006e FB75     		strb	r3, [r7, #23]
+ 1101              	.L37:
+ 374:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     {
+ 1102              		.loc 1 374 5 discriminator 1
+ 1103 0070 FA7D     		ldrb	r2, [r7, #23]	@ zero_extendqisi2
+ 1104 0072 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 1105 0074 9A42     		cmp	r2, r3
+ 1106 0076 CDD3     		bcc	.L38
+ 1107              	.LBE2:
+ 382:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     }
+ 383:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** }
+ 1108              		.loc 1 383 1
+ 1109 0078 00BF     		nop
+ 1110 007a 00BF     		nop
+ 1111 007c 1C37     		adds	r7, r7, #28
+ 1112              	.LCFI70:
+ 1113              		.cfi_def_cfa_offset 4
+ 1114 007e BD46     		mov	sp, r7
+ 1115              	.LCFI71:
+ 1116              		.cfi_def_cfa_register 13
+ 1117              		@ sp needed
+ 1118 0080 5DF8047B 		ldr	r7, [sp], #4
+ARM GAS  /tmp/ccz1jFcy.s 			page 27
+
+
+ 1119              	.LCFI72:
+ 1120              		.cfi_restore 7
+ 1121              		.cfi_def_cfa_offset 0
+ 1122 0084 7047     		bx	lr
+ 1123              		.cfi_endproc
+ 1124              	.LFE13:
+ 1126              		.section	.text.lr1110_bootloader_fill_cbuffer_cdata_flash,"ax",%progbits
+ 1127              		.align	1
+ 1128              		.syntax unified
+ 1129              		.thumb
+ 1130              		.thumb_func
+ 1131              		.fpu fpv4-sp-d16
+ 1133              	lr1110_bootloader_fill_cbuffer_cdata_flash:
+ 1134              	.LFB14:
+ 384:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** 
+ 385:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** void lr1110_bootloader_fill_cbuffer_cdata_flash( uint8_t* cbuffer, uint8_t* cdata, uint16_t opcode,
+ 386:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****                                                  const uint32_t* data, uint8_t data_length )
+ 387:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** {
+ 1135              		.loc 1 387 1
+ 1136              		.cfi_startproc
+ 1137              		@ args = 8, pretend = 0, frame = 16
+ 1138              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1139 0000 80B5     		push	{r7, lr}
+ 1140              	.LCFI73:
+ 1141              		.cfi_def_cfa_offset 8
+ 1142              		.cfi_offset 7, -8
+ 1143              		.cfi_offset 14, -4
+ 1144 0002 84B0     		sub	sp, sp, #16
+ 1145              	.LCFI74:
+ 1146              		.cfi_def_cfa_offset 24
+ 1147 0004 00AF     		add	r7, sp, #0
+ 1148              	.LCFI75:
+ 1149              		.cfi_def_cfa_register 7
+ 1150 0006 F860     		str	r0, [r7, #12]
+ 1151 0008 B960     		str	r1, [r7, #8]
+ 1152 000a 3B60     		str	r3, [r7]
+ 1153 000c 1346     		mov	r3, r2	@ movhi
+ 1154 000e FB80     		strh	r3, [r7, #6]	@ movhi
+ 388:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     lr1110_bootloader_fill_cbuffer_opcode_offset_flash( cbuffer, opcode, offset );
+ 1155              		.loc 1 388 5
+ 1156 0010 FB88     		ldrh	r3, [r7, #6]
+ 1157 0012 3A68     		ldr	r2, [r7]
+ 1158 0014 1946     		mov	r1, r3
+ 1159 0016 F868     		ldr	r0, [r7, #12]
+ 1160 0018 FFF7FEFF 		bl	lr1110_bootloader_fill_cbuffer_opcode_offset_flash
+ 389:../Src/radio/lr1110_modem/src/lr1110_bootloader.c ****     lr1110_bootloader_fill_cdata_flash( cdata, data, data_length );
+ 1161              		.loc 1 389 5
+ 1162 001c 3B7F     		ldrb	r3, [r7, #28]	@ zero_extendqisi2
+ 1163 001e 1A46     		mov	r2, r3
+ 1164 0020 B969     		ldr	r1, [r7, #24]
+ 1165 0022 B868     		ldr	r0, [r7, #8]
+ 1166 0024 FFF7FEFF 		bl	lr1110_bootloader_fill_cdata_flash
+ 390:../Src/radio/lr1110_modem/src/lr1110_bootloader.c **** }
+ 1167              		.loc 1 390 1
+ 1168 0028 00BF     		nop
+ 1169 002a 1037     		adds	r7, r7, #16
+ 1170              	.LCFI76:
+ARM GAS  /tmp/ccz1jFcy.s 			page 28
+
+
+ 1171              		.cfi_def_cfa_offset 8
+ 1172 002c BD46     		mov	sp, r7
+ 1173              	.LCFI77:
+ 1174              		.cfi_def_cfa_register 13
+ 1175              		@ sp needed
+ 1176 002e 80BD     		pop	{r7, pc}
+ 1177              		.cfi_endproc
+ 1178              	.LFE14:
+ 1180              		.text
+ 1181              	.Letext0:
+ 1182              		.file 2 "/usr/lib/gcc/arm-none-eabi/10.3.1/include/stdint.h"
+ 1183              		.file 3 "../Src/radio/lr1110_modem/src/lr1110_bootloader_types.h"
+ 1184              		.file 4 "../Src/radio/lr1110_modem/src/lr1110_types.h"
+ARM GAS  /tmp/ccz1jFcy.s 			page 29
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 lr1110_bootloader.c
+     /tmp/ccz1jFcy.s:18     .text.min:0000000000000000 $t
+     /tmp/ccz1jFcy.s:26     .text.min:0000000000000000 min
+     /tmp/ccz1jFcy.s:78     .text.lr1110_bootloader_get_version:0000000000000000 $t
+     /tmp/ccz1jFcy.s:85     .text.lr1110_bootloader_get_version:0000000000000000 lr1110_bootloader_get_version
+     /tmp/ccz1jFcy.s:172    .text.lr1110_bootloader_erase_flash:0000000000000000 $t
+     /tmp/ccz1jFcy.s:179    .text.lr1110_bootloader_erase_flash:0000000000000000 lr1110_bootloader_erase_flash
+     /tmp/ccz1jFcy.s:226    .text.lr1110_bootloader_erase_page:0000000000000000 $t
+     /tmp/ccz1jFcy.s:233    .text.lr1110_bootloader_erase_page:0000000000000000 lr1110_bootloader_erase_page
+     /tmp/ccz1jFcy.s:285    .text.lr1110_bootloader_write_flash:0000000000000000 $t
+     /tmp/ccz1jFcy.s:292    .text.lr1110_bootloader_write_flash:0000000000000000 lr1110_bootloader_write_flash
+     /tmp/ccz1jFcy.s:1133   .text.lr1110_bootloader_fill_cbuffer_cdata_flash:0000000000000000 lr1110_bootloader_fill_cbuffer_cdata_flash
+     /tmp/ccz1jFcy.s:370    .text.lr1110_bootloader_write_flash_full:0000000000000000 $t
+     /tmp/ccz1jFcy.s:377    .text.lr1110_bootloader_write_flash_full:0000000000000000 lr1110_bootloader_write_flash_full
+     /tmp/ccz1jFcy.s:475    .text.lr1110_bootloader_write_flash_encrypted:0000000000000000 $t
+     /tmp/ccz1jFcy.s:482    .text.lr1110_bootloader_write_flash_encrypted:0000000000000000 lr1110_bootloader_write_flash_encrypted
+     /tmp/ccz1jFcy.s:560    .text.lr1110_bootloader_write_flash_encrypted_full:0000000000000000 $t
+     /tmp/ccz1jFcy.s:567    .text.lr1110_bootloader_write_flash_encrypted_full:0000000000000000 lr1110_bootloader_write_flash_encrypted_full
+     /tmp/ccz1jFcy.s:665    .text.lr1110_bootloader_get_hash:0000000000000000 $t
+     /tmp/ccz1jFcy.s:672    .text.lr1110_bootloader_get_hash:0000000000000000 lr1110_bootloader_get_hash
+     /tmp/ccz1jFcy.s:720    .text.lr1110_bootloader_reboot:0000000000000000 $t
+     /tmp/ccz1jFcy.s:727    .text.lr1110_bootloader_reboot:0000000000000000 lr1110_bootloader_reboot
+     /tmp/ccz1jFcy.s:789    .text.lr1110_bootloader_read_pin:0000000000000000 $t
+     /tmp/ccz1jFcy.s:796    .text.lr1110_bootloader_read_pin:0000000000000000 lr1110_bootloader_read_pin
+     /tmp/ccz1jFcy.s:844    .text.lr1110_bootloader_read_chip_eui:0000000000000000 $t
+     /tmp/ccz1jFcy.s:851    .text.lr1110_bootloader_read_chip_eui:0000000000000000 lr1110_bootloader_read_chip_eui
+     /tmp/ccz1jFcy.s:899    .text.lr1110_bootloader_fill_cbuffer_opcode_offset_flash:0000000000000000 $t
+     /tmp/ccz1jFcy.s:905    .text.lr1110_bootloader_fill_cbuffer_opcode_offset_flash:0000000000000000 lr1110_bootloader_fill_cbuffer_opcode_offset_flash
+     /tmp/ccz1jFcy.s:998    .text.lr1110_bootloader_fill_cdata_flash:0000000000000000 $t
+     /tmp/ccz1jFcy.s:1004   .text.lr1110_bootloader_fill_cdata_flash:0000000000000000 lr1110_bootloader_fill_cdata_flash
+     /tmp/ccz1jFcy.s:1127   .text.lr1110_bootloader_fill_cbuffer_cdata_flash:0000000000000000 $t
+
+UNDEFINED SYMBOLS
+lr1110_hal_read
+lr1110_hal_write

@@ -1,0 +1,341 @@
+ARM GAS  /tmp/ccCsRmZr.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"smtc_hal_watchdog.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.bss.iwdg_handle,"aw",%nobits
+  18              		.align	2
+  21              	iwdg_handle:
+  22 0000 00000000 		.space	16
+  22      00000000 
+  22      00000000 
+  22      00000000 
+  23              		.section	.text.hal_watchdog_init,"ax",%progbits
+  24              		.align	1
+  25              		.global	hal_watchdog_init
+  26              		.arch armv7e-m
+  27              		.syntax unified
+  28              		.thumb
+  29              		.thumb_func
+  30              		.fpu fpv4-sp-d16
+  32              	hal_watchdog_init:
+  33              	.LFB313:
+  34              		.file 1 "../Src/smtc_hal/smtc_hal_watchdog.c"
+   1:../Src/smtc_hal/smtc_hal_watchdog.c **** /*!
+   2:../Src/smtc_hal/smtc_hal_watchdog.c ****  * @file      smtc_hal_watchdog.h
+   3:../Src/smtc_hal/smtc_hal_watchdog.c ****  *
+   4:../Src/smtc_hal/smtc_hal_watchdog.c ****  * @brief     Board specific package WATCHDOG management API definition.
+   5:../Src/smtc_hal/smtc_hal_watchdog.c ****  *
+   6:../Src/smtc_hal/smtc_hal_watchdog.c ****  * Revised BSD License
+   7:../Src/smtc_hal/smtc_hal_watchdog.c ****  * Copyright Semtech Corporation 2020. All rights reserved.
+   8:../Src/smtc_hal/smtc_hal_watchdog.c ****  *
+   9:../Src/smtc_hal/smtc_hal_watchdog.c ****  * Redistribution and use in source and binary forms, with or without
+  10:../Src/smtc_hal/smtc_hal_watchdog.c ****  * modification, are permitted provided that the following conditions are met:
+  11:../Src/smtc_hal/smtc_hal_watchdog.c ****  *     * Redistributions of source code must retain the above copyright
+  12:../Src/smtc_hal/smtc_hal_watchdog.c ****  *       notice, this list of conditions and the following disclaimer.
+  13:../Src/smtc_hal/smtc_hal_watchdog.c ****  *     * Redistributions in binary form must reproduce the above copyright
+  14:../Src/smtc_hal/smtc_hal_watchdog.c ****  *       notice, this list of conditions and the following disclaimer in the
+  15:../Src/smtc_hal/smtc_hal_watchdog.c ****  *       documentation and/or other materials provided with the distribution.
+  16:../Src/smtc_hal/smtc_hal_watchdog.c ****  *     * Neither the name of the Semtech corporation nor the
+  17:../Src/smtc_hal/smtc_hal_watchdog.c ****  *       names of its contributors may be used to endorse or promote products
+  18:../Src/smtc_hal/smtc_hal_watchdog.c ****  *       derived from this software without specific prior written permission.
+  19:../Src/smtc_hal/smtc_hal_watchdog.c ****  *
+  20:../Src/smtc_hal/smtc_hal_watchdog.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  21:../Src/smtc_hal/smtc_hal_watchdog.c ****  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  22:../Src/smtc_hal/smtc_hal_watchdog.c ****  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  23:../Src/smtc_hal/smtc_hal_watchdog.c ****  * ARE DISCLAIMED. IN NO EVENT SHALL SEMTECH CORPORATION BE LIABLE FOR ANY
+ARM GAS  /tmp/ccCsRmZr.s 			page 2
+
+
+  24:../Src/smtc_hal/smtc_hal_watchdog.c ****  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+  25:../Src/smtc_hal/smtc_hal_watchdog.c ****  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  26:../Src/smtc_hal/smtc_hal_watchdog.c ****  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+  27:../Src/smtc_hal/smtc_hal_watchdog.c ****  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  28:../Src/smtc_hal/smtc_hal_watchdog.c ****  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  29:../Src/smtc_hal/smtc_hal_watchdog.c ****  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  30:../Src/smtc_hal/smtc_hal_watchdog.c ****  */
+  31:../Src/smtc_hal/smtc_hal_watchdog.c **** 
+  32:../Src/smtc_hal/smtc_hal_watchdog.c **** /*
+  33:../Src/smtc_hal/smtc_hal_watchdog.c ****  * -----------------------------------------------------------------------------
+  34:../Src/smtc_hal/smtc_hal_watchdog.c ****  * --- DEPENDENCIES ------------------------------------------------------------
+  35:../Src/smtc_hal/smtc_hal_watchdog.c ****  */
+  36:../Src/smtc_hal/smtc_hal_watchdog.c **** 
+  37:../Src/smtc_hal/smtc_hal_watchdog.c **** #include <stdint.h>   // C99 types
+  38:../Src/smtc_hal/smtc_hal_watchdog.c **** #include <stdbool.h>  // bool type
+  39:../Src/smtc_hal/smtc_hal_watchdog.c **** 
+  40:../Src/smtc_hal/smtc_hal_watchdog.c **** #include "stm32l4xx_hal.h"
+  41:../Src/smtc_hal/smtc_hal_watchdog.c **** #include "smtc_hal_watchdog.h"
+  42:../Src/smtc_hal/smtc_hal_watchdog.c **** 
+  43:../Src/smtc_hal/smtc_hal_watchdog.c **** /*
+  44:../Src/smtc_hal/smtc_hal_watchdog.c ****  * -----------------------------------------------------------------------------
+  45:../Src/smtc_hal/smtc_hal_watchdog.c ****  * --- PRIVATE MACROS-----------------------------------------------------------
+  46:../Src/smtc_hal/smtc_hal_watchdog.c ****  */
+  47:../Src/smtc_hal/smtc_hal_watchdog.c **** 
+  48:../Src/smtc_hal/smtc_hal_watchdog.c **** /*
+  49:../Src/smtc_hal/smtc_hal_watchdog.c ****  * -----------------------------------------------------------------------------
+  50:../Src/smtc_hal/smtc_hal_watchdog.c ****  * --- PRIVATE CONSTANTS -------------------------------------------------------
+  51:../Src/smtc_hal/smtc_hal_watchdog.c ****  */
+  52:../Src/smtc_hal/smtc_hal_watchdog.c **** 
+  53:../Src/smtc_hal/smtc_hal_watchdog.c **** /*
+  54:../Src/smtc_hal/smtc_hal_watchdog.c ****  * -----------------------------------------------------------------------------
+  55:../Src/smtc_hal/smtc_hal_watchdog.c ****  * --- PRIVATE TYPES -----------------------------------------------------------
+  56:../Src/smtc_hal/smtc_hal_watchdog.c ****  */
+  57:../Src/smtc_hal/smtc_hal_watchdog.c **** 
+  58:../Src/smtc_hal/smtc_hal_watchdog.c **** /*
+  59:../Src/smtc_hal/smtc_hal_watchdog.c ****  * -----------------------------------------------------------------------------
+  60:../Src/smtc_hal/smtc_hal_watchdog.c ****  * --- PRIVATE VARIABLES -------------------------------------------------------
+  61:../Src/smtc_hal/smtc_hal_watchdog.c ****  */
+  62:../Src/smtc_hal/smtc_hal_watchdog.c **** 
+  63:../Src/smtc_hal/smtc_hal_watchdog.c **** static IWDG_HandleTypeDef iwdg_handle;
+  64:../Src/smtc_hal/smtc_hal_watchdog.c **** 
+  65:../Src/smtc_hal/smtc_hal_watchdog.c **** /*
+  66:../Src/smtc_hal/smtc_hal_watchdog.c ****  * -----------------------------------------------------------------------------
+  67:../Src/smtc_hal/smtc_hal_watchdog.c ****  * --- PRIVATE FUNCTIONS DECLARATION -------------------------------------------
+  68:../Src/smtc_hal/smtc_hal_watchdog.c ****  */
+  69:../Src/smtc_hal/smtc_hal_watchdog.c **** 
+  70:../Src/smtc_hal/smtc_hal_watchdog.c **** /*
+  71:../Src/smtc_hal/smtc_hal_watchdog.c ****  * -----------------------------------------------------------------------------
+  72:../Src/smtc_hal/smtc_hal_watchdog.c ****  * --- PUBLIC FUNCTIONS DEFINITION ---------------------------------------------
+  73:../Src/smtc_hal/smtc_hal_watchdog.c ****  */
+  74:../Src/smtc_hal/smtc_hal_watchdog.c **** 
+  75:../Src/smtc_hal/smtc_hal_watchdog.c **** void hal_watchdog_init( void )
+  76:../Src/smtc_hal/smtc_hal_watchdog.c **** {
+  35              		.loc 1 76 1
+  36              		.cfi_startproc
+  37              		@ args = 0, pretend = 0, frame = 0
+  38              		@ frame_needed = 1, uses_anonymous_args = 0
+ARM GAS  /tmp/ccCsRmZr.s 			page 3
+
+
+  39              		@ link register save eliminated.
+  40 0000 80B4     		push	{r7}
+  41              	.LCFI0:
+  42              		.cfi_def_cfa_offset 4
+  43              		.cfi_offset 7, -4
+  44 0002 00AF     		add	r7, sp, #0
+  45              	.LCFI1:
+  46              		.cfi_def_cfa_register 7
+  77:../Src/smtc_hal/smtc_hal_watchdog.c ****     iwdg_handle.Instance       = IWDG;
+  47              		.loc 1 77 32
+  48 0004 1F4B     		ldr	r3, .L6
+  49 0006 204A     		ldr	r2, .L6+4
+  50 0008 1A60     		str	r2, [r3]
+  78:../Src/smtc_hal/smtc_hal_watchdog.c ****     iwdg_handle.Init.Prescaler = IWDG_PRESCALER_256;
+  51              		.loc 1 78 32
+  52 000a 1E4B     		ldr	r3, .L6
+  53 000c 0622     		movs	r2, #6
+  54 000e 5A60     		str	r2, [r3, #4]
+  79:../Src/smtc_hal/smtc_hal_watchdog.c ****     iwdg_handle.Init.Window    = IWDG_WINDOW_DISABLE;
+  55              		.loc 1 79 32
+  56 0010 1C4B     		ldr	r3, .L6
+  57 0012 40F6FF72 		movw	r2, #4095
+  58 0016 DA60     		str	r2, [r3, #12]
+  80:../Src/smtc_hal/smtc_hal_watchdog.c ****     iwdg_handle.Init.Reload    = 0xFFF;
+  59              		.loc 1 80 32
+  60 0018 1A4B     		ldr	r3, .L6
+  61 001a 40F6FF72 		movw	r2, #4095
+  62 001e 9A60     		str	r2, [r3, #8]
+  81:../Src/smtc_hal/smtc_hal_watchdog.c **** 
+  82:../Src/smtc_hal/smtc_hal_watchdog.c ****     /* Enable IWDG. LSI is turned on automaticaly. */
+  83:../Src/smtc_hal/smtc_hal_watchdog.c ****     __HAL_IWDG_START( &iwdg_handle );
+  63              		.loc 1 83 5
+  64 0020 184B     		ldr	r3, .L6
+  65 0022 1B68     		ldr	r3, [r3]
+  66 0024 4CF6CC42 		movw	r2, #52428
+  67 0028 1A60     		str	r2, [r3]
+  84:../Src/smtc_hal/smtc_hal_watchdog.c **** 
+  85:../Src/smtc_hal/smtc_hal_watchdog.c ****     /* Enable write access to IWDG_PR, IWDG_RLR and IWDG_WINR registers by
+  86:../Src/smtc_hal/smtc_hal_watchdog.c ****        writing 0x5555 in KR */
+  87:../Src/smtc_hal/smtc_hal_watchdog.c ****     IWDG_ENABLE_WRITE_ACCESS( &iwdg_handle );
+  68              		.loc 1 87 5
+  69 002a 164B     		ldr	r3, .L6
+  70 002c 1B68     		ldr	r3, [r3]
+  71 002e 45F25552 		movw	r2, #21845
+  72 0032 1A60     		str	r2, [r3]
+  88:../Src/smtc_hal/smtc_hal_watchdog.c ****     /* Write to IWDG registers the Prescaler & Reload values to work with. */
+  89:../Src/smtc_hal/smtc_hal_watchdog.c ****     iwdg_handle.Instance->PR  = iwdg_handle.Init.Prescaler;
+  73              		.loc 1 89 16
+  74 0034 134B     		ldr	r3, .L6
+  75 0036 1B68     		ldr	r3, [r3]
+  76              		.loc 1 89 49
+  77 0038 124A     		ldr	r2, .L6
+  78 003a 5268     		ldr	r2, [r2, #4]
+  79              		.loc 1 89 31
+  80 003c 5A60     		str	r2, [r3, #4]
+  90:../Src/smtc_hal/smtc_hal_watchdog.c ****     iwdg_handle.Instance->RLR = iwdg_handle.Init.Reload;
+  81              		.loc 1 90 16
+ARM GAS  /tmp/ccCsRmZr.s 			page 4
+
+
+  82 003e 114B     		ldr	r3, .L6
+  83 0040 1B68     		ldr	r3, [r3]
+  84              		.loc 1 90 49
+  85 0042 104A     		ldr	r2, .L6
+  86 0044 9268     		ldr	r2, [r2, #8]
+  87              		.loc 1 90 31
+  88 0046 9A60     		str	r2, [r3, #8]
+  91:../Src/smtc_hal/smtc_hal_watchdog.c **** 
+  92:../Src/smtc_hal/smtc_hal_watchdog.c ****     /* Wait for register to be updated. */
+  93:../Src/smtc_hal/smtc_hal_watchdog.c ****     while( iwdg_handle.Instance->SR != RESET )
+  89              		.loc 1 93 10
+  90 0048 00BF     		nop
+  91              	.L2:
+  92              		.loc 1 93 23 discriminator 1
+  93 004a 0E4B     		ldr	r3, .L6
+  94 004c 1B68     		ldr	r3, [r3]
+  95              		.loc 1 93 32 discriminator 1
+  96 004e DB68     		ldr	r3, [r3, #12]
+  97              		.loc 1 93 10 discriminator 1
+  98 0050 002B     		cmp	r3, #0
+  99 0052 FAD1     		bne	.L2
+  94:../Src/smtc_hal/smtc_hal_watchdog.c ****     {
+  95:../Src/smtc_hal/smtc_hal_watchdog.c ****     }
+  96:../Src/smtc_hal/smtc_hal_watchdog.c **** 
+  97:../Src/smtc_hal/smtc_hal_watchdog.c ****     /* If window parameter is different than current value, modify window
+  98:../Src/smtc_hal/smtc_hal_watchdog.c ****        register. */
+  99:../Src/smtc_hal/smtc_hal_watchdog.c ****     if( iwdg_handle.Instance->WINR != iwdg_handle.Init.Window )
+ 100              		.loc 1 99 20
+ 101 0054 0B4B     		ldr	r3, .L6
+ 102 0056 1B68     		ldr	r3, [r3]
+ 103              		.loc 1 99 29
+ 104 0058 1A69     		ldr	r2, [r3, #16]
+ 105              		.loc 1 99 55
+ 106 005a 0A4B     		ldr	r3, .L6
+ 107 005c DB68     		ldr	r3, [r3, #12]
+ 108              		.loc 1 99 7
+ 109 005e 9A42     		cmp	r2, r3
+ 110 0060 05D0     		beq	.L3
+ 100:../Src/smtc_hal/smtc_hal_watchdog.c ****     {
+ 101:../Src/smtc_hal/smtc_hal_watchdog.c ****         // Write to IWDG WINR the IWDG_Window value to compare with. In any
+ 102:../Src/smtc_hal/smtc_hal_watchdog.c ****         // case, even if window feature is disabled, Watchdog will be reloaded
+ 103:../Src/smtc_hal/smtc_hal_watchdog.c ****         // by writing windows register. */
+ 104:../Src/smtc_hal/smtc_hal_watchdog.c ****         iwdg_handle.Instance->WINR = iwdg_handle.Init.Window;
+ 111              		.loc 1 104 20
+ 112 0062 084B     		ldr	r3, .L6
+ 113 0064 1B68     		ldr	r3, [r3]
+ 114              		.loc 1 104 54
+ 115 0066 074A     		ldr	r2, .L6
+ 116 0068 D268     		ldr	r2, [r2, #12]
+ 117              		.loc 1 104 36
+ 118 006a 1A61     		str	r2, [r3, #16]
+ 105:../Src/smtc_hal/smtc_hal_watchdog.c ****     }
+ 106:../Src/smtc_hal/smtc_hal_watchdog.c ****     else
+ 107:../Src/smtc_hal/smtc_hal_watchdog.c ****     {
+ 108:../Src/smtc_hal/smtc_hal_watchdog.c ****         /* Reload IWDG counter with value defined in the reload register. */
+ 109:../Src/smtc_hal/smtc_hal_watchdog.c ****         __HAL_IWDG_RELOAD_COUNTER( &iwdg_handle );
+ 110:../Src/smtc_hal/smtc_hal_watchdog.c ****     }
+ARM GAS  /tmp/ccCsRmZr.s 			page 5
+
+
+ 111:../Src/smtc_hal/smtc_hal_watchdog.c **** }
+ 119              		.loc 1 111 1
+ 120 006c 04E0     		b	.L5
+ 121              	.L3:
+ 109:../Src/smtc_hal/smtc_hal_watchdog.c ****     }
+ 122              		.loc 1 109 9
+ 123 006e 054B     		ldr	r3, .L6
+ 124 0070 1B68     		ldr	r3, [r3]
+ 125 0072 4AF6AA22 		movw	r2, #43690
+ 126 0076 1A60     		str	r2, [r3]
+ 127              	.L5:
+ 128              		.loc 1 111 1
+ 129 0078 00BF     		nop
+ 130 007a BD46     		mov	sp, r7
+ 131              	.LCFI2:
+ 132              		.cfi_def_cfa_register 13
+ 133              		@ sp needed
+ 134 007c 5DF8047B 		ldr	r7, [sp], #4
+ 135              	.LCFI3:
+ 136              		.cfi_restore 7
+ 137              		.cfi_def_cfa_offset 0
+ 138 0080 7047     		bx	lr
+ 139              	.L7:
+ 140 0082 00BF     		.align	2
+ 141              	.L6:
+ 142 0084 00000000 		.word	iwdg_handle
+ 143 0088 00300040 		.word	1073754112
+ 144              		.cfi_endproc
+ 145              	.LFE313:
+ 147              		.section	.text.hal_watchdog_reload,"ax",%progbits
+ 148              		.align	1
+ 149              		.global	hal_watchdog_reload
+ 150              		.syntax unified
+ 151              		.thumb
+ 152              		.thumb_func
+ 153              		.fpu fpv4-sp-d16
+ 155              	hal_watchdog_reload:
+ 156              	.LFB314:
+ 112:../Src/smtc_hal/smtc_hal_watchdog.c **** 
+ 113:../Src/smtc_hal/smtc_hal_watchdog.c **** void hal_watchdog_reload( void ) { __HAL_IWDG_RELOAD_COUNTER( &iwdg_handle ); }
+ 157              		.loc 1 113 34
+ 158              		.cfi_startproc
+ 159              		@ args = 0, pretend = 0, frame = 0
+ 160              		@ frame_needed = 1, uses_anonymous_args = 0
+ 161              		@ link register save eliminated.
+ 162 0000 80B4     		push	{r7}
+ 163              	.LCFI4:
+ 164              		.cfi_def_cfa_offset 4
+ 165              		.cfi_offset 7, -4
+ 166 0002 00AF     		add	r7, sp, #0
+ 167              	.LCFI5:
+ 168              		.cfi_def_cfa_register 7
+ 169              		.loc 1 113 36
+ 170 0004 044B     		ldr	r3, .L9
+ 171 0006 1B68     		ldr	r3, [r3]
+ 172 0008 4AF6AA22 		movw	r2, #43690
+ 173 000c 1A60     		str	r2, [r3]
+ARM GAS  /tmp/ccCsRmZr.s 			page 6
+
+
+ 174              		.loc 1 113 79
+ 175 000e 00BF     		nop
+ 176 0010 BD46     		mov	sp, r7
+ 177              	.LCFI6:
+ 178              		.cfi_def_cfa_register 13
+ 179              		@ sp needed
+ 180 0012 5DF8047B 		ldr	r7, [sp], #4
+ 181              	.LCFI7:
+ 182              		.cfi_restore 7
+ 183              		.cfi_def_cfa_offset 0
+ 184 0016 7047     		bx	lr
+ 185              	.L10:
+ 186              		.align	2
+ 187              	.L9:
+ 188 0018 00000000 		.word	iwdg_handle
+ 189              		.cfi_endproc
+ 190              	.LFE314:
+ 192              		.text
+ 193              	.Letext0:
+ 194              		.file 2 "../Drivers/CMSIS/Device/ST/STM32L4xx/Include/stm32l476xx.h"
+ 195              		.file 3 "/usr/lib/gcc/arm-none-eabi/10.3.1/include/stdint.h"
+ 196              		.file 4 "../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_iwdg.h"
+ 197              		.file 5 "../Drivers/CMSIS/Device/ST/STM32L4xx/Include/stm32l4xx.h"
+ARM GAS  /tmp/ccCsRmZr.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 smtc_hal_watchdog.c
+     /tmp/ccCsRmZr.s:18     .bss.iwdg_handle:0000000000000000 $d
+     /tmp/ccCsRmZr.s:21     .bss.iwdg_handle:0000000000000000 iwdg_handle
+     /tmp/ccCsRmZr.s:24     .text.hal_watchdog_init:0000000000000000 $t
+     /tmp/ccCsRmZr.s:32     .text.hal_watchdog_init:0000000000000000 hal_watchdog_init
+     /tmp/ccCsRmZr.s:142    .text.hal_watchdog_init:0000000000000084 $d
+     /tmp/ccCsRmZr.s:148    .text.hal_watchdog_reload:0000000000000000 $t
+     /tmp/ccCsRmZr.s:155    .text.hal_watchdog_reload:0000000000000000 hal_watchdog_reload
+     /tmp/ccCsRmZr.s:188    .text.hal_watchdog_reload:0000000000000018 $d
+
+NO UNDEFINED SYMBOLS

@@ -1,0 +1,1184 @@
+ARM GAS  /tmp/ccabOd7J.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"lr1110_modem_system.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.lr1110_modem_system_write_regmem32,"ax",%progbits
+  18              		.align	1
+  19              		.global	lr1110_modem_system_write_regmem32
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	lr1110_modem_system_write_regmem32:
+  27              	.LFB1:
+  28              		.file 1 "../Src/radio/lr1110_modem/src/lr1110_modem_system.c"
+   1:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** /*!
+   2:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * @file      lr1110_modem_system.c
+   3:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  *
+   4:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * @brief     System driver implementation for LR1110 modem
+   5:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  *
+   6:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * Revised BSD License
+   7:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * Copyright Semtech Corporation 2020. All rights reserved.
+   8:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  *
+   9:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * Redistribution and use in source and binary forms, with or without
+  10:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * modification, are permitted provided that the following conditions are met:
+  11:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  *     * Redistributions of source code must retain the above copyright
+  12:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  *       notice, this list of conditions and the following disclaimer.
+  13:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  *     * Redistributions in binary form must reproduce the above copyright
+  14:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  *       notice, this list of conditions and the following disclaimer in the
+  15:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  *       documentation and/or other materials provided with the distribution.
+  16:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  *     * Neither the name of the Semtech corporation nor the
+  17:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  *       names of its contributors may be used to endorse or promote products
+  18:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  *       derived from this software without specific prior written permission.
+  19:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  *
+  20:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  21:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  22:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  23:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * ARE DISCLAIMED. IN NO EVENT SHALL SEMTECH CORPORATION BE LIABLE FOR ANY
+  24:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+  25:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  26:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+  27:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  28:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  29:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  30:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  */
+ARM GAS  /tmp/ccabOd7J.s 			page 2
+
+
+  31:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+  32:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** /*
+  33:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * -----------------------------------------------------------------------------
+  34:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * --- DEPENDENCIES ------------------------------------------------------------
+  35:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  */
+  36:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** #include "lr1110_modem_system.h"
+  37:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** #include "lr1110_modem_hal.h"
+  38:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+  39:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** /*
+  40:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * -----------------------------------------------------------------------------
+  41:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * --- PRIVATE MACROS-----------------------------------------------------------
+  42:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  */
+  43:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+  44:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** /*
+  45:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * -----------------------------------------------------------------------------
+  46:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * --- PRIVATE CONSTANTS -------------------------------------------------------
+  47:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  */
+  48:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+  49:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** /*!
+  50:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * @brief Command buffer length for command Write Regmem32
+  51:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  */
+  52:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** #define LR1110_MODEM_SYSTEM_WRITE_REGMEM32_CMD_LEN ( 2 + 4 )
+  53:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+  54:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** /*!
+  55:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * @brief Command buffer length for command Read Regmem32
+  56:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  */
+  57:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** #define LR1110_MODEM_SYSTEM_READ_REGMEM32_CMD_LEN ( 2 + 4 + 1 )
+  58:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+  59:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** /*!
+  60:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * @brief Command buffer length for command System calibrate
+  61:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  */
+  62:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** #define LR1110_MODEM_SYSTEM_CALIBRATE_CMD_LEN ( 2 + 1 )
+  63:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+  64:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** /*!
+  65:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * @brief Command buffer length for command Set regulator mode
+  66:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  */
+  67:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** #define LR1110_MODEM_SYSTEM_SET_REGMODE_CMD_LENGTH ( 2 + 1 )
+  68:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+  69:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** /*!
+  70:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * @brief Command buffer length for command Set DIO as RF switch
+  71:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  */
+  72:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** #define LR1110_MODEM_SYSTEM_SET_DIO_AS_RF_SWITCH_CMD_LENGTH ( 2 + 8 )
+  73:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+  74:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** /*!
+  75:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * @brief Command buffer length for command Configuration LFCLK
+  76:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  */
+  77:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** #define LR1110_MODEM_SYSTEM_CONFIG_LFCLK_CMD_LENGTH ( 2 + 1 )
+  78:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+  79:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** /*!
+  80:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * @brief Command buffer length for command Set TCXO mode
+  81:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  */
+  82:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** #define LR1110_MODEM_SYSTEM_SET_TCXO_MODE_CMD_LENGTH ( 2 + 4 )
+  83:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+  84:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** /*!
+  85:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * @brief Command buffer length for command Reboot
+  86:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  */
+  87:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** #define LR1110_MODEM_SYSTEM_REBOOT_CMD_LENGTH ( 2 + 1 )
+ARM GAS  /tmp/ccabOd7J.s 			page 3
+
+
+  88:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+  89:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** /*!
+  90:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * @brief Size of data buffer for Write regmem32
+  91:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  */
+  92:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** #define LR1110_MODEM_SYSTEM_REGMEM_BUFFER_SIZE_MAX ( 256 )
+  93:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+  94:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** /*
+  95:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * -----------------------------------------------------------------------------
+  96:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * --- PRIVATE TYPES -----------------------------------------------------------
+  97:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  */
+  98:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+  99:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** /*!
+ 100:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * @brief Operation code for system commands
+ 101:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  */
+ 102:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** enum
+ 103:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** {
+ 104:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     LR1110_MODEM_SYSTEM_WRITE_REG_MEM_32_CMD     = 0x05,
+ 105:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     LR1110_MODEM_SYSTEM_READ_REG_MEM_32_CMD      = 0x06,
+ 106:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     LR1110_MODEM_SYSTEM_CALIBRATE_CMD            = 0x0F,
+ 107:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     LR1110_MODEM_SYSTEM_SET_REG_MODE_CMD         = 0x10,
+ 108:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     LR1110_MODEM_SYSTEM_SET_DIO_AS_RF_SWITCH_CMD = 0x12,
+ 109:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     LR1110_MODEM_SYSTEM_CONFIG_LF_CLOCK_CMD      = 0x16,
+ 110:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     LR1110_MODEM_SYSTEM_SET_TCXO_MODE_CMD        = 0x17,
+ 111:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     LR1110_MODEM_SYSTEM_REBOOT_CMD               = 0x18,
+ 112:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** };
+ 113:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 114:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** /*
+ 115:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * -----------------------------------------------------------------------------
+ 116:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * --- PRIVATE VARIABLES -------------------------------------------------------
+ 117:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  */
+ 118:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 119:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** /*
+ 120:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * -----------------------------------------------------------------------------
+ 121:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * --- PRIVATE FUNCTIONS DECLARATION -------------------------------------------
+ 122:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  */
+ 123:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 124:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** /*
+ 125:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * -----------------------------------------------------------------------------
+ 126:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  * --- PUBLIC FUNCTIONS DEFINITION ---------------------------------------------
+ 127:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****  */
+ 128:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 129:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** lr1110_modem_response_code_t lr1110_modem_system_write_regmem32( const void* context, const uint32_
+ 130:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****                                                                  const uint32_t* buffer, const uint
+ 131:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** {
+  29              		.loc 1 131 1
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 288
+  32              		@ frame_needed = 1, uses_anonymous_args = 0
+  33 0000 90B5     		push	{r4, r7, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 12
+  36              		.cfi_offset 4, -12
+  37              		.cfi_offset 7, -8
+  38              		.cfi_offset 14, -4
+  39 0002 CBB0     		sub	sp, sp, #300
+  40              	.LCFI1:
+  41              		.cfi_def_cfa_offset 312
+ARM GAS  /tmp/ccabOd7J.s 			page 4
+
+
+  42 0004 02AF     		add	r7, sp, #8
+  43              	.LCFI2:
+  44              		.cfi_def_cfa 7, 304
+  45 0006 07F59074 		add	r4, r7, #288
+  46 000a A4F58A74 		sub	r4, r4, #276
+  47 000e 2060     		str	r0, [r4]
+  48 0010 07F59070 		add	r0, r7, #288
+  49 0014 A0F58C70 		sub	r0, r0, #280
+  50 0018 0160     		str	r1, [r0]
+  51 001a 07F59071 		add	r1, r7, #288
+  52 001e A1F58E71 		sub	r1, r1, #284
+  53 0022 0A60     		str	r2, [r1]
+  54 0024 1A46     		mov	r2, r3
+  55 0026 07F59073 		add	r3, r7, #288
+  56 002a A3F21D13 		subw	r3, r3, #285
+  57 002e 1A70     		strb	r2, [r3]
+ 132:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     uint8_t cbuffer[LR1110_MODEM_SYSTEM_WRITE_REGMEM32_CMD_LEN];
+ 133:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     uint8_t cdata[LR1110_MODEM_SYSTEM_REGMEM_BUFFER_SIZE_MAX] = { 0 };
+  58              		.loc 1 133 13
+  59 0030 07F59073 		add	r3, r7, #288
+  60 0034 A3F58873 		sub	r3, r3, #272
+  61 0038 0022     		movs	r2, #0
+  62 003a 1A60     		str	r2, [r3]
+  63 003c 0433     		adds	r3, r3, #4
+  64 003e FC22     		movs	r2, #252
+  65 0040 0021     		movs	r1, #0
+  66 0042 1846     		mov	r0, r3
+  67 0044 FFF7FEFF 		bl	memset
+ 134:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 135:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[0] = LR1110_MODEM_GROUP_ID_SYSTEM;
+  68              		.loc 1 135 16
+  69 0048 0123     		movs	r3, #1
+  70 004a 87F81031 		strb	r3, [r7, #272]
+ 136:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[1] = LR1110_MODEM_SYSTEM_WRITE_REG_MEM_32_CMD;
+  71              		.loc 1 136 16
+  72 004e 0523     		movs	r3, #5
+  73 0050 87F81131 		strb	r3, [r7, #273]
+ 137:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 138:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[2] = ( uint8_t )( address >> 24 );
+  74              		.loc 1 138 39
+  75 0054 07F59073 		add	r3, r7, #288
+  76 0058 A3F58C73 		sub	r3, r3, #280
+  77 005c 1B68     		ldr	r3, [r3]
+  78 005e 1B0E     		lsrs	r3, r3, #24
+  79              		.loc 1 138 18
+  80 0060 DBB2     		uxtb	r3, r3
+  81              		.loc 1 138 16
+  82 0062 87F81231 		strb	r3, [r7, #274]
+ 139:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[3] = ( uint8_t )( address >> 16 );
+  83              		.loc 1 139 39
+  84 0066 07F59073 		add	r3, r7, #288
+  85 006a A3F58C73 		sub	r3, r3, #280
+  86 006e 1B68     		ldr	r3, [r3]
+  87 0070 1B0C     		lsrs	r3, r3, #16
+  88              		.loc 1 139 18
+  89 0072 DBB2     		uxtb	r3, r3
+  90              		.loc 1 139 16
+ARM GAS  /tmp/ccabOd7J.s 			page 5
+
+
+  91 0074 87F81331 		strb	r3, [r7, #275]
+ 140:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[4] = ( uint8_t )( address >> 8 );
+  92              		.loc 1 140 39
+  93 0078 07F59073 		add	r3, r7, #288
+  94 007c A3F58C73 		sub	r3, r3, #280
+  95 0080 1B68     		ldr	r3, [r3]
+  96 0082 1B0A     		lsrs	r3, r3, #8
+  97              		.loc 1 140 18
+  98 0084 DBB2     		uxtb	r3, r3
+  99              		.loc 1 140 16
+ 100 0086 87F81431 		strb	r3, [r7, #276]
+ 141:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[5] = ( uint8_t )( address >> 0 );
+ 101              		.loc 1 141 18
+ 102 008a 07F59073 		add	r3, r7, #288
+ 103 008e A3F58C73 		sub	r3, r3, #280
+ 104 0092 1B68     		ldr	r3, [r3]
+ 105 0094 DBB2     		uxtb	r3, r3
+ 106              		.loc 1 141 16
+ 107 0096 87F81531 		strb	r3, [r7, #277]
+ 108              	.LBB2:
+ 142:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 143:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     for( uint16_t index = 0; index < length; index++ )
+ 109              		.loc 1 143 19
+ 110 009a 0023     		movs	r3, #0
+ 111 009c A7F81E31 		strh	r3, [r7, #286]	@ movhi
+ 112              		.loc 1 143 5
+ 113 00a0 4AE0     		b	.L2
+ 114              	.L3:
+ 115              	.LBB3:
+ 144:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     {
+ 145:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****         uint8_t* cdata_local = &cdata[index * sizeof( uint32_t )];
+ 116              		.loc 1 145 45 discriminator 3
+ 117 00a2 B7F81E31 		ldrh	r3, [r7, #286]
+ 118 00a6 9B00     		lsls	r3, r3, #2
+ 119              		.loc 1 145 18 discriminator 3
+ 120 00a8 07F11002 		add	r2, r7, #16
+ 121 00ac 1344     		add	r3, r3, r2
+ 122 00ae C7F81831 		str	r3, [r7, #280]
+ 146:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 147:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****         cdata_local[0] = ( uint8_t )( buffer[index] >> 24 );
+ 123              		.loc 1 147 45 discriminator 3
+ 124 00b2 B7F81E31 		ldrh	r3, [r7, #286]
+ 125 00b6 9B00     		lsls	r3, r3, #2
+ 126 00b8 07F59072 		add	r2, r7, #288
+ 127 00bc A2F58E72 		sub	r2, r2, #284
+ 128 00c0 1268     		ldr	r2, [r2]
+ 129 00c2 1344     		add	r3, r3, r2
+ 130 00c4 1B68     		ldr	r3, [r3]
+ 131              		.loc 1 147 53 discriminator 3
+ 132 00c6 1B0E     		lsrs	r3, r3, #24
+ 133              		.loc 1 147 26 discriminator 3
+ 134 00c8 DAB2     		uxtb	r2, r3
+ 135              		.loc 1 147 24 discriminator 3
+ 136 00ca D7F81831 		ldr	r3, [r7, #280]
+ 137 00ce 1A70     		strb	r2, [r3]
+ 148:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****         cdata_local[1] = ( uint8_t )( buffer[index] >> 16 );
+ 138              		.loc 1 148 45 discriminator 3
+ARM GAS  /tmp/ccabOd7J.s 			page 6
+
+
+ 139 00d0 B7F81E31 		ldrh	r3, [r7, #286]
+ 140 00d4 9B00     		lsls	r3, r3, #2
+ 141 00d6 07F59072 		add	r2, r7, #288
+ 142 00da A2F58E72 		sub	r2, r2, #284
+ 143 00de 1268     		ldr	r2, [r2]
+ 144 00e0 1344     		add	r3, r3, r2
+ 145 00e2 1B68     		ldr	r3, [r3]
+ 146              		.loc 1 148 53 discriminator 3
+ 147 00e4 1A0C     		lsrs	r2, r3, #16
+ 148              		.loc 1 148 20 discriminator 3
+ 149 00e6 D7F81831 		ldr	r3, [r7, #280]
+ 150 00ea 0133     		adds	r3, r3, #1
+ 151              		.loc 1 148 26 discriminator 3
+ 152 00ec D2B2     		uxtb	r2, r2
+ 153              		.loc 1 148 24 discriminator 3
+ 154 00ee 1A70     		strb	r2, [r3]
+ 149:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****         cdata_local[2] = ( uint8_t )( buffer[index] >> 8 );
+ 155              		.loc 1 149 45 discriminator 3
+ 156 00f0 B7F81E31 		ldrh	r3, [r7, #286]
+ 157 00f4 9B00     		lsls	r3, r3, #2
+ 158 00f6 07F59072 		add	r2, r7, #288
+ 159 00fa A2F58E72 		sub	r2, r2, #284
+ 160 00fe 1268     		ldr	r2, [r2]
+ 161 0100 1344     		add	r3, r3, r2
+ 162 0102 1B68     		ldr	r3, [r3]
+ 163              		.loc 1 149 53 discriminator 3
+ 164 0104 1A0A     		lsrs	r2, r3, #8
+ 165              		.loc 1 149 20 discriminator 3
+ 166 0106 D7F81831 		ldr	r3, [r7, #280]
+ 167 010a 0233     		adds	r3, r3, #2
+ 168              		.loc 1 149 26 discriminator 3
+ 169 010c D2B2     		uxtb	r2, r2
+ 170              		.loc 1 149 24 discriminator 3
+ 171 010e 1A70     		strb	r2, [r3]
+ 150:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****         cdata_local[3] = ( uint8_t )( buffer[index] >> 0 );
+ 172              		.loc 1 150 45 discriminator 3
+ 173 0110 B7F81E31 		ldrh	r3, [r7, #286]
+ 174 0114 9B00     		lsls	r3, r3, #2
+ 175 0116 07F59072 		add	r2, r7, #288
+ 176 011a A2F58E72 		sub	r2, r2, #284
+ 177 011e 1268     		ldr	r2, [r2]
+ 178 0120 1344     		add	r3, r3, r2
+ 179 0122 1A68     		ldr	r2, [r3]
+ 180              		.loc 1 150 20 discriminator 3
+ 181 0124 D7F81831 		ldr	r3, [r7, #280]
+ 182 0128 0333     		adds	r3, r3, #3
+ 183              		.loc 1 150 26 discriminator 3
+ 184 012a D2B2     		uxtb	r2, r2
+ 185              		.loc 1 150 24 discriminator 3
+ 186 012c 1A70     		strb	r2, [r3]
+ 187              	.LBE3:
+ 143:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     {
+ 188              		.loc 1 143 51 discriminator 3
+ 189 012e B7F81E31 		ldrh	r3, [r7, #286]
+ 190 0132 0133     		adds	r3, r3, #1
+ 191 0134 A7F81E31 		strh	r3, [r7, #286]	@ movhi
+ 192              	.L2:
+ARM GAS  /tmp/ccabOd7J.s 			page 7
+
+
+ 143:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     {
+ 193              		.loc 1 143 36 discriminator 1
+ 194 0138 07F59073 		add	r3, r7, #288
+ 195 013c A3F21D13 		subw	r3, r3, #285
+ 196 0140 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 197 0142 9BB2     		uxth	r3, r3
+ 143:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     {
+ 198              		.loc 1 143 5 discriminator 1
+ 199 0144 B7F81E21 		ldrh	r2, [r7, #286]
+ 200 0148 9A42     		cmp	r2, r3
+ 201 014a AAD3     		bcc	.L3
+ 202              	.LBE2:
+ 151:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     }
+ 152:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 153:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     return ( lr1110_modem_response_code_t ) lr1110_modem_hal_write(
+ 203              		.loc 1 153 45
+ 204 014c 07F59073 		add	r3, r7, #288
+ 205 0150 A3F21D13 		subw	r3, r3, #285
+ 206 0154 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 207 0156 9BB2     		uxth	r3, r3
+ 208 0158 9B00     		lsls	r3, r3, #2
+ 209 015a 9BB2     		uxth	r3, r3
+ 210 015c 07F11002 		add	r2, r7, #16
+ 211 0160 07F58871 		add	r1, r7, #272
+ 212 0164 07F59070 		add	r0, r7, #288
+ 213 0168 A0F58A70 		sub	r0, r0, #276
+ 214 016c 0093     		str	r3, [sp]
+ 215 016e 1346     		mov	r3, r2
+ 216 0170 0622     		movs	r2, #6
+ 217 0172 0068     		ldr	r0, [r0]
+ 218 0174 FFF7FEFF 		bl	lr1110_modem_hal_write
+ 219 0178 0346     		mov	r3, r0
+ 154:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****         context, cbuffer, LR1110_MODEM_SYSTEM_WRITE_REGMEM32_CMD_LEN, cdata, length * sizeof( uint3
+ 155:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** }
+ 220              		.loc 1 155 1
+ 221 017a 1846     		mov	r0, r3
+ 222 017c 07F59277 		add	r7, r7, #292
+ 223              	.LCFI3:
+ 224              		.cfi_def_cfa_offset 12
+ 225 0180 BD46     		mov	sp, r7
+ 226              	.LCFI4:
+ 227              		.cfi_def_cfa_register 13
+ 228              		@ sp needed
+ 229 0182 90BD     		pop	{r4, r7, pc}
+ 230              		.cfi_endproc
+ 231              	.LFE1:
+ 233              		.section	.text.lr1110_modem_system_read_regmem32,"ax",%progbits
+ 234              		.align	1
+ 235              		.global	lr1110_modem_system_read_regmem32
+ 236              		.syntax unified
+ 237              		.thumb
+ 238              		.thumb_func
+ 239              		.fpu fpv4-sp-d16
+ 241              	lr1110_modem_system_read_regmem32:
+ 242              	.LFB2:
+ 156:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 157:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** lr1110_modem_response_code_t lr1110_modem_system_read_regmem32( const void* context, const uint32_t
+ARM GAS  /tmp/ccabOd7J.s 			page 8
+
+
+ 158:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****                                                                 uint32_t* buffer, const uint8_t len
+ 159:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** {
+ 243              		.loc 1 159 1
+ 244              		.cfi_startproc
+ 245              		@ args = 0, pretend = 0, frame = 32
+ 246              		@ frame_needed = 1, uses_anonymous_args = 0
+ 247 0000 80B5     		push	{r7, lr}
+ 248              	.LCFI5:
+ 249              		.cfi_def_cfa_offset 8
+ 250              		.cfi_offset 7, -8
+ 251              		.cfi_offset 14, -4
+ 252 0002 8AB0     		sub	sp, sp, #40
+ 253              	.LCFI6:
+ 254              		.cfi_def_cfa_offset 48
+ 255 0004 02AF     		add	r7, sp, #8
+ 256              	.LCFI7:
+ 257              		.cfi_def_cfa 7, 40
+ 258 0006 F860     		str	r0, [r7, #12]
+ 259 0008 B960     		str	r1, [r7, #8]
+ 260 000a 7A60     		str	r2, [r7, #4]
+ 261 000c FB70     		strb	r3, [r7, #3]
+ 160:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     uint8_t                      cbuffer[LR1110_MODEM_SYSTEM_READ_REGMEM32_CMD_LEN];
+ 161:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     lr1110_modem_response_code_t rc;
+ 162:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 163:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[0] = LR1110_MODEM_GROUP_ID_SYSTEM;
+ 262              		.loc 1 163 16
+ 263 000e 0123     		movs	r3, #1
+ 264 0010 3B74     		strb	r3, [r7, #16]
+ 164:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[1] = LR1110_MODEM_SYSTEM_READ_REG_MEM_32_CMD;
+ 265              		.loc 1 164 16
+ 266 0012 0623     		movs	r3, #6
+ 267 0014 7B74     		strb	r3, [r7, #17]
+ 165:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 166:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[2] = ( uint8_t )( address >> 24 );
+ 268              		.loc 1 166 39
+ 269 0016 BB68     		ldr	r3, [r7, #8]
+ 270 0018 1B0E     		lsrs	r3, r3, #24
+ 271              		.loc 1 166 18
+ 272 001a DBB2     		uxtb	r3, r3
+ 273              		.loc 1 166 16
+ 274 001c BB74     		strb	r3, [r7, #18]
+ 167:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[3] = ( uint8_t )( address >> 16 );
+ 275              		.loc 1 167 39
+ 276 001e BB68     		ldr	r3, [r7, #8]
+ 277 0020 1B0C     		lsrs	r3, r3, #16
+ 278              		.loc 1 167 18
+ 279 0022 DBB2     		uxtb	r3, r3
+ 280              		.loc 1 167 16
+ 281 0024 FB74     		strb	r3, [r7, #19]
+ 168:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[4] = ( uint8_t )( address >> 8 );
+ 282              		.loc 1 168 39
+ 283 0026 BB68     		ldr	r3, [r7, #8]
+ 284 0028 1B0A     		lsrs	r3, r3, #8
+ 285              		.loc 1 168 18
+ 286 002a DBB2     		uxtb	r3, r3
+ 287              		.loc 1 168 16
+ 288 002c 3B75     		strb	r3, [r7, #20]
+ARM GAS  /tmp/ccabOd7J.s 			page 9
+
+
+ 169:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[5] = ( uint8_t )( address >> 0 );
+ 289              		.loc 1 169 18
+ 290 002e BB68     		ldr	r3, [r7, #8]
+ 291 0030 DBB2     		uxtb	r3, r3
+ 292              		.loc 1 169 16
+ 293 0032 7B75     		strb	r3, [r7, #21]
+ 170:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 171:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[6] = length;
+ 294              		.loc 1 171 16
+ 295 0034 FB78     		ldrb	r3, [r7, #3]
+ 296 0036 BB75     		strb	r3, [r7, #22]
+ 172:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 173:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     rc = ( lr1110_modem_response_code_t ) lr1110_modem_hal_read(
+ 297              		.loc 1 173 43
+ 298 0038 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 299 003a 9BB2     		uxth	r3, r3
+ 300 003c 9B00     		lsls	r3, r3, #2
+ 301 003e 9BB2     		uxth	r3, r3
+ 302 0040 07F11001 		add	r1, r7, #16
+ 303 0044 0093     		str	r3, [sp]
+ 304 0046 7B68     		ldr	r3, [r7, #4]
+ 305 0048 0722     		movs	r2, #7
+ 306 004a F868     		ldr	r0, [r7, #12]
+ 307 004c FFF7FEFF 		bl	lr1110_modem_hal_read
+ 308 0050 0346     		mov	r3, r0
+ 309 0052 BB77     		strb	r3, [r7, #30]
+ 310              	.LBB4:
+ 174:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****         context, cbuffer, LR1110_MODEM_SYSTEM_READ_REGMEM32_CMD_LEN, ( uint8_t* ) buffer, length * 
+ 175:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 176:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     for( uint8_t index = 0; index < length; index++ )
+ 311              		.loc 1 176 18
+ 312 0054 0023     		movs	r3, #0
+ 313 0056 FB77     		strb	r3, [r7, #31]
+ 314              		.loc 1 176 5
+ 315 0058 1EE0     		b	.L6
+ 316              	.L7:
+ 317              	.LBB5:
+ 177:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     {
+ 178:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****         uint8_t* buffer_local = ( uint8_t* ) &buffer[index];
+ 318              		.loc 1 178 53 discriminator 3
+ 319 005a FB7F     		ldrb	r3, [r7, #31]	@ zero_extendqisi2
+ 320 005c 9B00     		lsls	r3, r3, #2
+ 321              		.loc 1 178 18 discriminator 3
+ 322 005e 7A68     		ldr	r2, [r7, #4]
+ 323 0060 1344     		add	r3, r3, r2
+ 324 0062 BB61     		str	r3, [r7, #24]
+ 179:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 180:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****         buffer[index] = ( ( uint32_t ) buffer_local[0] << 24 ) + ( ( uint32_t ) buffer_local[1] << 
+ 325              		.loc 1 180 52 discriminator 3
+ 326 0064 BB69     		ldr	r3, [r7, #24]
+ 327 0066 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 328              		.loc 1 180 56 discriminator 3
+ 329 0068 1A06     		lsls	r2, r3, #24
+ 330              		.loc 1 180 93 discriminator 3
+ 331 006a BB69     		ldr	r3, [r7, #24]
+ 332 006c 0133     		adds	r3, r3, #1
+ 333 006e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ARM GAS  /tmp/ccabOd7J.s 			page 10
+
+
+ 334              		.loc 1 180 97 discriminator 3
+ 335 0070 1B04     		lsls	r3, r3, #16
+ 336              		.loc 1 180 64 discriminator 3
+ 337 0072 1A44     		add	r2, r2, r3
+ 181:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****                         ( ( uint32_t ) buffer_local[2] << 8 ) + ( ( uint32_t ) buffer_local[3] << 0
+ 338              		.loc 1 181 52 discriminator 3
+ 339 0074 BB69     		ldr	r3, [r7, #24]
+ 340 0076 0233     		adds	r3, r3, #2
+ 341 0078 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 342              		.loc 1 181 56 discriminator 3
+ 343 007a 1B02     		lsls	r3, r3, #8
+ 180:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****                         ( ( uint32_t ) buffer_local[2] << 8 ) + ( ( uint32_t ) buffer_local[3] << 0
+ 344              		.loc 1 180 105 discriminator 3
+ 345 007c 1A44     		add	r2, r2, r3
+ 346              		.loc 1 181 92 discriminator 3
+ 347 007e BB69     		ldr	r3, [r7, #24]
+ 348 0080 0333     		adds	r3, r3, #3
+ 349 0082 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 350              		.loc 1 181 96 discriminator 3
+ 351 0084 1846     		mov	r0, r3
+ 180:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****                         ( ( uint32_t ) buffer_local[2] << 8 ) + ( ( uint32_t ) buffer_local[3] << 0
+ 352              		.loc 1 180 15 discriminator 3
+ 353 0086 FB7F     		ldrb	r3, [r7, #31]	@ zero_extendqisi2
+ 354 0088 9B00     		lsls	r3, r3, #2
+ 355 008a 7968     		ldr	r1, [r7, #4]
+ 356 008c 0B44     		add	r3, r3, r1
+ 357              		.loc 1 181 63 discriminator 3
+ 358 008e 0244     		add	r2, r2, r0
+ 180:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****                         ( ( uint32_t ) buffer_local[2] << 8 ) + ( ( uint32_t ) buffer_local[3] << 0
+ 359              		.loc 1 180 23 discriminator 3
+ 360 0090 1A60     		str	r2, [r3]
+ 361              	.LBE5:
+ 176:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     {
+ 362              		.loc 1 176 50 discriminator 3
+ 363 0092 FB7F     		ldrb	r3, [r7, #31]	@ zero_extendqisi2
+ 364 0094 0133     		adds	r3, r3, #1
+ 365 0096 FB77     		strb	r3, [r7, #31]
+ 366              	.L6:
+ 176:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     {
+ 367              		.loc 1 176 5 discriminator 1
+ 368 0098 FA7F     		ldrb	r2, [r7, #31]	@ zero_extendqisi2
+ 369 009a FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 370 009c 9A42     		cmp	r2, r3
+ 371 009e DCD3     		bcc	.L7
+ 372              	.LBE4:
+ 182:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     }
+ 183:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 184:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     return rc;
+ 373              		.loc 1 184 12
+ 374 00a0 BB7F     		ldrb	r3, [r7, #30]	@ zero_extendqisi2
+ 185:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** }
+ 375              		.loc 1 185 1
+ 376 00a2 1846     		mov	r0, r3
+ 377 00a4 2037     		adds	r7, r7, #32
+ 378              	.LCFI8:
+ 379              		.cfi_def_cfa_offset 8
+ 380 00a6 BD46     		mov	sp, r7
+ARM GAS  /tmp/ccabOd7J.s 			page 11
+
+
+ 381              	.LCFI9:
+ 382              		.cfi_def_cfa_register 13
+ 383              		@ sp needed
+ 384 00a8 80BD     		pop	{r7, pc}
+ 385              		.cfi_endproc
+ 386              	.LFE2:
+ 388              		.section	.text.lr1110_modem_system_calibrate,"ax",%progbits
+ 389              		.align	1
+ 390              		.global	lr1110_modem_system_calibrate
+ 391              		.syntax unified
+ 392              		.thumb
+ 393              		.thumb_func
+ 394              		.fpu fpv4-sp-d16
+ 396              	lr1110_modem_system_calibrate:
+ 397              	.LFB3:
+ 186:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 187:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** lr1110_modem_response_code_t lr1110_modem_system_calibrate( const void* context, const uint8_t cali
+ 188:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** {
+ 398              		.loc 1 188 1
+ 399              		.cfi_startproc
+ 400              		@ args = 0, pretend = 0, frame = 16
+ 401              		@ frame_needed = 1, uses_anonymous_args = 0
+ 402 0000 80B5     		push	{r7, lr}
+ 403              	.LCFI10:
+ 404              		.cfi_def_cfa_offset 8
+ 405              		.cfi_offset 7, -8
+ 406              		.cfi_offset 14, -4
+ 407 0002 86B0     		sub	sp, sp, #24
+ 408              	.LCFI11:
+ 409              		.cfi_def_cfa_offset 32
+ 410 0004 02AF     		add	r7, sp, #8
+ 411              	.LCFI12:
+ 412              		.cfi_def_cfa 7, 24
+ 413 0006 7860     		str	r0, [r7, #4]
+ 414 0008 0B46     		mov	r3, r1
+ 415 000a FB70     		strb	r3, [r7, #3]
+ 189:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     uint8_t cbuffer[LR1110_MODEM_SYSTEM_CALIBRATE_CMD_LEN];
+ 190:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 191:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[0] = LR1110_MODEM_GROUP_ID_SYSTEM;
+ 416              		.loc 1 191 16
+ 417 000c 0123     		movs	r3, #1
+ 418 000e 3B73     		strb	r3, [r7, #12]
+ 192:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[1] = LR1110_MODEM_SYSTEM_CALIBRATE_CMD;
+ 419              		.loc 1 192 16
+ 420 0010 0F23     		movs	r3, #15
+ 421 0012 7B73     		strb	r3, [r7, #13]
+ 193:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 194:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[2] = calib_param;
+ 422              		.loc 1 194 16
+ 423 0014 FB78     		ldrb	r3, [r7, #3]
+ 424 0016 BB73     		strb	r3, [r7, #14]
+ 195:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 196:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     return ( lr1110_modem_response_code_t ) lr1110_modem_hal_write( context, cbuffer,
+ 425              		.loc 1 196 45
+ 426 0018 07F10C01 		add	r1, r7, #12
+ 427 001c 0023     		movs	r3, #0
+ 428 001e 0093     		str	r3, [sp]
+ARM GAS  /tmp/ccabOd7J.s 			page 12
+
+
+ 429 0020 0023     		movs	r3, #0
+ 430 0022 0322     		movs	r2, #3
+ 431 0024 7868     		ldr	r0, [r7, #4]
+ 432 0026 FFF7FEFF 		bl	lr1110_modem_hal_write
+ 433 002a 0346     		mov	r3, r0
+ 197:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****                                                                     LR1110_MODEM_SYSTEM_CALIBRATE_C
+ 198:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** }
+ 434              		.loc 1 198 1
+ 435 002c 1846     		mov	r0, r3
+ 436 002e 1037     		adds	r7, r7, #16
+ 437              	.LCFI13:
+ 438              		.cfi_def_cfa_offset 8
+ 439 0030 BD46     		mov	sp, r7
+ 440              	.LCFI14:
+ 441              		.cfi_def_cfa_register 13
+ 442              		@ sp needed
+ 443 0032 80BD     		pop	{r7, pc}
+ 444              		.cfi_endproc
+ 445              	.LFE3:
+ 447              		.section	.text.lr1110_modem_system_set_reg_mode,"ax",%progbits
+ 448              		.align	1
+ 449              		.global	lr1110_modem_system_set_reg_mode
+ 450              		.syntax unified
+ 451              		.thumb
+ 452              		.thumb_func
+ 453              		.fpu fpv4-sp-d16
+ 455              	lr1110_modem_system_set_reg_mode:
+ 456              	.LFB4:
+ 199:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 200:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** lr1110_modem_response_code_t lr1110_modem_system_set_reg_mode( const void*                         
+ 201:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****                                                                const lr1110_modem_system_reg_mode_t
+ 202:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** {
+ 457              		.loc 1 202 1
+ 458              		.cfi_startproc
+ 459              		@ args = 0, pretend = 0, frame = 16
+ 460              		@ frame_needed = 1, uses_anonymous_args = 0
+ 461 0000 80B5     		push	{r7, lr}
+ 462              	.LCFI15:
+ 463              		.cfi_def_cfa_offset 8
+ 464              		.cfi_offset 7, -8
+ 465              		.cfi_offset 14, -4
+ 466 0002 86B0     		sub	sp, sp, #24
+ 467              	.LCFI16:
+ 468              		.cfi_def_cfa_offset 32
+ 469 0004 02AF     		add	r7, sp, #8
+ 470              	.LCFI17:
+ 471              		.cfi_def_cfa 7, 24
+ 472 0006 7860     		str	r0, [r7, #4]
+ 473 0008 0B46     		mov	r3, r1
+ 474 000a FB70     		strb	r3, [r7, #3]
+ 203:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     uint8_t cbuffer[LR1110_MODEM_SYSTEM_SET_REGMODE_CMD_LENGTH];
+ 204:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 205:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[0] = LR1110_MODEM_GROUP_ID_SYSTEM;
+ 475              		.loc 1 205 16
+ 476 000c 0123     		movs	r3, #1
+ 477 000e 3B73     		strb	r3, [r7, #12]
+ 206:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[1] = LR1110_MODEM_SYSTEM_SET_REG_MODE_CMD;
+ARM GAS  /tmp/ccabOd7J.s 			page 13
+
+
+ 478              		.loc 1 206 16
+ 479 0010 1023     		movs	r3, #16
+ 480 0012 7B73     		strb	r3, [r7, #13]
+ 207:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 208:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[2] = ( uint8_t ) reg_mode;
+ 481              		.loc 1 208 16
+ 482 0014 FB78     		ldrb	r3, [r7, #3]
+ 483 0016 BB73     		strb	r3, [r7, #14]
+ 209:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 210:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     return ( lr1110_modem_response_code_t ) lr1110_modem_hal_write( context, cbuffer,
+ 484              		.loc 1 210 45
+ 485 0018 07F10C01 		add	r1, r7, #12
+ 486 001c 0023     		movs	r3, #0
+ 487 001e 0093     		str	r3, [sp]
+ 488 0020 0023     		movs	r3, #0
+ 489 0022 0322     		movs	r2, #3
+ 490 0024 7868     		ldr	r0, [r7, #4]
+ 491 0026 FFF7FEFF 		bl	lr1110_modem_hal_write
+ 492 002a 0346     		mov	r3, r0
+ 211:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****                                                                     LR1110_MODEM_SYSTEM_SET_REGMODE
+ 212:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** }
+ 493              		.loc 1 212 1
+ 494 002c 1846     		mov	r0, r3
+ 495 002e 1037     		adds	r7, r7, #16
+ 496              	.LCFI18:
+ 497              		.cfi_def_cfa_offset 8
+ 498 0030 BD46     		mov	sp, r7
+ 499              	.LCFI19:
+ 500              		.cfi_def_cfa_register 13
+ 501              		@ sp needed
+ 502 0032 80BD     		pop	{r7, pc}
+ 503              		.cfi_endproc
+ 504              	.LFE4:
+ 506              		.section	.text.lr1110_modem_system_set_dio_as_rf_switch,"ax",%progbits
+ 507              		.align	1
+ 508              		.global	lr1110_modem_system_set_dio_as_rf_switch
+ 509              		.syntax unified
+ 510              		.thumb
+ 511              		.thumb_func
+ 512              		.fpu fpv4-sp-d16
+ 514              	lr1110_modem_system_set_dio_as_rf_switch:
+ 515              	.LFB5:
+ 213:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 214:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** lr1110_modem_response_code_t lr1110_modem_system_set_dio_as_rf_switch(
+ 215:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     const void* context, const lr1110_modem_system_rf_switch_cfg_t* rf_switch_cfg )
+ 216:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** {
+ 516              		.loc 1 216 1
+ 517              		.cfi_startproc
+ 518              		@ args = 0, pretend = 0, frame = 24
+ 519              		@ frame_needed = 1, uses_anonymous_args = 0
+ 520 0000 80B5     		push	{r7, lr}
+ 521              	.LCFI20:
+ 522              		.cfi_def_cfa_offset 8
+ 523              		.cfi_offset 7, -8
+ 524              		.cfi_offset 14, -4
+ 525 0002 88B0     		sub	sp, sp, #32
+ 526              	.LCFI21:
+ARM GAS  /tmp/ccabOd7J.s 			page 14
+
+
+ 527              		.cfi_def_cfa_offset 40
+ 528 0004 02AF     		add	r7, sp, #8
+ 529              	.LCFI22:
+ 530              		.cfi_def_cfa 7, 32
+ 531 0006 7860     		str	r0, [r7, #4]
+ 532 0008 3960     		str	r1, [r7]
+ 217:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     uint8_t cbuffer[LR1110_MODEM_SYSTEM_SET_DIO_AS_RF_SWITCH_CMD_LENGTH];
+ 218:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 219:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[0] = LR1110_MODEM_GROUP_ID_SYSTEM;
+ 533              		.loc 1 219 16
+ 534 000a 0123     		movs	r3, #1
+ 535 000c 3B73     		strb	r3, [r7, #12]
+ 220:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[1] = LR1110_MODEM_SYSTEM_SET_DIO_AS_RF_SWITCH_CMD;
+ 536              		.loc 1 220 16
+ 537 000e 1223     		movs	r3, #18
+ 538 0010 7B73     		strb	r3, [r7, #13]
+ 221:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 222:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[2] = rf_switch_cfg->enable;
+ 539              		.loc 1 222 31
+ 540 0012 3B68     		ldr	r3, [r7]
+ 541 0014 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 542              		.loc 1 222 16
+ 543 0016 BB73     		strb	r3, [r7, #14]
+ 223:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[3] = rf_switch_cfg->standby;
+ 544              		.loc 1 223 31
+ 545 0018 3B68     		ldr	r3, [r7]
+ 546 001a 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 547              		.loc 1 223 16
+ 548 001c FB73     		strb	r3, [r7, #15]
+ 224:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[4] = rf_switch_cfg->rx;
+ 549              		.loc 1 224 31
+ 550 001e 3B68     		ldr	r3, [r7]
+ 551 0020 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+ 552              		.loc 1 224 16
+ 553 0022 3B74     		strb	r3, [r7, #16]
+ 225:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[5] = rf_switch_cfg->tx;
+ 554              		.loc 1 225 31
+ 555 0024 3B68     		ldr	r3, [r7]
+ 556 0026 DB78     		ldrb	r3, [r3, #3]	@ zero_extendqisi2
+ 557              		.loc 1 225 16
+ 558 0028 7B74     		strb	r3, [r7, #17]
+ 226:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[6] = rf_switch_cfg->tx_hp;
+ 559              		.loc 1 226 31
+ 560 002a 3B68     		ldr	r3, [r7]
+ 561 002c 1B79     		ldrb	r3, [r3, #4]	@ zero_extendqisi2
+ 562              		.loc 1 226 16
+ 563 002e BB74     		strb	r3, [r7, #18]
+ 227:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[7] = rf_switch_cfg->tx_hf;
+ 564              		.loc 1 227 31
+ 565 0030 3B68     		ldr	r3, [r7]
+ 566 0032 5B79     		ldrb	r3, [r3, #5]	@ zero_extendqisi2
+ 567              		.loc 1 227 16
+ 568 0034 FB74     		strb	r3, [r7, #19]
+ 228:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[8] = rf_switch_cfg->gnss;
+ 569              		.loc 1 228 31
+ 570 0036 3B68     		ldr	r3, [r7]
+ 571 0038 9B79     		ldrb	r3, [r3, #6]	@ zero_extendqisi2
+ARM GAS  /tmp/ccabOd7J.s 			page 15
+
+
+ 572              		.loc 1 228 16
+ 573 003a 3B75     		strb	r3, [r7, #20]
+ 229:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[9] = rf_switch_cfg->wifi;
+ 574              		.loc 1 229 31
+ 575 003c 3B68     		ldr	r3, [r7]
+ 576 003e DB79     		ldrb	r3, [r3, #7]	@ zero_extendqisi2
+ 577              		.loc 1 229 16
+ 578 0040 7B75     		strb	r3, [r7, #21]
+ 230:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 231:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     return ( lr1110_modem_response_code_t ) lr1110_modem_hal_write(
+ 579              		.loc 1 231 45
+ 580 0042 07F10C01 		add	r1, r7, #12
+ 581 0046 0023     		movs	r3, #0
+ 582 0048 0093     		str	r3, [sp]
+ 583 004a 0023     		movs	r3, #0
+ 584 004c 0A22     		movs	r2, #10
+ 585 004e 7868     		ldr	r0, [r7, #4]
+ 586 0050 FFF7FEFF 		bl	lr1110_modem_hal_write
+ 587 0054 0346     		mov	r3, r0
+ 232:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****         context, cbuffer, LR1110_MODEM_SYSTEM_SET_DIO_AS_RF_SWITCH_CMD_LENGTH, 0, 0 );
+ 233:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** }
+ 588              		.loc 1 233 1
+ 589 0056 1846     		mov	r0, r3
+ 590 0058 1837     		adds	r7, r7, #24
+ 591              	.LCFI23:
+ 592              		.cfi_def_cfa_offset 8
+ 593 005a BD46     		mov	sp, r7
+ 594              	.LCFI24:
+ 595              		.cfi_def_cfa_register 13
+ 596              		@ sp needed
+ 597 005c 80BD     		pop	{r7, pc}
+ 598              		.cfi_endproc
+ 599              	.LFE5:
+ 601              		.section	.text.lr1110_modem_system_cfg_lfclk,"ax",%progbits
+ 602              		.align	1
+ 603              		.global	lr1110_modem_system_cfg_lfclk
+ 604              		.syntax unified
+ 605              		.thumb
+ 606              		.thumb_func
+ 607              		.fpu fpv4-sp-d16
+ 609              	lr1110_modem_system_cfg_lfclk:
+ 610              	.LFB6:
+ 234:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 235:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** lr1110_modem_response_code_t lr1110_modem_system_cfg_lfclk( const void*                           c
+ 236:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****                                                             const lr1110_modem_system_lfclk_cfg_t l
+ 237:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****                                                             const bool                            w
+ 238:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** {
+ 611              		.loc 1 238 1
+ 612              		.cfi_startproc
+ 613              		@ args = 0, pretend = 0, frame = 16
+ 614              		@ frame_needed = 1, uses_anonymous_args = 0
+ 615 0000 80B5     		push	{r7, lr}
+ 616              	.LCFI25:
+ 617              		.cfi_def_cfa_offset 8
+ 618              		.cfi_offset 7, -8
+ 619              		.cfi_offset 14, -4
+ 620 0002 86B0     		sub	sp, sp, #24
+ARM GAS  /tmp/ccabOd7J.s 			page 16
+
+
+ 621              	.LCFI26:
+ 622              		.cfi_def_cfa_offset 32
+ 623 0004 02AF     		add	r7, sp, #8
+ 624              	.LCFI27:
+ 625              		.cfi_def_cfa 7, 24
+ 626 0006 7860     		str	r0, [r7, #4]
+ 627 0008 0B46     		mov	r3, r1
+ 628 000a FB70     		strb	r3, [r7, #3]
+ 629 000c 1346     		mov	r3, r2
+ 630 000e BB70     		strb	r3, [r7, #2]
+ 239:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     uint8_t cbuffer[LR1110_MODEM_SYSTEM_CONFIG_LFCLK_CMD_LENGTH];
+ 240:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     uint8_t config = lfclock_cfg | ( wait_for_32k_ready << 2 );
+ 631              		.loc 1 240 57
+ 632 0010 BB78     		ldrb	r3, [r7, #2]	@ zero_extendqisi2
+ 633 0012 9B00     		lsls	r3, r3, #2
+ 634              		.loc 1 240 34
+ 635 0014 5AB2     		sxtb	r2, r3
+ 636 0016 97F90330 		ldrsb	r3, [r7, #3]
+ 637 001a 1343     		orrs	r3, r3, r2
+ 638 001c 5BB2     		sxtb	r3, r3
+ 639              		.loc 1 240 13
+ 640 001e FB73     		strb	r3, [r7, #15]
+ 241:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 242:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[0] = LR1110_MODEM_GROUP_ID_SYSTEM;
+ 641              		.loc 1 242 16
+ 642 0020 0123     		movs	r3, #1
+ 643 0022 3B73     		strb	r3, [r7, #12]
+ 243:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[1] = LR1110_MODEM_SYSTEM_CONFIG_LF_CLOCK_CMD;
+ 644              		.loc 1 243 16
+ 645 0024 1623     		movs	r3, #22
+ 646 0026 7B73     		strb	r3, [r7, #13]
+ 244:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 245:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[2] = config;
+ 647              		.loc 1 245 16
+ 648 0028 FB7B     		ldrb	r3, [r7, #15]
+ 649 002a BB73     		strb	r3, [r7, #14]
+ 246:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 247:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     return ( lr1110_modem_response_code_t ) lr1110_modem_hal_write( context, cbuffer,
+ 650              		.loc 1 247 45
+ 651 002c 07F10C01 		add	r1, r7, #12
+ 652 0030 0023     		movs	r3, #0
+ 653 0032 0093     		str	r3, [sp]
+ 654 0034 0023     		movs	r3, #0
+ 655 0036 0322     		movs	r2, #3
+ 656 0038 7868     		ldr	r0, [r7, #4]
+ 657 003a FFF7FEFF 		bl	lr1110_modem_hal_write
+ 658 003e 0346     		mov	r3, r0
+ 248:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****                                                                     LR1110_MODEM_SYSTEM_CONFIG_LFCL
+ 249:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** }
+ 659              		.loc 1 249 1
+ 660 0040 1846     		mov	r0, r3
+ 661 0042 1037     		adds	r7, r7, #16
+ 662              	.LCFI28:
+ 663              		.cfi_def_cfa_offset 8
+ 664 0044 BD46     		mov	sp, r7
+ 665              	.LCFI29:
+ 666              		.cfi_def_cfa_register 13
+ARM GAS  /tmp/ccabOd7J.s 			page 17
+
+
+ 667              		@ sp needed
+ 668 0046 80BD     		pop	{r7, pc}
+ 669              		.cfi_endproc
+ 670              	.LFE6:
+ 672              		.section	.text.lr1110_modem_system_set_tcxo_mode,"ax",%progbits
+ 673              		.align	1
+ 674              		.global	lr1110_modem_system_set_tcxo_mode
+ 675              		.syntax unified
+ 676              		.thumb
+ 677              		.thumb_func
+ 678              		.fpu fpv4-sp-d16
+ 680              	lr1110_modem_system_set_tcxo_mode:
+ 681              	.LFB7:
+ 250:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 251:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** lr1110_modem_response_code_t lr1110_modem_system_set_tcxo_mode( const void*                        
+ 252:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****                                                                 const lr1110_modem_system_tcxo_supp
+ 253:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****                                                                 const uint32_t timeout )
+ 254:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** {
+ 682              		.loc 1 254 1
+ 683              		.cfi_startproc
+ 684              		@ args = 0, pretend = 0, frame = 24
+ 685              		@ frame_needed = 1, uses_anonymous_args = 0
+ 686 0000 80B5     		push	{r7, lr}
+ 687              	.LCFI30:
+ 688              		.cfi_def_cfa_offset 8
+ 689              		.cfi_offset 7, -8
+ 690              		.cfi_offset 14, -4
+ 691 0002 88B0     		sub	sp, sp, #32
+ 692              	.LCFI31:
+ 693              		.cfi_def_cfa_offset 40
+ 694 0004 02AF     		add	r7, sp, #8
+ 695              	.LCFI32:
+ 696              		.cfi_def_cfa 7, 32
+ 697 0006 F860     		str	r0, [r7, #12]
+ 698 0008 0B46     		mov	r3, r1
+ 699 000a 7A60     		str	r2, [r7, #4]
+ 700 000c FB72     		strb	r3, [r7, #11]
+ 255:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     uint8_t cbuffer[LR1110_MODEM_SYSTEM_SET_TCXO_MODE_CMD_LENGTH];
+ 256:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 257:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[0] = LR1110_MODEM_GROUP_ID_SYSTEM;
+ 701              		.loc 1 257 16
+ 702 000e 0123     		movs	r3, #1
+ 703 0010 3B74     		strb	r3, [r7, #16]
+ 258:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[1] = LR1110_MODEM_SYSTEM_SET_TCXO_MODE_CMD;
+ 704              		.loc 1 258 16
+ 705 0012 1723     		movs	r3, #23
+ 706 0014 7B74     		strb	r3, [r7, #17]
+ 259:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 260:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[2] = ( uint8_t ) tune;
+ 707              		.loc 1 260 16
+ 708 0016 FB7A     		ldrb	r3, [r7, #11]
+ 709 0018 BB74     		strb	r3, [r7, #18]
+ 261:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 262:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[3] = ( uint8_t )( timeout >> 16 );
+ 710              		.loc 1 262 39
+ 711 001a 7B68     		ldr	r3, [r7, #4]
+ 712 001c 1B0C     		lsrs	r3, r3, #16
+ARM GAS  /tmp/ccabOd7J.s 			page 18
+
+
+ 713              		.loc 1 262 18
+ 714 001e DBB2     		uxtb	r3, r3
+ 715              		.loc 1 262 16
+ 716 0020 FB74     		strb	r3, [r7, #19]
+ 263:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[4] = ( uint8_t )( timeout >> 8 );
+ 717              		.loc 1 263 39
+ 718 0022 7B68     		ldr	r3, [r7, #4]
+ 719 0024 1B0A     		lsrs	r3, r3, #8
+ 720              		.loc 1 263 18
+ 721 0026 DBB2     		uxtb	r3, r3
+ 722              		.loc 1 263 16
+ 723 0028 3B75     		strb	r3, [r7, #20]
+ 264:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[5] = ( uint8_t )( timeout >> 0 );
+ 724              		.loc 1 264 18
+ 725 002a 7B68     		ldr	r3, [r7, #4]
+ 726 002c DBB2     		uxtb	r3, r3
+ 727              		.loc 1 264 16
+ 728 002e 7B75     		strb	r3, [r7, #21]
+ 265:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 266:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     return ( lr1110_modem_response_code_t ) lr1110_modem_hal_write(
+ 729              		.loc 1 266 45
+ 730 0030 07F11001 		add	r1, r7, #16
+ 731 0034 0023     		movs	r3, #0
+ 732 0036 0093     		str	r3, [sp]
+ 733 0038 0023     		movs	r3, #0
+ 734 003a 0622     		movs	r2, #6
+ 735 003c F868     		ldr	r0, [r7, #12]
+ 736 003e FFF7FEFF 		bl	lr1110_modem_hal_write
+ 737 0042 0346     		mov	r3, r0
+ 267:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****         context, cbuffer, LR1110_MODEM_SYSTEM_SET_TCXO_MODE_CMD_LENGTH, 0, 0 );
+ 268:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** }
+ 738              		.loc 1 268 1
+ 739 0044 1846     		mov	r0, r3
+ 740 0046 1837     		adds	r7, r7, #24
+ 741              	.LCFI33:
+ 742              		.cfi_def_cfa_offset 8
+ 743 0048 BD46     		mov	sp, r7
+ 744              	.LCFI34:
+ 745              		.cfi_def_cfa_register 13
+ 746              		@ sp needed
+ 747 004a 80BD     		pop	{r7, pc}
+ 748              		.cfi_endproc
+ 749              	.LFE7:
+ 751              		.section	.text.lr1110_modem_system_reboot,"ax",%progbits
+ 752              		.align	1
+ 753              		.global	lr1110_modem_system_reboot
+ 754              		.syntax unified
+ 755              		.thumb
+ 756              		.thumb_func
+ 757              		.fpu fpv4-sp-d16
+ 759              	lr1110_modem_system_reboot:
+ 760              	.LFB8:
+ 269:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 270:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** lr1110_modem_response_code_t lr1110_modem_system_reboot( const void* context, const bool stay_in_bo
+ 271:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** {
+ 761              		.loc 1 271 1
+ 762              		.cfi_startproc
+ARM GAS  /tmp/ccabOd7J.s 			page 19
+
+
+ 763              		@ args = 0, pretend = 0, frame = 16
+ 764              		@ frame_needed = 1, uses_anonymous_args = 0
+ 765 0000 80B5     		push	{r7, lr}
+ 766              	.LCFI35:
+ 767              		.cfi_def_cfa_offset 8
+ 768              		.cfi_offset 7, -8
+ 769              		.cfi_offset 14, -4
+ 770 0002 86B0     		sub	sp, sp, #24
+ 771              	.LCFI36:
+ 772              		.cfi_def_cfa_offset 32
+ 773 0004 02AF     		add	r7, sp, #8
+ 774              	.LCFI37:
+ 775              		.cfi_def_cfa 7, 24
+ 776 0006 7860     		str	r0, [r7, #4]
+ 777 0008 0B46     		mov	r3, r1
+ 778 000a FB70     		strb	r3, [r7, #3]
+ 272:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     uint8_t cbuffer[LR1110_MODEM_SYSTEM_REBOOT_CMD_LENGTH];
+ 273:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 274:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[0] = LR1110_MODEM_GROUP_ID_SYSTEM;
+ 779              		.loc 1 274 16
+ 780 000c 0123     		movs	r3, #1
+ 781 000e 3B73     		strb	r3, [r7, #12]
+ 275:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[1] = LR1110_MODEM_SYSTEM_REBOOT_CMD;
+ 782              		.loc 1 275 16
+ 783 0010 1823     		movs	r3, #24
+ 784 0012 7B73     		strb	r3, [r7, #13]
+ 276:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 277:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     cbuffer[2] = ( stay_in_bootloader == true ) ? 0x03 : 0x00;
+ 785              		.loc 1 277 16
+ 786 0014 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 787 0016 002B     		cmp	r3, #0
+ 788 0018 01D0     		beq	.L20
+ 789              		.loc 1 277 16 is_stmt 0 discriminator 1
+ 790 001a 0323     		movs	r3, #3
+ 791 001c 00E0     		b	.L21
+ 792              	.L20:
+ 793              		.loc 1 277 16 discriminator 2
+ 794 001e 0023     		movs	r3, #0
+ 795              	.L21:
+ 796              		.loc 1 277 16 discriminator 4
+ 797 0020 BB73     		strb	r3, [r7, #14]
+ 278:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** 
+ 279:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****     return ( lr1110_modem_response_code_t ) lr1110_modem_hal_write_without_rc(
+ 798              		.loc 1 279 45 is_stmt 1 discriminator 4
+ 799 0022 07F10C01 		add	r1, r7, #12
+ 800 0026 0023     		movs	r3, #0
+ 801 0028 0093     		str	r3, [sp]
+ 802 002a 0023     		movs	r3, #0
+ 803 002c 0322     		movs	r2, #3
+ 804 002e 7868     		ldr	r0, [r7, #4]
+ 805 0030 FFF7FEFF 		bl	lr1110_modem_hal_write_without_rc
+ 806 0034 0346     		mov	r3, r0
+ 280:../Src/radio/lr1110_modem/src/lr1110_modem_system.c ****         context, cbuffer, LR1110_MODEM_SYSTEM_REBOOT_CMD_LENGTH, 0, 0 );
+ 281:../Src/radio/lr1110_modem/src/lr1110_modem_system.c **** }
+ 807              		.loc 1 281 1 discriminator 4
+ 808 0036 1846     		mov	r0, r3
+ 809 0038 1037     		adds	r7, r7, #16
+ARM GAS  /tmp/ccabOd7J.s 			page 20
+
+
+ 810              	.LCFI38:
+ 811              		.cfi_def_cfa_offset 8
+ 812 003a BD46     		mov	sp, r7
+ 813              	.LCFI39:
+ 814              		.cfi_def_cfa_register 13
+ 815              		@ sp needed
+ 816 003c 80BD     		pop	{r7, pc}
+ 817              		.cfi_endproc
+ 818              	.LFE8:
+ 820              		.text
+ 821              	.Letext0:
+ 822              		.file 2 "/usr/lib/gcc/arm-none-eabi/10.3.1/include/stdint.h"
+ 823              		.file 3 "../Src/radio/lr1110_modem/src/lr1110_modem_common.h"
+ 824              		.file 4 "../Src/radio/lr1110_modem/src/lr1110_modem_system.h"
+ARM GAS  /tmp/ccabOd7J.s 			page 21
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 lr1110_modem_system.c
+     /tmp/ccabOd7J.s:18     .text.lr1110_modem_system_write_regmem32:0000000000000000 $t
+     /tmp/ccabOd7J.s:26     .text.lr1110_modem_system_write_regmem32:0000000000000000 lr1110_modem_system_write_regmem32
+     /tmp/ccabOd7J.s:234    .text.lr1110_modem_system_read_regmem32:0000000000000000 $t
+     /tmp/ccabOd7J.s:241    .text.lr1110_modem_system_read_regmem32:0000000000000000 lr1110_modem_system_read_regmem32
+     /tmp/ccabOd7J.s:389    .text.lr1110_modem_system_calibrate:0000000000000000 $t
+     /tmp/ccabOd7J.s:396    .text.lr1110_modem_system_calibrate:0000000000000000 lr1110_modem_system_calibrate
+     /tmp/ccabOd7J.s:448    .text.lr1110_modem_system_set_reg_mode:0000000000000000 $t
+     /tmp/ccabOd7J.s:455    .text.lr1110_modem_system_set_reg_mode:0000000000000000 lr1110_modem_system_set_reg_mode
+     /tmp/ccabOd7J.s:507    .text.lr1110_modem_system_set_dio_as_rf_switch:0000000000000000 $t
+     /tmp/ccabOd7J.s:514    .text.lr1110_modem_system_set_dio_as_rf_switch:0000000000000000 lr1110_modem_system_set_dio_as_rf_switch
+     /tmp/ccabOd7J.s:602    .text.lr1110_modem_system_cfg_lfclk:0000000000000000 $t
+     /tmp/ccabOd7J.s:609    .text.lr1110_modem_system_cfg_lfclk:0000000000000000 lr1110_modem_system_cfg_lfclk
+     /tmp/ccabOd7J.s:673    .text.lr1110_modem_system_set_tcxo_mode:0000000000000000 $t
+     /tmp/ccabOd7J.s:680    .text.lr1110_modem_system_set_tcxo_mode:0000000000000000 lr1110_modem_system_set_tcxo_mode
+     /tmp/ccabOd7J.s:752    .text.lr1110_modem_system_reboot:0000000000000000 $t
+     /tmp/ccabOd7J.s:759    .text.lr1110_modem_system_reboot:0000000000000000 lr1110_modem_system_reboot
+
+UNDEFINED SYMBOLS
+memset
+lr1110_modem_hal_write
+lr1110_modem_hal_read
+lr1110_modem_hal_write_without_rc

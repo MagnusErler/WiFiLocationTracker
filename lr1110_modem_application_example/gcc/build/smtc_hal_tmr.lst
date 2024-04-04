@@ -1,0 +1,750 @@
+ARM GAS  /tmp/ccaUNQsf.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"smtc_hal_tmr.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.bss.lptim_handle,"aw",%nobits
+  18              		.align	2
+  21              	lptim_handle:
+  22 0000 00000000 		.space	56
+  22      00000000 
+  22      00000000 
+  22      00000000 
+  22      00000000 
+  23              		.section	.bss.lptim_tmr_irq,"aw",%nobits
+  24              		.align	2
+  27              	lptim_tmr_irq:
+  28 0000 00000000 		.space	8
+  28      00000000 
+  29              		.section	.text.hal_tmr_init,"ax",%progbits
+  30              		.align	1
+  31              		.global	hal_tmr_init
+  32              		.arch armv7e-m
+  33              		.syntax unified
+  34              		.thumb
+  35              		.thumb_func
+  36              		.fpu fpv4-sp-d16
+  38              	hal_tmr_init:
+  39              	.LFB313:
+  40              		.file 1 "../Src/smtc_hal/smtc_hal_tmr.c"
+   1:../Src/smtc_hal/smtc_hal_tmr.c **** /*!
+   2:../Src/smtc_hal/smtc_hal_tmr.c ****  * @file      smtc_hal_tmr.c
+   3:../Src/smtc_hal/smtc_hal_tmr.c ****  *
+   4:../Src/smtc_hal/smtc_hal_tmr.c ****  * @brief     Board specific package HW timer API implementation.
+   5:../Src/smtc_hal/smtc_hal_tmr.c ****  *
+   6:../Src/smtc_hal/smtc_hal_tmr.c ****  * Revised BSD License
+   7:../Src/smtc_hal/smtc_hal_tmr.c ****  * Copyright Semtech Corporation 2020. All rights reserved.
+   8:../Src/smtc_hal/smtc_hal_tmr.c ****  *
+   9:../Src/smtc_hal/smtc_hal_tmr.c ****  * Redistribution and use in source and binary forms, with or without
+  10:../Src/smtc_hal/smtc_hal_tmr.c ****  * modification, are permitted provided that the following conditions are met:
+  11:../Src/smtc_hal/smtc_hal_tmr.c ****  *     * Redistributions of source code must retain the above copyright
+  12:../Src/smtc_hal/smtc_hal_tmr.c ****  *       notice, this list of conditions and the following disclaimer.
+  13:../Src/smtc_hal/smtc_hal_tmr.c ****  *     * Redistributions in binary form must reproduce the above copyright
+  14:../Src/smtc_hal/smtc_hal_tmr.c ****  *       notice, this list of conditions and the following disclaimer in the
+  15:../Src/smtc_hal/smtc_hal_tmr.c ****  *       documentation and/or other materials provided with the distribution.
+  16:../Src/smtc_hal/smtc_hal_tmr.c ****  *     * Neither the name of the Semtech corporation nor the
+  17:../Src/smtc_hal/smtc_hal_tmr.c ****  *       names of its contributors may be used to endorse or promote products
+ARM GAS  /tmp/ccaUNQsf.s 			page 2
+
+
+  18:../Src/smtc_hal/smtc_hal_tmr.c ****  *       derived from this software without specific prior written permission.
+  19:../Src/smtc_hal/smtc_hal_tmr.c ****  *
+  20:../Src/smtc_hal/smtc_hal_tmr.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  21:../Src/smtc_hal/smtc_hal_tmr.c ****  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  22:../Src/smtc_hal/smtc_hal_tmr.c ****  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  23:../Src/smtc_hal/smtc_hal_tmr.c ****  * ARE DISCLAIMED. IN NO EVENT SHALL SEMTECH CORPORATION BE LIABLE FOR ANY
+  24:../Src/smtc_hal/smtc_hal_tmr.c ****  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+  25:../Src/smtc_hal/smtc_hal_tmr.c ****  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  26:../Src/smtc_hal/smtc_hal_tmr.c ****  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+  27:../Src/smtc_hal/smtc_hal_tmr.c ****  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  28:../Src/smtc_hal/smtc_hal_tmr.c ****  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  29:../Src/smtc_hal/smtc_hal_tmr.c ****  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  30:../Src/smtc_hal/smtc_hal_tmr.c ****  */
+  31:../Src/smtc_hal/smtc_hal_tmr.c **** 
+  32:../Src/smtc_hal/smtc_hal_tmr.c **** /*
+  33:../Src/smtc_hal/smtc_hal_tmr.c ****  * -----------------------------------------------------------------------------
+  34:../Src/smtc_hal/smtc_hal_tmr.c ****  * --- DEPENDENCIES ------------------------------------------------------------
+  35:../Src/smtc_hal/smtc_hal_tmr.c ****  */
+  36:../Src/smtc_hal/smtc_hal_tmr.c **** 
+  37:../Src/smtc_hal/smtc_hal_tmr.c **** #include <stdint.h>   // C99 types
+  38:../Src/smtc_hal/smtc_hal_tmr.c **** #include <stdbool.h>  // bool type
+  39:../Src/smtc_hal/smtc_hal_tmr.c **** 
+  40:../Src/smtc_hal/smtc_hal_tmr.c **** #include "stm32l4xx_hal.h"
+  41:../Src/smtc_hal/smtc_hal_tmr.c **** #include "smtc_hal_mcu.h"
+  42:../Src/smtc_hal/smtc_hal_tmr.c **** #include "smtc_hal_tmr.h"
+  43:../Src/smtc_hal/smtc_hal_tmr.c **** 
+  44:../Src/smtc_hal/smtc_hal_tmr.c **** /*
+  45:../Src/smtc_hal/smtc_hal_tmr.c ****  * -----------------------------------------------------------------------------
+  46:../Src/smtc_hal/smtc_hal_tmr.c ****  * --- PRIVATE MACROS-----------------------------------------------------------
+  47:../Src/smtc_hal/smtc_hal_tmr.c ****  */
+  48:../Src/smtc_hal/smtc_hal_tmr.c **** 
+  49:../Src/smtc_hal/smtc_hal_tmr.c **** /*
+  50:../Src/smtc_hal/smtc_hal_tmr.c ****  * -----------------------------------------------------------------------------
+  51:../Src/smtc_hal/smtc_hal_tmr.c ****  * --- PRIVATE CONSTANTS -------------------------------------------------------
+  52:../Src/smtc_hal/smtc_hal_tmr.c ****  */
+  53:../Src/smtc_hal/smtc_hal_tmr.c **** 
+  54:../Src/smtc_hal/smtc_hal_tmr.c **** /*
+  55:../Src/smtc_hal/smtc_hal_tmr.c ****  * -----------------------------------------------------------------------------
+  56:../Src/smtc_hal/smtc_hal_tmr.c ****  * --- PRIVATE TYPES -----------------------------------------------------------
+  57:../Src/smtc_hal/smtc_hal_tmr.c ****  */
+  58:../Src/smtc_hal/smtc_hal_tmr.c **** 
+  59:../Src/smtc_hal/smtc_hal_tmr.c **** /*
+  60:../Src/smtc_hal/smtc_hal_tmr.c ****  * -----------------------------------------------------------------------------
+  61:../Src/smtc_hal/smtc_hal_tmr.c ****  * --- PRIVATE VARIABLES -------------------------------------------------------
+  62:../Src/smtc_hal/smtc_hal_tmr.c ****  */
+  63:../Src/smtc_hal/smtc_hal_tmr.c **** 
+  64:../Src/smtc_hal/smtc_hal_tmr.c **** static LPTIM_HandleTypeDef lptim_handle;
+  65:../Src/smtc_hal/smtc_hal_tmr.c **** 
+  66:../Src/smtc_hal/smtc_hal_tmr.c **** static hal_tmr_irq_t lptim_tmr_irq = { .context = NULL, .callback = NULL };
+  67:../Src/smtc_hal/smtc_hal_tmr.c **** 
+  68:../Src/smtc_hal/smtc_hal_tmr.c **** /*
+  69:../Src/smtc_hal/smtc_hal_tmr.c ****  * -----------------------------------------------------------------------------
+  70:../Src/smtc_hal/smtc_hal_tmr.c ****  * --- PRIVATE FUNCTIONS DECLARATION -------------------------------------------
+  71:../Src/smtc_hal/smtc_hal_tmr.c ****  */
+  72:../Src/smtc_hal/smtc_hal_tmr.c **** 
+  73:../Src/smtc_hal/smtc_hal_tmr.c **** /*
+  74:../Src/smtc_hal/smtc_hal_tmr.c ****  * -----------------------------------------------------------------------------
+ARM GAS  /tmp/ccaUNQsf.s 			page 3
+
+
+  75:../Src/smtc_hal/smtc_hal_tmr.c ****  * --- PUBLIC FUNCTIONS DEFINITION ---------------------------------------------
+  76:../Src/smtc_hal/smtc_hal_tmr.c ****  */
+  77:../Src/smtc_hal/smtc_hal_tmr.c **** 
+  78:../Src/smtc_hal/smtc_hal_tmr.c **** void hal_tmr_init( void )
+  79:../Src/smtc_hal/smtc_hal_tmr.c **** {
+  41              		.loc 1 79 1
+  42              		.cfi_startproc
+  43              		@ args = 0, pretend = 0, frame = 8
+  44              		@ frame_needed = 1, uses_anonymous_args = 0
+  45 0000 80B5     		push	{r7, lr}
+  46              	.LCFI0:
+  47              		.cfi_def_cfa_offset 8
+  48              		.cfi_offset 7, -8
+  49              		.cfi_offset 14, -4
+  50 0002 82B0     		sub	sp, sp, #8
+  51              	.LCFI1:
+  52              		.cfi_def_cfa_offset 16
+  53 0004 00AF     		add	r7, sp, #0
+  54              	.LCFI2:
+  55              		.cfi_def_cfa_register 7
+  80:../Src/smtc_hal/smtc_hal_tmr.c ****     lptim_handle.Instance             = LPTIM1;
+  56              		.loc 1 80 39
+  57 0006 144B     		ldr	r3, .L3
+  58 0008 144A     		ldr	r2, .L3+4
+  59 000a 1A60     		str	r2, [r3]
+  81:../Src/smtc_hal/smtc_hal_tmr.c ****     lptim_handle.Init.Clock.Source    = LPTIM_CLOCKSOURCE_APBCLOCK_LPOSC;
+  60              		.loc 1 81 39
+  61 000c 124B     		ldr	r3, .L3
+  62 000e 0022     		movs	r2, #0
+  63 0010 5A60     		str	r2, [r3, #4]
+  82:../Src/smtc_hal/smtc_hal_tmr.c ****     lptim_handle.Init.Clock.Prescaler = LPTIM_PRESCALER_DIV16;
+  64              		.loc 1 82 39
+  65 0012 114B     		ldr	r3, .L3
+  66 0014 4FF40062 		mov	r2, #2048
+  67 0018 9A60     		str	r2, [r3, #8]
+  83:../Src/smtc_hal/smtc_hal_tmr.c ****     lptim_handle.Init.Trigger.Source  = LPTIM_TRIGSOURCE_SOFTWARE;
+  68              		.loc 1 83 39
+  69 001a 0F4B     		ldr	r3, .L3
+  70 001c 4FF6FF72 		movw	r2, #65535
+  71 0020 5A61     		str	r2, [r3, #20]
+  84:../Src/smtc_hal/smtc_hal_tmr.c ****     lptim_handle.Init.OutputPolarity  = LPTIM_OUTPUTPOLARITY_HIGH;
+  72              		.loc 1 84 39
+  73 0022 0D4B     		ldr	r3, .L3
+  74 0024 0022     		movs	r2, #0
+  75 0026 1A62     		str	r2, [r3, #32]
+  85:../Src/smtc_hal/smtc_hal_tmr.c ****     lptim_handle.Init.UpdateMode      = LPTIM_UPDATE_IMMEDIATE;
+  76              		.loc 1 85 39
+  77 0028 0B4B     		ldr	r3, .L3
+  78 002a 0022     		movs	r2, #0
+  79 002c 5A62     		str	r2, [r3, #36]
+  86:../Src/smtc_hal/smtc_hal_tmr.c ****     lptim_handle.Init.CounterSource   = LPTIM_COUNTERSOURCE_INTERNAL;
+  80              		.loc 1 86 39
+  81 002e 0A4B     		ldr	r3, .L3
+  82 0030 0022     		movs	r2, #0
+  83 0032 9A62     		str	r2, [r3, #40]
+  87:../Src/smtc_hal/smtc_hal_tmr.c **** 
+  88:../Src/smtc_hal/smtc_hal_tmr.c ****     if( HAL_LPTIM_Init( &lptim_handle ) != HAL_OK )
+ARM GAS  /tmp/ccaUNQsf.s 			page 4
+
+
+  84              		.loc 1 88 9
+  85 0034 0848     		ldr	r0, .L3
+  86 0036 FFF7FEFF 		bl	HAL_LPTIM_Init
+  87 003a 0346     		mov	r3, r0
+  88              		.loc 1 88 7
+  89 003c 002B     		cmp	r3, #0
+  90 003e 01D0     		beq	.L2
+  89:../Src/smtc_hal/smtc_hal_tmr.c ****     {
+  90:../Src/smtc_hal/smtc_hal_tmr.c ****         hal_mcu_panic( );
+  91              		.loc 1 90 9
+  92 0040 FFF7FEFF 		bl	hal_mcu_panic
+  93              	.L2:
+  91:../Src/smtc_hal/smtc_hal_tmr.c ****     }
+  92:../Src/smtc_hal/smtc_hal_tmr.c ****     lptim_tmr_irq = ( hal_tmr_irq_t ){ .context = NULL, .callback = NULL };
+  94              		.loc 1 92 19
+  95 0044 064B     		ldr	r3, .L3+8
+  96 0046 0022     		movs	r2, #0
+  97 0048 1A60     		str	r2, [r3]
+  98 004a 054B     		ldr	r3, .L3+8
+  99 004c 0022     		movs	r2, #0
+ 100 004e 5A60     		str	r2, [r3, #4]
+  93:../Src/smtc_hal/smtc_hal_tmr.c **** }
+ 101              		.loc 1 93 1
+ 102 0050 00BF     		nop
+ 103 0052 0837     		adds	r7, r7, #8
+ 104              	.LCFI3:
+ 105              		.cfi_def_cfa_offset 8
+ 106 0054 BD46     		mov	sp, r7
+ 107              	.LCFI4:
+ 108              		.cfi_def_cfa_register 13
+ 109              		@ sp needed
+ 110 0056 80BD     		pop	{r7, pc}
+ 111              	.L4:
+ 112              		.align	2
+ 113              	.L3:
+ 114 0058 00000000 		.word	lptim_handle
+ 115 005c 007C0040 		.word	1073773568
+ 116 0060 00000000 		.word	lptim_tmr_irq
+ 117              		.cfi_endproc
+ 118              	.LFE313:
+ 120              		.global	__aeabi_uldivmod
+ 121              		.section	.text.hal_tmr_start,"ax",%progbits
+ 122              		.align	1
+ 123              		.global	hal_tmr_start
+ 124              		.syntax unified
+ 125              		.thumb
+ 126              		.thumb_func
+ 127              		.fpu fpv4-sp-d16
+ 129              	hal_tmr_start:
+ 130              	.LFB314:
+  94:../Src/smtc_hal/smtc_hal_tmr.c **** 
+  95:../Src/smtc_hal/smtc_hal_tmr.c **** void hal_tmr_start( const uint32_t milliseconds, const hal_tmr_irq_t* tmr_irq )
+  96:../Src/smtc_hal/smtc_hal_tmr.c **** {
+ 131              		.loc 1 96 1
+ 132              		.cfi_startproc
+ 133              		@ args = 0, pretend = 0, frame = 16
+ 134              		@ frame_needed = 1, uses_anonymous_args = 0
+ARM GAS  /tmp/ccaUNQsf.s 			page 5
+
+
+ 135 0000 80B5     		push	{r7, lr}
+ 136              	.LCFI5:
+ 137              		.cfi_def_cfa_offset 8
+ 138              		.cfi_offset 7, -8
+ 139              		.cfi_offset 14, -4
+ 140 0002 84B0     		sub	sp, sp, #16
+ 141              	.LCFI6:
+ 142              		.cfi_def_cfa_offset 24
+ 143 0004 00AF     		add	r7, sp, #0
+ 144              	.LCFI7:
+ 145              		.cfi_def_cfa_register 7
+ 146 0006 7860     		str	r0, [r7, #4]
+ 147 0008 3960     		str	r1, [r7]
+  97:../Src/smtc_hal/smtc_hal_tmr.c ****     uint32_t delay_ms_2_tick = 0;
+ 148              		.loc 1 97 14
+ 149 000a 0021     		movs	r1, #0
+ 150 000c F960     		str	r1, [r7, #12]
+  98:../Src/smtc_hal/smtc_hal_tmr.c **** 
+  99:../Src/smtc_hal/smtc_hal_tmr.c ****     /* Remark LSE_VALUE / LPTIM_PRESCALER_DIV16 */
+ 100:../Src/smtc_hal/smtc_hal_tmr.c ****     delay_ms_2_tick = ( uint32_t )( ( ( uint64_t ) milliseconds * ( LSE_VALUE >> 4 ) ) / 1000 );
+ 151              		.loc 1 100 39
+ 152 000e 7968     		ldr	r1, [r7, #4]
+ 153 0010 0020     		movs	r0, #0
+ 154 0012 0A46     		mov	r2, r1
+ 155 0014 0346     		mov	r3, r0
+ 156              		.loc 1 100 65
+ 157 0016 4FF00000 		mov	r0, #0
+ 158 001a 4FF00001 		mov	r1, #0
+ 159 001e D902     		lsls	r1, r3, #11
+ 160 0020 41EA5251 		orr	r1, r1, r2, lsr #21
+ 161 0024 D002     		lsls	r0, r2, #11
+ 162              		.loc 1 100 88
+ 163 0026 4FF47A72 		mov	r2, #1000
+ 164 002a 4FF00003 		mov	r3, #0
+ 165 002e FFF7FEFF 		bl	__aeabi_uldivmod
+ 166 0032 0246     		mov	r2, r0
+ 167 0034 0B46     		mov	r3, r1
+ 168              		.loc 1 100 21
+ 169 0036 1346     		mov	r3, r2
+ 170 0038 FB60     		str	r3, [r7, #12]
+ 101:../Src/smtc_hal/smtc_hal_tmr.c **** 
+ 102:../Src/smtc_hal/smtc_hal_tmr.c ****     /* check if delay_ms_2_tick is not greater than 0xFFFF and clamp it if it is the case */
+ 103:../Src/smtc_hal/smtc_hal_tmr.c ****     if( delay_ms_2_tick > 0xFFFF )
+ 171              		.loc 1 103 7
+ 172 003a FB68     		ldr	r3, [r7, #12]
+ 173 003c B3F5803F 		cmp	r3, #65536
+ 174 0040 02D3     		bcc	.L6
+ 104:../Src/smtc_hal/smtc_hal_tmr.c ****     {
+ 105:../Src/smtc_hal/smtc_hal_tmr.c ****         delay_ms_2_tick = 0xFFFF;
+ 175              		.loc 1 105 25
+ 176 0042 4FF6FF73 		movw	r3, #65535
+ 177 0046 FB60     		str	r3, [r7, #12]
+ 178              	.L6:
+ 106:../Src/smtc_hal/smtc_hal_tmr.c ****     }
+ 107:../Src/smtc_hal/smtc_hal_tmr.c **** 
+ 108:../Src/smtc_hal/smtc_hal_tmr.c ****     /* Auto reload period is set to max value 0xFFFF */
+ 109:../Src/smtc_hal/smtc_hal_tmr.c ****     HAL_LPTIM_TimeOut_Start_IT( &lptim_handle, 0xFFFF, delay_ms_2_tick );
+ARM GAS  /tmp/ccaUNQsf.s 			page 6
+
+
+ 179              		.loc 1 109 5
+ 180 0048 FA68     		ldr	r2, [r7, #12]
+ 181 004a 4FF6FF71 		movw	r1, #65535
+ 182 004e 0648     		ldr	r0, .L7
+ 183 0050 FFF7FEFF 		bl	HAL_LPTIM_TimeOut_Start_IT
+ 110:../Src/smtc_hal/smtc_hal_tmr.c ****     lptim_tmr_irq = *tmr_irq;
+ 184              		.loc 1 110 19
+ 185 0054 054B     		ldr	r3, .L7+4
+ 186 0056 3A68     		ldr	r2, [r7]
+ 187 0058 92E80300 		ldm	r2, {r0, r1}
+ 188 005c 83E80300 		stm	r3, {r0, r1}
+ 111:../Src/smtc_hal/smtc_hal_tmr.c **** }
+ 189              		.loc 1 111 1
+ 190 0060 00BF     		nop
+ 191 0062 1037     		adds	r7, r7, #16
+ 192              	.LCFI8:
+ 193              		.cfi_def_cfa_offset 8
+ 194 0064 BD46     		mov	sp, r7
+ 195              	.LCFI9:
+ 196              		.cfi_def_cfa_register 13
+ 197              		@ sp needed
+ 198 0066 80BD     		pop	{r7, pc}
+ 199              	.L8:
+ 200              		.align	2
+ 201              	.L7:
+ 202 0068 00000000 		.word	lptim_handle
+ 203 006c 00000000 		.word	lptim_tmr_irq
+ 204              		.cfi_endproc
+ 205              	.LFE314:
+ 207              		.section	.text.hal_tmr_stop,"ax",%progbits
+ 208              		.align	1
+ 209              		.global	hal_tmr_stop
+ 210              		.syntax unified
+ 211              		.thumb
+ 212              		.thumb_func
+ 213              		.fpu fpv4-sp-d16
+ 215              	hal_tmr_stop:
+ 216              	.LFB315:
+ 112:../Src/smtc_hal/smtc_hal_tmr.c **** 
+ 113:../Src/smtc_hal/smtc_hal_tmr.c **** void hal_tmr_stop( void ) { HAL_LPTIM_TimeOut_Stop_IT( &lptim_handle ); }
+ 217              		.loc 1 113 27
+ 218              		.cfi_startproc
+ 219              		@ args = 0, pretend = 0, frame = 0
+ 220              		@ frame_needed = 1, uses_anonymous_args = 0
+ 221 0000 80B5     		push	{r7, lr}
+ 222              	.LCFI10:
+ 223              		.cfi_def_cfa_offset 8
+ 224              		.cfi_offset 7, -8
+ 225              		.cfi_offset 14, -4
+ 226 0002 00AF     		add	r7, sp, #0
+ 227              	.LCFI11:
+ 228              		.cfi_def_cfa_register 7
+ 229              		.loc 1 113 29
+ 230 0004 0248     		ldr	r0, .L10
+ 231 0006 FFF7FEFF 		bl	HAL_LPTIM_TimeOut_Stop_IT
+ 232              		.loc 1 113 73
+ 233 000a 00BF     		nop
+ARM GAS  /tmp/ccaUNQsf.s 			page 7
+
+
+ 234 000c 80BD     		pop	{r7, pc}
+ 235              	.L11:
+ 236 000e 00BF     		.align	2
+ 237              	.L10:
+ 238 0010 00000000 		.word	lptim_handle
+ 239              		.cfi_endproc
+ 240              	.LFE315:
+ 242              		.section	.text.hal_tmr_get_time_ms,"ax",%progbits
+ 243              		.align	1
+ 244              		.global	hal_tmr_get_time_ms
+ 245              		.syntax unified
+ 246              		.thumb
+ 247              		.thumb_func
+ 248              		.fpu fpv4-sp-d16
+ 250              	hal_tmr_get_time_ms:
+ 251              	.LFB316:
+ 114:../Src/smtc_hal/smtc_hal_tmr.c **** 
+ 115:../Src/smtc_hal/smtc_hal_tmr.c **** uint32_t hal_tmr_get_time_ms( void ) { return HAL_LPTIM_ReadCounter( &lptim_handle ); }
+ 252              		.loc 1 115 38
+ 253              		.cfi_startproc
+ 254              		@ args = 0, pretend = 0, frame = 0
+ 255              		@ frame_needed = 1, uses_anonymous_args = 0
+ 256 0000 80B5     		push	{r7, lr}
+ 257              	.LCFI12:
+ 258              		.cfi_def_cfa_offset 8
+ 259              		.cfi_offset 7, -8
+ 260              		.cfi_offset 14, -4
+ 261 0002 00AF     		add	r7, sp, #0
+ 262              	.LCFI13:
+ 263              		.cfi_def_cfa_register 7
+ 264              		.loc 1 115 47
+ 265 0004 0248     		ldr	r0, .L14
+ 266 0006 FFF7FEFF 		bl	HAL_LPTIM_ReadCounter
+ 267 000a 0346     		mov	r3, r0
+ 268              		.loc 1 115 87
+ 269 000c 1846     		mov	r0, r3
+ 270 000e 80BD     		pop	{r7, pc}
+ 271              	.L15:
+ 272              		.align	2
+ 273              	.L14:
+ 274 0010 00000000 		.word	lptim_handle
+ 275              		.cfi_endproc
+ 276              	.LFE316:
+ 278              		.section	.text.hal_tmr_irq_enable,"ax",%progbits
+ 279              		.align	1
+ 280              		.global	hal_tmr_irq_enable
+ 281              		.syntax unified
+ 282              		.thumb
+ 283              		.thumb_func
+ 284              		.fpu fpv4-sp-d16
+ 286              	hal_tmr_irq_enable:
+ 287              	.LFB317:
+ 116:../Src/smtc_hal/smtc_hal_tmr.c **** 
+ 117:../Src/smtc_hal/smtc_hal_tmr.c **** void hal_tmr_irq_enable( void ) { HAL_NVIC_EnableIRQ( LPTIM1_IRQn ); }
+ 288              		.loc 1 117 33
+ 289              		.cfi_startproc
+ 290              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  /tmp/ccaUNQsf.s 			page 8
+
+
+ 291              		@ frame_needed = 1, uses_anonymous_args = 0
+ 292 0000 80B5     		push	{r7, lr}
+ 293              	.LCFI14:
+ 294              		.cfi_def_cfa_offset 8
+ 295              		.cfi_offset 7, -8
+ 296              		.cfi_offset 14, -4
+ 297 0002 00AF     		add	r7, sp, #0
+ 298              	.LCFI15:
+ 299              		.cfi_def_cfa_register 7
+ 300              		.loc 1 117 35
+ 301 0004 4120     		movs	r0, #65
+ 302 0006 FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
+ 303              		.loc 1 117 70
+ 304 000a 00BF     		nop
+ 305 000c 80BD     		pop	{r7, pc}
+ 306              		.cfi_endproc
+ 307              	.LFE317:
+ 309              		.section	.text.hal_tmr_irq_disable,"ax",%progbits
+ 310              		.align	1
+ 311              		.global	hal_tmr_irq_disable
+ 312              		.syntax unified
+ 313              		.thumb
+ 314              		.thumb_func
+ 315              		.fpu fpv4-sp-d16
+ 317              	hal_tmr_irq_disable:
+ 318              	.LFB318:
+ 118:../Src/smtc_hal/smtc_hal_tmr.c **** 
+ 119:../Src/smtc_hal/smtc_hal_tmr.c **** void hal_tmr_irq_disable( void ) { HAL_NVIC_DisableIRQ( LPTIM1_IRQn ); }
+ 319              		.loc 1 119 34
+ 320              		.cfi_startproc
+ 321              		@ args = 0, pretend = 0, frame = 0
+ 322              		@ frame_needed = 1, uses_anonymous_args = 0
+ 323 0000 80B5     		push	{r7, lr}
+ 324              	.LCFI16:
+ 325              		.cfi_def_cfa_offset 8
+ 326              		.cfi_offset 7, -8
+ 327              		.cfi_offset 14, -4
+ 328 0002 00AF     		add	r7, sp, #0
+ 329              	.LCFI17:
+ 330              		.cfi_def_cfa_register 7
+ 331              		.loc 1 119 36
+ 332 0004 4120     		movs	r0, #65
+ 333 0006 FFF7FEFF 		bl	HAL_NVIC_DisableIRQ
+ 334              		.loc 1 119 72
+ 335 000a 00BF     		nop
+ 336 000c 80BD     		pop	{r7, pc}
+ 337              		.cfi_endproc
+ 338              	.LFE318:
+ 340              		.section	.text.LPTIM1_IRQHandler,"ax",%progbits
+ 341              		.align	1
+ 342              		.global	LPTIM1_IRQHandler
+ 343              		.syntax unified
+ 344              		.thumb
+ 345              		.thumb_func
+ 346              		.fpu fpv4-sp-d16
+ 348              	LPTIM1_IRQHandler:
+ 349              	.LFB319:
+ARM GAS  /tmp/ccaUNQsf.s 			page 9
+
+
+ 120:../Src/smtc_hal/smtc_hal_tmr.c **** 
+ 121:../Src/smtc_hal/smtc_hal_tmr.c **** void LPTIM1_IRQHandler( void )
+ 122:../Src/smtc_hal/smtc_hal_tmr.c **** {
+ 350              		.loc 1 122 1
+ 351              		.cfi_startproc
+ 352              		@ args = 0, pretend = 0, frame = 0
+ 353              		@ frame_needed = 1, uses_anonymous_args = 0
+ 354 0000 80B5     		push	{r7, lr}
+ 355              	.LCFI18:
+ 356              		.cfi_def_cfa_offset 8
+ 357              		.cfi_offset 7, -8
+ 358              		.cfi_offset 14, -4
+ 359 0002 00AF     		add	r7, sp, #0
+ 360              	.LCFI19:
+ 361              		.cfi_def_cfa_register 7
+ 123:../Src/smtc_hal/smtc_hal_tmr.c ****     HAL_LPTIM_IRQHandler( &lptim_handle );
+ 362              		.loc 1 123 5
+ 363 0004 0848     		ldr	r0, .L21
+ 364 0006 FFF7FEFF 		bl	HAL_LPTIM_IRQHandler
+ 124:../Src/smtc_hal/smtc_hal_tmr.c ****     HAL_LPTIM_TimeOut_Stop( &lptim_handle );
+ 365              		.loc 1 124 5
+ 366 000a 0748     		ldr	r0, .L21
+ 367 000c FFF7FEFF 		bl	HAL_LPTIM_TimeOut_Stop
+ 125:../Src/smtc_hal/smtc_hal_tmr.c **** 
+ 126:../Src/smtc_hal/smtc_hal_tmr.c ****     if( lptim_tmr_irq.callback != NULL )
+ 368              		.loc 1 126 22
+ 369 0010 064B     		ldr	r3, .L21+4
+ 370 0012 5B68     		ldr	r3, [r3, #4]
+ 371              		.loc 1 126 7
+ 372 0014 002B     		cmp	r3, #0
+ 373 0016 05D0     		beq	.L20
+ 127:../Src/smtc_hal/smtc_hal_tmr.c ****     {
+ 128:../Src/smtc_hal/smtc_hal_tmr.c ****         lptim_tmr_irq.callback( lptim_tmr_irq.context );
+ 374              		.loc 1 128 22
+ 375 0018 044B     		ldr	r3, .L21+4
+ 376 001a 5B68     		ldr	r3, [r3, #4]
+ 377              		.loc 1 128 9
+ 378 001c 034A     		ldr	r2, .L21+4
+ 379 001e 1268     		ldr	r2, [r2]
+ 380 0020 1046     		mov	r0, r2
+ 381 0022 9847     		blx	r3
+ 382              	.LVL0:
+ 383              	.L20:
+ 129:../Src/smtc_hal/smtc_hal_tmr.c ****     }
+ 130:../Src/smtc_hal/smtc_hal_tmr.c **** }
+ 384              		.loc 1 130 1
+ 385 0024 00BF     		nop
+ 386 0026 80BD     		pop	{r7, pc}
+ 387              	.L22:
+ 388              		.align	2
+ 389              	.L21:
+ 390 0028 00000000 		.word	lptim_handle
+ 391 002c 00000000 		.word	lptim_tmr_irq
+ 392              		.cfi_endproc
+ 393              	.LFE319:
+ 395              		.section	.text.HAL_LPTIM_MspInit,"ax",%progbits
+ 396              		.align	1
+ARM GAS  /tmp/ccaUNQsf.s 			page 10
+
+
+ 397              		.global	HAL_LPTIM_MspInit
+ 398              		.syntax unified
+ 399              		.thumb
+ 400              		.thumb_func
+ 401              		.fpu fpv4-sp-d16
+ 403              	HAL_LPTIM_MspInit:
+ 404              	.LFB320:
+ 131:../Src/smtc_hal/smtc_hal_tmr.c **** 
+ 132:../Src/smtc_hal/smtc_hal_tmr.c **** void HAL_LPTIM_MspInit( LPTIM_HandleTypeDef* lptimhandle )
+ 133:../Src/smtc_hal/smtc_hal_tmr.c **** {
+ 405              		.loc 1 133 1
+ 406              		.cfi_startproc
+ 407              		@ args = 0, pretend = 0, frame = 16
+ 408              		@ frame_needed = 1, uses_anonymous_args = 0
+ 409 0000 80B5     		push	{r7, lr}
+ 410              	.LCFI20:
+ 411              		.cfi_def_cfa_offset 8
+ 412              		.cfi_offset 7, -8
+ 413              		.cfi_offset 14, -4
+ 414 0002 84B0     		sub	sp, sp, #16
+ 415              	.LCFI21:
+ 416              		.cfi_def_cfa_offset 24
+ 417 0004 00AF     		add	r7, sp, #0
+ 418              	.LCFI22:
+ 419              		.cfi_def_cfa_register 7
+ 420 0006 7860     		str	r0, [r7, #4]
+ 134:../Src/smtc_hal/smtc_hal_tmr.c ****     if( lptimhandle->Instance == LPTIM1 )
+ 421              		.loc 1 134 20
+ 422 0008 7B68     		ldr	r3, [r7, #4]
+ 423 000a 1B68     		ldr	r3, [r3]
+ 424              		.loc 1 134 7
+ 425 000c 0D4A     		ldr	r2, .L26
+ 426 000e 9342     		cmp	r3, r2
+ 427 0010 13D1     		bne	.L25
+ 428              	.LBB2:
+ 135:../Src/smtc_hal/smtc_hal_tmr.c ****     {
+ 136:../Src/smtc_hal/smtc_hal_tmr.c ****         __HAL_RCC_LPTIM1_CLK_ENABLE( );
+ 429              		.loc 1 136 9
+ 430 0012 0D4B     		ldr	r3, .L26+4
+ 431 0014 9B6D     		ldr	r3, [r3, #88]
+ 432 0016 0C4A     		ldr	r2, .L26+4
+ 433 0018 43F00043 		orr	r3, r3, #-2147483648
+ 434 001c 9365     		str	r3, [r2, #88]
+ 435 001e 0A4B     		ldr	r3, .L26+4
+ 436 0020 9B6D     		ldr	r3, [r3, #88]
+ 437 0022 03F00043 		and	r3, r3, #-2147483648
+ 438 0026 FB60     		str	r3, [r7, #12]
+ 439 0028 FB68     		ldr	r3, [r7, #12]
+ 440              	.LBE2:
+ 137:../Src/smtc_hal/smtc_hal_tmr.c ****         HAL_NVIC_SetPriority( LPTIM1_IRQn, 0, 0 );
+ 441              		.loc 1 137 9
+ 442 002a 0022     		movs	r2, #0
+ 443 002c 0021     		movs	r1, #0
+ 444 002e 4120     		movs	r0, #65
+ 445 0030 FFF7FEFF 		bl	HAL_NVIC_SetPriority
+ 138:../Src/smtc_hal/smtc_hal_tmr.c ****         HAL_NVIC_EnableIRQ( LPTIM1_IRQn );
+ 446              		.loc 1 138 9
+ARM GAS  /tmp/ccaUNQsf.s 			page 11
+
+
+ 447 0034 4120     		movs	r0, #65
+ 448 0036 FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
+ 449              	.L25:
+ 139:../Src/smtc_hal/smtc_hal_tmr.c ****     }
+ 140:../Src/smtc_hal/smtc_hal_tmr.c **** }
+ 450              		.loc 1 140 1
+ 451 003a 00BF     		nop
+ 452 003c 1037     		adds	r7, r7, #16
+ 453              	.LCFI23:
+ 454              		.cfi_def_cfa_offset 8
+ 455 003e BD46     		mov	sp, r7
+ 456              	.LCFI24:
+ 457              		.cfi_def_cfa_register 13
+ 458              		@ sp needed
+ 459 0040 80BD     		pop	{r7, pc}
+ 460              	.L27:
+ 461 0042 00BF     		.align	2
+ 462              	.L26:
+ 463 0044 007C0040 		.word	1073773568
+ 464 0048 00100240 		.word	1073876992
+ 465              		.cfi_endproc
+ 466              	.LFE320:
+ 468              		.section	.text.HAL_LPTIM_MspDeInit,"ax",%progbits
+ 469              		.align	1
+ 470              		.global	HAL_LPTIM_MspDeInit
+ 471              		.syntax unified
+ 472              		.thumb
+ 473              		.thumb_func
+ 474              		.fpu fpv4-sp-d16
+ 476              	HAL_LPTIM_MspDeInit:
+ 477              	.LFB321:
+ 141:../Src/smtc_hal/smtc_hal_tmr.c **** 
+ 142:../Src/smtc_hal/smtc_hal_tmr.c **** void HAL_LPTIM_MspDeInit( LPTIM_HandleTypeDef* lptimhandle )
+ 143:../Src/smtc_hal/smtc_hal_tmr.c **** {
+ 478              		.loc 1 143 1
+ 479              		.cfi_startproc
+ 480              		@ args = 0, pretend = 0, frame = 8
+ 481              		@ frame_needed = 1, uses_anonymous_args = 0
+ 482 0000 80B5     		push	{r7, lr}
+ 483              	.LCFI25:
+ 484              		.cfi_def_cfa_offset 8
+ 485              		.cfi_offset 7, -8
+ 486              		.cfi_offset 14, -4
+ 487 0002 82B0     		sub	sp, sp, #8
+ 488              	.LCFI26:
+ 489              		.cfi_def_cfa_offset 16
+ 490 0004 00AF     		add	r7, sp, #0
+ 491              	.LCFI27:
+ 492              		.cfi_def_cfa_register 7
+ 493 0006 7860     		str	r0, [r7, #4]
+ 144:../Src/smtc_hal/smtc_hal_tmr.c ****     if( lptimhandle->Instance == LPTIM1 )
+ 494              		.loc 1 144 20
+ 495 0008 7B68     		ldr	r3, [r7, #4]
+ 496 000a 1B68     		ldr	r3, [r3]
+ 497              		.loc 1 144 7
+ 498 000c 074A     		ldr	r2, .L31
+ 499 000e 9342     		cmp	r3, r2
+ARM GAS  /tmp/ccaUNQsf.s 			page 12
+
+
+ 500 0010 08D1     		bne	.L30
+ 145:../Src/smtc_hal/smtc_hal_tmr.c ****     {
+ 146:../Src/smtc_hal/smtc_hal_tmr.c ****         __HAL_RCC_LPTIM1_CLK_DISABLE( );
+ 501              		.loc 1 146 9
+ 502 0012 074B     		ldr	r3, .L31+4
+ 503 0014 9B6D     		ldr	r3, [r3, #88]
+ 504 0016 064A     		ldr	r2, .L31+4
+ 505 0018 23F00043 		bic	r3, r3, #-2147483648
+ 506 001c 9365     		str	r3, [r2, #88]
+ 147:../Src/smtc_hal/smtc_hal_tmr.c ****         HAL_NVIC_DisableIRQ( LPTIM1_IRQn );
+ 507              		.loc 1 147 9
+ 508 001e 4120     		movs	r0, #65
+ 509 0020 FFF7FEFF 		bl	HAL_NVIC_DisableIRQ
+ 510              	.L30:
+ 148:../Src/smtc_hal/smtc_hal_tmr.c ****     }
+ 149:../Src/smtc_hal/smtc_hal_tmr.c **** }
+ 511              		.loc 1 149 1
+ 512 0024 00BF     		nop
+ 513 0026 0837     		adds	r7, r7, #8
+ 514              	.LCFI28:
+ 515              		.cfi_def_cfa_offset 8
+ 516 0028 BD46     		mov	sp, r7
+ 517              	.LCFI29:
+ 518              		.cfi_def_cfa_register 13
+ 519              		@ sp needed
+ 520 002a 80BD     		pop	{r7, pc}
+ 521              	.L32:
+ 522              		.align	2
+ 523              	.L31:
+ 524 002c 007C0040 		.word	1073773568
+ 525 0030 00100240 		.word	1073876992
+ 526              		.cfi_endproc
+ 527              	.LFE321:
+ 529              		.text
+ 530              	.Letext0:
+ 531              		.file 2 "/usr/lib/gcc/arm-none-eabi/10.3.1/include/stdint.h"
+ 532              		.file 3 "../Drivers/CMSIS/Device/ST/STM32L4xx/Include/stm32l476xx.h"
+ 533              		.file 4 "../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def.h"
+ 534              		.file 5 "../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_lptim.h"
+ 535              		.file 6 "../Inc/smtc_hal/smtc_hal_tmr.h"
+ARM GAS  /tmp/ccaUNQsf.s 			page 13
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 smtc_hal_tmr.c
+     /tmp/ccaUNQsf.s:18     .bss.lptim_handle:0000000000000000 $d
+     /tmp/ccaUNQsf.s:21     .bss.lptim_handle:0000000000000000 lptim_handle
+     /tmp/ccaUNQsf.s:24     .bss.lptim_tmr_irq:0000000000000000 $d
+     /tmp/ccaUNQsf.s:27     .bss.lptim_tmr_irq:0000000000000000 lptim_tmr_irq
+     /tmp/ccaUNQsf.s:30     .text.hal_tmr_init:0000000000000000 $t
+     /tmp/ccaUNQsf.s:38     .text.hal_tmr_init:0000000000000000 hal_tmr_init
+     /tmp/ccaUNQsf.s:114    .text.hal_tmr_init:0000000000000058 $d
+     /tmp/ccaUNQsf.s:122    .text.hal_tmr_start:0000000000000000 $t
+     /tmp/ccaUNQsf.s:129    .text.hal_tmr_start:0000000000000000 hal_tmr_start
+     /tmp/ccaUNQsf.s:202    .text.hal_tmr_start:0000000000000068 $d
+     /tmp/ccaUNQsf.s:208    .text.hal_tmr_stop:0000000000000000 $t
+     /tmp/ccaUNQsf.s:215    .text.hal_tmr_stop:0000000000000000 hal_tmr_stop
+     /tmp/ccaUNQsf.s:238    .text.hal_tmr_stop:0000000000000010 $d
+     /tmp/ccaUNQsf.s:243    .text.hal_tmr_get_time_ms:0000000000000000 $t
+     /tmp/ccaUNQsf.s:250    .text.hal_tmr_get_time_ms:0000000000000000 hal_tmr_get_time_ms
+     /tmp/ccaUNQsf.s:274    .text.hal_tmr_get_time_ms:0000000000000010 $d
+     /tmp/ccaUNQsf.s:279    .text.hal_tmr_irq_enable:0000000000000000 $t
+     /tmp/ccaUNQsf.s:286    .text.hal_tmr_irq_enable:0000000000000000 hal_tmr_irq_enable
+     /tmp/ccaUNQsf.s:310    .text.hal_tmr_irq_disable:0000000000000000 $t
+     /tmp/ccaUNQsf.s:317    .text.hal_tmr_irq_disable:0000000000000000 hal_tmr_irq_disable
+     /tmp/ccaUNQsf.s:341    .text.LPTIM1_IRQHandler:0000000000000000 $t
+     /tmp/ccaUNQsf.s:348    .text.LPTIM1_IRQHandler:0000000000000000 LPTIM1_IRQHandler
+     /tmp/ccaUNQsf.s:390    .text.LPTIM1_IRQHandler:0000000000000028 $d
+     /tmp/ccaUNQsf.s:396    .text.HAL_LPTIM_MspInit:0000000000000000 $t
+     /tmp/ccaUNQsf.s:403    .text.HAL_LPTIM_MspInit:0000000000000000 HAL_LPTIM_MspInit
+     /tmp/ccaUNQsf.s:463    .text.HAL_LPTIM_MspInit:0000000000000044 $d
+     /tmp/ccaUNQsf.s:469    .text.HAL_LPTIM_MspDeInit:0000000000000000 $t
+     /tmp/ccaUNQsf.s:476    .text.HAL_LPTIM_MspDeInit:0000000000000000 HAL_LPTIM_MspDeInit
+     /tmp/ccaUNQsf.s:524    .text.HAL_LPTIM_MspDeInit:000000000000002c $d
+
+UNDEFINED SYMBOLS
+HAL_LPTIM_Init
+hal_mcu_panic
+__aeabi_uldivmod
+HAL_LPTIM_TimeOut_Start_IT
+HAL_LPTIM_TimeOut_Stop_IT
+HAL_LPTIM_ReadCounter
+HAL_NVIC_EnableIRQ
+HAL_NVIC_DisableIRQ
+HAL_LPTIM_IRQHandler
+HAL_LPTIM_TimeOut_Stop
+HAL_NVIC_SetPriority

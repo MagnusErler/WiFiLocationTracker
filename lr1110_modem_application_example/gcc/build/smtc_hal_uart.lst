@@ -1,0 +1,1581 @@
+ARM GAS  /tmp/ccQINvK1.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"smtc_hal_uart.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.data.hal_uart,"aw"
+  18              		.align	2
+  21              	hal_uart:
+  22 0000 00380140 		.word	1073821696
+  23 0004 00000000 		.word	0
+  24 0008 00000000 		.space	124
+  24      00000000 
+  24      00000000 
+  24      00000000 
+  24      00000000 
+  25 0084 FFFF     		.short	-1
+  26 0086 FFFF     		.short	-1
+  27 0088 00440040 		.word	1073759232
+  28 008c 00000000 		.word	0
+  29 0090 00000000 		.space	124
+  29      00000000 
+  29      00000000 
+  29      00000000 
+  29      00000000 
+  30 010c FFFF     		.short	-1
+  31 010e FFFF     		.short	-1
+  32 0110 00480040 		.word	1073760256
+  33 0114 00000000 		.word	0
+  34 0118 00000000 		.space	124
+  34      00000000 
+  34      00000000 
+  34      00000000 
+  34      00000000 
+  35 0194 FFFF     		.short	-1
+  36 0196 FFFF     		.short	-1
+  37              		.global	uart_rx_done
+  38              		.section	.bss.uart_rx_done,"aw",%nobits
+  41              	uart_rx_done:
+  42 0000 00       		.space	1
+  43              		.section	.text.hal_uart_init,"ax",%progbits
+  44              		.align	1
+  45              		.global	hal_uart_init
+  46              		.arch armv7e-m
+  47              		.syntax unified
+  48              		.thumb
+  49              		.thumb_func
+ARM GAS  /tmp/ccQINvK1.s 			page 2
+
+
+  50              		.fpu fpv4-sp-d16
+  52              	hal_uart_init:
+  53              	.LFB313:
+  54              		.file 1 "../Src/smtc_hal/smtc_hal_uart.c"
+   1:../Src/smtc_hal/smtc_hal_uart.c **** /*!
+   2:../Src/smtc_hal/smtc_hal_uart.c ****  * @file      smtc_hal_uart.c
+   3:../Src/smtc_hal/smtc_hal_uart.c ****  *
+   4:../Src/smtc_hal/smtc_hal_uart.c ****  * @brief     Board specific package UART API implementation.
+   5:../Src/smtc_hal/smtc_hal_uart.c ****  *
+   6:../Src/smtc_hal/smtc_hal_uart.c ****  * Revised BSD License
+   7:../Src/smtc_hal/smtc_hal_uart.c ****  * Copyright Semtech Corporation 2020. All rights reserved.
+   8:../Src/smtc_hal/smtc_hal_uart.c ****  *
+   9:../Src/smtc_hal/smtc_hal_uart.c ****  * Redistribution and use in source and binary forms, with or without
+  10:../Src/smtc_hal/smtc_hal_uart.c ****  * modification, are permitted provided that the following conditions are met:
+  11:../Src/smtc_hal/smtc_hal_uart.c ****  *     * Redistributions of source code must retain the above copyright
+  12:../Src/smtc_hal/smtc_hal_uart.c ****  *       notice, this list of conditions and the following disclaimer.
+  13:../Src/smtc_hal/smtc_hal_uart.c ****  *     * Redistributions in binary form must reproduce the above copyright
+  14:../Src/smtc_hal/smtc_hal_uart.c ****  *       notice, this list of conditions and the following disclaimer in the
+  15:../Src/smtc_hal/smtc_hal_uart.c ****  *       documentation and/or other materials provided with the distribution.
+  16:../Src/smtc_hal/smtc_hal_uart.c ****  *     * Neither the name of the Semtech corporation nor the
+  17:../Src/smtc_hal/smtc_hal_uart.c ****  *       names of its contributors may be used to endorse or promote products
+  18:../Src/smtc_hal/smtc_hal_uart.c ****  *       derived from this software without specific prior written permission.
+  19:../Src/smtc_hal/smtc_hal_uart.c ****  *
+  20:../Src/smtc_hal/smtc_hal_uart.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  21:../Src/smtc_hal/smtc_hal_uart.c ****  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  22:../Src/smtc_hal/smtc_hal_uart.c ****  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  23:../Src/smtc_hal/smtc_hal_uart.c ****  * ARE DISCLAIMED. IN NO EVENT SHALL SEMTECH CORPORATION BE LIABLE FOR ANY
+  24:../Src/smtc_hal/smtc_hal_uart.c ****  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+  25:../Src/smtc_hal/smtc_hal_uart.c ****  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  26:../Src/smtc_hal/smtc_hal_uart.c ****  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+  27:../Src/smtc_hal/smtc_hal_uart.c ****  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  28:../Src/smtc_hal/smtc_hal_uart.c ****  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  29:../Src/smtc_hal/smtc_hal_uart.c ****  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  30:../Src/smtc_hal/smtc_hal_uart.c ****  */
+  31:../Src/smtc_hal/smtc_hal_uart.c **** 
+  32:../Src/smtc_hal/smtc_hal_uart.c **** /*
+  33:../Src/smtc_hal/smtc_hal_uart.c ****  * -----------------------------------------------------------------------------
+  34:../Src/smtc_hal/smtc_hal_uart.c ****  * --- DEPENDENCIES ------------------------------------------------------------
+  35:../Src/smtc_hal/smtc_hal_uart.c ****  */
+  36:../Src/smtc_hal/smtc_hal_uart.c **** 
+  37:../Src/smtc_hal/smtc_hal_uart.c **** #include <stdint.h>   // C99 types
+  38:../Src/smtc_hal/smtc_hal_uart.c **** #include <stdbool.h>  // bool type
+  39:../Src/smtc_hal/smtc_hal_uart.c **** 
+  40:../Src/smtc_hal/smtc_hal_uart.c **** #include "stm32l4xx_hal.h"
+  41:../Src/smtc_hal/smtc_hal_uart.c **** #include "smtc_hal_gpio_pin_names.h"
+  42:../Src/smtc_hal/smtc_hal_uart.c **** #include "smtc_hal_uart.h"
+  43:../Src/smtc_hal/smtc_hal_uart.c **** #include "smtc_hal_mcu.h"
+  44:../Src/smtc_hal/smtc_hal_uart.c **** 
+  45:../Src/smtc_hal/smtc_hal_uart.c **** /*
+  46:../Src/smtc_hal/smtc_hal_uart.c ****  * -----------------------------------------------------------------------------
+  47:../Src/smtc_hal/smtc_hal_uart.c ****  * --- PRIVATE MACROS-----------------------------------------------------------
+  48:../Src/smtc_hal/smtc_hal_uart.c ****  */
+  49:../Src/smtc_hal/smtc_hal_uart.c **** 
+  50:../Src/smtc_hal/smtc_hal_uart.c **** /*
+  51:../Src/smtc_hal/smtc_hal_uart.c ****  * -----------------------------------------------------------------------------
+  52:../Src/smtc_hal/smtc_hal_uart.c ****  * --- PRIVATE CONSTANTS -------------------------------------------------------
+  53:../Src/smtc_hal/smtc_hal_uart.c ****  */
+ARM GAS  /tmp/ccQINvK1.s 			page 3
+
+
+  54:../Src/smtc_hal/smtc_hal_uart.c **** 
+  55:../Src/smtc_hal/smtc_hal_uart.c **** /*
+  56:../Src/smtc_hal/smtc_hal_uart.c ****  * -----------------------------------------------------------------------------
+  57:../Src/smtc_hal/smtc_hal_uart.c ****  * --- PRIVATE TYPES -----------------------------------------------------------
+  58:../Src/smtc_hal/smtc_hal_uart.c ****  */
+  59:../Src/smtc_hal/smtc_hal_uart.c ****  
+  60:../Src/smtc_hal/smtc_hal_uart.c ****  /*!
+  61:../Src/smtc_hal/smtc_hal_uart.c ****  * @brief UART structure
+  62:../Src/smtc_hal/smtc_hal_uart.c ****  */
+  63:../Src/smtc_hal/smtc_hal_uart.c **** typedef struct hal_uart_s
+  64:../Src/smtc_hal/smtc_hal_uart.c **** {
+  65:../Src/smtc_hal/smtc_hal_uart.c ****     USART_TypeDef*     interface;
+  66:../Src/smtc_hal/smtc_hal_uart.c ****     UART_HandleTypeDef handle;
+  67:../Src/smtc_hal/smtc_hal_uart.c ****     struct
+  68:../Src/smtc_hal/smtc_hal_uart.c ****     {
+  69:../Src/smtc_hal/smtc_hal_uart.c ****         hal_gpio_pin_names_t tx;
+  70:../Src/smtc_hal/smtc_hal_uart.c ****         hal_gpio_pin_names_t rx;
+  71:../Src/smtc_hal/smtc_hal_uart.c ****     } pins;
+  72:../Src/smtc_hal/smtc_hal_uart.c **** } hal_uart_t;
+  73:../Src/smtc_hal/smtc_hal_uart.c **** 
+  74:../Src/smtc_hal/smtc_hal_uart.c **** static hal_uart_t hal_uart[] = {
+  75:../Src/smtc_hal/smtc_hal_uart.c ****     [0] =
+  76:../Src/smtc_hal/smtc_hal_uart.c ****         {
+  77:../Src/smtc_hal/smtc_hal_uart.c ****             .interface = USART1,
+  78:../Src/smtc_hal/smtc_hal_uart.c ****             .handle    = { NULL },
+  79:../Src/smtc_hal/smtc_hal_uart.c ****             .pins =
+  80:../Src/smtc_hal/smtc_hal_uart.c ****                 {
+  81:../Src/smtc_hal/smtc_hal_uart.c ****                     .tx = NC,
+  82:../Src/smtc_hal/smtc_hal_uart.c ****                     .rx = NC,
+  83:../Src/smtc_hal/smtc_hal_uart.c ****                 },
+  84:../Src/smtc_hal/smtc_hal_uart.c ****         },
+  85:../Src/smtc_hal/smtc_hal_uart.c ****     [1] =
+  86:../Src/smtc_hal/smtc_hal_uart.c ****         {
+  87:../Src/smtc_hal/smtc_hal_uart.c ****             .interface = USART2,
+  88:../Src/smtc_hal/smtc_hal_uart.c ****             .handle    = { NULL },
+  89:../Src/smtc_hal/smtc_hal_uart.c ****             .pins =
+  90:../Src/smtc_hal/smtc_hal_uart.c ****                 {
+  91:../Src/smtc_hal/smtc_hal_uart.c ****                     .tx = NC,
+  92:../Src/smtc_hal/smtc_hal_uart.c ****                     .rx = NC,
+  93:../Src/smtc_hal/smtc_hal_uart.c ****                 },
+  94:../Src/smtc_hal/smtc_hal_uart.c ****         },
+  95:../Src/smtc_hal/smtc_hal_uart.c ****     [2] =
+  96:../Src/smtc_hal/smtc_hal_uart.c ****         {
+  97:../Src/smtc_hal/smtc_hal_uart.c ****             .interface = USART3,
+  98:../Src/smtc_hal/smtc_hal_uart.c ****             .handle    = { NULL },
+  99:../Src/smtc_hal/smtc_hal_uart.c ****             .pins =
+ 100:../Src/smtc_hal/smtc_hal_uart.c ****                 {
+ 101:../Src/smtc_hal/smtc_hal_uart.c ****                     .tx = NC,
+ 102:../Src/smtc_hal/smtc_hal_uart.c ****                     .rx = NC,
+ 103:../Src/smtc_hal/smtc_hal_uart.c ****                 },
+ 104:../Src/smtc_hal/smtc_hal_uart.c ****         },
+ 105:../Src/smtc_hal/smtc_hal_uart.c **** };
+ 106:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 107:../Src/smtc_hal/smtc_hal_uart.c **** /*
+ 108:../Src/smtc_hal/smtc_hal_uart.c ****  * -----------------------------------------------------------------------------
+ 109:../Src/smtc_hal/smtc_hal_uart.c ****  * --- PRIVATE VARIABLES -------------------------------------------------------
+ 110:../Src/smtc_hal/smtc_hal_uart.c ****  */
+ARM GAS  /tmp/ccQINvK1.s 			page 4
+
+
+ 111:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 112:../Src/smtc_hal/smtc_hal_uart.c **** uint8_t uart_rx_done = false;
+ 113:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 114:../Src/smtc_hal/smtc_hal_uart.c **** /*
+ 115:../Src/smtc_hal/smtc_hal_uart.c ****  * -----------------------------------------------------------------------------
+ 116:../Src/smtc_hal/smtc_hal_uart.c ****  * --- PRIVATE FUNCTIONS DECLARATION -------------------------------------------
+ 117:../Src/smtc_hal/smtc_hal_uart.c ****  */
+ 118:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 119:../Src/smtc_hal/smtc_hal_uart.c **** void USART1_IRQHandler(void);
+ 120:../Src/smtc_hal/smtc_hal_uart.c **** void USART2_IRQHandler(void);
+ 121:../Src/smtc_hal/smtc_hal_uart.c **** void USART3_IRQHandler(void);
+ 122:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 123:../Src/smtc_hal/smtc_hal_uart.c **** /*
+ 124:../Src/smtc_hal/smtc_hal_uart.c ****  * -----------------------------------------------------------------------------
+ 125:../Src/smtc_hal/smtc_hal_uart.c ****  * --- PUBLIC FUNCTIONS DEFINITION ---------------------------------------------
+ 126:../Src/smtc_hal/smtc_hal_uart.c ****  */
+ 127:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 128:../Src/smtc_hal/smtc_hal_uart.c **** void hal_uart_init( const uint32_t id, const hal_gpio_pin_names_t uart_tx, const hal_gpio_pin_names
+ 129:../Src/smtc_hal/smtc_hal_uart.c **** {
+  55              		.loc 1 129 1
+  56              		.cfi_startproc
+  57              		@ args = 0, pretend = 0, frame = 16
+  58              		@ frame_needed = 1, uses_anonymous_args = 0
+  59 0000 80B5     		push	{r7, lr}
+  60              	.LCFI0:
+  61              		.cfi_def_cfa_offset 8
+  62              		.cfi_offset 7, -8
+  63              		.cfi_offset 14, -4
+  64 0002 84B0     		sub	sp, sp, #16
+  65              	.LCFI1:
+  66              		.cfi_def_cfa_offset 24
+  67 0004 00AF     		add	r7, sp, #0
+  68              	.LCFI2:
+  69              		.cfi_def_cfa_register 7
+  70 0006 7860     		str	r0, [r7, #4]
+  71 0008 0B46     		mov	r3, r1
+  72 000a 7B80     		strh	r3, [r7, #2]	@ movhi
+  73 000c 1346     		mov	r3, r2	@ movhi
+  74 000e 3B80     		strh	r3, [r7]	@ movhi
+ 130:../Src/smtc_hal/smtc_hal_uart.c ****     assert_param( ( id > 0 ) && ( ( id - 1 ) < sizeof( hal_uart ) ) );
+ 131:../Src/smtc_hal/smtc_hal_uart.c ****     uint32_t local_id = id - 1;
+  75              		.loc 1 131 14
+  76 0010 7B68     		ldr	r3, [r7, #4]
+  77 0012 013B     		subs	r3, r3, #1
+  78 0014 FB60     		str	r3, [r7, #12]
+ 132:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 133:../Src/smtc_hal/smtc_hal_uart.c ****     hal_uart[local_id].handle.Instance                    = hal_uart[local_id].interface;
+  79              		.loc 1 133 79
+  80 0016 5549     		ldr	r1, .L3
+  81 0018 FA68     		ldr	r2, [r7, #12]
+  82 001a 1346     		mov	r3, r2
+  83 001c 1B01     		lsls	r3, r3, #4
+  84 001e 1344     		add	r3, r3, r2
+  85 0020 DB00     		lsls	r3, r3, #3
+  86 0022 0B44     		add	r3, r3, r1
+  87 0024 1968     		ldr	r1, [r3]
+  88              		.loc 1 133 59
+ARM GAS  /tmp/ccQINvK1.s 			page 5
+
+
+  89 0026 5148     		ldr	r0, .L3
+  90 0028 FA68     		ldr	r2, [r7, #12]
+  91 002a 1346     		mov	r3, r2
+  92 002c 1B01     		lsls	r3, r3, #4
+  93 002e 1344     		add	r3, r3, r2
+  94 0030 DB00     		lsls	r3, r3, #3
+  95 0032 0344     		add	r3, r3, r0
+  96 0034 0433     		adds	r3, r3, #4
+  97 0036 1960     		str	r1, [r3]
+ 134:../Src/smtc_hal/smtc_hal_uart.c ****     hal_uart[local_id].handle.Init.BaudRate               = 921600;
+  98              		.loc 1 134 59
+  99 0038 4C49     		ldr	r1, .L3
+ 100 003a FA68     		ldr	r2, [r7, #12]
+ 101 003c 1346     		mov	r3, r2
+ 102 003e 1B01     		lsls	r3, r3, #4
+ 103 0040 1344     		add	r3, r3, r2
+ 104 0042 DB00     		lsls	r3, r3, #3
+ 105 0044 0B44     		add	r3, r3, r1
+ 106 0046 0833     		adds	r3, r3, #8
+ 107 0048 4FF46122 		mov	r2, #921600
+ 108 004c 1A60     		str	r2, [r3]
+ 135:../Src/smtc_hal/smtc_hal_uart.c ****     hal_uart[local_id].handle.Init.WordLength             = UART_WORDLENGTH_8B;
+ 109              		.loc 1 135 59
+ 110 004e 4749     		ldr	r1, .L3
+ 111 0050 FA68     		ldr	r2, [r7, #12]
+ 112 0052 1346     		mov	r3, r2
+ 113 0054 1B01     		lsls	r3, r3, #4
+ 114 0056 1344     		add	r3, r3, r2
+ 115 0058 DB00     		lsls	r3, r3, #3
+ 116 005a 0B44     		add	r3, r3, r1
+ 117 005c 0C33     		adds	r3, r3, #12
+ 118 005e 0022     		movs	r2, #0
+ 119 0060 1A60     		str	r2, [r3]
+ 136:../Src/smtc_hal/smtc_hal_uart.c ****     hal_uart[local_id].handle.Init.StopBits               = UART_STOPBITS_1;
+ 120              		.loc 1 136 59
+ 121 0062 4249     		ldr	r1, .L3
+ 122 0064 FA68     		ldr	r2, [r7, #12]
+ 123 0066 1346     		mov	r3, r2
+ 124 0068 1B01     		lsls	r3, r3, #4
+ 125 006a 1344     		add	r3, r3, r2
+ 126 006c DB00     		lsls	r3, r3, #3
+ 127 006e 0B44     		add	r3, r3, r1
+ 128 0070 1033     		adds	r3, r3, #16
+ 129 0072 0022     		movs	r2, #0
+ 130 0074 1A60     		str	r2, [r3]
+ 137:../Src/smtc_hal/smtc_hal_uart.c ****     hal_uart[local_id].handle.Init.Parity                 = UART_PARITY_NONE;
+ 131              		.loc 1 137 59
+ 132 0076 3D49     		ldr	r1, .L3
+ 133 0078 FA68     		ldr	r2, [r7, #12]
+ 134 007a 1346     		mov	r3, r2
+ 135 007c 1B01     		lsls	r3, r3, #4
+ 136 007e 1344     		add	r3, r3, r2
+ 137 0080 DB00     		lsls	r3, r3, #3
+ 138 0082 0B44     		add	r3, r3, r1
+ 139 0084 1433     		adds	r3, r3, #20
+ 140 0086 0022     		movs	r2, #0
+ 141 0088 1A60     		str	r2, [r3]
+ARM GAS  /tmp/ccQINvK1.s 			page 6
+
+
+ 138:../Src/smtc_hal/smtc_hal_uart.c ****     hal_uart[local_id].handle.Init.Mode                   = UART_MODE_TX_RX;
+ 142              		.loc 1 138 59
+ 143 008a 3849     		ldr	r1, .L3
+ 144 008c FA68     		ldr	r2, [r7, #12]
+ 145 008e 1346     		mov	r3, r2
+ 146 0090 1B01     		lsls	r3, r3, #4
+ 147 0092 1344     		add	r3, r3, r2
+ 148 0094 DB00     		lsls	r3, r3, #3
+ 149 0096 0B44     		add	r3, r3, r1
+ 150 0098 1833     		adds	r3, r3, #24
+ 151 009a 0C22     		movs	r2, #12
+ 152 009c 1A60     		str	r2, [r3]
+ 139:../Src/smtc_hal/smtc_hal_uart.c ****     hal_uart[local_id].handle.Init.HwFlowCtl              = UART_HWCONTROL_NONE;
+ 153              		.loc 1 139 59
+ 154 009e 3349     		ldr	r1, .L3
+ 155 00a0 FA68     		ldr	r2, [r7, #12]
+ 156 00a2 1346     		mov	r3, r2
+ 157 00a4 1B01     		lsls	r3, r3, #4
+ 158 00a6 1344     		add	r3, r3, r2
+ 159 00a8 DB00     		lsls	r3, r3, #3
+ 160 00aa 0B44     		add	r3, r3, r1
+ 161 00ac 1C33     		adds	r3, r3, #28
+ 162 00ae 0022     		movs	r2, #0
+ 163 00b0 1A60     		str	r2, [r3]
+ 140:../Src/smtc_hal/smtc_hal_uart.c ****     hal_uart[local_id].handle.Init.OverSampling           = UART_OVERSAMPLING_16;
+ 164              		.loc 1 140 59
+ 165 00b2 2E49     		ldr	r1, .L3
+ 166 00b4 FA68     		ldr	r2, [r7, #12]
+ 167 00b6 1346     		mov	r3, r2
+ 168 00b8 1B01     		lsls	r3, r3, #4
+ 169 00ba 1344     		add	r3, r3, r2
+ 170 00bc DB00     		lsls	r3, r3, #3
+ 171 00be 0B44     		add	r3, r3, r1
+ 172 00c0 2033     		adds	r3, r3, #32
+ 173 00c2 0022     		movs	r2, #0
+ 174 00c4 1A60     		str	r2, [r3]
+ 141:../Src/smtc_hal/smtc_hal_uart.c ****     hal_uart[local_id].handle.Init.OneBitSampling         = UART_ONE_BIT_SAMPLE_DISABLE;
+ 175              		.loc 1 141 59
+ 176 00c6 2949     		ldr	r1, .L3
+ 177 00c8 FA68     		ldr	r2, [r7, #12]
+ 178 00ca 1346     		mov	r3, r2
+ 179 00cc 1B01     		lsls	r3, r3, #4
+ 180 00ce 1344     		add	r3, r3, r2
+ 181 00d0 DB00     		lsls	r3, r3, #3
+ 182 00d2 0B44     		add	r3, r3, r1
+ 183 00d4 2433     		adds	r3, r3, #36
+ 184 00d6 0022     		movs	r2, #0
+ 185 00d8 1A60     		str	r2, [r3]
+ 142:../Src/smtc_hal/smtc_hal_uart.c ****     hal_uart[local_id].handle.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
+ 186              		.loc 1 142 59
+ 187 00da 2449     		ldr	r1, .L3
+ 188 00dc FA68     		ldr	r2, [r7, #12]
+ 189 00de 1346     		mov	r3, r2
+ 190 00e0 1B01     		lsls	r3, r3, #4
+ 191 00e2 1344     		add	r3, r3, r2
+ 192 00e4 DB00     		lsls	r3, r3, #3
+ 193 00e6 0B44     		add	r3, r3, r1
+ARM GAS  /tmp/ccQINvK1.s 			page 7
+
+
+ 194 00e8 2833     		adds	r3, r3, #40
+ 195 00ea 0022     		movs	r2, #0
+ 196 00ec 1A60     		str	r2, [r3]
+ 143:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 144:../Src/smtc_hal/smtc_hal_uart.c ****     hal_uart[local_id].pins.tx = uart_tx;
+ 197              		.loc 1 144 32
+ 198 00ee 1F49     		ldr	r1, .L3
+ 199 00f0 FA68     		ldr	r2, [r7, #12]
+ 200 00f2 1346     		mov	r3, r2
+ 201 00f4 1B01     		lsls	r3, r3, #4
+ 202 00f6 1344     		add	r3, r3, r2
+ 203 00f8 DB00     		lsls	r3, r3, #3
+ 204 00fa 0B44     		add	r3, r3, r1
+ 205 00fc 8433     		adds	r3, r3, #132
+ 206 00fe 7A88     		ldrh	r2, [r7, #2]	@ movhi
+ 207 0100 1A80     		strh	r2, [r3]	@ movhi
+ 145:../Src/smtc_hal/smtc_hal_uart.c ****     hal_uart[local_id].pins.rx = uart_rx;
+ 208              		.loc 1 145 32
+ 209 0102 1A49     		ldr	r1, .L3
+ 210 0104 FA68     		ldr	r2, [r7, #12]
+ 211 0106 1346     		mov	r3, r2
+ 212 0108 1B01     		lsls	r3, r3, #4
+ 213 010a 1344     		add	r3, r3, r2
+ 214 010c DB00     		lsls	r3, r3, #3
+ 215 010e 0B44     		add	r3, r3, r1
+ 216 0110 8633     		adds	r3, r3, #134
+ 217 0112 3A88     		ldrh	r2, [r7]	@ movhi
+ 218 0114 1A80     		strh	r2, [r3]	@ movhi
+ 146:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 147:../Src/smtc_hal/smtc_hal_uart.c ****     if( HAL_UART_Init( &hal_uart[local_id].handle ) != HAL_OK )
+ 219              		.loc 1 147 9
+ 220 0116 FA68     		ldr	r2, [r7, #12]
+ 221 0118 1346     		mov	r3, r2
+ 222 011a 1B01     		lsls	r3, r3, #4
+ 223 011c 1344     		add	r3, r3, r2
+ 224 011e DB00     		lsls	r3, r3, #3
+ 225 0120 124A     		ldr	r2, .L3
+ 226 0122 1344     		add	r3, r3, r2
+ 227 0124 0433     		adds	r3, r3, #4
+ 228 0126 1846     		mov	r0, r3
+ 229 0128 FFF7FEFF 		bl	HAL_UART_Init
+ 230 012c 0346     		mov	r3, r0
+ 231              		.loc 1 147 7
+ 232 012e 002B     		cmp	r3, #0
+ 233 0130 01D0     		beq	.L2
+ 148:../Src/smtc_hal/smtc_hal_uart.c ****     {
+ 149:../Src/smtc_hal/smtc_hal_uart.c ****         hal_mcu_panic( );
+ 234              		.loc 1 149 9
+ 235 0132 FFF7FEFF 		bl	hal_mcu_panic
+ 236              	.L2:
+ 150:../Src/smtc_hal/smtc_hal_uart.c ****     }
+ 151:../Src/smtc_hal/smtc_hal_uart.c ****     __HAL_UART_ENABLE( &hal_uart[local_id].handle );
+ 237              		.loc 1 151 5
+ 238 0136 0D49     		ldr	r1, .L3
+ 239 0138 FA68     		ldr	r2, [r7, #12]
+ 240 013a 1346     		mov	r3, r2
+ 241 013c 1B01     		lsls	r3, r3, #4
+ARM GAS  /tmp/ccQINvK1.s 			page 8
+
+
+ 242 013e 1344     		add	r3, r3, r2
+ 243 0140 DB00     		lsls	r3, r3, #3
+ 244 0142 0B44     		add	r3, r3, r1
+ 245 0144 0433     		adds	r3, r3, #4
+ 246 0146 1B68     		ldr	r3, [r3]
+ 247 0148 1968     		ldr	r1, [r3]
+ 248 014a 0848     		ldr	r0, .L3
+ 249 014c FA68     		ldr	r2, [r7, #12]
+ 250 014e 1346     		mov	r3, r2
+ 251 0150 1B01     		lsls	r3, r3, #4
+ 252 0152 1344     		add	r3, r3, r2
+ 253 0154 DB00     		lsls	r3, r3, #3
+ 254 0156 0344     		add	r3, r3, r0
+ 255 0158 0433     		adds	r3, r3, #4
+ 256 015a 1B68     		ldr	r3, [r3]
+ 257 015c 41F00102 		orr	r2, r1, #1
+ 258 0160 1A60     		str	r2, [r3]
+ 152:../Src/smtc_hal/smtc_hal_uart.c **** }
+ 259              		.loc 1 152 1
+ 260 0162 00BF     		nop
+ 261 0164 1037     		adds	r7, r7, #16
+ 262              	.LCFI3:
+ 263              		.cfi_def_cfa_offset 8
+ 264 0166 BD46     		mov	sp, r7
+ 265              	.LCFI4:
+ 266              		.cfi_def_cfa_register 13
+ 267              		@ sp needed
+ 268 0168 80BD     		pop	{r7, pc}
+ 269              	.L4:
+ 270 016a 00BF     		.align	2
+ 271              	.L3:
+ 272 016c 00000000 		.word	hal_uart
+ 273              		.cfi_endproc
+ 274              	.LFE313:
+ 276              		.section	.text.hal_uart_deinit,"ax",%progbits
+ 277              		.align	1
+ 278              		.global	hal_uart_deinit
+ 279              		.syntax unified
+ 280              		.thumb
+ 281              		.thumb_func
+ 282              		.fpu fpv4-sp-d16
+ 284              	hal_uart_deinit:
+ 285              	.LFB314:
+ 153:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 154:../Src/smtc_hal/smtc_hal_uart.c **** void hal_uart_deinit( const uint32_t id )
+ 155:../Src/smtc_hal/smtc_hal_uart.c **** {
+ 286              		.loc 1 155 1
+ 287              		.cfi_startproc
+ 288              		@ args = 0, pretend = 0, frame = 16
+ 289              		@ frame_needed = 1, uses_anonymous_args = 0
+ 290 0000 80B5     		push	{r7, lr}
+ 291              	.LCFI5:
+ 292              		.cfi_def_cfa_offset 8
+ 293              		.cfi_offset 7, -8
+ 294              		.cfi_offset 14, -4
+ 295 0002 84B0     		sub	sp, sp, #16
+ 296              	.LCFI6:
+ARM GAS  /tmp/ccQINvK1.s 			page 9
+
+
+ 297              		.cfi_def_cfa_offset 24
+ 298 0004 00AF     		add	r7, sp, #0
+ 299              	.LCFI7:
+ 300              		.cfi_def_cfa_register 7
+ 301 0006 7860     		str	r0, [r7, #4]
+ 156:../Src/smtc_hal/smtc_hal_uart.c ****     assert_param( ( id > 0 ) && ( ( id - 1 ) < sizeof( hal_uart ) ) );
+ 157:../Src/smtc_hal/smtc_hal_uart.c ****     uint32_t local_id = id - 1;
+ 302              		.loc 1 157 14
+ 303 0008 7B68     		ldr	r3, [r7, #4]
+ 304 000a 013B     		subs	r3, r3, #1
+ 305 000c FB60     		str	r3, [r7, #12]
+ 158:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 159:../Src/smtc_hal/smtc_hal_uart.c ****     HAL_UART_DeInit( &hal_uart[local_id].handle );
+ 306              		.loc 1 159 5
+ 307 000e FA68     		ldr	r2, [r7, #12]
+ 308 0010 1346     		mov	r3, r2
+ 309 0012 1B01     		lsls	r3, r3, #4
+ 310 0014 1344     		add	r3, r3, r2
+ 311 0016 DB00     		lsls	r3, r3, #3
+ 312 0018 044A     		ldr	r2, .L6
+ 313 001a 1344     		add	r3, r3, r2
+ 314 001c 0433     		adds	r3, r3, #4
+ 315 001e 1846     		mov	r0, r3
+ 316 0020 FFF7FEFF 		bl	HAL_UART_DeInit
+ 160:../Src/smtc_hal/smtc_hal_uart.c **** }
+ 317              		.loc 1 160 1
+ 318 0024 00BF     		nop
+ 319 0026 1037     		adds	r7, r7, #16
+ 320              	.LCFI8:
+ 321              		.cfi_def_cfa_offset 8
+ 322 0028 BD46     		mov	sp, r7
+ 323              	.LCFI9:
+ 324              		.cfi_def_cfa_register 13
+ 325              		@ sp needed
+ 326 002a 80BD     		pop	{r7, pc}
+ 327              	.L7:
+ 328              		.align	2
+ 329              	.L6:
+ 330 002c 00000000 		.word	hal_uart
+ 331              		.cfi_endproc
+ 332              	.LFE314:
+ 334              		.section	.text.hal_uart_tx,"ax",%progbits
+ 335              		.align	1
+ 336              		.global	hal_uart_tx
+ 337              		.syntax unified
+ 338              		.thumb
+ 339              		.thumb_func
+ 340              		.fpu fpv4-sp-d16
+ 342              	hal_uart_tx:
+ 343              	.LFB315:
+ 161:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 162:../Src/smtc_hal/smtc_hal_uart.c **** void hal_uart_tx( const uint32_t id, uint8_t* buff, uint16_t len )
+ 163:../Src/smtc_hal/smtc_hal_uart.c **** {
+ 344              		.loc 1 163 1
+ 345              		.cfi_startproc
+ 346              		@ args = 0, pretend = 0, frame = 24
+ 347              		@ frame_needed = 1, uses_anonymous_args = 0
+ARM GAS  /tmp/ccQINvK1.s 			page 10
+
+
+ 348 0000 80B5     		push	{r7, lr}
+ 349              	.LCFI10:
+ 350              		.cfi_def_cfa_offset 8
+ 351              		.cfi_offset 7, -8
+ 352              		.cfi_offset 14, -4
+ 353 0002 86B0     		sub	sp, sp, #24
+ 354              	.LCFI11:
+ 355              		.cfi_def_cfa_offset 32
+ 356 0004 00AF     		add	r7, sp, #0
+ 357              	.LCFI12:
+ 358              		.cfi_def_cfa_register 7
+ 359 0006 F860     		str	r0, [r7, #12]
+ 360 0008 B960     		str	r1, [r7, #8]
+ 361 000a 1346     		mov	r3, r2
+ 362 000c FB80     		strh	r3, [r7, #6]	@ movhi
+ 164:../Src/smtc_hal/smtc_hal_uart.c ****     assert_param( ( id > 0 ) && ( ( id - 1 ) < sizeof( hal_uart ) ) );
+ 165:../Src/smtc_hal/smtc_hal_uart.c ****     uint32_t local_id = id - 1;
+ 363              		.loc 1 165 14
+ 364 000e FB68     		ldr	r3, [r7, #12]
+ 365 0010 013B     		subs	r3, r3, #1
+ 366 0012 7B61     		str	r3, [r7, #20]
+ 166:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 167:../Src/smtc_hal/smtc_hal_uart.c ****     HAL_UART_Transmit( &hal_uart[local_id].handle, ( uint8_t* ) buff, len, 0xffffff );
+ 367              		.loc 1 167 5
+ 368 0014 7A69     		ldr	r2, [r7, #20]
+ 369 0016 1346     		mov	r3, r2
+ 370 0018 1B01     		lsls	r3, r3, #4
+ 371 001a 1344     		add	r3, r3, r2
+ 372 001c DB00     		lsls	r3, r3, #3
+ 373 001e 064A     		ldr	r2, .L9
+ 374 0020 1344     		add	r3, r3, r2
+ 375 0022 181D     		adds	r0, r3, #4
+ 376 0024 FA88     		ldrh	r2, [r7, #6]
+ 377 0026 6FF07F43 		mvn	r3, #-16777216
+ 378 002a B968     		ldr	r1, [r7, #8]
+ 379 002c FFF7FEFF 		bl	HAL_UART_Transmit
+ 168:../Src/smtc_hal/smtc_hal_uart.c **** }
+ 380              		.loc 1 168 1
+ 381 0030 00BF     		nop
+ 382 0032 1837     		adds	r7, r7, #24
+ 383              	.LCFI13:
+ 384              		.cfi_def_cfa_offset 8
+ 385 0034 BD46     		mov	sp, r7
+ 386              	.LCFI14:
+ 387              		.cfi_def_cfa_register 13
+ 388              		@ sp needed
+ 389 0036 80BD     		pop	{r7, pc}
+ 390              	.L10:
+ 391              		.align	2
+ 392              	.L9:
+ 393 0038 00000000 		.word	hal_uart
+ 394              		.cfi_endproc
+ 395              	.LFE315:
+ 397              		.section	.text.hal_uart_rx,"ax",%progbits
+ 398              		.align	1
+ 399              		.global	hal_uart_rx
+ 400              		.syntax unified
+ARM GAS  /tmp/ccQINvK1.s 			page 11
+
+
+ 401              		.thumb
+ 402              		.thumb_func
+ 403              		.fpu fpv4-sp-d16
+ 405              	hal_uart_rx:
+ 406              	.LFB316:
+ 169:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 170:../Src/smtc_hal/smtc_hal_uart.c **** void hal_uart_rx( const uint32_t id, uint8_t* rx_buffer, uint8_t len )
+ 171:../Src/smtc_hal/smtc_hal_uart.c **** {
+ 407              		.loc 1 171 1
+ 408              		.cfi_startproc
+ 409              		@ args = 0, pretend = 0, frame = 24
+ 410              		@ frame_needed = 1, uses_anonymous_args = 0
+ 411 0000 80B5     		push	{r7, lr}
+ 412              	.LCFI15:
+ 413              		.cfi_def_cfa_offset 8
+ 414              		.cfi_offset 7, -8
+ 415              		.cfi_offset 14, -4
+ 416 0002 86B0     		sub	sp, sp, #24
+ 417              	.LCFI16:
+ 418              		.cfi_def_cfa_offset 32
+ 419 0004 00AF     		add	r7, sp, #0
+ 420              	.LCFI17:
+ 421              		.cfi_def_cfa_register 7
+ 422 0006 F860     		str	r0, [r7, #12]
+ 423 0008 B960     		str	r1, [r7, #8]
+ 424 000a 1346     		mov	r3, r2
+ 425 000c FB71     		strb	r3, [r7, #7]
+ 172:../Src/smtc_hal/smtc_hal_uart.c ****     assert_param( ( id > 0 ) && ( ( id - 1 ) < sizeof( hal_uart ) ) );
+ 173:../Src/smtc_hal/smtc_hal_uart.c ****     uint32_t local_id = id - 1;
+ 426              		.loc 1 173 14
+ 427 000e FB68     		ldr	r3, [r7, #12]
+ 428 0010 013B     		subs	r3, r3, #1
+ 429 0012 7B61     		str	r3, [r7, #20]
+ 174:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 175:../Src/smtc_hal/smtc_hal_uart.c ****     HAL_UART_Receive_IT( &hal_uart[local_id].handle, rx_buffer, len );
+ 430              		.loc 1 175 5
+ 431 0014 7A69     		ldr	r2, [r7, #20]
+ 432 0016 1346     		mov	r3, r2
+ 433 0018 1B01     		lsls	r3, r3, #4
+ 434 001a 1344     		add	r3, r3, r2
+ 435 001c DB00     		lsls	r3, r3, #3
+ 436 001e 0A4A     		ldr	r2, .L13
+ 437 0020 1344     		add	r3, r3, r2
+ 438 0022 0433     		adds	r3, r3, #4
+ 439 0024 FA79     		ldrb	r2, [r7, #7]	@ zero_extendqisi2
+ 440 0026 92B2     		uxth	r2, r2
+ 441 0028 B968     		ldr	r1, [r7, #8]
+ 442 002a 1846     		mov	r0, r3
+ 443 002c FFF7FEFF 		bl	HAL_UART_Receive_IT
+ 176:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 177:../Src/smtc_hal/smtc_hal_uart.c ****     while( uart_rx_done != true )
+ 444              		.loc 1 177 10
+ 445 0030 00BF     		nop
+ 446              	.L12:
+ 447              		.loc 1 177 25 discriminator 1
+ 448 0032 064B     		ldr	r3, .L13+4
+ 449 0034 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ARM GAS  /tmp/ccQINvK1.s 			page 12
+
+
+ 450              		.loc 1 177 10 discriminator 1
+ 451 0036 012B     		cmp	r3, #1
+ 452 0038 FBD1     		bne	.L12
+ 178:../Src/smtc_hal/smtc_hal_uart.c ****         ;
+ 179:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 180:../Src/smtc_hal/smtc_hal_uart.c ****     uart_rx_done = false;
+ 453              		.loc 1 180 18
+ 454 003a 044B     		ldr	r3, .L13+4
+ 455 003c 0022     		movs	r2, #0
+ 456 003e 1A70     		strb	r2, [r3]
+ 181:../Src/smtc_hal/smtc_hal_uart.c **** }
+ 457              		.loc 1 181 1
+ 458 0040 00BF     		nop
+ 459 0042 1837     		adds	r7, r7, #24
+ 460              	.LCFI18:
+ 461              		.cfi_def_cfa_offset 8
+ 462 0044 BD46     		mov	sp, r7
+ 463              	.LCFI19:
+ 464              		.cfi_def_cfa_register 13
+ 465              		@ sp needed
+ 466 0046 80BD     		pop	{r7, pc}
+ 467              	.L14:
+ 468              		.align	2
+ 469              	.L13:
+ 470 0048 00000000 		.word	hal_uart
+ 471 004c 00000000 		.word	uart_rx_done
+ 472              		.cfi_endproc
+ 473              	.LFE316:
+ 475              		.section	.text.HAL_UART_MspInit,"ax",%progbits
+ 476              		.align	1
+ 477              		.global	HAL_UART_MspInit
+ 478              		.syntax unified
+ 479              		.thumb
+ 480              		.thumb_func
+ 481              		.fpu fpv4-sp-d16
+ 483              	HAL_UART_MspInit:
+ 484              	.LFB317:
+ 182:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 183:../Src/smtc_hal/smtc_hal_uart.c **** void HAL_UART_MspInit( UART_HandleTypeDef* huart )
+ 184:../Src/smtc_hal/smtc_hal_uart.c **** {
+ 485              		.loc 1 184 1
+ 486              		.cfi_startproc
+ 487              		@ args = 0, pretend = 0, frame = 96
+ 488              		@ frame_needed = 1, uses_anonymous_args = 0
+ 489 0000 80B5     		push	{r7, lr}
+ 490              	.LCFI20:
+ 491              		.cfi_def_cfa_offset 8
+ 492              		.cfi_offset 7, -8
+ 493              		.cfi_offset 14, -4
+ 494 0002 98B0     		sub	sp, sp, #96
+ 495              	.LCFI21:
+ 496              		.cfi_def_cfa_offset 104
+ 497 0004 00AF     		add	r7, sp, #0
+ 498              	.LCFI22:
+ 499              		.cfi_def_cfa_register 7
+ 500 0006 7860     		str	r0, [r7, #4]
+ 185:../Src/smtc_hal/smtc_hal_uart.c ****     if( huart->Instance == hal_uart[0].interface )
+ARM GAS  /tmp/ccQINvK1.s 			page 13
+
+
+ 501              		.loc 1 185 14
+ 502 0008 7B68     		ldr	r3, [r7, #4]
+ 503 000a 1A68     		ldr	r2, [r3]
+ 504              		.loc 1 185 39
+ 505 000c 744B     		ldr	r3, .L21
+ 506 000e 1B68     		ldr	r3, [r3]
+ 507              		.loc 1 185 7
+ 508 0010 9A42     		cmp	r2, r3
+ 509 0012 45D1     		bne	.L16
+ 510              	.LBB2:
+ 186:../Src/smtc_hal/smtc_hal_uart.c ****     {
+ 187:../Src/smtc_hal/smtc_hal_uart.c ****         GPIO_TypeDef*    gpio_port = ( GPIO_TypeDef* ) ( AHB2PERIPH_BASE + ( ( hal_uart[0].pins.tx 
+ 511              		.loc 1 187 96
+ 512 0014 724B     		ldr	r3, .L21
+ 513 0016 B3F98430 		ldrsh	r3, [r3, #132]
+ 514              		.loc 1 187 109
+ 515 001a 9BB2     		uxth	r3, r3
+ 516 001c 9B01     		lsls	r3, r3, #6
+ 517 001e 03F47053 		and	r3, r3, #15360
+ 518              		.loc 1 187 74
+ 519 0022 03F19043 		add	r3, r3, #1207959552
+ 520              		.loc 1 187 26
+ 521 0026 7B65     		str	r3, [r7, #84]
+ 188:../Src/smtc_hal/smtc_hal_uart.c ****         GPIO_InitTypeDef gpio      = {
+ 522              		.loc 1 188 26
+ 523 0028 07F14003 		add	r3, r7, #64
+ 524 002c 0022     		movs	r2, #0
+ 525 002e 1A60     		str	r2, [r3]
+ 526 0030 5A60     		str	r2, [r3, #4]
+ 527 0032 9A60     		str	r2, [r3, #8]
+ 528 0034 DA60     		str	r2, [r3, #12]
+ 529 0036 1A61     		str	r2, [r3, #16]
+ 530 0038 0223     		movs	r3, #2
+ 531 003a 7B64     		str	r3, [r7, #68]
+ 532 003c 0223     		movs	r3, #2
+ 533 003e FB64     		str	r3, [r7, #76]
+ 534 0040 0723     		movs	r3, #7
+ 535 0042 3B65     		str	r3, [r7, #80]
+ 189:../Src/smtc_hal/smtc_hal_uart.c ****             .Mode      = GPIO_MODE_AF_PP,
+ 190:../Src/smtc_hal/smtc_hal_uart.c ****             .Pull      = GPIO_NOPULL,
+ 191:../Src/smtc_hal/smtc_hal_uart.c ****             .Speed     = GPIO_SPEED_FREQ_HIGH,
+ 192:../Src/smtc_hal/smtc_hal_uart.c ****             .Alternate = GPIO_AF7_USART1,
+ 193:../Src/smtc_hal/smtc_hal_uart.c ****         };
+ 194:../Src/smtc_hal/smtc_hal_uart.c ****         gpio.Pin = ( 1 << ( hal_uart[0].pins.tx & 0x0F ) ) | ( 1 << ( hal_uart[0].pins.rx & 0x0F ) 
+ 536              		.loc 1 194 45
+ 537 0044 664B     		ldr	r3, .L21
+ 538 0046 B3F98430 		ldrsh	r3, [r3, #132]
+ 539              		.loc 1 194 49
+ 540 004a 9BB2     		uxth	r3, r3
+ 541 004c 03F00F03 		and	r3, r3, #15
+ 542              		.loc 1 194 24
+ 543 0050 0122     		movs	r2, #1
+ 544 0052 9A40     		lsls	r2, r2, r3
+ 545              		.loc 1 194 87
+ 546 0054 624B     		ldr	r3, .L21
+ 547 0056 B3F98630 		ldrsh	r3, [r3, #134]
+ 548              		.loc 1 194 91
+ARM GAS  /tmp/ccQINvK1.s 			page 14
+
+
+ 549 005a 9BB2     		uxth	r3, r3
+ 550 005c 03F00F03 		and	r3, r3, #15
+ 551              		.loc 1 194 66
+ 552 0060 0121     		movs	r1, #1
+ 553 0062 01FA03F3 		lsl	r3, r1, r3
+ 554              		.loc 1 194 60
+ 555 0066 1343     		orrs	r3, r3, r2
+ 556              		.loc 1 194 18
+ 557 0068 3B64     		str	r3, [r7, #64]
+ 195:../Src/smtc_hal/smtc_hal_uart.c ****         HAL_GPIO_Init( gpio_port, &gpio );
+ 558              		.loc 1 195 9
+ 559 006a 07F14003 		add	r3, r7, #64
+ 560 006e 1946     		mov	r1, r3
+ 561 0070 786D     		ldr	r0, [r7, #84]
+ 562 0072 FFF7FEFF 		bl	HAL_GPIO_Init
+ 196:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 197:../Src/smtc_hal/smtc_hal_uart.c ****         /* NVIC for USART1 */
+ 198:../Src/smtc_hal/smtc_hal_uart.c ****         HAL_NVIC_SetPriority( USART1_IRQn, 0, 1 );
+ 563              		.loc 1 198 9
+ 564 0076 0122     		movs	r2, #1
+ 565 0078 0021     		movs	r1, #0
+ 566 007a 2520     		movs	r0, #37
+ 567 007c FFF7FEFF 		bl	HAL_NVIC_SetPriority
+ 199:../Src/smtc_hal/smtc_hal_uart.c ****         HAL_NVIC_EnableIRQ( USART1_IRQn );
+ 568              		.loc 1 199 9
+ 569 0080 2520     		movs	r0, #37
+ 570 0082 FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
+ 571              	.LBB3:
+ 200:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 201:../Src/smtc_hal/smtc_hal_uart.c ****         __HAL_RCC_USART1_CLK_ENABLE( );
+ 572              		.loc 1 201 9
+ 573 0086 574B     		ldr	r3, .L21+4
+ 574 0088 1B6E     		ldr	r3, [r3, #96]
+ 575 008a 564A     		ldr	r2, .L21+4
+ 576 008c 43F48043 		orr	r3, r3, #16384
+ 577 0090 1366     		str	r3, [r2, #96]
+ 578 0092 544B     		ldr	r3, .L21+4
+ 579 0094 1B6E     		ldr	r3, [r3, #96]
+ 580 0096 03F48043 		and	r3, r3, #16384
+ 581 009a FB63     		str	r3, [r7, #60]
+ 582 009c FB6B     		ldr	r3, [r7, #60]
+ 583              	.LBE3:
+ 584              	.LBE2:
+ 202:../Src/smtc_hal/smtc_hal_uart.c ****     }
+ 203:../Src/smtc_hal/smtc_hal_uart.c ****     else if( huart->Instance == hal_uart[1].interface )
+ 204:../Src/smtc_hal/smtc_hal_uart.c ****     {
+ 205:../Src/smtc_hal/smtc_hal_uart.c ****         GPIO_TypeDef* gpio_port =
+ 206:../Src/smtc_hal/smtc_hal_uart.c ****             ( GPIO_TypeDef* ) ( AHB2PERIPH_BASE +
+ 207:../Src/smtc_hal/smtc_hal_uart.c ****                                 ( ( hal_uart[1].pins.tx & 0xF0 ) << 6 ) );
+ 208:../Src/smtc_hal/smtc_hal_uart.c ****         GPIO_InitTypeDef gpio = {
+ 209:../Src/smtc_hal/smtc_hal_uart.c ****             .Mode      = GPIO_MODE_AF_PP,
+ 210:../Src/smtc_hal/smtc_hal_uart.c ****             .Pull      = GPIO_NOPULL,
+ 211:../Src/smtc_hal/smtc_hal_uart.c ****             .Speed     = GPIO_SPEED_HIGH,
+ 212:../Src/smtc_hal/smtc_hal_uart.c ****             .Alternate = GPIO_AF7_USART2,
+ 213:../Src/smtc_hal/smtc_hal_uart.c ****         };
+ 214:../Src/smtc_hal/smtc_hal_uart.c ****         gpio.Pin = ( 1 << ( hal_uart[1].pins.tx & 0x0F ) ) |
+ 215:../Src/smtc_hal/smtc_hal_uart.c ****                    ( 1 << ( hal_uart[1].pins.rx & 0x0F ) ) ;
+ARM GAS  /tmp/ccQINvK1.s 			page 15
+
+
+ 216:../Src/smtc_hal/smtc_hal_uart.c ****         HAL_GPIO_Init( gpio_port, &gpio );
+ 217:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 218:../Src/smtc_hal/smtc_hal_uart.c ****         /* NVIC for USART2 */
+ 219:../Src/smtc_hal/smtc_hal_uart.c ****         HAL_NVIC_SetPriority(USART2_IRQn, 0, 1);
+ 220:../Src/smtc_hal/smtc_hal_uart.c ****         HAL_NVIC_EnableIRQ(USART2_IRQn);
+ 221:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 222:../Src/smtc_hal/smtc_hal_uart.c ****         __HAL_RCC_USART2_CLK_ENABLE( );
+ 223:../Src/smtc_hal/smtc_hal_uart.c ****     }
+ 224:../Src/smtc_hal/smtc_hal_uart.c ****     else if( huart->Instance == hal_uart[2].interface )
+ 225:../Src/smtc_hal/smtc_hal_uart.c ****     {
+ 226:../Src/smtc_hal/smtc_hal_uart.c ****         GPIO_TypeDef* gpio_port =
+ 227:../Src/smtc_hal/smtc_hal_uart.c ****             ( GPIO_TypeDef* ) ( AHB2PERIPH_BASE +
+ 228:../Src/smtc_hal/smtc_hal_uart.c ****                                 ( ( hal_uart[2].pins.tx & 0xF0 ) << 6 ) );
+ 229:../Src/smtc_hal/smtc_hal_uart.c ****         GPIO_InitTypeDef gpio = {
+ 230:../Src/smtc_hal/smtc_hal_uart.c ****             .Mode      = GPIO_MODE_AF_PP,
+ 231:../Src/smtc_hal/smtc_hal_uart.c ****             .Pull      = GPIO_NOPULL,
+ 232:../Src/smtc_hal/smtc_hal_uart.c ****             .Speed     = GPIO_SPEED_HIGH,
+ 233:../Src/smtc_hal/smtc_hal_uart.c ****             .Alternate = GPIO_AF7_USART3,
+ 234:../Src/smtc_hal/smtc_hal_uart.c ****         };
+ 235:../Src/smtc_hal/smtc_hal_uart.c ****         gpio.Pin = ( 1 << ( hal_uart[2].pins.tx & 0x0F ) ) |
+ 236:../Src/smtc_hal/smtc_hal_uart.c ****                    ( 1 << ( hal_uart[2].pins.rx & 0x0F ) ) ;
+ 237:../Src/smtc_hal/smtc_hal_uart.c ****         HAL_GPIO_Init( gpio_port, &gpio );
+ 238:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 239:../Src/smtc_hal/smtc_hal_uart.c ****         /* NVIC for USART3 */
+ 240:../Src/smtc_hal/smtc_hal_uart.c ****         HAL_NVIC_SetPriority(USART3_IRQn, 0, 1);
+ 241:../Src/smtc_hal/smtc_hal_uart.c ****         HAL_NVIC_EnableIRQ(USART3_IRQn);
+ 242:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 243:../Src/smtc_hal/smtc_hal_uart.c ****         __HAL_RCC_USART3_CLK_ENABLE( );
+ 244:../Src/smtc_hal/smtc_hal_uart.c ****     }
+ 245:../Src/smtc_hal/smtc_hal_uart.c ****     else
+ 246:../Src/smtc_hal/smtc_hal_uart.c ****     {
+ 247:../Src/smtc_hal/smtc_hal_uart.c ****         hal_mcu_panic( );
+ 248:../Src/smtc_hal/smtc_hal_uart.c ****     }
+ 249:../Src/smtc_hal/smtc_hal_uart.c **** }
+ 585              		.loc 1 249 1
+ 586 009e 9BE0     		b	.L20
+ 587              	.L16:
+ 203:../Src/smtc_hal/smtc_hal_uart.c ****     {
+ 588              		.loc 1 203 19
+ 589 00a0 7B68     		ldr	r3, [r7, #4]
+ 590 00a2 1A68     		ldr	r2, [r3]
+ 203:../Src/smtc_hal/smtc_hal_uart.c ****     {
+ 591              		.loc 1 203 44
+ 592 00a4 4E4B     		ldr	r3, .L21
+ 593 00a6 D3F88830 		ldr	r3, [r3, #136]
+ 203:../Src/smtc_hal/smtc_hal_uart.c ****     {
+ 594              		.loc 1 203 12
+ 595 00aa 9A42     		cmp	r2, r3
+ 596 00ac 45D1     		bne	.L18
+ 597              	.LBB4:
+ 207:../Src/smtc_hal/smtc_hal_uart.c ****         GPIO_InitTypeDef gpio = {
+ 598              		.loc 1 207 53
+ 599 00ae 4C4B     		ldr	r3, .L21
+ 600 00b0 B3F90C31 		ldrsh	r3, [r3, #268]
+ 207:../Src/smtc_hal/smtc_hal_uart.c ****         GPIO_InitTypeDef gpio = {
+ 601              		.loc 1 207 66
+ 602 00b4 9BB2     		uxth	r3, r3
+ARM GAS  /tmp/ccQINvK1.s 			page 16
+
+
+ 603 00b6 9B01     		lsls	r3, r3, #6
+ 604 00b8 03F47053 		and	r3, r3, #15360
+ 206:../Src/smtc_hal/smtc_hal_uart.c ****                                 ( ( hal_uart[1].pins.tx & 0xF0 ) << 6 ) );
+ 605              		.loc 1 206 49
+ 606 00bc 03F19043 		add	r3, r3, #1207959552
+ 205:../Src/smtc_hal/smtc_hal_uart.c ****             ( GPIO_TypeDef* ) ( AHB2PERIPH_BASE +
+ 607              		.loc 1 205 23
+ 608 00c0 BB65     		str	r3, [r7, #88]
+ 208:../Src/smtc_hal/smtc_hal_uart.c ****             .Mode      = GPIO_MODE_AF_PP,
+ 609              		.loc 1 208 26
+ 610 00c2 07F12803 		add	r3, r7, #40
+ 611 00c6 0022     		movs	r2, #0
+ 612 00c8 1A60     		str	r2, [r3]
+ 613 00ca 5A60     		str	r2, [r3, #4]
+ 614 00cc 9A60     		str	r2, [r3, #8]
+ 615 00ce DA60     		str	r2, [r3, #12]
+ 616 00d0 1A61     		str	r2, [r3, #16]
+ 617 00d2 0223     		movs	r3, #2
+ 618 00d4 FB62     		str	r3, [r7, #44]
+ 619 00d6 0323     		movs	r3, #3
+ 620 00d8 7B63     		str	r3, [r7, #52]
+ 621 00da 0723     		movs	r3, #7
+ 622 00dc BB63     		str	r3, [r7, #56]
+ 214:../Src/smtc_hal/smtc_hal_uart.c ****                    ( 1 << ( hal_uart[1].pins.rx & 0x0F ) ) ;
+ 623              		.loc 1 214 45
+ 624 00de 404B     		ldr	r3, .L21
+ 625 00e0 B3F90C31 		ldrsh	r3, [r3, #268]
+ 214:../Src/smtc_hal/smtc_hal_uart.c ****                    ( 1 << ( hal_uart[1].pins.rx & 0x0F ) ) ;
+ 626              		.loc 1 214 49
+ 627 00e4 9BB2     		uxth	r3, r3
+ 628 00e6 03F00F03 		and	r3, r3, #15
+ 214:../Src/smtc_hal/smtc_hal_uart.c ****                    ( 1 << ( hal_uart[1].pins.rx & 0x0F ) ) ;
+ 629              		.loc 1 214 24
+ 630 00ea 0122     		movs	r2, #1
+ 631 00ec 9A40     		lsls	r2, r2, r3
+ 215:../Src/smtc_hal/smtc_hal_uart.c ****         HAL_GPIO_Init( gpio_port, &gpio );
+ 632              		.loc 1 215 45
+ 633 00ee 3C4B     		ldr	r3, .L21
+ 634 00f0 B3F90E31 		ldrsh	r3, [r3, #270]
+ 215:../Src/smtc_hal/smtc_hal_uart.c ****         HAL_GPIO_Init( gpio_port, &gpio );
+ 635              		.loc 1 215 49
+ 636 00f4 9BB2     		uxth	r3, r3
+ 637 00f6 03F00F03 		and	r3, r3, #15
+ 215:../Src/smtc_hal/smtc_hal_uart.c ****         HAL_GPIO_Init( gpio_port, &gpio );
+ 638              		.loc 1 215 24
+ 639 00fa 0121     		movs	r1, #1
+ 640 00fc 01FA03F3 		lsl	r3, r1, r3
+ 214:../Src/smtc_hal/smtc_hal_uart.c ****                    ( 1 << ( hal_uart[1].pins.rx & 0x0F ) ) ;
+ 641              		.loc 1 214 60
+ 642 0100 1343     		orrs	r3, r3, r2
+ 214:../Src/smtc_hal/smtc_hal_uart.c ****                    ( 1 << ( hal_uart[1].pins.rx & 0x0F ) ) ;
+ 643              		.loc 1 214 18
+ 644 0102 BB62     		str	r3, [r7, #40]
+ 216:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 645              		.loc 1 216 9
+ 646 0104 07F12803 		add	r3, r7, #40
+ 647 0108 1946     		mov	r1, r3
+ARM GAS  /tmp/ccQINvK1.s 			page 17
+
+
+ 648 010a B86D     		ldr	r0, [r7, #88]
+ 649 010c FFF7FEFF 		bl	HAL_GPIO_Init
+ 219:../Src/smtc_hal/smtc_hal_uart.c ****         HAL_NVIC_EnableIRQ(USART2_IRQn);
+ 650              		.loc 1 219 9
+ 651 0110 0122     		movs	r2, #1
+ 652 0112 0021     		movs	r1, #0
+ 653 0114 2620     		movs	r0, #38
+ 654 0116 FFF7FEFF 		bl	HAL_NVIC_SetPriority
+ 220:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 655              		.loc 1 220 9
+ 656 011a 2620     		movs	r0, #38
+ 657 011c FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
+ 658              	.LBB5:
+ 222:../Src/smtc_hal/smtc_hal_uart.c ****     }
+ 659              		.loc 1 222 9
+ 660 0120 304B     		ldr	r3, .L21+4
+ 661 0122 9B6D     		ldr	r3, [r3, #88]
+ 662 0124 2F4A     		ldr	r2, .L21+4
+ 663 0126 43F40033 		orr	r3, r3, #131072
+ 664 012a 9365     		str	r3, [r2, #88]
+ 665 012c 2D4B     		ldr	r3, .L21+4
+ 666 012e 9B6D     		ldr	r3, [r3, #88]
+ 667 0130 03F40033 		and	r3, r3, #131072
+ 668 0134 7B62     		str	r3, [r7, #36]
+ 669 0136 7B6A     		ldr	r3, [r7, #36]
+ 670              	.LBE5:
+ 671              	.LBE4:
+ 672              		.loc 1 249 1
+ 673 0138 4EE0     		b	.L20
+ 674              	.L18:
+ 224:../Src/smtc_hal/smtc_hal_uart.c ****     {
+ 675              		.loc 1 224 19
+ 676 013a 7B68     		ldr	r3, [r7, #4]
+ 677 013c 1A68     		ldr	r2, [r3]
+ 224:../Src/smtc_hal/smtc_hal_uart.c ****     {
+ 678              		.loc 1 224 44
+ 679 013e 284B     		ldr	r3, .L21
+ 680 0140 D3F81031 		ldr	r3, [r3, #272]
+ 224:../Src/smtc_hal/smtc_hal_uart.c ****     {
+ 681              		.loc 1 224 12
+ 682 0144 9A42     		cmp	r2, r3
+ 683 0146 45D1     		bne	.L19
+ 684              	.LBB6:
+ 228:../Src/smtc_hal/smtc_hal_uart.c ****         GPIO_InitTypeDef gpio = {
+ 685              		.loc 1 228 53
+ 686 0148 254B     		ldr	r3, .L21
+ 687 014a B3F99431 		ldrsh	r3, [r3, #404]
+ 228:../Src/smtc_hal/smtc_hal_uart.c ****         GPIO_InitTypeDef gpio = {
+ 688              		.loc 1 228 66
+ 689 014e 9BB2     		uxth	r3, r3
+ 690 0150 9B01     		lsls	r3, r3, #6
+ 691 0152 03F47053 		and	r3, r3, #15360
+ 227:../Src/smtc_hal/smtc_hal_uart.c ****                                 ( ( hal_uart[2].pins.tx & 0xF0 ) << 6 ) );
+ 692              		.loc 1 227 49
+ 693 0156 03F19043 		add	r3, r3, #1207959552
+ 226:../Src/smtc_hal/smtc_hal_uart.c ****             ( GPIO_TypeDef* ) ( AHB2PERIPH_BASE +
+ 694              		.loc 1 226 23
+ARM GAS  /tmp/ccQINvK1.s 			page 18
+
+
+ 695 015a FB65     		str	r3, [r7, #92]
+ 229:../Src/smtc_hal/smtc_hal_uart.c ****             .Mode      = GPIO_MODE_AF_PP,
+ 696              		.loc 1 229 26
+ 697 015c 07F11003 		add	r3, r7, #16
+ 698 0160 0022     		movs	r2, #0
+ 699 0162 1A60     		str	r2, [r3]
+ 700 0164 5A60     		str	r2, [r3, #4]
+ 701 0166 9A60     		str	r2, [r3, #8]
+ 702 0168 DA60     		str	r2, [r3, #12]
+ 703 016a 1A61     		str	r2, [r3, #16]
+ 704 016c 0223     		movs	r3, #2
+ 705 016e 7B61     		str	r3, [r7, #20]
+ 706 0170 0323     		movs	r3, #3
+ 707 0172 FB61     		str	r3, [r7, #28]
+ 708 0174 0723     		movs	r3, #7
+ 709 0176 3B62     		str	r3, [r7, #32]
+ 235:../Src/smtc_hal/smtc_hal_uart.c ****                    ( 1 << ( hal_uart[2].pins.rx & 0x0F ) ) ;
+ 710              		.loc 1 235 45
+ 711 0178 194B     		ldr	r3, .L21
+ 712 017a B3F99431 		ldrsh	r3, [r3, #404]
+ 235:../Src/smtc_hal/smtc_hal_uart.c ****                    ( 1 << ( hal_uart[2].pins.rx & 0x0F ) ) ;
+ 713              		.loc 1 235 49
+ 714 017e 9BB2     		uxth	r3, r3
+ 715 0180 03F00F03 		and	r3, r3, #15
+ 235:../Src/smtc_hal/smtc_hal_uart.c ****                    ( 1 << ( hal_uart[2].pins.rx & 0x0F ) ) ;
+ 716              		.loc 1 235 24
+ 717 0184 0122     		movs	r2, #1
+ 718 0186 9A40     		lsls	r2, r2, r3
+ 236:../Src/smtc_hal/smtc_hal_uart.c ****         HAL_GPIO_Init( gpio_port, &gpio );
+ 719              		.loc 1 236 45
+ 720 0188 154B     		ldr	r3, .L21
+ 721 018a B3F99631 		ldrsh	r3, [r3, #406]
+ 236:../Src/smtc_hal/smtc_hal_uart.c ****         HAL_GPIO_Init( gpio_port, &gpio );
+ 722              		.loc 1 236 49
+ 723 018e 9BB2     		uxth	r3, r3
+ 724 0190 03F00F03 		and	r3, r3, #15
+ 236:../Src/smtc_hal/smtc_hal_uart.c ****         HAL_GPIO_Init( gpio_port, &gpio );
+ 725              		.loc 1 236 24
+ 726 0194 0121     		movs	r1, #1
+ 727 0196 01FA03F3 		lsl	r3, r1, r3
+ 235:../Src/smtc_hal/smtc_hal_uart.c ****                    ( 1 << ( hal_uart[2].pins.rx & 0x0F ) ) ;
+ 728              		.loc 1 235 60
+ 729 019a 1343     		orrs	r3, r3, r2
+ 235:../Src/smtc_hal/smtc_hal_uart.c ****                    ( 1 << ( hal_uart[2].pins.rx & 0x0F ) ) ;
+ 730              		.loc 1 235 18
+ 731 019c 3B61     		str	r3, [r7, #16]
+ 237:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 732              		.loc 1 237 9
+ 733 019e 07F11003 		add	r3, r7, #16
+ 734 01a2 1946     		mov	r1, r3
+ 735 01a4 F86D     		ldr	r0, [r7, #92]
+ 736 01a6 FFF7FEFF 		bl	HAL_GPIO_Init
+ 240:../Src/smtc_hal/smtc_hal_uart.c ****         HAL_NVIC_EnableIRQ(USART3_IRQn);
+ 737              		.loc 1 240 9
+ 738 01aa 0122     		movs	r2, #1
+ 739 01ac 0021     		movs	r1, #0
+ 740 01ae 2720     		movs	r0, #39
+ARM GAS  /tmp/ccQINvK1.s 			page 19
+
+
+ 741 01b0 FFF7FEFF 		bl	HAL_NVIC_SetPriority
+ 241:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 742              		.loc 1 241 9
+ 743 01b4 2720     		movs	r0, #39
+ 744 01b6 FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
+ 745              	.LBB7:
+ 243:../Src/smtc_hal/smtc_hal_uart.c ****     }
+ 746              		.loc 1 243 9
+ 747 01ba 0A4B     		ldr	r3, .L21+4
+ 748 01bc 9B6D     		ldr	r3, [r3, #88]
+ 749 01be 094A     		ldr	r2, .L21+4
+ 750 01c0 43F48023 		orr	r3, r3, #262144
+ 751 01c4 9365     		str	r3, [r2, #88]
+ 752 01c6 074B     		ldr	r3, .L21+4
+ 753 01c8 9B6D     		ldr	r3, [r3, #88]
+ 754 01ca 03F48023 		and	r3, r3, #262144
+ 755 01ce FB60     		str	r3, [r7, #12]
+ 756 01d0 FB68     		ldr	r3, [r7, #12]
+ 757              	.LBE7:
+ 758              	.LBE6:
+ 759              		.loc 1 249 1
+ 760 01d2 01E0     		b	.L20
+ 761              	.L19:
+ 247:../Src/smtc_hal/smtc_hal_uart.c ****     }
+ 762              		.loc 1 247 9
+ 763 01d4 FFF7FEFF 		bl	hal_mcu_panic
+ 764              	.L20:
+ 765              		.loc 1 249 1
+ 766 01d8 00BF     		nop
+ 767 01da 6037     		adds	r7, r7, #96
+ 768              	.LCFI23:
+ 769              		.cfi_def_cfa_offset 8
+ 770 01dc BD46     		mov	sp, r7
+ 771              	.LCFI24:
+ 772              		.cfi_def_cfa_register 13
+ 773              		@ sp needed
+ 774 01de 80BD     		pop	{r7, pc}
+ 775              	.L22:
+ 776              		.align	2
+ 777              	.L21:
+ 778 01e0 00000000 		.word	hal_uart
+ 779 01e4 00100240 		.word	1073876992
+ 780              		.cfi_endproc
+ 781              	.LFE317:
+ 783              		.section	.text.HAL_UART_MspDeInit,"ax",%progbits
+ 784              		.align	1
+ 785              		.global	HAL_UART_MspDeInit
+ 786              		.syntax unified
+ 787              		.thumb
+ 788              		.thumb_func
+ 789              		.fpu fpv4-sp-d16
+ 791              	HAL_UART_MspDeInit:
+ 792              	.LFB318:
+ 250:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 251:../Src/smtc_hal/smtc_hal_uart.c **** void HAL_UART_MspDeInit( UART_HandleTypeDef* huart )
+ 252:../Src/smtc_hal/smtc_hal_uart.c **** {
+ 793              		.loc 1 252 1
+ARM GAS  /tmp/ccQINvK1.s 			page 20
+
+
+ 794              		.cfi_startproc
+ 795              		@ args = 0, pretend = 0, frame = 16
+ 796              		@ frame_needed = 1, uses_anonymous_args = 0
+ 797 0000 90B5     		push	{r4, r7, lr}
+ 798              	.LCFI25:
+ 799              		.cfi_def_cfa_offset 12
+ 800              		.cfi_offset 4, -12
+ 801              		.cfi_offset 7, -8
+ 802              		.cfi_offset 14, -4
+ 803 0002 85B0     		sub	sp, sp, #20
+ 804              	.LCFI26:
+ 805              		.cfi_def_cfa_offset 32
+ 806 0004 00AF     		add	r7, sp, #0
+ 807              	.LCFI27:
+ 808              		.cfi_def_cfa_register 7
+ 809 0006 7860     		str	r0, [r7, #4]
+ 253:../Src/smtc_hal/smtc_hal_uart.c ****     uint32_t local_id = 0;
+ 810              		.loc 1 253 14
+ 811 0008 0023     		movs	r3, #0
+ 812 000a FB60     		str	r3, [r7, #12]
+ 254:../Src/smtc_hal/smtc_hal_uart.c ****     if( huart->Instance == hal_uart[0].interface )
+ 813              		.loc 1 254 14
+ 814 000c 7B68     		ldr	r3, [r7, #4]
+ 815 000e 1A68     		ldr	r2, [r3]
+ 816              		.loc 1 254 39
+ 817 0010 334B     		ldr	r3, .L28
+ 818 0012 1B68     		ldr	r3, [r3]
+ 819              		.loc 1 254 7
+ 820 0014 9A42     		cmp	r2, r3
+ 821 0016 06D1     		bne	.L24
+ 255:../Src/smtc_hal/smtc_hal_uart.c ****     {
+ 256:../Src/smtc_hal/smtc_hal_uart.c ****         __HAL_RCC_USART1_CLK_DISABLE( );
+ 822              		.loc 1 256 9
+ 823 0018 324B     		ldr	r3, .L28+4
+ 824 001a 1B6E     		ldr	r3, [r3, #96]
+ 825 001c 314A     		ldr	r2, .L28+4
+ 826 001e 23F48043 		bic	r3, r3, #16384
+ 827 0022 1366     		str	r3, [r2, #96]
+ 828 0024 21E0     		b	.L25
+ 829              	.L24:
+ 257:../Src/smtc_hal/smtc_hal_uart.c ****     }
+ 258:../Src/smtc_hal/smtc_hal_uart.c ****     else if( huart->Instance == hal_uart[1].interface )
+ 830              		.loc 1 258 19
+ 831 0026 7B68     		ldr	r3, [r7, #4]
+ 832 0028 1A68     		ldr	r2, [r3]
+ 833              		.loc 1 258 44
+ 834 002a 2D4B     		ldr	r3, .L28
+ 835 002c D3F88830 		ldr	r3, [r3, #136]
+ 836              		.loc 1 258 12
+ 837 0030 9A42     		cmp	r2, r3
+ 838 0032 08D1     		bne	.L26
+ 259:../Src/smtc_hal/smtc_hal_uart.c ****     {
+ 260:../Src/smtc_hal/smtc_hal_uart.c ****         local_id = 1;
+ 839              		.loc 1 260 18
+ 840 0034 0123     		movs	r3, #1
+ 841 0036 FB60     		str	r3, [r7, #12]
+ 261:../Src/smtc_hal/smtc_hal_uart.c ****         __HAL_RCC_USART2_CLK_DISABLE( );
+ARM GAS  /tmp/ccQINvK1.s 			page 21
+
+
+ 842              		.loc 1 261 9
+ 843 0038 2A4B     		ldr	r3, .L28+4
+ 844 003a 9B6D     		ldr	r3, [r3, #88]
+ 845 003c 294A     		ldr	r2, .L28+4
+ 846 003e 23F40033 		bic	r3, r3, #131072
+ 847 0042 9365     		str	r3, [r2, #88]
+ 848 0044 11E0     		b	.L25
+ 849              	.L26:
+ 262:../Src/smtc_hal/smtc_hal_uart.c ****     }
+ 263:../Src/smtc_hal/smtc_hal_uart.c ****     else if( huart->Instance == hal_uart[2].interface )
+ 850              		.loc 1 263 19
+ 851 0046 7B68     		ldr	r3, [r7, #4]
+ 852 0048 1A68     		ldr	r2, [r3]
+ 853              		.loc 1 263 44
+ 854 004a 254B     		ldr	r3, .L28
+ 855 004c D3F81031 		ldr	r3, [r3, #272]
+ 856              		.loc 1 263 12
+ 857 0050 9A42     		cmp	r2, r3
+ 858 0052 08D1     		bne	.L27
+ 264:../Src/smtc_hal/smtc_hal_uart.c ****     {
+ 265:../Src/smtc_hal/smtc_hal_uart.c ****         local_id = 2;
+ 859              		.loc 1 265 18
+ 860 0054 0223     		movs	r3, #2
+ 861 0056 FB60     		str	r3, [r7, #12]
+ 266:../Src/smtc_hal/smtc_hal_uart.c ****         __HAL_RCC_USART3_CLK_DISABLE( );
+ 862              		.loc 1 266 9
+ 863 0058 224B     		ldr	r3, .L28+4
+ 864 005a 9B6D     		ldr	r3, [r3, #88]
+ 865 005c 214A     		ldr	r2, .L28+4
+ 866 005e 23F48023 		bic	r3, r3, #262144
+ 867 0062 9365     		str	r3, [r2, #88]
+ 868 0064 01E0     		b	.L25
+ 869              	.L27:
+ 267:../Src/smtc_hal/smtc_hal_uart.c ****     }
+ 268:../Src/smtc_hal/smtc_hal_uart.c ****     else
+ 269:../Src/smtc_hal/smtc_hal_uart.c ****     {
+ 270:../Src/smtc_hal/smtc_hal_uart.c ****         hal_mcu_panic( );
+ 870              		.loc 1 270 9
+ 871 0066 FFF7FEFF 		bl	hal_mcu_panic
+ 872              	.L25:
+ 271:../Src/smtc_hal/smtc_hal_uart.c ****     }
+ 272:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 273:../Src/smtc_hal/smtc_hal_uart.c ****     HAL_GPIO_DeInit( ( GPIO_TypeDef* ) ( AHB2PERIPH_BASE + ( ( hal_uart[local_id].pins.tx & 0xF0 ) 
+ 873              		.loc 1 273 87
+ 874 006a 1D49     		ldr	r1, .L28
+ 875 006c FA68     		ldr	r2, [r7, #12]
+ 876 006e 1346     		mov	r3, r2
+ 877 0070 1B01     		lsls	r3, r3, #4
+ 878 0072 1344     		add	r3, r3, r2
+ 879 0074 DB00     		lsls	r3, r3, #3
+ 880 0076 0B44     		add	r3, r3, r1
+ 881 0078 8433     		adds	r3, r3, #132
+ 882 007a B3F90030 		ldrsh	r3, [r3]
+ 883              		.loc 1 273 100
+ 884 007e 9BB2     		uxth	r3, r3
+ 885 0080 9B01     		lsls	r3, r3, #6
+ 886 0082 03F47053 		and	r3, r3, #15360
+ARM GAS  /tmp/ccQINvK1.s 			page 22
+
+
+ 887              		.loc 1 273 58
+ 888 0086 03F19043 		add	r3, r3, #1207959552
+ 889              		.loc 1 273 5
+ 890 008a 1C46     		mov	r4, r3
+ 274:../Src/smtc_hal/smtc_hal_uart.c ****                      ( 1 << ( hal_uart[local_id].pins.tx & 0x0F ) ) | ( 1 << ( hal_uart[local_id].p
+ 891              		.loc 1 274 54
+ 892 008c 1449     		ldr	r1, .L28
+ 893 008e FA68     		ldr	r2, [r7, #12]
+ 894 0090 1346     		mov	r3, r2
+ 895 0092 1B01     		lsls	r3, r3, #4
+ 896 0094 1344     		add	r3, r3, r2
+ 897 0096 DB00     		lsls	r3, r3, #3
+ 898 0098 0B44     		add	r3, r3, r1
+ 899 009a 8433     		adds	r3, r3, #132
+ 900 009c B3F90030 		ldrsh	r3, [r3]
+ 901              		.loc 1 274 58
+ 902 00a0 9BB2     		uxth	r3, r3
+ 903 00a2 03F00F03 		and	r3, r3, #15
+ 904              		.loc 1 274 26
+ 905 00a6 0122     		movs	r2, #1
+ 906 00a8 02FA03F1 		lsl	r1, r2, r3
+ 907              		.loc 1 274 103
+ 908 00ac 0C48     		ldr	r0, .L28
+ 909 00ae FA68     		ldr	r2, [r7, #12]
+ 910 00b0 1346     		mov	r3, r2
+ 911 00b2 1B01     		lsls	r3, r3, #4
+ 912 00b4 1344     		add	r3, r3, r2
+ 913 00b6 DB00     		lsls	r3, r3, #3
+ 914 00b8 0344     		add	r3, r3, r0
+ 915 00ba 8633     		adds	r3, r3, #134
+ 916 00bc B3F90030 		ldrsh	r3, [r3]
+ 917              		.loc 1 274 107
+ 918 00c0 9BB2     		uxth	r3, r3
+ 919 00c2 03F00F03 		and	r3, r3, #15
+ 920              		.loc 1 274 75
+ 921 00c6 0122     		movs	r2, #1
+ 922 00c8 02FA03F3 		lsl	r3, r2, r3
+ 923              		.loc 1 274 69
+ 924 00cc 0B43     		orrs	r3, r3, r1
+ 273:../Src/smtc_hal/smtc_hal_uart.c ****                      ( 1 << ( hal_uart[local_id].pins.tx & 0x0F ) ) | ( 1 << ( hal_uart[local_id].p
+ 925              		.loc 1 273 5
+ 926 00ce 1946     		mov	r1, r3
+ 927 00d0 2046     		mov	r0, r4
+ 928 00d2 FFF7FEFF 		bl	HAL_GPIO_DeInit
+ 275:../Src/smtc_hal/smtc_hal_uart.c **** }
+ 929              		.loc 1 275 1
+ 930 00d6 00BF     		nop
+ 931 00d8 1437     		adds	r7, r7, #20
+ 932              	.LCFI28:
+ 933              		.cfi_def_cfa_offset 12
+ 934 00da BD46     		mov	sp, r7
+ 935              	.LCFI29:
+ 936              		.cfi_def_cfa_register 13
+ 937              		@ sp needed
+ 938 00dc 90BD     		pop	{r4, r7, pc}
+ 939              	.L29:
+ 940 00de 00BF     		.align	2
+ARM GAS  /tmp/ccQINvK1.s 			page 23
+
+
+ 941              	.L28:
+ 942 00e0 00000000 		.word	hal_uart
+ 943 00e4 00100240 		.word	1073876992
+ 944              		.cfi_endproc
+ 945              	.LFE318:
+ 947              		.section	.text.USART1_IRQHandler,"ax",%progbits
+ 948              		.align	1
+ 949              		.global	USART1_IRQHandler
+ 950              		.syntax unified
+ 951              		.thumb
+ 952              		.thumb_func
+ 953              		.fpu fpv4-sp-d16
+ 955              	USART1_IRQHandler:
+ 956              	.LFB319:
+ 276:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 277:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 278:../Src/smtc_hal/smtc_hal_uart.c **** /*
+ 279:../Src/smtc_hal/smtc_hal_uart.c ****  * -----------------------------------------------------------------------------
+ 280:../Src/smtc_hal/smtc_hal_uart.c ****  * --- PRIVATE FUNCTIONS DEFINITION --------------------------------------------
+ 281:../Src/smtc_hal/smtc_hal_uart.c ****  */
+ 282:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 283:../Src/smtc_hal/smtc_hal_uart.c **** /**
+ 284:../Src/smtc_hal/smtc_hal_uart.c ****  * @brief  This function handles USART1 interrupt request.
+ 285:../Src/smtc_hal/smtc_hal_uart.c ****  */
+ 286:../Src/smtc_hal/smtc_hal_uart.c **** void USART1_IRQHandler( void ) { HAL_UART_IRQHandler( &hal_uart[0].handle ); }
+ 957              		.loc 1 286 32
+ 958              		.cfi_startproc
+ 959              		@ args = 0, pretend = 0, frame = 0
+ 960              		@ frame_needed = 1, uses_anonymous_args = 0
+ 961 0000 80B5     		push	{r7, lr}
+ 962              	.LCFI30:
+ 963              		.cfi_def_cfa_offset 8
+ 964              		.cfi_offset 7, -8
+ 965              		.cfi_offset 14, -4
+ 966 0002 00AF     		add	r7, sp, #0
+ 967              	.LCFI31:
+ 968              		.cfi_def_cfa_register 7
+ 969              		.loc 1 286 34
+ 970 0004 0248     		ldr	r0, .L31
+ 971 0006 FFF7FEFF 		bl	HAL_UART_IRQHandler
+ 972              		.loc 1 286 78
+ 973 000a 00BF     		nop
+ 974 000c 80BD     		pop	{r7, pc}
+ 975              	.L32:
+ 976 000e 00BF     		.align	2
+ 977              	.L31:
+ 978 0010 04000000 		.word	hal_uart+4
+ 979              		.cfi_endproc
+ 980              	.LFE319:
+ 982              		.section	.text.USART2_IRQHandler,"ax",%progbits
+ 983              		.align	1
+ 984              		.global	USART2_IRQHandler
+ 985              		.syntax unified
+ 986              		.thumb
+ 987              		.thumb_func
+ 988              		.fpu fpv4-sp-d16
+ 990              	USART2_IRQHandler:
+ARM GAS  /tmp/ccQINvK1.s 			page 24
+
+
+ 991              	.LFB320:
+ 287:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 288:../Src/smtc_hal/smtc_hal_uart.c **** /**
+ 289:../Src/smtc_hal/smtc_hal_uart.c ****   * @brief  This function handles USART2 interrupt request.
+ 290:../Src/smtc_hal/smtc_hal_uart.c ****   */
+ 291:../Src/smtc_hal/smtc_hal_uart.c **** void USART2_IRQHandler(void)
+ 292:../Src/smtc_hal/smtc_hal_uart.c **** {
+ 992              		.loc 1 292 1
+ 993              		.cfi_startproc
+ 994              		@ args = 0, pretend = 0, frame = 0
+ 995              		@ frame_needed = 1, uses_anonymous_args = 0
+ 996 0000 80B5     		push	{r7, lr}
+ 997              	.LCFI32:
+ 998              		.cfi_def_cfa_offset 8
+ 999              		.cfi_offset 7, -8
+ 1000              		.cfi_offset 14, -4
+ 1001 0002 00AF     		add	r7, sp, #0
+ 1002              	.LCFI33:
+ 1003              		.cfi_def_cfa_register 7
+ 293:../Src/smtc_hal/smtc_hal_uart.c ****   HAL_UART_IRQHandler(&hal_uart[1].handle);
+ 1004              		.loc 1 293 3
+ 1005 0004 0248     		ldr	r0, .L34
+ 1006 0006 FFF7FEFF 		bl	HAL_UART_IRQHandler
+ 294:../Src/smtc_hal/smtc_hal_uart.c **** }
+ 1007              		.loc 1 294 1
+ 1008 000a 00BF     		nop
+ 1009 000c 80BD     		pop	{r7, pc}
+ 1010              	.L35:
+ 1011 000e 00BF     		.align	2
+ 1012              	.L34:
+ 1013 0010 8C000000 		.word	hal_uart+140
+ 1014              		.cfi_endproc
+ 1015              	.LFE320:
+ 1017              		.section	.text.USART3_IRQHandler,"ax",%progbits
+ 1018              		.align	1
+ 1019              		.global	USART3_IRQHandler
+ 1020              		.syntax unified
+ 1021              		.thumb
+ 1022              		.thumb_func
+ 1023              		.fpu fpv4-sp-d16
+ 1025              	USART3_IRQHandler:
+ 1026              	.LFB321:
+ 295:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 296:../Src/smtc_hal/smtc_hal_uart.c **** /**
+ 297:../Src/smtc_hal/smtc_hal_uart.c ****   * @brief  This function handles USART3 interrupt request.
+ 298:../Src/smtc_hal/smtc_hal_uart.c ****   */
+ 299:../Src/smtc_hal/smtc_hal_uart.c **** void USART3_IRQHandler(void)
+ 300:../Src/smtc_hal/smtc_hal_uart.c **** {
+ 1027              		.loc 1 300 1
+ 1028              		.cfi_startproc
+ 1029              		@ args = 0, pretend = 0, frame = 0
+ 1030              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1031 0000 80B5     		push	{r7, lr}
+ 1032              	.LCFI34:
+ 1033              		.cfi_def_cfa_offset 8
+ 1034              		.cfi_offset 7, -8
+ 1035              		.cfi_offset 14, -4
+ARM GAS  /tmp/ccQINvK1.s 			page 25
+
+
+ 1036 0002 00AF     		add	r7, sp, #0
+ 1037              	.LCFI35:
+ 1038              		.cfi_def_cfa_register 7
+ 301:../Src/smtc_hal/smtc_hal_uart.c ****   HAL_UART_IRQHandler(&hal_uart[2].handle);
+ 1039              		.loc 1 301 3
+ 1040 0004 0248     		ldr	r0, .L37
+ 1041 0006 FFF7FEFF 		bl	HAL_UART_IRQHandler
+ 302:../Src/smtc_hal/smtc_hal_uart.c **** }
+ 1042              		.loc 1 302 1
+ 1043 000a 00BF     		nop
+ 1044 000c 80BD     		pop	{r7, pc}
+ 1045              	.L38:
+ 1046 000e 00BF     		.align	2
+ 1047              	.L37:
+ 1048 0010 14010000 		.word	hal_uart+276
+ 1049              		.cfi_endproc
+ 1050              	.LFE321:
+ 1052              		.section	.text.HAL_UART_RxCpltCallback,"ax",%progbits
+ 1053              		.align	1
+ 1054              		.global	HAL_UART_RxCpltCallback
+ 1055              		.syntax unified
+ 1056              		.thumb
+ 1057              		.thumb_func
+ 1058              		.fpu fpv4-sp-d16
+ 1060              	HAL_UART_RxCpltCallback:
+ 1061              	.LFB322:
+ 303:../Src/smtc_hal/smtc_hal_uart.c **** 
+ 304:../Src/smtc_hal/smtc_hal_uart.c **** /**
+ 305:../Src/smtc_hal/smtc_hal_uart.c ****  * @brief  Rx Transfer completed callback
+ 306:../Src/smtc_hal/smtc_hal_uart.c ****  * @param  UartHandle: UART handle
+ 307:../Src/smtc_hal/smtc_hal_uart.c ****  * @note   This example shows a simple way to report end of DMA Rx transfer, and
+ 308:../Src/smtc_hal/smtc_hal_uart.c ****  *         you can add your own implementation.
+ 309:../Src/smtc_hal/smtc_hal_uart.c ****  * @retval None
+ 310:../Src/smtc_hal/smtc_hal_uart.c ****  */
+ 311:../Src/smtc_hal/smtc_hal_uart.c **** void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle ) { uart_rx_done = true; }
+ 1062              		.loc 1 311 64
+ 1063              		.cfi_startproc
+ 1064              		@ args = 0, pretend = 0, frame = 8
+ 1065              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1066              		@ link register save eliminated.
+ 1067 0000 80B4     		push	{r7}
+ 1068              	.LCFI36:
+ 1069              		.cfi_def_cfa_offset 4
+ 1070              		.cfi_offset 7, -4
+ 1071 0002 83B0     		sub	sp, sp, #12
+ 1072              	.LCFI37:
+ 1073              		.cfi_def_cfa_offset 16
+ 1074 0004 00AF     		add	r7, sp, #0
+ 1075              	.LCFI38:
+ 1076              		.cfi_def_cfa_register 7
+ 1077 0006 7860     		str	r0, [r7, #4]
+ 1078              		.loc 1 311 79
+ 1079 0008 044B     		ldr	r3, .L40
+ 1080 000a 0122     		movs	r2, #1
+ 1081 000c 1A70     		strb	r2, [r3]
+ 1082              		.loc 1 311 87
+ 1083 000e 00BF     		nop
+ARM GAS  /tmp/ccQINvK1.s 			page 26
+
+
+ 1084 0010 0C37     		adds	r7, r7, #12
+ 1085              	.LCFI39:
+ 1086              		.cfi_def_cfa_offset 4
+ 1087 0012 BD46     		mov	sp, r7
+ 1088              	.LCFI40:
+ 1089              		.cfi_def_cfa_register 13
+ 1090              		@ sp needed
+ 1091 0014 5DF8047B 		ldr	r7, [sp], #4
+ 1092              	.LCFI41:
+ 1093              		.cfi_restore 7
+ 1094              		.cfi_def_cfa_offset 0
+ 1095 0018 7047     		bx	lr
+ 1096              	.L41:
+ 1097 001a 00BF     		.align	2
+ 1098              	.L40:
+ 1099 001c 00000000 		.word	uart_rx_done
+ 1100              		.cfi_endproc
+ 1101              	.LFE322:
+ 1103              		.text
+ 1104              	.Letext0:
+ 1105              		.file 2 "/usr/lib/gcc/arm-none-eabi/10.3.1/include/stdint.h"
+ 1106              		.file 3 "../Drivers/CMSIS/Device/ST/STM32L4xx/Include/stm32l476xx.h"
+ 1107              		.file 4 "../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def.h"
+ 1108              		.file 5 "../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_gpio.h"
+ 1109              		.file 6 "../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_dma.h"
+ 1110              		.file 7 "../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h"
+ 1111              		.file 8 "../Inc/smtc_hal/smtc_hal_gpio_pin_names.h"
+ARM GAS  /tmp/ccQINvK1.s 			page 27
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 smtc_hal_uart.c
+     /tmp/ccQINvK1.s:18     .data.hal_uart:0000000000000000 $d
+     /tmp/ccQINvK1.s:21     .data.hal_uart:0000000000000000 hal_uart
+     /tmp/ccQINvK1.s:41     .bss.uart_rx_done:0000000000000000 uart_rx_done
+     /tmp/ccQINvK1.s:42     .bss.uart_rx_done:0000000000000000 $d
+     /tmp/ccQINvK1.s:44     .text.hal_uart_init:0000000000000000 $t
+     /tmp/ccQINvK1.s:52     .text.hal_uart_init:0000000000000000 hal_uart_init
+     /tmp/ccQINvK1.s:272    .text.hal_uart_init:000000000000016c $d
+     /tmp/ccQINvK1.s:277    .text.hal_uart_deinit:0000000000000000 $t
+     /tmp/ccQINvK1.s:284    .text.hal_uart_deinit:0000000000000000 hal_uart_deinit
+     /tmp/ccQINvK1.s:330    .text.hal_uart_deinit:000000000000002c $d
+     /tmp/ccQINvK1.s:335    .text.hal_uart_tx:0000000000000000 $t
+     /tmp/ccQINvK1.s:342    .text.hal_uart_tx:0000000000000000 hal_uart_tx
+     /tmp/ccQINvK1.s:393    .text.hal_uart_tx:0000000000000038 $d
+     /tmp/ccQINvK1.s:398    .text.hal_uart_rx:0000000000000000 $t
+     /tmp/ccQINvK1.s:405    .text.hal_uart_rx:0000000000000000 hal_uart_rx
+     /tmp/ccQINvK1.s:470    .text.hal_uart_rx:0000000000000048 $d
+     /tmp/ccQINvK1.s:476    .text.HAL_UART_MspInit:0000000000000000 $t
+     /tmp/ccQINvK1.s:483    .text.HAL_UART_MspInit:0000000000000000 HAL_UART_MspInit
+     /tmp/ccQINvK1.s:778    .text.HAL_UART_MspInit:00000000000001e0 $d
+     /tmp/ccQINvK1.s:784    .text.HAL_UART_MspDeInit:0000000000000000 $t
+     /tmp/ccQINvK1.s:791    .text.HAL_UART_MspDeInit:0000000000000000 HAL_UART_MspDeInit
+     /tmp/ccQINvK1.s:942    .text.HAL_UART_MspDeInit:00000000000000e0 $d
+     /tmp/ccQINvK1.s:948    .text.USART1_IRQHandler:0000000000000000 $t
+     /tmp/ccQINvK1.s:955    .text.USART1_IRQHandler:0000000000000000 USART1_IRQHandler
+     /tmp/ccQINvK1.s:978    .text.USART1_IRQHandler:0000000000000010 $d
+     /tmp/ccQINvK1.s:983    .text.USART2_IRQHandler:0000000000000000 $t
+     /tmp/ccQINvK1.s:990    .text.USART2_IRQHandler:0000000000000000 USART2_IRQHandler
+     /tmp/ccQINvK1.s:1013   .text.USART2_IRQHandler:0000000000000010 $d
+     /tmp/ccQINvK1.s:1018   .text.USART3_IRQHandler:0000000000000000 $t
+     /tmp/ccQINvK1.s:1025   .text.USART3_IRQHandler:0000000000000000 USART3_IRQHandler
+     /tmp/ccQINvK1.s:1048   .text.USART3_IRQHandler:0000000000000010 $d
+     /tmp/ccQINvK1.s:1053   .text.HAL_UART_RxCpltCallback:0000000000000000 $t
+     /tmp/ccQINvK1.s:1060   .text.HAL_UART_RxCpltCallback:0000000000000000 HAL_UART_RxCpltCallback
+     /tmp/ccQINvK1.s:1099   .text.HAL_UART_RxCpltCallback:000000000000001c $d
+
+UNDEFINED SYMBOLS
+HAL_UART_Init
+hal_mcu_panic
+HAL_UART_DeInit
+HAL_UART_Transmit
+HAL_UART_Receive_IT
+HAL_GPIO_Init
+HAL_NVIC_SetPriority
+HAL_NVIC_EnableIRQ
+HAL_GPIO_DeInit
+HAL_UART_IRQHandler
