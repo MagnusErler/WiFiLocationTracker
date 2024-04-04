@@ -175,17 +175,23 @@ int main(void)
   // LORA
   setLR1110_LoRa_Packet_Type(lr1110_context, 0x02);
   getLR1110_LoRa_Packet_Type(lr1110_context);
-  setLR1110_LoRa_Modulation_Params(lr1110_context, 0x0C, 0x06, 0x01, 0x00);         // (lr1110_context, 0x07, 0x05, 0x01, 0x00); NOT SURE ABOUT VALUE 4
+  setLR1110_LoRa_Modulation_Params(lr1110_context, 0x0C, 0x04, 0x01, 0x00);         // (lr1110_context, 0x07, 0x05, 0x01, 0x00); NOT SURE ABOUT VALUE 4
   setLR1110_LoRa_Packet_Params(lr1110_context, 0x00, 0x08, 0x00, 0x00, 0x01, 0x00); // NOT SURE ABOUT VALUE 1,2,4 and 6
-  setLR1110_LoRa_PA_Config(lr1110_context, 0x01, 0x01, 0x04, 0x07);                 // DONT KNOW WHAT TO PUT HERE
-  setLR1110_LoRa_TX_Params(lr1110_context, 0x16, 0x02);                             // DONT KNOW WHAT TO PUT HERE
   setLR1110_LoRa_Public_Network(lr1110_context, 0x01);
+  setLR1110_LoRa_PA_Config(lr1110_context, 0x00, 0x00, 0x04, 0x07);                 // DONT KNOW WHAT TO PUT HERE
+  //setLR1110_LoRa_DIO_As_RF_Switch(lr1110_context, 0x03, 0x00, 0x02, 0x03, 0x01, 0x00, 0x00);
+  setLR1110_LoRa_TX_Params(lr1110_context, 0x0E, 0x02);                             // DONT KNOW WHAT TO PUT HERE
+  setLR1110_Auto_TX_RX(lr1110_context, 3000);
 
   // setLR1110_Crypto_Key(lr1110_context);
 
   // getLR1110_MIC(lr1110_context);
 
   //getLR1110_Encrypted_Data(lr1110_context);
+
+  
+
+  // joinNetwork(lr1110_context);
 
   // joinAccepts(lr1110_context, 5, 5, 0);
 
@@ -203,8 +209,8 @@ int main(void)
     getLR1110_RF_Status(lr1110_context);
 
 
-    // getLR1110_Status(lr1110_context);
-    // getLR1110_Errors(lr1110_context);
+    getLR1110_Status(lr1110_context);
+    getLR1110_Errors(lr1110_context);
 
 
 
@@ -556,7 +562,7 @@ static void MX_GPIO_Init(void)
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
   if(GPIO_Pin == EVENT_Pin) {
-    toggleLED( GPIOB, SNIFFING_LED_Pin );
+    //toggleLED( GPIOB, SNIFFING_LED_Pin );
     HAL_DBG_TRACE_MSG_COLOR("\r\nINTERRUPT\r\n", HAL_DBG_TRACE_COLOR_CUSTOM);
     getLR1110_Status( lr1110_context );
   } else {

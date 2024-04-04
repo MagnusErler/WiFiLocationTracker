@@ -128,6 +128,29 @@ void setLR1110_LoRa_PA_Config( const void* context, const uint8_t pa_sel, const 
     }
 }
 
+void setLR1110_LoRa_DIO_As_RF_Switch( const void* context, const uint8_t rf_sw_enable, const uint8_t rf_sw_stby_cfg, const uint8_t rf_sw_rx_cfg, const uint8_t rf_sw_tx_cfg, const uint8_t rf_sw_tx_hp_cfg, const uint8_t rf_sw_gnss_cfg, const uint8_t rf_sw_wifi_cfg) {
+    HAL_DBG_TRACE_INFO("Setting LR1110 DIO as RF switch... ");
+
+    uint8_t cbuffer[2+8];
+
+    cbuffer[0] = ( uint8_t )( 0x0112 >> 8 );
+    cbuffer[1] = ( uint8_t )( 0x0112 >> 0 );
+    cbuffer[2] = ( uint8_t ) rf_sw_enable;
+    cbuffer[3] = ( uint8_t ) rf_sw_stby_cfg;
+    cbuffer[4] = ( uint8_t ) rf_sw_rx_cfg;
+    cbuffer[5] = ( uint8_t ) rf_sw_tx_cfg;
+    cbuffer[6] = ( uint8_t ) rf_sw_tx_hp_cfg;
+    cbuffer[7] = ( uint8_t ) 0;
+    cbuffer[8] = ( uint8_t ) rf_sw_gnss_cfg;
+    cbuffer[9] = ( uint8_t ) rf_sw_wifi_cfg;
+
+    if ( lr1110_spi_write( context, cbuffer, 2+8 ) == LR1110_SPI_STATUS_OK ) {
+        HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+    } else {
+        HAL_DBG_TRACE_ERROR("Failed to set LR1110 DIO as RF switch\r\n");
+    }
+}
+
 void setLR1110_LoRa_TX_Params( const void* context, const uint8_t tx_power, const uint8_t ramp_time) {
     HAL_DBG_TRACE_INFO("Setting LR1110 LoRa TX parameters... ");
 
@@ -182,13 +205,14 @@ void getLR1110_LoRa_Packet_Status( const void* context ) {
 void writeLR1110_Buffer8( const void* context, const uint8_t data ) {
     HAL_DBG_TRACE_INFO("Writing 0x%0X to buffer... ", data);
 
-    uint8_t cbuffer[2 + 1];
+    uint8_t cbuffer[2 + 2];
 
     cbuffer[0] = ( uint8_t )( 0x0109 >> 8 );
     cbuffer[1] = ( uint8_t )( 0x0109 >> 0 );
-    cbuffer[2] = ( uint8_t )( data );
+    cbuffer[2] = ( uint8_t )( 0x52 );
+    cbuffer[3] = ( uint8_t )( 0x22 );
 
-    if ( lr1110_spi_write( context, cbuffer, 2+1 ) == LR1110_SPI_STATUS_OK ) {
+    if ( lr1110_spi_write( context, cbuffer, 2+2 ) == LR1110_SPI_STATUS_OK ) {
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
     } else {
         HAL_DBG_TRACE_ERROR("Failed to write to buffer");
@@ -208,6 +232,29 @@ void setLR1110_TX( const void* context, const uint32_t timeout_ms ) {
     cbuffer[4] = ( uint8_t )( timeout >> 0 );
 
     if ( lr1110_spi_write( context, cbuffer, 2+3 ) == LR1110_SPI_STATUS_OK ) {
+        HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+    } else {
+        HAL_DBG_TRACE_ERROR("Failed to set LR1110 TX mode\r\n");
+    }
+}
+
+void setLR1110_Auto_TX_RX( const void* context, const uint32_t timeout_ms ) {
+    uint32_t timeout = timeout_ms * 32768;
+    HAL_DBG_TRACE_INFO("Setting LR1110 Auto TX RX mode with timeout of %d ms... ", timeout_ms);
+
+    uint8_t cbuffer[2+7];
+
+    cbuffer[0] = ( uint8_t )( 0x020C >> 8 );
+    cbuffer[1] = ( uint8_t )( 0x020C >> 0 );
+    cbuffer[2] = ( uint8_t )( 0 >> 16 );
+    cbuffer[3] = ( uint8_t )( 0 >> 8 );
+    cbuffer[4] = ( uint8_t )( 0 >> 0 );
+    cbuffer[5] = ( uint8_t )( 1 );
+    cbuffer[6] = ( uint8_t )( timeout >> 16 );
+    cbuffer[7] = ( uint8_t )( timeout >> 8 );
+    cbuffer[8] = ( uint8_t )( timeout >> 0 );
+
+    if ( lr1110_spi_write( context, cbuffer, 2+7 ) == LR1110_SPI_STATUS_OK ) {
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
     } else {
         HAL_DBG_TRACE_ERROR("Failed to set LR1110 TX mode\r\n");
@@ -246,6 +293,21 @@ void setLR1110_TX_Continuous_Wave( const void* context ) {
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
     } else {
         HAL_DBG_TRACE_ERROR("Failed to set LR1110 in continuous TX wave mode\r\n");
+    }
+}
+
+void joinNetwork( const void* context ) {
+    HAL_DBG_TRACE_INFO("Joining network... ");
+
+    uint8_t cbuffer[2];
+
+    cbuffer[0] = ( uint8_t )( 0x0625 >> 8 );
+    cbuffer[1] = ( uint8_t )( 0x0625 >> 0 );
+
+    if ( lr1110_spi_write( context, cbuffer, 2 ) == LR1110_SPI_STATUS_OK ) {
+        HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
+    } else {
+        HAL_DBG_TRACE_ERROR("Failed to join network\r\n");
     }
 }
 

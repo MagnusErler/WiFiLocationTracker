@@ -152,3 +152,9 @@ void getLR1110_Encrypted_Data( const void* context );
  * @param [in] context Radio abstraction
  */
 void setLR1110_TX_Continuous_Wave( const void* context );
+
+void joinNetwork( const void* context );
+
+void setLR1110_Auto_TX_RX( const void* context, const uint32_t timeout_ms );
+
+void setLR1110_LoRa_DIO_As_RF_Switch( const void* context, const uint8_t rf_sw_enable, const uint8_t rf_sw_stby_cfg, const uint8_t rf_sw_rx_cfg, const uint8_t rf_sw_tx_cfg, const uint8_t rf_sw_tx_hp_cfg, const uint8_t rf_sw_gnss_cfg, const uint8_t rf_sw_wifi_cfg);
