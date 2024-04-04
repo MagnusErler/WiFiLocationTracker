@@ -137,7 +137,6 @@ int main(void)
   resetLR1110(lr1110_context, 0);
   blinkLED(GPIOC, RX_LED_Pin|TX_LED_Pin, 100, 5);
 
-
   clearLR1110_Errors(lr1110_context);
   clearLR1110_IRQ(lr1110_context);
 
@@ -179,13 +178,13 @@ int main(void)
   setLR1110_LoRa_Packet_Params(lr1110_context, 0x00, 0x08, 0x00, 0x00, 0x01, 0x00); // NOT SURE ABOUT VALUE 1,2,4 and 6
   setLR1110_LoRa_Public_Network(lr1110_context, 0x01);
   setLR1110_LoRa_PA_Config(lr1110_context, 0x00, 0x00, 0x04, 0x07);                 // DONT KNOW WHAT TO PUT HERE
-  //setLR1110_LoRa_DIO_As_RF_Switch(lr1110_context, 0x03, 0x00, 0x02, 0x03, 0x01, 0x00, 0x00);
+  // setLR1110_LoRa_DIO_As_RF_Switch(lr1110_context, 0x03, 0x00, 0x02, 0x03, 0x01, 0x00, 0x00);
   setLR1110_LoRa_TX_Params(lr1110_context, 0x0E, 0x02);                             // DONT KNOW WHAT TO PUT HERE
   setLR1110_Auto_TX_RX(lr1110_context, 3000);
 
   // setLR1110_Crypto_Key(lr1110_context);
 
-  // getLR1110_MIC(lr1110_context);
+  getLR1110_MIC(lr1110_context);
 
   //getLR1110_Encrypted_Data(lr1110_context);
 
@@ -203,6 +202,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1) {
 
+    clearLR1110_RX_Buffer(lr1110_context);
     writeLR1110_Buffer8(lr1110_context, 0x02);
     setLR1110_TX(lr1110_context, 5000);
 
@@ -564,7 +564,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
   if(GPIO_Pin == EVENT_Pin) {
     //toggleLED( GPIOB, SNIFFING_LED_Pin );
     HAL_DBG_TRACE_MSG_COLOR("\r\nINTERRUPT\r\n", HAL_DBG_TRACE_COLOR_CUSTOM);
-    getLR1110_Status( lr1110_context );
+    //getLR1110_Status( lr1110_context );
   } else {
       __NOP();
   }

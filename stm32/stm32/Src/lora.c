@@ -205,14 +205,42 @@ void getLR1110_LoRa_Packet_Status( const void* context ) {
 void writeLR1110_Buffer8( const void* context, const uint8_t data ) {
     HAL_DBG_TRACE_INFO("Writing 0x%0X to buffer... ", data);
 
-    uint8_t cbuffer[2 + 2];
+    uint8_t cbuffer[2 + 18 + 4];
+
+    // joinEUI = AppEUI = 00:16:C0:01:FF:FE:00:01
+    // chipEUI = DevEUI = 00:16:C0:01:F0:00:5F:84
+    // AppKey = 6A9D92991BAB79BCAE224DC0B56AC197
 
     cbuffer[0] = ( uint8_t )( 0x0109 >> 8 );
     cbuffer[1] = ( uint8_t )( 0x0109 >> 0 );
-    cbuffer[2] = ( uint8_t )( 0x52 );
-    cbuffer[3] = ( uint8_t )( 0x22 );
 
-    if ( lr1110_spi_write( context, cbuffer, 2+2 ) == LR1110_SPI_STATUS_OK ) {
+    cbuffer[2] = ( uint8_t )( 0x00 );
+    cbuffer[3] = ( uint8_t )( 0x16 );
+    cbuffer[4] = ( uint8_t )( 0xC0 );
+    cbuffer[5] = ( uint8_t )( 0x01 );
+    cbuffer[6] = ( uint8_t )( 0xFF );
+    cbuffer[7] = ( uint8_t )( 0xFE );
+    cbuffer[8] = ( uint8_t )( 0x00 );
+    cbuffer[9] = ( uint8_t )( 0x01 );
+
+    cbuffer[10] = ( uint8_t )( 0x00 );
+    cbuffer[11] = ( uint8_t )( 0x16 );
+    cbuffer[12] = ( uint8_t )( 0xC0 );
+    cbuffer[13] = ( uint8_t )( 0x01 );
+    cbuffer[14] = ( uint8_t )( 0xF0 );
+    cbuffer[15] = ( uint8_t )( 0x00 );
+    cbuffer[16] = ( uint8_t )( 0x5F );
+    cbuffer[17] = ( uint8_t )( 0x84 );
+
+    cbuffer[18] = ( uint8_t )( 0x10 );
+    cbuffer[19] = ( uint8_t )( 0x20 );
+
+    cbuffer[20] = ( uint8_t )( 0x63 );
+    cbuffer[21] = ( uint8_t )( 0x6E );
+    cbuffer[22] = ( uint8_t )( 0xB9 );
+    cbuffer[23] = ( uint8_t )( 0xCE );
+
+    if ( lr1110_spi_write( context, cbuffer, 2+18+4 ) == LR1110_SPI_STATUS_OK ) {
         HAL_DBG_TRACE_MSG_COLOR("DONE\r\n", HAL_DBG_TRACE_COLOR_GREEN);
     } else {
         HAL_DBG_TRACE_ERROR("Failed to write to buffer");
@@ -445,7 +473,8 @@ void setLR1110_Crypto_Key( const void* context ) {
 void getLR1110_MIC( const void* context ) {
     HAL_DBG_TRACE_INFO("Getting LR1110 MIC... ");
 
-    uint8_t cbuffer[2+1+16];
+    // uint8_t cbuffer[2+1+16];
+    uint8_t cbuffer[2+1+18];
     uint8_t rbuffer[1+5] = { 0 };
 
     cbuffer[0] = ( uint8_t )( 0x0505 >> 8 );
@@ -453,24 +482,45 @@ void getLR1110_MIC( const void* context ) {
 
     cbuffer[2] = ( uint8_t ) 5;
 
-    // 6BC1BEE2 2E409F96 E93D7E11 7393172A
-    // 2b7e1516 28aed2a6abf71588 09cf4f3c
-    cbuffer[3] = ( uint8_t ) ( 0x6B >> 0 );
-    cbuffer[4] = ( uint8_t ) ( 0xC1 >> 0 );
-    cbuffer[5] = ( uint8_t ) ( 0xBE >> 0 );
-    cbuffer[6] = ( uint8_t ) ( 0xE2 >> 0 );
-    cbuffer[7] = ( uint8_t ) ( 0x2E >> 0 );
-    cbuffer[8] = ( uint8_t ) ( 0x40 >> 0 );
-    cbuffer[9] = ( uint8_t ) ( 0x9F >> 0 );
-    cbuffer[10] = ( uint8_t ) ( 0x96 >> 0 );
-    cbuffer[11] = ( uint8_t ) ( 0xE9 >> 0 );
-    cbuffer[12] = ( uint8_t ) ( 0x3D >> 0 );
-    cbuffer[13] = ( uint8_t ) ( 0x7E >> 0 );
-    cbuffer[14] = ( uint8_t ) ( 0x11 >> 0 );
-    cbuffer[15] = ( uint8_t ) ( 0x73 >> 0 );
-    cbuffer[16] = ( uint8_t ) ( 0x93 >> 0 );
-    cbuffer[17] = ( uint8_t ) ( 0x17 >> 0 );
-    cbuffer[18] = ( uint8_t ) ( 0x2A >> 0 );
+    // // 6BC1BEE2 2E409F96 E93D7E11 7393172A
+    // // 2b7e1516 28aed2a6abf71588 09cf4f3c
+    // cbuffer[3] = ( uint8_t ) ( 0x6B >> 0 );
+    // cbuffer[4] = ( uint8_t ) ( 0xC1 >> 0 );
+    // cbuffer[5] = ( uint8_t ) ( 0xBE >> 0 );
+    // cbuffer[6] = ( uint8_t ) ( 0xE2 >> 0 );
+    // cbuffer[7] = ( uint8_t ) ( 0x2E >> 0 );
+    // cbuffer[8] = ( uint8_t ) ( 0x40 >> 0 );
+    // cbuffer[9] = ( uint8_t ) ( 0x9F >> 0 );
+    // cbuffer[10] = ( uint8_t ) ( 0x96 >> 0 );
+    // cbuffer[11] = ( uint8_t ) ( 0xE9 >> 0 );
+    // cbuffer[12] = ( uint8_t ) ( 0x3D >> 0 );
+    // cbuffer[13] = ( uint8_t ) ( 0x7E >> 0 );
+    // cbuffer[14] = ( uint8_t ) ( 0x11 >> 0 );
+    // cbuffer[15] = ( uint8_t ) ( 0x73 >> 0 );
+    // cbuffer[16] = ( uint8_t ) ( 0x93 >> 0 );
+    // cbuffer[17] = ( uint8_t ) ( 0x17 >> 0 );
+    // cbuffer[18] = ( uint8_t ) ( 0x2A >> 0 );
+
+    cbuffer[3] = ( uint8_t )( 0x00 );
+    cbuffer[4] = ( uint8_t )( 0x16 );
+    cbuffer[5] = ( uint8_t )( 0xC0 );
+    cbuffer[6] = ( uint8_t )( 0x01 );
+    cbuffer[7] = ( uint8_t )( 0xFF );
+    cbuffer[8] = ( uint8_t )( 0xFE );
+    cbuffer[9] = ( uint8_t )( 0x00 );
+    cbuffer[10] = ( uint8_t )( 0x01 );
+
+    cbuffer[11] = ( uint8_t )( 0x00 );
+    cbuffer[12] = ( uint8_t )( 0x16 );
+    cbuffer[13] = ( uint8_t )( 0xC0 );
+    cbuffer[14] = ( uint8_t )( 0x01 );
+    cbuffer[15] = ( uint8_t )( 0xF0 );
+    cbuffer[16] = ( uint8_t )( 0x00 );
+    cbuffer[17] = ( uint8_t )( 0x5F );
+    cbuffer[18] = ( uint8_t )( 0x84 );
+
+    cbuffer[19] = ( uint8_t )( 0x10 );
+    cbuffer[20] = ( uint8_t )( 0x20 );
 
     if (lr1110_spi_read( context, cbuffer, 2+1+16, rbuffer, 1+5 ) == LR1110_SPI_STATUS_OK) {
         switch (rbuffer[1]) {
