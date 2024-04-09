@@ -196,26 +196,22 @@ void main_geolocation( void )
 
     /* Check LR11XX Firmware version */
     status = lr11xx_system_get_version( NULL, &lr11xx_fw_version );
-    if( status != LR11XX_STATUS_OK )
-    {
+    if( status != LR11XX_STATUS_OK ) {
         SMTC_HAL_TRACE_ERROR( "Failed to get LR11XX firmware version\n" );
     }
     if( ( lr11xx_fw_version.type == LR11XX_SYSTEM_VERSION_TYPE_LR1110 ) &&
-        ( lr11xx_fw_version.fw < LR1110_FW_VERSION ) )
-    {
+        ( lr11xx_fw_version.fw < LR1110_FW_VERSION ) ) {
         SMTC_HAL_TRACE_ERROR( "Wrong LR1110 firmware version, expected 0x%04X, got 0x%04X\n", LR1110_FW_VERSION,
                               lr11xx_fw_version.fw );
     }
     if( ( lr11xx_fw_version.type == LR11XX_SYSTEM_VERSION_TYPE_LR1120 ) &&
-        ( lr11xx_fw_version.fw < LR1120_FW_VERSION ) )
-    {
+        ( lr11xx_fw_version.fw < LR1120_FW_VERSION ) ) {
         SMTC_HAL_TRACE_ERROR( "Wrong LR1120 firmware version, expected 0x%04X, got 0x%04X\n", LR1120_FW_VERSION,
                               lr11xx_fw_version.fw );
     }
     SMTC_HAL_TRACE_INFO( "LR11XX FW: 0x%04X, type: 0x%02X\n", lr11xx_fw_version.fw, lr11xx_fw_version.type );
 
-    while( 1 )
-    {
+    while( 1 ) {
         // Modem process launch
         sleep_time_ms = smtc_modem_run_engine( );
 
@@ -256,8 +252,7 @@ static void modem_event_callback( void )
     smtc_modem_wifi_event_data_terminated_t                     wifi_terminated_data;
 
     // Continue to read modem event until all event has been processed
-    do
-    {
+    do {
         // Read modem event
         smtc_modem_get_event( &current_event, &event_pending_count );
 
