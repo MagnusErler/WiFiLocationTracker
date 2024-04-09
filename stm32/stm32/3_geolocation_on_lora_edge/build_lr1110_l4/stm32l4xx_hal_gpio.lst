@@ -1,0 +1,486 @@
+ARM GAS  /tmp/ccwLwp8x.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 23, 1
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 4
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"stm32l4xx_hal_gpio.c"
+  12              		.text
+  13              		.section	.text.HAL_GPIO_Init,"ax",%progbits
+  14              		.align	1
+  15              		.global	HAL_GPIO_Init
+  16              		.arch armv7e-m
+  17              		.syntax unified
+  18              		.thumb
+  19              		.thumb_func
+  20              		.fpu fpv4-sp-d16
+  22              	HAL_GPIO_Init:
+  23              		@ args = 0, pretend = 0, frame = 8
+  24              		@ frame_needed = 0, uses_anonymous_args = 0
+  25 0000 2DE9F74F 		push	{r0, r1, r2, r4, r5, r6, r7, r8, r9, r10, fp, lr}
+  26 0004 DFF8B091 		ldr	r9, .L29+8
+  27 0008 694D     		ldr	r5, .L29
+  28 000a 0023     		movs	r3, #0
+  29              	.L2:
+  30 000c 0A68     		ldr	r2, [r1]
+  31 000e 32FA03F4 		lsrs	r4, r2, r3
+  32 0012 02D1     		bne	.L18
+  33 0014 03B0     		add	sp, sp, #12
+  34              		@ sp needed
+  35 0016 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+  36              	.L18:
+  37 001a 4FF0010A 		mov	r10, #1
+  38 001e 0AFA03FA 		lsl	r10, r10, r3
+  39 0022 1AEA0202 		ands	r2, r10, r2
+  40 0026 00F0B480 		beq	.L4
+  41 002a 4C68     		ldr	r4, [r1, #4]
+  42 002c 24F0100E 		bic	lr, r4, #16
+  43 0030 4FEA4308 		lsl	r8, r3, #1
+  44 0034 0326     		movs	r6, #3
+  45 0036 0EF1FF37 		add	r7, lr, #-1
+  46 003a 06FA08F6 		lsl	r6, r6, r8
+  47 003e 012F     		cmp	r7, #1
+  48 0040 6FEA0606 		mvn	r6, r6
+  49 0044 11D8     		bhi	.L5
+  50 0046 8768     		ldr	r7, [r0, #8]
+  51 0048 07EA060C 		and	ip, r7, r6
+  52 004c CF68     		ldr	r7, [r1, #12]
+  53 004e 07FA08F7 		lsl	r7, r7, r8
+  54 0052 47EA0C07 		orr	r7, r7, ip
+  55 0056 8760     		str	r7, [r0, #8]
+  56 0058 4768     		ldr	r7, [r0, #4]
+  57 005a 27EA0A0C 		bic	ip, r7, r10
+  58 005e C4F30017 		ubfx	r7, r4, #4, #1
+ARM GAS  /tmp/ccwLwp8x.s 			page 2
+
+
+  59 0062 9F40     		lsls	r7, r7, r3
+  60 0064 47EA0C07 		orr	r7, r7, ip
+  61 0068 4760     		str	r7, [r0, #4]
+  62              	.L5:
+  63 006a 04F0030C 		and	ip, r4, #3
+  64 006e BCF1030F 		cmp	ip, #3
+  65 0072 08D1     		bne	.L6
+  66 0074 C76A     		ldr	r7, [r0, #44]
+  67 0076 27EA0A0A 		bic	r10, r7, r10
+  68 007a C4F3C007 		ubfx	r7, r4, #3, #1
+  69 007e 9F40     		lsls	r7, r7, r3
+  70 0080 47EA0A07 		orr	r7, r7, r10
+  71 0084 C762     		str	r7, [r0, #44]
+  72              	.L6:
+  73 0086 C768     		ldr	r7, [r0, #12]
+  74 0088 07EA060A 		and	r10, r7, r6
+  75 008c 8F68     		ldr	r7, [r1, #8]
+  76 008e 07FA08F7 		lsl	r7, r7, r8
+  77 0092 47EA0A07 		orr	r7, r7, r10
+  78 0096 BEF1020F 		cmp	lr, #2
+  79 009a C760     		str	r7, [r0, #12]
+  80 009c 16D1     		bne	.L7
+  81 009e 4FEAD30A 		lsr	r10, r3, #3
+  82 00a2 00EB8A0A 		add	r10, r0, r10, lsl #2
+  83 00a6 03F0070B 		and	fp, r3, #7
+  84 00aa DAF82070 		ldr	r7, [r10, #32]
+  85 00ae 4FEA8B0B 		lsl	fp, fp, #2
+  86 00b2 4FF00F0E 		mov	lr, #15
+  87 00b6 0EFA0BFE 		lsl	lr, lr, fp
+  88 00ba 27EA0E0E 		bic	lr, r7, lr
+  89 00be 0F69     		ldr	r7, [r1, #16]
+  90 00c0 07FA0BF7 		lsl	r7, r7, fp
+  91 00c4 47EA0E07 		orr	r7, r7, lr
+  92 00c8 CAF82070 		str	r7, [r10, #32]
+  93              	.L7:
+  94 00cc 0768     		ldr	r7, [r0]
+  95 00ce 0CFA08FC 		lsl	ip, ip, r8
+  96 00d2 3E40     		ands	r6, r6, r7
+  97 00d4 4CEA0606 		orr	r6, ip, r6
+  98 00d8 0660     		str	r6, [r0]
+  99 00da E600     		lsls	r6, r4, #3
+ 100 00dc 59D5     		bpl	.L4
+ 101 00de D9F86060 		ldr	r6, [r9, #96]
+ 102 00e2 46F00106 		orr	r6, r6, #1
+ 103 00e6 C9F86060 		str	r6, [r9, #96]
+ 104 00ea D9F86060 		ldr	r6, [r9, #96]
+ 105 00ee 23F00307 		bic	r7, r3, #3
+ 106 00f2 07F18047 		add	r7, r7, #1073741824
+ 107 00f6 06F00106 		and	r6, r6, #1
+ 108 00fa 07F58037 		add	r7, r7, #65536
+ 109 00fe 0196     		str	r6, [sp, #4]
+ 110 0100 03F0030E 		and	lr, r3, #3
+ 111 0104 019E     		ldr	r6, [sp, #4]
+ 112 0106 BE68     		ldr	r6, [r7, #8]
+ 113 0108 4FEA8E0E 		lsl	lr, lr, #2
+ 114 010c 4FF00F0C 		mov	ip, #15
+ 115 0110 0CFA0EFC 		lsl	ip, ip, lr
+ARM GAS  /tmp/ccwLwp8x.s 			page 3
+
+
+ 116 0114 B0F1904F 		cmp	r0, #1207959552
+ 117 0118 26EA0C0C 		bic	ip, r6, ip
+ 118 011c 3BD0     		beq	.L19
+ 119 011e 254E     		ldr	r6, .L29+4
+ 120 0120 B042     		cmp	r0, r6
+ 121 0122 3AD0     		beq	.L20
+ 122 0124 06F58066 		add	r6, r6, #1024
+ 123 0128 B042     		cmp	r0, r6
+ 124 012a 38D0     		beq	.L21
+ 125 012c 06F58066 		add	r6, r6, #1024
+ 126 0130 B042     		cmp	r0, r6
+ 127 0132 36D0     		beq	.L22
+ 128 0134 06F58066 		add	r6, r6, #1024
+ 129 0138 B042     		cmp	r0, r6
+ 130 013a 34D0     		beq	.L23
+ 131 013c 06F58066 		add	r6, r6, #1024
+ 132 0140 B042     		cmp	r0, r6
+ 133 0142 32D0     		beq	.L24
+ 134 0144 06F58066 		add	r6, r6, #1024
+ 135 0148 B042     		cmp	r0, r6
+ 136 014a 0CBF     		ite	eq
+ 137 014c 0626     		moveq	r6, #6
+ 138 014e 0726     		movne	r6, #7
+ 139              	.L9:
+ 140 0150 06FA0EF6 		lsl	r6, r6, lr
+ 141 0154 46EA0C06 		orr	r6, r6, ip
+ 142 0158 BE60     		str	r6, [r7, #8]
+ 143 015a 2E68     		ldr	r6, [r5]
+ 144 015c D743     		mvns	r7, r2
+ 145 015e 14F4803F 		tst	r4, #65536
+ 146 0162 0CBF     		ite	eq
+ 147 0164 3E40     		andeq	r6, r6, r7
+ 148 0166 1643     		orrne	r6, r6, r2
+ 149 0168 2E60     		str	r6, [r5]
+ 150 016a 6E68     		ldr	r6, [r5, #4]
+ 151 016c 14F4003F 		tst	r4, #131072
+ 152 0170 0CBF     		ite	eq
+ 153 0172 3E40     		andeq	r6, r6, r7
+ 154 0174 1643     		orrne	r6, r6, r2
+ 155 0176 6E60     		str	r6, [r5, #4]
+ 156 0178 AE68     		ldr	r6, [r5, #8]
+ 157 017a 14F4801F 		tst	r4, #1048576
+ 158 017e 0CBF     		ite	eq
+ 159 0180 3E40     		andeq	r6, r6, r7
+ 160 0182 1643     		orrne	r6, r6, r2
+ 161 0184 AE60     		str	r6, [r5, #8]
+ 162 0186 EE68     		ldr	r6, [r5, #12]
+ 163 0188 A402     		lsls	r4, r4, #10
+ 164 018a 54BF     		ite	pl
+ 165 018c 3E40     		andpl	r6, r6, r7
+ 166 018e 1643     		orrmi	r6, r6, r2
+ 167 0190 EE60     		str	r6, [r5, #12]
+ 168              	.L4:
+ 169 0192 0133     		adds	r3, r3, #1
+ 170 0194 3AE7     		b	.L2
+ 171              	.L19:
+ 172 0196 0026     		movs	r6, #0
+ARM GAS  /tmp/ccwLwp8x.s 			page 4
+
+
+ 173 0198 DAE7     		b	.L9
+ 174              	.L20:
+ 175 019a 0126     		movs	r6, #1
+ 176 019c D8E7     		b	.L9
+ 177              	.L21:
+ 178 019e 0226     		movs	r6, #2
+ 179 01a0 D6E7     		b	.L9
+ 180              	.L22:
+ 181 01a2 0326     		movs	r6, #3
+ 182 01a4 D4E7     		b	.L9
+ 183              	.L23:
+ 184 01a6 0426     		movs	r6, #4
+ 185 01a8 D2E7     		b	.L9
+ 186              	.L24:
+ 187 01aa 0526     		movs	r6, #5
+ 188 01ac D0E7     		b	.L9
+ 189              	.L30:
+ 190 01ae 00BF     		.align	2
+ 191              	.L29:
+ 192 01b0 00040140 		.word	1073808384
+ 193 01b4 00040048 		.word	1207960576
+ 194 01b8 00100240 		.word	1073876992
+ 196              		.section	.text.HAL_GPIO_DeInit,"ax",%progbits
+ 197              		.align	1
+ 198              		.global	HAL_GPIO_DeInit
+ 199              		.syntax unified
+ 200              		.thumb
+ 201              		.thumb_func
+ 202              		.fpu fpv4-sp-d16
+ 204              	HAL_GPIO_DeInit:
+ 205              		@ args = 0, pretend = 0, frame = 0
+ 206              		@ frame_needed = 0, uses_anonymous_args = 0
+ 207 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 208 0004 424C     		ldr	r4, .L47
+ 209 0006 DFF810B1 		ldr	fp, .L47+8
+ 210 000a 0023     		movs	r3, #0
+ 211 000c 4FF0010A 		mov	r10, #1
+ 212 0010 4FF00F08 		mov	r8, #15
+ 213              	.L32:
+ 214 0014 31FA03F2 		lsrs	r2, r1, r3
+ 215 0018 01D1     		bne	.L36
+ 216 001a BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 217              	.L36:
+ 218 001e 0AFA03F6 		lsl	r6, r10, r3
+ 219 0022 16EA0107 		ands	r7, r6, r1
+ 220 0026 65D0     		beq	.L33
+ 221 0028 23F00305 		bic	r5, r3, #3
+ 222 002c 05F18045 		add	r5, r5, #1073741824
+ 223 0030 05F58035 		add	r5, r5, #65536
+ 224 0034 03F0030C 		and	ip, r3, #3
+ 225 0038 AA68     		ldr	r2, [r5, #8]
+ 226 003a 4FEA8C0C 		lsl	ip, ip, #2
+ 227 003e 08FA0CF9 		lsl	r9, r8, ip
+ 228 0042 B0F1904F 		cmp	r0, #1207959552
+ 229 0046 09EA020E 		and	lr, r9, r2
+ 230 004a 55D0     		beq	.L37
+ 231 004c 314A     		ldr	r2, .L47+4
+ARM GAS  /tmp/ccwLwp8x.s 			page 5
+
+
+ 232 004e 9042     		cmp	r0, r2
+ 233 0050 54D0     		beq	.L38
+ 234 0052 02F58062 		add	r2, r2, #1024
+ 235 0056 9042     		cmp	r0, r2
+ 236 0058 52D0     		beq	.L39
+ 237 005a 02F58062 		add	r2, r2, #1024
+ 238 005e 9042     		cmp	r0, r2
+ 239 0060 50D0     		beq	.L40
+ 240 0062 02F58062 		add	r2, r2, #1024
+ 241 0066 9042     		cmp	r0, r2
+ 242 0068 4ED0     		beq	.L41
+ 243 006a 02F58062 		add	r2, r2, #1024
+ 244 006e 9042     		cmp	r0, r2
+ 245 0070 4CD0     		beq	.L42
+ 246 0072 5845     		cmp	r0, fp
+ 247 0074 0CBF     		ite	eq
+ 248 0076 0622     		moveq	r2, #6
+ 249 0078 0722     		movne	r2, #7
+ 250              	.L34:
+ 251 007a 02FA0CF2 		lsl	r2, r2, ip
+ 252 007e 7245     		cmp	r2, lr
+ 253 0080 13D1     		bne	.L35
+ 254 0082 2268     		ldr	r2, [r4]
+ 255 0084 22EA0702 		bic	r2, r2, r7
+ 256 0088 2260     		str	r2, [r4]
+ 257 008a 6268     		ldr	r2, [r4, #4]
+ 258 008c 22EA0702 		bic	r2, r2, r7
+ 259 0090 6260     		str	r2, [r4, #4]
+ 260 0092 A268     		ldr	r2, [r4, #8]
+ 261 0094 22EA0702 		bic	r2, r2, r7
+ 262 0098 A260     		str	r2, [r4, #8]
+ 263 009a E268     		ldr	r2, [r4, #12]
+ 264 009c 22EA0702 		bic	r2, r2, r7
+ 265 00a0 E260     		str	r2, [r4, #12]
+ 266 00a2 AA68     		ldr	r2, [r5, #8]
+ 267 00a4 22EA0902 		bic	r2, r2, r9
+ 268 00a8 AA60     		str	r2, [r5, #8]
+ 269              	.L35:
+ 270 00aa 0568     		ldr	r5, [r0]
+ 271 00ac 0327     		movs	r7, #3
+ 272 00ae 5A00     		lsls	r2, r3, #1
+ 273 00b0 07FA02F2 		lsl	r2, r7, r2
+ 274 00b4 23FA07F7 		lsr	r7, r3, r7
+ 275 00b8 1543     		orrs	r5, r5, r2
+ 276 00ba 00EB8707 		add	r7, r0, r7, lsl #2
+ 277 00be 0560     		str	r5, [r0]
+ 278 00c0 03F00705 		and	r5, r3, #7
+ 279 00c4 D7F820C0 		ldr	ip, [r7, #32]
+ 280 00c8 AD00     		lsls	r5, r5, #2
+ 281 00ca 08FA05F5 		lsl	r5, r8, r5
+ 282 00ce 2CEA0505 		bic	r5, ip, r5
+ 283 00d2 3D62     		str	r5, [r7, #32]
+ 284 00d4 8568     		ldr	r5, [r0, #8]
+ 285 00d6 25EA0205 		bic	r5, r5, r2
+ 286 00da 8560     		str	r5, [r0, #8]
+ 287 00dc 4568     		ldr	r5, [r0, #4]
+ 288 00de 25EA0605 		bic	r5, r5, r6
+ARM GAS  /tmp/ccwLwp8x.s 			page 6
+
+
+ 289 00e2 4560     		str	r5, [r0, #4]
+ 290 00e4 C568     		ldr	r5, [r0, #12]
+ 291 00e6 25EA0202 		bic	r2, r5, r2
+ 292 00ea C260     		str	r2, [r0, #12]
+ 293 00ec C26A     		ldr	r2, [r0, #44]
+ 294 00ee 22EA0606 		bic	r6, r2, r6
+ 295 00f2 C662     		str	r6, [r0, #44]
+ 296              	.L33:
+ 297 00f4 0133     		adds	r3, r3, #1
+ 298 00f6 8DE7     		b	.L32
+ 299              	.L37:
+ 300 00f8 0022     		movs	r2, #0
+ 301 00fa BEE7     		b	.L34
+ 302              	.L38:
+ 303 00fc 0122     		movs	r2, #1
+ 304 00fe BCE7     		b	.L34
+ 305              	.L39:
+ 306 0100 0222     		movs	r2, #2
+ 307 0102 BAE7     		b	.L34
+ 308              	.L40:
+ 309 0104 0322     		movs	r2, #3
+ 310 0106 B8E7     		b	.L34
+ 311              	.L41:
+ 312 0108 0422     		movs	r2, #4
+ 313 010a B6E7     		b	.L34
+ 314              	.L42:
+ 315 010c 0522     		movs	r2, #5
+ 316 010e B4E7     		b	.L34
+ 317              	.L48:
+ 318              		.align	2
+ 319              	.L47:
+ 320 0110 00040140 		.word	1073808384
+ 321 0114 00040048 		.word	1207960576
+ 322 0118 00180048 		.word	1207965696
+ 324              		.section	.text.HAL_GPIO_ReadPin,"ax",%progbits
+ 325              		.align	1
+ 326              		.global	HAL_GPIO_ReadPin
+ 327              		.syntax unified
+ 328              		.thumb
+ 329              		.thumb_func
+ 330              		.fpu fpv4-sp-d16
+ 332              	HAL_GPIO_ReadPin:
+ 333              		@ args = 0, pretend = 0, frame = 0
+ 334              		@ frame_needed = 0, uses_anonymous_args = 0
+ 335              		@ link register save eliminated.
+ 336 0000 0369     		ldr	r3, [r0, #16]
+ 337 0002 1942     		tst	r1, r3
+ 338 0004 14BF     		ite	ne
+ 339 0006 0120     		movne	r0, #1
+ 340 0008 0020     		moveq	r0, #0
+ 341 000a 7047     		bx	lr
+ 343              		.section	.text.HAL_GPIO_WritePin,"ax",%progbits
+ 344              		.align	1
+ 345              		.global	HAL_GPIO_WritePin
+ 346              		.syntax unified
+ 347              		.thumb
+ 348              		.thumb_func
+ARM GAS  /tmp/ccwLwp8x.s 			page 7
+
+
+ 349              		.fpu fpv4-sp-d16
+ 351              	HAL_GPIO_WritePin:
+ 352              		@ args = 0, pretend = 0, frame = 0
+ 353              		@ frame_needed = 0, uses_anonymous_args = 0
+ 354              		@ link register save eliminated.
+ 355 0000 0AB1     		cbz	r2, .L51
+ 356 0002 8161     		str	r1, [r0, #24]
+ 357 0004 7047     		bx	lr
+ 358              	.L51:
+ 359 0006 8162     		str	r1, [r0, #40]
+ 360 0008 7047     		bx	lr
+ 362              		.section	.text.HAL_GPIO_TogglePin,"ax",%progbits
+ 363              		.align	1
+ 364              		.global	HAL_GPIO_TogglePin
+ 365              		.syntax unified
+ 366              		.thumb
+ 367              		.thumb_func
+ 368              		.fpu fpv4-sp-d16
+ 370              	HAL_GPIO_TogglePin:
+ 371              		@ args = 0, pretend = 0, frame = 0
+ 372              		@ frame_needed = 0, uses_anonymous_args = 0
+ 373              		@ link register save eliminated.
+ 374 0000 4369     		ldr	r3, [r0, #20]
+ 375 0002 01EA0302 		and	r2, r1, r3
+ 376 0006 21EA0301 		bic	r1, r1, r3
+ 377 000a 41EA0241 		orr	r1, r1, r2, lsl #16
+ 378 000e 8161     		str	r1, [r0, #24]
+ 379 0010 7047     		bx	lr
+ 381              		.section	.text.HAL_GPIO_LockPin,"ax",%progbits
+ 382              		.align	1
+ 383              		.global	HAL_GPIO_LockPin
+ 384              		.syntax unified
+ 385              		.thumb
+ 386              		.thumb_func
+ 387              		.fpu fpv4-sp-d16
+ 389              	HAL_GPIO_LockPin:
+ 390              		@ args = 0, pretend = 0, frame = 8
+ 391              		@ frame_needed = 0, uses_anonymous_args = 0
+ 392              		@ link register save eliminated.
+ 393 0000 82B0     		sub	sp, sp, #8
+ 394 0002 4FF48033 		mov	r3, #65536
+ 395 0006 0193     		str	r3, [sp, #4]
+ 396 0008 019B     		ldr	r3, [sp, #4]
+ 397 000a 0B43     		orrs	r3, r3, r1
+ 398 000c 0193     		str	r3, [sp, #4]
+ 399 000e 019B     		ldr	r3, [sp, #4]
+ 400 0010 C361     		str	r3, [r0, #28]
+ 401 0012 C161     		str	r1, [r0, #28]
+ 402 0014 019B     		ldr	r3, [sp, #4]
+ 403 0016 C361     		str	r3, [r0, #28]
+ 404 0018 C369     		ldr	r3, [r0, #28]
+ 405 001a 0193     		str	r3, [sp, #4]
+ 406 001c C069     		ldr	r0, [r0, #28]
+ 407 001e 80F48030 		eor	r0, r0, #65536
+ 408 0022 C0F30040 		ubfx	r0, r0, #16, #1
+ 409 0026 02B0     		add	sp, sp, #8
+ 410              		@ sp needed
+ARM GAS  /tmp/ccwLwp8x.s 			page 8
+
+
+ 411 0028 7047     		bx	lr
+ 413              		.section	.text.HAL_GPIO_EXTI_Callback,"ax",%progbits
+ 414              		.align	1
+ 415              		.weak	HAL_GPIO_EXTI_Callback
+ 416              		.syntax unified
+ 417              		.thumb
+ 418              		.thumb_func
+ 419              		.fpu fpv4-sp-d16
+ 421              	HAL_GPIO_EXTI_Callback:
+ 422              		@ args = 0, pretend = 0, frame = 0
+ 423              		@ frame_needed = 0, uses_anonymous_args = 0
+ 424              		@ link register save eliminated.
+ 425 0000 7047     		bx	lr
+ 427              		.section	.text.HAL_GPIO_EXTI_IRQHandler,"ax",%progbits
+ 428              		.align	1
+ 429              		.global	HAL_GPIO_EXTI_IRQHandler
+ 430              		.syntax unified
+ 431              		.thumb
+ 432              		.thumb_func
+ 433              		.fpu fpv4-sp-d16
+ 435              	HAL_GPIO_EXTI_IRQHandler:
+ 436              		@ args = 0, pretend = 0, frame = 0
+ 437              		@ frame_needed = 0, uses_anonymous_args = 0
+ 438 0000 044A     		ldr	r2, .L61
+ 439 0002 5169     		ldr	r1, [r2, #20]
+ 440 0004 0142     		tst	r1, r0
+ 441 0006 08B5     		push	{r3, lr}
+ 442 0008 02D0     		beq	.L56
+ 443 000a 5061     		str	r0, [r2, #20]
+ 444 000c FFF7FEFF 		bl	HAL_GPIO_EXTI_Callback
+ 445              	.L56:
+ 446 0010 08BD     		pop	{r3, pc}
+ 447              	.L62:
+ 448 0012 00BF     		.align	2
+ 449              	.L61:
+ 450 0014 00040140 		.word	1073808384
+ 452              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccwLwp8x.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 stm32l4xx_hal_gpio.c
+     /tmp/ccwLwp8x.s:14     .text.HAL_GPIO_Init:0000000000000000 $t
+     /tmp/ccwLwp8x.s:22     .text.HAL_GPIO_Init:0000000000000000 HAL_GPIO_Init
+     /tmp/ccwLwp8x.s:192    .text.HAL_GPIO_Init:00000000000001b0 $d
+     /tmp/ccwLwp8x.s:197    .text.HAL_GPIO_DeInit:0000000000000000 $t
+     /tmp/ccwLwp8x.s:204    .text.HAL_GPIO_DeInit:0000000000000000 HAL_GPIO_DeInit
+     /tmp/ccwLwp8x.s:320    .text.HAL_GPIO_DeInit:0000000000000110 $d
+     /tmp/ccwLwp8x.s:325    .text.HAL_GPIO_ReadPin:0000000000000000 $t
+     /tmp/ccwLwp8x.s:332    .text.HAL_GPIO_ReadPin:0000000000000000 HAL_GPIO_ReadPin
+     /tmp/ccwLwp8x.s:344    .text.HAL_GPIO_WritePin:0000000000000000 $t
+     /tmp/ccwLwp8x.s:351    .text.HAL_GPIO_WritePin:0000000000000000 HAL_GPIO_WritePin
+     /tmp/ccwLwp8x.s:363    .text.HAL_GPIO_TogglePin:0000000000000000 $t
+     /tmp/ccwLwp8x.s:370    .text.HAL_GPIO_TogglePin:0000000000000000 HAL_GPIO_TogglePin
+     /tmp/ccwLwp8x.s:382    .text.HAL_GPIO_LockPin:0000000000000000 $t
+     /tmp/ccwLwp8x.s:389    .text.HAL_GPIO_LockPin:0000000000000000 HAL_GPIO_LockPin
+     /tmp/ccwLwp8x.s:414    .text.HAL_GPIO_EXTI_Callback:0000000000000000 $t
+     /tmp/ccwLwp8x.s:421    .text.HAL_GPIO_EXTI_Callback:0000000000000000 HAL_GPIO_EXTI_Callback
+     /tmp/ccwLwp8x.s:428    .text.HAL_GPIO_EXTI_IRQHandler:0000000000000000 $t
+     /tmp/ccwLwp8x.s:435    .text.HAL_GPIO_EXTI_IRQHandler:0000000000000000 HAL_GPIO_EXTI_IRQHandler
+     /tmp/ccwLwp8x.s:450    .text.HAL_GPIO_EXTI_IRQHandler:0000000000000014 $d
+
+NO UNDEFINED SYMBOLS
