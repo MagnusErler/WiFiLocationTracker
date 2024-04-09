@@ -113,7 +113,7 @@ endif
 
 #-- LR1110 -------------------------------------------------------------------
 lr1110:
- 	$(MAKE) app_build TARGET_RADIO=lr1110 $(MTHREAD_FLAG)
+	$(MAKE) app_build TARGET_RADIO=lr1110 $(MTHREAD_FLAG)
 
 full_lr1110:
 	$(MAKE) clean_modem TARGET_RADIO=lr1110
