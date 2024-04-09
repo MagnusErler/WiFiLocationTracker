@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccK3FTIY.s 			page 1
+ARM GAS  /tmp/cc8NzXmL.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccK3FTIY.s 			page 1
   31      33326D49 
   31      4E464F3A 
   31      20547261 
-ARM GAS  /tmp/ccK3FTIY.s 			page 2
+ARM GAS  /tmp/cc8NzXmL.s 			page 2
 
 
   31      6E736D69 
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccK3FTIY.s 			page 1
   52              	.LC19:
   53 01e9 1B5B303B 		.ascii	"\033[0;32mINFO: Event received: GNSS_TERMINATED\012"
   53      33326D49 
-ARM GAS  /tmp/ccK3FTIY.s 			page 3
+ARM GAS  /tmp/cc8NzXmL.s 			page 3
 
 
   53      4E464F3A 
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccK3FTIY.s 			page 1
   73              	.LC28:
   74 0335 1B5B303B 		.ascii	"\033[0;31mERROR: Unknown event %u\012\000"
   74      33316D45 
-ARM GAS  /tmp/ccK3FTIY.s 			page 4
+ARM GAS  /tmp/cc8NzXmL.s 			page 4
 
 
   74      52524F52 
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccK3FTIY.s 			page 1
  127 0060 E300     		.2byte	(.L7-.L4)/2
  128 0062 F900     		.2byte	(.L6-.L4)/2
  129 0064 1601     		.2byte	(.L5-.L4)/2
-ARM GAS  /tmp/ccK3FTIY.s 			page 5
+ARM GAS  /tmp/cc8NzXmL.s 			page 5
 
 
  130 0066 2101     		.2byte	(.L3-.L4)/2
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccK3FTIY.s 			page 1
  184 00f2 3DB0     		add	sp, sp, #244
  185              		@ sp needed
  186 00f4 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
-ARM GAS  /tmp/ccK3FTIY.s 			page 6
+ARM GAS  /tmp/cc8NzXmL.s 			page 6
 
 
  187              	.L16:
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccK3FTIY.s 			page 1
  241 017a DFF8C8B1 		ldr	fp, .L31+148
  242 017e FFF7FEFF 		bl	hal_trace_print_var
  243 0182 2046     		mov	r0, r4
-ARM GAS  /tmp/ccK3FTIY.s 			page 7
+ARM GAS  /tmp/cc8NzXmL.s 			page 7
 
 
  244 0184 FFF7FEFF 		bl	hal_trace_print_var
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccK3FTIY.s 			page 1
  298 01fa 4848     		ldr	r0, .L31+108
  299 01fc FFF7FEFF 		bl	hal_trace_print_var
  300 0200 2046     		mov	r0, r4
-ARM GAS  /tmp/ccK3FTIY.s 			page 8
+ARM GAS  /tmp/cc8NzXmL.s 			page 8
 
 
  301 0202 FFF7FEFF 		bl	hal_trace_print_var
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccK3FTIY.s 			page 1
  355 0292 FFF7FEFF 		bl	smtc_modem_wifi_get_event_data_terminated
  356 0296 3C21     		movs	r1, #60
  357 0298 0020     		movs	r0, #0
-ARM GAS  /tmp/ccK3FTIY.s 			page 9
+ARM GAS  /tmp/cc8NzXmL.s 			page 9
 
 
  358 029a FFF7FEFF 		bl	smtc_modem_wifi_scan
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccK3FTIY.s 			page 1
  413              	.LC29:
  414 0000 1B5B303B 		.ascii	"\033[0;32mINFO: GEOLOCATION example is starting\012"
  414      33326D49 
-ARM GAS  /tmp/ccK3FTIY.s 			page 10
+ARM GAS  /tmp/cc8NzXmL.s 			page 10
 
 
  414      4E464F3A 
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccK3FTIY.s 			page 1
  442 000a 2C48     		ldr	r0, .L44
  443 000c FFF7FEFF 		bl	smtc_modem_init
  444 0010 FFF7FEFF 		bl	hal_mcu_enable_irq
-ARM GAS  /tmp/ccK3FTIY.s 			page 11
+ARM GAS  /tmp/cc8NzXmL.s 			page 11
 
 
  445 0014 2A48     		ldr	r0, .L44+4
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccK3FTIY.s 			page 1
  499 00ac 2846     		movcs	r0, r5
  500 00ae FFF7FEFF 		bl	hal_mcu_set_sleep_for_ms
  501              	.L39:
-ARM GAS  /tmp/ccK3FTIY.s 			page 12
+ARM GAS  /tmp/cc8NzXmL.s 			page 12
 
 
  502 00b2 FFF7FEFF 		bl	hal_watchdog_reload
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccK3FTIY.s 			page 1
  559              		.align	2
  560              		.set	.LANCHOR2,. + 0
  563              	user_app_key:
-ARM GAS  /tmp/ccK3FTIY.s 			page 13
+ARM GAS  /tmp/cc8NzXmL.s 			page 13
 
 
  564 0000 0D5E6BF7 		.ascii	"\015^k\367n\245\007\360fg\315\203\230\270\317\300"
@@ -738,37 +738,37 @@ ARM GAS  /tmp/ccK3FTIY.s 			page 1
  578 0000 0016C001 		.ascii	"\000\026\300\001\377\376\000\001"
  578      FFFE0001 
  579              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/ccK3FTIY.s 			page 14
+ARM GAS  /tmp/cc8NzXmL.s 			page 14
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 main_geolocation.c
-     /tmp/ccK3FTIY.s:76     .text.modem_event_callback:0000000000000000 $t
-     /tmp/ccK3FTIY.s:83     .text.modem_event_callback:0000000000000000 modem_event_callback
-     /tmp/ccK3FTIY.s:105    .text.modem_event_callback:0000000000000034 $d
-     /tmp/ccK3FTIY.s:131    .text.modem_event_callback:0000000000000068 $t
-     /tmp/ccK3FTIY.s:373    .text.modem_event_callback:00000000000002b0 $d
-     /tmp/ccK3FTIY.s:429    .text.main_geolocation:0000000000000000 $t
-     /tmp/ccK3FTIY.s:436    .text.main_geolocation:0000000000000000 main_geolocation
-     /tmp/ccK3FTIY.s:508    .text.main_geolocation:00000000000000bc $d
-     /tmp/ccK3FTIY.s:522    .bss.keep_alive_payload:0000000000000000 keep_alive_payload
-     /tmp/ccK3FTIY.s:518    .bss.keep_alive_payload:0000000000000000 $d
-     /tmp/ccK3FTIY.s:525    .bss.rx_metadata:0000000000000000 $d
-     /tmp/ccK3FTIY.s:529    .bss.rx_metadata:0000000000000000 rx_metadata
-     /tmp/ccK3FTIY.s:532    .bss.rx_payload:0000000000000000 $d
-     /tmp/ccK3FTIY.s:536    .bss.rx_payload:0000000000000000 rx_payload
-     /tmp/ccK3FTIY.s:542    .bss.rx_payload_size:0000000000000000 rx_payload_size
-     /tmp/ccK3FTIY.s:543    .bss.rx_payload_size:0000000000000000 $d
-     /tmp/ccK3FTIY.s:548    .bss.rx_remaining:0000000000000000 rx_remaining
-     /tmp/ccK3FTIY.s:549    .bss.rx_remaining:0000000000000000 $d
-     /tmp/ccK3FTIY.s:551    .rodata.adr_custom_list:0000000000000000 $d
-     /tmp/ccK3FTIY.s:555    .rodata.adr_custom_list:0000000000000000 adr_custom_list
-     /tmp/ccK3FTIY.s:559    .rodata.user_app_key:0000000000000000 $d
-     /tmp/ccK3FTIY.s:563    .rodata.user_app_key:0000000000000000 user_app_key
-     /tmp/ccK3FTIY.s:566    .rodata.user_dev_eui:0000000000000000 $d
-     /tmp/ccK3FTIY.s:570    .rodata.user_dev_eui:0000000000000000 user_dev_eui
-     /tmp/ccK3FTIY.s:573    .rodata.user_join_eui:0000000000000000 $d
-     /tmp/ccK3FTIY.s:577    .rodata.user_join_eui:0000000000000000 user_join_eui
+     /tmp/cc8NzXmL.s:76     .text.modem_event_callback:0000000000000000 $t
+     /tmp/cc8NzXmL.s:83     .text.modem_event_callback:0000000000000000 modem_event_callback
+     /tmp/cc8NzXmL.s:105    .text.modem_event_callback:0000000000000034 $d
+     /tmp/cc8NzXmL.s:131    .text.modem_event_callback:0000000000000068 $t
+     /tmp/cc8NzXmL.s:373    .text.modem_event_callback:00000000000002b0 $d
+     /tmp/cc8NzXmL.s:429    .text.main_geolocation:0000000000000000 $t
+     /tmp/cc8NzXmL.s:436    .text.main_geolocation:0000000000000000 main_geolocation
+     /tmp/cc8NzXmL.s:508    .text.main_geolocation:00000000000000bc $d
+     /tmp/cc8NzXmL.s:522    .bss.keep_alive_payload:0000000000000000 keep_alive_payload
+     /tmp/cc8NzXmL.s:518    .bss.keep_alive_payload:0000000000000000 $d
+     /tmp/cc8NzXmL.s:525    .bss.rx_metadata:0000000000000000 $d
+     /tmp/cc8NzXmL.s:529    .bss.rx_metadata:0000000000000000 rx_metadata
+     /tmp/cc8NzXmL.s:532    .bss.rx_payload:0000000000000000 $d
+     /tmp/cc8NzXmL.s:536    .bss.rx_payload:0000000000000000 rx_payload
+     /tmp/cc8NzXmL.s:542    .bss.rx_payload_size:0000000000000000 rx_payload_size
+     /tmp/cc8NzXmL.s:543    .bss.rx_payload_size:0000000000000000 $d
+     /tmp/cc8NzXmL.s:548    .bss.rx_remaining:0000000000000000 rx_remaining
+     /tmp/cc8NzXmL.s:549    .bss.rx_remaining:0000000000000000 $d
+     /tmp/cc8NzXmL.s:551    .rodata.adr_custom_list:0000000000000000 $d
+     /tmp/cc8NzXmL.s:555    .rodata.adr_custom_list:0000000000000000 adr_custom_list
+     /tmp/cc8NzXmL.s:559    .rodata.user_app_key:0000000000000000 $d
+     /tmp/cc8NzXmL.s:563    .rodata.user_app_key:0000000000000000 user_app_key
+     /tmp/cc8NzXmL.s:566    .rodata.user_dev_eui:0000000000000000 $d
+     /tmp/cc8NzXmL.s:570    .rodata.user_dev_eui:0000000000000000 user_dev_eui
+     /tmp/cc8NzXmL.s:573    .rodata.user_join_eui:0000000000000000 $d
+     /tmp/cc8NzXmL.s:577    .rodata.user_join_eui:0000000000000000 user_join_eui
 
 UNDEFINED SYMBOLS
 hal_trace_print_var
@@ -798,7 +798,7 @@ smtc_modem_set_nb_trans
 smtc_modem_get_downlink_data
 smtc_modem_gnss_get_event_data_scan_done
 smtc_modem_gnss_get_event_data_terminated
-ARM GAS  /tmp/ccK3FTIY.s 			page 15
+ARM GAS  /tmp/cc8NzXmL.s 			page 15
 
 
 smtc_modem_almanac_demodulation_get_event_data_almanac_update

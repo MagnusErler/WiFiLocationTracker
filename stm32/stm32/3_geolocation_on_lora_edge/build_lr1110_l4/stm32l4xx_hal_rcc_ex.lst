@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc7bje9w.s 			page 1
+ARM GAS  /tmp/cc4z4OyW.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
   56 0054 D368     		ldr	r3, [r2, #12]
   57 0056 C1F30621 		ubfx	r1, r1, #8, #7
   58              	.L53:
-ARM GAS  /tmp/cc7bje9w.s 			page 2
+ARM GAS  /tmp/cc4z4OyW.s 			page 2
 
 
   59 005a 13F4003F 		tst	r3, #131072
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
  113              	.L57:
  114 00d6 00BF     		.align	2
  115              	.L56:
-ARM GAS  /tmp/cc7bje9w.s 			page 3
+ARM GAS  /tmp/cc4z4OyW.s 			page 3
 
 
  116 00d8 00100240 		.word	1073876992
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
  172 0062 30E0     		b	.L68
  173              	.L59:
  174 0064 022B     		cmp	r3, #2
-ARM GAS  /tmp/cc7bje9w.s 			page 4
+ARM GAS  /tmp/cc4z4OyW.s 			page 4
 
 
  175 0066 11D0     		beq	.L62
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
  229 00d4 2368     		ldr	r3, [r4]
  230 00d6 1B01     		lsls	r3, r3, #4
  231 00d8 12D5     		bpl	.L72
-ARM GAS  /tmp/cc7bje9w.s 			page 5
+ARM GAS  /tmp/cc4z4OyW.s 			page 5
 
 
  232 00da 2369     		ldr	r3, [r4, #16]
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
  288 0020 6A68     		ldr	r2, [r5, #4]
  289 0022 C3F30213 		ubfx	r3, r3, #4, #3
  290 0026 0133     		adds	r3, r3, #1
-ARM GAS  /tmp/cc7bje9w.s 			page 6
+ARM GAS  /tmp/cc4z4OyW.s 			page 6
 
 
  291 0028 9342     		cmp	r3, r2
@@ -358,7 +358,7 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
  345 0098 12F4802F 		tst	r2, #262144
  346 009c E9E7     		b	.L120
  347              	.L99:
-ARM GAS  /tmp/cc7bje9w.s 			page 7
+ARM GAS  /tmp/cc4z4OyW.s 			page 7
 
 
  348 009e FFF7FEFF 		bl	HAL_GetTick
@@ -418,7 +418,7 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
  404              		@ args = 0, pretend = 0, frame = 8
  405              		@ frame_needed = 0, uses_anonymous_args = 0
  406 0000 2DE9F347 		push	{r0, r1, r4, r5, r6, r7, r8, r9, r10, lr}
-ARM GAS  /tmp/cc7bje9w.s 			page 8
+ARM GAS  /tmp/cc4z4OyW.s 			page 8
 
 
  407 0004 0668     		ldr	r6, [r0]
@@ -478,7 +478,7 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
  461 0074 E7E7     		b	.L129
  462              	.L128:
  463 0076 0021     		movs	r1, #0
-ARM GAS  /tmp/cc7bje9w.s 			page 9
+ARM GAS  /tmp/cc4z4OyW.s 			page 9
 
 
  464 0078 2030     		adds	r0, r0, #32
@@ -538,7 +538,7 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
  518 00f4 DB05     		lsls	r3, r3, #23
  519 00f6 21D5     		bpl	.L141
  520 00f8 3DBB     		cbnz	r5, .L140
-ARM GAS  /tmp/cc7bje9w.s 			page 10
+ARM GAS  /tmp/cc4z4OyW.s 			page 10
 
 
  521 00fa D7F89030 		ldr	r3, [r7, #144]
@@ -598,7 +598,7 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
  575 0176 E06B     		ldr	r0, [r4, #60]
  576 0178 D1F88820 		ldr	r2, [r1, #136]
  577 017c 22F00C02 		bic	r2, r2, #12
-ARM GAS  /tmp/cc7bje9w.s 			page 11
+ARM GAS  /tmp/cc4z4OyW.s 			page 11
 
 
  578 0180 0243     		orrs	r2, r2, r0
@@ -658,7 +658,7 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
  632 0204 0243     		orrs	r2, r2, r0
  633 0206 C1F88820 		str	r2, [r1, #136]
  634              	.L154:
-ARM GAS  /tmp/cc7bje9w.s 			page 12
+ARM GAS  /tmp/cc4z4OyW.s 			page 12
 
 
  635 020a 5806     		lsls	r0, r3, #25
@@ -718,7 +718,7 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
  689 0298 D360     		str	r3, [r2, #12]
  690              	.L160:
  691 029a 2368     		ldr	r3, [r4]
-ARM GAS  /tmp/cc7bje9w.s 			page 13
+ARM GAS  /tmp/cc4z4OyW.s 			page 13
 
 
  692 029c 5E03     		lsls	r6, r3, #13
@@ -778,7 +778,7 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
  746              		@ sp needed
  747 0320 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
  748              	.L142:
-ARM GAS  /tmp/cc7bje9w.s 			page 14
+ARM GAS  /tmp/cc4z4OyW.s 			page 14
 
 
  749 0324 D4F88420 		ldr	r2, [r4, #132]
@@ -838,7 +838,7 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
  803 03b6 FFF7FEFF 		bl	RCCEx_PLLSAI1_Config
  804 03ba 0028     		cmp	r0, #0
  805 03bc 18BF     		it	ne
-ARM GAS  /tmp/cc7bje9w.s 			page 15
+ARM GAS  /tmp/cc4z4OyW.s 			page 15
 
 
  806 03be 0546     		movne	r5, r0
@@ -898,7 +898,7 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
  862 004c C2F30622 		ubfx	r2, r2, #8, #7
  863 0050 8262     		str	r2, [r0, #40]
  864 0052 5A69     		ldr	r2, [r3, #20]
-ARM GAS  /tmp/cc7bje9w.s 			page 16
+ARM GAS  /tmp/cc4z4OyW.s 			page 16
 
 
  865 0054 520B     		lsrs	r2, r2, #13
@@ -958,7 +958,7 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
  919 0102 D3F88820 		ldr	r2, [r3, #136]
  920 0106 02F04062 		and	r2, r2, #201326592
  921 010a 0267     		str	r2, [r0, #112]
-ARM GAS  /tmp/cc7bje9w.s 			page 17
+ARM GAS  /tmp/cc4z4OyW.s 			page 17
 
 
  922 010c D3F88820 		ldr	r2, [r3, #136]
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
  978 003e 1846     		movne	r0, r3
  979 0040 EDE0     		b	.L254
  980              	.L255:
-ARM GAS  /tmp/cc7bje9w.s 			page 18
+ARM GAS  /tmp/cc4z4OyW.s 			page 18
 
 
  981 0042 EB68     		ldr	r3, [r5, #12]
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
  1035 00b8 11F40031 		ands	r1, r1, #131072
  1036 00bc F7E7     		b	.L485
  1037              	.L324:
-ARM GAS  /tmp/cc7bje9w.s 			page 19
+ARM GAS  /tmp/cc4z4OyW.s 			page 19
 
 
  1038 00be 0021     		movs	r1, #0
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
  1092 015c 2868     		ldr	r0, [r5]
  1093 015e 10F00060 		ands	r0, r0, #134217728
  1094 0162 5CD0     		beq	.L254
-ARM GAS  /tmp/cc7bje9w.s 			page 20
+ARM GAS  /tmp/cc4z4OyW.s 			page 20
 
 
  1095 0164 2869     		ldr	r0, [r5, #16]
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
  1149 01f6 FFF7FEBF 		b	RCCEx_GetSAIxPeriphCLKFreq
  1150              	.L287:
  1151 01fa 2868     		ldr	r0, [r5]
-ARM GAS  /tmp/cc7bje9w.s 			page 21
+ARM GAS  /tmp/cc4z4OyW.s 			page 21
 
 
  1152 01fc 10F00200 		ands	r0, r0, #2
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
  1206 0286 7AD0     		beq	.L296
  1207 0288 042B     		cmp	r3, #4
  1208              	.L499:
-ARM GAS  /tmp/cc7bje9w.s 			page 22
+ARM GAS  /tmp/cc4z4OyW.s 			page 22
 
 
  1209 028a 7FF423AF 		bne	.L328
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
  1263              	.L275:
  1264 0304 D5F88830 		ldr	r3, [r5, #136]
  1265 0308 03F44063 		and	r3, r3, #3072
-ARM GAS  /tmp/cc7bje9w.s 			page 23
+ARM GAS  /tmp/cc4z4OyW.s 			page 23
 
 
  1266 030c B3F5006F 		cmp	r3, #2048
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
  1320              	.L264:
  1321 039a D5F88830 		ldr	r3, [r5, #136]
  1322 039e 03F44033 		and	r3, r3, #196608
-ARM GAS  /tmp/cc7bje9w.s 			page 24
+ARM GAS  /tmp/cc4z4OyW.s 			page 24
 
 
  1323 03a2 B3F5803F 		cmp	r3, #65536
@@ -1438,7 +1438,7 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
  1379 0018 20D4     		bmi	.L517
  1380 001a 2169     		ldr	r1, [r4, #16]
  1381 001c 194B     		ldr	r3, .L525+4
-ARM GAS  /tmp/cc7bje9w.s 			page 25
+ARM GAS  /tmp/cc4z4OyW.s 			page 25
 
 
  1382 001e AA68     		ldr	r2, [r5, #8]
@@ -1498,7 +1498,7 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
  1437              		.thumb
  1438              		.thumb_func
  1439              		.fpu fpv4-sp-d16
-ARM GAS  /tmp/cc7bje9w.s 			page 26
+ARM GAS  /tmp/cc4z4OyW.s 			page 26
 
 
  1441              	HAL_RCCEx_DisablePLLSAI1:
@@ -1558,7 +1558,7 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
  1497 000e FFF7FEFF 		bl	HAL_GetTick
  1498 0012 0646     		mov	r6, r0
  1499              	.L536:
-ARM GAS  /tmp/cc7bje9w.s 			page 27
+ARM GAS  /tmp/cc4z4OyW.s 			page 27
 
 
  1500 0014 2368     		ldr	r3, [r4]
@@ -1618,7 +1618,7 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
  1555              		.syntax unified
  1556              		.thumb
  1557              		.thumb_func
-ARM GAS  /tmp/cc7bje9w.s 			page 28
+ARM GAS  /tmp/cc4z4OyW.s 			page 28
 
 
  1558              		.fpu fpv4-sp-d16
@@ -1678,7 +1678,7 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
  1615 000a 9060     		str	r0, [r2, #8]
  1616 000c 7047     		bx	lr
  1617              	.L558:
-ARM GAS  /tmp/cc7bje9w.s 			page 29
+ARM GAS  /tmp/cc4z4OyW.s 			page 29
 
 
  1618 000e 00BF     		.align	2
@@ -1738,7 +1738,7 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
  1678              		@ link register save eliminated.
  1679 0000 054B     		ldr	r3, .L566
  1680 0002 D3F89020 		ldr	r2, [r3, #144]
-ARM GAS  /tmp/cc7bje9w.s 			page 30
+ARM GAS  /tmp/cc4z4OyW.s 			page 30
 
 
  1681 0006 22F02002 		bic	r2, r2, #32
@@ -1798,7 +1798,7 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
  1740              		.global	HAL_RCCEx_LSECSS_IRQHandler
  1741              		.syntax unified
  1742              		.thumb
-ARM GAS  /tmp/cc7bje9w.s 			page 31
+ARM GAS  /tmp/cc4z4OyW.s 			page 31
 
 
  1743              		.thumb_func
@@ -1858,7 +1858,7 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
  1800 0040 A365     		str	r3, [r4, #88]
  1801 0042 A36D     		ldr	r3, [r4, #88]
  1802 0044 03F08053 		and	r3, r3, #268435456
-ARM GAS  /tmp/cc7bje9w.s 			page 32
+ARM GAS  /tmp/cc4z4OyW.s 			page 32
 
 
  1803 0048 0193     		str	r3, [sp, #4]
@@ -1918,7 +1918,7 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
  1859 000c 43F08053 		orr	r3, r3, #268435456
  1860 0010 A365     		str	r3, [r4, #88]
  1861 0012 A36D     		ldr	r3, [r4, #88]
-ARM GAS  /tmp/cc7bje9w.s 			page 33
+ARM GAS  /tmp/cc4z4OyW.s 			page 33
 
 
  1862 0014 03F08053 		and	r3, r3, #268435456
@@ -1978,7 +1978,7 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
  1918              		.align	2
  1919              	.L598:
  1920 000c 00100240 		.word	1073876992
-ARM GAS  /tmp/cc7bje9w.s 			page 34
+ARM GAS  /tmp/cc4z4OyW.s 			page 34
 
 
  1922              		.section	.text.HAL_RCCEx_DisableMSIPLLMode,"ax",%progbits
@@ -2002,82 +2002,82 @@ ARM GAS  /tmp/cc7bje9w.s 			page 1
  1941              	.L601:
  1942 000c 00100240 		.word	1073876992
  1944              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/cc7bje9w.s 			page 35
+ARM GAS  /tmp/cc4z4OyW.s 			page 35
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 stm32l4xx_hal_rcc_ex.c
-     /tmp/cc7bje9w.s:14     .text.RCCEx_GetSAIxPeriphCLKFreq:0000000000000000 $t
-     /tmp/cc7bje9w.s:21     .text.RCCEx_GetSAIxPeriphCLKFreq:0000000000000000 RCCEx_GetSAIxPeriphCLKFreq
-     /tmp/cc7bje9w.s:116    .text.RCCEx_GetSAIxPeriphCLKFreq:00000000000000d8 $d
-     /tmp/cc7bje9w.s:119    .text.RCCEx_PLLSAI1_Config:0000000000000000 $t
-     /tmp/cc7bje9w.s:125    .text.RCCEx_PLLSAI1_Config:0000000000000000 RCCEx_PLLSAI1_Config
-     /tmp/cc7bje9w.s:261    .text.RCCEx_PLLSAI1_Config:0000000000000110 $d
-     /tmp/cc7bje9w.s:264    .text.RCCEx_PLLSAI2_Config:0000000000000000 $t
-     /tmp/cc7bje9w.s:270    .text.RCCEx_PLLSAI2_Config:0000000000000000 RCCEx_PLLSAI2_Config
-     /tmp/cc7bje9w.s:393    .text.RCCEx_PLLSAI2_Config:00000000000000f4 $d
-     /tmp/cc7bje9w.s:396    .text.HAL_RCCEx_PeriphCLKConfig:0000000000000000 $t
-     /tmp/cc7bje9w.s:403    .text.HAL_RCCEx_PeriphCLKConfig:0000000000000000 HAL_RCCEx_PeriphCLKConfig
-     /tmp/cc7bje9w.s:546    .text.HAL_RCCEx_PeriphCLKConfig:0000000000000134 $d
-     /tmp/cc7bje9w.s:549    .text.HAL_RCCEx_PeriphCLKConfig:000000000000013c $t
-     /tmp/cc7bje9w.s:818    .text.HAL_RCCEx_PeriphCLKConfig:00000000000003d4 $d
-     /tmp/cc7bje9w.s:821    .text.HAL_RCCEx_GetPeriphCLKConfig:0000000000000000 $t
-     /tmp/cc7bje9w.s:828    .text.HAL_RCCEx_GetPeriphCLKConfig:0000000000000000 HAL_RCCEx_GetPeriphCLKConfig
-     /tmp/cc7bje9w.s:938    .text.HAL_RCCEx_GetPeriphCLKConfig:0000000000000138 $d
-     /tmp/cc7bje9w.s:942    .text.HAL_RCCEx_GetPeriphCLKFreq:0000000000000000 $t
-     /tmp/cc7bje9w.s:949    .text.HAL_RCCEx_GetPeriphCLKFreq:0000000000000000 HAL_RCCEx_GetPeriphCLKFreq
-     /tmp/cc7bje9w.s:1015   .text.HAL_RCCEx_GetPeriphCLKFreq:0000000000000096 $d
-     /tmp/cc7bje9w.s:1023   .text.HAL_RCCEx_GetPeriphCLKFreq:00000000000000a6 $t
-     /tmp/cc7bje9w.s:1232   .text.HAL_RCCEx_GetPeriphCLKFreq:00000000000002b4 $d
-     /tmp/cc7bje9w.s:1238   .text.HAL_RCCEx_GetPeriphCLKFreq:00000000000002c8 $t
-     /tmp/cc7bje9w.s:1355   .text.HAL_RCCEx_GetPeriphCLKFreq:00000000000003e8 $d
-     /tmp/cc7bje9w.s:1358   .text.HAL_RCCEx_EnablePLLSAI1:0000000000000000 $t
-     /tmp/cc7bje9w.s:1365   .text.HAL_RCCEx_EnablePLLSAI1:0000000000000000 HAL_RCCEx_EnablePLLSAI1
-     /tmp/cc7bje9w.s:1430   .text.HAL_RCCEx_EnablePLLSAI1:0000000000000080 $d
-     /tmp/cc7bje9w.s:1434   .text.HAL_RCCEx_DisablePLLSAI1:0000000000000000 $t
-     /tmp/cc7bje9w.s:1441   .text.HAL_RCCEx_DisablePLLSAI1:0000000000000000 HAL_RCCEx_DisablePLLSAI1
-     /tmp/cc7bje9w.s:1478   .text.HAL_RCCEx_DisablePLLSAI1:0000000000000048 $d
-     /tmp/cc7bje9w.s:1481   .text.HAL_RCCEx_EnablePLLSAI2:0000000000000000 $t
-     /tmp/cc7bje9w.s:1488   .text.HAL_RCCEx_EnablePLLSAI2:0000000000000000 HAL_RCCEx_EnablePLLSAI2
-     /tmp/cc7bje9w.s:1549   .text.HAL_RCCEx_EnablePLLSAI2:0000000000000074 $d
-     /tmp/cc7bje9w.s:1553   .text.HAL_RCCEx_DisablePLLSAI2:0000000000000000 $t
-     /tmp/cc7bje9w.s:1560   .text.HAL_RCCEx_DisablePLLSAI2:0000000000000000 HAL_RCCEx_DisablePLLSAI2
-     /tmp/cc7bje9w.s:1597   .text.HAL_RCCEx_DisablePLLSAI2:0000000000000048 $d
-     /tmp/cc7bje9w.s:1600   .text.HAL_RCCEx_WakeUpStopCLKConfig:0000000000000000 $t
-     /tmp/cc7bje9w.s:1607   .text.HAL_RCCEx_WakeUpStopCLKConfig:0000000000000000 HAL_RCCEx_WakeUpStopCLKConfig
-     /tmp/cc7bje9w.s:1620   .text.HAL_RCCEx_WakeUpStopCLKConfig:0000000000000010 $d
-     /tmp/cc7bje9w.s:1623   .text.HAL_RCCEx_StandbyMSIRangeConfig:0000000000000000 $t
-     /tmp/cc7bje9w.s:1630   .text.HAL_RCCEx_StandbyMSIRangeConfig:0000000000000000 HAL_RCCEx_StandbyMSIRangeConfig
-     /tmp/cc7bje9w.s:1643   .text.HAL_RCCEx_StandbyMSIRangeConfig:0000000000000014 $d
-     /tmp/cc7bje9w.s:1646   .text.HAL_RCCEx_EnableLSECSS:0000000000000000 $t
-     /tmp/cc7bje9w.s:1653   .text.HAL_RCCEx_EnableLSECSS:0000000000000000 HAL_RCCEx_EnableLSECSS
-     /tmp/cc7bje9w.s:1665   .text.HAL_RCCEx_EnableLSECSS:0000000000000010 $d
-     /tmp/cc7bje9w.s:1668   .text.HAL_RCCEx_DisableLSECSS:0000000000000000 $t
-     /tmp/cc7bje9w.s:1675   .text.HAL_RCCEx_DisableLSECSS:0000000000000000 HAL_RCCEx_DisableLSECSS
-     /tmp/cc7bje9w.s:1690   .text.HAL_RCCEx_DisableLSECSS:0000000000000018 $d
-     /tmp/cc7bje9w.s:1693   .text.HAL_RCCEx_EnableLSECSS_IT:0000000000000000 $t
-     /tmp/cc7bje9w.s:1700   .text.HAL_RCCEx_EnableLSECSS_IT:0000000000000000 HAL_RCCEx_EnableLSECSS_IT
-     /tmp/cc7bje9w.s:1722   .text.HAL_RCCEx_EnableLSECSS_IT:000000000000002c $d
-     /tmp/cc7bje9w.s:1725   .text.HAL_RCCEx_LSECSS_Callback:0000000000000000 $t
-     /tmp/cc7bje9w.s:1732   .text.HAL_RCCEx_LSECSS_Callback:0000000000000000 HAL_RCCEx_LSECSS_Callback
-     /tmp/cc7bje9w.s:1739   .text.HAL_RCCEx_LSECSS_IRQHandler:0000000000000000 $t
-     /tmp/cc7bje9w.s:1746   .text.HAL_RCCEx_LSECSS_IRQHandler:0000000000000000 HAL_RCCEx_LSECSS_IRQHandler
-ARM GAS  /tmp/cc7bje9w.s 			page 36
+     /tmp/cc4z4OyW.s:14     .text.RCCEx_GetSAIxPeriphCLKFreq:0000000000000000 $t
+     /tmp/cc4z4OyW.s:21     .text.RCCEx_GetSAIxPeriphCLKFreq:0000000000000000 RCCEx_GetSAIxPeriphCLKFreq
+     /tmp/cc4z4OyW.s:116    .text.RCCEx_GetSAIxPeriphCLKFreq:00000000000000d8 $d
+     /tmp/cc4z4OyW.s:119    .text.RCCEx_PLLSAI1_Config:0000000000000000 $t
+     /tmp/cc4z4OyW.s:125    .text.RCCEx_PLLSAI1_Config:0000000000000000 RCCEx_PLLSAI1_Config
+     /tmp/cc4z4OyW.s:261    .text.RCCEx_PLLSAI1_Config:0000000000000110 $d
+     /tmp/cc4z4OyW.s:264    .text.RCCEx_PLLSAI2_Config:0000000000000000 $t
+     /tmp/cc4z4OyW.s:270    .text.RCCEx_PLLSAI2_Config:0000000000000000 RCCEx_PLLSAI2_Config
+     /tmp/cc4z4OyW.s:393    .text.RCCEx_PLLSAI2_Config:00000000000000f4 $d
+     /tmp/cc4z4OyW.s:396    .text.HAL_RCCEx_PeriphCLKConfig:0000000000000000 $t
+     /tmp/cc4z4OyW.s:403    .text.HAL_RCCEx_PeriphCLKConfig:0000000000000000 HAL_RCCEx_PeriphCLKConfig
+     /tmp/cc4z4OyW.s:546    .text.HAL_RCCEx_PeriphCLKConfig:0000000000000134 $d
+     /tmp/cc4z4OyW.s:549    .text.HAL_RCCEx_PeriphCLKConfig:000000000000013c $t
+     /tmp/cc4z4OyW.s:818    .text.HAL_RCCEx_PeriphCLKConfig:00000000000003d4 $d
+     /tmp/cc4z4OyW.s:821    .text.HAL_RCCEx_GetPeriphCLKConfig:0000000000000000 $t
+     /tmp/cc4z4OyW.s:828    .text.HAL_RCCEx_GetPeriphCLKConfig:0000000000000000 HAL_RCCEx_GetPeriphCLKConfig
+     /tmp/cc4z4OyW.s:938    .text.HAL_RCCEx_GetPeriphCLKConfig:0000000000000138 $d
+     /tmp/cc4z4OyW.s:942    .text.HAL_RCCEx_GetPeriphCLKFreq:0000000000000000 $t
+     /tmp/cc4z4OyW.s:949    .text.HAL_RCCEx_GetPeriphCLKFreq:0000000000000000 HAL_RCCEx_GetPeriphCLKFreq
+     /tmp/cc4z4OyW.s:1015   .text.HAL_RCCEx_GetPeriphCLKFreq:0000000000000096 $d
+     /tmp/cc4z4OyW.s:1023   .text.HAL_RCCEx_GetPeriphCLKFreq:00000000000000a6 $t
+     /tmp/cc4z4OyW.s:1232   .text.HAL_RCCEx_GetPeriphCLKFreq:00000000000002b4 $d
+     /tmp/cc4z4OyW.s:1238   .text.HAL_RCCEx_GetPeriphCLKFreq:00000000000002c8 $t
+     /tmp/cc4z4OyW.s:1355   .text.HAL_RCCEx_GetPeriphCLKFreq:00000000000003e8 $d
+     /tmp/cc4z4OyW.s:1358   .text.HAL_RCCEx_EnablePLLSAI1:0000000000000000 $t
+     /tmp/cc4z4OyW.s:1365   .text.HAL_RCCEx_EnablePLLSAI1:0000000000000000 HAL_RCCEx_EnablePLLSAI1
+     /tmp/cc4z4OyW.s:1430   .text.HAL_RCCEx_EnablePLLSAI1:0000000000000080 $d
+     /tmp/cc4z4OyW.s:1434   .text.HAL_RCCEx_DisablePLLSAI1:0000000000000000 $t
+     /tmp/cc4z4OyW.s:1441   .text.HAL_RCCEx_DisablePLLSAI1:0000000000000000 HAL_RCCEx_DisablePLLSAI1
+     /tmp/cc4z4OyW.s:1478   .text.HAL_RCCEx_DisablePLLSAI1:0000000000000048 $d
+     /tmp/cc4z4OyW.s:1481   .text.HAL_RCCEx_EnablePLLSAI2:0000000000000000 $t
+     /tmp/cc4z4OyW.s:1488   .text.HAL_RCCEx_EnablePLLSAI2:0000000000000000 HAL_RCCEx_EnablePLLSAI2
+     /tmp/cc4z4OyW.s:1549   .text.HAL_RCCEx_EnablePLLSAI2:0000000000000074 $d
+     /tmp/cc4z4OyW.s:1553   .text.HAL_RCCEx_DisablePLLSAI2:0000000000000000 $t
+     /tmp/cc4z4OyW.s:1560   .text.HAL_RCCEx_DisablePLLSAI2:0000000000000000 HAL_RCCEx_DisablePLLSAI2
+     /tmp/cc4z4OyW.s:1597   .text.HAL_RCCEx_DisablePLLSAI2:0000000000000048 $d
+     /tmp/cc4z4OyW.s:1600   .text.HAL_RCCEx_WakeUpStopCLKConfig:0000000000000000 $t
+     /tmp/cc4z4OyW.s:1607   .text.HAL_RCCEx_WakeUpStopCLKConfig:0000000000000000 HAL_RCCEx_WakeUpStopCLKConfig
+     /tmp/cc4z4OyW.s:1620   .text.HAL_RCCEx_WakeUpStopCLKConfig:0000000000000010 $d
+     /tmp/cc4z4OyW.s:1623   .text.HAL_RCCEx_StandbyMSIRangeConfig:0000000000000000 $t
+     /tmp/cc4z4OyW.s:1630   .text.HAL_RCCEx_StandbyMSIRangeConfig:0000000000000000 HAL_RCCEx_StandbyMSIRangeConfig
+     /tmp/cc4z4OyW.s:1643   .text.HAL_RCCEx_StandbyMSIRangeConfig:0000000000000014 $d
+     /tmp/cc4z4OyW.s:1646   .text.HAL_RCCEx_EnableLSECSS:0000000000000000 $t
+     /tmp/cc4z4OyW.s:1653   .text.HAL_RCCEx_EnableLSECSS:0000000000000000 HAL_RCCEx_EnableLSECSS
+     /tmp/cc4z4OyW.s:1665   .text.HAL_RCCEx_EnableLSECSS:0000000000000010 $d
+     /tmp/cc4z4OyW.s:1668   .text.HAL_RCCEx_DisableLSECSS:0000000000000000 $t
+     /tmp/cc4z4OyW.s:1675   .text.HAL_RCCEx_DisableLSECSS:0000000000000000 HAL_RCCEx_DisableLSECSS
+     /tmp/cc4z4OyW.s:1690   .text.HAL_RCCEx_DisableLSECSS:0000000000000018 $d
+     /tmp/cc4z4OyW.s:1693   .text.HAL_RCCEx_EnableLSECSS_IT:0000000000000000 $t
+     /tmp/cc4z4OyW.s:1700   .text.HAL_RCCEx_EnableLSECSS_IT:0000000000000000 HAL_RCCEx_EnableLSECSS_IT
+     /tmp/cc4z4OyW.s:1722   .text.HAL_RCCEx_EnableLSECSS_IT:000000000000002c $d
+     /tmp/cc4z4OyW.s:1725   .text.HAL_RCCEx_LSECSS_Callback:0000000000000000 $t
+     /tmp/cc4z4OyW.s:1732   .text.HAL_RCCEx_LSECSS_Callback:0000000000000000 HAL_RCCEx_LSECSS_Callback
+     /tmp/cc4z4OyW.s:1739   .text.HAL_RCCEx_LSECSS_IRQHandler:0000000000000000 $t
+     /tmp/cc4z4OyW.s:1746   .text.HAL_RCCEx_LSECSS_IRQHandler:0000000000000000 HAL_RCCEx_LSECSS_IRQHandler
+ARM GAS  /tmp/cc4z4OyW.s 			page 36
 
 
-     /tmp/cc7bje9w.s:1762   .text.HAL_RCCEx_LSECSS_IRQHandler:0000000000000018 $d
-     /tmp/cc7bje9w.s:1765   .text.HAL_RCCEx_EnableLSCO:0000000000000000 $t
-     /tmp/cc7bje9w.s:1772   .text.HAL_RCCEx_EnableLSCO:0000000000000000 HAL_RCCEx_EnableLSCO
-     /tmp/cc7bje9w.s:1839   .text.HAL_RCCEx_EnableLSCO:000000000000008c $d
-     /tmp/cc7bje9w.s:1843   .text.HAL_RCCEx_DisableLSCO:0000000000000000 $t
-     /tmp/cc7bje9w.s:1850   .text.HAL_RCCEx_DisableLSCO:0000000000000000 HAL_RCCEx_DisableLSCO
-     /tmp/cc7bje9w.s:1897   .text.HAL_RCCEx_DisableLSCO:0000000000000054 $d
-     /tmp/cc7bje9w.s:1901   .text.HAL_RCCEx_EnableMSIPLLMode:0000000000000000 $t
-     /tmp/cc7bje9w.s:1908   .text.HAL_RCCEx_EnableMSIPLLMode:0000000000000000 HAL_RCCEx_EnableMSIPLLMode
-     /tmp/cc7bje9w.s:1920   .text.HAL_RCCEx_EnableMSIPLLMode:000000000000000c $d
-     /tmp/cc7bje9w.s:1923   .text.HAL_RCCEx_DisableMSIPLLMode:0000000000000000 $t
-     /tmp/cc7bje9w.s:1930   .text.HAL_RCCEx_DisableMSIPLLMode:0000000000000000 HAL_RCCEx_DisableMSIPLLMode
-     /tmp/cc7bje9w.s:1942   .text.HAL_RCCEx_DisableMSIPLLMode:000000000000000c $d
+     /tmp/cc4z4OyW.s:1762   .text.HAL_RCCEx_LSECSS_IRQHandler:0000000000000018 $d
+     /tmp/cc4z4OyW.s:1765   .text.HAL_RCCEx_EnableLSCO:0000000000000000 $t
+     /tmp/cc4z4OyW.s:1772   .text.HAL_RCCEx_EnableLSCO:0000000000000000 HAL_RCCEx_EnableLSCO
+     /tmp/cc4z4OyW.s:1839   .text.HAL_RCCEx_EnableLSCO:000000000000008c $d
+     /tmp/cc4z4OyW.s:1843   .text.HAL_RCCEx_DisableLSCO:0000000000000000 $t
+     /tmp/cc4z4OyW.s:1850   .text.HAL_RCCEx_DisableLSCO:0000000000000000 HAL_RCCEx_DisableLSCO
+     /tmp/cc4z4OyW.s:1897   .text.HAL_RCCEx_DisableLSCO:0000000000000054 $d
+     /tmp/cc4z4OyW.s:1901   .text.HAL_RCCEx_EnableMSIPLLMode:0000000000000000 $t
+     /tmp/cc4z4OyW.s:1908   .text.HAL_RCCEx_EnableMSIPLLMode:0000000000000000 HAL_RCCEx_EnableMSIPLLMode
+     /tmp/cc4z4OyW.s:1920   .text.HAL_RCCEx_EnableMSIPLLMode:000000000000000c $d
+     /tmp/cc4z4OyW.s:1923   .text.HAL_RCCEx_DisableMSIPLLMode:0000000000000000 $t
+     /tmp/cc4z4OyW.s:1930   .text.HAL_RCCEx_DisableMSIPLLMode:0000000000000000 HAL_RCCEx_DisableMSIPLLMode
+     /tmp/cc4z4OyW.s:1942   .text.HAL_RCCEx_DisableMSIPLLMode:000000000000000c $d
 
 UNDEFINED SYMBOLS
 HAL_GetTick

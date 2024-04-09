@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccXEZeM1.s 			page 1
+ARM GAS  /tmp/ccUoGmfg.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccXEZeM1.s 			page 1
   47 002e C4E907C0 		strd	ip, r0, [r4, #28]
   48 0032 0435     		adds	r5, r5, #4
   49 0034 0720     		movs	r0, #7
-ARM GAS  /tmp/ccXEZeM1.s 			page 2
+ARM GAS  /tmp/ccUoGmfg.s 			page 2
 
 
   50 0036 2063     		str	r0, [r4, #48]
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccXEZeM1.s 			page 1
  106              		.align	2
  107              	.L9:
  108 0010 00000000 		.word	.LANCHOR0
-ARM GAS  /tmp/ccXEZeM1.s 			page 3
+ARM GAS  /tmp/ccUoGmfg.s 			page 3
 
 
  110              		.section	.text.hal_spi_in_out,"ax",%progbits
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccXEZeM1.s 			page 1
  167 0010 0022     		movs	r2, #0
  168 0012 CDE90232 		strd	r3, r2, [sp, #8]
  169 0016 0324     		movs	r4, #3
-ARM GAS  /tmp/ccXEZeM1.s 			page 4
+ARM GAS  /tmp/ccUoGmfg.s 			page 4
 
 
  170 0018 0523     		movs	r3, #5
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccXEZeM1.s 			page 1
  225              		.section	.text.HAL_SPI_MspDeInit,"ax",%progbits
  226              		.align	1
  227              		.global	HAL_SPI_MspDeInit
-ARM GAS  /tmp/ccXEZeM1.s 			page 5
+ARM GAS  /tmp/ccUoGmfg.s 			page 5
 
 
  228              		.syntax unified
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccXEZeM1.s 			page 1
  283 0078 0B48     		ldr	r0, .L30+12
  284 007a FFF7FEFF 		bl	hal_trace_print_var
  285 007e 0B48     		ldr	r0, .L30+16
-ARM GAS  /tmp/ccXEZeM1.s 			page 6
+ARM GAS  /tmp/ccUoGmfg.s 			page 6
 
 
  286 0080 FFF7FEFF 		bl	hal_trace_print_var
@@ -357,31 +357,31 @@ ARM GAS  /tmp/ccXEZeM1.s 			page 1
  335      696E6974 
  335      00
  336              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/ccXEZeM1.s 			page 7
+ARM GAS  /tmp/ccUoGmfg.s 			page 7
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 smtc_hal_spi.c
-     /tmp/ccXEZeM1.s:21     .text.hal_spi_init:0000000000000000 $t
-     /tmp/ccXEZeM1.s:29     .text.hal_spi_init:0000000000000000 hal_spi_init
-     /tmp/ccXEZeM1.s:81     .text.hal_spi_init:0000000000000088 $d
-     /tmp/ccXEZeM1.s:88     .text.hal_spi_de_init:0000000000000000 $t
-     /tmp/ccXEZeM1.s:95     .text.hal_spi_de_init:0000000000000000 hal_spi_de_init
-     /tmp/ccXEZeM1.s:108    .text.hal_spi_de_init:0000000000000010 $d
-     /tmp/ccXEZeM1.s:111    .text.hal_spi_in_out:0000000000000000 $t
-     /tmp/ccXEZeM1.s:118    .text.hal_spi_in_out:0000000000000000 hal_spi_in_out
-     /tmp/ccXEZeM1.s:146    .text.hal_spi_in_out:0000000000000028 $d
-     /tmp/ccXEZeM1.s:149    .text.HAL_SPI_MspInit:0000000000000000 $t
-     /tmp/ccXEZeM1.s:156    .text.HAL_SPI_MspInit:0000000000000000 HAL_SPI_MspInit
-     /tmp/ccXEZeM1.s:218    .text.HAL_SPI_MspInit:0000000000000094 $d
-     /tmp/ccXEZeM1.s:226    .text.HAL_SPI_MspDeInit:0000000000000000 $t
-     /tmp/ccXEZeM1.s:233    .text.HAL_SPI_MspDeInit:0000000000000000 HAL_SPI_MspDeInit
-     /tmp/ccXEZeM1.s:298    .text.HAL_SPI_MspDeInit:000000000000009c $d
-     /tmp/ccXEZeM1.s:306    .data.spi_periph:0000000000000000 $d
-     /tmp/ccXEZeM1.s:310    .data.spi_periph:0000000000000000 spi_periph
-     /tmp/ccXEZeM1.s:322    .rodata.__func__.0:0000000000000000 __func__.0
-     /tmp/ccXEZeM1.s:328    .rodata.__func__.1:0000000000000000 __func__.1
-     /tmp/ccXEZeM1.s:334    .rodata.__func__.2:0000000000000000 __func__.2
+     /tmp/ccUoGmfg.s:21     .text.hal_spi_init:0000000000000000 $t
+     /tmp/ccUoGmfg.s:29     .text.hal_spi_init:0000000000000000 hal_spi_init
+     /tmp/ccUoGmfg.s:81     .text.hal_spi_init:0000000000000088 $d
+     /tmp/ccUoGmfg.s:88     .text.hal_spi_de_init:0000000000000000 $t
+     /tmp/ccUoGmfg.s:95     .text.hal_spi_de_init:0000000000000000 hal_spi_de_init
+     /tmp/ccUoGmfg.s:108    .text.hal_spi_de_init:0000000000000010 $d
+     /tmp/ccUoGmfg.s:111    .text.hal_spi_in_out:0000000000000000 $t
+     /tmp/ccUoGmfg.s:118    .text.hal_spi_in_out:0000000000000000 hal_spi_in_out
+     /tmp/ccUoGmfg.s:146    .text.hal_spi_in_out:0000000000000028 $d
+     /tmp/ccUoGmfg.s:149    .text.HAL_SPI_MspInit:0000000000000000 $t
+     /tmp/ccUoGmfg.s:156    .text.HAL_SPI_MspInit:0000000000000000 HAL_SPI_MspInit
+     /tmp/ccUoGmfg.s:218    .text.HAL_SPI_MspInit:0000000000000094 $d
+     /tmp/ccUoGmfg.s:226    .text.HAL_SPI_MspDeInit:0000000000000000 $t
+     /tmp/ccUoGmfg.s:233    .text.HAL_SPI_MspDeInit:0000000000000000 HAL_SPI_MspDeInit
+     /tmp/ccUoGmfg.s:298    .text.HAL_SPI_MspDeInit:000000000000009c $d
+     /tmp/ccUoGmfg.s:306    .data.spi_periph:0000000000000000 $d
+     /tmp/ccUoGmfg.s:310    .data.spi_periph:0000000000000000 spi_periph
+     /tmp/ccUoGmfg.s:322    .rodata.__func__.0:0000000000000000 __func__.0
+     /tmp/ccUoGmfg.s:328    .rodata.__func__.1:0000000000000000 __func__.1
+     /tmp/ccUoGmfg.s:334    .rodata.__func__.2:0000000000000000 __func__.2
 
 UNDEFINED SYMBOLS
 HAL_SPI_Init

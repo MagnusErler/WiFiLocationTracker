@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccjgab4r.s 			page 1
+ARM GAS  /tmp/ccntOh0i.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccjgab4r.s 			page 1
   47 0026 1448     		ldr	r0, .L10+16
   48 0028 FFF7FEFF 		bl	hal_trace_print_var
   49 002c FFF7FEFF 		bl	hal_mcu_reset
-ARM GAS  /tmp/ccjgab4r.s 			page 2
+ARM GAS  /tmp/ccntOh0i.s 			page 2
 
 
   50              	.L2:
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccjgab4r.s 			page 1
  106 001e 38BD     		pop	{r3, r4, r5, pc}
  107              	.L13:
  108 0020 FFF7FEFF 		bl	hal_rng_get_random
-ARM GAS  /tmp/ccjgab4r.s 			page 3
+ARM GAS  /tmp/ccntOh0i.s 			page 3
 
 
  109 0024 641B     		subs	r4, r4, r5
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccjgab4r.s 			page 1
  167 001a 0293     		str	r3, [sp, #8]
  168 001c FFF7FEFF 		bl	HAL_RCCEx_PeriphCLKConfig
  169 0020 70B1     		cbz	r0, .L19
-ARM GAS  /tmp/ccjgab4r.s 			page 4
+ARM GAS  /tmp/ccntOh0i.s 			page 4
 
 
  170 0022 0E49     		ldr	r1, .L23
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccjgab4r.s 			page 1
  226              	.L26:
  227 001c 00100240 		.word	1073876992
  229              		.section	.bss.rng_handle,"aw",%nobits
-ARM GAS  /tmp/ccjgab4r.s 			page 5
+ARM GAS  /tmp/ccntOh0i.s 			page 5
 
 
  230              		.align	2
@@ -264,28 +264,28 @@ ARM GAS  /tmp/ccjgab4r.s 			page 1
  247      72616E64 
  247      6F6D00
  248              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/ccjgab4r.s 			page 6
+ARM GAS  /tmp/ccntOh0i.s 			page 6
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 smtc_hal_rng.c
-     /tmp/ccjgab4r.s:21     .text.hal_rng_get_random:0000000000000000 $t
-     /tmp/ccjgab4r.s:29     .text.hal_rng_get_random:0000000000000000 hal_rng_get_random
-     /tmp/ccjgab4r.s:75     .text.hal_rng_get_random:0000000000000068 $d
-     /tmp/ccjgab4r.s:83     .text.hal_rng_get_random_in_range:0000000000000000 $t
-     /tmp/ccjgab4r.s:90     .text.hal_rng_get_random_in_range:0000000000000000 hal_rng_get_random_in_range
-     /tmp/ccjgab4r.s:118    .text.hal_rng_get_signed_random_in_range:0000000000000000 $t
-     /tmp/ccjgab4r.s:125    .text.hal_rng_get_signed_random_in_range:0000000000000000 hal_rng_get_signed_random_in_range
-     /tmp/ccjgab4r.s:147    .text.HAL_RNG_MspInit:0000000000000000 $t
-     /tmp/ccjgab4r.s:154    .text.HAL_RNG_MspInit:0000000000000000 HAL_RNG_MspInit
-     /tmp/ccjgab4r.s:195    .text.HAL_RNG_MspInit:000000000000005c $d
-     /tmp/ccjgab4r.s:202    .text.HAL_RNG_MspDeInit:0000000000000000 $t
-     /tmp/ccjgab4r.s:209    .text.HAL_RNG_MspDeInit:0000000000000000 HAL_RNG_MspDeInit
-     /tmp/ccjgab4r.s:227    .text.HAL_RNG_MspDeInit:000000000000001c $d
-     /tmp/ccjgab4r.s:230    .bss.rng_handle:0000000000000000 $d
-     /tmp/ccjgab4r.s:234    .bss.rng_handle:0000000000000000 rng_handle
-     /tmp/ccjgab4r.s:240    .rodata.__func__.0:0000000000000000 __func__.0
-     /tmp/ccjgab4r.s:246    .rodata.__func__.1:0000000000000000 __func__.1
+     /tmp/ccntOh0i.s:21     .text.hal_rng_get_random:0000000000000000 $t
+     /tmp/ccntOh0i.s:29     .text.hal_rng_get_random:0000000000000000 hal_rng_get_random
+     /tmp/ccntOh0i.s:75     .text.hal_rng_get_random:0000000000000068 $d
+     /tmp/ccntOh0i.s:83     .text.hal_rng_get_random_in_range:0000000000000000 $t
+     /tmp/ccntOh0i.s:90     .text.hal_rng_get_random_in_range:0000000000000000 hal_rng_get_random_in_range
+     /tmp/ccntOh0i.s:118    .text.hal_rng_get_signed_random_in_range:0000000000000000 $t
+     /tmp/ccntOh0i.s:125    .text.hal_rng_get_signed_random_in_range:0000000000000000 hal_rng_get_signed_random_in_range
+     /tmp/ccntOh0i.s:147    .text.HAL_RNG_MspInit:0000000000000000 $t
+     /tmp/ccntOh0i.s:154    .text.HAL_RNG_MspInit:0000000000000000 HAL_RNG_MspInit
+     /tmp/ccntOh0i.s:195    .text.HAL_RNG_MspInit:000000000000005c $d
+     /tmp/ccntOh0i.s:202    .text.HAL_RNG_MspDeInit:0000000000000000 $t
+     /tmp/ccntOh0i.s:209    .text.HAL_RNG_MspDeInit:0000000000000000 HAL_RNG_MspDeInit
+     /tmp/ccntOh0i.s:227    .text.HAL_RNG_MspDeInit:000000000000001c $d
+     /tmp/ccntOh0i.s:230    .bss.rng_handle:0000000000000000 $d
+     /tmp/ccntOh0i.s:234    .bss.rng_handle:0000000000000000 rng_handle
+     /tmp/ccntOh0i.s:240    .rodata.__func__.0:0000000000000000 __func__.0
+     /tmp/ccntOh0i.s:246    .rodata.__func__.1:0000000000000000 __func__.1
 
 UNDEFINED SYMBOLS
 HAL_RNG_Init

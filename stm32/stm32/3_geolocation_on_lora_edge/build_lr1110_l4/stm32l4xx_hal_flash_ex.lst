@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccJCS3iu.s 			page 1
+ARM GAS  /tmp/ccZmFd3f.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccJCS3iu.s 			page 1
   58 0004 DFF8F882 		ldr	r8, .L97+24
   59 0008 98F80030 		ldrb	r3, [r8]	@ zero_extendqisi2
   60 000c 012B     		cmp	r3, #1
-ARM GAS  /tmp/ccJCS3iu.s 			page 2
+ARM GAS  /tmp/ccZmFd3f.s 			page 2
 
 
   61 000e 0446     		mov	r4, r0
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccJCS3iu.s 			page 1
  115 009e 4DD0     		beq	.L23
  116              	.L37:
  117 00a0 4FF00109 		mov	r9, #1
-ARM GAS  /tmp/ccJCS3iu.s 			page 3
+ARM GAS  /tmp/ccZmFd3f.s 			page 3
 
 
  118              	.L22:
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccJCS3iu.s 			page 1
  172 011a 3343     		orrs	r3, r3, r6
  173 011c 2B62     		str	r3, [r5, #32]
  174 011e 6B69     		ldr	r3, [r5, #20]
-ARM GAS  /tmp/ccJCS3iu.s 			page 4
+ARM GAS  /tmp/ccZmFd3f.s 			page 4
 
 
  175 0120 43F40033 		orr	r3, r3, #131072
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccJCS3iu.s 			page 1
  229 01b6 0B43     		orrmi	r3, r3, r1
  230 01b8 42F48012 		orrmi	r2, r2, #1048576
  231 01bc F005     		lsls	r0, r6, #23
-ARM GAS  /tmp/ccJCS3iu.s 			page 5
+ARM GAS  /tmp/ccZmFd3f.s 			page 5
 
 
  232 01be 42BF     		ittt	mi
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccJCS3iu.s 			page 1
  286 024a 9942     		cmp	r1, r3
  287 024c 33D0     		beq	.L50
  288 024e 294B     		ldr	r3, .L97+12
-ARM GAS  /tmp/ccJCS3iu.s 			page 6
+ARM GAS  /tmp/ccZmFd3f.s 			page 6
 
 
  289 0250 03EA4223 		and	r3, r3, r2, lsl #9
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccJCS3iu.s 			page 1
  343 02d4 A5EB0C03 		sub	r3, r5, ip
  344 02d8 3940     		ands	r1, r1, r7
  345 02da 41EAD301 		orr	r1, r1, r3, lsr #3
-ARM GAS  /tmp/ccJCS3iu.s 			page 7
+ARM GAS  /tmp/ccZmFd3f.s 			page 7
 
 
  346 02de 9164     		str	r1, [r2, #72]
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccJCS3iu.s 			page 1
  402              	.L106:
  403 0036 136A     		ldr	r3, [r2, #32]
  404 0038 DBB2     		uxtb	r3, r3
-ARM GAS  /tmp/ccJCS3iu.s 			page 8
+ARM GAS  /tmp/ccZmFd3f.s 			page 8
 
 
  405              	.L107:
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccJCS3iu.s 			page 1
  459 00aa C6E7     		b	.L107
  460              	.L109:
  461 00ac D3F8E015 		ldr	r1, [r3, #1504]
-ARM GAS  /tmp/ccJCS3iu.s 			page 9
+ARM GAS  /tmp/ccZmFd3f.s 			page 9
 
 
  462 00b0 8BB2     		uxth	r3, r1
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccJCS3iu.s 			page 1
  516 0128 00000808 		.word	134742016
  518              		.section	.text.FLASH_PageErase,"ax",%progbits
  519              		.align	1
-ARM GAS  /tmp/ccJCS3iu.s 			page 10
+ARM GAS  /tmp/ccZmFd3f.s 			page 10
 
 
  520              		.global	FLASH_PageErase
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccJCS3iu.s 			page 1
  577 0016 1168     		ldr	r1, [r2]
  578 0018 11F4007F 		tst	r1, #512
  579 001c 1168     		ldr	r1, [r2]
-ARM GAS  /tmp/ccJCS3iu.s 			page 11
+ARM GAS  /tmp/ccZmFd3f.s 			page 11
 
 
  580 001e 1ED0     		beq	.L135
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccJCS3iu.s 			page 1
  634 0086 0220     		movs	r0, #2
  635 0088 E8E7     		b	.L134
  636              	.L144:
-ARM GAS  /tmp/ccJCS3iu.s 			page 12
+ARM GAS  /tmp/ccZmFd3f.s 			page 12
 
 
  637 008a 00BF     		.align	2
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccJCS3iu.s 			page 1
  694              		.section	.text.HAL_FLASHEx_Erase,"ax",%progbits
  695              		.align	1
  696              		.global	HAL_FLASHEx_Erase
-ARM GAS  /tmp/ccJCS3iu.s 			page 13
+ARM GAS  /tmp/ccZmFd3f.s 			page 13
 
 
  697              		.syntax unified
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccJCS3iu.s 			page 1
  752              	.L158:
  753 006e FFF7FEFF 		bl	FLASH_FlushCaches
  754              	.L152:
-ARM GAS  /tmp/ccJCS3iu.s 			page 14
+ARM GAS  /tmp/ccZmFd3f.s 			page 14
 
 
  755 0072 0023     		movs	r3, #0
@@ -833,32 +833,32 @@ ARM GAS  /tmp/ccJCS3iu.s 			page 1
  804 00e0 00200240 		.word	1073881088
  805 00e4 05F8FFFF 		.word	-2043
  807              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/ccJCS3iu.s 			page 15
+ARM GAS  /tmp/ccZmFd3f.s 			page 15
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 stm32l4xx_hal_flash_ex.c
-     /tmp/ccJCS3iu.s:14     .text.FLASH_MassErase:0000000000000000 $t
-     /tmp/ccJCS3iu.s:21     .text.FLASH_MassErase:0000000000000000 FLASH_MassErase
-     /tmp/ccJCS3iu.s:44     .text.FLASH_MassErase:0000000000000028 $d
-     /tmp/ccJCS3iu.s:47     .text.HAL_FLASHEx_OBProgram:0000000000000000 $t
-     /tmp/ccJCS3iu.s:54     .text.HAL_FLASHEx_OBProgram:0000000000000000 HAL_FLASHEx_OBProgram
-     /tmp/ccJCS3iu.s:354    .text.HAL_FLASHEx_OBProgram:00000000000002e8 $d
-     /tmp/ccJCS3iu.s:363    .text.HAL_FLASHEx_OBGetConfig:0000000000000000 $t
-     /tmp/ccJCS3iu.s:370    .text.HAL_FLASHEx_OBGetConfig:0000000000000000 HAL_FLASHEx_OBGetConfig
-     /tmp/ccJCS3iu.s:511    .text.HAL_FLASHEx_OBGetConfig:0000000000000114 $d
-     /tmp/ccJCS3iu.s:519    .text.FLASH_PageErase:0000000000000000 $t
-     /tmp/ccJCS3iu.s:526    .text.FLASH_PageErase:0000000000000000 FLASH_PageErase
-     /tmp/ccJCS3iu.s:553    .text.FLASH_PageErase:0000000000000038 $d
-     /tmp/ccJCS3iu.s:556    .text.HAL_FLASHEx_Erase_IT:0000000000000000 $t
-     /tmp/ccJCS3iu.s:563    .text.HAL_FLASHEx_Erase_IT:0000000000000000 HAL_FLASHEx_Erase_IT
-     /tmp/ccJCS3iu.s:639    .text.HAL_FLASHEx_Erase_IT:000000000000008c $d
-     /tmp/ccJCS3iu.s:643    .text.FLASH_FlushCaches:0000000000000000 $t
-     /tmp/ccJCS3iu.s:650    .text.FLASH_FlushCaches:0000000000000000 FLASH_FlushCaches
-     /tmp/ccJCS3iu.s:691    .text.FLASH_FlushCaches:0000000000000050 $d
-     /tmp/ccJCS3iu.s:695    .text.HAL_FLASHEx_Erase:0000000000000000 $t
-     /tmp/ccJCS3iu.s:702    .text.HAL_FLASHEx_Erase:0000000000000000 HAL_FLASHEx_Erase
-     /tmp/ccJCS3iu.s:803    .text.HAL_FLASHEx_Erase:00000000000000dc $d
+     /tmp/ccZmFd3f.s:14     .text.FLASH_MassErase:0000000000000000 $t
+     /tmp/ccZmFd3f.s:21     .text.FLASH_MassErase:0000000000000000 FLASH_MassErase
+     /tmp/ccZmFd3f.s:44     .text.FLASH_MassErase:0000000000000028 $d
+     /tmp/ccZmFd3f.s:47     .text.HAL_FLASHEx_OBProgram:0000000000000000 $t
+     /tmp/ccZmFd3f.s:54     .text.HAL_FLASHEx_OBProgram:0000000000000000 HAL_FLASHEx_OBProgram
+     /tmp/ccZmFd3f.s:354    .text.HAL_FLASHEx_OBProgram:00000000000002e8 $d
+     /tmp/ccZmFd3f.s:363    .text.HAL_FLASHEx_OBGetConfig:0000000000000000 $t
+     /tmp/ccZmFd3f.s:370    .text.HAL_FLASHEx_OBGetConfig:0000000000000000 HAL_FLASHEx_OBGetConfig
+     /tmp/ccZmFd3f.s:511    .text.HAL_FLASHEx_OBGetConfig:0000000000000114 $d
+     /tmp/ccZmFd3f.s:519    .text.FLASH_PageErase:0000000000000000 $t
+     /tmp/ccZmFd3f.s:526    .text.FLASH_PageErase:0000000000000000 FLASH_PageErase
+     /tmp/ccZmFd3f.s:553    .text.FLASH_PageErase:0000000000000038 $d
+     /tmp/ccZmFd3f.s:556    .text.HAL_FLASHEx_Erase_IT:0000000000000000 $t
+     /tmp/ccZmFd3f.s:563    .text.HAL_FLASHEx_Erase_IT:0000000000000000 HAL_FLASHEx_Erase_IT
+     /tmp/ccZmFd3f.s:639    .text.HAL_FLASHEx_Erase_IT:000000000000008c $d
+     /tmp/ccZmFd3f.s:643    .text.FLASH_FlushCaches:0000000000000000 $t
+     /tmp/ccZmFd3f.s:650    .text.FLASH_FlushCaches:0000000000000000 FLASH_FlushCaches
+     /tmp/ccZmFd3f.s:691    .text.FLASH_FlushCaches:0000000000000050 $d
+     /tmp/ccZmFd3f.s:695    .text.HAL_FLASHEx_Erase:0000000000000000 $t
+     /tmp/ccZmFd3f.s:702    .text.HAL_FLASHEx_Erase:0000000000000000 HAL_FLASHEx_Erase
+     /tmp/ccZmFd3f.s:803    .text.HAL_FLASHEx_Erase:00000000000000dc $d
 
 UNDEFINED SYMBOLS
 FLASH_WaitForLastOperation

@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccr7BAw8.s 			page 1
+ARM GAS  /tmp/ccUQAduf.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccr7BAw8.s 			page 1
   61              		.thumb_func
   62              		.fpu fpv4-sp-d16
   64              	smtc_modem_hal_get_time_in_ms:
-ARM GAS  /tmp/ccr7BAw8.s 			page 2
+ARM GAS  /tmp/ccUQAduf.s 			page 2
 
 
   65              		@ args = 0, pretend = 0, frame = 0
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccr7BAw8.s 			page 1
  126              		.syntax unified
  127              		.thumb
  128              		.thumb_func
-ARM GAS  /tmp/ccr7BAw8.s 			page 3
+ARM GAS  /tmp/ccUQAduf.s 			page 3
 
 
  129              		.fpu fpv4-sp-d16
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccr7BAw8.s 			page 1
  177 001c FFF7FEBF 		b	hal_flash_read_buffer
  178              	.L16:
  179 0020 1248     		ldr	r0, .L19+4
-ARM GAS  /tmp/ccr7BAw8.s 			page 4
+ARM GAS  /tmp/ccUQAduf.s 			page 4
 
 
  180 0022 F9E7     		b	.L18
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccr7BAw8.s 			page 1
  236 000c DFE800F0 		tbb	[pc, r0]
  237              	.L24:
  238 0010 03       		.byte	(.L29-.L24)/2
-ARM GAS  /tmp/ccr7BAw8.s 			page 5
+ARM GAS  /tmp/ccUQAduf.s 			page 5
 
 
  239 0011 10       		.byte	(.L28-.L24)/2
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccr7BAw8.s 			page 1
  293 0076 FFF7FEFF 		bl	hal_trace_print_var
  294 007a 0E48     		ldr	r0, .L31+24
  295 007c FFF7FEFF 		bl	hal_trace_print_var
-ARM GAS  /tmp/ccr7BAw8.s 			page 6
+ARM GAS  /tmp/ccUQAduf.s 			page 6
 
 
  296 0080 0D48     		ldr	r0, .L31+28
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccr7BAw8.s 			page 1
  352              	.L36:
  353              		.align	2
  354              	.L35:
-ARM GAS  /tmp/ccr7BAw8.s 			page 7
+ARM GAS  /tmp/ccUQAduf.s 			page 7
 
 
  355 003c 00000000 		.word	.LANCHOR2
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccr7BAw8.s 			page 1
  413 0016 00BF     		.align	2
  414              	.L43:
  415 0018 00000000 		.word	.LANCHOR3
-ARM GAS  /tmp/ccr7BAw8.s 			page 8
+ARM GAS  /tmp/ccUQAduf.s 			page 8
 
 
  416 001c 01000000 		.word	.LANCHOR3+1
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccr7BAw8.s 			page 1
  471              	smtc_modem_hal_on_panic:
  472              		@ args = 4, pretend = 8, frame = 272
  473              		@ frame_needed = 0, uses_anonymous_args = 1
-ARM GAS  /tmp/ccr7BAw8.s 			page 9
+ARM GAS  /tmp/ccUQAduf.s 			page 9
 
 
  474 0000 0CB4     		push	{r2, r3}
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccr7BAw8.s 			page 1
  530              		@ args = 0, pretend = 0, frame = 0
  531              		@ frame_needed = 0, uses_anonymous_args = 0
  532              		@ link register save eliminated.
-ARM GAS  /tmp/ccr7BAw8.s 			page 10
+ARM GAS  /tmp/ccUQAduf.s 			page 10
 
 
  533 0000 FFF7FEBF 		b	hal_rng_get_random_in_range
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccr7BAw8.s 			page 1
  595              	smtc_modem_hal_stop_radio_tcxo:
  596              		@ args = 0, pretend = 0, frame = 0
  597              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  /tmp/ccr7BAw8.s 			page 11
+ARM GAS  /tmp/ccUQAduf.s 			page 11
 
 
  598              		@ link register save eliminated.
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccr7BAw8.s 			page 1
  661              		.align	1
  662              		.global	smtc_modem_hal_print_trace
  663              		.syntax unified
-ARM GAS  /tmp/ccr7BAw8.s 			page 12
+ARM GAS  /tmp/ccUQAduf.s 			page 12
 
 
  664              		.thumb
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccr7BAw8.s 			page 1
  725 0000 0A20     		movs	r0, #10
  726 0002 7047     		bx	lr
  728              		.section	.text.smtc_modem_hal_flash_get_page_size,"ax",%progbits
-ARM GAS  /tmp/ccr7BAw8.s 			page 13
+ARM GAS  /tmp/ccUQAduf.s 			page 13
 
 
  729              		.align	1
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccr7BAw8.s 			page 1
  788      5F6D6F64 
  788      656D5F68 
  788      616C5F63 
-ARM GAS  /tmp/ccr7BAw8.s 			page 14
+ARM GAS  /tmp/ccUQAduf.s 			page 14
 
 
  788      6F6E7465 
@@ -791,98 +791,98 @@ ARM GAS  /tmp/ccr7BAw8.s 			page 1
  794      616C5F63 
  794      6F6E7465 
  795              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/ccr7BAw8.s 			page 15
+ARM GAS  /tmp/ccUQAduf.s 			page 15
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 smtc_modem_hal.c
-     /tmp/ccr7BAw8.s:14     .text.smtc_modem_hal_reset_mcu:0000000000000000 $t
-     /tmp/ccr7BAw8.s:22     .text.smtc_modem_hal_reset_mcu:0000000000000000 smtc_modem_hal_reset_mcu
-     /tmp/ccr7BAw8.s:29     .text.smtc_modem_hal_reload_wdog:0000000000000000 $t
-     /tmp/ccr7BAw8.s:36     .text.smtc_modem_hal_reload_wdog:0000000000000000 smtc_modem_hal_reload_wdog
-     /tmp/ccr7BAw8.s:43     .text.smtc_modem_hal_get_time_in_s:0000000000000000 $t
-     /tmp/ccr7BAw8.s:50     .text.smtc_modem_hal_get_time_in_s:0000000000000000 smtc_modem_hal_get_time_in_s
-     /tmp/ccr7BAw8.s:57     .text.smtc_modem_hal_get_time_in_ms:0000000000000000 $t
-     /tmp/ccr7BAw8.s:64     .text.smtc_modem_hal_get_time_in_ms:0000000000000000 smtc_modem_hal_get_time_in_ms
-     /tmp/ccr7BAw8.s:71     .text.smtc_modem_hal_start_timer:0000000000000000 $t
-     /tmp/ccr7BAw8.s:78     .text.smtc_modem_hal_start_timer:0000000000000000 smtc_modem_hal_start_timer
-     /tmp/ccr7BAw8.s:92     .text.smtc_modem_hal_stop_timer:0000000000000000 $t
-     /tmp/ccr7BAw8.s:99     .text.smtc_modem_hal_stop_timer:0000000000000000 smtc_modem_hal_stop_timer
-     /tmp/ccr7BAw8.s:107    .text.smtc_modem_hal_disable_modem_irq:0000000000000000 $t
-     /tmp/ccr7BAw8.s:114    .text.smtc_modem_hal_disable_modem_irq:0000000000000000 smtc_modem_hal_disable_modem_irq
-     /tmp/ccr7BAw8.s:124    .text.smtc_modem_hal_enable_modem_irq:0000000000000000 $t
-     /tmp/ccr7BAw8.s:131    .text.smtc_modem_hal_enable_modem_irq:0000000000000000 smtc_modem_hal_enable_modem_irq
-     /tmp/ccr7BAw8.s:148    .text.smtc_modem_hal_context_restore:0000000000000000 $t
-     /tmp/ccr7BAw8.s:155    .text.smtc_modem_hal_context_restore:0000000000000000 smtc_modem_hal_context_restore
-     /tmp/ccr7BAw8.s:166    .text.smtc_modem_hal_context_restore:0000000000000010 $d
-     /tmp/ccr7BAw8.s:172    .text.smtc_modem_hal_context_restore:0000000000000016 $t
-     /tmp/ccr7BAw8.s:211    .text.smtc_modem_hal_context_restore:0000000000000068 $d
-     /tmp/ccr7BAw8.s:220    .text.smtc_modem_hal_context_store:0000000000000000 $t
-     /tmp/ccr7BAw8.s:227    .text.smtc_modem_hal_context_store:0000000000000000 smtc_modem_hal_context_store
-     /tmp/ccr7BAw8.s:238    .text.smtc_modem_hal_context_store:0000000000000010 $d
-     /tmp/ccr7BAw8.s:244    .text.smtc_modem_hal_context_store:0000000000000016 $t
-     /tmp/ccr7BAw8.s:311    .text.smtc_modem_hal_context_store:000000000000009c $d
-     /tmp/ccr7BAw8.s:321    .text.smtc_modem_hal_context_flash_pages_erase:0000000000000000 $t
-     /tmp/ccr7BAw8.s:328    .text.smtc_modem_hal_context_flash_pages_erase:0000000000000000 smtc_modem_hal_context_flash_pages_erase
-     /tmp/ccr7BAw8.s:355    .text.smtc_modem_hal_context_flash_pages_erase:000000000000003c $d
-     /tmp/ccr7BAw8.s:361    .text.smtc_modem_hal_crashlog_store:0000000000000000 $t
-     /tmp/ccr7BAw8.s:368    .text.smtc_modem_hal_crashlog_store:0000000000000000 smtc_modem_hal_crashlog_store
-     /tmp/ccr7BAw8.s:388    .text.smtc_modem_hal_crashlog_store:0000000000000024 $d
-     /tmp/ccr7BAw8.s:391    .text.smtc_modem_hal_crashlog_restore:0000000000000000 $t
-     /tmp/ccr7BAw8.s:398    .text.smtc_modem_hal_crashlog_restore:0000000000000000 smtc_modem_hal_crashlog_restore
-     /tmp/ccr7BAw8.s:415    .text.smtc_modem_hal_crashlog_restore:0000000000000018 $d
-     /tmp/ccr7BAw8.s:419    .text.smtc_modem_hal_crashlog_set_status:0000000000000000 $t
-     /tmp/ccr7BAw8.s:426    .text.smtc_modem_hal_crashlog_set_status:0000000000000000 smtc_modem_hal_crashlog_set_status
-     /tmp/ccr7BAw8.s:436    .text.smtc_modem_hal_crashlog_set_status:0000000000000008 $d
-     /tmp/ccr7BAw8.s:439    .text.smtc_modem_hal_crashlog_get_status:0000000000000000 $t
-     /tmp/ccr7BAw8.s:446    .text.smtc_modem_hal_crashlog_get_status:0000000000000000 smtc_modem_hal_crashlog_get_status
-     /tmp/ccr7BAw8.s:456    .text.smtc_modem_hal_crashlog_get_status:0000000000000008 $d
-     /tmp/ccr7BAw8.s:464    .text.smtc_modem_hal_on_panic:0000000000000000 $t
-     /tmp/ccr7BAw8.s:471    .text.smtc_modem_hal_on_panic:0000000000000000 smtc_modem_hal_on_panic
-     /tmp/ccr7BAw8.s:517    .text.smtc_modem_hal_on_panic:0000000000000064 $d
-     /tmp/ccr7BAw8.s:522    .text.smtc_modem_hal_get_random_nb_in_range:0000000000000000 $t
-     /tmp/ccr7BAw8.s:529    .text.smtc_modem_hal_get_random_nb_in_range:0000000000000000 smtc_modem_hal_get_random_nb_in_range
-     /tmp/ccr7BAw8.s:536    .text.smtc_modem_hal_irq_config_radio_irq:0000000000000000 $t
-     /tmp/ccr7BAw8.s:543    .text.smtc_modem_hal_irq_config_radio_irq:0000000000000000 smtc_modem_hal_irq_config_radio_irq
-     /tmp/ccr7BAw8.s:556    .text.smtc_modem_hal_irq_config_radio_irq:0000000000000010 $d
-     /tmp/ccr7BAw8.s:559    .text.smtc_modem_hal_radio_irq_clear_pending:0000000000000000 $t
-     /tmp/ccr7BAw8.s:566    .text.smtc_modem_hal_radio_irq_clear_pending:0000000000000000 smtc_modem_hal_radio_irq_clear_pending
-     /tmp/ccr7BAw8.s:574    .text.smtc_modem_hal_start_radio_tcxo:0000000000000000 $t
-     /tmp/ccr7BAw8.s:581    .text.smtc_modem_hal_start_radio_tcxo:0000000000000000 smtc_modem_hal_start_radio_tcxo
-     /tmp/ccr7BAw8.s:588    .text.smtc_modem_hal_stop_radio_tcxo:0000000000000000 $t
-     /tmp/ccr7BAw8.s:595    .text.smtc_modem_hal_stop_radio_tcxo:0000000000000000 smtc_modem_hal_stop_radio_tcxo
-ARM GAS  /tmp/ccr7BAw8.s 			page 16
+     /tmp/ccUQAduf.s:14     .text.smtc_modem_hal_reset_mcu:0000000000000000 $t
+     /tmp/ccUQAduf.s:22     .text.smtc_modem_hal_reset_mcu:0000000000000000 smtc_modem_hal_reset_mcu
+     /tmp/ccUQAduf.s:29     .text.smtc_modem_hal_reload_wdog:0000000000000000 $t
+     /tmp/ccUQAduf.s:36     .text.smtc_modem_hal_reload_wdog:0000000000000000 smtc_modem_hal_reload_wdog
+     /tmp/ccUQAduf.s:43     .text.smtc_modem_hal_get_time_in_s:0000000000000000 $t
+     /tmp/ccUQAduf.s:50     .text.smtc_modem_hal_get_time_in_s:0000000000000000 smtc_modem_hal_get_time_in_s
+     /tmp/ccUQAduf.s:57     .text.smtc_modem_hal_get_time_in_ms:0000000000000000 $t
+     /tmp/ccUQAduf.s:64     .text.smtc_modem_hal_get_time_in_ms:0000000000000000 smtc_modem_hal_get_time_in_ms
+     /tmp/ccUQAduf.s:71     .text.smtc_modem_hal_start_timer:0000000000000000 $t
+     /tmp/ccUQAduf.s:78     .text.smtc_modem_hal_start_timer:0000000000000000 smtc_modem_hal_start_timer
+     /tmp/ccUQAduf.s:92     .text.smtc_modem_hal_stop_timer:0000000000000000 $t
+     /tmp/ccUQAduf.s:99     .text.smtc_modem_hal_stop_timer:0000000000000000 smtc_modem_hal_stop_timer
+     /tmp/ccUQAduf.s:107    .text.smtc_modem_hal_disable_modem_irq:0000000000000000 $t
+     /tmp/ccUQAduf.s:114    .text.smtc_modem_hal_disable_modem_irq:0000000000000000 smtc_modem_hal_disable_modem_irq
+     /tmp/ccUQAduf.s:124    .text.smtc_modem_hal_enable_modem_irq:0000000000000000 $t
+     /tmp/ccUQAduf.s:131    .text.smtc_modem_hal_enable_modem_irq:0000000000000000 smtc_modem_hal_enable_modem_irq
+     /tmp/ccUQAduf.s:148    .text.smtc_modem_hal_context_restore:0000000000000000 $t
+     /tmp/ccUQAduf.s:155    .text.smtc_modem_hal_context_restore:0000000000000000 smtc_modem_hal_context_restore
+     /tmp/ccUQAduf.s:166    .text.smtc_modem_hal_context_restore:0000000000000010 $d
+     /tmp/ccUQAduf.s:172    .text.smtc_modem_hal_context_restore:0000000000000016 $t
+     /tmp/ccUQAduf.s:211    .text.smtc_modem_hal_context_restore:0000000000000068 $d
+     /tmp/ccUQAduf.s:220    .text.smtc_modem_hal_context_store:0000000000000000 $t
+     /tmp/ccUQAduf.s:227    .text.smtc_modem_hal_context_store:0000000000000000 smtc_modem_hal_context_store
+     /tmp/ccUQAduf.s:238    .text.smtc_modem_hal_context_store:0000000000000010 $d
+     /tmp/ccUQAduf.s:244    .text.smtc_modem_hal_context_store:0000000000000016 $t
+     /tmp/ccUQAduf.s:311    .text.smtc_modem_hal_context_store:000000000000009c $d
+     /tmp/ccUQAduf.s:321    .text.smtc_modem_hal_context_flash_pages_erase:0000000000000000 $t
+     /tmp/ccUQAduf.s:328    .text.smtc_modem_hal_context_flash_pages_erase:0000000000000000 smtc_modem_hal_context_flash_pages_erase
+     /tmp/ccUQAduf.s:355    .text.smtc_modem_hal_context_flash_pages_erase:000000000000003c $d
+     /tmp/ccUQAduf.s:361    .text.smtc_modem_hal_crashlog_store:0000000000000000 $t
+     /tmp/ccUQAduf.s:368    .text.smtc_modem_hal_crashlog_store:0000000000000000 smtc_modem_hal_crashlog_store
+     /tmp/ccUQAduf.s:388    .text.smtc_modem_hal_crashlog_store:0000000000000024 $d
+     /tmp/ccUQAduf.s:391    .text.smtc_modem_hal_crashlog_restore:0000000000000000 $t
+     /tmp/ccUQAduf.s:398    .text.smtc_modem_hal_crashlog_restore:0000000000000000 smtc_modem_hal_crashlog_restore
+     /tmp/ccUQAduf.s:415    .text.smtc_modem_hal_crashlog_restore:0000000000000018 $d
+     /tmp/ccUQAduf.s:419    .text.smtc_modem_hal_crashlog_set_status:0000000000000000 $t
+     /tmp/ccUQAduf.s:426    .text.smtc_modem_hal_crashlog_set_status:0000000000000000 smtc_modem_hal_crashlog_set_status
+     /tmp/ccUQAduf.s:436    .text.smtc_modem_hal_crashlog_set_status:0000000000000008 $d
+     /tmp/ccUQAduf.s:439    .text.smtc_modem_hal_crashlog_get_status:0000000000000000 $t
+     /tmp/ccUQAduf.s:446    .text.smtc_modem_hal_crashlog_get_status:0000000000000000 smtc_modem_hal_crashlog_get_status
+     /tmp/ccUQAduf.s:456    .text.smtc_modem_hal_crashlog_get_status:0000000000000008 $d
+     /tmp/ccUQAduf.s:464    .text.smtc_modem_hal_on_panic:0000000000000000 $t
+     /tmp/ccUQAduf.s:471    .text.smtc_modem_hal_on_panic:0000000000000000 smtc_modem_hal_on_panic
+     /tmp/ccUQAduf.s:517    .text.smtc_modem_hal_on_panic:0000000000000064 $d
+     /tmp/ccUQAduf.s:522    .text.smtc_modem_hal_get_random_nb_in_range:0000000000000000 $t
+     /tmp/ccUQAduf.s:529    .text.smtc_modem_hal_get_random_nb_in_range:0000000000000000 smtc_modem_hal_get_random_nb_in_range
+     /tmp/ccUQAduf.s:536    .text.smtc_modem_hal_irq_config_radio_irq:0000000000000000 $t
+     /tmp/ccUQAduf.s:543    .text.smtc_modem_hal_irq_config_radio_irq:0000000000000000 smtc_modem_hal_irq_config_radio_irq
+     /tmp/ccUQAduf.s:556    .text.smtc_modem_hal_irq_config_radio_irq:0000000000000010 $d
+     /tmp/ccUQAduf.s:559    .text.smtc_modem_hal_radio_irq_clear_pending:0000000000000000 $t
+     /tmp/ccUQAduf.s:566    .text.smtc_modem_hal_radio_irq_clear_pending:0000000000000000 smtc_modem_hal_radio_irq_clear_pending
+     /tmp/ccUQAduf.s:574    .text.smtc_modem_hal_start_radio_tcxo:0000000000000000 $t
+     /tmp/ccUQAduf.s:581    .text.smtc_modem_hal_start_radio_tcxo:0000000000000000 smtc_modem_hal_start_radio_tcxo
+     /tmp/ccUQAduf.s:588    .text.smtc_modem_hal_stop_radio_tcxo:0000000000000000 $t
+     /tmp/ccUQAduf.s:595    .text.smtc_modem_hal_stop_radio_tcxo:0000000000000000 smtc_modem_hal_stop_radio_tcxo
+ARM GAS  /tmp/ccUQAduf.s 			page 16
 
 
-     /tmp/ccr7BAw8.s:602    .text.smtc_modem_hal_get_radio_tcxo_startup_delay_ms:0000000000000000 $t
-     /tmp/ccr7BAw8.s:609    .text.smtc_modem_hal_get_radio_tcxo_startup_delay_ms:0000000000000000 smtc_modem_hal_get_radio_tcxo_startup_delay_ms
-     /tmp/ccr7BAw8.s:617    .text.smtc_modem_hal_set_ant_switch:0000000000000000 $t
-     /tmp/ccr7BAw8.s:624    .text.smtc_modem_hal_set_ant_switch:0000000000000000 smtc_modem_hal_set_ant_switch
-     /tmp/ccr7BAw8.s:631    .text.smtc_modem_hal_get_battery_level:0000000000000000 $t
-     /tmp/ccr7BAw8.s:638    .text.smtc_modem_hal_get_battery_level:0000000000000000 smtc_modem_hal_get_battery_level
-     /tmp/ccr7BAw8.s:646    .text.smtc_modem_hal_get_board_delay_ms:0000000000000000 $t
-     /tmp/ccr7BAw8.s:653    .text.smtc_modem_hal_get_board_delay_ms:0000000000000000 smtc_modem_hal_get_board_delay_ms
-     /tmp/ccr7BAw8.s:661    .text.smtc_modem_hal_print_trace:0000000000000000 $t
-     /tmp/ccr7BAw8.s:668    .text.smtc_modem_hal_print_trace:0000000000000000 smtc_modem_hal_print_trace
-     /tmp/ccr7BAw8.s:684    .text.smtc_modem_hal_get_temperature:0000000000000000 $t
-     /tmp/ccr7BAw8.s:691    .text.smtc_modem_hal_get_temperature:0000000000000000 smtc_modem_hal_get_temperature
-     /tmp/ccr7BAw8.s:699    .text.smtc_modem_hal_get_voltage_mv:0000000000000000 $t
-     /tmp/ccr7BAw8.s:706    .text.smtc_modem_hal_get_voltage_mv:0000000000000000 smtc_modem_hal_get_voltage_mv
-     /tmp/ccr7BAw8.s:714    .text.smtc_modem_hal_store_and_forward_get_number_of_pages:0000000000000000 $t
-     /tmp/ccr7BAw8.s:721    .text.smtc_modem_hal_store_and_forward_get_number_of_pages:0000000000000000 smtc_modem_hal_store_and_forward_get_number_of_pages
-     /tmp/ccr7BAw8.s:729    .text.smtc_modem_hal_flash_get_page_size:0000000000000000 $t
-     /tmp/ccr7BAw8.s:736    .text.smtc_modem_hal_flash_get_page_size:0000000000000000 smtc_modem_hal_flash_get_page_size
-     /tmp/ccr7BAw8.s:743    .text.smtc_modem_hal_user_lbm_irq:0000000000000000 $t
-     /tmp/ccr7BAw8.s:750    .text.smtc_modem_hal_user_lbm_irq:0000000000000000 smtc_modem_hal_user_lbm_irq
-     /tmp/ccr7BAw8.s:757    .bss.radio_dio_irq:0000000000000000 $d
-     /tmp/ccr7BAw8.s:761    .bss.radio_dio_irq:0000000000000000 radio_dio_irq
-     /tmp/ccr7BAw8.s:767    .noinit:0000000000000000 crashlog_length_noinit
-     /tmp/ccr7BAw8.s:768    .noinit:0000000000000000 $d
-     /tmp/ccr7BAw8.s:771    .noinit:0000000000000001 crashlog_buff_noinit
-     /tmp/ccr7BAw8.s:775    .noinit:00000000000000f3 crashlog_available_noinit
-     /tmp/ccr7BAw8.s:781    .rodata.__func__.0:0000000000000000 __func__.0
-     /tmp/ccr7BAw8.s:787    .rodata.__func__.1:0000000000000000 __func__.1
-     /tmp/ccr7BAw8.s:793    .rodata.__func__.2:0000000000000000 __func__.2
+     /tmp/ccUQAduf.s:602    .text.smtc_modem_hal_get_radio_tcxo_startup_delay_ms:0000000000000000 $t
+     /tmp/ccUQAduf.s:609    .text.smtc_modem_hal_get_radio_tcxo_startup_delay_ms:0000000000000000 smtc_modem_hal_get_radio_tcxo_startup_delay_ms
+     /tmp/ccUQAduf.s:617    .text.smtc_modem_hal_set_ant_switch:0000000000000000 $t
+     /tmp/ccUQAduf.s:624    .text.smtc_modem_hal_set_ant_switch:0000000000000000 smtc_modem_hal_set_ant_switch
+     /tmp/ccUQAduf.s:631    .text.smtc_modem_hal_get_battery_level:0000000000000000 $t
+     /tmp/ccUQAduf.s:638    .text.smtc_modem_hal_get_battery_level:0000000000000000 smtc_modem_hal_get_battery_level
+     /tmp/ccUQAduf.s:646    .text.smtc_modem_hal_get_board_delay_ms:0000000000000000 $t
+     /tmp/ccUQAduf.s:653    .text.smtc_modem_hal_get_board_delay_ms:0000000000000000 smtc_modem_hal_get_board_delay_ms
+     /tmp/ccUQAduf.s:661    .text.smtc_modem_hal_print_trace:0000000000000000 $t
+     /tmp/ccUQAduf.s:668    .text.smtc_modem_hal_print_trace:0000000000000000 smtc_modem_hal_print_trace
+     /tmp/ccUQAduf.s:684    .text.smtc_modem_hal_get_temperature:0000000000000000 $t
+     /tmp/ccUQAduf.s:691    .text.smtc_modem_hal_get_temperature:0000000000000000 smtc_modem_hal_get_temperature
+     /tmp/ccUQAduf.s:699    .text.smtc_modem_hal_get_voltage_mv:0000000000000000 $t
+     /tmp/ccUQAduf.s:706    .text.smtc_modem_hal_get_voltage_mv:0000000000000000 smtc_modem_hal_get_voltage_mv
+     /tmp/ccUQAduf.s:714    .text.smtc_modem_hal_store_and_forward_get_number_of_pages:0000000000000000 $t
+     /tmp/ccUQAduf.s:721    .text.smtc_modem_hal_store_and_forward_get_number_of_pages:0000000000000000 smtc_modem_hal_store_and_forward_get_number_of_pages
+     /tmp/ccUQAduf.s:729    .text.smtc_modem_hal_flash_get_page_size:0000000000000000 $t
+     /tmp/ccUQAduf.s:736    .text.smtc_modem_hal_flash_get_page_size:0000000000000000 smtc_modem_hal_flash_get_page_size
+     /tmp/ccUQAduf.s:743    .text.smtc_modem_hal_user_lbm_irq:0000000000000000 $t
+     /tmp/ccUQAduf.s:750    .text.smtc_modem_hal_user_lbm_irq:0000000000000000 smtc_modem_hal_user_lbm_irq
+     /tmp/ccUQAduf.s:757    .bss.radio_dio_irq:0000000000000000 $d
+     /tmp/ccUQAduf.s:761    .bss.radio_dio_irq:0000000000000000 radio_dio_irq
+     /tmp/ccUQAduf.s:767    .noinit:0000000000000000 crashlog_length_noinit
+     /tmp/ccUQAduf.s:768    .noinit:0000000000000000 $d
+     /tmp/ccUQAduf.s:771    .noinit:0000000000000001 crashlog_buff_noinit
+     /tmp/ccUQAduf.s:775    .noinit:00000000000000f3 crashlog_available_noinit
+     /tmp/ccUQAduf.s:781    .rodata.__func__.0:0000000000000000 __func__.0
+     /tmp/ccUQAduf.s:787    .rodata.__func__.1:0000000000000000 __func__.1
+     /tmp/ccUQAduf.s:793    .rodata.__func__.2:0000000000000000 __func__.2
 
 UNDEFINED SYMBOLS
 hal_mcu_reset

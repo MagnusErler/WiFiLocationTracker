@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccTTZBgw.s 			page 1
+ARM GAS  /tmp/ccGblsdM.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccTTZBgw.s 			page 1
   58 000a 0191     		str	r1, [sp, #4]
   59 000c FFF7FEFF 		bl	hal_trace_print
   60 0010 03B0     		add	sp, sp, #12
-ARM GAS  /tmp/ccTTZBgw.s 			page 2
+ARM GAS  /tmp/ccGblsdM.s 			page 2
 
 
   61              		@ sp needed
@@ -66,15 +66,15 @@ ARM GAS  /tmp/ccTTZBgw.s 			page 1
   63 0016 04B0     		add	sp, sp, #16
   64 0018 7047     		bx	lr
   66              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/ccTTZBgw.s 			page 3
+ARM GAS  /tmp/ccGblsdM.s 			page 3
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 smtc_hal_trace.c
-     /tmp/ccTTZBgw.s:14     .text.hal_trace_print:0000000000000000 $t
-     /tmp/ccTTZBgw.s:22     .text.hal_trace_print:0000000000000000 hal_trace_print
-     /tmp/ccTTZBgw.s:44     .text.hal_trace_print_var:0000000000000000 $t
-     /tmp/ccTTZBgw.s:51     .text.hal_trace_print_var:0000000000000000 hal_trace_print_var
+     /tmp/ccGblsdM.s:14     .text.hal_trace_print:0000000000000000 $t
+     /tmp/ccGblsdM.s:22     .text.hal_trace_print:0000000000000000 hal_trace_print
+     /tmp/ccGblsdM.s:44     .text.hal_trace_print_var:0000000000000000 $t
+     /tmp/ccGblsdM.s:51     .text.hal_trace_print_var:0000000000000000 hal_trace_print_var
 
 UNDEFINED SYMBOLS
 vsprintf

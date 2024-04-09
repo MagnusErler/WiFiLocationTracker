@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccyfCRed.s 			page 1
+ARM GAS  /tmp/cciZvpqf.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccyfCRed.s 			page 1
   56 004e 3D20     		movs	r0, #61
   57 0050 4843     		muls	r0, r1, r0
   58 0052 013B     		subs	r3, r3, #1
-ARM GAS  /tmp/ccyfCRed.s 			page 2
+ARM GAS  /tmp/cciZvpqf.s 			page 2
 
 
   59 0054 0130     		adds	r0, r0, #1
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccyfCRed.s 			page 1
  109 0021 1B5B303B 		.ascii	"\033[0;31mERROR: -> \000"
  109      33316D45 
  109      52524F52 
-ARM GAS  /tmp/ccyfCRed.s 			page 3
+ARM GAS  /tmp/cciZvpqf.s 			page 3
 
 
  109      3A202D3E 
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccyfCRed.s 			page 1
  163              	.L13:
  164 0070 00000000 		.word	.LANCHOR0
  165 0074 00280040 		.word	1073752064
-ARM GAS  /tmp/ccyfCRed.s 			page 4
+ARM GAS  /tmp/cciZvpqf.s 			page 4
 
 
  166 0078 00000000 		.word	.LANCHOR1
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccyfCRed.s 			page 1
  226              		@ args = 0, pretend = 0, frame = 8
  227              		@ frame_needed = 0, uses_anonymous_args = 0
  228 0000 13B5     		push	{r0, r1, r4, lr}
-ARM GAS  /tmp/ccyfCRed.s 			page 5
+ARM GAS  /tmp/cciZvpqf.s 			page 5
 
 
  229 0002 094C     		ldr	r4, .L18
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccyfCRed.s 			page 1
  288              		.align	1
  289              		.global	HAL_RTC_MspInit
  290              		.syntax unified
-ARM GAS  /tmp/ccyfCRed.s 			page 6
+ARM GAS  /tmp/cciZvpqf.s 			page 6
 
 
  291              		.thumb
@@ -358,45 +358,45 @@ ARM GAS  /tmp/ccyfCRed.s 			page 1
  349              	__func__.0:
  350 0000 68616C5F 		.ascii	"hal_rtc_init\000"
  350      7274635F 
-ARM GAS  /tmp/ccyfCRed.s 			page 7
+ARM GAS  /tmp/cciZvpqf.s 			page 7
 
 
  350      696E6974 
  350      00
  351              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/ccyfCRed.s 			page 8
+ARM GAS  /tmp/cciZvpqf.s 			page 8
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 smtc_hal_rtc.c
-     /tmp/ccyfCRed.s:14     .text.rtc_get_calendar_time.constprop.0:0000000000000000 $t
-     /tmp/ccyfCRed.s:21     .text.rtc_get_calendar_time.constprop.0:0000000000000000 rtc_get_calendar_time.constprop.0
-     /tmp/ccyfCRed.s:97     .text.rtc_get_calendar_time.constprop.0:00000000000000bc $d
-     /tmp/ccyfCRed.s:111    .text.hal_rtc_init:0000000000000000 $t
-     /tmp/ccyfCRed.s:118    .text.hal_rtc_init:0000000000000000 hal_rtc_init
-     /tmp/ccyfCRed.s:164    .text.hal_rtc_init:0000000000000070 $d
-     /tmp/ccyfCRed.s:173    .text.hal_rtc_get_time_s:0000000000000000 $t
-     /tmp/ccyfCRed.s:180    .text.hal_rtc_get_time_s:0000000000000000 hal_rtc_get_time_s
-     /tmp/ccyfCRed.s:193    .text.hal_rtc_get_time_ms:0000000000000000 $t
-     /tmp/ccyfCRed.s:200    .text.hal_rtc_get_time_ms:0000000000000000 hal_rtc_get_time_ms
-     /tmp/ccyfCRed.s:218    .text.hal_rtc_wakeup_timer_set_ms:0000000000000000 $t
-     /tmp/ccyfCRed.s:225    .text.hal_rtc_wakeup_timer_set_ms:0000000000000000 hal_rtc_wakeup_timer_set_ms
-     /tmp/ccyfCRed.s:247    .text.hal_rtc_wakeup_timer_set_ms:0000000000000028 $d
-     /tmp/ccyfCRed.s:250    .text.hal_rtc_wakeup_timer_stop:0000000000000000 $t
-     /tmp/ccyfCRed.s:257    .text.hal_rtc_wakeup_timer_stop:0000000000000000 hal_rtc_wakeup_timer_stop
-     /tmp/ccyfCRed.s:266    .text.hal_rtc_wakeup_timer_stop:0000000000000008 $d
-     /tmp/ccyfCRed.s:269    .text.RTC_WKUP_IRQHandler:0000000000000000 $t
-     /tmp/ccyfCRed.s:276    .text.RTC_WKUP_IRQHandler:0000000000000000 RTC_WKUP_IRQHandler
-     /tmp/ccyfCRed.s:285    .text.RTC_WKUP_IRQHandler:0000000000000008 $d
-     /tmp/ccyfCRed.s:288    .text.HAL_RTC_MspInit:0000000000000000 $t
-     /tmp/ccyfCRed.s:295    .text.HAL_RTC_MspInit:0000000000000000 HAL_RTC_MspInit
-     /tmp/ccyfCRed.s:313    .text.HAL_RTC_MspInit:0000000000000024 $d
-     /tmp/ccyfCRed.s:316    .text.HAL_RTC_MspDeInit:0000000000000000 $t
-     /tmp/ccyfCRed.s:323    .text.HAL_RTC_MspDeInit:0000000000000000 HAL_RTC_MspDeInit
-     /tmp/ccyfCRed.s:336    .text.HAL_RTC_MspDeInit:0000000000000014 $d
-     /tmp/ccyfCRed.s:339    .bss.hal_rtc_handle:0000000000000000 $d
-     /tmp/ccyfCRed.s:343    .bss.hal_rtc_handle:0000000000000000 hal_rtc_handle
-     /tmp/ccyfCRed.s:349    .rodata.__func__.0:0000000000000000 __func__.0
+     /tmp/cciZvpqf.s:14     .text.rtc_get_calendar_time.constprop.0:0000000000000000 $t
+     /tmp/cciZvpqf.s:21     .text.rtc_get_calendar_time.constprop.0:0000000000000000 rtc_get_calendar_time.constprop.0
+     /tmp/cciZvpqf.s:97     .text.rtc_get_calendar_time.constprop.0:00000000000000bc $d
+     /tmp/cciZvpqf.s:111    .text.hal_rtc_init:0000000000000000 $t
+     /tmp/cciZvpqf.s:118    .text.hal_rtc_init:0000000000000000 hal_rtc_init
+     /tmp/cciZvpqf.s:164    .text.hal_rtc_init:0000000000000070 $d
+     /tmp/cciZvpqf.s:173    .text.hal_rtc_get_time_s:0000000000000000 $t
+     /tmp/cciZvpqf.s:180    .text.hal_rtc_get_time_s:0000000000000000 hal_rtc_get_time_s
+     /tmp/cciZvpqf.s:193    .text.hal_rtc_get_time_ms:0000000000000000 $t
+     /tmp/cciZvpqf.s:200    .text.hal_rtc_get_time_ms:0000000000000000 hal_rtc_get_time_ms
+     /tmp/cciZvpqf.s:218    .text.hal_rtc_wakeup_timer_set_ms:0000000000000000 $t
+     /tmp/cciZvpqf.s:225    .text.hal_rtc_wakeup_timer_set_ms:0000000000000000 hal_rtc_wakeup_timer_set_ms
+     /tmp/cciZvpqf.s:247    .text.hal_rtc_wakeup_timer_set_ms:0000000000000028 $d
+     /tmp/cciZvpqf.s:250    .text.hal_rtc_wakeup_timer_stop:0000000000000000 $t
+     /tmp/cciZvpqf.s:257    .text.hal_rtc_wakeup_timer_stop:0000000000000000 hal_rtc_wakeup_timer_stop
+     /tmp/cciZvpqf.s:266    .text.hal_rtc_wakeup_timer_stop:0000000000000008 $d
+     /tmp/cciZvpqf.s:269    .text.RTC_WKUP_IRQHandler:0000000000000000 $t
+     /tmp/cciZvpqf.s:276    .text.RTC_WKUP_IRQHandler:0000000000000000 RTC_WKUP_IRQHandler
+     /tmp/cciZvpqf.s:285    .text.RTC_WKUP_IRQHandler:0000000000000008 $d
+     /tmp/cciZvpqf.s:288    .text.HAL_RTC_MspInit:0000000000000000 $t
+     /tmp/cciZvpqf.s:295    .text.HAL_RTC_MspInit:0000000000000000 HAL_RTC_MspInit
+     /tmp/cciZvpqf.s:313    .text.HAL_RTC_MspInit:0000000000000024 $d
+     /tmp/cciZvpqf.s:316    .text.HAL_RTC_MspDeInit:0000000000000000 $t
+     /tmp/cciZvpqf.s:323    .text.HAL_RTC_MspDeInit:0000000000000000 HAL_RTC_MspDeInit
+     /tmp/cciZvpqf.s:336    .text.HAL_RTC_MspDeInit:0000000000000014 $d
+     /tmp/cciZvpqf.s:339    .bss.hal_rtc_handle:0000000000000000 $d
+     /tmp/cciZvpqf.s:343    .bss.hal_rtc_handle:0000000000000000 hal_rtc_handle
+     /tmp/cciZvpqf.s:349    .rodata.__func__.0:0000000000000000 __func__.0
 
 UNDEFINED SYMBOLS
 HAL_RTC_GetDate

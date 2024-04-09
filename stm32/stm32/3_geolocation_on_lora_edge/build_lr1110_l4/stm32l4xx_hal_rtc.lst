@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccVUKf99.s 			page 1
+ARM GAS  /tmp/ccxuGqPg.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccVUKf99.s 			page 1
   60 0012 84F82030 		strb	r3, [r4, #32]
   61 0016 2368     		ldr	r3, [r4]
   62 0018 84F82100 		strb	r0, [r4, #33]
-ARM GAS  /tmp/ccVUKf99.s 			page 2
+ARM GAS  /tmp/ccxuGqPg.s 			page 2
 
 
   63 001c CA22     		movs	r2, #202
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccVUKf99.s 			page 1
  117 0098 D7D1     		bne	.L10
  118 009a FFF7FEFF 		bl	HAL_GetTick
  119 009e 801B     		subs	r0, r0, r6
-ARM GAS  /tmp/ccVUKf99.s 			page 3
+ARM GAS  /tmp/ccxuGqPg.s 			page 3
 
 
  120 00a0 B0F57A7F 		cmp	r0, #1000
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccVUKf99.s 			page 1
  178 0040 2046     		mov	r0, r4
  179 0042 FFF7FEFF 		bl	HAL_RTCEx_AlarmBEventCallback
  180              	.L18:
-ARM GAS  /tmp/ccVUKf99.s 			page 4
+ARM GAS  /tmp/ccxuGqPg.s 			page 4
 
 
  181 0046 0123     		movs	r3, #1
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccVUKf99.s 			page 1
  238              		.syntax unified
  239              		.thumb
  240              		.thumb_func
-ARM GAS  /tmp/ccVUKf99.s 			page 5
+ARM GAS  /tmp/ccxuGqPg.s 			page 5
 
 
  241              		.fpu fpv4-sp-d16
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccVUKf99.s 			page 1
  300 000a 0546     		mov	r5, r0
  301 000c 18D1     		bne	.L53
  302 000e 4FF0FF32 		mov	r2, #-1
-ARM GAS  /tmp/ccVUKf99.s 			page 6
+ARM GAS  /tmp/ccxuGqPg.s 			page 6
 
 
  303 0012 DA60     		str	r2, [r3, #12]
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccVUKf99.s 			page 1
  359 002a FFF7FEFF 		bl	HAL_RTC_WaitForSynchro
  360 002e 10B1     		cbz	r0, .L58
  361 0030 0320     		movs	r0, #3
-ARM GAS  /tmp/ccVUKf99.s 			page 7
+ARM GAS  /tmp/ccxuGqPg.s 			page 7
 
 
  362 0032 84F82100 		strb	r0, [r4, #33]
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccVUKf99.s 			page 1
  418 0050 E268     		ldr	r2, [r4, #12]
  419 0052 1A61     		str	r2, [r3, #16]
  420 0054 1A69     		ldr	r2, [r3, #16]
-ARM GAS  /tmp/ccVUKf99.s 			page 8
+ARM GAS  /tmp/ccxuGqPg.s 			page 8
 
 
  421 0056 A168     		ldr	r1, [r4, #8]
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccVUKf99.s 			page 1
  477 002c 9860     		str	r0, [r3, #8]
  478 002e 4FF6FF72 		movw	r2, #65535
  479 0032 5A61     		str	r2, [r3, #20]
-ARM GAS  /tmp/ccVUKf99.s 			page 9
+ARM GAS  /tmp/ccxuGqPg.s 			page 9
 
 
  480 0034 0E4A     		ldr	r2, .L74
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccVUKf99.s 			page 1
  537              		.section	.text.HAL_RTC_SetTime,"ax",%progbits
  538              		.align	1
  539              		.global	HAL_RTC_SetTime
-ARM GAS  /tmp/ccVUKf99.s 			page 10
+ARM GAS  /tmp/ccxuGqPg.s 			page 10
 
 
  540              		.syntax unified
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccVUKf99.s 			page 1
  595 0080 8A68     		ldr	r2, [r1, #8]
  596 0082 0343     		orrs	r3, r3, r0
  597 0084 1343     		orrs	r3, r3, r2
-ARM GAS  /tmp/ccVUKf99.s 			page 11
+ARM GAS  /tmp/ccxuGqPg.s 			page 11
 
 
  598 0086 8B60     		str	r3, [r1, #8]
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccVUKf99.s 			page 1
  654 002c 03D5     		bpl	.L91
  655 002e 24F01004 		bic	r4, r4, #16
  656 0032 0A34     		adds	r4, r4, #10
-ARM GAS  /tmp/ccVUKf99.s 			page 12
+ARM GAS  /tmp/ccxuGqPg.s 			page 12
 
 
  657 0034 4C70     		strb	r4, [r1, #1]
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccVUKf99.s 			page 1
  713              	HAL_RTC_SetAlarm:
  714              		@ args = 0, pretend = 0, frame = 0
  715              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  /tmp/ccVUKf99.s 			page 13
+ARM GAS  /tmp/ccxuGqPg.s 			page 13
 
 
  716 0000 2DE9F84F 		push	{r3, r4, r5, r6, r7, r8, r9, r10, fp, lr}
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccVUKf99.s 			page 1
  770 0096 DBB2     		uxtb	r3, r3
  771 0098 63F4C073 		orn	r3, r3, #384
  772 009c FB60     		str	r3, [r7, #12]
-ARM GAS  /tmp/ccVUKf99.s 			page 14
+ARM GAS  /tmp/ccxuGqPg.s 			page 14
 
 
  773 009e BB68     		ldr	r3, [r7, #8]
@@ -838,7 +838,7 @@ ARM GAS  /tmp/ccVUKf99.s 			page 1
  827 0122 FB68     		ldr	r3, [r7, #12]
  828 0124 DBB2     		uxtb	r3, r3
  829 0126 63F42073 		orn	r3, r3, #640
-ARM GAS  /tmp/ccVUKf99.s 			page 15
+ARM GAS  /tmp/ccxuGqPg.s 			page 15
 
 
  830 012a FB60     		str	r3, [r7, #12]
@@ -898,7 +898,7 @@ ARM GAS  /tmp/ccVUKf99.s 			page 1
  886 0042 8246     		mov	r10, r0
  887 0044 4846     		mov	r0, r9
  888 0046 FFF7FEFF 		bl	RTC_ByteToBcd2
-ARM GAS  /tmp/ccVUKf99.s 			page 16
+ARM GAS  /tmp/ccxuGqPg.s 			page 16
 
 
  889 004a 8146     		mov	r9, r0
@@ -958,7 +958,7 @@ ARM GAS  /tmp/ccVUKf99.s 			page 1
  943 00d2 9A60     		str	r2, [r3, #8]
  944 00d4 2368     		ldr	r3, [r4]
  945 00d6 FF22     		movs	r2, #255
-ARM GAS  /tmp/ccVUKf99.s 			page 17
+ARM GAS  /tmp/ccxuGqPg.s 			page 17
 
 
  946 00d8 5A62     		str	r2, [r3, #36]
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/ccVUKf99.s 			page 1
  1000 0160 AEE7     		b	.L132
  1001              	.L128:
  1002 0162 FFF7FEFF 		bl	HAL_GetTick
-ARM GAS  /tmp/ccVUKf99.s 			page 18
+ARM GAS  /tmp/ccxuGqPg.s 			page 18
 
 
  1003 0166 A0EB0800 		sub	r0, r0, r8
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/ccVUKf99.s 			page 1
  1061 0032 2846     		mov	r0, r5
  1062 0034 FFF7FEFF 		bl	RTC_Bcd2ToByte
  1063 0038 4870     		strb	r0, [r1, #1]
-ARM GAS  /tmp/ccVUKf99.s 			page 19
+ARM GAS  /tmp/ccxuGqPg.s 			page 19
 
 
  1064 003a 2046     		mov	r0, r4
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/ccVUKf99.s 			page 1
  1122 000e 8A62     		strne	r2, [r1, #40]
  1123 0010 C269     		ldreq	r2, [r0, #28]
  1124 0012 16BF     		itet	ne
-ARM GAS  /tmp/ccVUKf99.s 			page 20
+ARM GAS  /tmp/ccxuGqPg.s 			page 20
 
 
  1125 0014 026A     		ldrne	r2, [r0, #32]
@@ -1178,57 +1178,57 @@ ARM GAS  /tmp/ccVUKf99.s 			page 1
  1159 0074 0020     		movs	r0, #0
  1160 0076 10BD     		pop	{r4, pc}
  1162              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/ccVUKf99.s 			page 21
+ARM GAS  /tmp/ccxuGqPg.s 			page 21
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 stm32l4xx_hal_rtc.c
-     /tmp/ccVUKf99.s:14     .text.HAL_RTC_MspInit:0000000000000000 $t
-     /tmp/ccVUKf99.s:22     .text.HAL_RTC_MspInit:0000000000000000 HAL_RTC_MspInit
-     /tmp/ccVUKf99.s:29     .text.HAL_RTC_MspDeInit:0000000000000000 $t
-     /tmp/ccVUKf99.s:36     .text.HAL_RTC_MspDeInit:0000000000000000 HAL_RTC_MspDeInit
-     /tmp/ccVUKf99.s:43     .text.HAL_RTC_DeactivateAlarm:0000000000000000 $t
-     /tmp/ccVUKf99.s:50     .text.HAL_RTC_DeactivateAlarm:0000000000000000 HAL_RTC_DeactivateAlarm
-     /tmp/ccVUKf99.s:125    .text.HAL_RTC_AlarmAEventCallback:0000000000000000 $t
-     /tmp/ccVUKf99.s:132    .text.HAL_RTC_AlarmAEventCallback:0000000000000000 HAL_RTC_AlarmAEventCallback
-     /tmp/ccVUKf99.s:139    .text.HAL_RTC_AlarmIRQHandler:0000000000000000 $t
-     /tmp/ccVUKf99.s:146    .text.HAL_RTC_AlarmIRQHandler:0000000000000000 HAL_RTC_AlarmIRQHandler
-     /tmp/ccVUKf99.s:187    .text.HAL_RTC_AlarmIRQHandler:0000000000000050 $d
-     /tmp/ccVUKf99.s:190    .text.HAL_RTC_PollForAlarmAEvent:0000000000000000 $t
-     /tmp/ccVUKf99.s:197    .text.HAL_RTC_PollForAlarmAEvent:0000000000000000 HAL_RTC_PollForAlarmAEvent
-     /tmp/ccVUKf99.s:236    .text.HAL_RTC_WaitForSynchro:0000000000000000 $t
-     /tmp/ccVUKf99.s:243    .text.HAL_RTC_WaitForSynchro:0000000000000000 HAL_RTC_WaitForSynchro
-     /tmp/ccVUKf99.s:271    .text.HAL_RTC_GetState:0000000000000000 $t
-     /tmp/ccVUKf99.s:278    .text.HAL_RTC_GetState:0000000000000000 HAL_RTC_GetState
-     /tmp/ccVUKf99.s:286    .text.RTC_EnterInitMode:0000000000000000 $t
-     /tmp/ccVUKf99.s:293    .text.RTC_EnterInitMode:0000000000000000 RTC_EnterInitMode
-     /tmp/ccVUKf99.s:330    .text.RTC_ExitInitMode:0000000000000000 $t
-     /tmp/ccVUKf99.s:337    .text.RTC_ExitInitMode:0000000000000000 RTC_ExitInitMode
-     /tmp/ccVUKf99.s:372    .text.RTC_ExitInitMode:0000000000000044 $d
-     /tmp/ccVUKf99.s:375    .text.HAL_RTC_Init:0000000000000000 $t
-     /tmp/ccVUKf99.s:382    .text.HAL_RTC_Init:0000000000000000 HAL_RTC_Init
-     /tmp/ccVUKf99.s:448    .text.HAL_RTC_DeInit:0000000000000000 $t
-     /tmp/ccVUKf99.s:455    .text.HAL_RTC_DeInit:0000000000000000 HAL_RTC_DeInit
-     /tmp/ccVUKf99.s:510    .text.HAL_RTC_DeInit:0000000000000070 $d
-     /tmp/ccVUKf99.s:513    .text.RTC_ByteToBcd2:0000000000000000 $t
-     /tmp/ccVUKf99.s:520    .text.RTC_ByteToBcd2:0000000000000000 RTC_ByteToBcd2
-     /tmp/ccVUKf99.s:538    .text.HAL_RTC_SetTime:0000000000000000 $t
-     /tmp/ccVUKf99.s:545    .text.HAL_RTC_SetTime:0000000000000000 HAL_RTC_SetTime
-     /tmp/ccVUKf99.s:628    .text.HAL_RTC_SetDate:0000000000000000 $t
-     /tmp/ccVUKf99.s:635    .text.HAL_RTC_SetDate:0000000000000000 HAL_RTC_SetDate
-     /tmp/ccVUKf99.s:706    .text.HAL_RTC_SetAlarm:0000000000000000 $t
-     /tmp/ccVUKf99.s:713    .text.HAL_RTC_SetAlarm:0000000000000000 HAL_RTC_SetAlarm
-     /tmp/ccVUKf99.s:854    .text.HAL_RTC_SetAlarm_IT:0000000000000000 $t
-     /tmp/ccVUKf99.s:861    .text.HAL_RTC_SetAlarm_IT:0000000000000000 HAL_RTC_SetAlarm_IT
-     /tmp/ccVUKf99.s:1010   .text.HAL_RTC_SetAlarm_IT:0000000000000174 $d
-     /tmp/ccVUKf99.s:1013   .text.RTC_Bcd2ToByte:0000000000000000 $t
-     /tmp/ccVUKf99.s:1020   .text.RTC_Bcd2ToByte:0000000000000000 RTC_Bcd2ToByte
-     /tmp/ccVUKf99.s:1032   .text.HAL_RTC_GetTime:0000000000000000 $t
-     /tmp/ccVUKf99.s:1039   .text.HAL_RTC_GetTime:0000000000000000 HAL_RTC_GetTime
-     /tmp/ccVUKf99.s:1072   .text.HAL_RTC_GetDate:0000000000000000 $t
-     /tmp/ccVUKf99.s:1079   .text.HAL_RTC_GetDate:0000000000000000 HAL_RTC_GetDate
-     /tmp/ccVUKf99.s:1107   .text.HAL_RTC_GetAlarm:0000000000000000 $t
-     /tmp/ccVUKf99.s:1114   .text.HAL_RTC_GetAlarm:0000000000000000 HAL_RTC_GetAlarm
+     /tmp/ccxuGqPg.s:14     .text.HAL_RTC_MspInit:0000000000000000 $t
+     /tmp/ccxuGqPg.s:22     .text.HAL_RTC_MspInit:0000000000000000 HAL_RTC_MspInit
+     /tmp/ccxuGqPg.s:29     .text.HAL_RTC_MspDeInit:0000000000000000 $t
+     /tmp/ccxuGqPg.s:36     .text.HAL_RTC_MspDeInit:0000000000000000 HAL_RTC_MspDeInit
+     /tmp/ccxuGqPg.s:43     .text.HAL_RTC_DeactivateAlarm:0000000000000000 $t
+     /tmp/ccxuGqPg.s:50     .text.HAL_RTC_DeactivateAlarm:0000000000000000 HAL_RTC_DeactivateAlarm
+     /tmp/ccxuGqPg.s:125    .text.HAL_RTC_AlarmAEventCallback:0000000000000000 $t
+     /tmp/ccxuGqPg.s:132    .text.HAL_RTC_AlarmAEventCallback:0000000000000000 HAL_RTC_AlarmAEventCallback
+     /tmp/ccxuGqPg.s:139    .text.HAL_RTC_AlarmIRQHandler:0000000000000000 $t
+     /tmp/ccxuGqPg.s:146    .text.HAL_RTC_AlarmIRQHandler:0000000000000000 HAL_RTC_AlarmIRQHandler
+     /tmp/ccxuGqPg.s:187    .text.HAL_RTC_AlarmIRQHandler:0000000000000050 $d
+     /tmp/ccxuGqPg.s:190    .text.HAL_RTC_PollForAlarmAEvent:0000000000000000 $t
+     /tmp/ccxuGqPg.s:197    .text.HAL_RTC_PollForAlarmAEvent:0000000000000000 HAL_RTC_PollForAlarmAEvent
+     /tmp/ccxuGqPg.s:236    .text.HAL_RTC_WaitForSynchro:0000000000000000 $t
+     /tmp/ccxuGqPg.s:243    .text.HAL_RTC_WaitForSynchro:0000000000000000 HAL_RTC_WaitForSynchro
+     /tmp/ccxuGqPg.s:271    .text.HAL_RTC_GetState:0000000000000000 $t
+     /tmp/ccxuGqPg.s:278    .text.HAL_RTC_GetState:0000000000000000 HAL_RTC_GetState
+     /tmp/ccxuGqPg.s:286    .text.RTC_EnterInitMode:0000000000000000 $t
+     /tmp/ccxuGqPg.s:293    .text.RTC_EnterInitMode:0000000000000000 RTC_EnterInitMode
+     /tmp/ccxuGqPg.s:330    .text.RTC_ExitInitMode:0000000000000000 $t
+     /tmp/ccxuGqPg.s:337    .text.RTC_ExitInitMode:0000000000000000 RTC_ExitInitMode
+     /tmp/ccxuGqPg.s:372    .text.RTC_ExitInitMode:0000000000000044 $d
+     /tmp/ccxuGqPg.s:375    .text.HAL_RTC_Init:0000000000000000 $t
+     /tmp/ccxuGqPg.s:382    .text.HAL_RTC_Init:0000000000000000 HAL_RTC_Init
+     /tmp/ccxuGqPg.s:448    .text.HAL_RTC_DeInit:0000000000000000 $t
+     /tmp/ccxuGqPg.s:455    .text.HAL_RTC_DeInit:0000000000000000 HAL_RTC_DeInit
+     /tmp/ccxuGqPg.s:510    .text.HAL_RTC_DeInit:0000000000000070 $d
+     /tmp/ccxuGqPg.s:513    .text.RTC_ByteToBcd2:0000000000000000 $t
+     /tmp/ccxuGqPg.s:520    .text.RTC_ByteToBcd2:0000000000000000 RTC_ByteToBcd2
+     /tmp/ccxuGqPg.s:538    .text.HAL_RTC_SetTime:0000000000000000 $t
+     /tmp/ccxuGqPg.s:545    .text.HAL_RTC_SetTime:0000000000000000 HAL_RTC_SetTime
+     /tmp/ccxuGqPg.s:628    .text.HAL_RTC_SetDate:0000000000000000 $t
+     /tmp/ccxuGqPg.s:635    .text.HAL_RTC_SetDate:0000000000000000 HAL_RTC_SetDate
+     /tmp/ccxuGqPg.s:706    .text.HAL_RTC_SetAlarm:0000000000000000 $t
+     /tmp/ccxuGqPg.s:713    .text.HAL_RTC_SetAlarm:0000000000000000 HAL_RTC_SetAlarm
+     /tmp/ccxuGqPg.s:854    .text.HAL_RTC_SetAlarm_IT:0000000000000000 $t
+     /tmp/ccxuGqPg.s:861    .text.HAL_RTC_SetAlarm_IT:0000000000000000 HAL_RTC_SetAlarm_IT
+     /tmp/ccxuGqPg.s:1010   .text.HAL_RTC_SetAlarm_IT:0000000000000174 $d
+     /tmp/ccxuGqPg.s:1013   .text.RTC_Bcd2ToByte:0000000000000000 $t
+     /tmp/ccxuGqPg.s:1020   .text.RTC_Bcd2ToByte:0000000000000000 RTC_Bcd2ToByte
+     /tmp/ccxuGqPg.s:1032   .text.HAL_RTC_GetTime:0000000000000000 $t
+     /tmp/ccxuGqPg.s:1039   .text.HAL_RTC_GetTime:0000000000000000 HAL_RTC_GetTime
+     /tmp/ccxuGqPg.s:1072   .text.HAL_RTC_GetDate:0000000000000000 $t
+     /tmp/ccxuGqPg.s:1079   .text.HAL_RTC_GetDate:0000000000000000 HAL_RTC_GetDate
+     /tmp/ccxuGqPg.s:1107   .text.HAL_RTC_GetAlarm:0000000000000000 $t
+     /tmp/ccxuGqPg.s:1114   .text.HAL_RTC_GetAlarm:0000000000000000 HAL_RTC_GetAlarm
 
 UNDEFINED SYMBOLS
 HAL_GetTick

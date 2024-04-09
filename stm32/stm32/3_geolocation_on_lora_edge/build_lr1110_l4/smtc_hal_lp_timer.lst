@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccq1AbjL.s 			page 1
+ARM GAS  /tmp/cc18cqfX.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccq1AbjL.s 			page 1
   47 0022 1344     		add	r3, r3, r2
   48 0024 4FF6FF75 		movw	r5, #65535
   49 0028 0026     		movs	r6, #0
-ARM GAS  /tmp/ccq1AbjL.s 			page 2
+ARM GAS  /tmp/cc18cqfX.s 			page 2
 
 
   50 002a 0027     		movs	r7, #0
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccq1AbjL.s 			page 1
  106 0014 4FF6FF71 		movw	r1, #65535
  107 0018 094B     		ldr	r3, .L11
  108 001a 8842     		cmp	r0, r1
-ARM GAS  /tmp/ccq1AbjL.s 			page 3
+ARM GAS  /tmp/cc18cqfX.s 			page 3
 
 
  109 001c 0246     		mov	r2, r0
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccq1AbjL.s 			page 1
  168              		.syntax unified
  169              		.thumb
  170              		.thumb_func
-ARM GAS  /tmp/ccq1AbjL.s 			page 4
+ARM GAS  /tmp/cc18cqfX.s 			page 4
 
 
  171              		.fpu fpv4-sp-d16
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccq1AbjL.s 			page 1
  230 0010 D368     		ldr	r3, [r2, #12]
  231 0012 1BB1     		cbz	r3, .L26
  232 0014 BDE81040 		pop	{r4, lr}
-ARM GAS  /tmp/ccq1AbjL.s 			page 5
+ARM GAS  /tmp/cc18cqfX.s 			page 5
 
 
  233 0018 9068     		ldr	r0, [r2, #8]
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccq1AbjL.s 			page 1
  289 0054 019B     		ldr	r3, [sp, #4]
  290 0056 FFF7FEFF 		bl	HAL_NVIC_SetPriority
  291 005a 4220     		movs	r0, #66
-ARM GAS  /tmp/ccq1AbjL.s 			page 6
+ARM GAS  /tmp/cc18cqfX.s 			page 6
 
 
  292 005c 02B0     		add	sp, sp, #8
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccq1AbjL.s 			page 1
  348 0044 00940040 		.word	1073779712
  350              		.section	.bss.lptim_handle,"aw",%nobits
  351              		.align	3
-ARM GAS  /tmp/ccq1AbjL.s 			page 7
+ARM GAS  /tmp/cc18cqfX.s 			page 7
 
 
  352              		.set	.LANCHOR0,. + 0
@@ -385,41 +385,41 @@ ARM GAS  /tmp/ccq1AbjL.s 			page 1
  369      5F696E69 
  369      7400
  370              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/ccq1AbjL.s 			page 8
+ARM GAS  /tmp/cc18cqfX.s 			page 8
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 smtc_hal_lp_timer.c
-     /tmp/ccq1AbjL.s:21     .text.hal_lp_timer_init:0000000000000000 $t
-     /tmp/ccq1AbjL.s:29     .text.hal_lp_timer_init:0000000000000000 hal_lp_timer_init
-     /tmp/ccq1AbjL.s:76     .text.hal_lp_timer_init:0000000000000068 $d
-     /tmp/ccq1AbjL.s:88     .text.hal_lp_timer_start:0000000000000000 $t
-     /tmp/ccq1AbjL.s:95     .text.hal_lp_timer_start:0000000000000000 hal_lp_timer_start
-     /tmp/ccq1AbjL.s:123    .text.hal_lp_timer_start:0000000000000040 $d
-     /tmp/ccq1AbjL.s:127    .text.hal_lp_timer_stop:0000000000000000 $t
-     /tmp/ccq1AbjL.s:134    .text.hal_lp_timer_stop:0000000000000000 hal_lp_timer_stop
-     /tmp/ccq1AbjL.s:145    .text.hal_lp_timer_stop:000000000000000c $d
-     /tmp/ccq1AbjL.s:148    .text.hal_lp_timer_irq_enable:0000000000000000 $t
-     /tmp/ccq1AbjL.s:155    .text.hal_lp_timer_irq_enable:0000000000000000 hal_lp_timer_irq_enable
-     /tmp/ccq1AbjL.s:166    .text.hal_lp_timer_irq_disable:0000000000000000 $t
-     /tmp/ccq1AbjL.s:173    .text.hal_lp_timer_irq_disable:0000000000000000 hal_lp_timer_irq_disable
-     /tmp/ccq1AbjL.s:184    .text.LPTIM1_IRQHandler:0000000000000000 $t
-     /tmp/ccq1AbjL.s:191    .text.LPTIM1_IRQHandler:0000000000000000 LPTIM1_IRQHandler
-     /tmp/ccq1AbjL.s:210    .text.LPTIM1_IRQHandler:0000000000000020 $d
-     /tmp/ccq1AbjL.s:214    .text.LPTIM2_IRQHandler:0000000000000000 $t
-     /tmp/ccq1AbjL.s:221    .text.LPTIM2_IRQHandler:0000000000000000 LPTIM2_IRQHandler
-     /tmp/ccq1AbjL.s:240    .text.LPTIM2_IRQHandler:0000000000000020 $d
-     /tmp/ccq1AbjL.s:244    .text.HAL_LPTIM_MspInit:0000000000000000 $t
-     /tmp/ccq1AbjL.s:251    .text.HAL_LPTIM_MspInit:0000000000000000 HAL_LPTIM_MspInit
-     /tmp/ccq1AbjL.s:303    .text.HAL_LPTIM_MspInit:000000000000006c $d
-     /tmp/ccq1AbjL.s:307    .text.HAL_LPTIM_MspDeInit:0000000000000000 $t
-     /tmp/ccq1AbjL.s:314    .text.HAL_LPTIM_MspDeInit:0000000000000000 HAL_LPTIM_MspDeInit
-     /tmp/ccq1AbjL.s:346    .text.HAL_LPTIM_MspDeInit:000000000000003c $d
-     /tmp/ccq1AbjL.s:351    .bss.lptim_handle:0000000000000000 $d
-     /tmp/ccq1AbjL.s:355    .bss.lptim_handle:0000000000000000 lptim_handle
-     /tmp/ccq1AbjL.s:358    .bss.lptim_tmr_irq:0000000000000000 $d
-     /tmp/ccq1AbjL.s:362    .bss.lptim_tmr_irq:0000000000000000 lptim_tmr_irq
-     /tmp/ccq1AbjL.s:368    .rodata.__func__.0:0000000000000000 __func__.0
+     /tmp/cc18cqfX.s:21     .text.hal_lp_timer_init:0000000000000000 $t
+     /tmp/cc18cqfX.s:29     .text.hal_lp_timer_init:0000000000000000 hal_lp_timer_init
+     /tmp/cc18cqfX.s:76     .text.hal_lp_timer_init:0000000000000068 $d
+     /tmp/cc18cqfX.s:88     .text.hal_lp_timer_start:0000000000000000 $t
+     /tmp/cc18cqfX.s:95     .text.hal_lp_timer_start:0000000000000000 hal_lp_timer_start
+     /tmp/cc18cqfX.s:123    .text.hal_lp_timer_start:0000000000000040 $d
+     /tmp/cc18cqfX.s:127    .text.hal_lp_timer_stop:0000000000000000 $t
+     /tmp/cc18cqfX.s:134    .text.hal_lp_timer_stop:0000000000000000 hal_lp_timer_stop
+     /tmp/cc18cqfX.s:145    .text.hal_lp_timer_stop:000000000000000c $d
+     /tmp/cc18cqfX.s:148    .text.hal_lp_timer_irq_enable:0000000000000000 $t
+     /tmp/cc18cqfX.s:155    .text.hal_lp_timer_irq_enable:0000000000000000 hal_lp_timer_irq_enable
+     /tmp/cc18cqfX.s:166    .text.hal_lp_timer_irq_disable:0000000000000000 $t
+     /tmp/cc18cqfX.s:173    .text.hal_lp_timer_irq_disable:0000000000000000 hal_lp_timer_irq_disable
+     /tmp/cc18cqfX.s:184    .text.LPTIM1_IRQHandler:0000000000000000 $t
+     /tmp/cc18cqfX.s:191    .text.LPTIM1_IRQHandler:0000000000000000 LPTIM1_IRQHandler
+     /tmp/cc18cqfX.s:210    .text.LPTIM1_IRQHandler:0000000000000020 $d
+     /tmp/cc18cqfX.s:214    .text.LPTIM2_IRQHandler:0000000000000000 $t
+     /tmp/cc18cqfX.s:221    .text.LPTIM2_IRQHandler:0000000000000000 LPTIM2_IRQHandler
+     /tmp/cc18cqfX.s:240    .text.LPTIM2_IRQHandler:0000000000000020 $d
+     /tmp/cc18cqfX.s:244    .text.HAL_LPTIM_MspInit:0000000000000000 $t
+     /tmp/cc18cqfX.s:251    .text.HAL_LPTIM_MspInit:0000000000000000 HAL_LPTIM_MspInit
+     /tmp/cc18cqfX.s:303    .text.HAL_LPTIM_MspInit:000000000000006c $d
+     /tmp/cc18cqfX.s:307    .text.HAL_LPTIM_MspDeInit:0000000000000000 $t
+     /tmp/cc18cqfX.s:314    .text.HAL_LPTIM_MspDeInit:0000000000000000 HAL_LPTIM_MspDeInit
+     /tmp/cc18cqfX.s:346    .text.HAL_LPTIM_MspDeInit:000000000000003c $d
+     /tmp/cc18cqfX.s:351    .bss.lptim_handle:0000000000000000 $d
+     /tmp/cc18cqfX.s:355    .bss.lptim_handle:0000000000000000 lptim_handle
+     /tmp/cc18cqfX.s:358    .bss.lptim_tmr_irq:0000000000000000 $d
+     /tmp/cc18cqfX.s:362    .bss.lptim_tmr_irq:0000000000000000 lptim_tmr_irq
+     /tmp/cc18cqfX.s:368    .rodata.__func__.0:0000000000000000 __func__.0
 
 UNDEFINED SYMBOLS
 HAL_LPTIM_Init

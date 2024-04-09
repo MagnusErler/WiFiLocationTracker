@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccuUlbp5.s 			page 1
+ARM GAS  /tmp/ccOs1VhN.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccuUlbp5.s 			page 1
   59              		.fpu fpv4-sp-d16
   61              	ral_lr11xx_bsp_get_xosc_cfg:
   62              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  /tmp/ccuUlbp5.s 			page 2
+ARM GAS  /tmp/ccOs1VhN.s 			page 2
 
 
   63              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccuUlbp5.s 			page 1
  121              	.L11:
  122 0024 1374     		strb	r3, [r2, #16]
  123 0026 7047     		bx	lr
-ARM GAS  /tmp/ccuUlbp5.s 			page 3
+ARM GAS  /tmp/ccOs1VhN.s 			page 3
 
 
  124              	.L8:
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccuUlbp5.s 			page 1
  180 0000 7047     		bx	lr
  182              		.section	.text.ral_lr11xx_bsp_get_rx_boost_cfg,"ax",%progbits
  183              		.align	1
-ARM GAS  /tmp/ccuUlbp5.s 			page 4
+ARM GAS  /tmp/ccOs1VhN.s 			page 4
 
 
  184              		.global	ral_lr11xx_bsp_get_rx_boost_cfg
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccuUlbp5.s 			page 1
  243 001e B8BF     		it	lt
  244 0020 1946     		movlt	r1, r3
  245 0022 0023     		movs	r3, #0
-ARM GAS  /tmp/ccuUlbp5.s 			page 5
+ARM GAS  /tmp/ccOs1VhN.s 			page 5
 
 
  246 0024 1370     		strb	r3, [r2]
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccuUlbp5.s 			page 1
  300 0090 0023     		movs	r3, #0
  301 0092 1370     		strb	r3, [r2]
  302 0094 5370     		strb	r3, [r2, #1]
-ARM GAS  /tmp/ccuUlbp5.s 			page 6
+ARM GAS  /tmp/ccOs1VhN.s 			page 6
 
 
  303 0096 1131     		adds	r1, r1, #17
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccuUlbp5.s 			page 1
  359              		@ args = 0, pretend = 0, frame = 8
  360              		@ frame_needed = 0, uses_anonymous_args = 0
  361 0000 13B5     		push	{r0, r1, r4, lr}
-ARM GAS  /tmp/ccuUlbp5.s 			page 7
+ARM GAS  /tmp/ccOs1VhN.s 			page 7
 
 
  362 0002 0C46     		mov	r4, r1
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccuUlbp5.s 			page 1
  419 001b F7       		.byte	-9
  420 001c 04       		.byte	4
  421 001d 00       		.byte	0
-ARM GAS  /tmp/ccuUlbp5.s 			page 8
+ARM GAS  /tmp/ccOs1VhN.s 			page 8
 
 
  422 001e F8       		.byte	-8
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccuUlbp5.s 			page 1
  476 0054 0B       		.byte	11
  477 0055 04       		.byte	4
  478 0056 00       		.byte	0
-ARM GAS  /tmp/ccuUlbp5.s 			page 9
+ARM GAS  /tmp/ccOs1VhN.s 			page 9
 
 
  479 0057 0C       		.byte	12
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccuUlbp5.s 			page 1
  535 002a 0F       		.byte	15
  536 002b 04       		.byte	4
  537 002c 01       		.byte	1
-ARM GAS  /tmp/ccuUlbp5.s 			page 10
+ARM GAS  /tmp/ccOs1VhN.s 			page 10
 
 
  538 002d 0E       		.byte	14
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccuUlbp5.s 			page 1
  594 0000 F1       		.byte	-15
  595 0001 00       		.byte	0
  596 0002 00       		.byte	0
-ARM GAS  /tmp/ccuUlbp5.s 			page 11
+ARM GAS  /tmp/ccOs1VhN.s 			page 11
 
 
  597 0003 F2       		.byte	-14
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccuUlbp5.s 			page 1
  651 0039 04       		.byte	4
  652 003a 01       		.byte	1
  653 003b 00       		.byte	0
-ARM GAS  /tmp/ccuUlbp5.s 			page 12
+ARM GAS  /tmp/ccOs1VhN.s 			page 12
 
 
  654 003c 07       		.byte	7
@@ -701,40 +701,40 @@ ARM GAS  /tmp/ccuUlbp5.s 			page 1
  691 0061 07       		.byte	7
  692 0062 00       		.byte	0
  693              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/ccuUlbp5.s 			page 13
+ARM GAS  /tmp/ccOs1VhN.s 			page 13
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 ral_lr11xx_bsp.c
-     /tmp/ccuUlbp5.s:14     .text.ral_lr11xx_bsp_get_rf_switch_cfg:0000000000000000 $t
-     /tmp/ccuUlbp5.s:22     .text.ral_lr11xx_bsp_get_rf_switch_cfg:0000000000000000 ral_lr11xx_bsp_get_rf_switch_cfg
-     /tmp/ccuUlbp5.s:34     .text.ral_lr11xx_bsp_get_rf_switch_cfg:000000000000000c $d
-     /tmp/ccuUlbp5.s:38     .text.ral_lr11xx_bsp_get_reg_mode:0000000000000000 $t
-     /tmp/ccuUlbp5.s:45     .text.ral_lr11xx_bsp_get_reg_mode:0000000000000000 ral_lr11xx_bsp_get_reg_mode
-     /tmp/ccuUlbp5.s:54     .text.ral_lr11xx_bsp_get_xosc_cfg:0000000000000000 $t
-     /tmp/ccuUlbp5.s:61     .text.ral_lr11xx_bsp_get_xosc_cfg:0000000000000000 ral_lr11xx_bsp_get_xosc_cfg
-     /tmp/ccuUlbp5.s:78     .text.ral_lr11xx_bsp_get_crc_state:0000000000000000 $t
-     /tmp/ccuUlbp5.s:85     .text.ral_lr11xx_bsp_get_crc_state:0000000000000000 ral_lr11xx_bsp_get_crc_state
-     /tmp/ccuUlbp5.s:94     .text.ral_lr11xx_bsp_get_rssi_calibration_table:0000000000000000 $t
-     /tmp/ccuUlbp5.s:101    .text.ral_lr11xx_bsp_get_rssi_calibration_table:0000000000000000 ral_lr11xx_bsp_get_rssi_calibration_table
-     /tmp/ccuUlbp5.s:157    .text.ral_lr11xx_bsp_get_rssi_calibration_table:000000000000006c $d
-     /tmp/ccuUlbp5.s:169    .text.ral_lr11xx_bsp_get_lora_cad_det_peak:0000000000000000 $t
-     /tmp/ccuUlbp5.s:176    .text.ral_lr11xx_bsp_get_lora_cad_det_peak:0000000000000000 ral_lr11xx_bsp_get_lora_cad_det_peak
-     /tmp/ccuUlbp5.s:183    .text.ral_lr11xx_bsp_get_rx_boost_cfg:0000000000000000 $t
-     /tmp/ccuUlbp5.s:190    .text.ral_lr11xx_bsp_get_rx_boost_cfg:0000000000000000 ral_lr11xx_bsp_get_rx_boost_cfg
-     /tmp/ccuUlbp5.s:199    .text.ral_lr11xx_bsp_get_lfclk_cfg_in_sleep:0000000000000000 $t
-     /tmp/ccuUlbp5.s:206    .text.ral_lr11xx_bsp_get_lfclk_cfg_in_sleep:0000000000000000 ral_lr11xx_bsp_get_lfclk_cfg_in_sleep
-     /tmp/ccuUlbp5.s:215    .text.lr11xx_get_tx_cfg:0000000000000000 $t
-     /tmp/ccuUlbp5.s:222    .text.lr11xx_get_tx_cfg:0000000000000000 lr11xx_get_tx_cfg
-     /tmp/ccuUlbp5.s:232    .text.lr11xx_get_tx_cfg:000000000000000e $d
-     /tmp/ccuUlbp5.s:236    .text.lr11xx_get_tx_cfg:0000000000000012 $t
-     /tmp/ccuUlbp5.s:346    .text.lr11xx_get_tx_cfg:00000000000000e4 $d
-     /tmp/ccuUlbp5.s:351    .text.ral_lr11xx_bsp_get_tx_cfg:0000000000000000 $t
-     /tmp/ccuUlbp5.s:358    .text.ral_lr11xx_bsp_get_tx_cfg:0000000000000000 ral_lr11xx_bsp_get_tx_cfg
-     /tmp/ccuUlbp5.s:382    .text.ral_lr11xx_bsp_get_tx_cfg:000000000000002c $d
-     /tmp/ccuUlbp5.s:391    .rodata.pa_hf_cfg_table:0000000000000000 pa_hf_cfg_table
-     /tmp/ccuUlbp5.s:492    .rodata.pa_hp_cfg_table:0000000000000000 pa_hp_cfg_table
-     /tmp/ccuUlbp5.s:593    .rodata.pa_lp_cfg_table:0000000000000000 pa_lp_cfg_table
+     /tmp/ccOs1VhN.s:14     .text.ral_lr11xx_bsp_get_rf_switch_cfg:0000000000000000 $t
+     /tmp/ccOs1VhN.s:22     .text.ral_lr11xx_bsp_get_rf_switch_cfg:0000000000000000 ral_lr11xx_bsp_get_rf_switch_cfg
+     /tmp/ccOs1VhN.s:34     .text.ral_lr11xx_bsp_get_rf_switch_cfg:000000000000000c $d
+     /tmp/ccOs1VhN.s:38     .text.ral_lr11xx_bsp_get_reg_mode:0000000000000000 $t
+     /tmp/ccOs1VhN.s:45     .text.ral_lr11xx_bsp_get_reg_mode:0000000000000000 ral_lr11xx_bsp_get_reg_mode
+     /tmp/ccOs1VhN.s:54     .text.ral_lr11xx_bsp_get_xosc_cfg:0000000000000000 $t
+     /tmp/ccOs1VhN.s:61     .text.ral_lr11xx_bsp_get_xosc_cfg:0000000000000000 ral_lr11xx_bsp_get_xosc_cfg
+     /tmp/ccOs1VhN.s:78     .text.ral_lr11xx_bsp_get_crc_state:0000000000000000 $t
+     /tmp/ccOs1VhN.s:85     .text.ral_lr11xx_bsp_get_crc_state:0000000000000000 ral_lr11xx_bsp_get_crc_state
+     /tmp/ccOs1VhN.s:94     .text.ral_lr11xx_bsp_get_rssi_calibration_table:0000000000000000 $t
+     /tmp/ccOs1VhN.s:101    .text.ral_lr11xx_bsp_get_rssi_calibration_table:0000000000000000 ral_lr11xx_bsp_get_rssi_calibration_table
+     /tmp/ccOs1VhN.s:157    .text.ral_lr11xx_bsp_get_rssi_calibration_table:000000000000006c $d
+     /tmp/ccOs1VhN.s:169    .text.ral_lr11xx_bsp_get_lora_cad_det_peak:0000000000000000 $t
+     /tmp/ccOs1VhN.s:176    .text.ral_lr11xx_bsp_get_lora_cad_det_peak:0000000000000000 ral_lr11xx_bsp_get_lora_cad_det_peak
+     /tmp/ccOs1VhN.s:183    .text.ral_lr11xx_bsp_get_rx_boost_cfg:0000000000000000 $t
+     /tmp/ccOs1VhN.s:190    .text.ral_lr11xx_bsp_get_rx_boost_cfg:0000000000000000 ral_lr11xx_bsp_get_rx_boost_cfg
+     /tmp/ccOs1VhN.s:199    .text.ral_lr11xx_bsp_get_lfclk_cfg_in_sleep:0000000000000000 $t
+     /tmp/ccOs1VhN.s:206    .text.ral_lr11xx_bsp_get_lfclk_cfg_in_sleep:0000000000000000 ral_lr11xx_bsp_get_lfclk_cfg_in_sleep
+     /tmp/ccOs1VhN.s:215    .text.lr11xx_get_tx_cfg:0000000000000000 $t
+     /tmp/ccOs1VhN.s:222    .text.lr11xx_get_tx_cfg:0000000000000000 lr11xx_get_tx_cfg
+     /tmp/ccOs1VhN.s:232    .text.lr11xx_get_tx_cfg:000000000000000e $d
+     /tmp/ccOs1VhN.s:236    .text.lr11xx_get_tx_cfg:0000000000000012 $t
+     /tmp/ccOs1VhN.s:346    .text.lr11xx_get_tx_cfg:00000000000000e4 $d
+     /tmp/ccOs1VhN.s:351    .text.ral_lr11xx_bsp_get_tx_cfg:0000000000000000 $t
+     /tmp/ccOs1VhN.s:358    .text.ral_lr11xx_bsp_get_tx_cfg:0000000000000000 ral_lr11xx_bsp_get_tx_cfg
+     /tmp/ccOs1VhN.s:382    .text.ral_lr11xx_bsp_get_tx_cfg:000000000000002c $d
+     /tmp/ccOs1VhN.s:391    .rodata.pa_hf_cfg_table:0000000000000000 pa_hf_cfg_table
+     /tmp/ccOs1VhN.s:492    .rodata.pa_hp_cfg_table:0000000000000000 pa_hp_cfg_table
+     /tmp/ccOs1VhN.s:593    .rodata.pa_lp_cfg_table:0000000000000000 pa_lp_cfg_table
 
 UNDEFINED SYMBOLS
 smtc_modem_hal_get_radio_tcxo_startup_delay_ms

@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccFwB6G6.s 			page 1
+ARM GAS  /tmp/ccvI10Od.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccFwB6G6.s 			page 1
   58 000a C4F10705 		rsb	r5, r4, #7
   59 000e 231D     		adds	r3, r4, #4
   60 0010 042D     		cmp	r5, #4
-ARM GAS  /tmp/ccFwB6G6.s 			page 2
+ARM GAS  /tmp/ccvI10Od.s 			page 2
 
 
   61 0012 28BF     		it	cs
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccFwB6G6.s 			page 1
  117              	.L13:
  118 0018 00E100E0 		.word	-536813312
  120              		.section	.text.HAL_NVIC_DisableIRQ,"ax",%progbits
-ARM GAS  /tmp/ccFwB6G6.s 			page 3
+ARM GAS  /tmp/ccvI10Od.s 			page 3
 
 
  121              		.align	1
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccFwB6G6.s 			page 1
  178 0008 CA68     		ldr	r2, [r1, #12]
  179 000a 02F4E062 		and	r2, r2, #1792
  180 000e 1343     		orrs	r3, r3, r2
-ARM GAS  /tmp/ccFwB6G6.s 			page 4
+ARM GAS  /tmp/ccvI10Od.s 			page 4
 
 
  181 0010 CB60     		str	r3, [r1, #12]
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccFwB6G6.s 			page 1
  238              		.syntax unified
  239              		.thumb
  240              		.thumb_func
-ARM GAS  /tmp/ccFwB6G6.s 			page 5
+ARM GAS  /tmp/ccvI10Od.s 			page 5
 
 
  241              		.fpu fpv4-sp-d16
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccFwB6G6.s 			page 1
  298 0056 00BF     		.align	2
  299              	.L37:
  300 0058 14ED00E0 		.word	-536810220
-ARM GAS  /tmp/ccFwB6G6.s 			page 6
+ARM GAS  /tmp/ccvI10Od.s 			page 6
 
 
  302              		.section	.text.HAL_NVIC_SetPendingIRQ,"ax",%progbits
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccFwB6G6.s 			page 1
  360              		.align	1
  361              		.global	HAL_NVIC_ClearPendingIRQ
  362              		.syntax unified
-ARM GAS  /tmp/ccFwB6G6.s 			page 7
+ARM GAS  /tmp/ccvI10Od.s 			page 7
 
 
  363              		.thumb
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccFwB6G6.s 			page 1
  421              		.thumb_func
  422              		.fpu fpv4-sp-d16
  424              	HAL_SYSTICK_CLKSourceConfig:
-ARM GAS  /tmp/ccFwB6G6.s 			page 8
+ARM GAS  /tmp/ccvI10Od.s 			page 8
 
 
  425              		@ args = 0, pretend = 0, frame = 0
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccFwB6G6.s 			page 1
  485              	@ 935 "mcu_drivers/cmsis/Core/Include/cmsis_gcc.h" 1
  486 000e BFF36F8F 		isb 0xF
  487              	@ 0 "" 2
-ARM GAS  /tmp/ccFwB6G6.s 			page 9
+ARM GAS  /tmp/ccvI10Od.s 			page 9
 
 
  488              		.thumb
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccFwB6G6.s 			page 1
  546 001e 0B43     		orrs	r3, r3, r1
  547 0020 817A     		ldrb	r1, [r0, #10]	@ zero_extendqisi2
  548 0022 43EAC143 		orr	r3, r3, r1, lsl #19
-ARM GAS  /tmp/ccFwB6G6.s 			page 10
+ARM GAS  /tmp/ccvI10Od.s 			page 10
 
 
  549 0026 417B     		ldrb	r1, [r0, #13]	@ zero_extendqisi2
@@ -563,61 +563,61 @@ ARM GAS  /tmp/ccFwB6G6.s 			page 1
  568              	.L72:
  569 0054 00ED00E0 		.word	-536810240
  571              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/ccFwB6G6.s 			page 11
+ARM GAS  /tmp/ccvI10Od.s 			page 11
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 stm32l4xx_hal_cortex.c
-     /tmp/ccFwB6G6.s:14     .text.HAL_NVIC_SetPriorityGrouping:0000000000000000 $t
-     /tmp/ccFwB6G6.s:22     .text.HAL_NVIC_SetPriorityGrouping:0000000000000000 HAL_NVIC_SetPriorityGrouping
-     /tmp/ccFwB6G6.s:41     .text.HAL_NVIC_SetPriorityGrouping:0000000000000020 $d
-     /tmp/ccFwB6G6.s:44     .text.HAL_NVIC_SetPriority:0000000000000000 $t
-     /tmp/ccFwB6G6.s:51     .text.HAL_NVIC_SetPriority:0000000000000000 HAL_NVIC_SetPriority
-     /tmp/ccFwB6G6.s:90     .text.HAL_NVIC_SetPriority:000000000000005c $d
-     /tmp/ccFwB6G6.s:94     .text.HAL_NVIC_EnableIRQ:0000000000000000 $t
-     /tmp/ccFwB6G6.s:101    .text.HAL_NVIC_EnableIRQ:0000000000000000 HAL_NVIC_EnableIRQ
-     /tmp/ccFwB6G6.s:118    .text.HAL_NVIC_EnableIRQ:0000000000000018 $d
-     /tmp/ccFwB6G6.s:121    .text.HAL_NVIC_DisableIRQ:0000000000000000 $t
-     /tmp/ccFwB6G6.s:128    .text.HAL_NVIC_DisableIRQ:0000000000000000 HAL_NVIC_DisableIRQ
-     /tmp/ccFwB6G6.s:155    .text.HAL_NVIC_DisableIRQ:0000000000000024 $d
-     /tmp/ccFwB6G6.s:158    .text.HAL_NVIC_SystemReset:0000000000000000 $t
-     /tmp/ccFwB6G6.s:165    .text.HAL_NVIC_SystemReset:0000000000000000 HAL_NVIC_SystemReset
-     /tmp/ccFwB6G6.s:199    .text.HAL_NVIC_SystemReset:000000000000001c $d
-     /tmp/ccFwB6G6.s:203    .text.HAL_SYSTICK_Config:0000000000000000 $t
-     /tmp/ccFwB6G6.s:210    .text.HAL_SYSTICK_Config:0000000000000000 HAL_SYSTICK_Config
-     /tmp/ccFwB6G6.s:233    .text.HAL_SYSTICK_Config:0000000000000024 $d
-     /tmp/ccFwB6G6.s:236    .text.HAL_NVIC_GetPriorityGrouping:0000000000000000 $t
-     /tmp/ccFwB6G6.s:243    .text.HAL_NVIC_GetPriorityGrouping:0000000000000000 HAL_NVIC_GetPriorityGrouping
-     /tmp/ccFwB6G6.s:254    .text.HAL_NVIC_GetPriorityGrouping:000000000000000c $d
-     /tmp/ccFwB6G6.s:257    .text.HAL_NVIC_GetPriority:0000000000000000 $t
-     /tmp/ccFwB6G6.s:264    .text.HAL_NVIC_GetPriority:0000000000000000 HAL_NVIC_GetPriority
-     /tmp/ccFwB6G6.s:300    .text.HAL_NVIC_GetPriority:0000000000000058 $d
-     /tmp/ccFwB6G6.s:303    .text.HAL_NVIC_SetPendingIRQ:0000000000000000 $t
-     /tmp/ccFwB6G6.s:310    .text.HAL_NVIC_SetPendingIRQ:0000000000000000 HAL_NVIC_SetPendingIRQ
-     /tmp/ccFwB6G6.s:328    .text.HAL_NVIC_SetPendingIRQ:000000000000001c $d
-     /tmp/ccFwB6G6.s:331    .text.HAL_NVIC_GetPendingIRQ:0000000000000000 $t
-     /tmp/ccFwB6G6.s:338    .text.HAL_NVIC_GetPendingIRQ:0000000000000000 HAL_NVIC_GetPendingIRQ
-     /tmp/ccFwB6G6.s:357    .text.HAL_NVIC_GetPendingIRQ:0000000000000020 $d
-     /tmp/ccFwB6G6.s:360    .text.HAL_NVIC_ClearPendingIRQ:0000000000000000 $t
-     /tmp/ccFwB6G6.s:367    .text.HAL_NVIC_ClearPendingIRQ:0000000000000000 HAL_NVIC_ClearPendingIRQ
-     /tmp/ccFwB6G6.s:385    .text.HAL_NVIC_ClearPendingIRQ:000000000000001c $d
-     /tmp/ccFwB6G6.s:388    .text.HAL_NVIC_GetActive:0000000000000000 $t
-     /tmp/ccFwB6G6.s:395    .text.HAL_NVIC_GetActive:0000000000000000 HAL_NVIC_GetActive
-     /tmp/ccFwB6G6.s:414    .text.HAL_NVIC_GetActive:0000000000000020 $d
-     /tmp/ccFwB6G6.s:417    .text.HAL_SYSTICK_CLKSourceConfig:0000000000000000 $t
-     /tmp/ccFwB6G6.s:424    .text.HAL_SYSTICK_CLKSourceConfig:0000000000000000 HAL_SYSTICK_CLKSourceConfig
-     /tmp/ccFwB6G6.s:438    .text.HAL_SYSTICK_Callback:0000000000000000 $t
-     /tmp/ccFwB6G6.s:445    .text.HAL_SYSTICK_Callback:0000000000000000 HAL_SYSTICK_Callback
-     /tmp/ccFwB6G6.s:452    .text.HAL_SYSTICK_IRQHandler:0000000000000000 $t
-     /tmp/ccFwB6G6.s:459    .text.HAL_SYSTICK_IRQHandler:0000000000000000 HAL_SYSTICK_IRQHandler
-     /tmp/ccFwB6G6.s:467    .text.HAL_MPU_Enable:0000000000000000 $t
-     /tmp/ccFwB6G6.s:474    .text.HAL_MPU_Enable:0000000000000000 HAL_MPU_Enable
-     /tmp/ccFwB6G6.s:494    .text.HAL_MPU_Enable:0000000000000014 $d
-     /tmp/ccFwB6G6.s:497    .text.HAL_MPU_Disable:0000000000000000 $t
-     /tmp/ccFwB6G6.s:504    .text.HAL_MPU_Disable:0000000000000000 HAL_MPU_Disable
-     /tmp/ccFwB6G6.s:521    .text.HAL_MPU_Disable:0000000000000010 $d
-     /tmp/ccFwB6G6.s:524    .text.HAL_MPU_ConfigRegion:0000000000000000 $t
-     /tmp/ccFwB6G6.s:531    .text.HAL_MPU_ConfigRegion:0000000000000000 HAL_MPU_ConfigRegion
-     /tmp/ccFwB6G6.s:569    .text.HAL_MPU_ConfigRegion:0000000000000054 $d
+     /tmp/ccvI10Od.s:14     .text.HAL_NVIC_SetPriorityGrouping:0000000000000000 $t
+     /tmp/ccvI10Od.s:22     .text.HAL_NVIC_SetPriorityGrouping:0000000000000000 HAL_NVIC_SetPriorityGrouping
+     /tmp/ccvI10Od.s:41     .text.HAL_NVIC_SetPriorityGrouping:0000000000000020 $d
+     /tmp/ccvI10Od.s:44     .text.HAL_NVIC_SetPriority:0000000000000000 $t
+     /tmp/ccvI10Od.s:51     .text.HAL_NVIC_SetPriority:0000000000000000 HAL_NVIC_SetPriority
+     /tmp/ccvI10Od.s:90     .text.HAL_NVIC_SetPriority:000000000000005c $d
+     /tmp/ccvI10Od.s:94     .text.HAL_NVIC_EnableIRQ:0000000000000000 $t
+     /tmp/ccvI10Od.s:101    .text.HAL_NVIC_EnableIRQ:0000000000000000 HAL_NVIC_EnableIRQ
+     /tmp/ccvI10Od.s:118    .text.HAL_NVIC_EnableIRQ:0000000000000018 $d
+     /tmp/ccvI10Od.s:121    .text.HAL_NVIC_DisableIRQ:0000000000000000 $t
+     /tmp/ccvI10Od.s:128    .text.HAL_NVIC_DisableIRQ:0000000000000000 HAL_NVIC_DisableIRQ
+     /tmp/ccvI10Od.s:155    .text.HAL_NVIC_DisableIRQ:0000000000000024 $d
+     /tmp/ccvI10Od.s:158    .text.HAL_NVIC_SystemReset:0000000000000000 $t
+     /tmp/ccvI10Od.s:165    .text.HAL_NVIC_SystemReset:0000000000000000 HAL_NVIC_SystemReset
+     /tmp/ccvI10Od.s:199    .text.HAL_NVIC_SystemReset:000000000000001c $d
+     /tmp/ccvI10Od.s:203    .text.HAL_SYSTICK_Config:0000000000000000 $t
+     /tmp/ccvI10Od.s:210    .text.HAL_SYSTICK_Config:0000000000000000 HAL_SYSTICK_Config
+     /tmp/ccvI10Od.s:233    .text.HAL_SYSTICK_Config:0000000000000024 $d
+     /tmp/ccvI10Od.s:236    .text.HAL_NVIC_GetPriorityGrouping:0000000000000000 $t
+     /tmp/ccvI10Od.s:243    .text.HAL_NVIC_GetPriorityGrouping:0000000000000000 HAL_NVIC_GetPriorityGrouping
+     /tmp/ccvI10Od.s:254    .text.HAL_NVIC_GetPriorityGrouping:000000000000000c $d
+     /tmp/ccvI10Od.s:257    .text.HAL_NVIC_GetPriority:0000000000000000 $t
+     /tmp/ccvI10Od.s:264    .text.HAL_NVIC_GetPriority:0000000000000000 HAL_NVIC_GetPriority
+     /tmp/ccvI10Od.s:300    .text.HAL_NVIC_GetPriority:0000000000000058 $d
+     /tmp/ccvI10Od.s:303    .text.HAL_NVIC_SetPendingIRQ:0000000000000000 $t
+     /tmp/ccvI10Od.s:310    .text.HAL_NVIC_SetPendingIRQ:0000000000000000 HAL_NVIC_SetPendingIRQ
+     /tmp/ccvI10Od.s:328    .text.HAL_NVIC_SetPendingIRQ:000000000000001c $d
+     /tmp/ccvI10Od.s:331    .text.HAL_NVIC_GetPendingIRQ:0000000000000000 $t
+     /tmp/ccvI10Od.s:338    .text.HAL_NVIC_GetPendingIRQ:0000000000000000 HAL_NVIC_GetPendingIRQ
+     /tmp/ccvI10Od.s:357    .text.HAL_NVIC_GetPendingIRQ:0000000000000020 $d
+     /tmp/ccvI10Od.s:360    .text.HAL_NVIC_ClearPendingIRQ:0000000000000000 $t
+     /tmp/ccvI10Od.s:367    .text.HAL_NVIC_ClearPendingIRQ:0000000000000000 HAL_NVIC_ClearPendingIRQ
+     /tmp/ccvI10Od.s:385    .text.HAL_NVIC_ClearPendingIRQ:000000000000001c $d
+     /tmp/ccvI10Od.s:388    .text.HAL_NVIC_GetActive:0000000000000000 $t
+     /tmp/ccvI10Od.s:395    .text.HAL_NVIC_GetActive:0000000000000000 HAL_NVIC_GetActive
+     /tmp/ccvI10Od.s:414    .text.HAL_NVIC_GetActive:0000000000000020 $d
+     /tmp/ccvI10Od.s:417    .text.HAL_SYSTICK_CLKSourceConfig:0000000000000000 $t
+     /tmp/ccvI10Od.s:424    .text.HAL_SYSTICK_CLKSourceConfig:0000000000000000 HAL_SYSTICK_CLKSourceConfig
+     /tmp/ccvI10Od.s:438    .text.HAL_SYSTICK_Callback:0000000000000000 $t
+     /tmp/ccvI10Od.s:445    .text.HAL_SYSTICK_Callback:0000000000000000 HAL_SYSTICK_Callback
+     /tmp/ccvI10Od.s:452    .text.HAL_SYSTICK_IRQHandler:0000000000000000 $t
+     /tmp/ccvI10Od.s:459    .text.HAL_SYSTICK_IRQHandler:0000000000000000 HAL_SYSTICK_IRQHandler
+     /tmp/ccvI10Od.s:467    .text.HAL_MPU_Enable:0000000000000000 $t
+     /tmp/ccvI10Od.s:474    .text.HAL_MPU_Enable:0000000000000000 HAL_MPU_Enable
+     /tmp/ccvI10Od.s:494    .text.HAL_MPU_Enable:0000000000000014 $d
+     /tmp/ccvI10Od.s:497    .text.HAL_MPU_Disable:0000000000000000 $t
+     /tmp/ccvI10Od.s:504    .text.HAL_MPU_Disable:0000000000000000 HAL_MPU_Disable
+     /tmp/ccvI10Od.s:521    .text.HAL_MPU_Disable:0000000000000010 $d
+     /tmp/ccvI10Od.s:524    .text.HAL_MPU_ConfigRegion:0000000000000000 $t
+     /tmp/ccvI10Od.s:531    .text.HAL_MPU_ConfigRegion:0000000000000000 HAL_MPU_ConfigRegion
+     /tmp/ccvI10Od.s:569    .text.HAL_MPU_ConfigRegion:0000000000000054 $d
 
 NO UNDEFINED SYMBOLS

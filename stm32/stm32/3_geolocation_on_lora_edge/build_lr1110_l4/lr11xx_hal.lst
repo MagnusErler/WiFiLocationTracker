@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccSBqdOb.s 			page 1
+ARM GAS  /tmp/ccSWu41b.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccSBqdOb.s 			page 1
   58              		@ args = 0, pretend = 0, frame = 0
   59              		@ frame_needed = 0, uses_anonymous_args = 0
   60 0000 08B5     		push	{r3, lr}
-ARM GAS  /tmp/ccSBqdOb.s 			page 2
+ARM GAS  /tmp/ccSWu41b.s 			page 2
 
 
   61              	.L5:
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccSBqdOb.s 			page 1
  119 000c BDE81040 		pop	{r4, lr}
  120 0010 FFF7FEBF 		b	lr11xx_hal_wait_on_busy
  121              	.L12:
-ARM GAS  /tmp/ccSBqdOb.s 			page 3
+ARM GAS  /tmp/ccSWu41b.s 			page 3
 
 
  122 0014 0820     		movs	r0, #8
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccSBqdOb.s 			page 1
  178 0044 FFF7FEFF 		bl	hal_mcu_wait_us
  179              	.L20:
  180 0048 0020     		movs	r0, #0
-ARM GAS  /tmp/ccSBqdOb.s 			page 4
+ARM GAS  /tmp/ccSWu41b.s 			page 4
 
 
  181 004a F8BD     		pop	{r3, r4, r5, r6, r7, pc}
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccSBqdOb.s 			page 1
  237 0046 0120     		movs	r0, #1
  238 0048 FFF7FEFF 		bl	hal_spi_in_out
  239 004c 04F8010F 		strb	r0, [r4, #1]!
-ARM GAS  /tmp/ccSBqdOb.s 			page 5
+ARM GAS  /tmp/ccSWu41b.s 			page 5
 
 
  240 0050 BC42     		cmp	r4, r7
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccSBqdOb.s 			page 1
  298              		@ frame_needed = 0, uses_anonymous_args = 0
  299 0000 08B5     		push	{r3, lr}
  300 0002 FFF7FEFF 		bl	lr11xx_hal_check_device_ready
-ARM GAS  /tmp/ccSBqdOb.s 			page 6
+ARM GAS  /tmp/ccSWu41b.s 			page 6
 
 
  301 0006 0020     		movs	r0, #0
@@ -308,31 +308,31 @@ ARM GAS  /tmp/ccSBqdOb.s 			page 1
  308              	radio_mode:
  309 0000 01       		.byte	1
  310              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/ccSBqdOb.s 			page 7
+ARM GAS  /tmp/ccSWu41b.s 			page 7
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 lr11xx_hal.c
-     /tmp/ccSBqdOb.s:14     .text.lr11xx_hal_reset:0000000000000000 $t
-     /tmp/ccSBqdOb.s:22     .text.lr11xx_hal_reset:0000000000000000 lr11xx_hal_reset
-     /tmp/ccSBqdOb.s:46     .text.lr11xx_hal_reset:0000000000000034 $d
-     /tmp/ccSBqdOb.s:50     .text.lr11xx_hal_wait_on_busy:0000000000000000 $t
-     /tmp/ccSBqdOb.s:57     .text.lr11xx_hal_wait_on_busy:0000000000000000 lr11xx_hal_wait_on_busy
-     /tmp/ccSBqdOb.s:69     .text.lr11xx_hal_abort_blocking_cmd:0000000000000000 $t
-     /tmp/ccSBqdOb.s:76     .text.lr11xx_hal_abort_blocking_cmd:0000000000000000 lr11xx_hal_abort_blocking_cmd
-     /tmp/ccSBqdOb.s:104    .text.lr11xx_hal_check_device_ready:0000000000000000 $t
-     /tmp/ccSBqdOb.s:111    .text.lr11xx_hal_check_device_ready:0000000000000000 lr11xx_hal_check_device_ready
-     /tmp/ccSBqdOb.s:134    .text.lr11xx_hal_check_device_ready:000000000000002c $d
-     /tmp/ccSBqdOb.s:137    .text.lr11xx_hal_write:0000000000000000 $t
-     /tmp/ccSBqdOb.s:144    .text.lr11xx_hal_write:0000000000000000 lr11xx_hal_write
-     /tmp/ccSBqdOb.s:195    .text.lr11xx_hal_write:0000000000000064 $d
-     /tmp/ccSBqdOb.s:198    .text.lr11xx_hal_read:0000000000000000 $t
-     /tmp/ccSBqdOb.s:205    .text.lr11xx_hal_read:0000000000000000 lr11xx_hal_read
-     /tmp/ccSBqdOb.s:255    .text.lr11xx_hal_direct_read:0000000000000000 $t
-     /tmp/ccSBqdOb.s:262    .text.lr11xx_hal_direct_read:0000000000000000 lr11xx_hal_direct_read
-     /tmp/ccSBqdOb.s:289    .text.lr11xx_hal_wakeup:0000000000000000 $t
-     /tmp/ccSBqdOb.s:296    .text.lr11xx_hal_wakeup:0000000000000000 lr11xx_hal_wakeup
-     /tmp/ccSBqdOb.s:308    .data.radio_mode:0000000000000000 radio_mode
+     /tmp/ccSWu41b.s:14     .text.lr11xx_hal_reset:0000000000000000 $t
+     /tmp/ccSWu41b.s:22     .text.lr11xx_hal_reset:0000000000000000 lr11xx_hal_reset
+     /tmp/ccSWu41b.s:46     .text.lr11xx_hal_reset:0000000000000034 $d
+     /tmp/ccSWu41b.s:50     .text.lr11xx_hal_wait_on_busy:0000000000000000 $t
+     /tmp/ccSWu41b.s:57     .text.lr11xx_hal_wait_on_busy:0000000000000000 lr11xx_hal_wait_on_busy
+     /tmp/ccSWu41b.s:69     .text.lr11xx_hal_abort_blocking_cmd:0000000000000000 $t
+     /tmp/ccSWu41b.s:76     .text.lr11xx_hal_abort_blocking_cmd:0000000000000000 lr11xx_hal_abort_blocking_cmd
+     /tmp/ccSWu41b.s:104    .text.lr11xx_hal_check_device_ready:0000000000000000 $t
+     /tmp/ccSWu41b.s:111    .text.lr11xx_hal_check_device_ready:0000000000000000 lr11xx_hal_check_device_ready
+     /tmp/ccSWu41b.s:134    .text.lr11xx_hal_check_device_ready:000000000000002c $d
+     /tmp/ccSWu41b.s:137    .text.lr11xx_hal_write:0000000000000000 $t
+     /tmp/ccSWu41b.s:144    .text.lr11xx_hal_write:0000000000000000 lr11xx_hal_write
+     /tmp/ccSWu41b.s:195    .text.lr11xx_hal_write:0000000000000064 $d
+     /tmp/ccSWu41b.s:198    .text.lr11xx_hal_read:0000000000000000 $t
+     /tmp/ccSWu41b.s:205    .text.lr11xx_hal_read:0000000000000000 lr11xx_hal_read
+     /tmp/ccSWu41b.s:255    .text.lr11xx_hal_direct_read:0000000000000000 $t
+     /tmp/ccSWu41b.s:262    .text.lr11xx_hal_direct_read:0000000000000000 lr11xx_hal_direct_read
+     /tmp/ccSWu41b.s:289    .text.lr11xx_hal_wakeup:0000000000000000 $t
+     /tmp/ccSWu41b.s:296    .text.lr11xx_hal_wakeup:0000000000000000 lr11xx_hal_wakeup
+     /tmp/ccSWu41b.s:308    .data.radio_mode:0000000000000000 radio_mode
 
 UNDEFINED SYMBOLS
 hal_gpio_set_value

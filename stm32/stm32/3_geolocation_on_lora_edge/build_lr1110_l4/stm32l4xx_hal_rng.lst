@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccGG2oRd.s 			page 1
+ARM GAS  /tmp/ccrrAmgA.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccGG2oRd.s 			page 1
   58 002a 6371     		strb	r3, [r4, #5]
   59              	.L8:
   60 002c 0120     		movs	r0, #1
-ARM GAS  /tmp/ccGG2oRd.s 			page 2
+ARM GAS  /tmp/ccrrAmgA.s 			page 2
 
 
   61 002e 0AE0     		b	.L3
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccGG2oRd.s 			page 1
  119 0012 22F06002 		bic	r2, r2, #96
  120 0016 5A60     		str	r2, [r3, #4]
  121 0018 FFF7FEFF 		bl	HAL_RNG_MspDeInit
-ARM GAS  /tmp/ccGG2oRd.s 			page 3
+ARM GAS  /tmp/ccrrAmgA.s 			page 3
 
 
  122 001c 0020     		movs	r0, #0
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccGG2oRd.s 			page 1
  178 004a EBD9     		bls	.L17
  179 004c 0123     		movs	r3, #1
  180 004e 6371     		strb	r3, [r4, #5]
-ARM GAS  /tmp/ccGG2oRd.s 			page 4
+ARM GAS  /tmp/ccrrAmgA.s 			page 4
 
 
  181 0050 0223     		movs	r3, #2
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccGG2oRd.s 			page 1
  238              		.syntax unified
  239              		.thumb
  240              		.thumb_func
-ARM GAS  /tmp/ccGG2oRd.s 			page 5
+ARM GAS  /tmp/ccrrAmgA.s 			page 5
 
 
  241              		.fpu fpv4-sp-d16
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccGG2oRd.s 			page 1
  300 0002 7047     		bx	lr
  302              		.section	.text.HAL_RNG_ReadyDataCallback,"ax",%progbits
  303              		.align	1
-ARM GAS  /tmp/ccGG2oRd.s 			page 6
+ARM GAS  /tmp/ccrrAmgA.s 			page 6
 
 
  304              		.weak	HAL_RNG_ReadyDataCallback
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccGG2oRd.s 			page 1
  363 002c 22F00802 		bic	r2, r2, #8
  364 0030 1A60     		str	r2, [r3]
  365 0032 9968     		ldr	r1, [r3, #8]
-ARM GAS  /tmp/ccGG2oRd.s 			page 7
+ARM GAS  /tmp/ccrrAmgA.s 			page 7
 
 
  366 0034 6379     		ldrb	r3, [r4, #5]	@ zero_extendqisi2
@@ -406,39 +406,39 @@ ARM GAS  /tmp/ccGG2oRd.s 			page 1
  412 0000 8068     		ldr	r0, [r0, #8]
  413 0002 7047     		bx	lr
  415              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/ccGG2oRd.s 			page 8
+ARM GAS  /tmp/ccrrAmgA.s 			page 8
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 stm32l4xx_hal_rng.c
-     /tmp/ccGG2oRd.s:14     .text.HAL_RNG_MspInit:0000000000000000 $t
-     /tmp/ccGG2oRd.s:22     .text.HAL_RNG_MspInit:0000000000000000 HAL_RNG_MspInit
-     /tmp/ccGG2oRd.s:29     .text.HAL_RNG_Init:0000000000000000 $t
-     /tmp/ccGG2oRd.s:36     .text.HAL_RNG_Init:0000000000000000 HAL_RNG_Init
-     /tmp/ccGG2oRd.s:87     .text.HAL_RNG_MspDeInit:0000000000000000 $t
-     /tmp/ccGG2oRd.s:94     .text.HAL_RNG_MspDeInit:0000000000000000 HAL_RNG_MspDeInit
-     /tmp/ccGG2oRd.s:101    .text.HAL_RNG_DeInit:0000000000000000 $t
-     /tmp/ccGG2oRd.s:108    .text.HAL_RNG_DeInit:0000000000000000 HAL_RNG_DeInit
-     /tmp/ccGG2oRd.s:133    .text.HAL_RNG_GenerateRandomNumber:0000000000000000 $t
-     /tmp/ccGG2oRd.s:140    .text.HAL_RNG_GenerateRandomNumber:0000000000000000 HAL_RNG_GenerateRandomNumber
-     /tmp/ccGG2oRd.s:197    .text.HAL_RNG_GenerateRandomNumber_IT:0000000000000000 $t
-     /tmp/ccGG2oRd.s:204    .text.HAL_RNG_GenerateRandomNumber_IT:0000000000000000 HAL_RNG_GenerateRandomNumber_IT
-     /tmp/ccGG2oRd.s:236    .text.HAL_RNG_GetRandomNumber:0000000000000000 $t
-     /tmp/ccGG2oRd.s:243    .text.HAL_RNG_GetRandomNumber:0000000000000000 HAL_RNG_GetRandomNumber
-     /tmp/ccGG2oRd.s:259    .text.HAL_RNG_GetRandomNumber_IT:0000000000000000 $t
-     /tmp/ccGG2oRd.s:266    .text.HAL_RNG_GetRandomNumber_IT:0000000000000000 HAL_RNG_GetRandomNumber_IT
-     /tmp/ccGG2oRd.s:288    .text.HAL_RNG_ReadLastRandomNumber:0000000000000000 $t
-     /tmp/ccGG2oRd.s:295    .text.HAL_RNG_ReadLastRandomNumber:0000000000000000 HAL_RNG_ReadLastRandomNumber
-     /tmp/ccGG2oRd.s:303    .text.HAL_RNG_ReadyDataCallback:0000000000000000 $t
-     /tmp/ccGG2oRd.s:310    .text.HAL_RNG_ReadyDataCallback:0000000000000000 HAL_RNG_ReadyDataCallback
-     /tmp/ccGG2oRd.s:317    .text.HAL_RNG_ErrorCallback:0000000000000000 $t
-     /tmp/ccGG2oRd.s:324    .text.HAL_RNG_ErrorCallback:0000000000000000 HAL_RNG_ErrorCallback
-     /tmp/ccGG2oRd.s:331    .text.HAL_RNG_IRQHandler:0000000000000000 $t
-     /tmp/ccGG2oRd.s:338    .text.HAL_RNG_IRQHandler:0000000000000000 HAL_RNG_IRQHandler
-     /tmp/ccGG2oRd.s:386    .text.HAL_RNG_GetState:0000000000000000 $t
-     /tmp/ccGG2oRd.s:393    .text.HAL_RNG_GetState:0000000000000000 HAL_RNG_GetState
-     /tmp/ccGG2oRd.s:401    .text.HAL_RNG_GetError:0000000000000000 $t
-     /tmp/ccGG2oRd.s:408    .text.HAL_RNG_GetError:0000000000000000 HAL_RNG_GetError
+     /tmp/ccrrAmgA.s:14     .text.HAL_RNG_MspInit:0000000000000000 $t
+     /tmp/ccrrAmgA.s:22     .text.HAL_RNG_MspInit:0000000000000000 HAL_RNG_MspInit
+     /tmp/ccrrAmgA.s:29     .text.HAL_RNG_Init:0000000000000000 $t
+     /tmp/ccrrAmgA.s:36     .text.HAL_RNG_Init:0000000000000000 HAL_RNG_Init
+     /tmp/ccrrAmgA.s:87     .text.HAL_RNG_MspDeInit:0000000000000000 $t
+     /tmp/ccrrAmgA.s:94     .text.HAL_RNG_MspDeInit:0000000000000000 HAL_RNG_MspDeInit
+     /tmp/ccrrAmgA.s:101    .text.HAL_RNG_DeInit:0000000000000000 $t
+     /tmp/ccrrAmgA.s:108    .text.HAL_RNG_DeInit:0000000000000000 HAL_RNG_DeInit
+     /tmp/ccrrAmgA.s:133    .text.HAL_RNG_GenerateRandomNumber:0000000000000000 $t
+     /tmp/ccrrAmgA.s:140    .text.HAL_RNG_GenerateRandomNumber:0000000000000000 HAL_RNG_GenerateRandomNumber
+     /tmp/ccrrAmgA.s:197    .text.HAL_RNG_GenerateRandomNumber_IT:0000000000000000 $t
+     /tmp/ccrrAmgA.s:204    .text.HAL_RNG_GenerateRandomNumber_IT:0000000000000000 HAL_RNG_GenerateRandomNumber_IT
+     /tmp/ccrrAmgA.s:236    .text.HAL_RNG_GetRandomNumber:0000000000000000 $t
+     /tmp/ccrrAmgA.s:243    .text.HAL_RNG_GetRandomNumber:0000000000000000 HAL_RNG_GetRandomNumber
+     /tmp/ccrrAmgA.s:259    .text.HAL_RNG_GetRandomNumber_IT:0000000000000000 $t
+     /tmp/ccrrAmgA.s:266    .text.HAL_RNG_GetRandomNumber_IT:0000000000000000 HAL_RNG_GetRandomNumber_IT
+     /tmp/ccrrAmgA.s:288    .text.HAL_RNG_ReadLastRandomNumber:0000000000000000 $t
+     /tmp/ccrrAmgA.s:295    .text.HAL_RNG_ReadLastRandomNumber:0000000000000000 HAL_RNG_ReadLastRandomNumber
+     /tmp/ccrrAmgA.s:303    .text.HAL_RNG_ReadyDataCallback:0000000000000000 $t
+     /tmp/ccrrAmgA.s:310    .text.HAL_RNG_ReadyDataCallback:0000000000000000 HAL_RNG_ReadyDataCallback
+     /tmp/ccrrAmgA.s:317    .text.HAL_RNG_ErrorCallback:0000000000000000 $t
+     /tmp/ccrrAmgA.s:324    .text.HAL_RNG_ErrorCallback:0000000000000000 HAL_RNG_ErrorCallback
+     /tmp/ccrrAmgA.s:331    .text.HAL_RNG_IRQHandler:0000000000000000 $t
+     /tmp/ccrrAmgA.s:338    .text.HAL_RNG_IRQHandler:0000000000000000 HAL_RNG_IRQHandler
+     /tmp/ccrrAmgA.s:386    .text.HAL_RNG_GetState:0000000000000000 $t
+     /tmp/ccrrAmgA.s:393    .text.HAL_RNG_GetState:0000000000000000 HAL_RNG_GetState
+     /tmp/ccrrAmgA.s:401    .text.HAL_RNG_GetError:0000000000000000 $t
+     /tmp/ccrrAmgA.s:408    .text.HAL_RNG_GetError:0000000000000000 HAL_RNG_GetError
 
 UNDEFINED SYMBOLS
 HAL_GetTick

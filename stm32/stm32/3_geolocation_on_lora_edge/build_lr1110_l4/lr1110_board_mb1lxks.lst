@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc6viiL5.s 			page 1
+ARM GAS  /tmp/cc8cJxYb.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cc6viiL5.s 			page 1
   58 000a 2120     		movs	r0, #33
   59 000c FFF7FEFF 		bl	hal_gpio_set_value
   60              	.L8:
-ARM GAS  /tmp/cc6viiL5.s 			page 2
+ARM GAS  /tmp/cc8cJxYb.s 			page 2
 
 
   61 0010 A307     		lsls	r3, r4, #30
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cc6viiL5.s 			page 1
  123              	smtc_board_led_set:
  124              		@ args = 0, pretend = 0, frame = 0
  125              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  /tmp/cc6viiL5.s 			page 3
+ARM GAS  /tmp/cc8cJxYb.s 			page 3
 
 
  126              		@ link register save eliminated.
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cc6viiL5.s 			page 1
  186              	geolocation_bsp_gnss_postscan_actions:
  187              		@ args = 0, pretend = 0, frame = 0
  188              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  /tmp/cc6viiL5.s 			page 4
+ARM GAS  /tmp/cc8cJxYb.s 			page 4
 
 
  189 0000 08B5     		push	{r3, lr}
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cc6viiL5.s 			page 1
  250              		.thumb_func
  251              		.fpu fpv4-sp-d16
  253              	geolocation_bsp_get_lr11xx_reg_mode:
-ARM GAS  /tmp/cc6viiL5.s 			page 5
+ARM GAS  /tmp/cc8cJxYb.s 			page 5
 
 
  254              		@ args = 0, pretend = 0, frame = 0
@@ -281,40 +281,40 @@ ARM GAS  /tmp/cc6viiL5.s 			page 1
  293 002c 3831660D 		.word	224801080
  294 0030 BA04E209 		.word	165807290
  296              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/cc6viiL5.s 			page 6
+ARM GAS  /tmp/cc8cJxYb.s 			page 6
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 lr1110_board_mb1lxks.c
-     /tmp/cc6viiL5.s:14     .text.leds_on:0000000000000000 $t
-     /tmp/cc6viiL5.s:22     .text.leds_on:0000000000000000 leds_on
-     /tmp/cc6viiL5.s:43     .text.leds_off:0000000000000000 $t
-     /tmp/cc6viiL5.s:50     .text.leds_off:0000000000000000 leds_off
-     /tmp/cc6viiL5.s:71     .text.smtc_board_get_led_tx_mask:0000000000000000 $t
-     /tmp/cc6viiL5.s:78     .text.smtc_board_get_led_tx_mask:0000000000000000 smtc_board_get_led_tx_mask
-     /tmp/cc6viiL5.s:86     .text.smtc_board_get_led_rx_mask:0000000000000000 $t
-     /tmp/cc6viiL5.s:93     .text.smtc_board_get_led_rx_mask:0000000000000000 smtc_board_get_led_rx_mask
-     /tmp/cc6viiL5.s:101    .text.smtc_board_get_led_all_mask:0000000000000000 $t
-     /tmp/cc6viiL5.s:108    .text.smtc_board_get_led_all_mask:0000000000000000 smtc_board_get_led_all_mask
-     /tmp/cc6viiL5.s:116    .text.smtc_board_led_set:0000000000000000 $t
-     /tmp/cc6viiL5.s:123    .text.smtc_board_led_set:0000000000000000 smtc_board_led_set
-     /tmp/cc6viiL5.s:134    .text.smtc_board_led_pulse:0000000000000000 $t
-     /tmp/cc6viiL5.s:141    .text.smtc_board_led_pulse:0000000000000000 smtc_board_led_pulse
-     /tmp/cc6viiL5.s:159    .text.geolocation_bsp_gnss_prescan_actions:0000000000000000 $t
-     /tmp/cc6viiL5.s:166    .text.geolocation_bsp_gnss_prescan_actions:0000000000000000 geolocation_bsp_gnss_prescan_actions
-     /tmp/cc6viiL5.s:179    .text.geolocation_bsp_gnss_postscan_actions:0000000000000000 $t
-     /tmp/cc6viiL5.s:186    .text.geolocation_bsp_gnss_postscan_actions:0000000000000000 geolocation_bsp_gnss_postscan_actions
-     /tmp/cc6viiL5.s:199    .text.geolocation_bsp_wifi_prescan_actions:0000000000000000 $t
-     /tmp/cc6viiL5.s:206    .text.geolocation_bsp_wifi_prescan_actions:0000000000000000 geolocation_bsp_wifi_prescan_actions
-     /tmp/cc6viiL5.s:215    .text.geolocation_bsp_wifi_postscan_actions:0000000000000000 $t
-     /tmp/cc6viiL5.s:222    .text.geolocation_bsp_wifi_postscan_actions:0000000000000000 geolocation_bsp_wifi_postscan_actions
-     /tmp/cc6viiL5.s:231    .text.geolocation_bsp_get_lr11xx_lf_clock_cfg:0000000000000000 $t
-     /tmp/cc6viiL5.s:238    .text.geolocation_bsp_get_lr11xx_lf_clock_cfg:0000000000000000 geolocation_bsp_get_lr11xx_lf_clock_cfg
-     /tmp/cc6viiL5.s:246    .text.geolocation_bsp_get_lr11xx_reg_mode:0000000000000000 $t
-     /tmp/cc6viiL5.s:253    .text.geolocation_bsp_get_lr11xx_reg_mode:0000000000000000 geolocation_bsp_get_lr11xx_reg_mode
-     /tmp/cc6viiL5.s:262    .text.geolocation_bsp_gnss_get_consumption:0000000000000000 $t
-     /tmp/cc6viiL5.s:269    .text.geolocation_bsp_gnss_get_consumption:0000000000000000 geolocation_bsp_gnss_get_consumption
-     /tmp/cc6viiL5.s:289    .text.geolocation_bsp_gnss_get_consumption:000000000000001c $d
+     /tmp/cc8cJxYb.s:14     .text.leds_on:0000000000000000 $t
+     /tmp/cc8cJxYb.s:22     .text.leds_on:0000000000000000 leds_on
+     /tmp/cc8cJxYb.s:43     .text.leds_off:0000000000000000 $t
+     /tmp/cc8cJxYb.s:50     .text.leds_off:0000000000000000 leds_off
+     /tmp/cc8cJxYb.s:71     .text.smtc_board_get_led_tx_mask:0000000000000000 $t
+     /tmp/cc8cJxYb.s:78     .text.smtc_board_get_led_tx_mask:0000000000000000 smtc_board_get_led_tx_mask
+     /tmp/cc8cJxYb.s:86     .text.smtc_board_get_led_rx_mask:0000000000000000 $t
+     /tmp/cc8cJxYb.s:93     .text.smtc_board_get_led_rx_mask:0000000000000000 smtc_board_get_led_rx_mask
+     /tmp/cc8cJxYb.s:101    .text.smtc_board_get_led_all_mask:0000000000000000 $t
+     /tmp/cc8cJxYb.s:108    .text.smtc_board_get_led_all_mask:0000000000000000 smtc_board_get_led_all_mask
+     /tmp/cc8cJxYb.s:116    .text.smtc_board_led_set:0000000000000000 $t
+     /tmp/cc8cJxYb.s:123    .text.smtc_board_led_set:0000000000000000 smtc_board_led_set
+     /tmp/cc8cJxYb.s:134    .text.smtc_board_led_pulse:0000000000000000 $t
+     /tmp/cc8cJxYb.s:141    .text.smtc_board_led_pulse:0000000000000000 smtc_board_led_pulse
+     /tmp/cc8cJxYb.s:159    .text.geolocation_bsp_gnss_prescan_actions:0000000000000000 $t
+     /tmp/cc8cJxYb.s:166    .text.geolocation_bsp_gnss_prescan_actions:0000000000000000 geolocation_bsp_gnss_prescan_actions
+     /tmp/cc8cJxYb.s:179    .text.geolocation_bsp_gnss_postscan_actions:0000000000000000 $t
+     /tmp/cc8cJxYb.s:186    .text.geolocation_bsp_gnss_postscan_actions:0000000000000000 geolocation_bsp_gnss_postscan_actions
+     /tmp/cc8cJxYb.s:199    .text.geolocation_bsp_wifi_prescan_actions:0000000000000000 $t
+     /tmp/cc8cJxYb.s:206    .text.geolocation_bsp_wifi_prescan_actions:0000000000000000 geolocation_bsp_wifi_prescan_actions
+     /tmp/cc8cJxYb.s:215    .text.geolocation_bsp_wifi_postscan_actions:0000000000000000 $t
+     /tmp/cc8cJxYb.s:222    .text.geolocation_bsp_wifi_postscan_actions:0000000000000000 geolocation_bsp_wifi_postscan_actions
+     /tmp/cc8cJxYb.s:231    .text.geolocation_bsp_get_lr11xx_lf_clock_cfg:0000000000000000 $t
+     /tmp/cc8cJxYb.s:238    .text.geolocation_bsp_get_lr11xx_lf_clock_cfg:0000000000000000 geolocation_bsp_get_lr11xx_lf_clock_cfg
+     /tmp/cc8cJxYb.s:246    .text.geolocation_bsp_get_lr11xx_reg_mode:0000000000000000 $t
+     /tmp/cc8cJxYb.s:253    .text.geolocation_bsp_get_lr11xx_reg_mode:0000000000000000 geolocation_bsp_get_lr11xx_reg_mode
+     /tmp/cc8cJxYb.s:262    .text.geolocation_bsp_gnss_get_consumption:0000000000000000 $t
+     /tmp/cc8cJxYb.s:269    .text.geolocation_bsp_gnss_get_consumption:0000000000000000 geolocation_bsp_gnss_get_consumption
+     /tmp/cc8cJxYb.s:289    .text.geolocation_bsp_gnss_get_consumption:000000000000001c $d
 
 UNDEFINED SYMBOLS
 hal_gpio_set_value

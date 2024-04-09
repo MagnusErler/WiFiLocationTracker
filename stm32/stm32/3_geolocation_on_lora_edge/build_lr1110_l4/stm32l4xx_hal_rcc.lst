@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccpfpYXM.s 			page 1
+ARM GAS  /tmp/ccS9vGBo.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccpfpYXM.s 			page 1
   56 0040 43F08053 		orr	r3, r3, #268435456
   57 0044 AB65     		str	r3, [r5, #88]
   58 0046 AB6D     		ldr	r3, [r5, #88]
-ARM GAS  /tmp/ccpfpYXM.s 			page 2
+ARM GAS  /tmp/ccS9vGBo.s 			page 2
 
 
   59 0048 03F08053 		and	r3, r3, #268435456
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccpfpYXM.s 			page 1
  115 0020 43F06003 		orr	r3, r3, #96
  116 0024 2360     		str	r3, [r4]
  117 0026 0023     		movs	r3, #0
-ARM GAS  /tmp/ccpfpYXM.s 			page 3
+ARM GAS  /tmp/ccS9vGBo.s 			page 3
 
 
  118 0028 A360     		str	r3, [r4, #8]
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccpfpYXM.s 			page 1
  172 00aa 0325     		movs	r5, #3
  173              	.L14:
  174 00ac 2846     		mov	r0, r5
-ARM GAS  /tmp/ccpfpYXM.s 			page 4
+ARM GAS  /tmp/ccS9vGBo.s 			page 4
 
 
  175 00ae F8BD     		pop	{r3, r4, r5, r6, r7, pc}
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccpfpYXM.s 			page 1
  231 0032 4FF09040 		mov	r0, #1207959552
  232 0036 0693     		str	r3, [sp, #24]
  233 0038 FFF7FEFF 		bl	HAL_GPIO_Init
-ARM GAS  /tmp/ccpfpYXM.s 			page 5
+ARM GAS  /tmp/ccS9vGBo.s 			page 5
 
 
  234 003c A368     		ldr	r3, [r4, #8]
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccpfpYXM.s 			page 1
  290 0046 0020     		movne	r0, #0
  291 0048 7047     		bx	lr
  292              	.L38:
-ARM GAS  /tmp/ccpfpYXM.s 			page 6
+ARM GAS  /tmp/ccS9vGBo.s 			page 6
 
 
  293 004a 0020     		movs	r0, #0
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccpfpYXM.s 			page 1
  349 000a 03B0     		add	sp, sp, #12
  350              		@ sp needed
  351 000c BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
-ARM GAS  /tmp/ccpfpYXM.s 			page 7
+ARM GAS  /tmp/ccS9vGBo.s 			page 7
 
 
  352              	.L53:
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccpfpYXM.s 			page 1
  406 008a 03F01F03 		and	r3, r3, #31
  407 008e D840     		lsrs	r0, r0, r3
  408 0090 744B     		ldr	r3, .L177+8
-ARM GAS  /tmp/ccpfpYXM.s 			page 8
+ARM GAS  /tmp/ccS9vGBo.s 			page 8
 
 
  409 0092 1860     		str	r0, [r3]
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccpfpYXM.s 			page 1
  463 0104 FFF7FEFF 		bl	HAL_GetTick
  464 0108 8046     		mov	r8, r0
  465              	.L69:
-ARM GAS  /tmp/ccpfpYXM.s 			page 9
+ARM GAS  /tmp/ccS9vGBo.s 			page 9
 
 
  466 010a 2368     		ldr	r3, [r4]
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccpfpYXM.s 			page 1
  520 017e 43E7     		b	.L60
  521              	.L78:
  522 0180 6B68     		ldr	r3, [r5, #4]
-ARM GAS  /tmp/ccpfpYXM.s 			page 10
+ARM GAS  /tmp/ccS9vGBo.s 			page 10
 
 
  523 0182 B3F5803F 		cmp	r3, #65536
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccpfpYXM.s 			page 1
  577 01f8 5A05     		lsls	r2, r3, #21
  578 01fa 03D5     		bpl	.L175
  579 01fc EB68     		ldr	r3, [r5, #12]
-ARM GAS  /tmp/ccpfpYXM.s 			page 11
+ARM GAS  /tmp/ccS9vGBo.s 			page 11
 
 
  580 01fe 002B     		cmp	r3, #0
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccpfpYXM.s 			page 1
  634 027c FFF7FEFF 		bl	HAL_GetTick
  635 0280 0746     		mov	r7, r0
  636              	.L101:
-ARM GAS  /tmp/ccpfpYXM.s 			page 12
+ARM GAS  /tmp/ccS9vGBo.s 			page 12
 
 
  637 0282 D4F89430 		ldr	r3, [r4, #148]
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccpfpYXM.s 			page 1
  691 0304 9807     		lsls	r0, r3, #30
  692 0306 42D5     		bpl	.L118
  693              	.L122:
-ARM GAS  /tmp/ccpfpYXM.s 			page 13
+ARM GAS  /tmp/ccS9vGBo.s 			page 13
 
 
  694 0308 B8F1000F 		cmp	r8, #0
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccpfpYXM.s 			page 1
  748 0392 C01B     		subs	r0, r0, r7
  749 0394 4845     		cmp	r0, r9
  750 0396 B3D9     		bls	.L117
-ARM GAS  /tmp/ccpfpYXM.s 			page 14
+ARM GAS  /tmp/ccS9vGBo.s 			page 14
 
 
  751 0398 D2E6     		b	.L72
@@ -838,7 +838,7 @@ ARM GAS  /tmp/ccpfpYXM.s 			page 1
  805 041e 2FD4     		bmi	.L128
  806 0420 E268     		ldr	r2, [r4, #12]
  807 0422 394B     		ldr	r3, .L179+4
-ARM GAS  /tmp/ccpfpYXM.s 			page 15
+ARM GAS  /tmp/ccS9vGBo.s 			page 15
 
 
  808 0424 1340     		ands	r3, r3, r2
@@ -898,7 +898,7 @@ ARM GAS  /tmp/ccpfpYXM.s 			page 1
  862 04a8 0546     		mov	r5, r0
  863              	.L132:
  864 04aa 2368     		ldr	r3, [r4]
-ARM GAS  /tmp/ccpfpYXM.s 			page 16
+ARM GAS  /tmp/ccS9vGBo.s 			page 16
 
 
  865 04ac 9A01     		lsls	r2, r3, #6
@@ -958,7 +958,7 @@ ARM GAS  /tmp/ccpfpYXM.s 			page 1
  921 000a 0120     		movs	r0, #1
  922              	.L183:
  923 000c BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
-ARM GAS  /tmp/ccpfpYXM.s 			page 17
+ARM GAS  /tmp/ccS9vGBo.s 			page 17
 
 
  924              	.L182:
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/ccpfpYXM.s 			page 1
  978 0084 C1D1     		bne	.L187
  979 0086 C9E7     		b	.L188
  980              	.L185:
-ARM GAS  /tmp/ccpfpYXM.s 			page 18
+ARM GAS  /tmp/ccS9vGBo.s 			page 18
 
 
  981 0088 6268     		ldr	r2, [r4, #4]
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/ccpfpYXM.s 			page 1
  1035 0100 AB42     		cmp	r3, r5
  1036 0102 82D1     		bne	.L187
  1037 0104 96E7     		b	.L200
-ARM GAS  /tmp/ccpfpYXM.s 			page 19
+ARM GAS  /tmp/ccS9vGBo.s 			page 19
 
 
  1038              	.L198:
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/ccpfpYXM.s 			page 1
  1096              	.L229:
  1097              		.align	2
  1098              	.L228:
-ARM GAS  /tmp/ccpfpYXM.s 			page 20
+ARM GAS  /tmp/ccS9vGBo.s 			page 20
 
 
  1099 0018 00100240 		.word	1073876992
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/ccpfpYXM.s 			page 1
  1157 001c C2F30722 		ubfx	r2, r2, #8, #8
  1158 0020 C261     		str	r2, [r0, #28]
  1159 0022 1A68     		ldr	r2, [r3]
-ARM GAS  /tmp/ccpfpYXM.s 			page 21
+ARM GAS  /tmp/ccS9vGBo.s 			page 21
 
 
  1160 0024 02F0F002 		and	r2, r2, #240
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/ccpfpYXM.s 			page 1
  1214 00a6 12F48032 		ands	r2, r2, #65536
  1215 00aa 18BF     		it	ne
  1216 00ac 4FF48032 		movne	r2, #65536
-ARM GAS  /tmp/ccpfpYXM.s 			page 22
+ARM GAS  /tmp/ccS9vGBo.s 			page 22
 
 
  1217 00b0 AEE7     		b	.L236
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/ccpfpYXM.s 			page 1
  1274              		.fpu fpv4-sp-d16
  1276              	HAL_RCC_EnableCSS:
  1277              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  /tmp/ccpfpYXM.s 			page 23
+ARM GAS  /tmp/ccS9vGBo.s 			page 23
 
 
  1278              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -1369,54 +1369,54 @@ ARM GAS  /tmp/ccpfpYXM.s 			page 1
  1327              	.L260:
  1328 0018 00100240 		.word	1073876992
  1330              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
-ARM GAS  /tmp/ccpfpYXM.s 			page 24
+ARM GAS  /tmp/ccS9vGBo.s 			page 24
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 stm32l4xx_hal_rcc.c
-     /tmp/ccpfpYXM.s:14     .text.RCC_SetFlashLatencyFromMSIRange:0000000000000000 $t
-     /tmp/ccpfpYXM.s:21     .text.RCC_SetFlashLatencyFromMSIRange:0000000000000000 RCC_SetFlashLatencyFromMSIRange
-     /tmp/ccpfpYXM.s:87     .text.RCC_SetFlashLatencyFromMSIRange:000000000000007c $d
-     /tmp/ccpfpYXM.s:91     .text.HAL_RCC_DeInit:0000000000000000 $t
-     /tmp/ccpfpYXM.s:98     .text.HAL_RCC_DeInit:0000000000000000 HAL_RCC_DeInit
-     /tmp/ccpfpYXM.s:194    .text.HAL_RCC_DeInit:00000000000000cc $d
-     /tmp/ccpfpYXM.s:201    .text.HAL_RCC_MCOConfig:0000000000000000 $t
-     /tmp/ccpfpYXM.s:208    .text.HAL_RCC_MCOConfig:0000000000000000 HAL_RCC_MCOConfig
-     /tmp/ccpfpYXM.s:245    .text.HAL_RCC_MCOConfig:0000000000000050 $d
-     /tmp/ccpfpYXM.s:248    .text.HAL_RCC_GetSysClockFreq:0000000000000000 $t
-     /tmp/ccpfpYXM.s:255    .text.HAL_RCC_GetSysClockFreq:0000000000000000 HAL_RCC_GetSysClockFreq
-     /tmp/ccpfpYXM.s:327    .text.HAL_RCC_GetSysClockFreq:000000000000008c $d
-     /tmp/ccpfpYXM.s:333    .text.HAL_RCC_OscConfig:0000000000000000 $t
-     /tmp/ccpfpYXM.s:340    .text.HAL_RCC_OscConfig:0000000000000000 HAL_RCC_OscConfig
-     /tmp/ccpfpYXM.s:624    .text.HAL_RCC_OscConfig:000000000000025c $d
-     /tmp/ccpfpYXM.s:629    .text.HAL_RCC_OscConfig:000000000000026c $t
-     /tmp/ccpfpYXM.s:902    .text.HAL_RCC_OscConfig:0000000000000504 $d
-     /tmp/ccpfpYXM.s:906    .text.HAL_RCC_ClockConfig:0000000000000000 $t
-     /tmp/ccpfpYXM.s:913    .text.HAL_RCC_ClockConfig:0000000000000000 HAL_RCC_ClockConfig
-     /tmp/ccpfpYXM.s:1048   .text.HAL_RCC_ClockConfig:0000000000000114 $d
-     /tmp/ccpfpYXM.s:1055   .text.HAL_RCC_GetHCLKFreq:0000000000000000 $t
-     /tmp/ccpfpYXM.s:1062   .text.HAL_RCC_GetHCLKFreq:0000000000000000 HAL_RCC_GetHCLKFreq
-     /tmp/ccpfpYXM.s:1072   .text.HAL_RCC_GetHCLKFreq:0000000000000008 $d
-     /tmp/ccpfpYXM.s:1075   .text.HAL_RCC_GetPCLK1Freq:0000000000000000 $t
-     /tmp/ccpfpYXM.s:1082   .text.HAL_RCC_GetPCLK1Freq:0000000000000000 HAL_RCC_GetPCLK1Freq
-     /tmp/ccpfpYXM.s:1099   .text.HAL_RCC_GetPCLK1Freq:0000000000000018 $d
-     /tmp/ccpfpYXM.s:1104   .text.HAL_RCC_GetPCLK2Freq:0000000000000000 $t
-     /tmp/ccpfpYXM.s:1111   .text.HAL_RCC_GetPCLK2Freq:0000000000000000 HAL_RCC_GetPCLK2Freq
-     /tmp/ccpfpYXM.s:1128   .text.HAL_RCC_GetPCLK2Freq:0000000000000018 $d
-     /tmp/ccpfpYXM.s:1133   .text.HAL_RCC_GetOscConfig:0000000000000000 $t
-     /tmp/ccpfpYXM.s:1140   .text.HAL_RCC_GetOscConfig:0000000000000000 HAL_RCC_GetOscConfig
-     /tmp/ccpfpYXM.s:1227   .text.HAL_RCC_GetOscConfig:00000000000000c0 $d
-     /tmp/ccpfpYXM.s:1230   .text.HAL_RCC_GetClockConfig:0000000000000000 $t
-     /tmp/ccpfpYXM.s:1237   .text.HAL_RCC_GetClockConfig:0000000000000000 HAL_RCC_GetClockConfig
-     /tmp/ccpfpYXM.s:1265   .text.HAL_RCC_GetClockConfig:0000000000000034 $d
-     /tmp/ccpfpYXM.s:1269   .text.HAL_RCC_EnableCSS:0000000000000000 $t
-     /tmp/ccpfpYXM.s:1276   .text.HAL_RCC_EnableCSS:0000000000000000 HAL_RCC_EnableCSS
-     /tmp/ccpfpYXM.s:1288   .text.HAL_RCC_EnableCSS:000000000000000c $d
-     /tmp/ccpfpYXM.s:1291   .text.HAL_RCC_CSSCallback:0000000000000000 $t
-     /tmp/ccpfpYXM.s:1298   .text.HAL_RCC_CSSCallback:0000000000000000 HAL_RCC_CSSCallback
-     /tmp/ccpfpYXM.s:1305   .text.HAL_RCC_NMI_IRQHandler:0000000000000000 $t
-     /tmp/ccpfpYXM.s:1312   .text.HAL_RCC_NMI_IRQHandler:0000000000000000 HAL_RCC_NMI_IRQHandler
-     /tmp/ccpfpYXM.s:1328   .text.HAL_RCC_NMI_IRQHandler:0000000000000018 $d
+     /tmp/ccS9vGBo.s:14     .text.RCC_SetFlashLatencyFromMSIRange:0000000000000000 $t
+     /tmp/ccS9vGBo.s:21     .text.RCC_SetFlashLatencyFromMSIRange:0000000000000000 RCC_SetFlashLatencyFromMSIRange
+     /tmp/ccS9vGBo.s:87     .text.RCC_SetFlashLatencyFromMSIRange:000000000000007c $d
+     /tmp/ccS9vGBo.s:91     .text.HAL_RCC_DeInit:0000000000000000 $t
+     /tmp/ccS9vGBo.s:98     .text.HAL_RCC_DeInit:0000000000000000 HAL_RCC_DeInit
+     /tmp/ccS9vGBo.s:194    .text.HAL_RCC_DeInit:00000000000000cc $d
+     /tmp/ccS9vGBo.s:201    .text.HAL_RCC_MCOConfig:0000000000000000 $t
+     /tmp/ccS9vGBo.s:208    .text.HAL_RCC_MCOConfig:0000000000000000 HAL_RCC_MCOConfig
+     /tmp/ccS9vGBo.s:245    .text.HAL_RCC_MCOConfig:0000000000000050 $d
+     /tmp/ccS9vGBo.s:248    .text.HAL_RCC_GetSysClockFreq:0000000000000000 $t
+     /tmp/ccS9vGBo.s:255    .text.HAL_RCC_GetSysClockFreq:0000000000000000 HAL_RCC_GetSysClockFreq
+     /tmp/ccS9vGBo.s:327    .text.HAL_RCC_GetSysClockFreq:000000000000008c $d
+     /tmp/ccS9vGBo.s:333    .text.HAL_RCC_OscConfig:0000000000000000 $t
+     /tmp/ccS9vGBo.s:340    .text.HAL_RCC_OscConfig:0000000000000000 HAL_RCC_OscConfig
+     /tmp/ccS9vGBo.s:624    .text.HAL_RCC_OscConfig:000000000000025c $d
+     /tmp/ccS9vGBo.s:629    .text.HAL_RCC_OscConfig:000000000000026c $t
+     /tmp/ccS9vGBo.s:902    .text.HAL_RCC_OscConfig:0000000000000504 $d
+     /tmp/ccS9vGBo.s:906    .text.HAL_RCC_ClockConfig:0000000000000000 $t
+     /tmp/ccS9vGBo.s:913    .text.HAL_RCC_ClockConfig:0000000000000000 HAL_RCC_ClockConfig
+     /tmp/ccS9vGBo.s:1048   .text.HAL_RCC_ClockConfig:0000000000000114 $d
+     /tmp/ccS9vGBo.s:1055   .text.HAL_RCC_GetHCLKFreq:0000000000000000 $t
+     /tmp/ccS9vGBo.s:1062   .text.HAL_RCC_GetHCLKFreq:0000000000000000 HAL_RCC_GetHCLKFreq
+     /tmp/ccS9vGBo.s:1072   .text.HAL_RCC_GetHCLKFreq:0000000000000008 $d
+     /tmp/ccS9vGBo.s:1075   .text.HAL_RCC_GetPCLK1Freq:0000000000000000 $t
+     /tmp/ccS9vGBo.s:1082   .text.HAL_RCC_GetPCLK1Freq:0000000000000000 HAL_RCC_GetPCLK1Freq
+     /tmp/ccS9vGBo.s:1099   .text.HAL_RCC_GetPCLK1Freq:0000000000000018 $d
+     /tmp/ccS9vGBo.s:1104   .text.HAL_RCC_GetPCLK2Freq:0000000000000000 $t
+     /tmp/ccS9vGBo.s:1111   .text.HAL_RCC_GetPCLK2Freq:0000000000000000 HAL_RCC_GetPCLK2Freq
+     /tmp/ccS9vGBo.s:1128   .text.HAL_RCC_GetPCLK2Freq:0000000000000018 $d
+     /tmp/ccS9vGBo.s:1133   .text.HAL_RCC_GetOscConfig:0000000000000000 $t
+     /tmp/ccS9vGBo.s:1140   .text.HAL_RCC_GetOscConfig:0000000000000000 HAL_RCC_GetOscConfig
+     /tmp/ccS9vGBo.s:1227   .text.HAL_RCC_GetOscConfig:00000000000000c0 $d
+     /tmp/ccS9vGBo.s:1230   .text.HAL_RCC_GetClockConfig:0000000000000000 $t
+     /tmp/ccS9vGBo.s:1237   .text.HAL_RCC_GetClockConfig:0000000000000000 HAL_RCC_GetClockConfig
+     /tmp/ccS9vGBo.s:1265   .text.HAL_RCC_GetClockConfig:0000000000000034 $d
+     /tmp/ccS9vGBo.s:1269   .text.HAL_RCC_EnableCSS:0000000000000000 $t
+     /tmp/ccS9vGBo.s:1276   .text.HAL_RCC_EnableCSS:0000000000000000 HAL_RCC_EnableCSS
+     /tmp/ccS9vGBo.s:1288   .text.HAL_RCC_EnableCSS:000000000000000c $d
+     /tmp/ccS9vGBo.s:1291   .text.HAL_RCC_CSSCallback:0000000000000000 $t
+     /tmp/ccS9vGBo.s:1298   .text.HAL_RCC_CSSCallback:0000000000000000 HAL_RCC_CSSCallback
+     /tmp/ccS9vGBo.s:1305   .text.HAL_RCC_NMI_IRQHandler:0000000000000000 $t
+     /tmp/ccS9vGBo.s:1312   .text.HAL_RCC_NMI_IRQHandler:0000000000000000 HAL_RCC_NMI_IRQHandler
+     /tmp/ccS9vGBo.s:1328   .text.HAL_RCC_NMI_IRQHandler:0000000000000018 $d
 
 UNDEFINED SYMBOLS
 HAL_PWREx_GetVoltageRange
