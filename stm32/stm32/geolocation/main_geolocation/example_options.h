@@ -63,11 +63,11 @@ extern "C" {
 // AppKey 0d5e6bf76ea507f06667cd8398b8cfc0
 #define USER_LORAWAN_DEVICE_EUI                        \
     {                                                  \
-        0x00, 0x16, 0xC0, 0x01, 0xF0, 0x00, 0x3F, 0xC5 \
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 \
     }
 #define USER_LORAWAN_JOIN_EUI                          \
     {                                                  \
-        0x00, 0x16, 0xC0, 0x01, 0xFF, 0xFE, 0x00, 0x01 \
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 \
     }
 #define USER_LORAWAN_APP_KEY                                                                           \
     {                                                                                                  \

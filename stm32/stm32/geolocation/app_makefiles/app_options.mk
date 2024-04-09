@@ -39,7 +39,7 @@ USE_LR11XX_CRC_SPI ?= no
 #-----------------------------------------------------------------------------
 
 # CRYPTO Management
-CRYPTO ?= SOFT
+CRYPTO ?= LR11XX_WITH_CREDENTIALS
 
 # Multistack
 # Note: if more than one stack is used, more ram will be used for nvm context saving due to read_modify_write feature
