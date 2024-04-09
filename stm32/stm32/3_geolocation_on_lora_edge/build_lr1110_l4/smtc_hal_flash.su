@@ -1,4 +1,0 @@
-smtc_hal_l4/smtc_hal_flash.c:108:10:hal_flash_get_page_size	0	static
-smtc_hal_l4/smtc_hal_flash.c:113:9:hal_flash_erase_page	48	static
-smtc_hal_l4/smtc_hal_flash.c:180:10:hal_flash_write_buffer	48	static
-smtc_hal_l4/smtc_hal_flash.c:255:6:hal_flash_read_buffer	8	static

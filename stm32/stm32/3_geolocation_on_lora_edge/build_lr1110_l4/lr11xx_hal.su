@@ -1,8 +1,0 @@
-radio_hal/lr11xx_hal.c:286:21:lr11xx_hal_reset	8	static
-radio_hal/lr11xx_hal.c:335:6:lr11xx_hal_wait_on_busy	8	static
-radio_hal/lr11xx_hal.c:306:21:lr11xx_hal_abort_blocking_cmd	24	static
-radio_hal/lr11xx_hal.c:342:6:lr11xx_hal_check_device_ready	8	static
-radio_hal/lr11xx_hal.c:99:21:lr11xx_hal_write	24	static
-radio_hal/lr11xx_hal.c:151:21:lr11xx_hal_read	24	static
-radio_hal/lr11xx_hal.c:244:21:lr11xx_hal_direct_read	16	static
-radio_hal/lr11xx_hal.c:300:21:lr11xx_hal_wakeup	8	static
