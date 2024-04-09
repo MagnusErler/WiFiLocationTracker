@@ -55,13 +55,11 @@ help:
 #-----------------------------------------------------------------------------
 # Makefile include selection
 #-----------------------------------------------------------------------------
-ifeq ($(TARGET_RADIO),lr1110)
 -include app_makefiles/app_lr11xx.mk
-endif
 
-ifeq ($(TARGET_RADIO),lr1120)
--include app_makefiles/app_lr11xx.mk
-endif
+TARGET = stm32
+
+BUILD_DIR = build
 
 #-----------------------------------------------------------------------------
 -include app_makefiles/app_common.mk
@@ -77,10 +75,6 @@ clean_all: clean_app
 clean_lr1110:
 	$(MAKE) clean_modem TARGET_RADIO=lr1110
 	$(MAKE) clean_target TARGET_RADIO=lr1110
-
-clean_lr1120:
-	$(MAKE) clean_modem TARGET_RADIO=lr1120
-	$(MAKE) clean_target TARGET_RADIO=lr1120
 
 clean:
 	$(MAKE) clean_modem
@@ -110,6 +104,12 @@ endif
 endif
 	$(MAKE) app_build
 endif
+
+#######################################
+# openocd
+#######################################
+flash: all
+	openocd -f interface/stlink.cfg -f target/stm32l4x.cfg -c "program $(BUILD_DIR)/$(TARGET).elf verify reset exit"
 
 #-- LR1110 -------------------------------------------------------------------
 lr1110:
