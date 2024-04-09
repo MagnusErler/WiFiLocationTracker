@@ -1,0 +1,648 @@
+ARM GAS  /tmp/ccsiERmD.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 23, 1
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 4
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"stm32l4xx_hal_flash.c"
+  12              		.text
+  13              		.section	.text.FLASH_Program_Fast,"ax",%progbits
+  14              		.align	1
+  15              		.arch armv7e-m
+  16              		.syntax unified
+  17              		.thumb
+  18              		.thumb_func
+  19              		.fpu fpv4-sp-d16
+  21              	FLASH_Program_Fast:
+  22              		@ args = 0, pretend = 0, frame = 0
+  23              		@ frame_needed = 0, uses_anonymous_args = 0
+  24 0000 094A     		ldr	r2, .L4
+  25 0002 5369     		ldr	r3, [r2, #20]
+  26 0004 43F48023 		orr	r3, r3, #262144
+  27 0008 10B5     		push	{r4, lr}
+  28 000a 5361     		str	r3, [r2, #20]
+  29              		.syntax unified
+  30              	@ 453 "mcu_drivers/cmsis/Core/Include/cmsis_gcc.h" 1
+  31 000c EFF31082 		MRS r2, primask
+  32              	@ 0 "" 2
+  33              	@ 209 "mcu_drivers/cmsis/Core/Include/cmsis_gcc.h" 1
+  34 0010 72B6     		cpsid i
+  35              	@ 0 "" 2
+  36              		.thumb
+  37              		.syntax unified
+  38 0012 0023     		movs	r3, #0
+  39              	.L2:
+  40 0014 5C58     		ldr	r4, [r3, r1]
+  41 0016 1C50     		str	r4, [r3, r0]
+  42 0018 0433     		adds	r3, r3, #4
+  43 001a B3F5807F 		cmp	r3, #256
+  44 001e F9D1     		bne	.L2
+  45              		.syntax unified
+  46              	@ 481 "mcu_drivers/cmsis/Core/Include/cmsis_gcc.h" 1
+  47 0020 82F31088 		MSR primask, r2
+  48              	@ 0 "" 2
+  49              		.thumb
+  50              		.syntax unified
+  51 0024 10BD     		pop	{r4, pc}
+  52              	.L5:
+  53 0026 00BF     		.align	2
+  54              	.L4:
+  55 0028 00200240 		.word	1073881088
+  57              		.section	.text.HAL_FLASH_Program_IT,"ax",%progbits
+  58              		.align	1
+  59              		.global	HAL_FLASH_Program_IT
+ARM GAS  /tmp/ccsiERmD.s 			page 2
+
+
+  60              		.syntax unified
+  61              		.thumb
+  62              		.thumb_func
+  63              		.fpu fpv4-sp-d16
+  65              	HAL_FLASH_Program_IT:
+  66              		@ args = 0, pretend = 0, frame = 0
+  67              		@ frame_needed = 0, uses_anonymous_args = 0
+  68 0000 70B5     		push	{r4, r5, r6, lr}
+  69 0002 1A4C     		ldr	r4, .L16
+  70 0004 0D46     		mov	r5, r1
+  71 0006 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+  72 0008 0129     		cmp	r1, #1
+  73 000a 2CD0     		beq	.L13
+  74 000c 0121     		movs	r1, #1
+  75 000e 2170     		strb	r1, [r4]
+  76 0010 174E     		ldr	r6, .L16+4
+  77 0012 0021     		movs	r1, #0
+  78 0014 6160     		str	r1, [r4, #4]
+  79 0016 3168     		ldr	r1, [r6]
+  80 0018 11F48061 		ands	r1, r1, #1024
+  81 001c 1FBF     		itttt	ne
+  82 001e 3168     		ldrne	r1, [r6]
+  83 0020 21F48061 		bicne	r1, r1, #1024
+  84 0024 3160     		strne	r1, [r6]
+  85 0026 0221     		movne	r1, #2
+  86 0028 0228     		cmp	r0, #2
+  87 002a 2177     		strb	r1, [r4, #28]
+  88 002c 0CBF     		ite	eq
+  89 002e 0421     		moveq	r1, #4
+  90 0030 0321     		movne	r1, #3
+  91 0032 2172     		strb	r1, [r4, #8]
+  92 0034 0E49     		ldr	r1, .L16+4
+  93 0036 E560     		str	r5, [r4, #12]
+  94 0038 4C69     		ldr	r4, [r1, #20]
+  95 003a 44F04074 		orr	r4, r4, #50331648
+  96 003e 4C61     		str	r4, [r1, #20]
+  97 0040 40B9     		cbnz	r0, .L12
+  98 0042 4C69     		ldr	r4, [r1, #20]
+  99 0044 44F00104 		orr	r4, r4, #1
+ 100 0048 4C61     		str	r4, [r1, #20]
+ 101 004a 2A60     		str	r2, [r5]
+ 102              		.syntax unified
+ 103              	@ 935 "mcu_drivers/cmsis/Core/Include/cmsis_gcc.h" 1
+ 104 004c BFF36F8F 		isb 0xF
+ 105              	@ 0 "" 2
+ 106              		.thumb
+ 107              		.syntax unified
+ 108 0050 6B60     		str	r3, [r5, #4]
+ 109              	.L7:
+ 110 0052 70BD     		pop	{r4, r5, r6, pc}
+ 111              	.L12:
+ 112 0054 431E     		subs	r3, r0, #1
+ 113 0056 012B     		cmp	r3, #1
+ 114 0058 03D8     		bhi	.L14
+ 115 005a 1146     		mov	r1, r2
+ 116 005c 2846     		mov	r0, r5
+ 117 005e FFF7FEFF 		bl	FLASH_Program_Fast
+ARM GAS  /tmp/ccsiERmD.s 			page 3
+
+
+ 118              	.L14:
+ 119 0062 0020     		movs	r0, #0
+ 120 0064 F5E7     		b	.L7
+ 121              	.L13:
+ 122 0066 0220     		movs	r0, #2
+ 123 0068 F3E7     		b	.L7
+ 124              	.L17:
+ 125 006a 00BF     		.align	2
+ 126              	.L16:
+ 127 006c 00000000 		.word	.LANCHOR0
+ 128 0070 00200240 		.word	1073881088
+ 130              		.section	.text.HAL_FLASH_EndOfOperationCallback,"ax",%progbits
+ 131              		.align	1
+ 132              		.weak	HAL_FLASH_EndOfOperationCallback
+ 133              		.syntax unified
+ 134              		.thumb
+ 135              		.thumb_func
+ 136              		.fpu fpv4-sp-d16
+ 138              	HAL_FLASH_EndOfOperationCallback:
+ 139              		@ args = 0, pretend = 0, frame = 0
+ 140              		@ frame_needed = 0, uses_anonymous_args = 0
+ 141              		@ link register save eliminated.
+ 142 0000 7047     		bx	lr
+ 144              		.section	.text.HAL_FLASH_OperationErrorCallback,"ax",%progbits
+ 145              		.align	1
+ 146              		.weak	HAL_FLASH_OperationErrorCallback
+ 147              		.syntax unified
+ 148              		.thumb
+ 149              		.thumb_func
+ 150              		.fpu fpv4-sp-d16
+ 152              	HAL_FLASH_OperationErrorCallback:
+ 153              		@ args = 0, pretend = 0, frame = 0
+ 154              		@ frame_needed = 0, uses_anonymous_args = 0
+ 155              		@ link register save eliminated.
+ 156 0000 7047     		bx	lr
+ 158              		.section	.text.HAL_FLASH_IRQHandler,"ax",%progbits
+ 159              		.align	1
+ 160              		.global	HAL_FLASH_IRQHandler
+ 161              		.syntax unified
+ 162              		.thumb
+ 163              		.thumb_func
+ 164              		.fpu fpv4-sp-d16
+ 166              	HAL_FLASH_IRQHandler:
+ 167              		@ args = 0, pretend = 0, frame = 0
+ 168              		@ frame_needed = 0, uses_anonymous_args = 0
+ 169 0000 374B     		ldr	r3, .L41
+ 170 0002 5A69     		ldr	r2, [r3, #20]
+ 171 0004 22F4FF62 		bic	r2, r2, #2040
+ 172 0008 22F00702 		bic	r2, r2, #7
+ 173 000c 10B5     		push	{r4, lr}
+ 174 000e 5A61     		str	r2, [r3, #20]
+ 175 0010 5A69     		ldr	r2, [r3, #20]
+ 176 0012 344C     		ldr	r4, .L41+4
+ 177 0014 22F40042 		bic	r2, r2, #32768
+ 178 0018 5A61     		str	r2, [r3, #20]
+ 179 001a 227A     		ldrb	r2, [r4, #8]	@ zero_extendqisi2
+ 180 001c 042A     		cmp	r2, #4
+ARM GAS  /tmp/ccsiERmD.s 			page 4
+
+
+ 181 001e 02BF     		ittt	eq
+ 182 0020 5A69     		ldreq	r2, [r3, #20]
+ 183 0022 22F48022 		biceq	r2, r2, #262144
+ 184 0026 5A61     		streq	r2, [r3, #20]
+ 185 0028 1A69     		ldr	r2, [r3, #16]
+ 186 002a 4CF2FA31 		movw	r1, #50170
+ 187 002e 0A40     		ands	r2, r2, r1
+ 188 0030 0ED0     		beq	.L22
+ 189 0032 6168     		ldr	r1, [r4, #4]
+ 190 0034 1143     		orrs	r1, r1, r2
+ 191 0036 6160     		str	r1, [r4, #4]
+ 192 0038 1A61     		str	r2, [r3, #16]
+ 193 003a FFF7FEFF 		bl	FLASH_FlushCaches
+ 194 003e 227A     		ldrb	r2, [r4, #8]	@ zero_extendqisi2
+ 195 0040 012A     		cmp	r2, #1
+ 196 0042 D3B2     		uxtb	r3, r2
+ 197 0044 27D1     		bne	.L23
+ 198 0046 6069     		ldr	r0, [r4, #20]
+ 199              	.L39:
+ 200 0048 FFF7FEFF 		bl	HAL_FLASH_OperationErrorCallback
+ 201 004c 0023     		movs	r3, #0
+ 202 004e 2372     		strb	r3, [r4, #8]
+ 203              	.L22:
+ 204 0050 234B     		ldr	r3, .L41
+ 205 0052 1A69     		ldr	r2, [r3, #16]
+ 206 0054 D207     		lsls	r2, r2, #31
+ 207 0056 13D5     		bpl	.L27
+ 208 0058 0122     		movs	r2, #1
+ 209 005a 1A61     		str	r2, [r3, #16]
+ 210 005c 237A     		ldrb	r3, [r4, #8]	@ zero_extendqisi2
+ 211 005e 9342     		cmp	r3, r2
+ 212 0060 2DD1     		bne	.L28
+ 213 0062 A369     		ldr	r3, [r4, #24]
+ 214 0064 013B     		subs	r3, r3, #1
+ 215 0066 A361     		str	r3, [r4, #24]
+ 216 0068 A369     		ldr	r3, [r4, #24]
+ 217 006a F3B1     		cbz	r3, .L29
+ 218 006c 6069     		ldr	r0, [r4, #20]
+ 219 006e FFF7FEFF 		bl	HAL_FLASH_EndOfOperationCallback
+ 220 0072 6369     		ldr	r3, [r4, #20]
+ 221 0074 0133     		adds	r3, r3, #1
+ 222 0076 6361     		str	r3, [r4, #20]
+ 223 0078 6069     		ldr	r0, [r4, #20]
+ 224 007a 2169     		ldr	r1, [r4, #16]
+ 225 007c FFF7FEFF 		bl	FLASH_PageErase
+ 226              	.L27:
+ 227 0080 237A     		ldrb	r3, [r4, #8]	@ zero_extendqisi2
+ 228 0082 03F0FF01 		and	r1, r3, #255
+ 229 0086 2BB9     		cbnz	r3, .L20
+ 230 0088 154A     		ldr	r2, .L41
+ 231 008a 5369     		ldr	r3, [r2, #20]
+ 232 008c 23F04073 		bic	r3, r3, #50331648
+ 233 0090 5361     		str	r3, [r2, #20]
+ 234 0092 2170     		strb	r1, [r4]
+ 235              	.L20:
+ 236 0094 10BD     		pop	{r4, pc}
+ 237              	.L23:
+ARM GAS  /tmp/ccsiERmD.s 			page 5
+
+
+ 238 0096 022B     		cmp	r3, #2
+ 239 0098 01D1     		bne	.L25
+ 240 009a 2069     		ldr	r0, [r4, #16]
+ 241 009c D4E7     		b	.L39
+ 242              	.L25:
+ 243 009e 033B     		subs	r3, r3, #3
+ 244 00a0 012B     		cmp	r3, #1
+ 245 00a2 94BF     		ite	ls
+ 246 00a4 E068     		ldrls	r0, [r4, #12]
+ 247 00a6 0020     		movhi	r0, #0
+ 248 00a8 CEE7     		b	.L39
+ 249              	.L29:
+ 250 00aa 4FF0FF32 		mov	r2, #-1
+ 251 00ae 6261     		str	r2, [r4, #20]
+ 252 00b0 2372     		strb	r3, [r4, #8]
+ 253 00b2 FFF7FEFF 		bl	FLASH_FlushCaches
+ 254 00b6 6069     		ldr	r0, [r4, #20]
+ 255 00b8 FFF7FEFF 		bl	HAL_FLASH_EndOfOperationCallback
+ 256 00bc E0E7     		b	.L27
+ 257              	.L28:
+ 258 00be FFF7FEFF 		bl	FLASH_FlushCaches
+ 259 00c2 227A     		ldrb	r2, [r4, #8]	@ zero_extendqisi2
+ 260 00c4 022A     		cmp	r2, #2
+ 261 00c6 D3B2     		uxtb	r3, r2
+ 262 00c8 05D1     		bne	.L30
+ 263 00ca 2069     		ldr	r0, [r4, #16]
+ 264              	.L40:
+ 265 00cc FFF7FEFF 		bl	HAL_FLASH_EndOfOperationCallback
+ 266              	.L31:
+ 267 00d0 0023     		movs	r3, #0
+ 268 00d2 2372     		strb	r3, [r4, #8]
+ 269 00d4 D4E7     		b	.L27
+ 270              	.L30:
+ 271 00d6 033B     		subs	r3, r3, #3
+ 272 00d8 012B     		cmp	r3, #1
+ 273 00da F9D8     		bhi	.L31
+ 274 00dc E068     		ldr	r0, [r4, #12]
+ 275 00de F5E7     		b	.L40
+ 276              	.L42:
+ 277              		.align	2
+ 278              	.L41:
+ 279 00e0 00200240 		.word	1073881088
+ 280 00e4 00000000 		.word	.LANCHOR0
+ 282              		.section	.text.HAL_FLASH_Unlock,"ax",%progbits
+ 283              		.align	1
+ 284              		.global	HAL_FLASH_Unlock
+ 285              		.syntax unified
+ 286              		.thumb
+ 287              		.thumb_func
+ 288              		.fpu fpv4-sp-d16
+ 290              	HAL_FLASH_Unlock:
+ 291              		@ args = 0, pretend = 0, frame = 0
+ 292              		@ frame_needed = 0, uses_anonymous_args = 0
+ 293              		@ link register save eliminated.
+ 294 0000 064B     		ldr	r3, .L46
+ 295 0002 5A69     		ldr	r2, [r3, #20]
+ 296 0004 002A     		cmp	r2, #0
+ARM GAS  /tmp/ccsiERmD.s 			page 6
+
+
+ 297 0006 BFBF     		itttt	lt
+ 298 0008 054A     		ldrlt	r2, .L46+4
+ 299 000a 9A60     		strlt	r2, [r3, #8]
+ 300 000c 02F18832 		addlt	r2, r2, #-2004318072
+ 301 0010 9A60     		strlt	r2, [r3, #8]
+ 302 0012 BABF     		itte	lt
+ 303 0014 5869     		ldrlt	r0, [r3, #20]
+ 304 0016 C00F     		lsrlt	r0, r0, #31
+ 305 0018 0020     		movge	r0, #0
+ 306 001a 7047     		bx	lr
+ 307              	.L47:
+ 308              		.align	2
+ 309              	.L46:
+ 310 001c 00200240 		.word	1073881088
+ 311 0020 23016745 		.word	1164378403
+ 313              		.section	.text.HAL_FLASH_Lock,"ax",%progbits
+ 314              		.align	1
+ 315              		.global	HAL_FLASH_Lock
+ 316              		.syntax unified
+ 317              		.thumb
+ 318              		.thumb_func
+ 319              		.fpu fpv4-sp-d16
+ 321              	HAL_FLASH_Lock:
+ 322              		@ args = 0, pretend = 0, frame = 0
+ 323              		@ frame_needed = 0, uses_anonymous_args = 0
+ 324              		@ link register save eliminated.
+ 325 0000 034A     		ldr	r2, .L49
+ 326 0002 5369     		ldr	r3, [r2, #20]
+ 327 0004 43F00043 		orr	r3, r3, #-2147483648
+ 328 0008 5361     		str	r3, [r2, #20]
+ 329 000a 0020     		movs	r0, #0
+ 330 000c 7047     		bx	lr
+ 331              	.L50:
+ 332 000e 00BF     		.align	2
+ 333              	.L49:
+ 334 0010 00200240 		.word	1073881088
+ 336              		.section	.text.HAL_FLASH_OB_Unlock,"ax",%progbits
+ 337              		.align	1
+ 338              		.global	HAL_FLASH_OB_Unlock
+ 339              		.syntax unified
+ 340              		.thumb
+ 341              		.thumb_func
+ 342              		.fpu fpv4-sp-d16
+ 344              	HAL_FLASH_OB_Unlock:
+ 345              		@ args = 0, pretend = 0, frame = 0
+ 346              		@ frame_needed = 0, uses_anonymous_args = 0
+ 347              		@ link register save eliminated.
+ 348 0000 064B     		ldr	r3, .L54
+ 349 0002 5A69     		ldr	r2, [r3, #20]
+ 350 0004 5200     		lsls	r2, r2, #1
+ 351 0006 41BF     		itttt	mi
+ 352 0008 054A     		ldrmi	r2, .L54+4
+ 353 000a DA60     		strmi	r2, [r3, #12]
+ 354 000c 02F14432 		addmi	r2, r2, #1145324612
+ 355 0010 0020     		movmi	r0, #0
+ 356 0012 4CBF     		ite	mi
+ 357 0014 DA60     		strmi	r2, [r3, #12]
+ARM GAS  /tmp/ccsiERmD.s 			page 7
+
+
+ 358 0016 0120     		movpl	r0, #1
+ 359 0018 7047     		bx	lr
+ 360              	.L55:
+ 361 001a 00BF     		.align	2
+ 362              	.L54:
+ 363 001c 00200240 		.word	1073881088
+ 364 0020 3B2A1908 		.word	135866939
+ 366              		.section	.text.HAL_FLASH_OB_Lock,"ax",%progbits
+ 367              		.align	1
+ 368              		.global	HAL_FLASH_OB_Lock
+ 369              		.syntax unified
+ 370              		.thumb
+ 371              		.thumb_func
+ 372              		.fpu fpv4-sp-d16
+ 374              	HAL_FLASH_OB_Lock:
+ 375              		@ args = 0, pretend = 0, frame = 0
+ 376              		@ frame_needed = 0, uses_anonymous_args = 0
+ 377              		@ link register save eliminated.
+ 378 0000 034A     		ldr	r2, .L57
+ 379 0002 5369     		ldr	r3, [r2, #20]
+ 380 0004 43F08043 		orr	r3, r3, #1073741824
+ 381 0008 5361     		str	r3, [r2, #20]
+ 382 000a 0020     		movs	r0, #0
+ 383 000c 7047     		bx	lr
+ 384              	.L58:
+ 385 000e 00BF     		.align	2
+ 386              	.L57:
+ 387 0010 00200240 		.word	1073881088
+ 389              		.section	.text.HAL_FLASH_GetError,"ax",%progbits
+ 390              		.align	1
+ 391              		.global	HAL_FLASH_GetError
+ 392              		.syntax unified
+ 393              		.thumb
+ 394              		.thumb_func
+ 395              		.fpu fpv4-sp-d16
+ 397              	HAL_FLASH_GetError:
+ 398              		@ args = 0, pretend = 0, frame = 0
+ 399              		@ frame_needed = 0, uses_anonymous_args = 0
+ 400              		@ link register save eliminated.
+ 401 0000 014B     		ldr	r3, .L60
+ 402 0002 5868     		ldr	r0, [r3, #4]
+ 403 0004 7047     		bx	lr
+ 404              	.L61:
+ 405 0006 00BF     		.align	2
+ 406              	.L60:
+ 407 0008 00000000 		.word	.LANCHOR0
+ 409              		.section	.text.FLASH_WaitForLastOperation,"ax",%progbits
+ 410              		.align	1
+ 411              		.global	FLASH_WaitForLastOperation
+ 412              		.syntax unified
+ 413              		.thumb
+ 414              		.thumb_func
+ 415              		.fpu fpv4-sp-d16
+ 417              	FLASH_WaitForLastOperation:
+ 418              		@ args = 0, pretend = 0, frame = 0
+ 419              		@ frame_needed = 0, uses_anonymous_args = 0
+ 420 0000 70B5     		push	{r4, r5, r6, lr}
+ARM GAS  /tmp/ccsiERmD.s 			page 8
+
+
+ 421 0002 0546     		mov	r5, r0
+ 422 0004 FFF7FEFF 		bl	HAL_GetTick
+ 423 0008 104C     		ldr	r4, .L72
+ 424 000a 0646     		mov	r6, r0
+ 425              	.L64:
+ 426 000c 2369     		ldr	r3, [r4, #16]
+ 427 000e DB03     		lsls	r3, r3, #15
+ 428 0010 0BD4     		bmi	.L66
+ 429 0012 2069     		ldr	r0, [r4, #16]
+ 430 0014 4CF2FA32 		movw	r2, #50170
+ 431 0018 0240     		ands	r2, r0, r2
+ 432 001a 0FD0     		beq	.L67
+ 433 001c 0C49     		ldr	r1, .L72+4
+ 434 001e 4B68     		ldr	r3, [r1, #4]
+ 435 0020 1343     		orrs	r3, r3, r2
+ 436 0022 4B60     		str	r3, [r1, #4]
+ 437 0024 0120     		movs	r0, #1
+ 438 0026 2261     		str	r2, [r4, #16]
+ 439              	.L65:
+ 440 0028 70BD     		pop	{r4, r5, r6, pc}
+ 441              	.L66:
+ 442 002a 6A1C     		adds	r2, r5, #1
+ 443 002c EED0     		beq	.L64
+ 444 002e FFF7FEFF 		bl	HAL_GetTick
+ 445 0032 801B     		subs	r0, r0, r6
+ 446 0034 A842     		cmp	r0, r5
+ 447 0036 E9D3     		bcc	.L64
+ 448 0038 0320     		movs	r0, #3
+ 449 003a F5E7     		b	.L65
+ 450              	.L67:
+ 451 003c 2069     		ldr	r0, [r4, #16]
+ 452 003e 10F00100 		ands	r0, r0, #1
+ 453 0042 F1D0     		beq	.L65
+ 454 0044 0123     		movs	r3, #1
+ 455 0046 2361     		str	r3, [r4, #16]
+ 456 0048 1046     		mov	r0, r2
+ 457 004a EDE7     		b	.L65
+ 458              	.L73:
+ 459              		.align	2
+ 460              	.L72:
+ 461 004c 00200240 		.word	1073881088
+ 462 0050 00000000 		.word	.LANCHOR0
+ 464              		.section	.text.HAL_FLASH_Program,"ax",%progbits
+ 465              		.align	1
+ 466              		.global	HAL_FLASH_Program
+ 467              		.syntax unified
+ 468              		.thumb
+ 469              		.thumb_func
+ 470              		.fpu fpv4-sp-d16
+ 472              	HAL_FLASH_Program:
+ 473              		@ args = 0, pretend = 0, frame = 0
+ 474              		@ frame_needed = 0, uses_anonymous_args = 0
+ 475 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 476 0004 254C     		ldr	r4, .L88
+ 477 0006 9946     		mov	r9, r3
+ 478 0008 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 479 000a 012B     		cmp	r3, #1
+ARM GAS  /tmp/ccsiERmD.s 			page 9
+
+
+ 480 000c 0646     		mov	r6, r0
+ 481 000e 0F46     		mov	r7, r1
+ 482 0010 9046     		mov	r8, r2
+ 483 0012 41D0     		beq	.L84
+ 484 0014 0123     		movs	r3, #1
+ 485 0016 4CF25030 		movw	r0, #50000
+ 486 001a 2370     		strb	r3, [r4]
+ 487 001c FFF7FEFF 		bl	FLASH_WaitForLastOperation
+ 488 0020 0546     		mov	r5, r0
+ 489 0022 30BB     		cbnz	r0, .L76
+ 490 0024 6060     		str	r0, [r4, #4]
+ 491 0026 1E48     		ldr	r0, .L88+4
+ 492 0028 0268     		ldr	r2, [r0]
+ 493 002a 12F48062 		ands	r2, r2, #1024
+ 494 002e 17BF     		itett	ne
+ 495 0030 0368     		ldrne	r3, [r0]
+ 496 0032 2277     		strbeq	r2, [r4, #28]
+ 497 0034 23F48063 		bicne	r3, r3, #1024
+ 498 0038 0360     		strne	r3, [r0]
+ 499 003a 1CBF     		itt	ne
+ 500 003c 0223     		movne	r3, #2
+ 501 003e 2377     		strbne	r3, [r4, #28]
+ 502 0040 E6B9     		cbnz	r6, .L79
+ 503 0042 4369     		ldr	r3, [r0, #20]
+ 504 0044 43F00103 		orr	r3, r3, #1
+ 505 0048 4361     		str	r3, [r0, #20]
+ 506 004a C7F80080 		str	r8, [r7]
+ 507              		.syntax unified
+ 508              	@ 935 "mcu_drivers/cmsis/Core/Include/cmsis_gcc.h" 1
+ 509 004e BFF36F8F 		isb 0xF
+ 510              	@ 0 "" 2
+ 511              		.thumb
+ 512              		.syntax unified
+ 513 0052 0126     		movs	r6, #1
+ 514 0054 C7F80490 		str	r9, [r7, #4]
+ 515              	.L80:
+ 516 0058 4CF25030 		movw	r0, #50000
+ 517 005c FFF7FEFF 		bl	FLASH_WaitForLastOperation
+ 518 0060 0546     		mov	r5, r0
+ 519 0062 26B1     		cbz	r6, .L83
+ 520 0064 0E4A     		ldr	r2, .L88+4
+ 521 0066 5369     		ldr	r3, [r2, #20]
+ 522 0068 23EA0606 		bic	r6, r3, r6
+ 523 006c 5661     		str	r6, [r2, #20]
+ 524              	.L83:
+ 525 006e FFF7FEFF 		bl	FLASH_FlushCaches
+ 526              	.L76:
+ 527 0072 0023     		movs	r3, #0
+ 528 0074 2370     		strb	r3, [r4]
+ 529              	.L75:
+ 530 0076 2846     		mov	r0, r5
+ 531 0078 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 532              	.L79:
+ 533 007c 731E     		subs	r3, r6, #1
+ 534 007e 012B     		cmp	r3, #1
+ 535 0080 01D9     		bls	.L81
+ 536              	.L82:
+ARM GAS  /tmp/ccsiERmD.s 			page 10
+
+
+ 537 0082 0026     		movs	r6, #0
+ 538 0084 E8E7     		b	.L80
+ 539              	.L81:
+ 540 0086 4146     		mov	r1, r8
+ 541 0088 3846     		mov	r0, r7
+ 542 008a FFF7FEFF 		bl	FLASH_Program_Fast
+ 543 008e 022E     		cmp	r6, #2
+ 544 0090 F7D1     		bne	.L82
+ 545 0092 4FF48026 		mov	r6, #262144
+ 546 0096 DFE7     		b	.L80
+ 547              	.L84:
+ 548 0098 0225     		movs	r5, #2
+ 549 009a ECE7     		b	.L75
+ 550              	.L89:
+ 551              		.align	2
+ 552              	.L88:
+ 553 009c 00000000 		.word	.LANCHOR0
+ 554 00a0 00200240 		.word	1073881088
+ 556              		.section	.text.HAL_FLASH_OB_Launch,"ax",%progbits
+ 557              		.align	1
+ 558              		.global	HAL_FLASH_OB_Launch
+ 559              		.syntax unified
+ 560              		.thumb
+ 561              		.thumb_func
+ 562              		.fpu fpv4-sp-d16
+ 564              	HAL_FLASH_OB_Launch:
+ 565              		@ args = 0, pretend = 0, frame = 0
+ 566              		@ frame_needed = 0, uses_anonymous_args = 0
+ 567              		@ link register save eliminated.
+ 568 0000 044A     		ldr	r2, .L91
+ 569 0002 5369     		ldr	r3, [r2, #20]
+ 570 0004 43F00063 		orr	r3, r3, #134217728
+ 571 0008 5361     		str	r3, [r2, #20]
+ 572 000a 4CF25030 		movw	r0, #50000
+ 573 000e FFF7FEBF 		b	FLASH_WaitForLastOperation
+ 574              	.L92:
+ 575 0012 00BF     		.align	2
+ 576              	.L91:
+ 577 0014 00200240 		.word	1073881088
+ 579              		.global	pFlash
+ 580              		.section	.data.pFlash,"aw"
+ 581              		.align	2
+ 582              		.set	.LANCHOR0,. + 0
+ 585              	pFlash:
+ 586 0000 00       		.byte	0
+ 587 0001 000000   		.space	3
+ 588 0004 00000000 		.word	0
+ 589 0008 00       		.byte	0
+ 590 0009 000000   		.space	3
+ 591 000c 00000000 		.word	0
+ 592 0010 01000000 		.word	1
+ 593 0014 00000000 		.word	0
+ 594 0018 00000000 		.word	0
+ 595 001c 00       		.byte	0
+ 596 001d 000000   		.space	3
+ 597              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccsiERmD.s 			page 11
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 stm32l4xx_hal_flash.c
+     /tmp/ccsiERmD.s:14     .text.FLASH_Program_Fast:0000000000000000 $t
+     /tmp/ccsiERmD.s:21     .text.FLASH_Program_Fast:0000000000000000 FLASH_Program_Fast
+     /tmp/ccsiERmD.s:55     .text.FLASH_Program_Fast:0000000000000028 $d
+     /tmp/ccsiERmD.s:58     .text.HAL_FLASH_Program_IT:0000000000000000 $t
+     /tmp/ccsiERmD.s:65     .text.HAL_FLASH_Program_IT:0000000000000000 HAL_FLASH_Program_IT
+     /tmp/ccsiERmD.s:127    .text.HAL_FLASH_Program_IT:000000000000006c $d
+     /tmp/ccsiERmD.s:131    .text.HAL_FLASH_EndOfOperationCallback:0000000000000000 $t
+     /tmp/ccsiERmD.s:138    .text.HAL_FLASH_EndOfOperationCallback:0000000000000000 HAL_FLASH_EndOfOperationCallback
+     /tmp/ccsiERmD.s:145    .text.HAL_FLASH_OperationErrorCallback:0000000000000000 $t
+     /tmp/ccsiERmD.s:152    .text.HAL_FLASH_OperationErrorCallback:0000000000000000 HAL_FLASH_OperationErrorCallback
+     /tmp/ccsiERmD.s:159    .text.HAL_FLASH_IRQHandler:0000000000000000 $t
+     /tmp/ccsiERmD.s:166    .text.HAL_FLASH_IRQHandler:0000000000000000 HAL_FLASH_IRQHandler
+     /tmp/ccsiERmD.s:279    .text.HAL_FLASH_IRQHandler:00000000000000e0 $d
+     /tmp/ccsiERmD.s:283    .text.HAL_FLASH_Unlock:0000000000000000 $t
+     /tmp/ccsiERmD.s:290    .text.HAL_FLASH_Unlock:0000000000000000 HAL_FLASH_Unlock
+     /tmp/ccsiERmD.s:310    .text.HAL_FLASH_Unlock:000000000000001c $d
+     /tmp/ccsiERmD.s:314    .text.HAL_FLASH_Lock:0000000000000000 $t
+     /tmp/ccsiERmD.s:321    .text.HAL_FLASH_Lock:0000000000000000 HAL_FLASH_Lock
+     /tmp/ccsiERmD.s:334    .text.HAL_FLASH_Lock:0000000000000010 $d
+     /tmp/ccsiERmD.s:337    .text.HAL_FLASH_OB_Unlock:0000000000000000 $t
+     /tmp/ccsiERmD.s:344    .text.HAL_FLASH_OB_Unlock:0000000000000000 HAL_FLASH_OB_Unlock
+     /tmp/ccsiERmD.s:363    .text.HAL_FLASH_OB_Unlock:000000000000001c $d
+     /tmp/ccsiERmD.s:367    .text.HAL_FLASH_OB_Lock:0000000000000000 $t
+     /tmp/ccsiERmD.s:374    .text.HAL_FLASH_OB_Lock:0000000000000000 HAL_FLASH_OB_Lock
+     /tmp/ccsiERmD.s:387    .text.HAL_FLASH_OB_Lock:0000000000000010 $d
+     /tmp/ccsiERmD.s:390    .text.HAL_FLASH_GetError:0000000000000000 $t
+     /tmp/ccsiERmD.s:397    .text.HAL_FLASH_GetError:0000000000000000 HAL_FLASH_GetError
+     /tmp/ccsiERmD.s:407    .text.HAL_FLASH_GetError:0000000000000008 $d
+     /tmp/ccsiERmD.s:410    .text.FLASH_WaitForLastOperation:0000000000000000 $t
+     /tmp/ccsiERmD.s:417    .text.FLASH_WaitForLastOperation:0000000000000000 FLASH_WaitForLastOperation
+     /tmp/ccsiERmD.s:461    .text.FLASH_WaitForLastOperation:000000000000004c $d
+     /tmp/ccsiERmD.s:465    .text.HAL_FLASH_Program:0000000000000000 $t
+     /tmp/ccsiERmD.s:472    .text.HAL_FLASH_Program:0000000000000000 HAL_FLASH_Program
+     /tmp/ccsiERmD.s:553    .text.HAL_FLASH_Program:000000000000009c $d
+     /tmp/ccsiERmD.s:557    .text.HAL_FLASH_OB_Launch:0000000000000000 $t
+     /tmp/ccsiERmD.s:564    .text.HAL_FLASH_OB_Launch:0000000000000000 HAL_FLASH_OB_Launch
+     /tmp/ccsiERmD.s:577    .text.HAL_FLASH_OB_Launch:0000000000000014 $d
+     /tmp/ccsiERmD.s:585    .data.pFlash:0000000000000000 pFlash
+     /tmp/ccsiERmD.s:581    .data.pFlash:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+FLASH_FlushCaches
+FLASH_PageErase
+HAL_GetTick

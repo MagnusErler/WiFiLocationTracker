@@ -1,0 +1,436 @@
+ARM GAS  /tmp/ccJgHq9e.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 23, 1
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 4
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"smtc_hal_lp_timer.c"
+  12              		.text
+  13              		.section	.rodata.hal_lp_timer_init.str1.1,"aMS",%progbits,1
+  14              	.LC0:
+  15 0000 1B5B303B 		.ascii	"\033[0;31mERROR: mcu_panic:%s\012\000"
+  15      33316D45 
+  15      52524F52 
+  15      3A206D63 
+  15      755F7061 
+  16              	.LC1:
+  17 001c 1B5B306D 		.ascii	"\033[0m\000"
+  17      00
+  18              	.LC2:
+  19 0021 1B5B303B 		.ascii	"\033[0;31mERROR: -> \000"
+  19      33316D45 
+  19      52524F52 
+  19      3A202D3E 
+  19      2000
+  20              		.section	.text.hal_lp_timer_init,"ax",%progbits
+  21              		.align	1
+  22              		.global	hal_lp_timer_init
+  23              		.arch armv7e-m
+  24              		.syntax unified
+  25              		.thumb
+  26              		.thumb_func
+  27              		.fpu fpv4-sp-d16
+  29              	hal_lp_timer_init:
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+  33 0002 194B     		ldr	r3, .L8
+  34 0004 1949     		ldr	r1, .L8+4
+  35 0006 1A4A     		ldr	r2, .L8+8
+  36 0008 041E     		subs	r4, r0, #0
+  37 000a 18BF     		it	ne
+  38 000c 1946     		movne	r1, r3
+  39 000e 3823     		movs	r3, #56
+  40 0010 6343     		muls	r3, r4, r3
+  41 0012 D018     		adds	r0, r2, r3
+  42 0014 D150     		str	r1, [r2, r3]
+  43 0016 4FF40065 		mov	r5, #2048
+  44 001a 0021     		movs	r1, #0
+  45 001c 1833     		adds	r3, r3, #24
+  46 001e C0E90115 		strd	r1, r5, [r0, #4]
+  47 0022 1344     		add	r3, r3, r2
+  48 0024 4FF6FF75 		movw	r5, #65535
+  49 0028 0026     		movs	r6, #0
+ARM GAS  /tmp/ccJgHq9e.s 			page 2
+
+
+  50 002a 0027     		movs	r7, #0
+  51 002c 4561     		str	r5, [r0, #20]
+  52 002e C3E90267 		strd	r6, [r3, #8]
+  53 0032 8162     		str	r1, [r0, #40]
+  54 0034 FFF7FEFF 		bl	HAL_LPTIM_Init
+  55 0038 70B1     		cbz	r0, .L3
+  56 003a 0E49     		ldr	r1, .L8+12
+  57 003c 0E48     		ldr	r0, .L8+16
+  58 003e FFF7FEFF 		bl	hal_trace_print_var
+  59 0042 0E48     		ldr	r0, .L8+20
+  60 0044 FFF7FEFF 		bl	hal_trace_print_var
+  61 0048 0D48     		ldr	r0, .L8+24
+  62 004a FFF7FEFF 		bl	hal_trace_print_var
+  63 004e 0B48     		ldr	r0, .L8+20
+  64 0050 FFF7FEFF 		bl	hal_trace_print_var
+  65 0054 FFF7FEFF 		bl	hal_mcu_reset
+  66              	.L3:
+  67 0058 0A48     		ldr	r0, .L8+28
+  68 005a 0023     		movs	r3, #0
+  69 005c 40F83430 		str	r3, [r0, r4, lsl #3]
+  70 0060 00EBC400 		add	r0, r0, r4, lsl #3
+  71 0064 4360     		str	r3, [r0, #4]
+  72 0066 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+  73              	.L9:
+  74              		.align	2
+  75              	.L8:
+  76 0068 00940040 		.word	1073779712
+  77 006c 007C0040 		.word	1073773568
+  78 0070 00000000 		.word	.LANCHOR0
+  79 0074 00000000 		.word	.LANCHOR1
+  80 0078 00000000 		.word	.LC0
+  81 007c 1C000000 		.word	.LC1
+  82 0080 21000000 		.word	.LC2
+  83 0084 00000000 		.word	.LANCHOR2
+  85              		.global	__aeabi_uldivmod
+  86              		.global	__aeabi_ldivmod
+  87              		.section	.text.hal_lp_timer_start,"ax",%progbits
+  88              		.align	1
+  89              		.global	hal_lp_timer_start
+  90              		.syntax unified
+  91              		.thumb
+  92              		.thumb_func
+  93              		.fpu fpv4-sp-d16
+  95              	hal_lp_timer_start:
+  96              		@ args = 0, pretend = 0, frame = 0
+  97              		@ frame_needed = 0, uses_anonymous_args = 0
+  98 0000 38B5     		push	{r3, r4, r5, lr}
+  99 0002 0546     		mov	r5, r0
+ 100 0004 1446     		mov	r4, r2
+ 101 0006 0023     		movs	r3, #0
+ 102 0008 4FF47A72 		mov	r2, #1000
+ 103 000c C802     		lsls	r0, r1, #11
+ 104 000e 490D     		lsrs	r1, r1, #21
+ 105 0010 FFF7FEFF 		bl	__aeabi_uldivmod
+ 106 0014 4FF6FF71 		movw	r1, #65535
+ 107 0018 094B     		ldr	r3, .L11
+ 108 001a 8842     		cmp	r0, r1
+ARM GAS  /tmp/ccJgHq9e.s 			page 3
+
+
+ 109 001c 0246     		mov	r2, r0
+ 110 001e 4FF03800 		mov	r0, #56
+ 111 0022 28BF     		it	cs
+ 112 0024 0A46     		movcs	r2, r1
+ 113 0026 00FB0530 		mla	r0, r0, r5, r3
+ 114 002a FFF7FEFF 		bl	HAL_LPTIM_TimeOut_Start_IT
+ 115 002e 94E80300 		ldm	r4, {r0, r1}
+ 116 0032 044B     		ldr	r3, .L11+4
+ 117 0034 03EBC503 		add	r3, r3, r5, lsl #3
+ 118 0038 83E80300 		stm	r3, {r0, r1}
+ 119 003c 38BD     		pop	{r3, r4, r5, pc}
+ 120              	.L12:
+ 121 003e 00BF     		.align	2
+ 122              	.L11:
+ 123 0040 00000000 		.word	.LANCHOR0
+ 124 0044 00000000 		.word	.LANCHOR2
+ 126              		.section	.text.hal_lp_timer_stop,"ax",%progbits
+ 127              		.align	1
+ 128              		.global	hal_lp_timer_stop
+ 129              		.syntax unified
+ 130              		.thumb
+ 131              		.thumb_func
+ 132              		.fpu fpv4-sp-d16
+ 134              	hal_lp_timer_stop:
+ 135              		@ args = 0, pretend = 0, frame = 0
+ 136              		@ frame_needed = 0, uses_anonymous_args = 0
+ 137              		@ link register save eliminated.
+ 138 0000 024B     		ldr	r3, .L14
+ 139 0002 3822     		movs	r2, #56
+ 140 0004 02FB0030 		mla	r0, r2, r0, r3
+ 141 0008 FFF7FEBF 		b	HAL_LPTIM_TimeOut_Stop_IT
+ 142              	.L15:
+ 143              		.align	2
+ 144              	.L14:
+ 145 000c 00000000 		.word	.LANCHOR0
+ 147              		.section	.text.hal_lp_timer_irq_enable,"ax",%progbits
+ 148              		.align	1
+ 149              		.global	hal_lp_timer_irq_enable
+ 150              		.syntax unified
+ 151              		.thumb
+ 152              		.thumb_func
+ 153              		.fpu fpv4-sp-d16
+ 155              	hal_lp_timer_irq_enable:
+ 156              		@ args = 0, pretend = 0, frame = 0
+ 157              		@ frame_needed = 0, uses_anonymous_args = 0
+ 158              		@ link register save eliminated.
+ 159 0000 0028     		cmp	r0, #0
+ 160 0002 0CBF     		ite	eq
+ 161 0004 4120     		moveq	r0, #65
+ 162 0006 4220     		movne	r0, #66
+ 163 0008 FFF7FEBF 		b	HAL_NVIC_EnableIRQ
+ 165              		.section	.text.hal_lp_timer_irq_disable,"ax",%progbits
+ 166              		.align	1
+ 167              		.global	hal_lp_timer_irq_disable
+ 168              		.syntax unified
+ 169              		.thumb
+ 170              		.thumb_func
+ARM GAS  /tmp/ccJgHq9e.s 			page 4
+
+
+ 171              		.fpu fpv4-sp-d16
+ 173              	hal_lp_timer_irq_disable:
+ 174              		@ args = 0, pretend = 0, frame = 0
+ 175              		@ frame_needed = 0, uses_anonymous_args = 0
+ 176              		@ link register save eliminated.
+ 177 0000 0028     		cmp	r0, #0
+ 178 0002 0CBF     		ite	eq
+ 179 0004 4120     		moveq	r0, #65
+ 180 0006 4220     		movne	r0, #66
+ 181 0008 FFF7FEBF 		b	HAL_NVIC_DisableIRQ
+ 183              		.section	.text.LPTIM1_IRQHandler,"ax",%progbits
+ 184              		.align	1
+ 185              		.global	LPTIM1_IRQHandler
+ 186              		.syntax unified
+ 187              		.thumb
+ 188              		.thumb_func
+ 189              		.fpu fpv4-sp-d16
+ 191              	LPTIM1_IRQHandler:
+ 192              		@ args = 0, pretend = 0, frame = 0
+ 193              		@ frame_needed = 0, uses_anonymous_args = 0
+ 194 0000 10B5     		push	{r4, lr}
+ 195 0002 0748     		ldr	r0, .L24
+ 196 0004 FFF7FEFF 		bl	HAL_LPTIM_IRQHandler
+ 197 0008 0548     		ldr	r0, .L24
+ 198 000a FFF7FEFF 		bl	HAL_LPTIM_TimeOut_Stop
+ 199 000e 054A     		ldr	r2, .L24+4
+ 200 0010 5368     		ldr	r3, [r2, #4]
+ 201 0012 1BB1     		cbz	r3, .L22
+ 202 0014 BDE81040 		pop	{r4, lr}
+ 203 0018 1068     		ldr	r0, [r2]
+ 204 001a 1847     		bx	r3	@ indirect register sibling call
+ 205              	.L22:
+ 206 001c 10BD     		pop	{r4, pc}
+ 207              	.L25:
+ 208 001e 00BF     		.align	2
+ 209              	.L24:
+ 210 0020 00000000 		.word	.LANCHOR0
+ 211 0024 00000000 		.word	.LANCHOR2
+ 213              		.section	.text.LPTIM2_IRQHandler,"ax",%progbits
+ 214              		.align	1
+ 215              		.global	LPTIM2_IRQHandler
+ 216              		.syntax unified
+ 217              		.thumb
+ 218              		.thumb_func
+ 219              		.fpu fpv4-sp-d16
+ 221              	LPTIM2_IRQHandler:
+ 222              		@ args = 0, pretend = 0, frame = 0
+ 223              		@ frame_needed = 0, uses_anonymous_args = 0
+ 224 0000 10B5     		push	{r4, lr}
+ 225 0002 0748     		ldr	r0, .L28
+ 226 0004 FFF7FEFF 		bl	HAL_LPTIM_IRQHandler
+ 227 0008 0548     		ldr	r0, .L28
+ 228 000a FFF7FEFF 		bl	HAL_LPTIM_TimeOut_Stop
+ 229 000e 054A     		ldr	r2, .L28+4
+ 230 0010 D368     		ldr	r3, [r2, #12]
+ 231 0012 1BB1     		cbz	r3, .L26
+ 232 0014 BDE81040 		pop	{r4, lr}
+ARM GAS  /tmp/ccJgHq9e.s 			page 5
+
+
+ 233 0018 9068     		ldr	r0, [r2, #8]
+ 234 001a 1847     		bx	r3	@ indirect register sibling call
+ 235              	.L26:
+ 236 001c 10BD     		pop	{r4, pc}
+ 237              	.L29:
+ 238 001e 00BF     		.align	2
+ 239              	.L28:
+ 240 0020 38000000 		.word	.LANCHOR0+56
+ 241 0024 00000000 		.word	.LANCHOR2
+ 243              		.section	.text.HAL_LPTIM_MspInit,"ax",%progbits
+ 244              		.align	1
+ 245              		.global	HAL_LPTIM_MspInit
+ 246              		.syntax unified
+ 247              		.thumb
+ 248              		.thumb_func
+ 249              		.fpu fpv4-sp-d16
+ 251              	HAL_LPTIM_MspInit:
+ 252              		@ args = 0, pretend = 0, frame = 8
+ 253              		@ frame_needed = 0, uses_anonymous_args = 0
+ 254 0000 0268     		ldr	r2, [r0]
+ 255 0002 1A4B     		ldr	r3, .L33
+ 256 0004 9A42     		cmp	r2, r3
+ 257 0006 13B5     		push	{r0, r1, r4, lr}
+ 258 0008 0446     		mov	r4, r0
+ 259 000a 12D1     		bne	.L31
+ 260 000c 03F5CA33 		add	r3, r3, #103424
+ 261 0010 4120     		movs	r0, #65
+ 262 0012 9A6D     		ldr	r2, [r3, #88]
+ 263 0014 42F00042 		orr	r2, r2, #-2147483648
+ 264 0018 9A65     		str	r2, [r3, #88]
+ 265 001a 9B6D     		ldr	r3, [r3, #88]
+ 266 001c 0022     		movs	r2, #0
+ 267 001e 03F00043 		and	r3, r3, #-2147483648
+ 268 0022 0093     		str	r3, [sp]
+ 269 0024 1146     		mov	r1, r2
+ 270 0026 009B     		ldr	r3, [sp]
+ 271 0028 FFF7FEFF 		bl	HAL_NVIC_SetPriority
+ 272 002c 4120     		movs	r0, #65
+ 273 002e FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
+ 274              	.L31:
+ 275 0032 2268     		ldr	r2, [r4]
+ 276 0034 0E4B     		ldr	r3, .L33+4
+ 277 0036 9A42     		cmp	r2, r3
+ 278 0038 15D1     		bne	.L30
+ 279 003a 03F5BE33 		add	r3, r3, #97280
+ 280 003e 4220     		movs	r0, #66
+ 281 0040 DA6D     		ldr	r2, [r3, #92]
+ 282 0042 42F02002 		orr	r2, r2, #32
+ 283 0046 DA65     		str	r2, [r3, #92]
+ 284 0048 DB6D     		ldr	r3, [r3, #92]
+ 285 004a 0022     		movs	r2, #0
+ 286 004c 03F02003 		and	r3, r3, #32
+ 287 0050 0193     		str	r3, [sp, #4]
+ 288 0052 1146     		mov	r1, r2
+ 289 0054 019B     		ldr	r3, [sp, #4]
+ 290 0056 FFF7FEFF 		bl	HAL_NVIC_SetPriority
+ 291 005a 4220     		movs	r0, #66
+ARM GAS  /tmp/ccJgHq9e.s 			page 6
+
+
+ 292 005c 02B0     		add	sp, sp, #8
+ 293              		@ sp needed
+ 294 005e BDE81040 		pop	{r4, lr}
+ 295 0062 FFF7FEBF 		b	HAL_NVIC_EnableIRQ
+ 296              	.L30:
+ 297 0066 02B0     		add	sp, sp, #8
+ 298              		@ sp needed
+ 299 0068 10BD     		pop	{r4, pc}
+ 300              	.L34:
+ 301 006a 00BF     		.align	2
+ 302              	.L33:
+ 303 006c 007C0040 		.word	1073773568
+ 304 0070 00940040 		.word	1073779712
+ 306              		.section	.text.HAL_LPTIM_MspDeInit,"ax",%progbits
+ 307              		.align	1
+ 308              		.global	HAL_LPTIM_MspDeInit
+ 309              		.syntax unified
+ 310              		.thumb
+ 311              		.thumb_func
+ 312              		.fpu fpv4-sp-d16
+ 314              	HAL_LPTIM_MspDeInit:
+ 315              		@ args = 0, pretend = 0, frame = 0
+ 316              		@ frame_needed = 0, uses_anonymous_args = 0
+ 317 0000 0268     		ldr	r2, [r0]
+ 318 0002 0E4B     		ldr	r3, .L38
+ 319 0004 9A42     		cmp	r2, r3
+ 320 0006 10B5     		push	{r4, lr}
+ 321 0008 0446     		mov	r4, r0
+ 322 000a 07D1     		bne	.L36
+ 323 000c 0C4A     		ldr	r2, .L38+4
+ 324 000e 936D     		ldr	r3, [r2, #88]
+ 325 0010 23F00043 		bic	r3, r3, #-2147483648
+ 326 0014 9365     		str	r3, [r2, #88]
+ 327 0016 4120     		movs	r0, #65
+ 328 0018 FFF7FEFF 		bl	HAL_NVIC_DisableIRQ
+ 329              	.L36:
+ 330 001c 2268     		ldr	r2, [r4]
+ 331 001e 094B     		ldr	r3, .L38+8
+ 332 0020 9A42     		cmp	r2, r3
+ 333 0022 09D1     		bne	.L35
+ 334 0024 064A     		ldr	r2, .L38+4
+ 335 0026 D36D     		ldr	r3, [r2, #92]
+ 336 0028 23F02003 		bic	r3, r3, #32
+ 337 002c BDE81040 		pop	{r4, lr}
+ 338 0030 D365     		str	r3, [r2, #92]
+ 339 0032 4220     		movs	r0, #66
+ 340 0034 FFF7FEBF 		b	HAL_NVIC_DisableIRQ
+ 341              	.L35:
+ 342 0038 10BD     		pop	{r4, pc}
+ 343              	.L39:
+ 344 003a 00BF     		.align	2
+ 345              	.L38:
+ 346 003c 007C0040 		.word	1073773568
+ 347 0040 00100240 		.word	1073876992
+ 348 0044 00940040 		.word	1073779712
+ 350              		.section	.bss.lptim_handle,"aw",%nobits
+ 351              		.align	3
+ARM GAS  /tmp/ccJgHq9e.s 			page 7
+
+
+ 352              		.set	.LANCHOR0,. + 0
+ 355              	lptim_handle:
+ 356 0000 00000000 		.space	112
+ 356      00000000 
+ 356      00000000 
+ 356      00000000 
+ 356      00000000 
+ 357              		.section	.bss.lptim_tmr_irq,"aw",%nobits
+ 358              		.align	2
+ 359              		.set	.LANCHOR2,. + 0
+ 362              	lptim_tmr_irq:
+ 363 0000 00000000 		.space	16
+ 363      00000000 
+ 363      00000000 
+ 363      00000000 
+ 364              		.section	.rodata.__func__.0,"a"
+ 365              		.set	.LANCHOR1,. + 0
+ 368              	__func__.0:
+ 369 0000 68616C5F 		.ascii	"hal_lp_timer_init\000"
+ 369      6C705F74 
+ 369      696D6572 
+ 369      5F696E69 
+ 369      7400
+ 370              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccJgHq9e.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 smtc_hal_lp_timer.c
+     /tmp/ccJgHq9e.s:21     .text.hal_lp_timer_init:0000000000000000 $t
+     /tmp/ccJgHq9e.s:29     .text.hal_lp_timer_init:0000000000000000 hal_lp_timer_init
+     /tmp/ccJgHq9e.s:76     .text.hal_lp_timer_init:0000000000000068 $d
+     /tmp/ccJgHq9e.s:88     .text.hal_lp_timer_start:0000000000000000 $t
+     /tmp/ccJgHq9e.s:95     .text.hal_lp_timer_start:0000000000000000 hal_lp_timer_start
+     /tmp/ccJgHq9e.s:123    .text.hal_lp_timer_start:0000000000000040 $d
+     /tmp/ccJgHq9e.s:127    .text.hal_lp_timer_stop:0000000000000000 $t
+     /tmp/ccJgHq9e.s:134    .text.hal_lp_timer_stop:0000000000000000 hal_lp_timer_stop
+     /tmp/ccJgHq9e.s:145    .text.hal_lp_timer_stop:000000000000000c $d
+     /tmp/ccJgHq9e.s:148    .text.hal_lp_timer_irq_enable:0000000000000000 $t
+     /tmp/ccJgHq9e.s:155    .text.hal_lp_timer_irq_enable:0000000000000000 hal_lp_timer_irq_enable
+     /tmp/ccJgHq9e.s:166    .text.hal_lp_timer_irq_disable:0000000000000000 $t
+     /tmp/ccJgHq9e.s:173    .text.hal_lp_timer_irq_disable:0000000000000000 hal_lp_timer_irq_disable
+     /tmp/ccJgHq9e.s:184    .text.LPTIM1_IRQHandler:0000000000000000 $t
+     /tmp/ccJgHq9e.s:191    .text.LPTIM1_IRQHandler:0000000000000000 LPTIM1_IRQHandler
+     /tmp/ccJgHq9e.s:210    .text.LPTIM1_IRQHandler:0000000000000020 $d
+     /tmp/ccJgHq9e.s:214    .text.LPTIM2_IRQHandler:0000000000000000 $t
+     /tmp/ccJgHq9e.s:221    .text.LPTIM2_IRQHandler:0000000000000000 LPTIM2_IRQHandler
+     /tmp/ccJgHq9e.s:240    .text.LPTIM2_IRQHandler:0000000000000020 $d
+     /tmp/ccJgHq9e.s:244    .text.HAL_LPTIM_MspInit:0000000000000000 $t
+     /tmp/ccJgHq9e.s:251    .text.HAL_LPTIM_MspInit:0000000000000000 HAL_LPTIM_MspInit
+     /tmp/ccJgHq9e.s:303    .text.HAL_LPTIM_MspInit:000000000000006c $d
+     /tmp/ccJgHq9e.s:307    .text.HAL_LPTIM_MspDeInit:0000000000000000 $t
+     /tmp/ccJgHq9e.s:314    .text.HAL_LPTIM_MspDeInit:0000000000000000 HAL_LPTIM_MspDeInit
+     /tmp/ccJgHq9e.s:346    .text.HAL_LPTIM_MspDeInit:000000000000003c $d
+     /tmp/ccJgHq9e.s:351    .bss.lptim_handle:0000000000000000 $d
+     /tmp/ccJgHq9e.s:355    .bss.lptim_handle:0000000000000000 lptim_handle
+     /tmp/ccJgHq9e.s:358    .bss.lptim_tmr_irq:0000000000000000 $d
+     /tmp/ccJgHq9e.s:362    .bss.lptim_tmr_irq:0000000000000000 lptim_tmr_irq
+     /tmp/ccJgHq9e.s:368    .rodata.__func__.0:0000000000000000 __func__.0
+
+UNDEFINED SYMBOLS
+HAL_LPTIM_Init
+hal_trace_print_var
+hal_mcu_reset
+__aeabi_uldivmod
+__aeabi_ldivmod
+HAL_LPTIM_TimeOut_Start_IT
+HAL_LPTIM_TimeOut_Stop_IT
+HAL_NVIC_EnableIRQ
+HAL_NVIC_DisableIRQ
+HAL_LPTIM_IRQHandler
+HAL_LPTIM_TimeOut_Stop
+HAL_NVIC_SetPriority

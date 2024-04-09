@@ -1,0 +1,9 @@
+smtc_hal_l4/smtc_hal_rtc.c:253:17:rtc_get_calendar_time.constprop	48	static
+smtc_hal_l4/smtc_hal_rtc.c:161:6:hal_rtc_init	32	static
+smtc_hal_l4/smtc_hal_rtc.c:202:10:hal_rtc_get_time_s	16	static
+smtc_hal_l4/smtc_hal_rtc.c:208:10:hal_rtc_get_time_ms	16	static
+smtc_hal_l4/smtc_hal_rtc.c:218:6:hal_rtc_wakeup_timer_set_ms	16	static
+smtc_hal_l4/smtc_hal_rtc.c:226:6:hal_rtc_wakeup_timer_stop	0	static
+smtc_hal_l4/smtc_hal_rtc.c:308:6:RTC_WKUP_IRQHandler	0	static
+smtc_hal_l4/smtc_hal_rtc.c:313:6:HAL_RTC_MspInit	8	static
+smtc_hal_l4/smtc_hal_rtc.c:320:6:HAL_RTC_MspDeInit	0	static

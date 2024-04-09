@@ -1,0 +1,321 @@
+ARM GAS  /tmp/ccWqbZcy.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 23, 1
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 4
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"lr1110_board_mb1lxks.c"
+  12              		.text
+  13              		.section	.text.leds_on,"ax",%progbits
+  14              		.align	1
+  15              		.global	leds_on
+  16              		.arch armv7e-m
+  17              		.syntax unified
+  18              		.thumb
+  19              		.thumb_func
+  20              		.fpu fpv4-sp-d16
+  22              	leds_on:
+  23              		@ args = 0, pretend = 0, frame = 0
+  24              		@ frame_needed = 0, uses_anonymous_args = 0
+  25 0000 C207     		lsls	r2, r0, #31
+  26 0002 10B5     		push	{r4, lr}
+  27 0004 0446     		mov	r4, r0
+  28 0006 03D5     		bpl	.L2
+  29 0008 0121     		movs	r1, #1
+  30 000a 2120     		movs	r0, #33
+  31 000c FFF7FEFF 		bl	hal_gpio_set_value
+  32              	.L2:
+  33 0010 A307     		lsls	r3, r4, #30
+  34 0012 05D5     		bpl	.L1
+  35 0014 BDE81040 		pop	{r4, lr}
+  36 0018 0121     		movs	r1, #1
+  37 001a 2020     		movs	r0, #32
+  38 001c FFF7FEBF 		b	hal_gpio_set_value
+  39              	.L1:
+  40 0020 10BD     		pop	{r4, pc}
+  42              		.section	.text.leds_off,"ax",%progbits
+  43              		.align	1
+  44              		.global	leds_off
+  45              		.syntax unified
+  46              		.thumb
+  47              		.thumb_func
+  48              		.fpu fpv4-sp-d16
+  50              	leds_off:
+  51              		@ args = 0, pretend = 0, frame = 0
+  52              		@ frame_needed = 0, uses_anonymous_args = 0
+  53 0000 C207     		lsls	r2, r0, #31
+  54 0002 10B5     		push	{r4, lr}
+  55 0004 0446     		mov	r4, r0
+  56 0006 03D5     		bpl	.L8
+  57 0008 0021     		movs	r1, #0
+  58 000a 2120     		movs	r0, #33
+  59 000c FFF7FEFF 		bl	hal_gpio_set_value
+  60              	.L8:
+ARM GAS  /tmp/ccWqbZcy.s 			page 2
+
+
+  61 0010 A307     		lsls	r3, r4, #30
+  62 0012 05D5     		bpl	.L7
+  63 0014 BDE81040 		pop	{r4, lr}
+  64 0018 0021     		movs	r1, #0
+  65 001a 2020     		movs	r0, #32
+  66 001c FFF7FEBF 		b	hal_gpio_set_value
+  67              	.L7:
+  68 0020 10BD     		pop	{r4, pc}
+  70              		.section	.text.smtc_board_get_led_tx_mask,"ax",%progbits
+  71              		.align	1
+  72              		.global	smtc_board_get_led_tx_mask
+  73              		.syntax unified
+  74              		.thumb
+  75              		.thumb_func
+  76              		.fpu fpv4-sp-d16
+  78              	smtc_board_get_led_tx_mask:
+  79              		@ args = 0, pretend = 0, frame = 0
+  80              		@ frame_needed = 0, uses_anonymous_args = 0
+  81              		@ link register save eliminated.
+  82 0000 0120     		movs	r0, #1
+  83 0002 7047     		bx	lr
+  85              		.section	.text.smtc_board_get_led_rx_mask,"ax",%progbits
+  86              		.align	1
+  87              		.global	smtc_board_get_led_rx_mask
+  88              		.syntax unified
+  89              		.thumb
+  90              		.thumb_func
+  91              		.fpu fpv4-sp-d16
+  93              	smtc_board_get_led_rx_mask:
+  94              		@ args = 0, pretend = 0, frame = 0
+  95              		@ frame_needed = 0, uses_anonymous_args = 0
+  96              		@ link register save eliminated.
+  97 0000 0220     		movs	r0, #2
+  98 0002 7047     		bx	lr
+ 100              		.section	.text.smtc_board_get_led_all_mask,"ax",%progbits
+ 101              		.align	1
+ 102              		.global	smtc_board_get_led_all_mask
+ 103              		.syntax unified
+ 104              		.thumb
+ 105              		.thumb_func
+ 106              		.fpu fpv4-sp-d16
+ 108              	smtc_board_get_led_all_mask:
+ 109              		@ args = 0, pretend = 0, frame = 0
+ 110              		@ frame_needed = 0, uses_anonymous_args = 0
+ 111              		@ link register save eliminated.
+ 112 0000 0320     		movs	r0, #3
+ 113 0002 7047     		bx	lr
+ 115              		.section	.text.smtc_board_led_set,"ax",%progbits
+ 116              		.align	1
+ 117              		.global	smtc_board_led_set
+ 118              		.syntax unified
+ 119              		.thumb
+ 120              		.thumb_func
+ 121              		.fpu fpv4-sp-d16
+ 123              	smtc_board_led_set:
+ 124              		@ args = 0, pretend = 0, frame = 0
+ 125              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  /tmp/ccWqbZcy.s 			page 3
+
+
+ 126              		@ link register save eliminated.
+ 127 0000 C0B2     		uxtb	r0, r0
+ 128 0002 09B1     		cbz	r1, .L17
+ 129 0004 FFF7FEBF 		b	leds_on
+ 130              	.L17:
+ 131 0008 FFF7FEBF 		b	leds_off
+ 133              		.section	.text.smtc_board_led_pulse,"ax",%progbits
+ 134              		.align	1
+ 135              		.global	smtc_board_led_pulse
+ 136              		.syntax unified
+ 137              		.thumb
+ 138              		.thumb_func
+ 139              		.fpu fpv4-sp-d16
+ 141              	smtc_board_led_pulse:
+ 142              		@ args = 0, pretend = 0, frame = 0
+ 143              		@ frame_needed = 0, uses_anonymous_args = 0
+ 144 0000 38B5     		push	{r3, r4, r5, lr}
+ 145 0002 C4B2     		uxtb	r4, r0
+ 146 0004 1546     		mov	r5, r2
+ 147 0006 2046     		mov	r0, r4
+ 148 0008 39B1     		cbz	r1, .L19
+ 149 000a FFF7FEFF 		bl	leds_on
+ 150 000e 4FF47A70 		mov	r0, #1000
+ 151 0012 6843     		muls	r0, r5, r0
+ 152 0014 FFF7FEFF 		bl	hal_mcu_wait_us
+ 153 0018 2046     		mov	r0, r4
+ 154              	.L19:
+ 155 001a BDE83840 		pop	{r3, r4, r5, lr}
+ 156 001e FFF7FEBF 		b	leds_off
+ 158              		.section	.text.geolocation_bsp_gnss_prescan_actions,"ax",%progbits
+ 159              		.align	1
+ 160              		.global	geolocation_bsp_gnss_prescan_actions
+ 161              		.syntax unified
+ 162              		.thumb
+ 163              		.thumb_func
+ 164              		.fpu fpv4-sp-d16
+ 166              	geolocation_bsp_gnss_prescan_actions:
+ 167              		@ args = 0, pretend = 0, frame = 0
+ 168              		@ frame_needed = 0, uses_anonymous_args = 0
+ 169 0000 08B5     		push	{r3, lr}
+ 170 0002 0121     		movs	r1, #1
+ 171 0004 1520     		movs	r0, #21
+ 172 0006 FFF7FEFF 		bl	hal_gpio_set_value
+ 173 000a BDE80840 		pop	{r3, lr}
+ 174 000e 0121     		movs	r1, #1
+ 175 0010 1020     		movs	r0, #16
+ 176 0012 FFF7FEBF 		b	hal_gpio_set_value
+ 178              		.section	.text.geolocation_bsp_gnss_postscan_actions,"ax",%progbits
+ 179              		.align	1
+ 180              		.global	geolocation_bsp_gnss_postscan_actions
+ 181              		.syntax unified
+ 182              		.thumb
+ 183              		.thumb_func
+ 184              		.fpu fpv4-sp-d16
+ 186              	geolocation_bsp_gnss_postscan_actions:
+ 187              		@ args = 0, pretend = 0, frame = 0
+ 188              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  /tmp/ccWqbZcy.s 			page 4
+
+
+ 189 0000 08B5     		push	{r3, lr}
+ 190 0002 0021     		movs	r1, #0
+ 191 0004 1520     		movs	r0, #21
+ 192 0006 FFF7FEFF 		bl	hal_gpio_set_value
+ 193 000a BDE80840 		pop	{r3, lr}
+ 194 000e 0021     		movs	r1, #0
+ 195 0010 1020     		movs	r0, #16
+ 196 0012 FFF7FEBF 		b	hal_gpio_set_value
+ 198              		.section	.text.geolocation_bsp_wifi_prescan_actions,"ax",%progbits
+ 199              		.align	1
+ 200              		.global	geolocation_bsp_wifi_prescan_actions
+ 201              		.syntax unified
+ 202              		.thumb
+ 203              		.thumb_func
+ 204              		.fpu fpv4-sp-d16
+ 206              	geolocation_bsp_wifi_prescan_actions:
+ 207              		@ args = 0, pretend = 0, frame = 0
+ 208              		@ frame_needed = 0, uses_anonymous_args = 0
+ 209              		@ link register save eliminated.
+ 210 0000 0121     		movs	r1, #1
+ 211 0002 1520     		movs	r0, #21
+ 212 0004 FFF7FEBF 		b	hal_gpio_set_value
+ 214              		.section	.text.geolocation_bsp_wifi_postscan_actions,"ax",%progbits
+ 215              		.align	1
+ 216              		.global	geolocation_bsp_wifi_postscan_actions
+ 217              		.syntax unified
+ 218              		.thumb
+ 219              		.thumb_func
+ 220              		.fpu fpv4-sp-d16
+ 222              	geolocation_bsp_wifi_postscan_actions:
+ 223              		@ args = 0, pretend = 0, frame = 0
+ 224              		@ frame_needed = 0, uses_anonymous_args = 0
+ 225              		@ link register save eliminated.
+ 226 0000 0021     		movs	r1, #0
+ 227 0002 1520     		movs	r0, #21
+ 228 0004 FFF7FEBF 		b	hal_gpio_set_value
+ 230              		.section	.text.geolocation_bsp_get_lr11xx_lf_clock_cfg,"ax",%progbits
+ 231              		.align	1
+ 232              		.global	geolocation_bsp_get_lr11xx_lf_clock_cfg
+ 233              		.syntax unified
+ 234              		.thumb
+ 235              		.thumb_func
+ 236              		.fpu fpv4-sp-d16
+ 238              	geolocation_bsp_get_lr11xx_lf_clock_cfg:
+ 239              		@ args = 0, pretend = 0, frame = 0
+ 240              		@ frame_needed = 0, uses_anonymous_args = 0
+ 241              		@ link register save eliminated.
+ 242 0000 0120     		movs	r0, #1
+ 243 0002 7047     		bx	lr
+ 245              		.section	.text.geolocation_bsp_get_lr11xx_reg_mode,"ax",%progbits
+ 246              		.align	1
+ 247              		.global	geolocation_bsp_get_lr11xx_reg_mode
+ 248              		.syntax unified
+ 249              		.thumb
+ 250              		.thumb_func
+ 251              		.fpu fpv4-sp-d16
+ 253              	geolocation_bsp_get_lr11xx_reg_mode:
+ARM GAS  /tmp/ccWqbZcy.s 			page 5
+
+
+ 254              		@ args = 0, pretend = 0, frame = 0
+ 255              		@ frame_needed = 0, uses_anonymous_args = 0
+ 256              		@ link register save eliminated.
+ 257 0000 0123     		movs	r3, #1
+ 258 0002 0B70     		strb	r3, [r1]
+ 259 0004 7047     		bx	lr
+ 261              		.section	.text.geolocation_bsp_gnss_get_consumption,"ax",%progbits
+ 262              		.align	1
+ 263              		.global	geolocation_bsp_gnss_get_consumption
+ 264              		.syntax unified
+ 265              		.thumb
+ 266              		.thumb_func
+ 267              		.fpu fpv4-sp-d16
+ 269              	geolocation_bsp_gnss_get_consumption:
+ 270              		@ args = 0, pretend = 0, frame = 0
+ 271              		@ frame_needed = 0, uses_anonymous_args = 0
+ 272              		@ link register save eliminated.
+ 273 0000 064B     		ldr	r3, .L27
+ 274 0002 0360     		str	r3, [r0]	@ unaligned
+ 275 0004 064B     		ldr	r3, .L27+4
+ 276 0006 4360     		str	r3, [r0, #4]	@ unaligned
+ 277 0008 064B     		ldr	r3, .L27+8
+ 278 000a 8360     		str	r3, [r0, #8]	@ unaligned
+ 279 000c 064B     		ldr	r3, .L27+12
+ 280 000e C360     		str	r3, [r0, #12]	@ unaligned
+ 281 0010 064B     		ldr	r3, .L27+16
+ 282 0012 0361     		str	r3, [r0, #16]	@ unaligned
+ 283 0014 064B     		ldr	r3, .L27+20
+ 284 0016 4361     		str	r3, [r0, #20]	@ unaligned
+ 285 0018 7047     		bx	lr
+ 286              	.L28:
+ 287 001a 00BF     		.align	2
+ 288              	.L27:
+ 289 001c E40C4E0C 		.word	206441700
+ 290 0020 7C2E0C0D 		.word	218902140
+ 291 0024 CC295410 		.word	273951180
+ 292 0028 BC34760C 		.word	209073340
+ 293 002c 3831660D 		.word	224801080
+ 294 0030 BA04E209 		.word	165807290
+ 296              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccWqbZcy.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 lr1110_board_mb1lxks.c
+     /tmp/ccWqbZcy.s:14     .text.leds_on:0000000000000000 $t
+     /tmp/ccWqbZcy.s:22     .text.leds_on:0000000000000000 leds_on
+     /tmp/ccWqbZcy.s:43     .text.leds_off:0000000000000000 $t
+     /tmp/ccWqbZcy.s:50     .text.leds_off:0000000000000000 leds_off
+     /tmp/ccWqbZcy.s:71     .text.smtc_board_get_led_tx_mask:0000000000000000 $t
+     /tmp/ccWqbZcy.s:78     .text.smtc_board_get_led_tx_mask:0000000000000000 smtc_board_get_led_tx_mask
+     /tmp/ccWqbZcy.s:86     .text.smtc_board_get_led_rx_mask:0000000000000000 $t
+     /tmp/ccWqbZcy.s:93     .text.smtc_board_get_led_rx_mask:0000000000000000 smtc_board_get_led_rx_mask
+     /tmp/ccWqbZcy.s:101    .text.smtc_board_get_led_all_mask:0000000000000000 $t
+     /tmp/ccWqbZcy.s:108    .text.smtc_board_get_led_all_mask:0000000000000000 smtc_board_get_led_all_mask
+     /tmp/ccWqbZcy.s:116    .text.smtc_board_led_set:0000000000000000 $t
+     /tmp/ccWqbZcy.s:123    .text.smtc_board_led_set:0000000000000000 smtc_board_led_set
+     /tmp/ccWqbZcy.s:134    .text.smtc_board_led_pulse:0000000000000000 $t
+     /tmp/ccWqbZcy.s:141    .text.smtc_board_led_pulse:0000000000000000 smtc_board_led_pulse
+     /tmp/ccWqbZcy.s:159    .text.geolocation_bsp_gnss_prescan_actions:0000000000000000 $t
+     /tmp/ccWqbZcy.s:166    .text.geolocation_bsp_gnss_prescan_actions:0000000000000000 geolocation_bsp_gnss_prescan_actions
+     /tmp/ccWqbZcy.s:179    .text.geolocation_bsp_gnss_postscan_actions:0000000000000000 $t
+     /tmp/ccWqbZcy.s:186    .text.geolocation_bsp_gnss_postscan_actions:0000000000000000 geolocation_bsp_gnss_postscan_actions
+     /tmp/ccWqbZcy.s:199    .text.geolocation_bsp_wifi_prescan_actions:0000000000000000 $t
+     /tmp/ccWqbZcy.s:206    .text.geolocation_bsp_wifi_prescan_actions:0000000000000000 geolocation_bsp_wifi_prescan_actions
+     /tmp/ccWqbZcy.s:215    .text.geolocation_bsp_wifi_postscan_actions:0000000000000000 $t
+     /tmp/ccWqbZcy.s:222    .text.geolocation_bsp_wifi_postscan_actions:0000000000000000 geolocation_bsp_wifi_postscan_actions
+     /tmp/ccWqbZcy.s:231    .text.geolocation_bsp_get_lr11xx_lf_clock_cfg:0000000000000000 $t
+     /tmp/ccWqbZcy.s:238    .text.geolocation_bsp_get_lr11xx_lf_clock_cfg:0000000000000000 geolocation_bsp_get_lr11xx_lf_clock_cfg
+     /tmp/ccWqbZcy.s:246    .text.geolocation_bsp_get_lr11xx_reg_mode:0000000000000000 $t
+     /tmp/ccWqbZcy.s:253    .text.geolocation_bsp_get_lr11xx_reg_mode:0000000000000000 geolocation_bsp_get_lr11xx_reg_mode
+     /tmp/ccWqbZcy.s:262    .text.geolocation_bsp_gnss_get_consumption:0000000000000000 $t
+     /tmp/ccWqbZcy.s:269    .text.geolocation_bsp_gnss_get_consumption:0000000000000000 geolocation_bsp_gnss_get_consumption
+     /tmp/ccWqbZcy.s:289    .text.geolocation_bsp_gnss_get_consumption:000000000000001c $d
+
+UNDEFINED SYMBOLS
+hal_gpio_set_value
+hal_mcu_wait_us

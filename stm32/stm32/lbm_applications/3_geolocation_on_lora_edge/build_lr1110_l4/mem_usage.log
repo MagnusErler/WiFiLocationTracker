@@ -1,0 +1,5 @@
+Memory region         Used Size  Region Size  %age Used
+             RAM:        9676 B        96 KB      9.84%
+            RAM2:        2560 B      32512 B      7.87%
+      NOINITRAM2:         244 B        256 B     95.31%
+           FLASH:      142304 B         1 MB     13.57%

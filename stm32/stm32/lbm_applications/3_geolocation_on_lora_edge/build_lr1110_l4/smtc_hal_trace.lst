@@ -1,0 +1,82 @@
+ARM GAS  /tmp/ccrItxOO.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 23, 1
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 4
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"smtc_hal_trace.c"
+  12              		.text
+  13              		.section	.text.hal_trace_print,"ax",%progbits
+  14              		.align	1
+  15              		.global	hal_trace_print
+  16              		.arch armv7e-m
+  17              		.syntax unified
+  18              		.thumb
+  19              		.thumb_func
+  20              		.fpu fpv4-sp-d16
+  22              	hal_trace_print:
+  23              		@ args = 0, pretend = 0, frame = 256
+  24              		@ frame_needed = 0, uses_anonymous_args = 0
+  25 0000 00B5     		push	{lr}
+  26 0002 C1B0     		sub	sp, sp, #260
+  27 0004 0A46     		mov	r2, r1
+  28 0006 0146     		mov	r1, r0
+  29 0008 6846     		mov	r0, sp
+  30 000a FFF7FEFF 		bl	vsprintf
+  31 000e 0028     		cmp	r0, #0
+  32 0010 06DD     		ble	.L1
+  33 0012 6846     		mov	r0, sp
+  34 0014 FFF7FEFF 		bl	strlen
+  35 0018 C1B2     		uxtb	r1, r0
+  36 001a 6846     		mov	r0, sp
+  37 001c FFF7FEFF 		bl	uart2_tx
+  38              	.L1:
+  39 0020 41B0     		add	sp, sp, #260
+  40              		@ sp needed
+  41 0022 5DF804FB 		ldr	pc, [sp], #4
+  43              		.section	.text.hal_trace_print_var,"ax",%progbits
+  44              		.align	1
+  45              		.global	hal_trace_print_var
+  46              		.syntax unified
+  47              		.thumb
+  48              		.thumb_func
+  49              		.fpu fpv4-sp-d16
+  51              	hal_trace_print_var:
+  52              		@ args = 4, pretend = 16, frame = 8
+  53              		@ frame_needed = 0, uses_anonymous_args = 1
+  54 0000 0FB4     		push	{r0, r1, r2, r3}
+  55 0002 07B5     		push	{r0, r1, r2, lr}
+  56 0004 04A9     		add	r1, sp, #16
+  57 0006 51F8040B 		ldr	r0, [r1], #4
+  58 000a 0191     		str	r1, [sp, #4]
+  59 000c FFF7FEFF 		bl	hal_trace_print
+  60 0010 03B0     		add	sp, sp, #12
+ARM GAS  /tmp/ccrItxOO.s 			page 2
+
+
+  61              		@ sp needed
+  62 0012 5DF804EB 		ldr	lr, [sp], #4
+  63 0016 04B0     		add	sp, sp, #16
+  64 0018 7047     		bx	lr
+  66              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccrItxOO.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 smtc_hal_trace.c
+     /tmp/ccrItxOO.s:14     .text.hal_trace_print:0000000000000000 $t
+     /tmp/ccrItxOO.s:22     .text.hal_trace_print:0000000000000000 hal_trace_print
+     /tmp/ccrItxOO.s:44     .text.hal_trace_print_var:0000000000000000 $t
+     /tmp/ccrItxOO.s:51     .text.hal_trace_print_var:0000000000000000 hal_trace_print_var
+
+UNDEFINED SYMBOLS
+vsprintf
+strlen
+uart2_tx
