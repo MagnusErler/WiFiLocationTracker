@@ -1,35 +1,42 @@
+import { Icon } from "leaflet";
 import "./styles.css";
 import "leaflet/dist/leaflet.css";
 import {MapContainer, TileLayer, Marker} from "react-leaflet";
 
 export default function App() {
+  const center = [56.234538, 10.231792]; // Denmark coordinates
+
   // markers TODO: fetch markers from API
   const markers = [
     {
-      geocode: [48.86, 2.3522],
+      geocode: [56.86, 10.1522],
       popUp: "Hello, I am pop up 1"
     },
     {
-      geocode: [48.85, 2.3522],
+      geocode: [56.85, 10.1522],
       popUp: "Hello, I am pop up 2"
     },
     {
-      geocode: [48.855, 2.34],
+      geocode: [56.855, 10.14],
       popUp: "Hello, I am pop up 3"
     }
   ];
 
-
+  const customIcon = new Icon({
+    //iconUrl: "https://png.pngtree.com/png-vector/20220502/ourmid/pngtree-3d-location-icon-design-symbol-png-transparent-background-png-image_4562236.png",
+    iconUrl: require("./img/markerIcon.png"),
+    iconSize: [38, 38]
+  })
 
   return (
-    <MapContainer center={[48.8566, 2.3522]} zoom={13}>
+    <MapContainer center={center} zoom={7}>
       <TileLayer
       attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>"
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
       {markers.map(marker => (
-        <Marker position={marker.geocode} />
+        <Marker position={marker.geocode} icon={customIcon}/>
       ))
       }
     </MapContainer>
