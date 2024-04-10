@@ -1,7 +1,7 @@
 import { Icon } from "leaflet";
 import "./styles.css";
 import "leaflet/dist/leaflet.css";
-import {MapContainer, TileLayer, Marker} from "react-leaflet";
+import {MapContainer, TileLayer, Marker, Popup} from "react-leaflet";
 
 export default function App() {
   const center = [56.234538, 10.231792]; // Denmark coordinates
@@ -31,12 +31,14 @@ export default function App() {
   return (
     <MapContainer center={center} zoom={7}>
       <TileLayer
-      attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>"
-      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
       {markers.map(marker => (
-        <Marker position={marker.geocode} icon={customIcon}/>
+        <Marker position={marker.geocode} icon={customIcon}>
+          <Popup>{marker.popUp}</Popup>
+        </Marker>
       ))
       }
     </MapContainer>
