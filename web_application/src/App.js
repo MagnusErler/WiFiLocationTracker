@@ -1,7 +1,9 @@
-import { Icon } from "leaflet";
 import "./styles.css";
 import "leaflet/dist/leaflet.css";
-import {MapContainer, TileLayer, Marker, Popup} from "react-leaflet";
+
+import { Icon, divIcon } from "leaflet";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import MarkerClusterGroup from "react-leaflet-cluster";
 
 export default function App() {
   const center = [56.234538, 10.231792]; // Denmark coordinates
@@ -28,6 +30,14 @@ export default function App() {
     iconSize: [38, 38]
   })
 
+    // // custom cluster icon
+    // const createCustomClusterIcon = function (cluster) {
+    //   return new divIcon({
+    //     html: `<span class="cluster-icon">${cluster.getChildCount()}</span>`,
+    //     className: "custom-marker-cluster",
+    //   });
+    // };
+
   return (
     <MapContainer center={center} zoom={7}>
       <TileLayer
@@ -35,12 +45,17 @@ export default function App() {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
-      {markers.map(marker => (
-        <Marker position={marker.geocode} icon={customIcon}>
-          <Popup>{marker.popUp}</Popup>
-        </Marker>
-      ))
-      }
+      <MarkerClusterGroup
+        chunkedLoading
+        // iconCreateFunction={createCustomClusterIcon}
+      >
+        {markers.map(marker => (
+          <Marker position={marker.geocode} icon={customIcon}>
+            <Popup>{marker.popUp}</Popup>
+          </Marker>
+        ))
+        }
+      </MarkerClusterGroup>
     </MapContainer>
   );
 }
