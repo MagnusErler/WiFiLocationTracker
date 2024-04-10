@@ -1,12 +1,17 @@
+import { useState } from "react";
+
 import "./styles.css";
 import "leaflet/dist/leaflet.css";
 
-import { Icon, divIcon } from "leaflet";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import MarkerClusterGroup from "react-leaflet-cluster";
+import MapComponent from "./components/MapComponent";
+import SettingsMenu from "./components/SettingsMenu";
+
+import ListIcon from '@mui/icons-material/List';
+
 
 export default function App() {
   const center = [56.234538, 10.231792]; // Denmark coordinates
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   // markers TODO: fetch markers from API
   const markers = [
@@ -24,38 +29,30 @@ export default function App() {
     }
   ];
 
-  const customIcon = new Icon({
-    //iconUrl: "https://png.pngtree.com/png-vector/20220502/ourmid/pngtree-3d-location-icon-design-symbol-png-transparent-background-png-image_4562236.png",
-    iconUrl: require("./img/markerIcon.png"),
-    iconSize: [38, 38]
-  })
+  const useCustomClusterIcon = false; // Set to true to use custom cluster icon
 
-    // // custom cluster icon
-    // const createCustomClusterIcon = function (cluster) {
-    //   return new divIcon({
-    //     html: `<span class="cluster-icon">${cluster.getChildCount()}</span>`,
-    //     className: "custom-marker-cluster",
-    //   });
-    // };
+  const handleButtonClick = () => {
+    setSettingsOpen(true);
+  };
+
+  const handleCloseSettings = () => {
+    setSettingsOpen(false);
+  };
 
   return (
-    <MapContainer center={center} zoom={7}>
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-
-      <MarkerClusterGroup
-        chunkedLoading
-        // iconCreateFunction={createCustomClusterIcon}
+    <div className="map-container">
+      <button
+        className="map-button"
+        onClick={handleButtonClick}
       >
-        {markers.map(marker => (
-          <Marker position={marker.geocode} icon={customIcon}>
-            <Popup>{marker.popUp}</Popup>
-          </Marker>
-        ))
-        }
-      </MarkerClusterGroup>
-    </MapContainer>
+        <ListIcon />
+      </button>
+      <MapComponent
+        center={center}
+        markers={markers}
+        useCustomClusterIcon={useCustomClusterIcon}
+      />
+      <SettingsMenu isOpen={settingsOpen} handleClose={handleCloseSettings} />
+    </div>
   );
 }
