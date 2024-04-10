@@ -8,24 +8,53 @@ import SettingsMenu from "./components/SettingsMenu";
 
 import ListIcon from '@mui/icons-material/List';
 
+function convertTimestampToPopup(timestamp) {
+  const date = new Date(timestamp * 1000); // Convert to milliseconds
+  const formattedDate = date.toLocaleString(); // Format as a human-readable string
+
+  return formattedDate;
+}
+
+function sortMarkers(markers) {
+  return markers.sort((a, b) => {
+    const timestampA = new Date(a.popUp).getTime() / 1000;
+    const timestampB = new Date(b.popUp).getTime() / 1000;
+
+    return timestampA - timestampB;
+  });
+}
 
 export default function App() {
   const center = [56.234538, 10.231792]; // Denmark coordinates
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [checkedIds, setCheckedIds] = useState([]);
 
   // markers TODO: fetch markers from API
   const markers = [
     {
+      id: 1,
       geocode: [56.86, 10.1522],
-      popUp: "Hello, I am pop up 1"
+      popUp: convertTimestampToPopup(1712781085)
     },
     {
+      id: 1,
       geocode: [56.85, 10.1522],
-      popUp: "Hello, I am pop up 2"
+      popUp: convertTimestampToPopup(1712761085)
     },
     {
+      id: 1,
       geocode: [56.855, 10.14],
-      popUp: "Hello, I am pop up 3"
+      popUp: convertTimestampToPopup(1712721085)
+    },
+    {
+      id: 2,
+      geocode: [56.845, 10.1328],
+      popUp: convertTimestampToPopup(1712681085)
+    },
+    {
+      id: 2,
+      geocode: [56.838, 10.129],
+      popUp: convertTimestampToPopup(1712781150)
     }
   ];
 
@@ -39,6 +68,13 @@ export default function App() {
     setSettingsOpen(false);
   };
 
+  const handleCheckboxChange = (ids) => {
+    setCheckedIds(ids);
+  };
+
+  // Filter markers based on checked IDs
+  const filteredMarkers = checkedIds.length === 0 ? [] : markers.filter(marker => checkedIds.includes(marker.id));
+
   return (
     <div className="map-container">
       <button
@@ -49,10 +85,10 @@ export default function App() {
       </button>
       <MapComponent
         center={center}
-        markers={markers}
+        markers={sortMarkers(filteredMarkers)}
         useCustomClusterIcon={useCustomClusterIcon}
       />
-      <SettingsMenu isOpen={settingsOpen} handleClose={handleCloseSettings} />
+      <SettingsMenu isOpen={settingsOpen} handleClose={handleCloseSettings} markers={markers} handleCheckboxChange={handleCheckboxChange}/>
     </div>
   );
 }
