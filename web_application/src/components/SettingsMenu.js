@@ -42,3 +42,5 @@ const SettingsMenu = ({ isOpen, handleClose, markers, handleCheckboxChange }) =>
 };
 
 export default SettingsMenu;
+
+//TODO: Implement checkboxes for showing markers and polylines on the map
