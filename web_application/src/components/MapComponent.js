@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup, Polyline } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import { Icon, divIcon } from "leaflet";
@@ -16,8 +16,28 @@ const MapComponent = ({ center, markers, useCustomClusterIcon }) => {
     });
   };
 
-  // Extracting coordinates from markers
-  const coordinates = markers.map(marker => marker.geocode);
+  const makeLineCoordinates = (markerGroup) => {
+    const lineCoordinates = [];
+    for (let i = 1; i < markerGroup.length; i++) {
+      if (markerGroup[i].id === markerGroup[i - 1].id) {
+        lineCoordinates.push(markerGroup[i - 1].geocode, markerGroup[i].geocode);
+      }
+    }
+    return lineCoordinates;
+  };
+
+  const [lines, setLines] = useState([]);
+
+  useEffect(() => {
+    const calculatedLines = {};
+    for (const marker of markers) {
+      if (!calculatedLines[marker.id]) {
+        calculatedLines[marker.id] = [];
+      }
+      calculatedLines[marker.id].push(marker);
+    }
+    setLines(calculatedLines);
+  }, [markers]);
 
   return (
     <MapContainer center={center} zoom={7}>
@@ -25,7 +45,10 @@ const MapComponent = ({ center, markers, useCustomClusterIcon }) => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <Polyline positions={coordinates} color="blue" />
+      {/* Render lines */}
+      {Object.values(lines).map((markerGroup, index) => (
+        <Polyline key={index} positions={makeLineCoordinates(markerGroup)} color="blue" />
+      ))}
       <MarkerClusterGroup
         chunkedLoading
         iconCreateFunction={useCustomClusterIcon ? createCustomClusterIcon : null}
@@ -41,5 +64,4 @@ const MapComponent = ({ center, markers, useCustomClusterIcon }) => {
 };
 
 export default MapComponent;
-//TODO: Make lines only between markers with the same ID
 //TODO: See if arrows can be implemented: https://imfeld.dev/writing/leaflet_shapes
