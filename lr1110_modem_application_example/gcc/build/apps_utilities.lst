@@ -1,0 +1,762 @@
+ARM GAS  /tmp/ccbriRXs.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"apps_utilities.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.rodata
+  18              		.align	2
+  19              	.LC0:
+  20 0000 0D0A00   		.ascii	"\015\012\000"
+  21 0003 00       		.align	2
+  22              	.LC1:
+  23 0004 25303258 		.ascii	"%02X \000"
+  23      2000
+  24              		.section	.text.print_hex_buffer,"ax",%progbits
+  25              		.align	1
+  26              		.global	print_hex_buffer
+  27              		.arch armv7e-m
+  28              		.syntax unified
+  29              		.thumb
+  30              		.thumb_func
+  31              		.fpu fpv4-sp-d16
+  33              	print_hex_buffer:
+  34              	.LFB3:
+  35              		.file 1 "../Src/apps/common/apps_utilities.c"
+   1:../Src/apps/common/apps_utilities.c **** /*!
+   2:../Src/apps/common/apps_utilities.c ****  * @file      apps_utilities.c
+   3:../Src/apps/common/apps_utilities.c ****  *
+   4:../Src/apps/common/apps_utilities.c ****  * @brief     Common Application Helper function implementations
+   5:../Src/apps/common/apps_utilities.c ****  *
+   6:../Src/apps/common/apps_utilities.c ****  * @copyright
+   7:../Src/apps/common/apps_utilities.c ****  * @parblock
+   8:../Src/apps/common/apps_utilities.c ****  * Revised BSD License
+   9:../Src/apps/common/apps_utilities.c ****  * Copyright Semtech Corporation 2021. All rights reserved.
+  10:../Src/apps/common/apps_utilities.c ****  *
+  11:../Src/apps/common/apps_utilities.c ****  * Redistribution and use in source and binary forms, with or without
+  12:../Src/apps/common/apps_utilities.c ****  * modification, are permitted provided that the following conditions are met:
+  13:../Src/apps/common/apps_utilities.c ****  *     * Redistributions of source code must retain the above copyright
+  14:../Src/apps/common/apps_utilities.c ****  *       notice, this list of conditions and the following disclaimer.
+  15:../Src/apps/common/apps_utilities.c ****  *     * Redistributions in binary form must reproduce the above copyright
+  16:../Src/apps/common/apps_utilities.c ****  *       notice, this list of conditions and the following disclaimer in the
+  17:../Src/apps/common/apps_utilities.c ****  *       documentation and/or other materials provided with the distribution.
+  18:../Src/apps/common/apps_utilities.c ****  *     * Neither the name of the Semtech corporation nor the
+  19:../Src/apps/common/apps_utilities.c ****  *       names of its contributors may be used to endorse or promote products
+  20:../Src/apps/common/apps_utilities.c ****  *       derived from this software without specific prior written permission.
+  21:../Src/apps/common/apps_utilities.c ****  *
+  22:../Src/apps/common/apps_utilities.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ARM GAS  /tmp/ccbriRXs.s 			page 2
+
+
+  23:../Src/apps/common/apps_utilities.c ****  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  24:../Src/apps/common/apps_utilities.c ****  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  25:../Src/apps/common/apps_utilities.c ****  * ARE DISCLAIMED. IN NO EVENT SHALL SEMTECH CORPORATION BE LIABLE FOR ANY
+  26:../Src/apps/common/apps_utilities.c ****  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+  27:../Src/apps/common/apps_utilities.c ****  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  28:../Src/apps/common/apps_utilities.c ****  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+  29:../Src/apps/common/apps_utilities.c ****  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  30:../Src/apps/common/apps_utilities.c ****  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  31:../Src/apps/common/apps_utilities.c ****  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  32:../Src/apps/common/apps_utilities.c ****  * @endparblock
+  33:../Src/apps/common/apps_utilities.c ****  */
+  34:../Src/apps/common/apps_utilities.c **** 
+  35:../Src/apps/common/apps_utilities.c **** /*
+  36:../Src/apps/common/apps_utilities.c ****  * -----------------------------------------------------------------------------
+  37:../Src/apps/common/apps_utilities.c ****  * --- DEPENDENCIES ------------------------------------------------------------
+  38:../Src/apps/common/apps_utilities.c ****  */
+  39:../Src/apps/common/apps_utilities.c **** 
+  40:../Src/apps/common/apps_utilities.c **** #include <stdlib.h>
+  41:../Src/apps/common/apps_utilities.c **** #include <stdio.h>
+  42:../Src/apps/common/apps_utilities.c **** #include "apps_utilities.h"
+  43:../Src/apps/common/apps_utilities.c **** #include "lr1110_modem_lorawan.h"
+  44:../Src/apps/common/apps_utilities.c **** #include "smtc_hal_dbg_trace.h"
+  45:../Src/apps/common/apps_utilities.c **** 
+  46:../Src/apps/common/apps_utilities.c **** /*
+  47:../Src/apps/common/apps_utilities.c ****  * -----------------------------------------------------------------------------
+  48:../Src/apps/common/apps_utilities.c ****  * --- PRIVATE MACROS-----------------------------------------------------------
+  49:../Src/apps/common/apps_utilities.c ****  */
+  50:../Src/apps/common/apps_utilities.c **** 
+  51:../Src/apps/common/apps_utilities.c **** /*
+  52:../Src/apps/common/apps_utilities.c ****  * -----------------------------------------------------------------------------
+  53:../Src/apps/common/apps_utilities.c ****  * --- PRIVATE CONSTANTS -------------------------------------------------------
+  54:../Src/apps/common/apps_utilities.c ****  */
+  55:../Src/apps/common/apps_utilities.c **** 
+  56:../Src/apps/common/apps_utilities.c **** /*
+  57:../Src/apps/common/apps_utilities.c ****  * -----------------------------------------------------------------------------
+  58:../Src/apps/common/apps_utilities.c ****  * --- PRIVATE TYPES -----------------------------------------------------------
+  59:../Src/apps/common/apps_utilities.c ****  */
+  60:../Src/apps/common/apps_utilities.c **** 
+  61:../Src/apps/common/apps_utilities.c **** /*
+  62:../Src/apps/common/apps_utilities.c ****  * -----------------------------------------------------------------------------
+  63:../Src/apps/common/apps_utilities.c ****  * --- PRIVATE VARIABLES -------------------------------------------------------
+  64:../Src/apps/common/apps_utilities.c ****  */
+  65:../Src/apps/common/apps_utilities.c **** 
+  66:../Src/apps/common/apps_utilities.c **** /*
+  67:../Src/apps/common/apps_utilities.c ****  * -----------------------------------------------------------------------------
+  68:../Src/apps/common/apps_utilities.c ****  * --- PRIVATE FUNCTIONS DECLARATION -------------------------------------------
+  69:../Src/apps/common/apps_utilities.c ****  */
+  70:../Src/apps/common/apps_utilities.c **** 
+  71:../Src/apps/common/apps_utilities.c **** /*
+  72:../Src/apps/common/apps_utilities.c ****  * -----------------------------------------------------------------------------
+  73:../Src/apps/common/apps_utilities.c ****  * --- PUBLIC VARIABLES --------------------------------------------------------
+  74:../Src/apps/common/apps_utilities.c ****  */
+  75:../Src/apps/common/apps_utilities.c **** 
+  76:../Src/apps/common/apps_utilities.c **** /*
+  77:../Src/apps/common/apps_utilities.c ****  * -----------------------------------------------------------------------------
+  78:../Src/apps/common/apps_utilities.c ****  * --- PUBLIC FUNCTIONS DEFINITION ---------------------------------------------
+  79:../Src/apps/common/apps_utilities.c ****  */
+ARM GAS  /tmp/ccbriRXs.s 			page 3
+
+
+  80:../Src/apps/common/apps_utilities.c **** 
+  81:../Src/apps/common/apps_utilities.c **** void print_hex_buffer( const uint8_t* buffer, uint8_t size )
+  82:../Src/apps/common/apps_utilities.c **** {
+  36              		.loc 1 82 1
+  37              		.cfi_startproc
+  38              		@ args = 0, pretend = 0, frame = 16
+  39              		@ frame_needed = 1, uses_anonymous_args = 0
+  40 0000 80B5     		push	{r7, lr}
+  41              	.LCFI0:
+  42              		.cfi_def_cfa_offset 8
+  43              		.cfi_offset 7, -8
+  44              		.cfi_offset 14, -4
+  45 0002 84B0     		sub	sp, sp, #16
+  46              	.LCFI1:
+  47              		.cfi_def_cfa_offset 24
+  48 0004 00AF     		add	r7, sp, #0
+  49              	.LCFI2:
+  50              		.cfi_def_cfa_register 7
+  51 0006 7860     		str	r0, [r7, #4]
+  52 0008 0B46     		mov	r3, r1
+  53 000a FB70     		strb	r3, [r7, #3]
+  83:../Src/apps/common/apps_utilities.c ****     uint8_t newline = 0;
+  54              		.loc 1 83 13
+  55 000c 0023     		movs	r3, #0
+  56 000e FB73     		strb	r3, [r7, #15]
+  57              	.LBB2:
+  84:../Src/apps/common/apps_utilities.c **** 
+  85:../Src/apps/common/apps_utilities.c ****     for( uint8_t i = 0; i < size; i++ )
+  58              		.loc 1 85 18
+  59 0010 0023     		movs	r3, #0
+  60 0012 BB73     		strb	r3, [r7, #14]
+  61              		.loc 1 85 5
+  62 0014 1AE0     		b	.L2
+  63              	.L5:
+  86:../Src/apps/common/apps_utilities.c ****     {
+  87:../Src/apps/common/apps_utilities.c ****         if( newline != 0 )
+  64              		.loc 1 87 11
+  65 0016 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+  66 0018 002B     		cmp	r3, #0
+  67 001a 04D0     		beq	.L3
+  88:../Src/apps/common/apps_utilities.c ****         {
+  89:../Src/apps/common/apps_utilities.c ****             HAL_DBG_TRACE_PRINTF( "\r\n" );
+  68              		.loc 1 89 13
+  69 001c 1148     		ldr	r0, .L6
+  70 001e FFF7FEFF 		bl	hal_mcu_trace_print
+  90:../Src/apps/common/apps_utilities.c ****             newline = 0;
+  71              		.loc 1 90 21
+  72 0022 0023     		movs	r3, #0
+  73 0024 FB73     		strb	r3, [r7, #15]
+  74              	.L3:
+  91:../Src/apps/common/apps_utilities.c ****         }
+  92:../Src/apps/common/apps_utilities.c **** 
+  93:../Src/apps/common/apps_utilities.c ****         HAL_DBG_TRACE_PRINTF( "%02X ", buffer[i] );
+  75              		.loc 1 93 9
+  76 0026 BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
+  77 0028 7A68     		ldr	r2, [r7, #4]
+  78 002a 1344     		add	r3, r3, r2
+ARM GAS  /tmp/ccbriRXs.s 			page 4
+
+
+  79 002c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  80 002e 1946     		mov	r1, r3
+  81 0030 0D48     		ldr	r0, .L6+4
+  82 0032 FFF7FEFF 		bl	hal_mcu_trace_print
+  94:../Src/apps/common/apps_utilities.c **** 
+  95:../Src/apps/common/apps_utilities.c ****         if( ( ( i + 1 ) % 16 ) == 0 )
+  83              		.loc 1 95 19
+  84 0036 BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
+  85 0038 0133     		adds	r3, r3, #1
+  86              		.loc 1 95 32
+  87 003a 03F00F03 		and	r3, r3, #15
+  88              		.loc 1 95 11
+  89 003e 002B     		cmp	r3, #0
+  90 0040 01D1     		bne	.L4
+  96:../Src/apps/common/apps_utilities.c ****         {
+  97:../Src/apps/common/apps_utilities.c ****             newline = 1;
+  91              		.loc 1 97 21
+  92 0042 0123     		movs	r3, #1
+  93 0044 FB73     		strb	r3, [r7, #15]
+  94              	.L4:
+  85:../Src/apps/common/apps_utilities.c ****     {
+  95              		.loc 1 85 36 discriminator 2
+  96 0046 BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
+  97 0048 0133     		adds	r3, r3, #1
+  98 004a BB73     		strb	r3, [r7, #14]
+  99              	.L2:
+  85:../Src/apps/common/apps_utilities.c ****     {
+ 100              		.loc 1 85 5 discriminator 1
+ 101 004c BA7B     		ldrb	r2, [r7, #14]	@ zero_extendqisi2
+ 102 004e FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 103 0050 9A42     		cmp	r2, r3
+ 104 0052 E0D3     		bcc	.L5
+ 105              	.LBE2:
+  98:../Src/apps/common/apps_utilities.c ****         }
+  99:../Src/apps/common/apps_utilities.c ****     }
+ 100:../Src/apps/common/apps_utilities.c ****     HAL_DBG_TRACE_PRINTF( "\r\n" );
+ 106              		.loc 1 100 5
+ 107 0054 0348     		ldr	r0, .L6
+ 108 0056 FFF7FEFF 		bl	hal_mcu_trace_print
+ 101:../Src/apps/common/apps_utilities.c **** }
+ 109              		.loc 1 101 1
+ 110 005a 00BF     		nop
+ 111 005c 1037     		adds	r7, r7, #16
+ 112              	.LCFI3:
+ 113              		.cfi_def_cfa_offset 8
+ 114 005e BD46     		mov	sp, r7
+ 115              	.LCFI4:
+ 116              		.cfi_def_cfa_register 13
+ 117              		@ sp needed
+ 118 0060 80BD     		pop	{r7, pc}
+ 119              	.L7:
+ 120 0062 00BF     		.align	2
+ 121              	.L6:
+ 122 0064 00000000 		.word	.LC0
+ 123 0068 04000000 		.word	.LC1
+ 124              		.cfi_endproc
+ 125              	.LFE3:
+ARM GAS  /tmp/ccbriRXs.s 			page 5
+
+
+ 127              		.section	.rodata
+ 128 000a 0000     		.align	2
+ 129              	.LC2:
+ 130 000c 44657645 		.ascii	"DevEui      : %02X\000"
+ 130      75692020 
+ 130      20202020 
+ 130      3A202530 
+ 130      325800
+ 131 001f 00       		.align	2
+ 132              	.LC3:
+ 133 0020 2D253032 		.ascii	"-%02X\000"
+ 133      5800
+ 134 0026 0000     		.align	2
+ 135              	.LC4:
+ 136 0028 41707045 		.ascii	"AppEui      : %02X\000"
+ 136      75692020 
+ 136      20202020 
+ 136      3A202530 
+ 136      325800
+ 137 003b 00       		.align	2
+ 138              	.LC5:
+ 139 003c 1B5B306D 		.ascii	"\033[0m\000"
+ 139      00
+ 140 0041 000000   		.align	2
+ 141              	.LC6:
+ 142 0044 4170704B 		.ascii	"AppKey      : Semtech join server used\015\012\000"
+ 142      65792020 
+ 142      20202020 
+ 142      3A205365 
+ 142      6D746563 
+ 143 006d 000000   		.align	2
+ 144              	.LC7:
+ 145 0070 4170704B 		.ascii	"AppKey      : %02X\000"
+ 145      65792020 
+ 145      20202020 
+ 145      3A202530 
+ 145      325800
+ 146 0083 00       		.align	2
+ 147              	.LC8:
+ 148 0084 50696E20 		.ascii	"Pin         : %08X\015\012\015\012\000"
+ 148      20202020 
+ 148      20202020 
+ 148      3A202530 
+ 148      38580D0A 
+ 149              		.section	.text.print_lorawan_keys,"ax",%progbits
+ 150              		.align	1
+ 151              		.global	print_lorawan_keys
+ 152              		.syntax unified
+ 153              		.thumb
+ 154              		.thumb_func
+ 155              		.fpu fpv4-sp-d16
+ 157              	print_lorawan_keys:
+ 158              	.LFB4:
+ 102:../Src/apps/common/apps_utilities.c **** 
+ 103:../Src/apps/common/apps_utilities.c **** void print_lorawan_keys( const uint8_t* dev_eui, const uint8_t* join_eui, const uint8_t* app_key, u
+ 104:../Src/apps/common/apps_utilities.c ****                          const bool use_semtech_join_server )
+ 105:../Src/apps/common/apps_utilities.c **** {
+ARM GAS  /tmp/ccbriRXs.s 			page 6
+
+
+ 159              		.loc 1 105 1
+ 160              		.cfi_startproc
+ 161              		@ args = 4, pretend = 0, frame = 32
+ 162              		@ frame_needed = 1, uses_anonymous_args = 0
+ 163 0000 80B5     		push	{r7, lr}
+ 164              	.LCFI5:
+ 165              		.cfi_def_cfa_offset 8
+ 166              		.cfi_offset 7, -8
+ 167              		.cfi_offset 14, -4
+ 168 0002 88B0     		sub	sp, sp, #32
+ 169              	.LCFI6:
+ 170              		.cfi_def_cfa_offset 40
+ 171 0004 00AF     		add	r7, sp, #0
+ 172              	.LCFI7:
+ 173              		.cfi_def_cfa_register 7
+ 174 0006 F860     		str	r0, [r7, #12]
+ 175 0008 B960     		str	r1, [r7, #8]
+ 176 000a 7A60     		str	r2, [r7, #4]
+ 177 000c 3B60     		str	r3, [r7]
+ 106:../Src/apps/common/apps_utilities.c ****     HAL_DBG_TRACE_PRINTF( "DevEui      : %02X", dev_eui[0] );
+ 178              		.loc 1 106 5
+ 179 000e FB68     		ldr	r3, [r7, #12]
+ 180 0010 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 181 0012 1946     		mov	r1, r3
+ 182 0014 2E48     		ldr	r0, .L17
+ 183 0016 FFF7FEFF 		bl	hal_mcu_trace_print
+ 184              	.LBB3:
+ 107:../Src/apps/common/apps_utilities.c ****     for( int i = 1; i < 8; i++ )
+ 185              		.loc 1 107 14
+ 186 001a 0123     		movs	r3, #1
+ 187 001c FB61     		str	r3, [r7, #28]
+ 188              		.loc 1 107 5
+ 189 001e 0AE0     		b	.L9
+ 190              	.L10:
+ 108:../Src/apps/common/apps_utilities.c ****     {
+ 109:../Src/apps/common/apps_utilities.c ****         HAL_DBG_TRACE_PRINTF( "-%02X", dev_eui[i] );
+ 191              		.loc 1 109 9 discriminator 3
+ 192 0020 FB69     		ldr	r3, [r7, #28]
+ 193 0022 FA68     		ldr	r2, [r7, #12]
+ 194 0024 1344     		add	r3, r3, r2
+ 195 0026 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 196 0028 1946     		mov	r1, r3
+ 197 002a 2A48     		ldr	r0, .L17+4
+ 198 002c FFF7FEFF 		bl	hal_mcu_trace_print
+ 107:../Src/apps/common/apps_utilities.c ****     for( int i = 1; i < 8; i++ )
+ 199              		.loc 1 107 29 discriminator 3
+ 200 0030 FB69     		ldr	r3, [r7, #28]
+ 201 0032 0133     		adds	r3, r3, #1
+ 202 0034 FB61     		str	r3, [r7, #28]
+ 203              	.L9:
+ 107:../Src/apps/common/apps_utilities.c ****     for( int i = 1; i < 8; i++ )
+ 204              		.loc 1 107 5 discriminator 1
+ 205 0036 FB69     		ldr	r3, [r7, #28]
+ 206 0038 072B     		cmp	r3, #7
+ 207 003a F1DD     		ble	.L10
+ 208              	.LBE3:
+ 110:../Src/apps/common/apps_utilities.c ****     }
+ARM GAS  /tmp/ccbriRXs.s 			page 7
+
+
+ 111:../Src/apps/common/apps_utilities.c ****     HAL_DBG_TRACE_PRINTF( "\r\n" );
+ 209              		.loc 1 111 5
+ 210 003c 2648     		ldr	r0, .L17+8
+ 211 003e FFF7FEFF 		bl	hal_mcu_trace_print
+ 112:../Src/apps/common/apps_utilities.c ****     HAL_DBG_TRACE_PRINTF( "AppEui      : %02X", join_eui[0] );
+ 212              		.loc 1 112 5
+ 213 0042 BB68     		ldr	r3, [r7, #8]
+ 214 0044 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 215 0046 1946     		mov	r1, r3
+ 216 0048 2448     		ldr	r0, .L17+12
+ 217 004a FFF7FEFF 		bl	hal_mcu_trace_print
+ 218              	.LBB4:
+ 113:../Src/apps/common/apps_utilities.c ****     for( int i = 1; i < 8; i++ )
+ 219              		.loc 1 113 14
+ 220 004e 0123     		movs	r3, #1
+ 221 0050 BB61     		str	r3, [r7, #24]
+ 222              		.loc 1 113 5
+ 223 0052 0AE0     		b	.L11
+ 224              	.L12:
+ 114:../Src/apps/common/apps_utilities.c ****     {
+ 115:../Src/apps/common/apps_utilities.c ****         HAL_DBG_TRACE_PRINTF( "-%02X", join_eui[i] );
+ 225              		.loc 1 115 9 discriminator 3
+ 226 0054 BB69     		ldr	r3, [r7, #24]
+ 227 0056 BA68     		ldr	r2, [r7, #8]
+ 228 0058 1344     		add	r3, r3, r2
+ 229 005a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 230 005c 1946     		mov	r1, r3
+ 231 005e 1D48     		ldr	r0, .L17+4
+ 232 0060 FFF7FEFF 		bl	hal_mcu_trace_print
+ 113:../Src/apps/common/apps_utilities.c ****     for( int i = 1; i < 8; i++ )
+ 233              		.loc 1 113 29 discriminator 3
+ 234 0064 BB69     		ldr	r3, [r7, #24]
+ 235 0066 0133     		adds	r3, r3, #1
+ 236 0068 BB61     		str	r3, [r7, #24]
+ 237              	.L11:
+ 113:../Src/apps/common/apps_utilities.c ****     for( int i = 1; i < 8; i++ )
+ 238              		.loc 1 113 5 discriminator 1
+ 239 006a BB69     		ldr	r3, [r7, #24]
+ 240 006c 072B     		cmp	r3, #7
+ 241 006e F1DD     		ble	.L12
+ 242              	.LBE4:
+ 116:../Src/apps/common/apps_utilities.c ****     }
+ 117:../Src/apps/common/apps_utilities.c ****     HAL_DBG_TRACE_PRINTF( "\r\n" );
+ 243              		.loc 1 117 5
+ 244 0070 1948     		ldr	r0, .L17+8
+ 245 0072 FFF7FEFF 		bl	hal_mcu_trace_print
+ 118:../Src/apps/common/apps_utilities.c ****     if( use_semtech_join_server )
+ 246              		.loc 1 118 7
+ 247 0076 97F82830 		ldrb	r3, [r7, #40]	@ zero_extendqisi2
+ 248 007a 002B     		cmp	r3, #0
+ 249 007c 06D0     		beq	.L13
+ 119:../Src/apps/common/apps_utilities.c ****     {
+ 120:../Src/apps/common/apps_utilities.c ****         HAL_DBG_TRACE_MSG( "AppKey      : Semtech join server used\r\n" );
+ 250              		.loc 1 120 9
+ 251 007e 1848     		ldr	r0, .L17+16
+ 252 0080 FFF7FEFF 		bl	hal_mcu_trace_print
+ 253 0084 1748     		ldr	r0, .L17+20
+ARM GAS  /tmp/ccbriRXs.s 			page 8
+
+
+ 254 0086 FFF7FEFF 		bl	hal_mcu_trace_print
+ 255 008a 19E0     		b	.L14
+ 256              	.L13:
+ 121:../Src/apps/common/apps_utilities.c ****     }
+ 122:../Src/apps/common/apps_utilities.c ****     else
+ 123:../Src/apps/common/apps_utilities.c ****     {
+ 124:../Src/apps/common/apps_utilities.c ****         HAL_DBG_TRACE_PRINTF( "AppKey      : %02X", app_key[0] );
+ 257              		.loc 1 124 9
+ 258 008c 7B68     		ldr	r3, [r7, #4]
+ 259 008e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 260 0090 1946     		mov	r1, r3
+ 261 0092 1548     		ldr	r0, .L17+24
+ 262 0094 FFF7FEFF 		bl	hal_mcu_trace_print
+ 263              	.LBB5:
+ 125:../Src/apps/common/apps_utilities.c ****         for( int i = 1; i < 16; i++ )
+ 264              		.loc 1 125 18
+ 265 0098 0123     		movs	r3, #1
+ 266 009a 7B61     		str	r3, [r7, #20]
+ 267              		.loc 1 125 9
+ 268 009c 0AE0     		b	.L15
+ 269              	.L16:
+ 126:../Src/apps/common/apps_utilities.c ****         {
+ 127:../Src/apps/common/apps_utilities.c ****             HAL_DBG_TRACE_PRINTF( "-%02X", app_key[i] );
+ 270              		.loc 1 127 13 discriminator 3
+ 271 009e 7B69     		ldr	r3, [r7, #20]
+ 272 00a0 7A68     		ldr	r2, [r7, #4]
+ 273 00a2 1344     		add	r3, r3, r2
+ 274 00a4 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 275 00a6 1946     		mov	r1, r3
+ 276 00a8 0A48     		ldr	r0, .L17+4
+ 277 00aa FFF7FEFF 		bl	hal_mcu_trace_print
+ 125:../Src/apps/common/apps_utilities.c ****         for( int i = 1; i < 16; i++ )
+ 278              		.loc 1 125 34 discriminator 3
+ 279 00ae 7B69     		ldr	r3, [r7, #20]
+ 280 00b0 0133     		adds	r3, r3, #1
+ 281 00b2 7B61     		str	r3, [r7, #20]
+ 282              	.L15:
+ 125:../Src/apps/common/apps_utilities.c ****         for( int i = 1; i < 16; i++ )
+ 283              		.loc 1 125 9 discriminator 1
+ 284 00b4 7B69     		ldr	r3, [r7, #20]
+ 285 00b6 0F2B     		cmp	r3, #15
+ 286 00b8 F1DD     		ble	.L16
+ 287              	.LBE5:
+ 128:../Src/apps/common/apps_utilities.c ****         }
+ 129:../Src/apps/common/apps_utilities.c ****         HAL_DBG_TRACE_PRINTF( "\r\n" );
+ 288              		.loc 1 129 9
+ 289 00ba 0748     		ldr	r0, .L17+8
+ 290 00bc FFF7FEFF 		bl	hal_mcu_trace_print
+ 291              	.L14:
+ 130:../Src/apps/common/apps_utilities.c ****     }
+ 131:../Src/apps/common/apps_utilities.c **** 
+ 132:../Src/apps/common/apps_utilities.c ****     HAL_DBG_TRACE_PRINTF( "Pin         : %08X\r\n\r\n", pin );
+ 292              		.loc 1 132 5
+ 293 00c0 3968     		ldr	r1, [r7]
+ 294 00c2 0A48     		ldr	r0, .L17+28
+ 295 00c4 FFF7FEFF 		bl	hal_mcu_trace_print
+ 133:../Src/apps/common/apps_utilities.c **** }
+ARM GAS  /tmp/ccbriRXs.s 			page 9
+
+
+ 296              		.loc 1 133 1
+ 297 00c8 00BF     		nop
+ 298 00ca 2037     		adds	r7, r7, #32
+ 299              	.LCFI8:
+ 300              		.cfi_def_cfa_offset 8
+ 301 00cc BD46     		mov	sp, r7
+ 302              	.LCFI9:
+ 303              		.cfi_def_cfa_register 13
+ 304              		@ sp needed
+ 305 00ce 80BD     		pop	{r7, pc}
+ 306              	.L18:
+ 307              		.align	2
+ 308              	.L17:
+ 309 00d0 0C000000 		.word	.LC2
+ 310 00d4 20000000 		.word	.LC3
+ 311 00d8 00000000 		.word	.LC0
+ 312 00dc 28000000 		.word	.LC4
+ 313 00e0 3C000000 		.word	.LC5
+ 314 00e4 44000000 		.word	.LC6
+ 315 00e8 70000000 		.word	.LC7
+ 316 00ec 84000000 		.word	.LC8
+ 317              		.cfi_endproc
+ 318              	.LFE4:
+ 320              		.section	.rodata
+ 321 009b 00       		.align	2
+ 322              	.LC9:
+ 323 009c 4D6F6465 		.ascii	"Modem status : \000"
+ 323      6D207374 
+ 323      61747573 
+ 323      203A2000 
+ 324              		.align	2
+ 325              	.LC10:
+ 326 00ac 43524153 		.ascii	"CRASH \000"
+ 326      482000
+ 327 00b3 00       		.align	2
+ 328              	.LC11:
+ 329 00b4 4D555445 		.ascii	"MUTE \000"
+ 329      2000
+ 330 00ba 0000     		.align	2
+ 331              	.LC12:
+ 332 00bc 4A4F494E 		.ascii	"JOINED \000"
+ 332      45442000 
+ 333              		.align	2
+ 334              	.LC13:
+ 335 00c4 53555350 		.ascii	"SUSPEND \000"
+ 335      454E4420 
+ 335      00
+ 336 00cd 000000   		.align	2
+ 337              	.LC14:
+ 338 00d0 55504C4F 		.ascii	"UPLOAD \000"
+ 338      41442000 
+ 339              		.align	2
+ 340              	.LC15:
+ 341 00d8 4A4F494E 		.ascii	"JOINING \000"
+ 341      494E4720 
+ 341      00
+ 342 00e1 000000   		.align	2
+ARM GAS  /tmp/ccbriRXs.s 			page 10
+
+
+ 343              	.LC16:
+ 344 00e4 53545245 		.ascii	"STREAM \000"
+ 344      414D2000 
+ 345              		.align	2
+ 346              	.LC17:
+ 347 00ec 0D0A0D0A 		.ascii	"\015\012\015\012\000"
+ 347      00
+ 348              		.section	.text.modem_status_to_string,"ax",%progbits
+ 349              		.align	1
+ 350              		.global	modem_status_to_string
+ 351              		.syntax unified
+ 352              		.thumb
+ 353              		.thumb_func
+ 354              		.fpu fpv4-sp-d16
+ 356              	modem_status_to_string:
+ 357              	.LFB5:
+ 134:../Src/apps/common/apps_utilities.c **** 
+ 135:../Src/apps/common/apps_utilities.c **** void modem_status_to_string( lr1110_modem_status_t modem_status )
+ 136:../Src/apps/common/apps_utilities.c **** {
+ 358              		.loc 1 136 1
+ 359              		.cfi_startproc
+ 360              		@ args = 0, pretend = 0, frame = 8
+ 361              		@ frame_needed = 1, uses_anonymous_args = 0
+ 362 0000 80B5     		push	{r7, lr}
+ 363              	.LCFI10:
+ 364              		.cfi_def_cfa_offset 8
+ 365              		.cfi_offset 7, -8
+ 366              		.cfi_offset 14, -4
+ 367 0002 82B0     		sub	sp, sp, #8
+ 368              	.LCFI11:
+ 369              		.cfi_def_cfa_offset 16
+ 370 0004 00AF     		add	r7, sp, #0
+ 371              	.LCFI12:
+ 372              		.cfi_def_cfa_register 7
+ 373 0006 0346     		mov	r3, r0
+ 374 0008 FB71     		strb	r3, [r7, #7]
+ 137:../Src/apps/common/apps_utilities.c ****     HAL_DBG_TRACE_MSG( "Modem status : " );
+ 375              		.loc 1 137 5
+ 376 000a 2E48     		ldr	r0, .L27
+ 377 000c FFF7FEFF 		bl	hal_mcu_trace_print
+ 378 0010 2D48     		ldr	r0, .L27+4
+ 379 0012 FFF7FEFF 		bl	hal_mcu_trace_print
+ 138:../Src/apps/common/apps_utilities.c **** 
+ 139:../Src/apps/common/apps_utilities.c ****     if( ( modem_status & LR1110_LORAWAN_CRASH ) == LR1110_LORAWAN_CRASH )
+ 380              		.loc 1 139 24
+ 381 0016 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 382 0018 03F00203 		and	r3, r3, #2
+ 383              		.loc 1 139 7
+ 384 001c 002B     		cmp	r3, #0
+ 385 001e 05D0     		beq	.L20
+ 140:../Src/apps/common/apps_utilities.c ****     {
+ 141:../Src/apps/common/apps_utilities.c ****         HAL_DBG_TRACE_MSG( "CRASH " );
+ 386              		.loc 1 141 9
+ 387 0020 2848     		ldr	r0, .L27
+ 388 0022 FFF7FEFF 		bl	hal_mcu_trace_print
+ 389 0026 2948     		ldr	r0, .L27+8
+ 390 0028 FFF7FEFF 		bl	hal_mcu_trace_print
+ARM GAS  /tmp/ccbriRXs.s 			page 11
+
+
+ 391              	.L20:
+ 142:../Src/apps/common/apps_utilities.c ****     }
+ 143:../Src/apps/common/apps_utilities.c ****     if( ( modem_status & LR1110_LORAWAN_MUTE ) == LR1110_LORAWAN_MUTE )
+ 392              		.loc 1 143 24
+ 393 002c FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 394 002e 03F00403 		and	r3, r3, #4
+ 395              		.loc 1 143 7
+ 396 0032 002B     		cmp	r3, #0
+ 397 0034 05D0     		beq	.L21
+ 144:../Src/apps/common/apps_utilities.c ****     {
+ 145:../Src/apps/common/apps_utilities.c ****         HAL_DBG_TRACE_MSG( "MUTE " );
+ 398              		.loc 1 145 9
+ 399 0036 2348     		ldr	r0, .L27
+ 400 0038 FFF7FEFF 		bl	hal_mcu_trace_print
+ 401 003c 2448     		ldr	r0, .L27+12
+ 402 003e FFF7FEFF 		bl	hal_mcu_trace_print
+ 403              	.L21:
+ 146:../Src/apps/common/apps_utilities.c ****     }
+ 147:../Src/apps/common/apps_utilities.c ****     if( ( modem_status & LR1110_LORAWAN_JOINED ) == LR1110_LORAWAN_JOINED )
+ 404              		.loc 1 147 24
+ 405 0042 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 406 0044 03F00803 		and	r3, r3, #8
+ 407              		.loc 1 147 7
+ 408 0048 002B     		cmp	r3, #0
+ 409 004a 05D0     		beq	.L22
+ 148:../Src/apps/common/apps_utilities.c ****     {
+ 149:../Src/apps/common/apps_utilities.c ****         HAL_DBG_TRACE_MSG( "JOINED " );
+ 410              		.loc 1 149 9
+ 411 004c 1D48     		ldr	r0, .L27
+ 412 004e FFF7FEFF 		bl	hal_mcu_trace_print
+ 413 0052 2048     		ldr	r0, .L27+16
+ 414 0054 FFF7FEFF 		bl	hal_mcu_trace_print
+ 415              	.L22:
+ 150:../Src/apps/common/apps_utilities.c ****     }
+ 151:../Src/apps/common/apps_utilities.c ****     if( ( modem_status & LR1110_LORAWAN_SUSPEND ) == LR1110_LORAWAN_SUSPEND )
+ 416              		.loc 1 151 24
+ 417 0058 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 418 005a 03F01003 		and	r3, r3, #16
+ 419              		.loc 1 151 7
+ 420 005e 002B     		cmp	r3, #0
+ 421 0060 05D0     		beq	.L23
+ 152:../Src/apps/common/apps_utilities.c ****     {
+ 153:../Src/apps/common/apps_utilities.c ****         HAL_DBG_TRACE_MSG( "SUSPEND " );
+ 422              		.loc 1 153 9
+ 423 0062 1848     		ldr	r0, .L27
+ 424 0064 FFF7FEFF 		bl	hal_mcu_trace_print
+ 425 0068 1B48     		ldr	r0, .L27+20
+ 426 006a FFF7FEFF 		bl	hal_mcu_trace_print
+ 427              	.L23:
+ 154:../Src/apps/common/apps_utilities.c ****     }
+ 155:../Src/apps/common/apps_utilities.c ****     if( ( modem_status & LR1110_LORAWAN_UPLOAD ) == LR1110_LORAWAN_UPLOAD )
+ 428              		.loc 1 155 24
+ 429 006e FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 430 0070 03F02003 		and	r3, r3, #32
+ 431              		.loc 1 155 7
+ 432 0074 002B     		cmp	r3, #0
+ 433 0076 05D0     		beq	.L24
+ARM GAS  /tmp/ccbriRXs.s 			page 12
+
+
+ 156:../Src/apps/common/apps_utilities.c ****     {
+ 157:../Src/apps/common/apps_utilities.c ****         HAL_DBG_TRACE_MSG( "UPLOAD " );
+ 434              		.loc 1 157 9
+ 435 0078 1248     		ldr	r0, .L27
+ 436 007a FFF7FEFF 		bl	hal_mcu_trace_print
+ 437 007e 1748     		ldr	r0, .L27+24
+ 438 0080 FFF7FEFF 		bl	hal_mcu_trace_print
+ 439              	.L24:
+ 158:../Src/apps/common/apps_utilities.c ****     }
+ 159:../Src/apps/common/apps_utilities.c ****     if( ( modem_status & LR1110_LORAWAN_JOINING ) == LR1110_LORAWAN_JOINING )
+ 440              		.loc 1 159 24
+ 441 0084 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 442 0086 03F04003 		and	r3, r3, #64
+ 443              		.loc 1 159 7
+ 444 008a 002B     		cmp	r3, #0
+ 445 008c 05D0     		beq	.L25
+ 160:../Src/apps/common/apps_utilities.c ****     {
+ 161:../Src/apps/common/apps_utilities.c ****         HAL_DBG_TRACE_MSG( "JOINING " );
+ 446              		.loc 1 161 9
+ 447 008e 0D48     		ldr	r0, .L27
+ 448 0090 FFF7FEFF 		bl	hal_mcu_trace_print
+ 449 0094 1248     		ldr	r0, .L27+28
+ 450 0096 FFF7FEFF 		bl	hal_mcu_trace_print
+ 451              	.L25:
+ 162:../Src/apps/common/apps_utilities.c ****     }
+ 163:../Src/apps/common/apps_utilities.c ****     if( ( modem_status & LR1110_LORAWAN_STREAM ) == LR1110_LORAWAN_STREAM )
+ 452              		.loc 1 163 50
+ 453 009a 97F90730 		ldrsb	r3, [r7, #7]
+ 454              		.loc 1 163 7
+ 455 009e 002B     		cmp	r3, #0
+ 456 00a0 05DA     		bge	.L26
+ 164:../Src/apps/common/apps_utilities.c ****     {
+ 165:../Src/apps/common/apps_utilities.c ****         HAL_DBG_TRACE_MSG( "STREAM " );
+ 457              		.loc 1 165 9
+ 458 00a2 0848     		ldr	r0, .L27
+ 459 00a4 FFF7FEFF 		bl	hal_mcu_trace_print
+ 460 00a8 0E48     		ldr	r0, .L27+32
+ 461 00aa FFF7FEFF 		bl	hal_mcu_trace_print
+ 462              	.L26:
+ 166:../Src/apps/common/apps_utilities.c ****     }
+ 167:../Src/apps/common/apps_utilities.c **** 
+ 168:../Src/apps/common/apps_utilities.c ****     HAL_DBG_TRACE_MSG( "\r\n\r\n" );
+ 463              		.loc 1 168 5
+ 464 00ae 0548     		ldr	r0, .L27
+ 465 00b0 FFF7FEFF 		bl	hal_mcu_trace_print
+ 466 00b4 0C48     		ldr	r0, .L27+36
+ 467 00b6 FFF7FEFF 		bl	hal_mcu_trace_print
+ 169:../Src/apps/common/apps_utilities.c **** }
+ 468              		.loc 1 169 1
+ 469 00ba 00BF     		nop
+ 470 00bc 0837     		adds	r7, r7, #8
+ 471              	.LCFI13:
+ 472              		.cfi_def_cfa_offset 8
+ 473 00be BD46     		mov	sp, r7
+ 474              	.LCFI14:
+ 475              		.cfi_def_cfa_register 13
+ 476              		@ sp needed
+ARM GAS  /tmp/ccbriRXs.s 			page 13
+
+
+ 477 00c0 80BD     		pop	{r7, pc}
+ 478              	.L28:
+ 479 00c2 00BF     		.align	2
+ 480              	.L27:
+ 481 00c4 3C000000 		.word	.LC5
+ 482 00c8 9C000000 		.word	.LC9
+ 483 00cc AC000000 		.word	.LC10
+ 484 00d0 B4000000 		.word	.LC11
+ 485 00d4 BC000000 		.word	.LC12
+ 486 00d8 C4000000 		.word	.LC13
+ 487 00dc D0000000 		.word	.LC14
+ 488 00e0 D8000000 		.word	.LC15
+ 489 00e4 E4000000 		.word	.LC16
+ 490 00e8 EC000000 		.word	.LC17
+ 491              		.cfi_endproc
+ 492              	.LFE5:
+ 494              		.text
+ 495              	.Letext0:
+ 496              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 497              		.file 3 "/usr/include/newlib/sys/_stdint.h"
+ 498              		.file 4 "../Src/radio/lr1110_modem/src/lr1110_modem_lorawan.h"
+ARM GAS  /tmp/ccbriRXs.s 			page 14
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 apps_utilities.c
+     /tmp/ccbriRXs.s:18     .rodata:0000000000000000 $d
+     /tmp/ccbriRXs.s:25     .text.print_hex_buffer:0000000000000000 $t
+     /tmp/ccbriRXs.s:33     .text.print_hex_buffer:0000000000000000 print_hex_buffer
+     /tmp/ccbriRXs.s:122    .text.print_hex_buffer:0000000000000064 $d
+     /tmp/ccbriRXs.s:150    .text.print_lorawan_keys:0000000000000000 $t
+     /tmp/ccbriRXs.s:157    .text.print_lorawan_keys:0000000000000000 print_lorawan_keys
+     /tmp/ccbriRXs.s:309    .text.print_lorawan_keys:00000000000000d0 $d
+     /tmp/ccbriRXs.s:349    .text.modem_status_to_string:0000000000000000 $t
+     /tmp/ccbriRXs.s:356    .text.modem_status_to_string:0000000000000000 modem_status_to_string
+     /tmp/ccbriRXs.s:481    .text.modem_status_to_string:00000000000000c4 $d
+
+UNDEFINED SYMBOLS
+hal_mcu_trace_print

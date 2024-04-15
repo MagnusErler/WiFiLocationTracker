@@ -1,0 +1,3492 @@
+ARM GAS  /tmp/ccLb7d1r.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"main_lorawan.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.global	adr_custom_list
+  18              		.section	.data.adr_custom_list,"aw"
+  19              		.align	2
+  22              	adr_custom_list:
+  23 0000 05050504 		.ascii	"\005\005\005\004\004\004\003\003\003\002\002\002\001"
+  23      04040303 
+  23      03020202 
+  23      01
+  24 000d 010000   		.ascii	"\001\000\000"
+  25              		.section	.bss.app_data_size,"aw",%nobits
+  28              	app_data_size:
+  29 0000 00       		.space	1
+  30              		.section	.bss.app_data_buffer,"aw",%nobits
+  31              		.align	2
+  34              	app_data_buffer:
+  35 0000 00000000 		.space	242
+  35      00000000 
+  35      00000000 
+  35      00000000 
+  35      00000000 
+  36              		.section	.bss.device_state,"aw",%nobits
+  39              	device_state:
+  40 0000 00       		.space	1
+  41              		.section	.rodata
+  42              		.align	2
+  43              	.LC3:
+  44 0000 1B5B306D 		.ascii	"\033[0m\000"
+  44      00
+  45 0005 000000   		.align	2
+  46              	.LC4:
+  47 0008 0D0A00   		.ascii	"\015\012\000"
+  48 000b 00       		.align	2
+  49              	.LC5:
+  50 000c 1B5B303B 		.ascii	"\033[0;32m\000"
+  50      33326D00 
+  51              		.align	2
+  52              	.LC6:
+  53 0014 494E464F 		.ascii	"INFO : \000"
+  53      203A2000 
+  54              		.align	2
+  55              	.LC7:
+ARM GAS  /tmp/ccLb7d1r.s 			page 2
+
+
+  56 001c 23232323 		.ascii	"###### ===== LoRa Basics Modem-E LoRaWAN Class A/C "
+  56      2323203D 
+  56      3D3D3D3D 
+  56      204C6F52 
+  56      61204261 
+  57 004f 64656D6F 		.ascii	"demo application ==== ######\015\012\015\012\000"
+  57      20617070 
+  57      6C696361 
+  57      74696F6E 
+  57      203D3D3D 
+  58              		.align	2
+  59              	.LC8:
+  60 0070 41505020 		.ascii	"APP VERSION : %d.%d.%d\015\012\015\012\000"
+  60      56455253 
+  60      494F4E20 
+  60      3A202564 
+  60      2E25642E 
+  61 008b 00       		.align	2
+  62              	.LC9:
+  63 008c 1B5B303B 		.ascii	"\033[0;31m\000"
+  63      33316D00 
+  64              		.align	2
+  65              	.LC10:
+  66 0094 4552524F 		.ascii	"ERROR: \000"
+  66      523A2000 
+  67              		.align	2
+  68              	.LC11:
+  69 009c 23232323 		.ascii	"###### ===== LR1110 BOARD INIT FAIL ==== ######\015"
+  69      2323203D 
+  69      3D3D3D3D 
+  69      204C5231 
+  69      31313020 
+  70 00cc 0A0D0A00 		.ascii	"\012\015\012\000"
+  71              		.align	2
+  72              	.LC12:
+  73 00d0 23232323 		.ascii	"###### ===== LR1110 MODEM-E VERSION ==== ######\015"
+  73      2323203D 
+  73      3D3D3D3D 
+  73      204C5231 
+  73      31313020 
+  74 0100 0A0D0A00 		.ascii	"\012\015\012\000"
+  75              		.align	2
+  76              	.LC13:
+  77 0104 4C4F5241 		.ascii	"LORAWAN     : %#04X\015\012\000"
+  77      57414E20 
+  77      20202020 
+  77      3A202523 
+  77      3034580D 
+  78 011a 0000     		.align	2
+  79              	.LC14:
+  80 011c 4649524D 		.ascii	"FIRMWARE    : %#02X\015\012\000"
+  80      57415245 
+  80      20202020 
+  80      3A202523 
+  80      3032580D 
+  81 0132 0000     		.align	2
+  82              	.LC15:
+ARM GAS  /tmp/ccLb7d1r.s 			page 3
+
+
+  83 0134 424F4F54 		.ascii	"BOOTLOADER  : %#02X\015\012\000"
+  83      4C4F4144 
+  83      45522020 
+  83      3A202523 
+  83      3032580D 
+  84 014a 0000     		.align	2
+  85              	.LC16:
+  86 014c 23232323 		.ascii	"###### ===== LORAWAN INIT ERROR ==== ######\015\012"
+  86      2323203D 
+  86      3D3D3D3D 
+  86      204C4F52 
+  86      4157414E 
+  87 0179 0D0A00   		.ascii	"\015\012\000"
+  88              		.align	2
+  89              	.LC17:
+  90 017c 23232323 		.ascii	"###### ===== LR1110 MODEM-E INIT ==== ######\015\012"
+  90      2323203D 
+  90      3D3D3D3D 
+  90      204C5231 
+  90      31313020 
+  91 01aa 0D0A00   		.ascii	"\015\012\000"
+  92 01ad 000000   		.align	2
+  93              	.LC18:
+  94 01b0 0D0A206C 		.ascii	"\015\012 lr1110_modem_get_charge returned RC : %d \015"
+  94      72313131 
+  94      305F6D6F 
+  94      64656D5F 
+  94      6765745F 
+  95 01dd 0A00     		.ascii	"\012\000"
+  96 01df 00       		.align	2
+  97              	.LC19:
+  98 01e0 6C723131 		.ascii	"lr1110_modem_set_alarm_timer : %d s\015\012\015\012"
+  98      31305F6D 
+  98      6F64656D 
+  98      5F736574 
+  98      5F616C61 
+  99 0207 00       		.ascii	"\000"
+ 100              		.align	2
+ 101              	.LC0:
+ 102 0208 00000000 		.ascii	"\000\000\000\000\000\000\000\000"
+ 102      00000000 
+ 103              		.align	2
+ 104              	.LC1:
+ 105 0210 0016C001 		.ascii	"\000\026\300\001\377\376\000\001"
+ 105      FFFE0001 
+ 106              		.align	2
+ 107              	.LC2:
+ 108 0218 00000000 		.ascii	"\000\000\000\000\000\000\000\000\000\000\000\000\000"
+ 108      00000000 
+ 108      00000000 
+ 108      00
+ 109 0225 000000   		.ascii	"\000\000\000"
+ 110              		.section	.text.main,"ax",%progbits
+ 111              		.align	1
+ 112              		.global	main
+ 113              		.arch armv7e-m
+ 114              		.syntax unified
+ARM GAS  /tmp/ccLb7d1r.s 			page 4
+
+
+ 115              		.thumb
+ 116              		.thumb_func
+ 117              		.fpu fpv4-sp-d16
+ 119              	main:
+ 120              	.LFB590:
+ 121              		.file 1 "../Src/apps/LoRaWAN/main_lorawan.c"
+   1:../Src/apps/LoRaWAN/main_lorawan.c **** /*!
+   2:../Src/apps/LoRaWAN/main_lorawan.c ****  * @ingroup   apps_lorawan
+   3:../Src/apps/LoRaWAN/main_lorawan.c ****  * @file      main_lorawan.c
+   4:../Src/apps/LoRaWAN/main_lorawan.c ****  *
+   5:../Src/apps/LoRaWAN/main_lorawan.c ****  * @brief     lr1110 Modem-E Class A/C device implementation
+   6:../Src/apps/LoRaWAN/main_lorawan.c ****  *
+   7:../Src/apps/LoRaWAN/main_lorawan.c ****  * @copyright
+   8:../Src/apps/LoRaWAN/main_lorawan.c ****  * @parblock
+   9:../Src/apps/LoRaWAN/main_lorawan.c ****  * Revised BSD License
+  10:../Src/apps/LoRaWAN/main_lorawan.c ****  * Copyright Semtech Corporation 2021. All rights reserved.
+  11:../Src/apps/LoRaWAN/main_lorawan.c ****  *
+  12:../Src/apps/LoRaWAN/main_lorawan.c ****  * Redistribution and use in source and binary forms, with or without
+  13:../Src/apps/LoRaWAN/main_lorawan.c ****  * modification, are permitted provided that the following conditions are met:
+  14:../Src/apps/LoRaWAN/main_lorawan.c ****  *     * Redistributions of source code must retain the above copyright
+  15:../Src/apps/LoRaWAN/main_lorawan.c ****  *       notice, this list of conditions and the following disclaimer.
+  16:../Src/apps/LoRaWAN/main_lorawan.c ****  *     * Redistributions in binary form must reproduce the above copyright
+  17:../Src/apps/LoRaWAN/main_lorawan.c ****  *       notice, this list of conditions and the following disclaimer in the
+  18:../Src/apps/LoRaWAN/main_lorawan.c ****  *       documentation and/or other materials provided with the distribution.
+  19:../Src/apps/LoRaWAN/main_lorawan.c ****  *     * Neither the name of the Semtech corporation nor the
+  20:../Src/apps/LoRaWAN/main_lorawan.c ****  *       names of its contributors may be used to endorse or promote products
+  21:../Src/apps/LoRaWAN/main_lorawan.c ****  *       derived from this software without specific prior written permission.
+  22:../Src/apps/LoRaWAN/main_lorawan.c ****  *
+  23:../Src/apps/LoRaWAN/main_lorawan.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  24:../Src/apps/LoRaWAN/main_lorawan.c ****  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  25:../Src/apps/LoRaWAN/main_lorawan.c ****  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  26:../Src/apps/LoRaWAN/main_lorawan.c ****  * ARE DISCLAIMED. IN NO EVENT SHALL SEMTECH CORPORATION BE LIABLE FOR ANY
+  27:../Src/apps/LoRaWAN/main_lorawan.c ****  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+  28:../Src/apps/LoRaWAN/main_lorawan.c ****  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  29:../Src/apps/LoRaWAN/main_lorawan.c ****  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+  30:../Src/apps/LoRaWAN/main_lorawan.c ****  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  31:../Src/apps/LoRaWAN/main_lorawan.c ****  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  32:../Src/apps/LoRaWAN/main_lorawan.c ****  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  33:../Src/apps/LoRaWAN/main_lorawan.c ****  * @endparblock
+  34:../Src/apps/LoRaWAN/main_lorawan.c ****  */
+  35:../Src/apps/LoRaWAN/main_lorawan.c **** 
+  36:../Src/apps/LoRaWAN/main_lorawan.c **** /*!
+  37:../Src/apps/LoRaWAN/main_lorawan.c ****  * @addtogroup apps_lorawan
+  38:../Src/apps/LoRaWAN/main_lorawan.c ****  * LR1110 Modem-E Class A/C device implementation
+  39:../Src/apps/LoRaWAN/main_lorawan.c ****  * @{
+  40:../Src/apps/LoRaWAN/main_lorawan.c ****  */
+  41:../Src/apps/LoRaWAN/main_lorawan.c **** 
+  42:../Src/apps/LoRaWAN/main_lorawan.c **** /*
+  43:../Src/apps/LoRaWAN/main_lorawan.c ****  * -----------------------------------------------------------------------------
+  44:../Src/apps/LoRaWAN/main_lorawan.c ****  * --- DEPENDENCIES ------------------------------------------------------------
+  45:../Src/apps/LoRaWAN/main_lorawan.c ****  */
+  46:../Src/apps/LoRaWAN/main_lorawan.c **** 
+  47:../Src/apps/LoRaWAN/main_lorawan.c **** #include <stdio.h>
+  48:../Src/apps/LoRaWAN/main_lorawan.c **** #include "main_lorawan.h"
+  49:../Src/apps/LoRaWAN/main_lorawan.c **** #include "lorawan_commissioning.h"
+  50:../Src/apps/LoRaWAN/main_lorawan.c **** #include "smtc_utilities.h"
+  51:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ARM GAS  /tmp/ccLb7d1r.s 			page 5
+
+
+  52:../Src/apps/LoRaWAN/main_lorawan.c **** #include "apps_utilities.h"
+  53:../Src/apps/LoRaWAN/main_lorawan.c **** 
+  54:../Src/apps/LoRaWAN/main_lorawan.c **** #include "lr1110_modem_board.h"
+  55:../Src/apps/LoRaWAN/main_lorawan.c **** 
+  56:../Src/apps/LoRaWAN/main_lorawan.c **** 
+  57:../Src/apps/LoRaWAN/main_lorawan.c **** 
+  58:../Src/apps/LoRaWAN/main_lorawan.c **** /*
+  59:../Src/apps/LoRaWAN/main_lorawan.c ****  * -----------------------------------------------------------------------------
+  60:../Src/apps/LoRaWAN/main_lorawan.c ****  * --- PRIVATE MACROS-----------------------------------------------------------
+  61:../Src/apps/LoRaWAN/main_lorawan.c ****  */
+  62:../Src/apps/LoRaWAN/main_lorawan.c **** 
+  63:../Src/apps/LoRaWAN/main_lorawan.c **** /*
+  64:../Src/apps/LoRaWAN/main_lorawan.c ****  * -----------------------------------------------------------------------------
+  65:../Src/apps/LoRaWAN/main_lorawan.c ****  * --- PRIVATE CONSTANTS -------------------------------------------------------
+  66:../Src/apps/LoRaWAN/main_lorawan.c ****  */
+  67:../Src/apps/LoRaWAN/main_lorawan.c **** 
+  68:../Src/apps/LoRaWAN/main_lorawan.c **** /*
+  69:../Src/apps/LoRaWAN/main_lorawan.c ****  * -----------------------------------------------------------------------------
+  70:../Src/apps/LoRaWAN/main_lorawan.c ****  * --- PRIVATE TYPES -----------------------------------------------------------
+  71:../Src/apps/LoRaWAN/main_lorawan.c ****  */
+  72:../Src/apps/LoRaWAN/main_lorawan.c **** 
+  73:../Src/apps/LoRaWAN/main_lorawan.c **** /*
+  74:../Src/apps/LoRaWAN/main_lorawan.c ****  * -----------------------------------------------------------------------------
+  75:../Src/apps/LoRaWAN/main_lorawan.c ****  * --- PRIVATE VARIABLES -------------------------------------------------------
+  76:../Src/apps/LoRaWAN/main_lorawan.c ****  */
+  77:../Src/apps/LoRaWAN/main_lorawan.c **** 
+  78:../Src/apps/LoRaWAN/main_lorawan.c **** /*!
+  79:../Src/apps/LoRaWAN/main_lorawan.c ****  * @brief Radio hardware and global parameters
+  80:../Src/apps/LoRaWAN/main_lorawan.c ****  */
+  81:../Src/apps/LoRaWAN/main_lorawan.c **** extern lr1110_t lr1110;
+  82:../Src/apps/LoRaWAN/main_lorawan.c **** 
+  83:../Src/apps/LoRaWAN/main_lorawan.c **** /*!
+  84:../Src/apps/LoRaWAN/main_lorawan.c ****  * @brief User application data size
+  85:../Src/apps/LoRaWAN/main_lorawan.c ****  */
+  86:../Src/apps/LoRaWAN/main_lorawan.c **** static uint8_t app_data_size = 0;
+  87:../Src/apps/LoRaWAN/main_lorawan.c **** 
+  88:../Src/apps/LoRaWAN/main_lorawan.c **** /*!
+  89:../Src/apps/LoRaWAN/main_lorawan.c ****  * @brief User application data
+  90:../Src/apps/LoRaWAN/main_lorawan.c ****  */
+  91:../Src/apps/LoRaWAN/main_lorawan.c **** static uint8_t app_data_buffer[LORAWAN_APP_DATA_MAX_SIZE];
+  92:../Src/apps/LoRaWAN/main_lorawan.c **** 
+  93:../Src/apps/LoRaWAN/main_lorawan.c **** /*!
+  94:../Src/apps/LoRaWAN/main_lorawan.c ****  * @brief Device states
+  95:../Src/apps/LoRaWAN/main_lorawan.c ****  */
+  96:../Src/apps/LoRaWAN/main_lorawan.c **** static enum device_state_e {
+  97:../Src/apps/LoRaWAN/main_lorawan.c ****     DEVICE_STATE_INIT,
+  98:../Src/apps/LoRaWAN/main_lorawan.c ****     DEVICE_STATE_JOIN,
+  99:../Src/apps/LoRaWAN/main_lorawan.c ****     DEVICE_STATE_SEND,
+ 100:../Src/apps/LoRaWAN/main_lorawan.c ****     DEVICE_STATE_CYCLE,
+ 101:../Src/apps/LoRaWAN/main_lorawan.c ****     DEVICE_STATE_SLEEP
+ 102:../Src/apps/LoRaWAN/main_lorawan.c **** } device_state = DEVICE_STATE_INIT;
+ 103:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 104:../Src/apps/LoRaWAN/main_lorawan.c **** /*
+ 105:../Src/apps/LoRaWAN/main_lorawan.c ****  * -----------------------------------------------------------------------------
+ 106:../Src/apps/LoRaWAN/main_lorawan.c ****  * --- PRIVATE FUNCTIONS DECLARATION -------------------------------------------
+ 107:../Src/apps/LoRaWAN/main_lorawan.c ****  */
+ 108:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ARM GAS  /tmp/ccLb7d1r.s 			page 6
+
+
+ 109:../Src/apps/LoRaWAN/main_lorawan.c **** /*!
+ 110:../Src/apps/LoRaWAN/main_lorawan.c ****  * Executes the network Join request
+ 111:../Src/apps/LoRaWAN/main_lorawan.c ****  */
+ 112:../Src/apps/LoRaWAN/main_lorawan.c **** static void join_network( void );
+ 113:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 114:../Src/apps/LoRaWAN/main_lorawan.c **** /*!
+ 115:../Src/apps/LoRaWAN/main_lorawan.c ****  * @brief   Send an application frame on LoRaWAN port defined by LORAWAN_APP_PORT
+ 116:../Src/apps/LoRaWAN/main_lorawan.c ****  *
+ 117:../Src/apps/LoRaWAN/main_lorawan.c ****  * @param [in] tx_frame_buffer   buffer containing the LoRaWAN buffer
+ 118:../Src/apps/LoRaWAN/main_lorawan.c ****  * @param [in] tx_frame_buffer_size   payload len buffer
+ 119:../Src/apps/LoRaWAN/main_lorawan.c ****  * @param [in] confirmed   send a confirmed or unconfirmed uplink [false : unconfirmed / true : con
+ 120:../Src/apps/LoRaWAN/main_lorawan.c ****  *
+ 121:../Src/apps/LoRaWAN/main_lorawan.c ****  * @returns  [true: frame could be send, false: error]
+ 122:../Src/apps/LoRaWAN/main_lorawan.c ****  */
+ 123:../Src/apps/LoRaWAN/main_lorawan.c **** static bool send_frame( const uint8_t* tx_frame_buffer, const uint8_t tx_frame_buffer_size,
+ 124:../Src/apps/LoRaWAN/main_lorawan.c ****                         const lr1110_modem_uplink_type_t confirmed );
+ 125:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 126:../Src/apps/LoRaWAN/main_lorawan.c **** /*!
+ 127:../Src/apps/LoRaWAN/main_lorawan.c ****  * @brief Parse the received downlink
+ 128:../Src/apps/LoRaWAN/main_lorawan.c ****  *
+ 129:../Src/apps/LoRaWAN/main_lorawan.c ****  * Demonstrates how a TLV-encoded command sequence received by downlink can
+ 130:../Src/apps/LoRaWAN/main_lorawan.c ****  *  control the state of an LED.
+ 131:../Src/apps/LoRaWAN/main_lorawan.c ****  * Can easily be extended to handle other commands received on the same port
+ 132:../Src/apps/LoRaWAN/main_lorawan.c ****  *  or another port.
+ 133:../Src/apps/LoRaWAN/main_lorawan.c ****  *
+ 134:../Src/apps/LoRaWAN/main_lorawan.c ****  * @param [in] port LoRaWAN port
+ 135:../Src/apps/LoRaWAN/main_lorawan.c ****  * @param [in] payload Payload Buffer
+ 136:../Src/apps/LoRaWAN/main_lorawan.c ****  * @param [in] size Payload size
+ 137:../Src/apps/LoRaWAN/main_lorawan.c ****  */
+ 138:../Src/apps/LoRaWAN/main_lorawan.c **** static void parse_downlink_frame( uint8_t port, const uint8_t* payload, uint8_t size );
+ 139:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 140:../Src/apps/LoRaWAN/main_lorawan.c **** /*!
+ 141:../Src/apps/LoRaWAN/main_lorawan.c ****  * @brief Lorawan default init
+ 142:../Src/apps/LoRaWAN/main_lorawan.c ****  *
+ 143:../Src/apps/LoRaWAN/main_lorawan.c ****  * @param [in] region LoRaWAN region to use \ref lr1110_modem_regions_t
+ 144:../Src/apps/LoRaWAN/main_lorawan.c ****  * @param [in] lorawan_class LoRaWAN class to use \ref lr1110_modem_classes_t
+ 145:../Src/apps/LoRaWAN/main_lorawan.c ****  *
+ 146:../Src/apps/LoRaWAN/main_lorawan.c ****  * @returns Operation status
+ 147:../Src/apps/LoRaWAN/main_lorawan.c ****  */
+ 148:../Src/apps/LoRaWAN/main_lorawan.c **** lr1110_modem_response_code_t lorawan_init( lr1110_modem_regions_t region, lr1110_modem_classes_t lo
+ 149:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 150:../Src/apps/LoRaWAN/main_lorawan.c **** /*!
+ 151:../Src/apps/LoRaWAN/main_lorawan.c ****  * @addtogroup lr1110_evt_callback
+ 152:../Src/apps/LoRaWAN/main_lorawan.c ****  * LR1110 event callbacks
+ 153:../Src/apps/LoRaWAN/main_lorawan.c ****  * @{
+ 154:../Src/apps/LoRaWAN/main_lorawan.c ****  */
+ 155:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 156:../Src/apps/LoRaWAN/main_lorawan.c **** /*!
+ 157:../Src/apps/LoRaWAN/main_lorawan.c ****  * @brief Reset event callback
+ 158:../Src/apps/LoRaWAN/main_lorawan.c ****  *
+ 159:../Src/apps/LoRaWAN/main_lorawan.c ****  * @param [in] reset_count reset counter from the modem
+ 160:../Src/apps/LoRaWAN/main_lorawan.c ****  */
+ 161:../Src/apps/LoRaWAN/main_lorawan.c **** static void lr1110_modem_reset_event( uint16_t reset_count );
+ 162:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 163:../Src/apps/LoRaWAN/main_lorawan.c **** /*!
+ 164:../Src/apps/LoRaWAN/main_lorawan.c ****  * @brief Network Joined event callback
+ 165:../Src/apps/LoRaWAN/main_lorawan.c ****  */
+ARM GAS  /tmp/ccLb7d1r.s 			page 7
+
+
+ 166:../Src/apps/LoRaWAN/main_lorawan.c **** static void lr1110_modem_network_joined( void );
+ 167:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 168:../Src/apps/LoRaWAN/main_lorawan.c **** /*!
+ 169:../Src/apps/LoRaWAN/main_lorawan.c ****  * @brief Join Fail event callback
+ 170:../Src/apps/LoRaWAN/main_lorawan.c ****  */
+ 171:../Src/apps/LoRaWAN/main_lorawan.c **** static void lr1110_modem_join_fail( void );
+ 172:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 173:../Src/apps/LoRaWAN/main_lorawan.c **** /*!
+ 174:../Src/apps/LoRaWAN/main_lorawan.c ****  * @brief Alarm event callback
+ 175:../Src/apps/LoRaWAN/main_lorawan.c ****  */
+ 176:../Src/apps/LoRaWAN/main_lorawan.c **** static void lr1110_modem_alarm( void );
+ 177:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 178:../Src/apps/LoRaWAN/main_lorawan.c **** /*!
+ 179:../Src/apps/LoRaWAN/main_lorawan.c ****  * @brief Tx done event callback
+ 180:../Src/apps/LoRaWAN/main_lorawan.c ****  *
+ 181:../Src/apps/LoRaWAN/main_lorawan.c ****  * @param [in] status tx done status \ref lr1110_modem_tx_done_event_t
+ 182:../Src/apps/LoRaWAN/main_lorawan.c ****  */
+ 183:../Src/apps/LoRaWAN/main_lorawan.c **** static void lr1110_modem_tx_done( lr1110_modem_tx_done_event_t status );
+ 184:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 185:../Src/apps/LoRaWAN/main_lorawan.c **** /*!
+ 186:../Src/apps/LoRaWAN/main_lorawan.c ****  * @brief Down data event callback.
+ 187:../Src/apps/LoRaWAN/main_lorawan.c ****  *
+ 188:../Src/apps/LoRaWAN/main_lorawan.c ****  * @param [in] rssi    rssi in signed value in dBm + 64
+ 189:../Src/apps/LoRaWAN/main_lorawan.c ****  * @param [in] snr     snr signed value in 0.25 dB steps
+ 190:../Src/apps/LoRaWAN/main_lorawan.c ****  * @param [in] flags   rx flags \see down_data_flag_t
+ 191:../Src/apps/LoRaWAN/main_lorawan.c ****  * @param [in] port    LoRaWAN port
+ 192:../Src/apps/LoRaWAN/main_lorawan.c ****  * @param [in] payload Received buffer pointer
+ 193:../Src/apps/LoRaWAN/main_lorawan.c ****  * @param [in] size    Received buffer size
+ 194:../Src/apps/LoRaWAN/main_lorawan.c ****  */
+ 195:../Src/apps/LoRaWAN/main_lorawan.c **** static void lr1110_modem_down_data( int8_t rssi, int8_t snr, lr1110_modem_down_data_flag_t flags, u
+ 196:../Src/apps/LoRaWAN/main_lorawan.c ****                                     const uint8_t* payload, uint8_t size );
+ 197:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 198:../Src/apps/LoRaWAN/main_lorawan.c **** /*!
+ 199:../Src/apps/LoRaWAN/main_lorawan.c ****  * @brief Stream done event callback
+ 200:../Src/apps/LoRaWAN/main_lorawan.c ****  *
+ 201:../Src/apps/LoRaWAN/main_lorawan.c ****  * @param [in] mute    modem mute status \ref lr1110_modem_mute_t
+ 202:../Src/apps/LoRaWAN/main_lorawan.c ****  */
+ 203:../Src/apps/LoRaWAN/main_lorawan.c **** static void lr1110_modem_mute( lr1110_modem_mute_t mute );
+ 204:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 205:../Src/apps/LoRaWAN/main_lorawan.c **** /*!
+ 206:../Src/apps/LoRaWAN/main_lorawan.c ****  * @brief Set conf event callback
+ 207:../Src/apps/LoRaWAN/main_lorawan.c ****  *
+ 208:../Src/apps/LoRaWAN/main_lorawan.c ****  * @param [in] tag   \ref lr1110_modem_event_setconf_tag_t
+ 209:../Src/apps/LoRaWAN/main_lorawan.c ****  */
+ 210:../Src/apps/LoRaWAN/main_lorawan.c **** static void lr1110_modem_set_conf( lr1110_modem_event_setconf_tag_t tag );
+ 211:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 212:../Src/apps/LoRaWAN/main_lorawan.c **** /*!
+ 213:../Src/apps/LoRaWAN/main_lorawan.c ****  * @brief Automatic switch from mobile to static ADR when connection timeout occurs event callback
+ 214:../Src/apps/LoRaWAN/main_lorawan.c ****  */
+ 215:../Src/apps/LoRaWAN/main_lorawan.c **** static void lr1110_modem_adr_mobile_to_static( void );
+ 216:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 217:../Src/apps/LoRaWAN/main_lorawan.c **** /*!
+ 218:../Src/apps/LoRaWAN/main_lorawan.c ****  * @brief New link ADR request event callback
+ 219:../Src/apps/LoRaWAN/main_lorawan.c ****  */
+ 220:../Src/apps/LoRaWAN/main_lorawan.c **** static void lr1110_modem_new_link_adr( void );
+ 221:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 222:../Src/apps/LoRaWAN/main_lorawan.c **** /*!
+ARM GAS  /tmp/ccLb7d1r.s 			page 8
+
+
+ 223:../Src/apps/LoRaWAN/main_lorawan.c ****  * @brief No event exists event callback
+ 224:../Src/apps/LoRaWAN/main_lorawan.c ****  */
+ 225:../Src/apps/LoRaWAN/main_lorawan.c **** static void lr1110_modem_no_event( void );
+ 226:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 227:../Src/apps/LoRaWAN/main_lorawan.c **** /*!
+ 228:../Src/apps/LoRaWAN/main_lorawan.c ****  * @}
+ 229:../Src/apps/LoRaWAN/main_lorawan.c ****  */
+ 230:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 231:../Src/apps/LoRaWAN/main_lorawan.c **** /*
+ 232:../Src/apps/LoRaWAN/main_lorawan.c ****  * -----------------------------------------------------------------------------
+ 233:../Src/apps/LoRaWAN/main_lorawan.c ****  * --- PUBLIC FUNCTIONS DEFINITION ---------------------------------------------
+ 234:../Src/apps/LoRaWAN/main_lorawan.c ****  */
+ 235:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 236:../Src/apps/LoRaWAN/main_lorawan.c **** /**
+ 237:../Src/apps/LoRaWAN/main_lorawan.c ****  * @brief Main application entry point.
+ 238:../Src/apps/LoRaWAN/main_lorawan.c ****  */
+ 239:../Src/apps/LoRaWAN/main_lorawan.c **** int main( void )
+ 240:../Src/apps/LoRaWAN/main_lorawan.c **** {
+ 122              		.loc 1 240 1
+ 123              		.cfi_startproc
+ 124              		@ args = 0, pretend = 0, frame = 128
+ 125              		@ frame_needed = 1, uses_anonymous_args = 0
+ 126 0000 90B5     		push	{r4, r7, lr}
+ 127              	.LCFI0:
+ 128              		.cfi_def_cfa_offset 12
+ 129              		.cfi_offset 4, -12
+ 130              		.cfi_offset 7, -8
+ 131              		.cfi_offset 14, -4
+ 132 0002 A3B0     		sub	sp, sp, #140
+ 133              	.LCFI1:
+ 134              		.cfi_def_cfa_offset 152
+ 135 0004 02AF     		add	r7, sp, #8
+ 136              	.LCFI2:
+ 137              		.cfi_def_cfa 7, 144
+ 241:../Src/apps/LoRaWAN/main_lorawan.c ****     lr1110_modem_response_code_t  modem_response_code = LR1110_MODEM_RESPONSE_CODE_OK;
+ 138              		.loc 1 241 35
+ 139 0006 0023     		movs	r3, #0
+ 140 0008 87F87F30 		strb	r3, [r7, #127]
+ 242:../Src/apps/LoRaWAN/main_lorawan.c ****     lr1110_modem_version_t        modem;
+ 243:../Src/apps/LoRaWAN/main_lorawan.c ****     lr1110_modem_event_callback_t lr1110_modem_event_callback = { NULL };
+ 141              		.loc 1 243 35
+ 142 000c 07F12C03 		add	r3, r7, #44
+ 143 0010 4022     		movs	r2, #64
+ 144 0012 0021     		movs	r1, #0
+ 145 0014 1846     		mov	r0, r3
+ 146 0016 FFF7FEFF 		bl	memset
+ 244:../Src/apps/LoRaWAN/main_lorawan.c ****     uint32_t                      pin;
+ 245:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 246:../Src/apps/LoRaWAN/main_lorawan.c ****     uint8_t dev_eui[LORAWAN_DEVICE_EUI_LEN] = LORAWAN_DEVICE_EUI;
+ 147              		.loc 1 246 13
+ 148 001a AC4A     		ldr	r2, .L19
+ 149 001c 07F12003 		add	r3, r7, #32
+ 150 0020 92E80300 		ldm	r2, {r0, r1}
+ 151 0024 83E80300 		stm	r3, {r0, r1}
+ 247:../Src/apps/LoRaWAN/main_lorawan.c ****     uint8_t join_eui[LORAWAN_JOIN_EUI_LEN]  = LORAWAN_JOIN_EUI;
+ 152              		.loc 1 247 13
+ 153 0028 A94A     		ldr	r2, .L19+4
+ARM GAS  /tmp/ccLb7d1r.s 			page 9
+
+
+ 154 002a 07F11803 		add	r3, r7, #24
+ 155 002e 92E80300 		ldm	r2, {r0, r1}
+ 156 0032 83E80300 		stm	r3, {r0, r1}
+ 248:../Src/apps/LoRaWAN/main_lorawan.c ****     uint8_t app_key[LORAWAN_APP_KEY_LEN]    = LORAWAN_APP_KEY;
+ 157              		.loc 1 248 13
+ 158 0036 A74B     		ldr	r3, .L19+8
+ 159 0038 07F10804 		add	r4, r7, #8
+ 160 003c 0FCB     		ldm	r3, {r0, r1, r2, r3}
+ 161 003e 84E80F00 		stm	r4, {r0, r1, r2, r3}
+ 249:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 250:../Src/apps/LoRaWAN/main_lorawan.c ****     /* Init board */
+ 251:../Src/apps/LoRaWAN/main_lorawan.c ****     hal_mcu_init( );
+ 162              		.loc 1 251 5
+ 163 0042 FFF7FEFF 		bl	hal_mcu_init
+ 252:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 253:../Src/apps/LoRaWAN/main_lorawan.c ****     /* Board is initialized */
+ 254:../Src/apps/LoRaWAN/main_lorawan.c ****     //leds_blink( LED_ALL_MASK, 100, 2, true );
+ 255:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 256:../Src/apps/LoRaWAN/main_lorawan.c ****     HAL_DBG_TRACE_MSG( "\r\n" );
+ 164              		.loc 1 256 5
+ 165 0046 A448     		ldr	r0, .L19+12
+ 166 0048 FFF7FEFF 		bl	hal_mcu_trace_print
+ 167 004c A348     		ldr	r0, .L19+16
+ 168 004e FFF7FEFF 		bl	hal_mcu_trace_print
+ 257:../Src/apps/LoRaWAN/main_lorawan.c ****     HAL_DBG_TRACE_INFO( "###### ===== LoRa Basics Modem-E LoRaWAN Class A/C demo application ==== #
+ 169              		.loc 1 257 5
+ 170 0052 A348     		ldr	r0, .L19+20
+ 171 0054 FFF7FEFF 		bl	hal_mcu_trace_print
+ 172 0058 A248     		ldr	r0, .L19+24
+ 173 005a FFF7FEFF 		bl	hal_mcu_trace_print
+ 174 005e A248     		ldr	r0, .L19+28
+ 175 0060 FFF7FEFF 		bl	hal_mcu_trace_print
+ 176 0064 9C48     		ldr	r0, .L19+12
+ 177 0066 FFF7FEFF 		bl	hal_mcu_trace_print
+ 258:../Src/apps/LoRaWAN/main_lorawan.c ****     HAL_DBG_TRACE_PRINTF( "APP VERSION : %d.%d.%d\r\n\r\n", MAJOR_APP_VERSION, MINOR_APP_VERSION,
+ 178              		.loc 1 258 5
+ 179 006a 0023     		movs	r3, #0
+ 180 006c 0522     		movs	r2, #5
+ 181 006e 0121     		movs	r1, #1
+ 182 0070 9E48     		ldr	r0, .L19+32
+ 183 0072 FFF7FEFF 		bl	hal_mcu_trace_print
+ 259:../Src/apps/LoRaWAN/main_lorawan.c ****                           SUB_MINOR_APP_VERSION );
+ 260:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 261:../Src/apps/LoRaWAN/main_lorawan.c ****     /* Init LR1110 modem-e event */
+ 262:../Src/apps/LoRaWAN/main_lorawan.c ****     memset( &lr1110_modem_event_callback, 0, sizeof( lr1110_modem_event_callback ) );
+ 184              		.loc 1 262 5
+ 185 0076 07F12C03 		add	r3, r7, #44
+ 186 007a 4022     		movs	r2, #64
+ 187 007c 0021     		movs	r1, #0
+ 188 007e 1846     		mov	r0, r3
+ 189 0080 FFF7FEFF 		bl	memset
+ 263:../Src/apps/LoRaWAN/main_lorawan.c ****     lr1110_modem_event_callback.reset                = lr1110_modem_reset_event;
+ 190              		.loc 1 263 54
+ 191 0084 9A4B     		ldr	r3, .L19+36
+ 192 0086 FB62     		str	r3, [r7, #44]
+ 264:../Src/apps/LoRaWAN/main_lorawan.c ****     lr1110_modem_event_callback.alarm                = lr1110_modem_alarm;
+ 193              		.loc 1 264 54
+ARM GAS  /tmp/ccLb7d1r.s 			page 10
+
+
+ 194 0088 9A4B     		ldr	r3, .L19+40
+ 195 008a 3B63     		str	r3, [r7, #48]
+ 265:../Src/apps/LoRaWAN/main_lorawan.c ****     lr1110_modem_event_callback.joined               = lr1110_modem_network_joined;
+ 196              		.loc 1 265 54
+ 197 008c 9A4B     		ldr	r3, .L19+44
+ 198 008e 7B63     		str	r3, [r7, #52]
+ 266:../Src/apps/LoRaWAN/main_lorawan.c ****     lr1110_modem_event_callback.join_fail            = lr1110_modem_join_fail;
+ 199              		.loc 1 266 54
+ 200 0090 9A4B     		ldr	r3, .L19+48
+ 201 0092 BB63     		str	r3, [r7, #56]
+ 267:../Src/apps/LoRaWAN/main_lorawan.c ****     lr1110_modem_event_callback.tx_done              = lr1110_modem_tx_done;
+ 202              		.loc 1 267 54
+ 203 0094 9A4B     		ldr	r3, .L19+52
+ 204 0096 FB63     		str	r3, [r7, #60]
+ 268:../Src/apps/LoRaWAN/main_lorawan.c ****     lr1110_modem_event_callback.down_data            = lr1110_modem_down_data;
+ 205              		.loc 1 268 54
+ 206 0098 9A4B     		ldr	r3, .L19+56
+ 207 009a 3B64     		str	r3, [r7, #64]
+ 269:../Src/apps/LoRaWAN/main_lorawan.c ****     lr1110_modem_event_callback.set_conf             = lr1110_modem_set_conf;
+ 208              		.loc 1 269 54
+ 209 009c 9A4B     		ldr	r3, .L19+60
+ 210 009e BB64     		str	r3, [r7, #72]
+ 270:../Src/apps/LoRaWAN/main_lorawan.c ****     lr1110_modem_event_callback.mute                 = lr1110_modem_mute;
+ 211              		.loc 1 270 54
+ 212 00a0 9A4B     		ldr	r3, .L19+64
+ 213 00a2 FB64     		str	r3, [r7, #76]
+ 271:../Src/apps/LoRaWAN/main_lorawan.c ****     lr1110_modem_event_callback.adr_mobile_to_static = lr1110_modem_adr_mobile_to_static;
+ 214              		.loc 1 271 54
+ 215 00a4 9A4B     		ldr	r3, .L19+68
+ 216 00a6 3B66     		str	r3, [r7, #96]
+ 272:../Src/apps/LoRaWAN/main_lorawan.c ****     lr1110_modem_event_callback.new_link_adr         = lr1110_modem_new_link_adr;
+ 217              		.loc 1 272 54
+ 218 00a8 9A4B     		ldr	r3, .L19+72
+ 219 00aa 7B66     		str	r3, [r7, #100]
+ 273:../Src/apps/LoRaWAN/main_lorawan.c ****     lr1110_modem_event_callback.no_event             = lr1110_modem_no_event;
+ 220              		.loc 1 273 54
+ 221 00ac 9A4B     		ldr	r3, .L19+76
+ 222 00ae BB66     		str	r3, [r7, #104]
+ 274:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 275:../Src/apps/LoRaWAN/main_lorawan.c ****     if( lr1110_modem_board_init( &lr1110, &lr1110_modem_event_callback ) != LR1110_MODEM_RESPONSE_C
+ 223              		.loc 1 275 9
+ 224 00b0 07F12C03 		add	r3, r7, #44
+ 225 00b4 1946     		mov	r1, r3
+ 226 00b6 9948     		ldr	r0, .L19+80
+ 227 00b8 FFF7FEFF 		bl	lr1110_modem_board_init
+ 228 00bc 0346     		mov	r3, r0
+ 229              		.loc 1 275 7
+ 230 00be 002B     		cmp	r3, #0
+ 231 00c0 0BD0     		beq	.L2
+ 276:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 277:../Src/apps/LoRaWAN/main_lorawan.c ****         HAL_DBG_TRACE_ERROR( "###### ===== LR1110 BOARD INIT FAIL ==== ######\r\n\r\n" );
+ 232              		.loc 1 277 9
+ 233 00c2 9748     		ldr	r0, .L19+84
+ 234 00c4 FFF7FEFF 		bl	hal_mcu_trace_print
+ 235 00c8 9648     		ldr	r0, .L19+88
+ 236 00ca FFF7FEFF 		bl	hal_mcu_trace_print
+ 237 00ce 9648     		ldr	r0, .L19+92
+ARM GAS  /tmp/ccLb7d1r.s 			page 11
+
+
+ 238 00d0 FFF7FEFF 		bl	hal_mcu_trace_print
+ 239 00d4 8048     		ldr	r0, .L19+12
+ 240 00d6 FFF7FEFF 		bl	hal_mcu_trace_print
+ 241              	.L2:
+ 278:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 279:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 280:../Src/apps/LoRaWAN/main_lorawan.c ****     /* LR1110 modem-e version */
+ 281:../Src/apps/LoRaWAN/main_lorawan.c ****     lr1110_modem_get_version( &lr1110, &modem );
+ 242              		.loc 1 281 5
+ 243 00da 07F16C03 		add	r3, r7, #108
+ 244 00de 1946     		mov	r1, r3
+ 245 00e0 8E48     		ldr	r0, .L19+80
+ 246 00e2 FFF7FEFF 		bl	lr1110_modem_get_version
+ 282:../Src/apps/LoRaWAN/main_lorawan.c ****     HAL_DBG_TRACE_INFO( "###### ===== LR1110 MODEM-E VERSION ==== ######\r\n\r\n" );
+ 247              		.loc 1 282 5
+ 248 00e6 7E48     		ldr	r0, .L19+20
+ 249 00e8 FFF7FEFF 		bl	hal_mcu_trace_print
+ 250 00ec 7D48     		ldr	r0, .L19+24
+ 251 00ee FFF7FEFF 		bl	hal_mcu_trace_print
+ 252 00f2 8E48     		ldr	r0, .L19+96
+ 253 00f4 FFF7FEFF 		bl	hal_mcu_trace_print
+ 254 00f8 7748     		ldr	r0, .L19+12
+ 255 00fa FFF7FEFF 		bl	hal_mcu_trace_print
+ 283:../Src/apps/LoRaWAN/main_lorawan.c ****     HAL_DBG_TRACE_PRINTF( "LORAWAN     : %#04X\r\n", modem.lorawan );
+ 256              		.loc 1 283 5
+ 257 00fe B7F87830 		ldrh	r3, [r7, #120]
+ 258 0102 1946     		mov	r1, r3
+ 259 0104 8A48     		ldr	r0, .L19+100
+ 260 0106 FFF7FEFF 		bl	hal_mcu_trace_print
+ 284:../Src/apps/LoRaWAN/main_lorawan.c ****     HAL_DBG_TRACE_PRINTF( "FIRMWARE    : %#02X\r\n", modem.firmware );
+ 261              		.loc 1 284 5
+ 262 010a 7B6F     		ldr	r3, [r7, #116]
+ 263 010c 1946     		mov	r1, r3
+ 264 010e 8948     		ldr	r0, .L19+104
+ 265 0110 FFF7FEFF 		bl	hal_mcu_trace_print
+ 285:../Src/apps/LoRaWAN/main_lorawan.c ****     HAL_DBG_TRACE_PRINTF( "BOOTLOADER  : %#02X\r\n", modem.bootloader );
+ 266              		.loc 1 285 5
+ 267 0114 FB6E     		ldr	r3, [r7, #108]
+ 268 0116 1946     		mov	r1, r3
+ 269 0118 8748     		ldr	r0, .L19+108
+ 270 011a FFF7FEFF 		bl	hal_mcu_trace_print
+ 286:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 287:../Src/apps/LoRaWAN/main_lorawan.c **** #if( USE_PRODUCTION_KEYS == 1 )
+ 288:../Src/apps/LoRaWAN/main_lorawan.c ****     /* When the production keys are used, DevEUI = ChipEUI and JoinEUI is the one defined in lorawa
+ 289:../Src/apps/LoRaWAN/main_lorawan.c ****     modem_response_code = lr1110_modem_get_chip_eui( &lr1110, dev_eui );
+ 271              		.loc 1 289 27
+ 272 011e 07F12003 		add	r3, r7, #32
+ 273 0122 1946     		mov	r1, r3
+ 274 0124 7D48     		ldr	r0, .L19+80
+ 275 0126 FFF7FEFF 		bl	lr1110_modem_get_chip_eui
+ 276 012a 0346     		mov	r3, r0
+ 277 012c 87F87F30 		strb	r3, [r7, #127]
+ 290:../Src/apps/LoRaWAN/main_lorawan.c **** #endif
+ 291:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 292:../Src/apps/LoRaWAN/main_lorawan.c ****     /* Basic LoRaWAN configuration */
+ 293:../Src/apps/LoRaWAN/main_lorawan.c ****     if( lorawan_init( LORAWAN_REGION_USED, LORAWAN_CLASS_USED ) != LR1110_MODEM_RESPONSE_CODE_OK )
+ 278              		.loc 1 293 9
+ARM GAS  /tmp/ccLb7d1r.s 			page 12
+
+
+ 279 0130 0021     		movs	r1, #0
+ 280 0132 0120     		movs	r0, #1
+ 281 0134 FFF7FEFF 		bl	lorawan_init
+ 282 0138 0346     		mov	r3, r0
+ 283              		.loc 1 293 7
+ 284 013a 002B     		cmp	r3, #0
+ 285 013c 0BD0     		beq	.L3
+ 294:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 295:../Src/apps/LoRaWAN/main_lorawan.c ****         HAL_DBG_TRACE_ERROR( "###### ===== LORAWAN INIT ERROR ==== ######\r\n\r\n" );
+ 286              		.loc 1 295 9
+ 287 013e 7848     		ldr	r0, .L19+84
+ 288 0140 FFF7FEFF 		bl	hal_mcu_trace_print
+ 289 0144 7748     		ldr	r0, .L19+88
+ 290 0146 FFF7FEFF 		bl	hal_mcu_trace_print
+ 291 014a 7C48     		ldr	r0, .L19+112
+ 292 014c FFF7FEFF 		bl	hal_mcu_trace_print
+ 293 0150 6148     		ldr	r0, .L19+12
+ 294 0152 FFF7FEFF 		bl	hal_mcu_trace_print
+ 295              	.L3:
+ 296:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 297:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 298:../Src/apps/LoRaWAN/main_lorawan.c ****     /* Configure the partial low power mode */
+ 299:../Src/apps/LoRaWAN/main_lorawan.c ****     hal_mcu_partial_sleep_enable( APP_PARTIAL_SLEEP );
+ 296              		.loc 1 299 5
+ 297 0156 0120     		movs	r0, #1
+ 298 0158 FFF7FEFF 		bl	hal_mcu_partial_sleep_enable
+ 299              	.L16:
+ 300:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 301:../Src/apps/LoRaWAN/main_lorawan.c ****     while( 1 )
+ 302:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 303:../Src/apps/LoRaWAN/main_lorawan.c ****         /* Process Event */
+ 304:../Src/apps/LoRaWAN/main_lorawan.c ****         if( lr1110.event.callback != NULL )
+ 300              		.loc 1 304 25
+ 301 015c 6F4B     		ldr	r3, .L19+80
+ 302 015e 1B6B     		ldr	r3, [r3, #48]
+ 303              		.loc 1 304 11
+ 304 0160 002B     		cmp	r3, #0
+ 305 0162 02D0     		beq	.L4
+ 305:../Src/apps/LoRaWAN/main_lorawan.c ****         {
+ 306:../Src/apps/LoRaWAN/main_lorawan.c ****             lr1110_modem_event_process( &lr1110 );
+ 306              		.loc 1 306 13
+ 307 0164 6D48     		ldr	r0, .L19+80
+ 308 0166 FFF7FEFF 		bl	lr1110_modem_event_process
+ 309              	.L4:
+ 307:../Src/apps/LoRaWAN/main_lorawan.c ****         }
+ 308:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 309:../Src/apps/LoRaWAN/main_lorawan.c ****         switch( device_state )
+ 310              		.loc 1 309 9
+ 311 016a 754B     		ldr	r3, .L19+116
+ 312 016c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 313 016e 042B     		cmp	r3, #4
+ 314 0170 00F2A580 		bhi	.L5
+ 315 0174 01A2     		adr	r2, .L7
+ 316 0176 52F823F0 		ldr	pc, [r2, r3, lsl #2]
+ 317 017a 00BF     		.p2align 2
+ 318              	.L7:
+ 319 017c 91010000 		.word	.L11+1
+ARM GAS  /tmp/ccLb7d1r.s 			page 13
+
+
+ 320 0180 F3010000 		.word	.L10+1
+ 321 0184 15020000 		.word	.L9+1
+ 322 0188 81020000 		.word	.L14+1
+ 323 018c A7020000 		.word	.L6+1
+ 324              		.p2align 1
+ 325              	.L11:
+ 310:../Src/apps/LoRaWAN/main_lorawan.c ****         {
+ 311:../Src/apps/LoRaWAN/main_lorawan.c ****         case DEVICE_STATE_INIT:
+ 312:../Src/apps/LoRaWAN/main_lorawan.c ****         {
+ 313:../Src/apps/LoRaWAN/main_lorawan.c ****             HAL_DBG_TRACE_INFO( "###### ===== LR1110 MODEM-E INIT ==== ######\r\n\r\n" );
+ 326              		.loc 1 313 13
+ 327 0190 5348     		ldr	r0, .L19+20
+ 328 0192 FFF7FEFF 		bl	hal_mcu_trace_print
+ 329 0196 5348     		ldr	r0, .L19+24
+ 330 0198 FFF7FEFF 		bl	hal_mcu_trace_print
+ 331 019c 6948     		ldr	r0, .L19+120
+ 332 019e FFF7FEFF 		bl	hal_mcu_trace_print
+ 333 01a2 4D48     		ldr	r0, .L19+12
+ 334 01a4 FFF7FEFF 		bl	hal_mcu_trace_print
+ 314:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 315:../Src/apps/LoRaWAN/main_lorawan.c ****             /* Set Keys */
+ 316:../Src/apps/LoRaWAN/main_lorawan.c ****             modem_response_code = lr1110_modem_set_dev_eui( &lr1110, dev_eui );
+ 335              		.loc 1 316 35
+ 336 01a8 07F12003 		add	r3, r7, #32
+ 337 01ac 1946     		mov	r1, r3
+ 338 01ae 5B48     		ldr	r0, .L19+80
+ 339 01b0 FFF7FEFF 		bl	lr1110_modem_set_dev_eui
+ 340 01b4 0346     		mov	r3, r0
+ 341 01b6 87F87F30 		strb	r3, [r7, #127]
+ 317:../Src/apps/LoRaWAN/main_lorawan.c ****             modem_response_code = lr1110_modem_set_join_eui( &lr1110, join_eui );
+ 342              		.loc 1 317 35
+ 343 01ba 07F11803 		add	r3, r7, #24
+ 344 01be 1946     		mov	r1, r3
+ 345 01c0 5648     		ldr	r0, .L19+80
+ 346 01c2 FFF7FEFF 		bl	lr1110_modem_set_join_eui
+ 347 01c6 0346     		mov	r3, r0
+ 348 01c8 87F87F30 		strb	r3, [r7, #127]
+ 318:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 319:../Src/apps/LoRaWAN/main_lorawan.c **** #if( USE_SEMTECH_JOIN_SERVER == 0 )
+ 320:../Src/apps/LoRaWAN/main_lorawan.c ****             modem_response_code = lr1110_modem_set_app_key( &lr1110, app_key );
+ 321:../Src/apps/LoRaWAN/main_lorawan.c **** #else
+ 322:../Src/apps/LoRaWAN/main_lorawan.c ****             modem_response_code = lr1110_modem_derive_keys( &lr1110 );
+ 349              		.loc 1 322 35
+ 350 01cc 5348     		ldr	r0, .L19+80
+ 351 01ce FFF7FEFF 		bl	lr1110_modem_derive_keys
+ 352 01d2 0346     		mov	r3, r0
+ 353 01d4 87F87F30 		strb	r3, [r7, #127]
+ 323:../Src/apps/LoRaWAN/main_lorawan.c ****             modem_response_code = lr1110_modem_get_pin( &lr1110, &pin );
+ 354              		.loc 1 323 35
+ 355 01d8 07F12803 		add	r3, r7, #40
+ 356 01dc 1946     		mov	r1, r3
+ 357 01de 4F48     		ldr	r0, .L19+80
+ 358 01e0 FFF7FEFF 		bl	lr1110_modem_get_pin
+ 359 01e4 0346     		mov	r3, r0
+ 360 01e6 87F87F30 		strb	r3, [r7, #127]
+ 324:../Src/apps/LoRaWAN/main_lorawan.c **** #endif
+ 325:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ARM GAS  /tmp/ccLb7d1r.s 			page 14
+
+
+ 326:../Src/apps/LoRaWAN/main_lorawan.c ****             device_state = DEVICE_STATE_JOIN;
+ 361              		.loc 1 326 26
+ 362 01ea 554B     		ldr	r3, .L19+116
+ 363 01ec 0122     		movs	r2, #1
+ 364 01ee 1A70     		strb	r2, [r3]
+ 327:../Src/apps/LoRaWAN/main_lorawan.c ****             break;
+ 365              		.loc 1 327 13
+ 366 01f0 6AE0     		b	.L12
+ 367              	.L10:
+ 328:../Src/apps/LoRaWAN/main_lorawan.c ****         }
+ 329:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 330:../Src/apps/LoRaWAN/main_lorawan.c ****         case DEVICE_STATE_JOIN:
+ 331:../Src/apps/LoRaWAN/main_lorawan.c ****         {
+ 332:../Src/apps/LoRaWAN/main_lorawan.c ****             /* Display used keys */
+ 333:../Src/apps/LoRaWAN/main_lorawan.c ****             print_lorawan_keys( dev_eui, join_eui, app_key, pin, USE_SEMTECH_JOIN_SERVER );
+ 368              		.loc 1 333 13
+ 369 01f2 BB6A     		ldr	r3, [r7, #40]
+ 370 01f4 07F10802 		add	r2, r7, #8
+ 371 01f8 07F11801 		add	r1, r7, #24
+ 372 01fc 07F12000 		add	r0, r7, #32
+ 373 0200 0124     		movs	r4, #1
+ 374 0202 0094     		str	r4, [sp]
+ 375 0204 FFF7FEFF 		bl	print_lorawan_keys
+ 334:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 335:../Src/apps/LoRaWAN/main_lorawan.c ****             join_network( );
+ 376              		.loc 1 335 13
+ 377 0208 FFF7FEFF 		bl	join_network
+ 336:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 337:../Src/apps/LoRaWAN/main_lorawan.c ****             device_state = DEVICE_STATE_CYCLE;
+ 378              		.loc 1 337 26
+ 379 020c 4C4B     		ldr	r3, .L19+116
+ 380 020e 0322     		movs	r2, #3
+ 381 0210 1A70     		strb	r2, [r3]
+ 338:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 339:../Src/apps/LoRaWAN/main_lorawan.c ****             break;
+ 382              		.loc 1 339 13
+ 383 0212 59E0     		b	.L12
+ 384              	.L9:
+ 385              	.LBB2:
+ 340:../Src/apps/LoRaWAN/main_lorawan.c ****         }
+ 341:../Src/apps/LoRaWAN/main_lorawan.c ****         case DEVICE_STATE_SEND:
+ 342:../Src/apps/LoRaWAN/main_lorawan.c ****         {
+ 343:../Src/apps/LoRaWAN/main_lorawan.c ****             /* Send LR1110 modem-e charge */
+ 344:../Src/apps/LoRaWAN/main_lorawan.c ****             uint32_t charge     = 0;
+ 386              		.loc 1 344 22
+ 387 0214 0023     		movs	r3, #0
+ 388 0216 7B60     		str	r3, [r7, #4]
+ 345:../Src/apps/LoRaWAN/main_lorawan.c ****             modem_response_code = lr1110_modem_get_charge( &lr1110, &charge );
+ 389              		.loc 1 345 35
+ 390 0218 3B1D     		adds	r3, r7, #4
+ 391 021a 1946     		mov	r1, r3
+ 392 021c 3F48     		ldr	r0, .L19+80
+ 393 021e FFF7FEFF 		bl	lr1110_modem_get_charge
+ 394 0222 0346     		mov	r3, r0
+ 395 0224 87F87F30 		strb	r3, [r7, #127]
+ 346:../Src/apps/LoRaWAN/main_lorawan.c ****             if( modem_response_code != ( lr1110_modem_response_code_t ) LR1110_MODEM_HAL_STATUS_OK 
+ 396              		.loc 1 346 15
+ARM GAS  /tmp/ccLb7d1r.s 			page 15
+
+
+ 397 0228 97F87F30 		ldrb	r3, [r7, #127]	@ zero_extendqisi2
+ 398 022c 002B     		cmp	r3, #0
+ 399 022e 05D0     		beq	.L13
+ 347:../Src/apps/LoRaWAN/main_lorawan.c ****             {
+ 348:../Src/apps/LoRaWAN/main_lorawan.c ****                 HAL_DBG_TRACE_PRINTF( "\r\n lr1110_modem_get_charge returned RC : %d \r\n", modem_r
+ 400              		.loc 1 348 17
+ 401 0230 97F87F30 		ldrb	r3, [r7, #127]	@ zero_extendqisi2
+ 402 0234 1946     		mov	r1, r3
+ 403 0236 4448     		ldr	r0, .L19+124
+ 404 0238 FFF7FEFF 		bl	hal_mcu_trace_print
+ 405              	.L13:
+ 349:../Src/apps/LoRaWAN/main_lorawan.c ****             }
+ 350:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 351:../Src/apps/LoRaWAN/main_lorawan.c ****             app_data_buffer[0] = charge;
+ 406              		.loc 1 351 32
+ 407 023c 7B68     		ldr	r3, [r7, #4]
+ 408 023e DAB2     		uxtb	r2, r3
+ 409 0240 424B     		ldr	r3, .L19+128
+ 410 0242 1A70     		strb	r2, [r3]
+ 352:../Src/apps/LoRaWAN/main_lorawan.c ****             app_data_buffer[1] = charge >> 8;
+ 411              		.loc 1 352 41
+ 412 0244 7B68     		ldr	r3, [r7, #4]
+ 413 0246 1B0A     		lsrs	r3, r3, #8
+ 414              		.loc 1 352 32
+ 415 0248 DAB2     		uxtb	r2, r3
+ 416 024a 404B     		ldr	r3, .L19+128
+ 417 024c 5A70     		strb	r2, [r3, #1]
+ 353:../Src/apps/LoRaWAN/main_lorawan.c ****             app_data_buffer[2] = charge >> 16;
+ 418              		.loc 1 353 41
+ 419 024e 7B68     		ldr	r3, [r7, #4]
+ 420 0250 1B0C     		lsrs	r3, r3, #16
+ 421              		.loc 1 353 32
+ 422 0252 DAB2     		uxtb	r2, r3
+ 423 0254 3D4B     		ldr	r3, .L19+128
+ 424 0256 9A70     		strb	r2, [r3, #2]
+ 354:../Src/apps/LoRaWAN/main_lorawan.c ****             app_data_buffer[3] = charge >> 24;
+ 425              		.loc 1 354 41
+ 426 0258 7B68     		ldr	r3, [r7, #4]
+ 427 025a 1B0E     		lsrs	r3, r3, #24
+ 428              		.loc 1 354 32
+ 429 025c DAB2     		uxtb	r2, r3
+ 430 025e 3B4B     		ldr	r3, .L19+128
+ 431 0260 DA70     		strb	r2, [r3, #3]
+ 355:../Src/apps/LoRaWAN/main_lorawan.c ****             app_data_size      = 4;
+ 432              		.loc 1 355 32
+ 433 0262 3B4B     		ldr	r3, .L19+132
+ 434 0264 0422     		movs	r2, #4
+ 435 0266 1A70     		strb	r2, [r3]
+ 356:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 357:../Src/apps/LoRaWAN/main_lorawan.c ****             /* Send the next frame */
+ 358:../Src/apps/LoRaWAN/main_lorawan.c ****             send_frame( app_data_buffer, app_data_size,
+ 436              		.loc 1 358 13
+ 437 0268 394B     		ldr	r3, .L19+132
+ 438 026a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 439 026c 0022     		movs	r2, #0
+ 440 026e 1946     		mov	r1, r3
+ 441 0270 3648     		ldr	r0, .L19+128
+ARM GAS  /tmp/ccLb7d1r.s 			page 16
+
+
+ 442 0272 FFF7FEFF 		bl	send_frame
+ 359:../Src/apps/LoRaWAN/main_lorawan.c ****                         LORAWAN_CONFIRMED_MSG_ON ? LR1110_MODEM_UPLINK_CONFIRMED : LR1110_MODEM_UPL
+ 360:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 361:../Src/apps/LoRaWAN/main_lorawan.c ****             device_state = DEVICE_STATE_CYCLE;
+ 443              		.loc 1 361 26
+ 444 0276 324B     		ldr	r3, .L19+116
+ 445 0278 0322     		movs	r2, #3
+ 446 027a 1A70     		strb	r2, [r3]
+ 362:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 363:../Src/apps/LoRaWAN/main_lorawan.c ****             break;
+ 447              		.loc 1 363 13
+ 448 027c 24E0     		b	.L12
+ 449              	.L17:
+ 450              	.LBE2:
+ 364:../Src/apps/LoRaWAN/main_lorawan.c ****         }
+ 365:../Src/apps/LoRaWAN/main_lorawan.c ****         case DEVICE_STATE_CYCLE:
+ 451              		.loc 1 365 9
+ 452 027e 00BF     		nop
+ 453              	.L14:
+ 366:../Src/apps/LoRaWAN/main_lorawan.c ****         {
+ 367:../Src/apps/LoRaWAN/main_lorawan.c ****             /* Schedule next packet transmission */
+ 368:../Src/apps/LoRaWAN/main_lorawan.c ****             do
+ 369:../Src/apps/LoRaWAN/main_lorawan.c ****             {
+ 370:../Src/apps/LoRaWAN/main_lorawan.c ****                 modem_response_code = lr1110_modem_set_alarm_timer( &lr1110, APP_TX_DUTYCYCLE / 100
+ 454              		.loc 1 370 39 discriminator 1
+ 455 0280 1421     		movs	r1, #20
+ 456 0282 2648     		ldr	r0, .L19+80
+ 457 0284 FFF7FEFF 		bl	lr1110_modem_set_alarm_timer
+ 458 0288 0346     		mov	r3, r0
+ 459 028a 87F87F30 		strb	r3, [r7, #127]
+ 371:../Src/apps/LoRaWAN/main_lorawan.c ****             } while( modem_response_code != LR1110_MODEM_RESPONSE_CODE_OK );
+ 460              		.loc 1 371 13 discriminator 1
+ 461 028e 97F87F30 		ldrb	r3, [r7, #127]	@ zero_extendqisi2
+ 462 0292 002B     		cmp	r3, #0
+ 463 0294 F3D1     		bne	.L17
+ 372:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 373:../Src/apps/LoRaWAN/main_lorawan.c ****             HAL_DBG_TRACE_PRINTF( "lr1110_modem_set_alarm_timer : %d s\r\n\r\n", APP_TX_DUTYCYCLE /
+ 464              		.loc 1 373 13
+ 465 0296 1421     		movs	r1, #20
+ 466 0298 2E48     		ldr	r0, .L19+136
+ 467 029a FFF7FEFF 		bl	hal_mcu_trace_print
+ 374:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 375:../Src/apps/LoRaWAN/main_lorawan.c ****             device_state = DEVICE_STATE_SLEEP;
+ 468              		.loc 1 375 26
+ 469 029e 284B     		ldr	r3, .L19+116
+ 470 02a0 0422     		movs	r2, #4
+ 471 02a2 1A70     		strb	r2, [r3]
+ 376:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 377:../Src/apps/LoRaWAN/main_lorawan.c ****             break;
+ 472              		.loc 1 377 13
+ 473 02a4 10E0     		b	.L12
+ 474              	.L6:
+ 378:../Src/apps/LoRaWAN/main_lorawan.c ****         }
+ 379:../Src/apps/LoRaWAN/main_lorawan.c ****         case DEVICE_STATE_SLEEP:
+ 380:../Src/apps/LoRaWAN/main_lorawan.c ****         {
+ 381:../Src/apps/LoRaWAN/main_lorawan.c ****             /* go in low power */
+ 382:../Src/apps/LoRaWAN/main_lorawan.c ****             if( lr1110_modem_board_read_event_line( &lr1110 ) == false )
+ARM GAS  /tmp/ccLb7d1r.s 			page 17
+
+
+ 475              		.loc 1 382 17
+ 476 02a6 1D48     		ldr	r0, .L19+80
+ 477 02a8 FFF7FEFF 		bl	lr1110_modem_board_read_event_line
+ 478 02ac 0346     		mov	r3, r0
+ 479              		.loc 1 382 63
+ 480 02ae 83F00103 		eor	r3, r3, #1
+ 481 02b2 DBB2     		uxtb	r3, r3
+ 482              		.loc 1 382 15
+ 483 02b4 002B     		cmp	r3, #0
+ 484 02b6 06D0     		beq	.L18
+ 383:../Src/apps/LoRaWAN/main_lorawan.c ****             {
+ 384:../Src/apps/LoRaWAN/main_lorawan.c ****                 hal_mcu_low_power_handler( );
+ 485              		.loc 1 384 17
+ 486 02b8 FFF7FEFF 		bl	hal_mcu_low_power_handler
+ 385:../Src/apps/LoRaWAN/main_lorawan.c ****             }
+ 386:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 387:../Src/apps/LoRaWAN/main_lorawan.c ****             break;
+ 487              		.loc 1 387 13
+ 488 02bc 03E0     		b	.L18
+ 489              	.L5:
+ 388:../Src/apps/LoRaWAN/main_lorawan.c ****         }
+ 389:../Src/apps/LoRaWAN/main_lorawan.c ****         default:
+ 390:../Src/apps/LoRaWAN/main_lorawan.c ****         {
+ 391:../Src/apps/LoRaWAN/main_lorawan.c ****             device_state = DEVICE_STATE_INIT;
+ 490              		.loc 1 391 26
+ 491 02be 204B     		ldr	r3, .L19+116
+ 492 02c0 0022     		movs	r2, #0
+ 493 02c2 1A70     		strb	r2, [r3]
+ 392:../Src/apps/LoRaWAN/main_lorawan.c ****             break;
+ 494              		.loc 1 392 13
+ 495 02c4 00E0     		b	.L12
+ 496              	.L18:
+ 387:../Src/apps/LoRaWAN/main_lorawan.c ****         }
+ 497              		.loc 1 387 13
+ 498 02c6 00BF     		nop
+ 499              	.L12:
+ 304:../Src/apps/LoRaWAN/main_lorawan.c ****         {
+ 500              		.loc 1 304 11
+ 501 02c8 48E7     		b	.L16
+ 502              	.L20:
+ 503 02ca 00BF     		.align	2
+ 504              	.L19:
+ 505 02cc 08020000 		.word	.LC0
+ 506 02d0 10020000 		.word	.LC1
+ 507 02d4 18020000 		.word	.LC2
+ 508 02d8 00000000 		.word	.LC3
+ 509 02dc 08000000 		.word	.LC4
+ 510 02e0 0C000000 		.word	.LC5
+ 511 02e4 14000000 		.word	.LC6
+ 512 02e8 1C000000 		.word	.LC7
+ 513 02ec 70000000 		.word	.LC8
+ 514 02f0 00000000 		.word	lr1110_modem_reset_event
+ 515 02f4 00000000 		.word	lr1110_modem_alarm
+ 516 02f8 00000000 		.word	lr1110_modem_network_joined
+ 517 02fc 00000000 		.word	lr1110_modem_join_fail
+ 518 0300 00000000 		.word	lr1110_modem_tx_done
+ 519 0304 00000000 		.word	lr1110_modem_down_data
+ARM GAS  /tmp/ccLb7d1r.s 			page 18
+
+
+ 520 0308 00000000 		.word	lr1110_modem_set_conf
+ 521 030c 00000000 		.word	lr1110_modem_mute
+ 522 0310 00000000 		.word	lr1110_modem_adr_mobile_to_static
+ 523 0314 00000000 		.word	lr1110_modem_new_link_adr
+ 524 0318 00000000 		.word	lr1110_modem_no_event
+ 525 031c 00000000 		.word	lr1110
+ 526 0320 8C000000 		.word	.LC9
+ 527 0324 94000000 		.word	.LC10
+ 528 0328 9C000000 		.word	.LC11
+ 529 032c D0000000 		.word	.LC12
+ 530 0330 04010000 		.word	.LC13
+ 531 0334 1C010000 		.word	.LC14
+ 532 0338 34010000 		.word	.LC15
+ 533 033c 4C010000 		.word	.LC16
+ 534 0340 00000000 		.word	device_state
+ 535 0344 7C010000 		.word	.LC17
+ 536 0348 B0010000 		.word	.LC18
+ 537 034c 00000000 		.word	app_data_buffer
+ 538 0350 00000000 		.word	app_data_size
+ 539 0354 E0010000 		.word	.LC19
+ 540              		.cfi_endproc
+ 541              	.LFE590:
+ 543              		.section	.rodata
+ 544              		.align	2
+ 545              	.LC20:
+ 546 0228 23232323 		.ascii	"###### ===== JOINING ==== ######\015\012\015\012\000"
+ 546      2323203D 
+ 546      3D3D3D3D 
+ 546      204A4F49 
+ 546      4E494E47 
+ 547 024d 000000   		.align	2
+ 548              	.LC21:
+ 549 0250 23232323 		.ascii	"###### ===== JOINING CMD ERROR %d==== ######\015\012"
+ 549      2323203D 
+ 549      3D3D3D3D 
+ 549      204A4F49 
+ 549      4E494E47 
+ 550 027e 0D0A00   		.ascii	"\015\012\000"
+ 551              		.section	.text.join_network,"ax",%progbits
+ 552              		.align	1
+ 553              		.syntax unified
+ 554              		.thumb
+ 555              		.thumb_func
+ 556              		.fpu fpv4-sp-d16
+ 558              	join_network:
+ 559              	.LFB591:
+ 393:../Src/apps/LoRaWAN/main_lorawan.c ****         }
+ 394:../Src/apps/LoRaWAN/main_lorawan.c ****         }
+ 395:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 396:../Src/apps/LoRaWAN/main_lorawan.c **** }
+ 397:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 398:../Src/apps/LoRaWAN/main_lorawan.c **** /*
+ 399:../Src/apps/LoRaWAN/main_lorawan.c ****  * -----------------------------------------------------------------------------
+ 400:../Src/apps/LoRaWAN/main_lorawan.c ****  * --- PRIVATE FUNCTIONS DEFINITION --------------------------------------------
+ 401:../Src/apps/LoRaWAN/main_lorawan.c ****  */
+ 402:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 403:../Src/apps/LoRaWAN/main_lorawan.c **** static void join_network( void )
+ARM GAS  /tmp/ccLb7d1r.s 			page 19
+
+
+ 404:../Src/apps/LoRaWAN/main_lorawan.c **** {
+ 560              		.loc 1 404 1
+ 561              		.cfi_startproc
+ 562              		@ args = 0, pretend = 0, frame = 8
+ 563              		@ frame_needed = 1, uses_anonymous_args = 0
+ 564 0000 80B5     		push	{r7, lr}
+ 565              	.LCFI3:
+ 566              		.cfi_def_cfa_offset 8
+ 567              		.cfi_offset 7, -8
+ 568              		.cfi_offset 14, -4
+ 569 0002 82B0     		sub	sp, sp, #8
+ 570              	.LCFI4:
+ 571              		.cfi_def_cfa_offset 16
+ 572 0004 00AF     		add	r7, sp, #0
+ 573              	.LCFI5:
+ 574              		.cfi_def_cfa_register 7
+ 405:../Src/apps/LoRaWAN/main_lorawan.c ****     lr1110_modem_response_code_t modem_response_code = LR1110_MODEM_RESPONSE_CODE_OK;
+ 575              		.loc 1 405 34
+ 576 0006 0023     		movs	r3, #0
+ 577 0008 FB71     		strb	r3, [r7, #7]
+ 406:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 407:../Src/apps/LoRaWAN/main_lorawan.c ****     /* Starts the join procedure */
+ 408:../Src/apps/LoRaWAN/main_lorawan.c ****     modem_response_code = lr1110_modem_join( &lr1110 );
+ 578              		.loc 1 408 27
+ 579 000a 1348     		ldr	r0, .L25
+ 580 000c FFF7FEFF 		bl	lr1110_modem_join
+ 581 0010 0346     		mov	r3, r0
+ 582 0012 FB71     		strb	r3, [r7, #7]
+ 409:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 410:../Src/apps/LoRaWAN/main_lorawan.c ****     if( modem_response_code == LR1110_MODEM_RESPONSE_CODE_OK )
+ 583              		.loc 1 410 7
+ 584 0014 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 585 0016 002B     		cmp	r3, #0
+ 586 0018 0CD1     		bne	.L22
+ 411:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 412:../Src/apps/LoRaWAN/main_lorawan.c ****         HAL_DBG_TRACE_INFO( "###### ===== JOINING ==== ######\r\n\r\n" );
+ 587              		.loc 1 412 9
+ 588 001a 1048     		ldr	r0, .L25+4
+ 589 001c FFF7FEFF 		bl	hal_mcu_trace_print
+ 590 0020 0F48     		ldr	r0, .L25+8
+ 591 0022 FFF7FEFF 		bl	hal_mcu_trace_print
+ 592 0026 0F48     		ldr	r0, .L25+12
+ 593 0028 FFF7FEFF 		bl	hal_mcu_trace_print
+ 594 002c 0E48     		ldr	r0, .L25+16
+ 595 002e FFF7FEFF 		bl	hal_mcu_trace_print
+ 413:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 414:../Src/apps/LoRaWAN/main_lorawan.c ****     else
+ 415:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 416:../Src/apps/LoRaWAN/main_lorawan.c ****         HAL_DBG_TRACE_ERROR( "###### ===== JOINING CMD ERROR %d==== ######\r\n\r\n", modem_response
+ 417:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 418:../Src/apps/LoRaWAN/main_lorawan.c **** }
+ 596              		.loc 1 418 1
+ 597 0032 0DE0     		b	.L24
+ 598              	.L22:
+ 416:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 599              		.loc 1 416 9
+ 600 0034 0D48     		ldr	r0, .L25+20
+ARM GAS  /tmp/ccLb7d1r.s 			page 20
+
+
+ 601 0036 FFF7FEFF 		bl	hal_mcu_trace_print
+ 602 003a 0D48     		ldr	r0, .L25+24
+ 603 003c FFF7FEFF 		bl	hal_mcu_trace_print
+ 604 0040 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 605 0042 1946     		mov	r1, r3
+ 606 0044 0B48     		ldr	r0, .L25+28
+ 607 0046 FFF7FEFF 		bl	hal_mcu_trace_print
+ 608 004a 0748     		ldr	r0, .L25+16
+ 609 004c FFF7FEFF 		bl	hal_mcu_trace_print
+ 610              	.L24:
+ 611              		.loc 1 418 1
+ 612 0050 00BF     		nop
+ 613 0052 0837     		adds	r7, r7, #8
+ 614              	.LCFI6:
+ 615              		.cfi_def_cfa_offset 8
+ 616 0054 BD46     		mov	sp, r7
+ 617              	.LCFI7:
+ 618              		.cfi_def_cfa_register 13
+ 619              		@ sp needed
+ 620 0056 80BD     		pop	{r7, pc}
+ 621              	.L26:
+ 622              		.align	2
+ 623              	.L25:
+ 624 0058 00000000 		.word	lr1110
+ 625 005c 0C000000 		.word	.LC5
+ 626 0060 14000000 		.word	.LC6
+ 627 0064 28020000 		.word	.LC20
+ 628 0068 00000000 		.word	.LC3
+ 629 006c 8C000000 		.word	.LC9
+ 630 0070 94000000 		.word	.LC10
+ 631 0074 50020000 		.word	.LC21
+ 632              		.cfi_endproc
+ 633              	.LFE591:
+ 635              		.section	.rodata
+ 636 0281 000000   		.align	2
+ 637              	.LC22:
+ 638 0284 44555459 		.ascii	"DUTY CYCLE, NEXT UPLINK AVAILABLE in %d millisecond"
+ 638      20435943 
+ 638      4C452C20 
+ 638      4E455854 
+ 638      2055504C 
+ 639 02b7 73200D0A 		.ascii	"s \015\012\015\012\000"
+ 639      0D0A00
+ 640 02be 0000     		.align	2
+ 641              	.LC23:
+ 642 02c0 0D0A206C 		.ascii	"\015\012 lr1110_modem_get_next_tx_max_payload RC : "
+ 642      72313131 
+ 642      305F6D6F 
+ 642      64656D5F 
+ 642      6765745F 
+ 643 02ed 2564200D 		.ascii	"%d \015\012\000"
+ 643      0A00
+ 644 02f3 00       		.align	2
+ 645              	.LC24:
+ 646 02f4 0D0A2041 		.ascii	"\015\012 APP DATA > MAX PAYLOAD AVAILABLE (%d bytes"
+ 646      50502044 
+ 646      41544120 
+ARM GAS  /tmp/ccLb7d1r.s 			page 21
+
+
+ 646      3E204D41 
+ 646      58205041 
+ 647 0321 29200D0A 		.ascii	") \015\012\000"
+ 647      00
+ 648 0326 0000     		.align	2
+ 649              	.LC25:
+ 650 0328 4C523131 		.ascii	"LR1110 MODEM-E REQUEST TX \015\012\015\012\000"
+ 650      3130204D 
+ 650      4F44454D 
+ 650      2D452052 
+ 650      45515545 
+ 651 0347 00       		.align	2
+ 652              	.LC26:
+ 653 0348 4C523131 		.ascii	"LR1110 MODEM-E REQUEST TX ERROR CMD, modem_response"
+ 653      3130204D 
+ 653      4F44454D 
+ 653      2D452052 
+ 653      45515545 
+ 654 037b 5F636F64 		.ascii	"_code : %d \015\012\015\012\000"
+ 654      65203A20 
+ 654      2564200D 
+ 654      0A0D0A00 
+ 655              		.section	.text.send_frame,"ax",%progbits
+ 656              		.align	1
+ 657              		.syntax unified
+ 658              		.thumb
+ 659              		.thumb_func
+ 660              		.fpu fpv4-sp-d16
+ 662              	send_frame:
+ 663              	.LFB592:
+ 419:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 420:../Src/apps/LoRaWAN/main_lorawan.c **** static bool send_frame( const uint8_t* tx_frame_buffer, const uint8_t tx_frame_buffer_size,
+ 421:../Src/apps/LoRaWAN/main_lorawan.c ****                         const lr1110_modem_uplink_type_t tx_confirmed )
+ 422:../Src/apps/LoRaWAN/main_lorawan.c **** {
+ 664              		.loc 1 422 1
+ 665              		.cfi_startproc
+ 666              		@ args = 0, pretend = 0, frame = 16
+ 667              		@ frame_needed = 1, uses_anonymous_args = 0
+ 668 0000 80B5     		push	{r7, lr}
+ 669              	.LCFI8:
+ 670              		.cfi_def_cfa_offset 8
+ 671              		.cfi_offset 7, -8
+ 672              		.cfi_offset 14, -4
+ 673 0002 86B0     		sub	sp, sp, #24
+ 674              	.LCFI9:
+ 675              		.cfi_def_cfa_offset 32
+ 676 0004 02AF     		add	r7, sp, #8
+ 677              	.LCFI10:
+ 678              		.cfi_def_cfa 7, 24
+ 679 0006 7860     		str	r0, [r7, #4]
+ 680 0008 0B46     		mov	r3, r1
+ 681 000a FB70     		strb	r3, [r7, #3]
+ 682 000c 1346     		mov	r3, r2
+ 683 000e BB70     		strb	r3, [r7, #2]
+ 423:../Src/apps/LoRaWAN/main_lorawan.c ****     lr1110_modem_response_code_t modem_response_code = LR1110_MODEM_RESPONSE_CODE_OK;
+ 684              		.loc 1 423 34
+ 685 0010 0023     		movs	r3, #0
+ARM GAS  /tmp/ccLb7d1r.s 			page 22
+
+
+ 686 0012 FB73     		strb	r3, [r7, #15]
+ 424:../Src/apps/LoRaWAN/main_lorawan.c ****     uint8_t                      tx_max_payload;
+ 425:../Src/apps/LoRaWAN/main_lorawan.c ****     int32_t                      duty_cycle;
+ 426:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 427:../Src/apps/LoRaWAN/main_lorawan.c ****     lr1110_modem_get_duty_cycle_status( &lr1110, &duty_cycle );
+ 687              		.loc 1 427 5
+ 688 0014 07F10803 		add	r3, r7, #8
+ 689 0018 1946     		mov	r1, r3
+ 690 001a 3948     		ldr	r0, .L35
+ 691 001c FFF7FEFF 		bl	lr1110_modem_get_duty_cycle_status
+ 428:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 429:../Src/apps/LoRaWAN/main_lorawan.c ****     if( duty_cycle < 0 )
+ 692              		.loc 1 429 20
+ 693 0020 BB68     		ldr	r3, [r7, #8]
+ 694              		.loc 1 429 7
+ 695 0022 002B     		cmp	r3, #0
+ 696 0024 10DA     		bge	.L28
+ 430:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 431:../Src/apps/LoRaWAN/main_lorawan.c ****         HAL_DBG_TRACE_INFO( "DUTY CYCLE, NEXT UPLINK AVAILABLE in %d milliseconds \r\n\r\n", -duty_
+ 697              		.loc 1 431 9
+ 698 0026 3748     		ldr	r0, .L35+4
+ 699 0028 FFF7FEFF 		bl	hal_mcu_trace_print
+ 700 002c 3648     		ldr	r0, .L35+8
+ 701 002e FFF7FEFF 		bl	hal_mcu_trace_print
+ 702 0032 BB68     		ldr	r3, [r7, #8]
+ 703 0034 5B42     		rsbs	r3, r3, #0
+ 704 0036 1946     		mov	r1, r3
+ 705 0038 3448     		ldr	r0, .L35+12
+ 706 003a FFF7FEFF 		bl	hal_mcu_trace_print
+ 707 003e 3448     		ldr	r0, .L35+16
+ 708 0040 FFF7FEFF 		bl	hal_mcu_trace_print
+ 432:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 433:../Src/apps/LoRaWAN/main_lorawan.c ****         return false;
+ 709              		.loc 1 433 16
+ 710 0044 0023     		movs	r3, #0
+ 711 0046 56E0     		b	.L34
+ 712              	.L28:
+ 434:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 435:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 436:../Src/apps/LoRaWAN/main_lorawan.c ****     modem_response_code = lr1110_modem_get_next_tx_max_payload( &lr1110, &tx_max_payload );
+ 713              		.loc 1 436 27
+ 714 0048 07F10E03 		add	r3, r7, #14
+ 715 004c 1946     		mov	r1, r3
+ 716 004e 2C48     		ldr	r0, .L35
+ 717 0050 FFF7FEFF 		bl	lr1110_modem_get_next_tx_max_payload
+ 718 0054 0346     		mov	r3, r0
+ 719 0056 FB73     		strb	r3, [r7, #15]
+ 437:../Src/apps/LoRaWAN/main_lorawan.c ****     if( modem_response_code != ( lr1110_modem_response_code_t ) LR1110_MODEM_HAL_STATUS_OK )
+ 720              		.loc 1 437 7
+ 721 0058 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 722 005a 002B     		cmp	r3, #0
+ 723 005c 0DD0     		beq	.L30
+ 438:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 439:../Src/apps/LoRaWAN/main_lorawan.c ****         HAL_DBG_TRACE_ERROR( "\r\n lr1110_modem_get_next_tx_max_payload RC : %d \r\n", modem_respon
+ 724              		.loc 1 439 9
+ 725 005e 2D48     		ldr	r0, .L35+20
+ 726 0060 FFF7FEFF 		bl	hal_mcu_trace_print
+ARM GAS  /tmp/ccLb7d1r.s 			page 23
+
+
+ 727 0064 2C48     		ldr	r0, .L35+24
+ 728 0066 FFF7FEFF 		bl	hal_mcu_trace_print
+ 729 006a FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 730 006c 1946     		mov	r1, r3
+ 731 006e 2B48     		ldr	r0, .L35+28
+ 732 0070 FFF7FEFF 		bl	hal_mcu_trace_print
+ 733 0074 2648     		ldr	r0, .L35+16
+ 734 0076 FFF7FEFF 		bl	hal_mcu_trace_print
+ 735              	.L30:
+ 440:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 441:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 442:../Src/apps/LoRaWAN/main_lorawan.c ****     if( tx_frame_buffer_size > tx_max_payload )
+ 736              		.loc 1 442 30
+ 737 007a BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
+ 738              		.loc 1 442 7
+ 739 007c FA78     		ldrb	r2, [r7, #3]	@ zero_extendqisi2
+ 740 007e 9A42     		cmp	r2, r3
+ 741 0080 0FD9     		bls	.L31
+ 443:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 444:../Src/apps/LoRaWAN/main_lorawan.c ****         /* Send empty frame in order to flush MAC commands */
+ 445:../Src/apps/LoRaWAN/main_lorawan.c ****         HAL_DBG_TRACE_PRINTF( "\r\n APP DATA > MAX PAYLOAD AVAILABLE (%d bytes) \r\n", tx_max_paylo
+ 742              		.loc 1 445 9
+ 743 0082 BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
+ 744 0084 1946     		mov	r1, r3
+ 745 0086 2648     		ldr	r0, .L35+32
+ 746 0088 FFF7FEFF 		bl	hal_mcu_trace_print
+ 446:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 447:../Src/apps/LoRaWAN/main_lorawan.c ****         modem_response_code = lr1110_modem_request_tx( &lr1110, LORAWAN_APP_PORT, tx_confirmed, NUL
+ 747              		.loc 1 447 31
+ 748 008c BA78     		ldrb	r2, [r7, #2]	@ zero_extendqisi2
+ 749 008e 0023     		movs	r3, #0
+ 750 0090 0093     		str	r3, [sp]
+ 751 0092 0023     		movs	r3, #0
+ 752 0094 0221     		movs	r1, #2
+ 753 0096 1A48     		ldr	r0, .L35
+ 754 0098 FFF7FEFF 		bl	lr1110_modem_request_tx
+ 755 009c 0346     		mov	r3, r0
+ 756 009e FB73     		strb	r3, [r7, #15]
+ 757 00a0 09E0     		b	.L32
+ 758              	.L31:
+ 448:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 449:../Src/apps/LoRaWAN/main_lorawan.c ****     else
+ 450:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 451:../Src/apps/LoRaWAN/main_lorawan.c ****         modem_response_code =
+ 452:../Src/apps/LoRaWAN/main_lorawan.c ****             lr1110_modem_request_tx( &lr1110, LORAWAN_APP_PORT, tx_confirmed, tx_frame_buffer, tx_f
+ 759              		.loc 1 452 13
+ 760 00a2 BA78     		ldrb	r2, [r7, #2]	@ zero_extendqisi2
+ 761 00a4 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 762 00a6 0093     		str	r3, [sp]
+ 763 00a8 7B68     		ldr	r3, [r7, #4]
+ 764 00aa 0221     		movs	r1, #2
+ 765 00ac 1448     		ldr	r0, .L35
+ 766 00ae FFF7FEFF 		bl	lr1110_modem_request_tx
+ 767 00b2 0346     		mov	r3, r0
+ 768 00b4 FB73     		strb	r3, [r7, #15]
+ 769              	.L32:
+ 453:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ARM GAS  /tmp/ccLb7d1r.s 			page 24
+
+
+ 454:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 455:../Src/apps/LoRaWAN/main_lorawan.c ****     if( modem_response_code == LR1110_MODEM_RESPONSE_CODE_OK )
+ 770              		.loc 1 455 7
+ 771 00b6 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 772 00b8 002B     		cmp	r3, #0
+ 773 00ba 0DD1     		bne	.L33
+ 456:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 457:../Src/apps/LoRaWAN/main_lorawan.c ****         HAL_DBG_TRACE_INFO( "LR1110 MODEM-E REQUEST TX \r\n\r\n" );
+ 774              		.loc 1 457 9
+ 775 00bc 1148     		ldr	r0, .L35+4
+ 776 00be FFF7FEFF 		bl	hal_mcu_trace_print
+ 777 00c2 1148     		ldr	r0, .L35+8
+ 778 00c4 FFF7FEFF 		bl	hal_mcu_trace_print
+ 779 00c8 1648     		ldr	r0, .L35+36
+ 780 00ca FFF7FEFF 		bl	hal_mcu_trace_print
+ 781 00ce 1048     		ldr	r0, .L35+16
+ 782 00d0 FFF7FEFF 		bl	hal_mcu_trace_print
+ 458:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 459:../Src/apps/LoRaWAN/main_lorawan.c ****         return true;
+ 783              		.loc 1 459 16
+ 784 00d4 0123     		movs	r3, #1
+ 785 00d6 0EE0     		b	.L34
+ 786              	.L33:
+ 460:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 461:../Src/apps/LoRaWAN/main_lorawan.c ****     else
+ 462:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 463:../Src/apps/LoRaWAN/main_lorawan.c ****         HAL_DBG_TRACE_ERROR( "LR1110 MODEM-E REQUEST TX ERROR CMD, modem_response_code : %d \r\n\r\
+ 787              		.loc 1 463 9
+ 788 00d8 0E48     		ldr	r0, .L35+20
+ 789 00da FFF7FEFF 		bl	hal_mcu_trace_print
+ 790 00de 0E48     		ldr	r0, .L35+24
+ 791 00e0 FFF7FEFF 		bl	hal_mcu_trace_print
+ 792 00e4 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 793 00e6 1946     		mov	r1, r3
+ 794 00e8 0F48     		ldr	r0, .L35+40
+ 795 00ea FFF7FEFF 		bl	hal_mcu_trace_print
+ 796 00ee 0848     		ldr	r0, .L35+16
+ 797 00f0 FFF7FEFF 		bl	hal_mcu_trace_print
+ 464:../Src/apps/LoRaWAN/main_lorawan.c ****                              modem_response_code );
+ 465:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 466:../Src/apps/LoRaWAN/main_lorawan.c ****         return false;
+ 798              		.loc 1 466 16
+ 799 00f4 0023     		movs	r3, #0
+ 800              	.L34:
+ 467:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 468:../Src/apps/LoRaWAN/main_lorawan.c **** }
+ 801              		.loc 1 468 1 discriminator 1
+ 802 00f6 1846     		mov	r0, r3
+ 803 00f8 1037     		adds	r7, r7, #16
+ 804              	.LCFI11:
+ 805              		.cfi_def_cfa_offset 8
+ 806 00fa BD46     		mov	sp, r7
+ 807              	.LCFI12:
+ 808              		.cfi_def_cfa_register 13
+ 809              		@ sp needed
+ 810 00fc 80BD     		pop	{r7, pc}
+ 811              	.L36:
+ARM GAS  /tmp/ccLb7d1r.s 			page 25
+
+
+ 812 00fe 00BF     		.align	2
+ 813              	.L35:
+ 814 0100 00000000 		.word	lr1110
+ 815 0104 0C000000 		.word	.LC5
+ 816 0108 14000000 		.word	.LC6
+ 817 010c 84020000 		.word	.LC22
+ 818 0110 00000000 		.word	.LC3
+ 819 0114 8C000000 		.word	.LC9
+ 820 0118 94000000 		.word	.LC10
+ 821 011c C0020000 		.word	.LC23
+ 822 0120 F4020000 		.word	.LC24
+ 823 0124 28030000 		.word	.LC25
+ 824 0128 48030000 		.word	.LC26
+ 825              		.cfi_endproc
+ 826              	.LFE592:
+ 828              		.section	.rodata
+ 829 038b 00       		.align	2
+ 830              	.LC27:
+ 831 038c 23232323 		.ascii	"###### ===== LR1110 MODEM-E RESET %lu ==== ######\015"
+ 831      2323203D 
+ 831      3D3D3D3D 
+ 831      204C5231 
+ 831      31313020 
+ 832 03be 0A0D0A00 		.ascii	"\012\015\012\000"
+ 833              		.section	.text.lr1110_modem_reset_event,"ax",%progbits
+ 834              		.align	1
+ 835              		.syntax unified
+ 836              		.thumb
+ 837              		.thumb_func
+ 838              		.fpu fpv4-sp-d16
+ 840              	lr1110_modem_reset_event:
+ 841              	.LFB593:
+ 469:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 470:../Src/apps/LoRaWAN/main_lorawan.c **** static void lr1110_modem_reset_event( uint16_t reset_count )
+ 471:../Src/apps/LoRaWAN/main_lorawan.c **** {
+ 842              		.loc 1 471 1
+ 843              		.cfi_startproc
+ 844              		@ args = 0, pretend = 0, frame = 8
+ 845              		@ frame_needed = 1, uses_anonymous_args = 0
+ 846 0000 80B5     		push	{r7, lr}
+ 847              	.LCFI13:
+ 848              		.cfi_def_cfa_offset 8
+ 849              		.cfi_offset 7, -8
+ 850              		.cfi_offset 14, -4
+ 851 0002 82B0     		sub	sp, sp, #8
+ 852              	.LCFI14:
+ 853              		.cfi_def_cfa_offset 16
+ 854 0004 00AF     		add	r7, sp, #0
+ 855              	.LCFI15:
+ 856              		.cfi_def_cfa_register 7
+ 857 0006 0346     		mov	r3, r0
+ 858 0008 FB80     		strh	r3, [r7, #6]	@ movhi
+ 472:../Src/apps/LoRaWAN/main_lorawan.c ****     HAL_DBG_TRACE_INFO( "###### ===== LR1110 MODEM-E RESET %lu ==== ######\r\n\r\n", reset_count );
+ 859              		.loc 1 472 5
+ 860 000a 0E48     		ldr	r0, .L41
+ 861 000c FFF7FEFF 		bl	hal_mcu_trace_print
+ 862 0010 0D48     		ldr	r0, .L41+4
+ARM GAS  /tmp/ccLb7d1r.s 			page 26
+
+
+ 863 0012 FFF7FEFF 		bl	hal_mcu_trace_print
+ 864 0016 FB88     		ldrh	r3, [r7, #6]
+ 865 0018 1946     		mov	r1, r3
+ 866 001a 0C48     		ldr	r0, .L41+8
+ 867 001c FFF7FEFF 		bl	hal_mcu_trace_print
+ 868 0020 0B48     		ldr	r0, .L41+12
+ 869 0022 FFF7FEFF 		bl	hal_mcu_trace_print
+ 473:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 474:../Src/apps/LoRaWAN/main_lorawan.c ****     if( lr1110_modem_board_is_ready( ) == true )
+ 870              		.loc 1 474 9
+ 871 0026 FFF7FEFF 		bl	lr1110_modem_board_is_ready
+ 872 002a 0346     		mov	r3, r0
+ 873              		.loc 1 474 7
+ 874 002c 002B     		cmp	r3, #0
+ 875 002e 02D0     		beq	.L38
+ 475:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 476:../Src/apps/LoRaWAN/main_lorawan.c ****         /* System reset */
+ 477:../Src/apps/LoRaWAN/main_lorawan.c ****         hal_mcu_reset( );
+ 876              		.loc 1 477 9
+ 877 0030 FFF7FEFF 		bl	hal_mcu_reset
+ 478:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 479:../Src/apps/LoRaWAN/main_lorawan.c ****     else
+ 480:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 481:../Src/apps/LoRaWAN/main_lorawan.c ****         lr1110_modem_board_set_ready( true );
+ 482:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 483:../Src/apps/LoRaWAN/main_lorawan.c **** }
+ 878              		.loc 1 483 1
+ 879 0034 02E0     		b	.L40
+ 880              	.L38:
+ 481:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 881              		.loc 1 481 9
+ 882 0036 0120     		movs	r0, #1
+ 883 0038 FFF7FEFF 		bl	lr1110_modem_board_set_ready
+ 884              	.L40:
+ 885              		.loc 1 483 1
+ 886 003c 00BF     		nop
+ 887 003e 0837     		adds	r7, r7, #8
+ 888              	.LCFI16:
+ 889              		.cfi_def_cfa_offset 8
+ 890 0040 BD46     		mov	sp, r7
+ 891              	.LCFI17:
+ 892              		.cfi_def_cfa_register 13
+ 893              		@ sp needed
+ 894 0042 80BD     		pop	{r7, pc}
+ 895              	.L42:
+ 896              		.align	2
+ 897              	.L41:
+ 898 0044 0C000000 		.word	.LC5
+ 899 0048 14000000 		.word	.LC6
+ 900 004c 8C030000 		.word	.LC27
+ 901 0050 00000000 		.word	.LC3
+ 902              		.cfi_endproc
+ 903              	.LFE593:
+ 905              		.section	.rodata
+ 906 03c2 0000     		.align	2
+ 907              	.LC28:
+ 908 03c4 23232323 		.ascii	"###### ===== JOINED ==== ######\015\012\015\012\000"
+ARM GAS  /tmp/ccLb7d1r.s 			page 27
+
+
+ 908      2323203D 
+ 908      3D3D3D3D 
+ 908      204A4F49 
+ 908      4E454420 
+ 909              		.section	.text.lr1110_modem_network_joined,"ax",%progbits
+ 910              		.align	1
+ 911              		.syntax unified
+ 912              		.thumb
+ 913              		.thumb_func
+ 914              		.fpu fpv4-sp-d16
+ 916              	lr1110_modem_network_joined:
+ 917              	.LFB594:
+ 484:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 485:../Src/apps/LoRaWAN/main_lorawan.c **** void lr1110_modem_network_joined( void )
+ 486:../Src/apps/LoRaWAN/main_lorawan.c **** {
+ 918              		.loc 1 486 1
+ 919              		.cfi_startproc
+ 920              		@ args = 0, pretend = 0, frame = 0
+ 921              		@ frame_needed = 1, uses_anonymous_args = 0
+ 922 0000 80B5     		push	{r7, lr}
+ 923              	.LCFI18:
+ 924              		.cfi_def_cfa_offset 8
+ 925              		.cfi_offset 7, -8
+ 926              		.cfi_offset 14, -4
+ 927 0002 00AF     		add	r7, sp, #0
+ 928              	.LCFI19:
+ 929              		.cfi_def_cfa_register 7
+ 487:../Src/apps/LoRaWAN/main_lorawan.c ****     HAL_DBG_TRACE_INFO( "###### ===== JOINED ==== ######\r\n\r\n" );
+ 930              		.loc 1 487 5
+ 931 0004 0948     		ldr	r0, .L44
+ 932 0006 FFF7FEFF 		bl	hal_mcu_trace_print
+ 933 000a 0948     		ldr	r0, .L44+4
+ 934 000c FFF7FEFF 		bl	hal_mcu_trace_print
+ 935 0010 0848     		ldr	r0, .L44+8
+ 936 0012 FFF7FEFF 		bl	hal_mcu_trace_print
+ 937 0016 0848     		ldr	r0, .L44+12
+ 938 0018 FFF7FEFF 		bl	hal_mcu_trace_print
+ 488:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 489:../Src/apps/LoRaWAN/main_lorawan.c ****     /* Set the ADR profile once joined */
+ 490:../Src/apps/LoRaWAN/main_lorawan.c ****     lr1110_modem_set_adr_profile( &lr1110, LORAWAN_DEFAULT_DATARATE, adr_custom_list );
+ 939              		.loc 1 490 5
+ 940 001c 074A     		ldr	r2, .L44+16
+ 941 001e 0021     		movs	r1, #0
+ 942 0020 0748     		ldr	r0, .L44+20
+ 943 0022 FFF7FEFF 		bl	lr1110_modem_set_adr_profile
+ 491:../Src/apps/LoRaWAN/main_lorawan.c **** }
+ 944              		.loc 1 491 1
+ 945 0026 00BF     		nop
+ 946 0028 80BD     		pop	{r7, pc}
+ 947              	.L45:
+ 948 002a 00BF     		.align	2
+ 949              	.L44:
+ 950 002c 0C000000 		.word	.LC5
+ 951 0030 14000000 		.word	.LC6
+ 952 0034 C4030000 		.word	.LC28
+ 953 0038 00000000 		.word	.LC3
+ 954 003c 00000000 		.word	adr_custom_list
+ARM GAS  /tmp/ccLb7d1r.s 			page 28
+
+
+ 955 0040 00000000 		.word	lr1110
+ 956              		.cfi_endproc
+ 957              	.LFE594:
+ 959              		.section	.rodata
+ 960              		.align	2
+ 961              	.LC29:
+ 962 03e8 23232323 		.ascii	"###### ===== JOINED FAIL ==== ######\015\012\015\012"
+ 962      2323203D 
+ 962      3D3D3D3D 
+ 962      204A4F49 
+ 962      4E454420 
+ 963 0410 00       		.ascii	"\000"
+ 964              		.section	.text.lr1110_modem_join_fail,"ax",%progbits
+ 965              		.align	1
+ 966              		.syntax unified
+ 967              		.thumb
+ 968              		.thumb_func
+ 969              		.fpu fpv4-sp-d16
+ 971              	lr1110_modem_join_fail:
+ 972              	.LFB595:
+ 492:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 493:../Src/apps/LoRaWAN/main_lorawan.c **** void lr1110_modem_join_fail( void ) { HAL_DBG_TRACE_INFO( "###### ===== JOINED FAIL ==== ######\r\n
+ 973              		.loc 1 493 37
+ 974              		.cfi_startproc
+ 975              		@ args = 0, pretend = 0, frame = 0
+ 976              		@ frame_needed = 1, uses_anonymous_args = 0
+ 977 0000 80B5     		push	{r7, lr}
+ 978              	.LCFI20:
+ 979              		.cfi_def_cfa_offset 8
+ 980              		.cfi_offset 7, -8
+ 981              		.cfi_offset 14, -4
+ 982 0002 00AF     		add	r7, sp, #0
+ 983              	.LCFI21:
+ 984              		.cfi_def_cfa_register 7
+ 985              		.loc 1 493 39
+ 986 0004 0648     		ldr	r0, .L47
+ 987 0006 FFF7FEFF 		bl	hal_mcu_trace_print
+ 988 000a 0648     		ldr	r0, .L47+4
+ 989 000c FFF7FEFF 		bl	hal_mcu_trace_print
+ 990 0010 0548     		ldr	r0, .L47+8
+ 991 0012 FFF7FEFF 		bl	hal_mcu_trace_print
+ 992 0016 0548     		ldr	r0, .L47+12
+ 993 0018 FFF7FEFF 		bl	hal_mcu_trace_print
+ 994              		.loc 1 493 109
+ 995 001c 00BF     		nop
+ 996 001e 80BD     		pop	{r7, pc}
+ 997              	.L48:
+ 998              		.align	2
+ 999              	.L47:
+ 1000 0020 0C000000 		.word	.LC5
+ 1001 0024 14000000 		.word	.LC6
+ 1002 0028 E8030000 		.word	.LC29
+ 1003 002c 00000000 		.word	.LC3
+ 1004              		.cfi_endproc
+ 1005              	.LFE595:
+ 1007              		.section	.rodata
+ 1008 0411 000000   		.align	2
+ARM GAS  /tmp/ccLb7d1r.s 			page 29
+
+
+ 1009              	.LC30:
+ 1010 0414 23232323 		.ascii	"###### ===== LR1110 ALARM ==== ######\015\012\015\012"
+ 1010      2323203D 
+ 1010      3D3D3D3D 
+ 1010      204C5231 
+ 1010      31313020 
+ 1011 043d 00       		.ascii	"\000"
+ 1012 043e 0000     		.align	2
+ 1013              	.LC31:
+ 1014 0440 1B5B303B 		.ascii	"\033[0;33m\000"
+ 1014      33336D00 
+ 1015              		.align	2
+ 1016              	.LC32:
+ 1017 0448 5741524E 		.ascii	"WARN : \000"
+ 1017      203A2000 
+ 1018              		.align	2
+ 1019              	.LC33:
+ 1020 0450 556E6B6E 		.ascii	"Unknow modem status %d\015\012\015\012\000"
+ 1020      6F77206D 
+ 1020      6F64656D 
+ 1020      20737461 
+ 1020      74757320 
+ 1021              		.section	.text.lr1110_modem_alarm,"ax",%progbits
+ 1022              		.align	1
+ 1023              		.syntax unified
+ 1024              		.thumb
+ 1025              		.thumb_func
+ 1026              		.fpu fpv4-sp-d16
+ 1028              	lr1110_modem_alarm:
+ 1029              	.LFB596:
+ 494:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 495:../Src/apps/LoRaWAN/main_lorawan.c **** void lr1110_modem_alarm( void )
+ 496:../Src/apps/LoRaWAN/main_lorawan.c **** {
+ 1030              		.loc 1 496 1
+ 1031              		.cfi_startproc
+ 1032              		@ args = 0, pretend = 0, frame = 8
+ 1033              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1034 0000 80B5     		push	{r7, lr}
+ 1035              	.LCFI22:
+ 1036              		.cfi_def_cfa_offset 8
+ 1037              		.cfi_offset 7, -8
+ 1038              		.cfi_offset 14, -4
+ 1039 0002 82B0     		sub	sp, sp, #8
+ 1040              	.LCFI23:
+ 1041              		.cfi_def_cfa_offset 16
+ 1042 0004 00AF     		add	r7, sp, #0
+ 1043              	.LCFI24:
+ 1044              		.cfi_def_cfa_register 7
+ 497:../Src/apps/LoRaWAN/main_lorawan.c ****     lr1110_modem_status_t        modem_status;
+ 498:../Src/apps/LoRaWAN/main_lorawan.c ****     lr1110_modem_response_code_t modem_response_code = LR1110_MODEM_RESPONSE_CODE_OK;
+ 1045              		.loc 1 498 34
+ 1046 0006 0023     		movs	r3, #0
+ 1047 0008 FB71     		strb	r3, [r7, #7]
+ 499:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 500:../Src/apps/LoRaWAN/main_lorawan.c ****     HAL_DBG_TRACE_INFO( "###### ===== LR1110 ALARM ==== ######\r\n\r\n" );
+ 1048              		.loc 1 500 5
+ 1049 000a 3048     		ldr	r0, .L58
+ARM GAS  /tmp/ccLb7d1r.s 			page 30
+
+
+ 1050 000c FFF7FEFF 		bl	hal_mcu_trace_print
+ 1051 0010 2F48     		ldr	r0, .L58+4
+ 1052 0012 FFF7FEFF 		bl	hal_mcu_trace_print
+ 1053 0016 2F48     		ldr	r0, .L58+8
+ 1054 0018 FFF7FEFF 		bl	hal_mcu_trace_print
+ 1055 001c 2E48     		ldr	r0, .L58+12
+ 1056 001e FFF7FEFF 		bl	hal_mcu_trace_print
+ 501:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 502:../Src/apps/LoRaWAN/main_lorawan.c ****     modem_response_code = lr1110_modem_get_status( &lr1110, &modem_status );
+ 1057              		.loc 1 502 27
+ 1058 0022 BB1D     		adds	r3, r7, #6
+ 1059 0024 1946     		mov	r1, r3
+ 1060 0026 2D48     		ldr	r0, .L58+16
+ 1061 0028 FFF7FEFF 		bl	lr1110_modem_get_status
+ 1062 002c 0346     		mov	r3, r0
+ 1063 002e FB71     		strb	r3, [r7, #7]
+ 503:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 504:../Src/apps/LoRaWAN/main_lorawan.c ****     if( modem_response_code == LR1110_MODEM_RESPONSE_CODE_OK )
+ 1064              		.loc 1 504 7
+ 1065 0030 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 1066 0032 002B     		cmp	r3, #0
+ 1067 0034 46D1     		bne	.L57
+ 505:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 506:../Src/apps/LoRaWAN/main_lorawan.c ****         modem_status_to_string( modem_status );
+ 1068              		.loc 1 506 9
+ 1069 0036 BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 1070 0038 1846     		mov	r0, r3
+ 1071 003a FFF7FEFF 		bl	modem_status_to_string
+ 507:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 508:../Src/apps/LoRaWAN/main_lorawan.c ****         if( ( modem_status & LR1110_LORAWAN_CRASH ) == LR1110_LORAWAN_CRASH )
+ 1072              		.loc 1 508 28
+ 1073 003e BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 1074 0040 03F00203 		and	r3, r3, #2
+ 1075              		.loc 1 508 11
+ 1076 0044 002B     		cmp	r3, #0
+ 1077 0046 02D0     		beq	.L51
+ 509:../Src/apps/LoRaWAN/main_lorawan.c ****         {
+ 510:../Src/apps/LoRaWAN/main_lorawan.c ****             hal_mcu_reset( );
+ 1078              		.loc 1 510 13
+ 1079 0048 FFF7FEFF 		bl	hal_mcu_reset
+ 511:../Src/apps/LoRaWAN/main_lorawan.c ****         }
+ 512:../Src/apps/LoRaWAN/main_lorawan.c ****         else if( ( ( modem_status & LR1110_LORAWAN_MUTE ) == LR1110_LORAWAN_MUTE ) ||
+ 513:../Src/apps/LoRaWAN/main_lorawan.c ****                  ( ( modem_status & LR1110_LORAWAN_SUSPEND ) == LR1110_LORAWAN_SUSPEND ) )
+ 514:../Src/apps/LoRaWAN/main_lorawan.c ****         {
+ 515:../Src/apps/LoRaWAN/main_lorawan.c ****             device_state = DEVICE_STATE_CYCLE;
+ 516:../Src/apps/LoRaWAN/main_lorawan.c ****         }
+ 517:../Src/apps/LoRaWAN/main_lorawan.c ****         else if( ( ( modem_status & LR1110_LORAWAN_JOINED ) == LR1110_LORAWAN_JOINED ) ||
+ 518:../Src/apps/LoRaWAN/main_lorawan.c ****                  ( ( modem_status & LR1110_LORAWAN_STREAM ) == LR1110_LORAWAN_STREAM ) ||
+ 519:../Src/apps/LoRaWAN/main_lorawan.c ****                  ( ( modem_status & LR1110_LORAWAN_UPLOAD ) == LR1110_LORAWAN_UPLOAD ) )
+ 520:../Src/apps/LoRaWAN/main_lorawan.c ****         {
+ 521:../Src/apps/LoRaWAN/main_lorawan.c ****             device_state = DEVICE_STATE_SEND;
+ 522:../Src/apps/LoRaWAN/main_lorawan.c ****         }
+ 523:../Src/apps/LoRaWAN/main_lorawan.c ****         else if( ( modem_status & LR1110_LORAWAN_JOINING ) == LR1110_LORAWAN_JOINING )
+ 524:../Src/apps/LoRaWAN/main_lorawan.c ****         {
+ 525:../Src/apps/LoRaWAN/main_lorawan.c ****             /* Network not joined yet. Wait */
+ 526:../Src/apps/LoRaWAN/main_lorawan.c ****             device_state = DEVICE_STATE_CYCLE;
+ 527:../Src/apps/LoRaWAN/main_lorawan.c ****         }
+ARM GAS  /tmp/ccLb7d1r.s 			page 31
+
+
+ 528:../Src/apps/LoRaWAN/main_lorawan.c ****         else
+ 529:../Src/apps/LoRaWAN/main_lorawan.c ****         {
+ 530:../Src/apps/LoRaWAN/main_lorawan.c ****             HAL_DBG_TRACE_WARNING( "Unknow modem status %d\r\n\r\n", modem_status );
+ 531:../Src/apps/LoRaWAN/main_lorawan.c ****             device_state = DEVICE_STATE_CYCLE;
+ 532:../Src/apps/LoRaWAN/main_lorawan.c ****         }
+ 533:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 534:../Src/apps/LoRaWAN/main_lorawan.c **** }
+ 1080              		.loc 1 534 1
+ 1081 004c 3AE0     		b	.L57
+ 1082              	.L51:
+ 512:../Src/apps/LoRaWAN/main_lorawan.c ****                  ( ( modem_status & LR1110_LORAWAN_SUSPEND ) == LR1110_LORAWAN_SUSPEND ) )
+ 1083              		.loc 1 512 35
+ 1084 004e BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 1085 0050 03F00403 		and	r3, r3, #4
+ 512:../Src/apps/LoRaWAN/main_lorawan.c ****                  ( ( modem_status & LR1110_LORAWAN_SUSPEND ) == LR1110_LORAWAN_SUSPEND ) )
+ 1086              		.loc 1 512 16
+ 1087 0054 002B     		cmp	r3, #0
+ 1088 0056 04D1     		bne	.L52
+ 513:../Src/apps/LoRaWAN/main_lorawan.c ****         {
+ 1089              		.loc 1 513 35 discriminator 1
+ 1090 0058 BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 1091 005a 03F01003 		and	r3, r3, #16
+ 512:../Src/apps/LoRaWAN/main_lorawan.c ****                  ( ( modem_status & LR1110_LORAWAN_SUSPEND ) == LR1110_LORAWAN_SUSPEND ) )
+ 1092              		.loc 1 512 84 discriminator 1
+ 1093 005e 002B     		cmp	r3, #0
+ 1094 0060 03D0     		beq	.L53
+ 1095              	.L52:
+ 515:../Src/apps/LoRaWAN/main_lorawan.c ****         }
+ 1096              		.loc 1 515 26
+ 1097 0062 1F4B     		ldr	r3, .L58+20
+ 1098 0064 0322     		movs	r2, #3
+ 1099 0066 1A70     		strb	r2, [r3]
+ 1100 0068 2CE0     		b	.L50
+ 1101              	.L53:
+ 517:../Src/apps/LoRaWAN/main_lorawan.c ****                  ( ( modem_status & LR1110_LORAWAN_STREAM ) == LR1110_LORAWAN_STREAM ) ||
+ 1102              		.loc 1 517 35
+ 1103 006a BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 1104 006c 03F00803 		and	r3, r3, #8
+ 517:../Src/apps/LoRaWAN/main_lorawan.c ****                  ( ( modem_status & LR1110_LORAWAN_STREAM ) == LR1110_LORAWAN_STREAM ) ||
+ 1105              		.loc 1 517 16
+ 1106 0070 002B     		cmp	r3, #0
+ 1107 0072 08D1     		bne	.L54
+ 518:../Src/apps/LoRaWAN/main_lorawan.c ****                  ( ( modem_status & LR1110_LORAWAN_UPLOAD ) == LR1110_LORAWAN_UPLOAD ) )
+ 1108              		.loc 1 518 61 discriminator 1
+ 1109 0074 BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 1110 0076 5BB2     		sxtb	r3, r3
+ 517:../Src/apps/LoRaWAN/main_lorawan.c ****                  ( ( modem_status & LR1110_LORAWAN_STREAM ) == LR1110_LORAWAN_STREAM ) ||
+ 1111              		.loc 1 517 88 discriminator 1
+ 1112 0078 002B     		cmp	r3, #0
+ 1113 007a 04DB     		blt	.L54
+ 519:../Src/apps/LoRaWAN/main_lorawan.c ****         {
+ 1114              		.loc 1 519 35
+ 1115 007c BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 1116 007e 03F02003 		and	r3, r3, #32
+ 518:../Src/apps/LoRaWAN/main_lorawan.c ****                  ( ( modem_status & LR1110_LORAWAN_UPLOAD ) == LR1110_LORAWAN_UPLOAD ) )
+ 1117              		.loc 1 518 88
+ 1118 0082 002B     		cmp	r3, #0
+ARM GAS  /tmp/ccLb7d1r.s 			page 32
+
+
+ 1119 0084 03D0     		beq	.L55
+ 1120              	.L54:
+ 521:../Src/apps/LoRaWAN/main_lorawan.c ****         }
+ 1121              		.loc 1 521 26
+ 1122 0086 164B     		ldr	r3, .L58+20
+ 1123 0088 0222     		movs	r2, #2
+ 1124 008a 1A70     		strb	r2, [r3]
+ 1125 008c 1AE0     		b	.L50
+ 1126              	.L55:
+ 523:../Src/apps/LoRaWAN/main_lorawan.c ****         {
+ 1127              		.loc 1 523 33
+ 1128 008e BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 1129 0090 03F04003 		and	r3, r3, #64
+ 523:../Src/apps/LoRaWAN/main_lorawan.c ****         {
+ 1130              		.loc 1 523 16
+ 1131 0094 002B     		cmp	r3, #0
+ 1132 0096 03D0     		beq	.L56
+ 526:../Src/apps/LoRaWAN/main_lorawan.c ****         }
+ 1133              		.loc 1 526 26
+ 1134 0098 114B     		ldr	r3, .L58+20
+ 1135 009a 0322     		movs	r2, #3
+ 1136 009c 1A70     		strb	r2, [r3]
+ 1137              		.loc 1 534 1
+ 1138 009e 11E0     		b	.L57
+ 1139              	.L56:
+ 530:../Src/apps/LoRaWAN/main_lorawan.c ****             device_state = DEVICE_STATE_CYCLE;
+ 1140              		.loc 1 530 13
+ 1141 00a0 1048     		ldr	r0, .L58+24
+ 1142 00a2 FFF7FEFF 		bl	hal_mcu_trace_print
+ 1143 00a6 1048     		ldr	r0, .L58+28
+ 1144 00a8 FFF7FEFF 		bl	hal_mcu_trace_print
+ 1145 00ac BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 1146 00ae 1946     		mov	r1, r3
+ 1147 00b0 0E48     		ldr	r0, .L58+32
+ 1148 00b2 FFF7FEFF 		bl	hal_mcu_trace_print
+ 1149 00b6 0848     		ldr	r0, .L58+12
+ 1150 00b8 FFF7FEFF 		bl	hal_mcu_trace_print
+ 531:../Src/apps/LoRaWAN/main_lorawan.c ****         }
+ 1151              		.loc 1 531 26
+ 1152 00bc 084B     		ldr	r3, .L58+20
+ 1153 00be 0322     		movs	r2, #3
+ 1154 00c0 1A70     		strb	r2, [r3]
+ 1155              		.loc 1 534 1
+ 1156 00c2 FFE7     		b	.L57
+ 1157              	.L50:
+ 1158              	.L57:
+ 1159 00c4 00BF     		nop
+ 1160 00c6 0837     		adds	r7, r7, #8
+ 1161              	.LCFI25:
+ 1162              		.cfi_def_cfa_offset 8
+ 1163 00c8 BD46     		mov	sp, r7
+ 1164              	.LCFI26:
+ 1165              		.cfi_def_cfa_register 13
+ 1166              		@ sp needed
+ 1167 00ca 80BD     		pop	{r7, pc}
+ 1168              	.L59:
+ 1169              		.align	2
+ARM GAS  /tmp/ccLb7d1r.s 			page 33
+
+
+ 1170              	.L58:
+ 1171 00cc 0C000000 		.word	.LC5
+ 1172 00d0 14000000 		.word	.LC6
+ 1173 00d4 14040000 		.word	.LC30
+ 1174 00d8 00000000 		.word	.LC3
+ 1175 00dc 00000000 		.word	lr1110
+ 1176 00e0 00000000 		.word	device_state
+ 1177 00e4 40040000 		.word	.LC31
+ 1178 00e8 48040000 		.word	.LC32
+ 1179 00ec 50040000 		.word	.LC33
+ 1180              		.cfi_endproc
+ 1181              	.LFE596:
+ 1183              		.section	.rodata
+ 1184 046b 00       		.align	2
+ 1185              	.LC34:
+ 1186 046c 23232323 		.ascii	"###### ===== UPLINK FRAME %lu ==== ######\015\012\015"
+ 1186      2323203D 
+ 1186      3D3D3D3D 
+ 1186      2055504C 
+ 1186      494E4B20 
+ 1187 0498 0A00     		.ascii	"\012\000"
+ 1188 049a 0000     		.align	2
+ 1189              	.LC35:
+ 1190 049c 434C4153 		.ascii	"CLASS       : %c\015\012\000"
+ 1190      53202020 
+ 1190      20202020 
+ 1190      3A202563 
+ 1190      0D0A00
+ 1191 04af 00       		.align	2
+ 1192              	.LC36:
+ 1193 04b0 54582050 		.ascii	"TX PORT     : %d\015\012\000"
+ 1193      4F525420 
+ 1193      20202020 
+ 1193      3A202564 
+ 1193      0D0A00
+ 1194 04c3 00       		.align	2
+ 1195              	.LC37:
+ 1196 04c4 54582044 		.ascii	"TX DATA     : \000"
+ 1196      41544120 
+ 1196      20202020 
+ 1196      3A2000
+ 1197 04d3 00       		.align	2
+ 1198              	.LC38:
+ 1199 04d4 554E434F 		.ascii	"UNCONFIRMED\015\012\000"
+ 1199      4E464952 
+ 1199      4D45440D 
+ 1199      0A00
+ 1200 04e2 0000     		.align	2
+ 1201              	.LC39:
+ 1202 04e4 23232323 		.ascii	"###### ===== TX ERROR ==== ######\015\012\015\012\000"
+ 1202      2323203D 
+ 1202      3D3D3D3D 
+ 1202      20545820 
+ 1202      4552524F 
+ 1203              		.section	.text.lr1110_modem_tx_done,"ax",%progbits
+ 1204              		.align	1
+ 1205              		.syntax unified
+ARM GAS  /tmp/ccLb7d1r.s 			page 34
+
+
+ 1206              		.thumb
+ 1207              		.thumb_func
+ 1208              		.fpu fpv4-sp-d16
+ 1210              	lr1110_modem_tx_done:
+ 1211              	.LFB597:
+ 535:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 536:../Src/apps/LoRaWAN/main_lorawan.c **** void lr1110_modem_tx_done( lr1110_modem_tx_done_event_t status )
+ 537:../Src/apps/LoRaWAN/main_lorawan.c **** {
+ 1212              		.loc 1 537 1
+ 1213              		.cfi_startproc
+ 1214              		@ args = 0, pretend = 0, frame = 8
+ 1215              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1216 0000 80B5     		push	{r7, lr}
+ 1217              	.LCFI27:
+ 1218              		.cfi_def_cfa_offset 8
+ 1219              		.cfi_offset 7, -8
+ 1220              		.cfi_offset 14, -4
+ 1221 0002 82B0     		sub	sp, sp, #8
+ 1222              	.LCFI28:
+ 1223              		.cfi_def_cfa_offset 16
+ 1224 0004 00AF     		add	r7, sp, #0
+ 1225              	.LCFI29:
+ 1226              		.cfi_def_cfa_register 7
+ 1227 0006 0346     		mov	r3, r0
+ 1228 0008 FB71     		strb	r3, [r7, #7]
+ 538:../Src/apps/LoRaWAN/main_lorawan.c ****     static uint32_t uplink_cnt = 0;
+ 539:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 540:../Src/apps/LoRaWAN/main_lorawan.c ****     if( status != LR1110_MODEM_TX_ERROR )
+ 1229              		.loc 1 540 7
+ 1230 000a FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 1231 000c 002B     		cmp	r3, #0
+ 1232 000e 3CD0     		beq	.L61
+ 541:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 542:../Src/apps/LoRaWAN/main_lorawan.c ****         HAL_DBG_TRACE_INFO( "###### ===== UPLINK FRAME %lu ==== ######\r\n\r\n", uplink_cnt++ );
+ 1233              		.loc 1 542 9
+ 1234 0010 2648     		ldr	r0, .L64
+ 1235 0012 FFF7FEFF 		bl	hal_mcu_trace_print
+ 1236 0016 2648     		ldr	r0, .L64+4
+ 1237 0018 FFF7FEFF 		bl	hal_mcu_trace_print
+ 1238 001c 254B     		ldr	r3, .L64+8
+ 1239 001e 1B68     		ldr	r3, [r3]
+ 1240 0020 5A1C     		adds	r2, r3, #1
+ 1241 0022 2449     		ldr	r1, .L64+8
+ 1242 0024 0A60     		str	r2, [r1]
+ 1243 0026 1946     		mov	r1, r3
+ 1244 0028 2348     		ldr	r0, .L64+12
+ 1245 002a FFF7FEFF 		bl	hal_mcu_trace_print
+ 1246 002e 2348     		ldr	r0, .L64+16
+ 1247 0030 FFF7FEFF 		bl	hal_mcu_trace_print
+ 543:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 544:../Src/apps/LoRaWAN/main_lorawan.c ****         HAL_DBG_TRACE_PRINTF( "CLASS       : %c\r\n", ( LORAWAN_CLASS_USED == LR1110_LORAWAN_CLASS_
+ 1248              		.loc 1 544 9
+ 1249 0034 4121     		movs	r1, #65
+ 1250 0036 2248     		ldr	r0, .L64+20
+ 1251 0038 FFF7FEFF 		bl	hal_mcu_trace_print
+ 545:../Src/apps/LoRaWAN/main_lorawan.c ****         HAL_DBG_TRACE_PRINTF( "TX PORT     : %d\r\n", LORAWAN_APP_PORT );
+ 1252              		.loc 1 545 9
+ARM GAS  /tmp/ccLb7d1r.s 			page 35
+
+
+ 1253 003c 0221     		movs	r1, #2
+ 1254 003e 2148     		ldr	r0, .L64+24
+ 1255 0040 FFF7FEFF 		bl	hal_mcu_trace_print
+ 546:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 547:../Src/apps/LoRaWAN/main_lorawan.c ****         if( app_data_size != 0 )
+ 1256              		.loc 1 547 27
+ 1257 0044 204B     		ldr	r3, .L64+28
+ 1258 0046 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1259              		.loc 1 547 11
+ 1260 0048 002B     		cmp	r3, #0
+ 1261 004a 2AD0     		beq	.L63
+ 548:../Src/apps/LoRaWAN/main_lorawan.c ****         {
+ 549:../Src/apps/LoRaWAN/main_lorawan.c ****             HAL_DBG_TRACE_MSG( "TX DATA     : " );
+ 1262              		.loc 1 549 13
+ 1263 004c 1B48     		ldr	r0, .L64+16
+ 1264 004e FFF7FEFF 		bl	hal_mcu_trace_print
+ 1265 0052 1E48     		ldr	r0, .L64+32
+ 1266 0054 FFF7FEFF 		bl	hal_mcu_trace_print
+ 550:../Src/apps/LoRaWAN/main_lorawan.c ****             if( LORAWAN_CONFIRMED_MSG_ON )
+ 551:../Src/apps/LoRaWAN/main_lorawan.c ****             {
+ 552:../Src/apps/LoRaWAN/main_lorawan.c ****                 HAL_DBG_TRACE_PRINTF( "CONFIRMED - %s\r\n", ( status == LR1110_MODEM_CONFIRMED_TX )
+ 553:../Src/apps/LoRaWAN/main_lorawan.c ****             }
+ 554:../Src/apps/LoRaWAN/main_lorawan.c ****             else
+ 555:../Src/apps/LoRaWAN/main_lorawan.c ****             {
+ 556:../Src/apps/LoRaWAN/main_lorawan.c ****                 HAL_DBG_TRACE_MSG( "UNCONFIRMED\r\n" );
+ 1267              		.loc 1 556 17
+ 1268 0058 1848     		ldr	r0, .L64+16
+ 1269 005a FFF7FEFF 		bl	hal_mcu_trace_print
+ 1270 005e 1C48     		ldr	r0, .L64+36
+ 1271 0060 FFF7FEFF 		bl	hal_mcu_trace_print
+ 557:../Src/apps/LoRaWAN/main_lorawan.c ****             }
+ 558:../Src/apps/LoRaWAN/main_lorawan.c ****             HAL_DBG_TRACE_MSG( "TX DATA     : " );
+ 1272              		.loc 1 558 13
+ 1273 0064 1548     		ldr	r0, .L64+16
+ 1274 0066 FFF7FEFF 		bl	hal_mcu_trace_print
+ 1275 006a 1848     		ldr	r0, .L64+32
+ 1276 006c FFF7FEFF 		bl	hal_mcu_trace_print
+ 559:../Src/apps/LoRaWAN/main_lorawan.c ****             print_hex_buffer( app_data_buffer, app_data_size );
+ 1277              		.loc 1 559 13
+ 1278 0070 154B     		ldr	r3, .L64+28
+ 1279 0072 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1280 0074 1946     		mov	r1, r3
+ 1281 0076 1748     		ldr	r0, .L64+40
+ 1282 0078 FFF7FEFF 		bl	print_hex_buffer
+ 560:../Src/apps/LoRaWAN/main_lorawan.c ****             HAL_DBG_TRACE_MSG( "\r\n" );
+ 1283              		.loc 1 560 13
+ 1284 007c 0F48     		ldr	r0, .L64+16
+ 1285 007e FFF7FEFF 		bl	hal_mcu_trace_print
+ 1286 0082 1548     		ldr	r0, .L64+44
+ 1287 0084 FFF7FEFF 		bl	hal_mcu_trace_print
+ 561:../Src/apps/LoRaWAN/main_lorawan.c ****         }
+ 562:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 563:../Src/apps/LoRaWAN/main_lorawan.c ****     else
+ 564:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 565:../Src/apps/LoRaWAN/main_lorawan.c ****         HAL_DBG_TRACE_ERROR( "###### ===== TX ERROR ==== ######\r\n\r\n" );
+ 566:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 567:../Src/apps/LoRaWAN/main_lorawan.c **** }
+ARM GAS  /tmp/ccLb7d1r.s 			page 36
+
+
+ 1288              		.loc 1 567 1
+ 1289 0088 0BE0     		b	.L63
+ 1290              	.L61:
+ 565:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 1291              		.loc 1 565 9
+ 1292 008a 1448     		ldr	r0, .L64+48
+ 1293 008c FFF7FEFF 		bl	hal_mcu_trace_print
+ 1294 0090 1348     		ldr	r0, .L64+52
+ 1295 0092 FFF7FEFF 		bl	hal_mcu_trace_print
+ 1296 0096 1348     		ldr	r0, .L64+56
+ 1297 0098 FFF7FEFF 		bl	hal_mcu_trace_print
+ 1298 009c 0748     		ldr	r0, .L64+16
+ 1299 009e FFF7FEFF 		bl	hal_mcu_trace_print
+ 1300              	.L63:
+ 1301              		.loc 1 567 1
+ 1302 00a2 00BF     		nop
+ 1303 00a4 0837     		adds	r7, r7, #8
+ 1304              	.LCFI30:
+ 1305              		.cfi_def_cfa_offset 8
+ 1306 00a6 BD46     		mov	sp, r7
+ 1307              	.LCFI31:
+ 1308              		.cfi_def_cfa_register 13
+ 1309              		@ sp needed
+ 1310 00a8 80BD     		pop	{r7, pc}
+ 1311              	.L65:
+ 1312 00aa 00BF     		.align	2
+ 1313              	.L64:
+ 1314 00ac 0C000000 		.word	.LC5
+ 1315 00b0 14000000 		.word	.LC6
+ 1316 00b4 00000000 		.word	uplink_cnt.1
+ 1317 00b8 6C040000 		.word	.LC34
+ 1318 00bc 00000000 		.word	.LC3
+ 1319 00c0 9C040000 		.word	.LC35
+ 1320 00c4 B0040000 		.word	.LC36
+ 1321 00c8 00000000 		.word	app_data_size
+ 1322 00cc C4040000 		.word	.LC37
+ 1323 00d0 D4040000 		.word	.LC38
+ 1324 00d4 00000000 		.word	app_data_buffer
+ 1325 00d8 08000000 		.word	.LC4
+ 1326 00dc 8C000000 		.word	.LC9
+ 1327 00e0 94000000 		.word	.LC10
+ 1328 00e4 E4040000 		.word	.LC39
+ 1329              		.cfi_endproc
+ 1330              	.LFE597:
+ 1332              		.section	.rodata
+ 1333 050a 0000     		.align	2
+ 1334              	.LC40:
+ 1335 050c 23232323 		.ascii	"###### ===== DOWNLINK FRAME %lu ==== ######\015\012"
+ 1335      2323203D 
+ 1335      3D3D3D3D 
+ 1335      20444F57 
+ 1335      4E4C494E 
+ 1336 0539 0D0A00   		.ascii	"\015\012\000"
+ 1337              		.align	2
+ 1338              	.LC41:
+ 1339 053c 52582057 		.ascii	"RX WINDOW   : %d\015\012\000"
+ 1339      494E444F 
+ARM GAS  /tmp/ccLb7d1r.s 			page 37
+
+
+ 1339      57202020 
+ 1339      3A202564 
+ 1339      0D0A00
+ 1340 054f 00       		.align	2
+ 1341              	.LC42:
+ 1342 0550 52582050 		.ascii	"RX PORT     : %d\015\012\000"
+ 1342      4F525420 
+ 1342      20202020 
+ 1342      3A202564 
+ 1342      0D0A00
+ 1343 0563 00       		.align	2
+ 1344              	.LC43:
+ 1345 0564 52582044 		.ascii	"RX DATA     : \000"
+ 1345      41544120 
+ 1345      20202020 
+ 1345      3A2000
+ 1346 0573 00       		.align	2
+ 1347              	.LC44:
+ 1348 0574 52582052 		.ascii	"RX RSSI     : %d\015\012\000"
+ 1348      53534920 
+ 1348      20202020 
+ 1348      3A202564 
+ 1348      0D0A00
+ 1349 0587 00       		.align	2
+ 1350              	.LC45:
+ 1351 0588 52582053 		.ascii	"RX SNR      : %d\015\012\015\012\000"
+ 1351      4E522020 
+ 1351      20202020 
+ 1351      3A202564 
+ 1351      0D0A0D0A 
+ 1352              		.section	.text.lr1110_modem_down_data,"ax",%progbits
+ 1353              		.align	1
+ 1354              		.syntax unified
+ 1355              		.thumb
+ 1356              		.thumb_func
+ 1357              		.fpu fpv4-sp-d16
+ 1359              	lr1110_modem_down_data:
+ 1360              	.LFB598:
+ 568:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 569:../Src/apps/LoRaWAN/main_lorawan.c **** static void lr1110_modem_down_data( int8_t rssi, int8_t snr, lr1110_modem_down_data_flag_t flags, u
+ 570:../Src/apps/LoRaWAN/main_lorawan.c ****                                     const uint8_t* payload, uint8_t size )
+ 571:../Src/apps/LoRaWAN/main_lorawan.c **** {
+ 1361              		.loc 1 571 1
+ 1362              		.cfi_startproc
+ 1363              		@ args = 8, pretend = 0, frame = 8
+ 1364              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1365 0000 90B5     		push	{r4, r7, lr}
+ 1366              	.LCFI32:
+ 1367              		.cfi_def_cfa_offset 12
+ 1368              		.cfi_offset 4, -12
+ 1369              		.cfi_offset 7, -8
+ 1370              		.cfi_offset 14, -4
+ 1371 0002 83B0     		sub	sp, sp, #12
+ 1372              	.LCFI33:
+ 1373              		.cfi_def_cfa_offset 24
+ 1374 0004 00AF     		add	r7, sp, #0
+ 1375              	.LCFI34:
+ARM GAS  /tmp/ccLb7d1r.s 			page 38
+
+
+ 1376              		.cfi_def_cfa_register 7
+ 1377 0006 0446     		mov	r4, r0
+ 1378 0008 0846     		mov	r0, r1
+ 1379 000a 1146     		mov	r1, r2
+ 1380 000c 1A46     		mov	r2, r3
+ 1381 000e 2346     		mov	r3, r4
+ 1382 0010 FB71     		strb	r3, [r7, #7]
+ 1383 0012 0346     		mov	r3, r0
+ 1384 0014 BB71     		strb	r3, [r7, #6]
+ 1385 0016 0B46     		mov	r3, r1
+ 1386 0018 7B71     		strb	r3, [r7, #5]
+ 1387 001a 1346     		mov	r3, r2
+ 1388 001c 3B71     		strb	r3, [r7, #4]
+ 572:../Src/apps/LoRaWAN/main_lorawan.c ****     static uint32_t downlink_cnt = 0;
+ 573:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 574:../Src/apps/LoRaWAN/main_lorawan.c ****     HAL_DBG_TRACE_INFO( "###### ===== DOWNLINK FRAME %lu ==== ######\r\n\r\n", downlink_cnt++ );
+ 1389              		.loc 1 574 5
+ 1390 001e 2148     		ldr	r0, .L68
+ 1391 0020 FFF7FEFF 		bl	hal_mcu_trace_print
+ 1392 0024 2048     		ldr	r0, .L68+4
+ 1393 0026 FFF7FEFF 		bl	hal_mcu_trace_print
+ 1394 002a 204B     		ldr	r3, .L68+8
+ 1395 002c 1B68     		ldr	r3, [r3]
+ 1396 002e 5A1C     		adds	r2, r3, #1
+ 1397 0030 1E49     		ldr	r1, .L68+8
+ 1398 0032 0A60     		str	r2, [r1]
+ 1399 0034 1946     		mov	r1, r3
+ 1400 0036 1E48     		ldr	r0, .L68+12
+ 1401 0038 FFF7FEFF 		bl	hal_mcu_trace_print
+ 1402 003c 1D48     		ldr	r0, .L68+16
+ 1403 003e FFF7FEFF 		bl	hal_mcu_trace_print
+ 575:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 576:../Src/apps/LoRaWAN/main_lorawan.c ****     HAL_DBG_TRACE_PRINTF( "RX WINDOW   : %d\r\n",
+ 1404              		.loc 1 576 5
+ 1405 0042 7B79     		ldrb	r3, [r7, #5]	@ zero_extendqisi2
+ 1406 0044 03F00303 		and	r3, r3, #3
+ 1407 0048 1946     		mov	r1, r3
+ 1408 004a 1B48     		ldr	r0, .L68+20
+ 1409 004c FFF7FEFF 		bl	hal_mcu_trace_print
+ 577:../Src/apps/LoRaWAN/main_lorawan.c ****                           flags & ( LR1110_MODEM_DOWN_DATA_EVENT_DNW1 | LR1110_MODEM_DOWN_DATA_EVEN
+ 578:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 579:../Src/apps/LoRaWAN/main_lorawan.c ****     HAL_DBG_TRACE_PRINTF( "RX PORT     : %d\r\n", port );
+ 1410              		.loc 1 579 5
+ 1411 0050 3B79     		ldrb	r3, [r7, #4]	@ zero_extendqisi2
+ 1412 0052 1946     		mov	r1, r3
+ 1413 0054 1948     		ldr	r0, .L68+24
+ 1414 0056 FFF7FEFF 		bl	hal_mcu_trace_print
+ 580:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 581:../Src/apps/LoRaWAN/main_lorawan.c ****     if( size != 0 )
+ 1415              		.loc 1 581 7
+ 1416 005a 3B7F     		ldrb	r3, [r7, #28]	@ zero_extendqisi2
+ 1417 005c 002B     		cmp	r3, #0
+ 1418 005e 0AD0     		beq	.L67
+ 582:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 583:../Src/apps/LoRaWAN/main_lorawan.c ****         HAL_DBG_TRACE_MSG( "RX DATA     : " );
+ 1419              		.loc 1 583 9
+ 1420 0060 1448     		ldr	r0, .L68+16
+ARM GAS  /tmp/ccLb7d1r.s 			page 39
+
+
+ 1421 0062 FFF7FEFF 		bl	hal_mcu_trace_print
+ 1422 0066 1648     		ldr	r0, .L68+28
+ 1423 0068 FFF7FEFF 		bl	hal_mcu_trace_print
+ 584:../Src/apps/LoRaWAN/main_lorawan.c ****         print_hex_buffer( payload, size );
+ 1424              		.loc 1 584 9
+ 1425 006c 3B7F     		ldrb	r3, [r7, #28]	@ zero_extendqisi2
+ 1426 006e 1946     		mov	r1, r3
+ 1427 0070 B869     		ldr	r0, [r7, #24]
+ 1428 0072 FFF7FEFF 		bl	print_hex_buffer
+ 1429              	.L67:
+ 585:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 586:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 587:../Src/apps/LoRaWAN/main_lorawan.c ****     HAL_DBG_TRACE_PRINTF( "RX RSSI     : %d\r\n", rssi );
+ 1430              		.loc 1 587 5
+ 1431 0076 97F90730 		ldrsb	r3, [r7, #7]
+ 1432 007a 1946     		mov	r1, r3
+ 1433 007c 1148     		ldr	r0, .L68+32
+ 1434 007e FFF7FEFF 		bl	hal_mcu_trace_print
+ 588:../Src/apps/LoRaWAN/main_lorawan.c ****     HAL_DBG_TRACE_PRINTF( "RX SNR      : %d\r\n\r\n", snr );
+ 1435              		.loc 1 588 5
+ 1436 0082 97F90630 		ldrsb	r3, [r7, #6]
+ 1437 0086 1946     		mov	r1, r3
+ 1438 0088 0F48     		ldr	r0, .L68+36
+ 1439 008a FFF7FEFF 		bl	hal_mcu_trace_print
+ 589:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 590:../Src/apps/LoRaWAN/main_lorawan.c ****     parse_downlink_frame( port, payload, size );
+ 1440              		.loc 1 590 5
+ 1441 008e 3A7F     		ldrb	r2, [r7, #28]	@ zero_extendqisi2
+ 1442 0090 3B79     		ldrb	r3, [r7, #4]	@ zero_extendqisi2
+ 1443 0092 B969     		ldr	r1, [r7, #24]
+ 1444 0094 1846     		mov	r0, r3
+ 1445 0096 FFF7FEFF 		bl	parse_downlink_frame
+ 591:../Src/apps/LoRaWAN/main_lorawan.c **** }
+ 1446              		.loc 1 591 1
+ 1447 009a 00BF     		nop
+ 1448 009c 0C37     		adds	r7, r7, #12
+ 1449              	.LCFI35:
+ 1450              		.cfi_def_cfa_offset 12
+ 1451 009e BD46     		mov	sp, r7
+ 1452              	.LCFI36:
+ 1453              		.cfi_def_cfa_register 13
+ 1454              		@ sp needed
+ 1455 00a0 90BD     		pop	{r4, r7, pc}
+ 1456              	.L69:
+ 1457 00a2 00BF     		.align	2
+ 1458              	.L68:
+ 1459 00a4 0C000000 		.word	.LC5
+ 1460 00a8 14000000 		.word	.LC6
+ 1461 00ac 00000000 		.word	downlink_cnt.0
+ 1462 00b0 0C050000 		.word	.LC40
+ 1463 00b4 00000000 		.word	.LC3
+ 1464 00b8 3C050000 		.word	.LC41
+ 1465 00bc 50050000 		.word	.LC42
+ 1466 00c0 64050000 		.word	.LC43
+ 1467 00c4 74050000 		.word	.LC44
+ 1468 00c8 88050000 		.word	.LC45
+ 1469              		.cfi_endproc
+ARM GAS  /tmp/ccLb7d1r.s 			page 40
+
+
+ 1470              	.LFE598:
+ 1472              		.section	.rodata
+ 1473 059d 000000   		.align	2
+ 1474              	.LC46:
+ 1475 05a0 23232323 		.ascii	"###### ===== MODEM UNMUTED ==== ######\015\012\015\012"
+ 1475      2323203D 
+ 1475      3D3D3D3D 
+ 1475      204D4F44 
+ 1475      454D2055 
+ 1476 05ca 00       		.ascii	"\000"
+ 1477 05cb 00       		.align	2
+ 1478              	.LC47:
+ 1479 05cc 23232323 		.ascii	"###### ===== MODEM MUTED ==== ######\015\012\015\012"
+ 1479      2323203D 
+ 1479      3D3D3D3D 
+ 1479      204D4F44 
+ 1479      454D204D 
+ 1480 05f4 00       		.ascii	"\000"
+ 1481              		.section	.text.lr1110_modem_mute,"ax",%progbits
+ 1482              		.align	1
+ 1483              		.syntax unified
+ 1484              		.thumb
+ 1485              		.thumb_func
+ 1486              		.fpu fpv4-sp-d16
+ 1488              	lr1110_modem_mute:
+ 1489              	.LFB599:
+ 592:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 593:../Src/apps/LoRaWAN/main_lorawan.c **** static void lr1110_modem_mute( lr1110_modem_mute_t mute )
+ 594:../Src/apps/LoRaWAN/main_lorawan.c **** {
+ 1490              		.loc 1 594 1
+ 1491              		.cfi_startproc
+ 1492              		@ args = 0, pretend = 0, frame = 8
+ 1493              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1494 0000 80B5     		push	{r7, lr}
+ 1495              	.LCFI37:
+ 1496              		.cfi_def_cfa_offset 8
+ 1497              		.cfi_offset 7, -8
+ 1498              		.cfi_offset 14, -4
+ 1499 0002 82B0     		sub	sp, sp, #8
+ 1500              	.LCFI38:
+ 1501              		.cfi_def_cfa_offset 16
+ 1502 0004 00AF     		add	r7, sp, #0
+ 1503              	.LCFI39:
+ 1504              		.cfi_def_cfa_register 7
+ 1505 0006 0346     		mov	r3, r0
+ 1506 0008 FB71     		strb	r3, [r7, #7]
+ 595:../Src/apps/LoRaWAN/main_lorawan.c ****     if( mute == LR1110_MODEM_UNMUTED )
+ 1507              		.loc 1 595 7
+ 1508 000a FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 1509 000c 002B     		cmp	r3, #0
+ 1510 000e 0CD1     		bne	.L71
+ 596:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 597:../Src/apps/LoRaWAN/main_lorawan.c ****         HAL_DBG_TRACE_INFO( "###### ===== MODEM UNMUTED ==== ######\r\n\r\n" );
+ 1511              		.loc 1 597 9
+ 1512 0010 0E48     		ldr	r0, .L74
+ 1513 0012 FFF7FEFF 		bl	hal_mcu_trace_print
+ 1514 0016 0E48     		ldr	r0, .L74+4
+ARM GAS  /tmp/ccLb7d1r.s 			page 41
+
+
+ 1515 0018 FFF7FEFF 		bl	hal_mcu_trace_print
+ 1516 001c 0D48     		ldr	r0, .L74+8
+ 1517 001e FFF7FEFF 		bl	hal_mcu_trace_print
+ 1518 0022 0D48     		ldr	r0, .L74+12
+ 1519 0024 FFF7FEFF 		bl	hal_mcu_trace_print
+ 598:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 599:../Src/apps/LoRaWAN/main_lorawan.c ****     else
+ 600:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 601:../Src/apps/LoRaWAN/main_lorawan.c ****         HAL_DBG_TRACE_INFO( "###### ===== MODEM MUTED ==== ######\r\n\r\n" );
+ 602:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 603:../Src/apps/LoRaWAN/main_lorawan.c **** }
+ 1520              		.loc 1 603 1
+ 1521 0028 0BE0     		b	.L73
+ 1522              	.L71:
+ 601:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 1523              		.loc 1 601 9
+ 1524 002a 0848     		ldr	r0, .L74
+ 1525 002c FFF7FEFF 		bl	hal_mcu_trace_print
+ 1526 0030 0748     		ldr	r0, .L74+4
+ 1527 0032 FFF7FEFF 		bl	hal_mcu_trace_print
+ 1528 0036 0948     		ldr	r0, .L74+16
+ 1529 0038 FFF7FEFF 		bl	hal_mcu_trace_print
+ 1530 003c 0648     		ldr	r0, .L74+12
+ 1531 003e FFF7FEFF 		bl	hal_mcu_trace_print
+ 1532              	.L73:
+ 1533              		.loc 1 603 1
+ 1534 0042 00BF     		nop
+ 1535 0044 0837     		adds	r7, r7, #8
+ 1536              	.LCFI40:
+ 1537              		.cfi_def_cfa_offset 8
+ 1538 0046 BD46     		mov	sp, r7
+ 1539              	.LCFI41:
+ 1540              		.cfi_def_cfa_register 13
+ 1541              		@ sp needed
+ 1542 0048 80BD     		pop	{r7, pc}
+ 1543              	.L75:
+ 1544 004a 00BF     		.align	2
+ 1545              	.L74:
+ 1546 004c 0C000000 		.word	.LC5
+ 1547 0050 14000000 		.word	.LC6
+ 1548 0054 A0050000 		.word	.LC46
+ 1549 0058 00000000 		.word	.LC3
+ 1550 005c CC050000 		.word	.LC47
+ 1551              		.cfi_endproc
+ 1552              	.LFE599:
+ 1554              		.section	.rodata
+ 1555 05f5 000000   		.align	2
+ 1556              	.LC48:
+ 1557 05f8 23232323 		.ascii	"###### ===== MODEM SET CONF %02X ==== ######\015\012"
+ 1557      2323203D 
+ 1557      3D3D3D3D 
+ 1557      204D4F44 
+ 1557      454D2053 
+ 1558 0626 0D0A00   		.ascii	"\015\012\000"
+ 1559              		.section	.text.lr1110_modem_set_conf,"ax",%progbits
+ 1560              		.align	1
+ 1561              		.syntax unified
+ARM GAS  /tmp/ccLb7d1r.s 			page 42
+
+
+ 1562              		.thumb
+ 1563              		.thumb_func
+ 1564              		.fpu fpv4-sp-d16
+ 1566              	lr1110_modem_set_conf:
+ 1567              	.LFB600:
+ 604:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 605:../Src/apps/LoRaWAN/main_lorawan.c **** static void lr1110_modem_set_conf( lr1110_modem_event_setconf_tag_t tag )
+ 606:../Src/apps/LoRaWAN/main_lorawan.c **** {
+ 1568              		.loc 1 606 1
+ 1569              		.cfi_startproc
+ 1570              		@ args = 0, pretend = 0, frame = 8
+ 1571              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1572 0000 80B5     		push	{r7, lr}
+ 1573              	.LCFI42:
+ 1574              		.cfi_def_cfa_offset 8
+ 1575              		.cfi_offset 7, -8
+ 1576              		.cfi_offset 14, -4
+ 1577 0002 82B0     		sub	sp, sp, #8
+ 1578              	.LCFI43:
+ 1579              		.cfi_def_cfa_offset 16
+ 1580 0004 00AF     		add	r7, sp, #0
+ 1581              	.LCFI44:
+ 1582              		.cfi_def_cfa_register 7
+ 1583 0006 0346     		mov	r3, r0
+ 1584 0008 FB71     		strb	r3, [r7, #7]
+ 607:../Src/apps/LoRaWAN/main_lorawan.c ****     HAL_DBG_TRACE_INFO( "###### ===== MODEM SET CONF %02X ==== ######\r\n\r\n", tag );
+ 1585              		.loc 1 607 5
+ 1586 000a 0948     		ldr	r0, .L77
+ 1587 000c FFF7FEFF 		bl	hal_mcu_trace_print
+ 1588 0010 0848     		ldr	r0, .L77+4
+ 1589 0012 FFF7FEFF 		bl	hal_mcu_trace_print
+ 1590 0016 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 1591 0018 1946     		mov	r1, r3
+ 1592 001a 0748     		ldr	r0, .L77+8
+ 1593 001c FFF7FEFF 		bl	hal_mcu_trace_print
+ 1594 0020 0648     		ldr	r0, .L77+12
+ 1595 0022 FFF7FEFF 		bl	hal_mcu_trace_print
+ 608:../Src/apps/LoRaWAN/main_lorawan.c **** }
+ 1596              		.loc 1 608 1
+ 1597 0026 00BF     		nop
+ 1598 0028 0837     		adds	r7, r7, #8
+ 1599              	.LCFI45:
+ 1600              		.cfi_def_cfa_offset 8
+ 1601 002a BD46     		mov	sp, r7
+ 1602              	.LCFI46:
+ 1603              		.cfi_def_cfa_register 13
+ 1604              		@ sp needed
+ 1605 002c 80BD     		pop	{r7, pc}
+ 1606              	.L78:
+ 1607 002e 00BF     		.align	2
+ 1608              	.L77:
+ 1609 0030 0C000000 		.word	.LC5
+ 1610 0034 14000000 		.word	.LC6
+ 1611 0038 F8050000 		.word	.LC48
+ 1612 003c 00000000 		.word	.LC3
+ 1613              		.cfi_endproc
+ 1614              	.LFE600:
+ARM GAS  /tmp/ccLb7d1r.s 			page 43
+
+
+ 1616              		.section	.rodata
+ 1617 0629 000000   		.align	2
+ 1618              	.LC49:
+ 1619 062c 23232323 		.ascii	"###### ===== ADR HAS SWITCHED FROM MOBILE TO STATIC"
+ 1619      2323203D 
+ 1619      3D3D3D3D 
+ 1619      20414452 
+ 1619      20484153 
+ 1620 065f 203D3D3D 		.ascii	" ==== ######\015\012\015\012\000"
+ 1620      3D202323 
+ 1620      23232323 
+ 1620      0D0A0D0A 
+ 1620      00
+ 1621              		.section	.text.lr1110_modem_adr_mobile_to_static,"ax",%progbits
+ 1622              		.align	1
+ 1623              		.syntax unified
+ 1624              		.thumb
+ 1625              		.thumb_func
+ 1626              		.fpu fpv4-sp-d16
+ 1628              	lr1110_modem_adr_mobile_to_static:
+ 1629              	.LFB601:
+ 609:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 610:../Src/apps/LoRaWAN/main_lorawan.c **** static void lr1110_modem_adr_mobile_to_static( void )
+ 611:../Src/apps/LoRaWAN/main_lorawan.c **** {
+ 1630              		.loc 1 611 1
+ 1631              		.cfi_startproc
+ 1632              		@ args = 0, pretend = 0, frame = 0
+ 1633              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1634 0000 80B5     		push	{r7, lr}
+ 1635              	.LCFI47:
+ 1636              		.cfi_def_cfa_offset 8
+ 1637              		.cfi_offset 7, -8
+ 1638              		.cfi_offset 14, -4
+ 1639 0002 00AF     		add	r7, sp, #0
+ 1640              	.LCFI48:
+ 1641              		.cfi_def_cfa_register 7
+ 612:../Src/apps/LoRaWAN/main_lorawan.c ****     HAL_DBG_TRACE_INFO( "###### ===== ADR HAS SWITCHED FROM MOBILE TO STATIC ==== ######\r\n\r\n" )
+ 1642              		.loc 1 612 5
+ 1643 0004 0648     		ldr	r0, .L80
+ 1644 0006 FFF7FEFF 		bl	hal_mcu_trace_print
+ 1645 000a 0648     		ldr	r0, .L80+4
+ 1646 000c FFF7FEFF 		bl	hal_mcu_trace_print
+ 1647 0010 0548     		ldr	r0, .L80+8
+ 1648 0012 FFF7FEFF 		bl	hal_mcu_trace_print
+ 1649 0016 0548     		ldr	r0, .L80+12
+ 1650 0018 FFF7FEFF 		bl	hal_mcu_trace_print
+ 613:../Src/apps/LoRaWAN/main_lorawan.c **** }
+ 1651              		.loc 1 613 1
+ 1652 001c 00BF     		nop
+ 1653 001e 80BD     		pop	{r7, pc}
+ 1654              	.L81:
+ 1655              		.align	2
+ 1656              	.L80:
+ 1657 0020 0C000000 		.word	.LC5
+ 1658 0024 14000000 		.word	.LC6
+ 1659 0028 2C060000 		.word	.LC49
+ 1660 002c 00000000 		.word	.LC3
+ARM GAS  /tmp/ccLb7d1r.s 			page 44
+
+
+ 1661              		.cfi_endproc
+ 1662              	.LFE601:
+ 1664              		.section	.rodata
+ 1665              		.align	2
+ 1666              	.LC50:
+ 1667 0670 23232323 		.ascii	"###### ===== NEW LINK ADR ==== ######\015\012\015\012"
+ 1667      2323203D 
+ 1667      3D3D3D3D 
+ 1667      204E4557 
+ 1667      204C494E 
+ 1668 0699 00       		.ascii	"\000"
+ 1669              		.section	.text.lr1110_modem_new_link_adr,"ax",%progbits
+ 1670              		.align	1
+ 1671              		.syntax unified
+ 1672              		.thumb
+ 1673              		.thumb_func
+ 1674              		.fpu fpv4-sp-d16
+ 1676              	lr1110_modem_new_link_adr:
+ 1677              	.LFB602:
+ 614:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 615:../Src/apps/LoRaWAN/main_lorawan.c **** static void lr1110_modem_new_link_adr( void ) { HAL_DBG_TRACE_INFO( "###### ===== NEW LINK ADR ====
+ 1678              		.loc 1 615 47
+ 1679              		.cfi_startproc
+ 1680              		@ args = 0, pretend = 0, frame = 0
+ 1681              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1682 0000 80B5     		push	{r7, lr}
+ 1683              	.LCFI49:
+ 1684              		.cfi_def_cfa_offset 8
+ 1685              		.cfi_offset 7, -8
+ 1686              		.cfi_offset 14, -4
+ 1687 0002 00AF     		add	r7, sp, #0
+ 1688              	.LCFI50:
+ 1689              		.cfi_def_cfa_register 7
+ 1690              		.loc 1 615 49
+ 1691 0004 0648     		ldr	r0, .L83
+ 1692 0006 FFF7FEFF 		bl	hal_mcu_trace_print
+ 1693 000a 0648     		ldr	r0, .L83+4
+ 1694 000c FFF7FEFF 		bl	hal_mcu_trace_print
+ 1695 0010 0548     		ldr	r0, .L83+8
+ 1696 0012 FFF7FEFF 		bl	hal_mcu_trace_print
+ 1697 0016 0548     		ldr	r0, .L83+12
+ 1698 0018 FFF7FEFF 		bl	hal_mcu_trace_print
+ 1699              		.loc 1 615 120
+ 1700 001c 00BF     		nop
+ 1701 001e 80BD     		pop	{r7, pc}
+ 1702              	.L84:
+ 1703              		.align	2
+ 1704              	.L83:
+ 1705 0020 0C000000 		.word	.LC5
+ 1706 0024 14000000 		.word	.LC6
+ 1707 0028 70060000 		.word	.LC50
+ 1708 002c 00000000 		.word	.LC3
+ 1709              		.cfi_endproc
+ 1710              	.LFE602:
+ 1712              		.section	.rodata
+ 1713 069a 0000     		.align	2
+ 1714              	.LC51:
+ARM GAS  /tmp/ccLb7d1r.s 			page 45
+
+
+ 1715 069c 23232323 		.ascii	"###### ===== NO EVENT ==== ######\015\012\015\012\000"
+ 1715      2323203D 
+ 1715      3D3D3D3D 
+ 1715      204E4F20 
+ 1715      4556454E 
+ 1716              		.section	.text.lr1110_modem_no_event,"ax",%progbits
+ 1717              		.align	1
+ 1718              		.syntax unified
+ 1719              		.thumb
+ 1720              		.thumb_func
+ 1721              		.fpu fpv4-sp-d16
+ 1723              	lr1110_modem_no_event:
+ 1724              	.LFB603:
+ 616:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 617:../Src/apps/LoRaWAN/main_lorawan.c **** static void lr1110_modem_no_event( void ) { HAL_DBG_TRACE_INFO( "###### ===== NO EVENT ==== ######\
+ 1725              		.loc 1 617 43
+ 1726              		.cfi_startproc
+ 1727              		@ args = 0, pretend = 0, frame = 0
+ 1728              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1729 0000 80B5     		push	{r7, lr}
+ 1730              	.LCFI51:
+ 1731              		.cfi_def_cfa_offset 8
+ 1732              		.cfi_offset 7, -8
+ 1733              		.cfi_offset 14, -4
+ 1734 0002 00AF     		add	r7, sp, #0
+ 1735              	.LCFI52:
+ 1736              		.cfi_def_cfa_register 7
+ 1737              		.loc 1 617 45
+ 1738 0004 0648     		ldr	r0, .L86
+ 1739 0006 FFF7FEFF 		bl	hal_mcu_trace_print
+ 1740 000a 0648     		ldr	r0, .L86+4
+ 1741 000c FFF7FEFF 		bl	hal_mcu_trace_print
+ 1742 0010 0548     		ldr	r0, .L86+8
+ 1743 0012 FFF7FEFF 		bl	hal_mcu_trace_print
+ 1744 0016 0548     		ldr	r0, .L86+12
+ 1745 0018 FFF7FEFF 		bl	hal_mcu_trace_print
+ 1746              		.loc 1 617 112
+ 1747 001c 00BF     		nop
+ 1748 001e 80BD     		pop	{r7, pc}
+ 1749              	.L87:
+ 1750              		.align	2
+ 1751              	.L86:
+ 1752 0020 0C000000 		.word	.LC5
+ 1753 0024 14000000 		.word	.LC6
+ 1754 0028 9C060000 		.word	.LC51
+ 1755 002c 00000000 		.word	.LC3
+ 1756              		.cfi_endproc
+ 1757              	.LFE603:
+ 1759              		.section	.text.parse_downlink_frame,"ax",%progbits
+ 1760              		.align	1
+ 1761              		.syntax unified
+ 1762              		.thumb
+ 1763              		.thumb_func
+ 1764              		.fpu fpv4-sp-d16
+ 1766              	parse_downlink_frame:
+ 1767              	.LFB604:
+ 618:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ARM GAS  /tmp/ccLb7d1r.s 			page 46
+
+
+ 619:../Src/apps/LoRaWAN/main_lorawan.c **** static void parse_downlink_frame( uint8_t port, const uint8_t* payload, uint8_t size )
+ 620:../Src/apps/LoRaWAN/main_lorawan.c **** {
+ 1768              		.loc 1 620 1
+ 1769              		.cfi_startproc
+ 1770              		@ args = 0, pretend = 0, frame = 16
+ 1771              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1772              		@ link register save eliminated.
+ 1773 0000 80B4     		push	{r7}
+ 1774              	.LCFI53:
+ 1775              		.cfi_def_cfa_offset 4
+ 1776              		.cfi_offset 7, -4
+ 1777 0002 85B0     		sub	sp, sp, #20
+ 1778              	.LCFI54:
+ 1779              		.cfi_def_cfa_offset 24
+ 1780 0004 00AF     		add	r7, sp, #0
+ 1781              	.LCFI55:
+ 1782              		.cfi_def_cfa_register 7
+ 1783 0006 0346     		mov	r3, r0
+ 1784 0008 3960     		str	r1, [r7]
+ 1785 000a FB71     		strb	r3, [r7, #7]
+ 1786 000c 1346     		mov	r3, r2
+ 1787 000e BB71     		strb	r3, [r7, #6]
+ 621:../Src/apps/LoRaWAN/main_lorawan.c ****     switch( port )
+ 1788              		.loc 1 621 5
+ 1789 0010 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 1790 0012 972B     		cmp	r3, #151
+ 1791 0014 28D1     		bne	.L94
+ 1792              	.LBB3:
+ 622:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 623:../Src/apps/LoRaWAN/main_lorawan.c ****     case APPLICATION_MSG_PORT:
+ 624:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 625:../Src/apps/LoRaWAN/main_lorawan.c ****         uint8_t tag           = 0;
+ 1793              		.loc 1 625 17
+ 1794 0016 0023     		movs	r3, #0
+ 1795 0018 BB73     		strb	r3, [r7, #14]
+ 626:../Src/apps/LoRaWAN/main_lorawan.c ****         uint8_t len           = 0;
+ 1796              		.loc 1 626 17
+ 1797 001a 0023     		movs	r3, #0
+ 1798 001c 7B73     		strb	r3, [r7, #13]
+ 627:../Src/apps/LoRaWAN/main_lorawan.c ****         uint8_t payload_index = 0;
+ 1799              		.loc 1 627 17
+ 1800 001e 0023     		movs	r3, #0
+ 1801 0020 FB73     		strb	r3, [r7, #15]
+ 628:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 629:../Src/apps/LoRaWAN/main_lorawan.c ****         while( payload_index < size )
+ 1802              		.loc 1 629 14
+ 1803 0022 1CE0     		b	.L90
+ 1804              	.L92:
+ 630:../Src/apps/LoRaWAN/main_lorawan.c ****         {
+ 631:../Src/apps/LoRaWAN/main_lorawan.c ****             tag = payload[payload_index++];
+ 1805              		.loc 1 631 40
+ 1806 0024 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 1807 0026 5A1C     		adds	r2, r3, #1
+ 1808 0028 FA73     		strb	r2, [r7, #15]
+ 1809 002a 1A46     		mov	r2, r3
+ 1810              		.loc 1 631 26
+ 1811 002c 3B68     		ldr	r3, [r7]
+ARM GAS  /tmp/ccLb7d1r.s 			page 47
+
+
+ 1812 002e 1344     		add	r3, r3, r2
+ 1813              		.loc 1 631 17
+ 1814 0030 1B78     		ldrb	r3, [r3]
+ 1815 0032 BB73     		strb	r3, [r7, #14]
+ 632:../Src/apps/LoRaWAN/main_lorawan.c ****             len = payload[payload_index++];
+ 1816              		.loc 1 632 40
+ 1817 0034 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 1818 0036 5A1C     		adds	r2, r3, #1
+ 1819 0038 FA73     		strb	r2, [r7, #15]
+ 1820 003a 1A46     		mov	r2, r3
+ 1821              		.loc 1 632 26
+ 1822 003c 3B68     		ldr	r3, [r7]
+ 1823 003e 1344     		add	r3, r3, r2
+ 1824              		.loc 1 632 17
+ 1825 0040 1B78     		ldrb	r3, [r3]
+ 1826 0042 7B73     		strb	r3, [r7, #13]
+ 633:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 634:../Src/apps/LoRaWAN/main_lorawan.c ****             switch( tag )
+ 1827              		.loc 1 634 13
+ 1828 0044 BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
+ 1829 0046 4F2B     		cmp	r3, #79
+ 1830 0048 04D1     		bne	.L91
+ 635:../Src/apps/LoRaWAN/main_lorawan.c ****             {
+ 636:../Src/apps/LoRaWAN/main_lorawan.c ****             case SET_RX_LED_CMD:
+ 637:../Src/apps/LoRaWAN/main_lorawan.c ****             {
+ 638:../Src/apps/LoRaWAN/main_lorawan.c ****                 payload_index += len;
+ 1831              		.loc 1 638 31
+ 1832 004a FA7B     		ldrb	r2, [r7, #15]
+ 1833 004c 7B7B     		ldrb	r3, [r7, #13]
+ 1834 004e 1344     		add	r3, r3, r2
+ 1835 0050 FB73     		strb	r3, [r7, #15]
+ 639:../Src/apps/LoRaWAN/main_lorawan.c ****                 break;
+ 1836              		.loc 1 639 17
+ 1837 0052 04E0     		b	.L90
+ 1838              	.L91:
+ 640:../Src/apps/LoRaWAN/main_lorawan.c ****             }
+ 641:../Src/apps/LoRaWAN/main_lorawan.c ****             default:
+ 642:../Src/apps/LoRaWAN/main_lorawan.c ****                 payload_index += len;
+ 1839              		.loc 1 642 31
+ 1840 0054 FA7B     		ldrb	r2, [r7, #15]
+ 1841 0056 7B7B     		ldrb	r3, [r7, #13]
+ 1842 0058 1344     		add	r3, r3, r2
+ 1843 005a FB73     		strb	r3, [r7, #15]
+ 643:../Src/apps/LoRaWAN/main_lorawan.c ****                 break;
+ 1844              		.loc 1 643 17
+ 1845 005c 00BF     		nop
+ 1846              	.L90:
+ 629:../Src/apps/LoRaWAN/main_lorawan.c ****         {
+ 1847              		.loc 1 629 14
+ 1848 005e FA7B     		ldrb	r2, [r7, #15]	@ zero_extendqisi2
+ 1849 0060 BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 1850 0062 9A42     		cmp	r2, r3
+ 1851 0064 DED3     		bcc	.L92
+ 644:../Src/apps/LoRaWAN/main_lorawan.c ****             }
+ 645:../Src/apps/LoRaWAN/main_lorawan.c ****         }
+ 646:../Src/apps/LoRaWAN/main_lorawan.c ****         break;
+ 1852              		.loc 1 646 9
+ARM GAS  /tmp/ccLb7d1r.s 			page 48
+
+
+ 1853 0066 00E0     		b	.L93
+ 1854              	.L94:
+ 1855              	.LBE3:
+ 647:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 648:../Src/apps/LoRaWAN/main_lorawan.c ****     default:
+ 649:../Src/apps/LoRaWAN/main_lorawan.c ****         break;
+ 1856              		.loc 1 649 9
+ 1857 0068 00BF     		nop
+ 1858              	.L93:
+ 650:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 651:../Src/apps/LoRaWAN/main_lorawan.c **** }
+ 1859              		.loc 1 651 1
+ 1860 006a 00BF     		nop
+ 1861 006c 1437     		adds	r7, r7, #20
+ 1862              	.LCFI56:
+ 1863              		.cfi_def_cfa_offset 4
+ 1864 006e BD46     		mov	sp, r7
+ 1865              	.LCFI57:
+ 1866              		.cfi_def_cfa_register 13
+ 1867              		@ sp needed
+ 1868 0070 5DF8047B 		ldr	r7, [sp], #4
+ 1869              	.LCFI58:
+ 1870              		.cfi_restore 7
+ 1871              		.cfi_def_cfa_offset 0
+ 1872 0074 7047     		bx	lr
+ 1873              		.cfi_endproc
+ 1874              	.LFE604:
+ 1876              		.section	.rodata
+ 1877 06c2 0000     		.align	2
+ 1878              	.LC52:
+ 1879 06c4 434C4153 		.ascii	"CLASS       : A\015\012\000"
+ 1879      53202020 
+ 1879      20202020 
+ 1879      3A20410D 
+ 1879      0A00
+ 1880 06d6 0000     		.align	2
+ 1881              	.LC53:
+ 1882 06d8 434C4153 		.ascii	"CLASS       : C\015\012\000"
+ 1882      53202020 
+ 1882      20202020 
+ 1882      3A20430D 
+ 1882      0A00
+ 1883 06ea 0000     		.align	2
+ 1884              	.LC54:
+ 1885 06ec 52454749 		.ascii	"REGION      : EU868\015\012\015\012\000"
+ 1885      4F4E2020 
+ 1885      20202020 
+ 1885      3A204555 
+ 1885      3836380D 
+ 1886              		.align	2
+ 1887              	.LC55:
+ 1888 0704 52454749 		.ascii	"REGION      : US915\015\012\015\012\000"
+ 1888      4F4E2020 
+ 1888      20202020 
+ 1888      3A205553 
+ 1888      3931350D 
+ 1889              		.align	2
+ARM GAS  /tmp/ccLb7d1r.s 			page 49
+
+
+ 1890              	.LC56:
+ 1891 071c 52454749 		.ascii	"REGION      : AU915\015\012\015\012\000"
+ 1891      4F4E2020 
+ 1891      20202020 
+ 1891      3A204155 
+ 1891      3931350D 
+ 1892              		.align	2
+ 1893              	.LC57:
+ 1894 0734 52454749 		.ascii	"REGION      : AS923_GRP1\015\012\015\012\000"
+ 1894      4F4E2020 
+ 1894      20202020 
+ 1894      3A204153 
+ 1894      3932335F 
+ 1895 0751 000000   		.align	2
+ 1896              	.LC58:
+ 1897 0754 52454749 		.ascii	"REGION      : CN470\015\012\015\012\000"
+ 1897      4F4E2020 
+ 1897      20202020 
+ 1897      3A20434E 
+ 1897      3437300D 
+ 1898              		.align	2
+ 1899              	.LC59:
+ 1900 076c 52454749 		.ascii	"REGION      : AS923_GRP2\015\012\015\012\000"
+ 1900      4F4E2020 
+ 1900      20202020 
+ 1900      3A204153 
+ 1900      3932335F 
+ 1901 0789 000000   		.align	2
+ 1902              	.LC60:
+ 1903 078c 52454749 		.ascii	"REGION      : AS923_GRP3\015\012\015\012\000"
+ 1903      4F4E2020 
+ 1903      20202020 
+ 1903      3A204153 
+ 1903      3932335F 
+ 1904 07a9 000000   		.align	2
+ 1905              	.LC61:
+ 1906 07ac 52454749 		.ascii	"REGION      : IN865\015\012\015\012\000"
+ 1906      4F4E2020 
+ 1906      20202020 
+ 1906      3A20494E 
+ 1906      3836350D 
+ 1907              		.align	2
+ 1908              	.LC62:
+ 1909 07c4 4C425420 		.ascii	"LBT         : ACTIVATE LBT\015\012\000"
+ 1909      20202020 
+ 1909      20202020 
+ 1909      3A204143 
+ 1909      54495641 
+ 1910 07e1 000000   		.align	2
+ 1911              	.LC63:
+ 1912 07e4 52454749 		.ascii	"REGION      : KR920\015\012\015\012\000"
+ 1912      4F4E2020 
+ 1912      20202020 
+ 1912      3A204B52 
+ 1912      3932300D 
+ 1913              		.align	2
+ 1914              	.LC64:
+ARM GAS  /tmp/ccLb7d1r.s 			page 50
+
+
+ 1915 07fc 52454749 		.ascii	"REGION      : RU864\015\012\015\012\000"
+ 1915      4F4E2020 
+ 1915      20202020 
+ 1915      3A205255 
+ 1915      3836340D 
+ 1916              		.align	2
+ 1917              	.LC65:
+ 1918 0814 4E6F2073 		.ascii	"No supported region selected\015\012\015\012\000"
+ 1918      7570706F 
+ 1918      72746564 
+ 1918      20726567 
+ 1918      696F6E20 
+ 1919              		.section	.text.lorawan_init,"ax",%progbits
+ 1920              		.align	1
+ 1921              		.global	lorawan_init
+ 1922              		.syntax unified
+ 1923              		.thumb
+ 1924              		.thumb_func
+ 1925              		.fpu fpv4-sp-d16
+ 1927              	lorawan_init:
+ 1928              	.LFB605:
+ 652:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 653:../Src/apps/LoRaWAN/main_lorawan.c **** lr1110_modem_response_code_t lorawan_init( lr1110_modem_regions_t region, lr1110_modem_classes_t lo
+ 654:../Src/apps/LoRaWAN/main_lorawan.c **** {
+ 1929              		.loc 1 654 1
+ 1930              		.cfi_startproc
+ 1931              		@ args = 0, pretend = 0, frame = 32
+ 1932              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1933 0000 80B5     		push	{r7, lr}
+ 1934              	.LCFI59:
+ 1935              		.cfi_def_cfa_offset 8
+ 1936              		.cfi_offset 7, -8
+ 1937              		.cfi_offset 14, -4
+ 1938 0002 8AB0     		sub	sp, sp, #40
+ 1939              	.LCFI60:
+ 1940              		.cfi_def_cfa_offset 48
+ 1941 0004 02AF     		add	r7, sp, #8
+ 1942              	.LCFI61:
+ 1943              		.cfi_def_cfa 7, 40
+ 1944 0006 0346     		mov	r3, r0
+ 1945 0008 0A46     		mov	r2, r1
+ 1946 000a FB71     		strb	r3, [r7, #7]
+ 1947 000c 1346     		mov	r3, r2
+ 1948 000e BB71     		strb	r3, [r7, #6]
+ 655:../Src/apps/LoRaWAN/main_lorawan.c ****     lr1110_modem_dm_info_fields_t dm_info_fields;
+ 656:../Src/apps/LoRaWAN/main_lorawan.c ****     lr1110_modem_response_code_t  modem_response_code = LR1110_MODEM_RESPONSE_CODE_OK;
+ 1949              		.loc 1 656 35
+ 1950 0010 0023     		movs	r3, #0
+ 1951 0012 FB77     		strb	r3, [r7, #31]
+ 657:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 658:../Src/apps/LoRaWAN/main_lorawan.c ****     modem_response_code |= lr1110_modem_set_class( &lr1110, lorawan_class );
+ 1952              		.loc 1 658 28
+ 1953 0014 BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 1954 0016 1946     		mov	r1, r3
+ 1955 0018 6848     		ldr	r0, .L113
+ 1956 001a FFF7FEFF 		bl	lr1110_modem_set_class
+ 1957 001e 0346     		mov	r3, r0
+ARM GAS  /tmp/ccLb7d1r.s 			page 51
+
+
+ 1958 0020 1A46     		mov	r2, r3
+ 1959              		.loc 1 658 25
+ 1960 0022 FB7F     		ldrb	r3, [r7, #31]
+ 1961 0024 1343     		orrs	r3, r3, r2
+ 1962 0026 FB77     		strb	r3, [r7, #31]
+ 659:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 660:../Src/apps/LoRaWAN/main_lorawan.c ****     if( lorawan_class == LR1110_LORAWAN_CLASS_A )
+ 1963              		.loc 1 660 7
+ 1964 0028 BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 1965 002a 002B     		cmp	r3, #0
+ 1966 002c 05D1     		bne	.L96
+ 661:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 662:../Src/apps/LoRaWAN/main_lorawan.c ****         HAL_DBG_TRACE_MSG( "CLASS       : A\r\n" );
+ 1967              		.loc 1 662 9
+ 1968 002e 6448     		ldr	r0, .L113+4
+ 1969 0030 FFF7FEFF 		bl	hal_mcu_trace_print
+ 1970 0034 6348     		ldr	r0, .L113+8
+ 1971 0036 FFF7FEFF 		bl	hal_mcu_trace_print
+ 1972              	.L96:
+ 663:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 664:../Src/apps/LoRaWAN/main_lorawan.c ****     if( lorawan_class == LR1110_LORAWAN_CLASS_C )
+ 1973              		.loc 1 664 7
+ 1974 003a BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 1975 003c 012B     		cmp	r3, #1
+ 1976 003e 05D1     		bne	.L97
+ 665:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 666:../Src/apps/LoRaWAN/main_lorawan.c ****         HAL_DBG_TRACE_MSG( "CLASS       : C\r\n" );
+ 1977              		.loc 1 666 9
+ 1978 0040 5F48     		ldr	r0, .L113+4
+ 1979 0042 FFF7FEFF 		bl	hal_mcu_trace_print
+ 1980 0046 6048     		ldr	r0, .L113+12
+ 1981 0048 FFF7FEFF 		bl	hal_mcu_trace_print
+ 1982              	.L97:
+ 667:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 668:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 669:../Src/apps/LoRaWAN/main_lorawan.c ****     modem_response_code |= lr1110_modem_set_region( &lr1110, region );
+ 1983              		.loc 1 669 28
+ 1984 004c FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 1985 004e 1946     		mov	r1, r3
+ 1986 0050 5A48     		ldr	r0, .L113
+ 1987 0052 FFF7FEFF 		bl	lr1110_modem_set_region
+ 1988 0056 0346     		mov	r3, r0
+ 1989 0058 1A46     		mov	r2, r3
+ 1990              		.loc 1 669 25
+ 1991 005a FB7F     		ldrb	r3, [r7, #31]
+ 1992 005c 1343     		orrs	r3, r3, r2
+ 1993 005e FB77     		strb	r3, [r7, #31]
+ 670:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 671:../Src/apps/LoRaWAN/main_lorawan.c ****     switch( region )
+ 1994              		.loc 1 671 5
+ 1995 0060 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 1996 0062 013B     		subs	r3, r3, #1
+ 1997 0064 0A2B     		cmp	r3, #10
+ 1998 0066 7CD8     		bhi	.L98
+ 1999 0068 01A2     		adr	r2, .L100
+ 2000 006a 52F823F0 		ldr	pc, [r2, r3, lsl #2]
+ 2001 006e 00BF     		.p2align 2
+ARM GAS  /tmp/ccLb7d1r.s 			page 52
+
+
+ 2002              	.L100:
+ 2003 0070 9D000000 		.word	.L109+1
+ 2004 0074 D9000000 		.word	.L112+1
+ 2005 0078 BD000000 		.word	.L107+1
+ 2006 007c CB000000 		.word	.L106+1
+ 2007 0080 E7000000 		.word	.L105+1
+ 2008 0084 63010000 		.word	.L98+1
+ 2009 0088 F5000000 		.word	.L104+1
+ 2010 008c 03010000 		.word	.L103+1
+ 2011 0090 11010000 		.word	.L102+1
+ 2012 0094 1F010000 		.word	.L101+1
+ 2013 0098 55010000 		.word	.L99+1
+ 2014              		.p2align 1
+ 2015              	.L109:
+ 672:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 673:../Src/apps/LoRaWAN/main_lorawan.c ****     case LR1110_LORAWAN_REGION_EU868:
+ 674:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 675:../Src/apps/LoRaWAN/main_lorawan.c ****         HAL_DBG_TRACE_MSG( "REGION      : EU868\r\n\r\n" );
+ 2016              		.loc 1 675 9
+ 2017 009c 4848     		ldr	r0, .L113+4
+ 2018 009e FFF7FEFF 		bl	hal_mcu_trace_print
+ 2019 00a2 4A48     		ldr	r0, .L113+16
+ 2020 00a4 FFF7FEFF 		bl	hal_mcu_trace_print
+ 676:../Src/apps/LoRaWAN/main_lorawan.c ****         modem_response_code |= lr1110_modem_activate_duty_cycle( &lr1110, LORAWAN_DUTYCYCLE_ON );
+ 2021              		.loc 1 676 32
+ 2022 00a8 0121     		movs	r1, #1
+ 2023 00aa 4448     		ldr	r0, .L113
+ 2024 00ac FFF7FEFF 		bl	lr1110_modem_activate_duty_cycle
+ 2025 00b0 0346     		mov	r3, r0
+ 2026 00b2 1A46     		mov	r2, r3
+ 2027              		.loc 1 676 29
+ 2028 00b4 FB7F     		ldrb	r3, [r7, #31]
+ 2029 00b6 1343     		orrs	r3, r3, r2
+ 2030 00b8 FB77     		strb	r3, [r7, #31]
+ 677:../Src/apps/LoRaWAN/main_lorawan.c ****         break;
+ 2031              		.loc 1 677 9
+ 2032 00ba 5FE0     		b	.L110
+ 2033              	.L107:
+ 678:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 679:../Src/apps/LoRaWAN/main_lorawan.c ****     case LR1110_LORAWAN_REGION_US915:
+ 680:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 681:../Src/apps/LoRaWAN/main_lorawan.c ****         HAL_DBG_TRACE_MSG( "REGION      : US915\r\n\r\n" );
+ 2034              		.loc 1 681 9
+ 2035 00bc 4048     		ldr	r0, .L113+4
+ 2036 00be FFF7FEFF 		bl	hal_mcu_trace_print
+ 2037 00c2 4348     		ldr	r0, .L113+20
+ 2038 00c4 FFF7FEFF 		bl	hal_mcu_trace_print
+ 682:../Src/apps/LoRaWAN/main_lorawan.c ****         break;
+ 2039              		.loc 1 682 9
+ 2040 00c8 58E0     		b	.L110
+ 2041              	.L106:
+ 683:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 684:../Src/apps/LoRaWAN/main_lorawan.c ****     case LR1110_LORAWAN_REGION_AU915:
+ 685:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 686:../Src/apps/LoRaWAN/main_lorawan.c ****         HAL_DBG_TRACE_MSG( "REGION      : AU915\r\n\r\n" );
+ 2042              		.loc 1 686 9
+ 2043 00ca 3D48     		ldr	r0, .L113+4
+ARM GAS  /tmp/ccLb7d1r.s 			page 53
+
+
+ 2044 00cc FFF7FEFF 		bl	hal_mcu_trace_print
+ 2045 00d0 4048     		ldr	r0, .L113+24
+ 2046 00d2 FFF7FEFF 		bl	hal_mcu_trace_print
+ 687:../Src/apps/LoRaWAN/main_lorawan.c ****         break;
+ 2047              		.loc 1 687 9
+ 2048 00d6 51E0     		b	.L110
+ 2049              	.L112:
+ 688:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 689:../Src/apps/LoRaWAN/main_lorawan.c ****     case LR1110_LORAWAN_REGION_AS923_GRP1:
+ 690:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 691:../Src/apps/LoRaWAN/main_lorawan.c ****         if( LORAWAN_COUNTRY_JAPAN == 1 )
+ 692:../Src/apps/LoRaWAN/main_lorawan.c ****         {
+ 693:../Src/apps/LoRaWAN/main_lorawan.c ****             HAL_DBG_TRACE_MSG( "LBT         : ACTIVATE LBT\r\n" );
+ 694:../Src/apps/LoRaWAN/main_lorawan.c ****             /* Activate LBT for 5ms before each transmission with a threshold at -80 dBm */
+ 695:../Src/apps/LoRaWAN/main_lorawan.c ****             modem_response_code |= lr1110_modem_activate_lbt( &lr1110, LR1110_MODEM_LBT_MODE_ENABLE
+ 696:../Src/apps/LoRaWAN/main_lorawan.c ****         }
+ 697:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 698:../Src/apps/LoRaWAN/main_lorawan.c ****         HAL_DBG_TRACE_MSG( "REGION      : AS923_GRP1\r\n\r\n" );
+ 2050              		.loc 1 698 9
+ 2051 00d8 3948     		ldr	r0, .L113+4
+ 2052 00da FFF7FEFF 		bl	hal_mcu_trace_print
+ 2053 00de 3E48     		ldr	r0, .L113+28
+ 2054 00e0 FFF7FEFF 		bl	hal_mcu_trace_print
+ 699:../Src/apps/LoRaWAN/main_lorawan.c ****         break;
+ 2055              		.loc 1 699 9
+ 2056 00e4 4AE0     		b	.L110
+ 2057              	.L105:
+ 700:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 701:../Src/apps/LoRaWAN/main_lorawan.c ****     case LR1110_LORAWAN_REGION_CN470:
+ 702:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 703:../Src/apps/LoRaWAN/main_lorawan.c ****         HAL_DBG_TRACE_MSG( "REGION      : CN470\r\n\r\n" );
+ 2058              		.loc 1 703 9
+ 2059 00e6 3648     		ldr	r0, .L113+4
+ 2060 00e8 FFF7FEFF 		bl	hal_mcu_trace_print
+ 2061 00ec 3B48     		ldr	r0, .L113+32
+ 2062 00ee FFF7FEFF 		bl	hal_mcu_trace_print
+ 704:../Src/apps/LoRaWAN/main_lorawan.c ****         break;
+ 2063              		.loc 1 704 9
+ 2064 00f2 43E0     		b	.L110
+ 2065              	.L104:
+ 705:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 706:../Src/apps/LoRaWAN/main_lorawan.c ****     case LR1110_LORAWAN_REGION_AS923_GRP2:
+ 707:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 708:../Src/apps/LoRaWAN/main_lorawan.c ****         HAL_DBG_TRACE_MSG( "REGION      : AS923_GRP2\r\n\r\n" );
+ 2066              		.loc 1 708 9
+ 2067 00f4 3248     		ldr	r0, .L113+4
+ 2068 00f6 FFF7FEFF 		bl	hal_mcu_trace_print
+ 2069 00fa 3948     		ldr	r0, .L113+36
+ 2070 00fc FFF7FEFF 		bl	hal_mcu_trace_print
+ 709:../Src/apps/LoRaWAN/main_lorawan.c ****         break;
+ 2071              		.loc 1 709 9
+ 2072 0100 3CE0     		b	.L110
+ 2073              	.L103:
+ 710:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 711:../Src/apps/LoRaWAN/main_lorawan.c ****     case LR1110_LORAWAN_REGION_AS923_GRP3:
+ 712:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 713:../Src/apps/LoRaWAN/main_lorawan.c ****         HAL_DBG_TRACE_MSG( "REGION      : AS923_GRP3\r\n\r\n" );
+ARM GAS  /tmp/ccLb7d1r.s 			page 54
+
+
+ 2074              		.loc 1 713 9
+ 2075 0102 2F48     		ldr	r0, .L113+4
+ 2076 0104 FFF7FEFF 		bl	hal_mcu_trace_print
+ 2077 0108 3648     		ldr	r0, .L113+40
+ 2078 010a FFF7FEFF 		bl	hal_mcu_trace_print
+ 714:../Src/apps/LoRaWAN/main_lorawan.c ****         break;
+ 2079              		.loc 1 714 9
+ 2080 010e 35E0     		b	.L110
+ 2081              	.L102:
+ 715:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 716:../Src/apps/LoRaWAN/main_lorawan.c ****     case LR1110_LORAWAN_REGION_IN865:
+ 717:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 718:../Src/apps/LoRaWAN/main_lorawan.c ****         HAL_DBG_TRACE_MSG( "REGION      : IN865\r\n\r\n" );
+ 2082              		.loc 1 718 9
+ 2083 0110 2B48     		ldr	r0, .L113+4
+ 2084 0112 FFF7FEFF 		bl	hal_mcu_trace_print
+ 2085 0116 3448     		ldr	r0, .L113+44
+ 2086 0118 FFF7FEFF 		bl	hal_mcu_trace_print
+ 719:../Src/apps/LoRaWAN/main_lorawan.c ****         break;
+ 2087              		.loc 1 719 9
+ 2088 011c 2EE0     		b	.L110
+ 2089              	.L101:
+ 720:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 721:../Src/apps/LoRaWAN/main_lorawan.c ****     case LR1110_LORAWAN_REGION_KR920:
+ 722:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 723:../Src/apps/LoRaWAN/main_lorawan.c ****         HAL_DBG_TRACE_MSG( "LBT         : ACTIVATE LBT\r\n" );
+ 2090              		.loc 1 723 9
+ 2091 011e 2848     		ldr	r0, .L113+4
+ 2092 0120 FFF7FEFF 		bl	hal_mcu_trace_print
+ 2093 0124 3148     		ldr	r0, .L113+48
+ 2094 0126 FFF7FEFF 		bl	hal_mcu_trace_print
+ 724:../Src/apps/LoRaWAN/main_lorawan.c ****         HAL_DBG_TRACE_MSG( "REGION      : KR920\r\n\r\n" );
+ 2095              		.loc 1 724 9
+ 2096 012a 2548     		ldr	r0, .L113+4
+ 2097 012c FFF7FEFF 		bl	hal_mcu_trace_print
+ 2098 0130 2F48     		ldr	r0, .L113+52
+ 2099 0132 FFF7FEFF 		bl	hal_mcu_trace_print
+ 725:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 726:../Src/apps/LoRaWAN/main_lorawan.c ****         /* Activate LBT for 5ms before each transmission with a threshold at -65 dBm */
+ 727:../Src/apps/LoRaWAN/main_lorawan.c ****         modem_response_code |= lr1110_modem_activate_lbt( &lr1110, LR1110_MODEM_LBT_MODE_ENABLE, -6
+ 2100              		.loc 1 727 32
+ 2101 0136 2F4B     		ldr	r3, .L113+56
+ 2102 0138 0093     		str	r3, [sp]
+ 2103 013a 0523     		movs	r3, #5
+ 2104 013c 6FF04002 		mvn	r2, #64
+ 2105 0140 0121     		movs	r1, #1
+ 2106 0142 1E48     		ldr	r0, .L113
+ 2107 0144 FFF7FEFF 		bl	lr1110_modem_activate_lbt
+ 2108 0148 0346     		mov	r3, r0
+ 2109 014a 1A46     		mov	r2, r3
+ 2110              		.loc 1 727 29
+ 2111 014c FB7F     		ldrb	r3, [r7, #31]
+ 2112 014e 1343     		orrs	r3, r3, r2
+ 2113 0150 FB77     		strb	r3, [r7, #31]
+ 728:../Src/apps/LoRaWAN/main_lorawan.c ****         break;
+ 2114              		.loc 1 728 9
+ 2115 0152 13E0     		b	.L110
+ARM GAS  /tmp/ccLb7d1r.s 			page 55
+
+
+ 2116              	.L99:
+ 729:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 730:../Src/apps/LoRaWAN/main_lorawan.c ****     case LR1110_LORAWAN_REGION_RU864:
+ 731:../Src/apps/LoRaWAN/main_lorawan.c ****     {
+ 732:../Src/apps/LoRaWAN/main_lorawan.c ****         HAL_DBG_TRACE_MSG( "REGION      : RU864\r\n\r\n" );
+ 2117              		.loc 1 732 9
+ 2118 0154 1A48     		ldr	r0, .L113+4
+ 2119 0156 FFF7FEFF 		bl	hal_mcu_trace_print
+ 2120 015a 2748     		ldr	r0, .L113+60
+ 2121 015c FFF7FEFF 		bl	hal_mcu_trace_print
+ 733:../Src/apps/LoRaWAN/main_lorawan.c ****         break;
+ 2122              		.loc 1 733 9
+ 2123 0160 0CE0     		b	.L110
+ 2124              	.L98:
+ 734:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 735:../Src/apps/LoRaWAN/main_lorawan.c ****     default:
+ 736:../Src/apps/LoRaWAN/main_lorawan.c ****         HAL_DBG_TRACE_ERROR( "No supported region selected\r\n\r\n" );
+ 2125              		.loc 1 736 9
+ 2126 0162 2648     		ldr	r0, .L113+64
+ 2127 0164 FFF7FEFF 		bl	hal_mcu_trace_print
+ 2128 0168 2548     		ldr	r0, .L113+68
+ 2129 016a FFF7FEFF 		bl	hal_mcu_trace_print
+ 2130 016e 2548     		ldr	r0, .L113+72
+ 2131 0170 FFF7FEFF 		bl	hal_mcu_trace_print
+ 2132 0174 1248     		ldr	r0, .L113+4
+ 2133 0176 FFF7FEFF 		bl	hal_mcu_trace_print
+ 737:../Src/apps/LoRaWAN/main_lorawan.c ****         break;
+ 2134              		.loc 1 737 9
+ 2135 017a 00BF     		nop
+ 2136              	.L110:
+ 738:../Src/apps/LoRaWAN/main_lorawan.c ****     }
+ 739:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 740:../Src/apps/LoRaWAN/main_lorawan.c ****     /* Set DM info field */
+ 741:../Src/apps/LoRaWAN/main_lorawan.c ****     dm_info_fields.dm_info_field[0] = LR1110_MODEM_DM_INFO_TYPE_CHARGE;
+ 2137              		.loc 1 741 37
+ 2138 017c 0123     		movs	r3, #1
+ 2139 017e 3B72     		strb	r3, [r7, #8]
+ 742:../Src/apps/LoRaWAN/main_lorawan.c ****     dm_info_fields.dm_info_field[1] = LR1110_MODEM_DM_INFO_TYPE_TEMPERATURE;
+ 2140              		.loc 1 742 37
+ 2141 0180 0323     		movs	r3, #3
+ 2142 0182 7B72     		strb	r3, [r7, #9]
+ 743:../Src/apps/LoRaWAN/main_lorawan.c ****     dm_info_fields.dm_info_length   = 2;
+ 2143              		.loc 1 743 37
+ 2144 0184 0223     		movs	r3, #2
+ 2145 0186 BB83     		strh	r3, [r7, #28]	@ movhi
+ 744:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 745:../Src/apps/LoRaWAN/main_lorawan.c ****     modem_response_code |= lr1110_modem_set_dm_info_field( &lr1110, &dm_info_fields );
+ 2146              		.loc 1 745 28
+ 2147 0188 07F10803 		add	r3, r7, #8
+ 2148 018c 1946     		mov	r1, r3
+ 2149 018e 0B48     		ldr	r0, .L113
+ 2150 0190 FFF7FEFF 		bl	lr1110_modem_set_dm_info_field
+ 2151 0194 0346     		mov	r3, r0
+ 2152 0196 1A46     		mov	r2, r3
+ 2153              		.loc 1 745 25
+ 2154 0198 FB7F     		ldrb	r3, [r7, #31]
+ 2155 019a 1343     		orrs	r3, r3, r2
+ARM GAS  /tmp/ccLb7d1r.s 			page 56
+
+
+ 2156 019c FB77     		strb	r3, [r7, #31]
+ 746:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 747:../Src/apps/LoRaWAN/main_lorawan.c ****     modem_response_code |= lr1110_modem_set_dm_info_interval( &lr1110, LR1110_MODEM_REPORTING_INTER
+ 2157              		.loc 1 747 28
+ 2158 019e 0122     		movs	r2, #1
+ 2159 01a0 0121     		movs	r1, #1
+ 2160 01a2 0648     		ldr	r0, .L113
+ 2161 01a4 FFF7FEFF 		bl	lr1110_modem_set_dm_info_interval
+ 2162 01a8 0346     		mov	r3, r0
+ 2163 01aa 1A46     		mov	r2, r3
+ 2164              		.loc 1 747 25
+ 2165 01ac FB7F     		ldrb	r3, [r7, #31]
+ 2166 01ae 1343     		orrs	r3, r3, r2
+ 2167 01b0 FB77     		strb	r3, [r7, #31]
+ 748:../Src/apps/LoRaWAN/main_lorawan.c **** 
+ 749:../Src/apps/LoRaWAN/main_lorawan.c ****     return modem_response_code;
+ 2168              		.loc 1 749 12
+ 2169 01b2 FB7F     		ldrb	r3, [r7, #31]	@ zero_extendqisi2
+ 750:../Src/apps/LoRaWAN/main_lorawan.c **** }
+ 2170              		.loc 1 750 1
+ 2171 01b4 1846     		mov	r0, r3
+ 2172 01b6 2037     		adds	r7, r7, #32
+ 2173              	.LCFI62:
+ 2174              		.cfi_def_cfa_offset 8
+ 2175 01b8 BD46     		mov	sp, r7
+ 2176              	.LCFI63:
+ 2177              		.cfi_def_cfa_register 13
+ 2178              		@ sp needed
+ 2179 01ba 80BD     		pop	{r7, pc}
+ 2180              	.L114:
+ 2181              		.align	2
+ 2182              	.L113:
+ 2183 01bc 00000000 		.word	lr1110
+ 2184 01c0 00000000 		.word	.LC3
+ 2185 01c4 C4060000 		.word	.LC52
+ 2186 01c8 D8060000 		.word	.LC53
+ 2187 01cc EC060000 		.word	.LC54
+ 2188 01d0 04070000 		.word	.LC55
+ 2189 01d4 1C070000 		.word	.LC56
+ 2190 01d8 34070000 		.word	.LC57
+ 2191 01dc 54070000 		.word	.LC58
+ 2192 01e0 6C070000 		.word	.LC59
+ 2193 01e4 8C070000 		.word	.LC60
+ 2194 01e8 AC070000 		.word	.LC61
+ 2195 01ec C4070000 		.word	.LC62
+ 2196 01f0 E4070000 		.word	.LC63
+ 2197 01f4 D0121300 		.word	1250000
+ 2198 01f8 FC070000 		.word	.LC64
+ 2199 01fc 8C000000 		.word	.LC9
+ 2200 0200 94000000 		.word	.LC10
+ 2201 0204 14080000 		.word	.LC65
+ 2202              		.cfi_endproc
+ 2203              	.LFE605:
+ 2205              		.section	.bss.uplink_cnt.1,"aw",%nobits
+ 2206              		.align	2
+ 2209              	uplink_cnt.1:
+ 2210 0000 00000000 		.space	4
+ARM GAS  /tmp/ccLb7d1r.s 			page 57
+
+
+ 2211              		.section	.bss.downlink_cnt.0,"aw",%nobits
+ 2212              		.align	2
+ 2215              	downlink_cnt.0:
+ 2216 0000 00000000 		.space	4
+ 2217              		.text
+ 2218              	.Letext0:
+ 2219              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 2220              		.file 3 "/usr/include/newlib/sys/_stdint.h"
+ 2221              		.file 4 "../Src/radio/lr1110_modem/src/lr1110_modem_common.h"
+ 2222              		.file 5 "../Src/radio/lr1110_modem/src/lr1110_modem_lorawan.h"
+ 2223              		.file 6 "../Inc/smtc_hal/smtc_hal_gpio_pin_names.h"
+ 2224              		.file 7 "../Inc/smtc_hal/smtc_hal_gpio.h"
+ 2225              		.file 8 "../Drivers/CMSIS/Device/ST/STM32L4xx/Include/stm32l476xx.h"
+ 2226              		.file 9 "../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def.h"
+ 2227              		.file 10 "../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_dma.h"
+ 2228              		.file 11 "../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_spi.h"
+ 2229              		.file 12 "../Inc/smtc_hal/smtc_hal_spi.h"
+ 2230              		.file 13 "../Src/radio/lr1110_modem/src/lr1110_modem_hal.h"
+ 2231              		.file 14 "../Src/radio/lr1110.h"
+ 2232              		.file 15 "../Src/apps/LoRaWAN/main_lorawan.h"
+ARM GAS  /tmp/ccLb7d1r.s 			page 58
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 main_lorawan.c
+     /tmp/ccLb7d1r.s:22     .data.adr_custom_list:0000000000000000 adr_custom_list
+     /tmp/ccLb7d1r.s:19     .data.adr_custom_list:0000000000000000 $d
+     /tmp/ccLb7d1r.s:28     .bss.app_data_size:0000000000000000 app_data_size
+     /tmp/ccLb7d1r.s:29     .bss.app_data_size:0000000000000000 $d
+     /tmp/ccLb7d1r.s:31     .bss.app_data_buffer:0000000000000000 $d
+     /tmp/ccLb7d1r.s:34     .bss.app_data_buffer:0000000000000000 app_data_buffer
+     /tmp/ccLb7d1r.s:39     .bss.device_state:0000000000000000 device_state
+     /tmp/ccLb7d1r.s:40     .bss.device_state:0000000000000000 $d
+     /tmp/ccLb7d1r.s:42     .rodata:0000000000000000 $d
+     /tmp/ccLb7d1r.s:111    .text.main:0000000000000000 $t
+     /tmp/ccLb7d1r.s:119    .text.main:0000000000000000 main
+     /tmp/ccLb7d1r.s:1927   .text.lorawan_init:0000000000000000 lorawan_init
+     /tmp/ccLb7d1r.s:319    .text.main:000000000000017c $d
+     /tmp/ccLb7d1r.s:324    .text.main:0000000000000190 $t
+     /tmp/ccLb7d1r.s:558    .text.join_network:0000000000000000 join_network
+     /tmp/ccLb7d1r.s:662    .text.send_frame:0000000000000000 send_frame
+     /tmp/ccLb7d1r.s:505    .text.main:00000000000002cc $d
+     /tmp/ccLb7d1r.s:840    .text.lr1110_modem_reset_event:0000000000000000 lr1110_modem_reset_event
+     /tmp/ccLb7d1r.s:1028   .text.lr1110_modem_alarm:0000000000000000 lr1110_modem_alarm
+     /tmp/ccLb7d1r.s:916    .text.lr1110_modem_network_joined:0000000000000000 lr1110_modem_network_joined
+     /tmp/ccLb7d1r.s:971    .text.lr1110_modem_join_fail:0000000000000000 lr1110_modem_join_fail
+     /tmp/ccLb7d1r.s:1210   .text.lr1110_modem_tx_done:0000000000000000 lr1110_modem_tx_done
+     /tmp/ccLb7d1r.s:1359   .text.lr1110_modem_down_data:0000000000000000 lr1110_modem_down_data
+     /tmp/ccLb7d1r.s:1566   .text.lr1110_modem_set_conf:0000000000000000 lr1110_modem_set_conf
+     /tmp/ccLb7d1r.s:1488   .text.lr1110_modem_mute:0000000000000000 lr1110_modem_mute
+     /tmp/ccLb7d1r.s:1628   .text.lr1110_modem_adr_mobile_to_static:0000000000000000 lr1110_modem_adr_mobile_to_static
+     /tmp/ccLb7d1r.s:1676   .text.lr1110_modem_new_link_adr:0000000000000000 lr1110_modem_new_link_adr
+     /tmp/ccLb7d1r.s:1723   .text.lr1110_modem_no_event:0000000000000000 lr1110_modem_no_event
+     /tmp/ccLb7d1r.s:552    .text.join_network:0000000000000000 $t
+     /tmp/ccLb7d1r.s:624    .text.join_network:0000000000000058 $d
+     /tmp/ccLb7d1r.s:656    .text.send_frame:0000000000000000 $t
+     /tmp/ccLb7d1r.s:814    .text.send_frame:0000000000000100 $d
+     /tmp/ccLb7d1r.s:834    .text.lr1110_modem_reset_event:0000000000000000 $t
+     /tmp/ccLb7d1r.s:898    .text.lr1110_modem_reset_event:0000000000000044 $d
+     /tmp/ccLb7d1r.s:910    .text.lr1110_modem_network_joined:0000000000000000 $t
+     /tmp/ccLb7d1r.s:950    .text.lr1110_modem_network_joined:000000000000002c $d
+     /tmp/ccLb7d1r.s:965    .text.lr1110_modem_join_fail:0000000000000000 $t
+     /tmp/ccLb7d1r.s:1000   .text.lr1110_modem_join_fail:0000000000000020 $d
+     /tmp/ccLb7d1r.s:1022   .text.lr1110_modem_alarm:0000000000000000 $t
+     /tmp/ccLb7d1r.s:1171   .text.lr1110_modem_alarm:00000000000000cc $d
+     /tmp/ccLb7d1r.s:1204   .text.lr1110_modem_tx_done:0000000000000000 $t
+     /tmp/ccLb7d1r.s:1314   .text.lr1110_modem_tx_done:00000000000000ac $d
+     /tmp/ccLb7d1r.s:2209   .bss.uplink_cnt.1:0000000000000000 uplink_cnt.1
+     /tmp/ccLb7d1r.s:1353   .text.lr1110_modem_down_data:0000000000000000 $t
+     /tmp/ccLb7d1r.s:1766   .text.parse_downlink_frame:0000000000000000 parse_downlink_frame
+     /tmp/ccLb7d1r.s:1459   .text.lr1110_modem_down_data:00000000000000a4 $d
+     /tmp/ccLb7d1r.s:2215   .bss.downlink_cnt.0:0000000000000000 downlink_cnt.0
+     /tmp/ccLb7d1r.s:1482   .text.lr1110_modem_mute:0000000000000000 $t
+     /tmp/ccLb7d1r.s:1546   .text.lr1110_modem_mute:000000000000004c $d
+     /tmp/ccLb7d1r.s:1560   .text.lr1110_modem_set_conf:0000000000000000 $t
+     /tmp/ccLb7d1r.s:1609   .text.lr1110_modem_set_conf:0000000000000030 $d
+     /tmp/ccLb7d1r.s:1622   .text.lr1110_modem_adr_mobile_to_static:0000000000000000 $t
+     /tmp/ccLb7d1r.s:1657   .text.lr1110_modem_adr_mobile_to_static:0000000000000020 $d
+     /tmp/ccLb7d1r.s:1670   .text.lr1110_modem_new_link_adr:0000000000000000 $t
+     /tmp/ccLb7d1r.s:1705   .text.lr1110_modem_new_link_adr:0000000000000020 $d
+ARM GAS  /tmp/ccLb7d1r.s 			page 59
+
+
+     /tmp/ccLb7d1r.s:1717   .text.lr1110_modem_no_event:0000000000000000 $t
+     /tmp/ccLb7d1r.s:1752   .text.lr1110_modem_no_event:0000000000000020 $d
+     /tmp/ccLb7d1r.s:1760   .text.parse_downlink_frame:0000000000000000 $t
+     /tmp/ccLb7d1r.s:1920   .text.lorawan_init:0000000000000000 $t
+     /tmp/ccLb7d1r.s:2003   .text.lorawan_init:0000000000000070 $d
+     /tmp/ccLb7d1r.s:2014   .text.lorawan_init:000000000000009c $t
+     /tmp/ccLb7d1r.s:2183   .text.lorawan_init:00000000000001bc $d
+     /tmp/ccLb7d1r.s:2206   .bss.uplink_cnt.1:0000000000000000 $d
+     /tmp/ccLb7d1r.s:2212   .bss.downlink_cnt.0:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+memset
+hal_mcu_init
+hal_mcu_trace_print
+lr1110_modem_board_init
+lr1110_modem_get_version
+lr1110_modem_get_chip_eui
+hal_mcu_partial_sleep_enable
+lr1110_modem_event_process
+lr1110_modem_set_dev_eui
+lr1110_modem_set_join_eui
+lr1110_modem_derive_keys
+lr1110_modem_get_pin
+print_lorawan_keys
+lr1110_modem_get_charge
+lr1110_modem_set_alarm_timer
+lr1110_modem_board_read_event_line
+hal_mcu_low_power_handler
+lr1110
+lr1110_modem_join
+lr1110_modem_get_duty_cycle_status
+lr1110_modem_get_next_tx_max_payload
+lr1110_modem_request_tx
+lr1110_modem_board_is_ready
+hal_mcu_reset
+lr1110_modem_board_set_ready
+lr1110_modem_set_adr_profile
+lr1110_modem_get_status
+modem_status_to_string
+print_hex_buffer
+lr1110_modem_set_class
+lr1110_modem_set_region
+lr1110_modem_activate_duty_cycle
+lr1110_modem_activate_lbt
+lr1110_modem_set_dm_info_field
+lr1110_modem_set_dm_info_interval

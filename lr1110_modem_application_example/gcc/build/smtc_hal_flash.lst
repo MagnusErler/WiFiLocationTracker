@@ -1,0 +1,1390 @@
+ARM GAS  /tmp/cct1kBOw.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"smtc_hal_flash.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.global	flash_user_start_addr
+  18              		.section	.data.flash_user_start_addr,"aw"
+  19              		.align	2
+  22              	flash_user_start_addr:
+  23 0000 FFEF0F08 		.word	135262207
+  24              		.section	.text.flash_init,"ax",%progbits
+  25              		.align	1
+  26              		.global	flash_init
+  27              		.arch armv7e-m
+  28              		.syntax unified
+  29              		.thumb
+  30              		.thumb_func
+  31              		.fpu fpv4-sp-d16
+  33              	flash_init:
+  34              	.LFB316:
+  35              		.file 1 "../Src/smtc_hal/smtc_hal_flash.c"
+   1:../Src/smtc_hal/smtc_hal_flash.c **** /*!
+   2:../Src/smtc_hal/smtc_hal_flash.c ****  * @file      smtc_hal_flash.c
+   3:../Src/smtc_hal/smtc_hal_flash.c ****  *
+   4:../Src/smtc_hal/smtc_hal_flash.c ****  * @brief     Board specific package FLASH API implementation
+   5:../Src/smtc_hal/smtc_hal_flash.c ****  *
+   6:../Src/smtc_hal/smtc_hal_flash.c ****  * Revised BSD License
+   7:../Src/smtc_hal/smtc_hal_flash.c ****  * Copyright Semtech Corporation 2020. All rights reserved.
+   8:../Src/smtc_hal/smtc_hal_flash.c ****  *
+   9:../Src/smtc_hal/smtc_hal_flash.c ****  * Redistribution and use in source and binary forms, with or without
+  10:../Src/smtc_hal/smtc_hal_flash.c ****  * modification, are permitted provided that the following conditions are met:
+  11:../Src/smtc_hal/smtc_hal_flash.c ****  *     * Redistributions of source code must retain the above copyright
+  12:../Src/smtc_hal/smtc_hal_flash.c ****  *       notice, this list of conditions and the following disclaimer.
+  13:../Src/smtc_hal/smtc_hal_flash.c ****  *     * Redistributions in binary form must reproduce the above copyright
+  14:../Src/smtc_hal/smtc_hal_flash.c ****  *       notice, this list of conditions and the following disclaimer in the
+  15:../Src/smtc_hal/smtc_hal_flash.c ****  *       documentation and/or other materials provided with the distribution.
+  16:../Src/smtc_hal/smtc_hal_flash.c ****  *     * Neither the name of the Semtech corporation nor the
+  17:../Src/smtc_hal/smtc_hal_flash.c ****  *       names of its contributors may be used to endorse or promote products
+  18:../Src/smtc_hal/smtc_hal_flash.c ****  *       derived from this software without specific prior written permission.
+  19:../Src/smtc_hal/smtc_hal_flash.c ****  *
+  20:../Src/smtc_hal/smtc_hal_flash.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  21:../Src/smtc_hal/smtc_hal_flash.c ****  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  22:../Src/smtc_hal/smtc_hal_flash.c ****  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  23:../Src/smtc_hal/smtc_hal_flash.c ****  * ARE DISCLAIMED. IN NO EVENT SHALL SEMTECH CORPORATION BE LIABLE FOR ANY
+  24:../Src/smtc_hal/smtc_hal_flash.c ****  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+  25:../Src/smtc_hal/smtc_hal_flash.c ****  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ARM GAS  /tmp/cct1kBOw.s 			page 2
+
+
+  26:../Src/smtc_hal/smtc_hal_flash.c ****  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+  27:../Src/smtc_hal/smtc_hal_flash.c ****  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  28:../Src/smtc_hal/smtc_hal_flash.c ****  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  29:../Src/smtc_hal/smtc_hal_flash.c ****  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  30:../Src/smtc_hal/smtc_hal_flash.c ****  */
+  31:../Src/smtc_hal/smtc_hal_flash.c ****  
+  32:../Src/smtc_hal/smtc_hal_flash.c ****  /*
+  33:../Src/smtc_hal/smtc_hal_flash.c ****  * -----------------------------------------------------------------------------
+  34:../Src/smtc_hal/smtc_hal_flash.c ****  * --- DEPENDENCIES ------------------------------------------------------------
+  35:../Src/smtc_hal/smtc_hal_flash.c ****  */
+  36:../Src/smtc_hal/smtc_hal_flash.c **** 
+  37:../Src/smtc_hal/smtc_hal_flash.c **** #include <stdint.h>
+  38:../Src/smtc_hal/smtc_hal_flash.c **** #include <stdbool.h>
+  39:../Src/smtc_hal/smtc_hal_flash.c **** #include <stdio.h>
+  40:../Src/smtc_hal/smtc_hal_flash.c **** #include "stm32l4xx_hal.h"
+  41:../Src/smtc_hal/smtc_hal_flash.c **** #include "smtc_hal_flash.h"
+  42:../Src/smtc_hal/smtc_hal_flash.c **** #include "smtc_utilities.h"
+  43:../Src/smtc_hal/smtc_hal_flash.c **** 
+  44:../Src/smtc_hal/smtc_hal_flash.c **** /*
+  45:../Src/smtc_hal/smtc_hal_flash.c ****  * -----------------------------------------------------------------------------
+  46:../Src/smtc_hal/smtc_hal_flash.c ****  * --- PRIVATE MACROS-----------------------------------------------------------
+  47:../Src/smtc_hal/smtc_hal_flash.c ****  */
+  48:../Src/smtc_hal/smtc_hal_flash.c **** 
+  49:../Src/smtc_hal/smtc_hal_flash.c **** /*
+  50:../Src/smtc_hal/smtc_hal_flash.c ****  * -----------------------------------------------------------------------------
+  51:../Src/smtc_hal/smtc_hal_flash.c ****  * --- PRIVATE CONSTANTS -------------------------------------------------------
+  52:../Src/smtc_hal/smtc_hal_flash.c ****  */
+  53:../Src/smtc_hal/smtc_hal_flash.c **** 
+  54:../Src/smtc_hal/smtc_hal_flash.c **** /*
+  55:../Src/smtc_hal/smtc_hal_flash.c ****  * -----------------------------------------------------------------------------
+  56:../Src/smtc_hal/smtc_hal_flash.c ****  * --- PRIVATE TYPES -----------------------------------------------------------
+  57:../Src/smtc_hal/smtc_hal_flash.c ****  */
+  58:../Src/smtc_hal/smtc_hal_flash.c **** 
+  59:../Src/smtc_hal/smtc_hal_flash.c **** /*
+  60:../Src/smtc_hal/smtc_hal_flash.c ****  * -----------------------------------------------------------------------------
+  61:../Src/smtc_hal/smtc_hal_flash.c ****  * --- PRIVATE VARIABLES -------------------------------------------------------
+  62:../Src/smtc_hal/smtc_hal_flash.c ****  */
+  63:../Src/smtc_hal/smtc_hal_flash.c **** 
+  64:../Src/smtc_hal/smtc_hal_flash.c **** /*!
+  65:../Src/smtc_hal/smtc_hal_flash.c ****  * @brief Initializes the FlashUserStartAddr to FLASH_USER_END_ADDR to avoid erase a occupied memor
+  66:../Src/smtc_hal/smtc_hal_flash.c ****  */
+  67:../Src/smtc_hal/smtc_hal_flash.c **** uint32_t flash_user_start_addr = FLASH_USER_END_ADDR;
+  68:../Src/smtc_hal/smtc_hal_flash.c **** 
+  69:../Src/smtc_hal/smtc_hal_flash.c **** /**
+  70:../Src/smtc_hal/smtc_hal_flash.c ****  * @brief  Gets the page of a given address
+  71:../Src/smtc_hal/smtc_hal_flash.c ****  * @param  Addr: Address of the FLASH Memory
+  72:../Src/smtc_hal/smtc_hal_flash.c ****  * @retval The page of a given address
+  73:../Src/smtc_hal/smtc_hal_flash.c ****  */
+  74:../Src/smtc_hal/smtc_hal_flash.c **** static uint32_t get_page( uint32_t address );
+  75:../Src/smtc_hal/smtc_hal_flash.c **** 
+  76:../Src/smtc_hal/smtc_hal_flash.c **** /*
+  77:../Src/smtc_hal/smtc_hal_flash.c ****  * -----------------------------------------------------------------------------
+  78:../Src/smtc_hal/smtc_hal_flash.c ****  * --- PRIVATE FUNCTIONS DECLARATION -------------------------------------------
+  79:../Src/smtc_hal/smtc_hal_flash.c ****  */
+  80:../Src/smtc_hal/smtc_hal_flash.c **** 
+  81:../Src/smtc_hal/smtc_hal_flash.c **** /*
+  82:../Src/smtc_hal/smtc_hal_flash.c ****  * -----------------------------------------------------------------------------
+ARM GAS  /tmp/cct1kBOw.s 			page 3
+
+
+  83:../Src/smtc_hal/smtc_hal_flash.c ****  * --- PUBLIC FUNCTIONS DEFINITION ---------------------------------------------
+  84:../Src/smtc_hal/smtc_hal_flash.c ****  */
+  85:../Src/smtc_hal/smtc_hal_flash.c **** 
+  86:../Src/smtc_hal/smtc_hal_flash.c **** /*!
+  87:../Src/smtc_hal/smtc_hal_flash.c ****  * @brief Initializes the FLASH module and find the first empty page.
+  88:../Src/smtc_hal/smtc_hal_flash.c ****  *
+  89:../Src/smtc_hal/smtc_hal_flash.c ****  * @returns User flash start address
+  90:../Src/smtc_hal/smtc_hal_flash.c ****  */
+  91:../Src/smtc_hal/smtc_hal_flash.c **** uint32_t flash_init( void )
+  92:../Src/smtc_hal/smtc_hal_flash.c **** {
+  36              		.loc 1 92 1
+  37              		.cfi_startproc
+  38              		@ args = 0, pretend = 0, frame = 160
+  39              		@ frame_needed = 1, uses_anonymous_args = 0
+  40 0000 B0B5     		push	{r4, r5, r7, lr}
+  41              	.LCFI0:
+  42              		.cfi_def_cfa_offset 16
+  43              		.cfi_offset 4, -16
+  44              		.cfi_offset 5, -12
+  45              		.cfi_offset 7, -8
+  46              		.cfi_offset 14, -4
+  47 0002 A8B0     		sub	sp, sp, #160
+  48              	.LCFI1:
+  49              		.cfi_def_cfa_offset 176
+  50 0004 00AF     		add	r7, sp, #0
+  51              	.LCFI2:
+  52              		.cfi_def_cfa_register 7
+  93:../Src/smtc_hal/smtc_hal_flash.c ****     uint8_t  status = SMTC_SUCCESS;
+  53              		.loc 1 93 14
+  54 0006 0123     		movs	r3, #1
+  55 0008 87F88730 		strb	r3, [r7, #135]
+  94:../Src/smtc_hal/smtc_hal_flash.c ****     uint8_t  buffer[ADDR_FLASH_PAGE_SIZE / 0x10]; 
+  95:../Src/smtc_hal/smtc_hal_flash.c ****     uint32_t  index_page = FLASH_USER_START_PAGE;
+  56              		.loc 1 95 15
+  57 000c 0123     		movs	r3, #1
+  58 000e C7F89C30 		str	r3, [r7, #156]
+  96:../Src/smtc_hal/smtc_hal_flash.c ****     uint64_t nb_empty_bytes = 0;
+  59              		.loc 1 96 14
+  60 0012 4FF00002 		mov	r2, #0
+  61 0016 4FF00003 		mov	r3, #0
+  62 001a C7E92423 		strd	r2, [r7, #144]
+  97:../Src/smtc_hal/smtc_hal_flash.c **** 
+  98:../Src/smtc_hal/smtc_hal_flash.c ****     while( ( nb_empty_bytes != ADDR_FLASH_PAGE_SIZE ) && ( index_page < FLASH_USER_END_PAGE ) )
+  63              		.loc 1 98 10
+  64 001e 40E0     		b	.L2
+  65              	.L9:
+  99:../Src/smtc_hal/smtc_hal_flash.c ****     {
+ 100:../Src/smtc_hal/smtc_hal_flash.c ****         nb_empty_bytes = 0;
+  66              		.loc 1 100 24
+  67 0020 4FF00002 		mov	r2, #0
+  68 0024 4FF00003 		mov	r3, #0
+  69 0028 C7E92423 		strd	r2, [r7, #144]
+  70              	.LBB2:
+ 101:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 102:../Src/smtc_hal/smtc_hal_flash.c ****         for( uint32_t j = 0; j < 0x10; j++ )
+  71              		.loc 1 102 23
+  72 002c 0023     		movs	r3, #0
+ARM GAS  /tmp/cct1kBOw.s 			page 4
+
+
+  73 002e C7F88C30 		str	r3, [r7, #140]
+  74              		.loc 1 102 9
+  75 0032 2DE0     		b	.L3
+  76              	.L7:
+ 103:../Src/smtc_hal/smtc_hal_flash.c ****         {
+ 104:../Src/smtc_hal/smtc_hal_flash.c ****             flash_read_buffer( ADDR_FLASH_PAGE_0 + ( index_page * ADDR_FLASH_PAGE_SIZE ) + ( j * si
+  77              		.loc 1 104 50
+  78 0034 D7F89C30 		ldr	r3, [r7, #156]
+  79 0038 03F58033 		add	r3, r3, #65536
+  80              		.loc 1 104 90
+  81 003c 1A01     		lsls	r2, r3, #4
+  82 003e D7F88C30 		ldr	r3, [r7, #140]
+  83 0042 1344     		add	r3, r3, r2
+  84              		.loc 1 104 13
+  85 0044 DB01     		lsls	r3, r3, #7
+  86 0046 391D     		adds	r1, r7, #4
+  87 0048 8022     		movs	r2, #128
+  88 004a 1846     		mov	r0, r3
+  89 004c FFF7FEFF 		bl	flash_read_buffer
+  90              	.LBB3:
+ 105:../Src/smtc_hal/smtc_hal_flash.c ****                                sizeof( buffer ) );
+ 106:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 107:../Src/smtc_hal/smtc_hal_flash.c ****             for( uint32_t i = 0; i < sizeof( buffer ); i++ )
+  91              		.loc 1 107 27
+  92 0050 0023     		movs	r3, #0
+  93 0052 C7F88830 		str	r3, [r7, #136]
+  94              		.loc 1 107 13
+  95 0056 12E0     		b	.L4
+  96              	.L6:
+ 108:../Src/smtc_hal/smtc_hal_flash.c ****             {
+ 109:../Src/smtc_hal/smtc_hal_flash.c ****                 if( buffer[i] == 0xFF )
+  97              		.loc 1 109 27
+  98 0058 3A1D     		adds	r2, r7, #4
+  99 005a D7F88830 		ldr	r3, [r7, #136]
+ 100 005e 1344     		add	r3, r3, r2
+ 101 0060 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 102              		.loc 1 109 19
+ 103 0062 FF2B     		cmp	r3, #255
+ 104 0064 06D1     		bne	.L5
+ 110:../Src/smtc_hal/smtc_hal_flash.c ****                 {
+ 111:../Src/smtc_hal/smtc_hal_flash.c ****                     nb_empty_bytes++;
+ 105              		.loc 1 111 35
+ 106 0066 D7E92423 		ldrd	r2, [r7, #144]
+ 107 006a 541C     		adds	r4, r2, #1
+ 108 006c 43F10005 		adc	r5, r3, #0
+ 109 0070 C7E92445 		strd	r4, [r7, #144]
+ 110              	.L5:
+ 107:../Src/smtc_hal/smtc_hal_flash.c ****             {
+ 111              		.loc 1 107 57 discriminator 2
+ 112 0074 D7F88830 		ldr	r3, [r7, #136]
+ 113 0078 0133     		adds	r3, r3, #1
+ 114 007a C7F88830 		str	r3, [r7, #136]
+ 115              	.L4:
+ 107:../Src/smtc_hal/smtc_hal_flash.c ****             {
+ 116              		.loc 1 107 13 discriminator 1
+ 117 007e D7F88830 		ldr	r3, [r7, #136]
+ 118 0082 7F2B     		cmp	r3, #127
+ARM GAS  /tmp/cct1kBOw.s 			page 5
+
+
+ 119 0084 E8D9     		bls	.L6
+ 120              	.LBE3:
+ 102:../Src/smtc_hal/smtc_hal_flash.c ****         {
+ 121              		.loc 1 102 41 discriminator 2
+ 122 0086 D7F88C30 		ldr	r3, [r7, #140]
+ 123 008a 0133     		adds	r3, r3, #1
+ 124 008c C7F88C30 		str	r3, [r7, #140]
+ 125              	.L3:
+ 102:../Src/smtc_hal/smtc_hal_flash.c ****         {
+ 126              		.loc 1 102 9 discriminator 1
+ 127 0090 D7F88C30 		ldr	r3, [r7, #140]
+ 128 0094 0F2B     		cmp	r3, #15
+ 129 0096 CDD9     		bls	.L7
+ 130              	.LBE2:
+ 112:../Src/smtc_hal/smtc_hal_flash.c ****                 }
+ 113:../Src/smtc_hal/smtc_hal_flash.c ****             }
+ 114:../Src/smtc_hal/smtc_hal_flash.c ****         }
+ 115:../Src/smtc_hal/smtc_hal_flash.c ****         index_page++;  // Check next page
+ 131              		.loc 1 115 19
+ 132 0098 D7F89C30 		ldr	r3, [r7, #156]
+ 133 009c 0133     		adds	r3, r3, #1
+ 134 009e C7F89C30 		str	r3, [r7, #156]
+ 135              	.L2:
+  98:../Src/smtc_hal/smtc_hal_flash.c ****     {
+ 136              		.loc 1 98 10
+ 137 00a2 D7E92423 		ldrd	r2, [r7, #144]
+ 138 00a6 A2F50061 		sub	r1, r2, #2048
+ 139 00aa 0B43     		orrs	r3, r1, r3
+ 140 00ac 04D0     		beq	.L8
+  98:../Src/smtc_hal/smtc_hal_flash.c ****     {
+ 141              		.loc 1 98 55 discriminator 1
+ 142 00ae D7F89C30 		ldr	r3, [r7, #156]
+ 143 00b2 B3F5FE7F 		cmp	r3, #508
+ 144 00b6 B3D9     		bls	.L9
+ 145              	.L8:
+ 116:../Src/smtc_hal/smtc_hal_flash.c ****     }
+ 117:../Src/smtc_hal/smtc_hal_flash.c ****     flash_user_start_addr = ADDR_FLASH_PAGE_0 + ( ( index_page - 1 ) * ADDR_FLASH_PAGE_SIZE );
+ 146              		.loc 1 117 47
+ 147 00b8 D7F89C30 		ldr	r3, [r7, #156]
+ 148 00bc 03F57F43 		add	r3, r3, #65280
+ 149 00c0 FF33     		adds	r3, r3, #255
+ 150 00c2 DB02     		lsls	r3, r3, #11
+ 151              		.loc 1 117 27
+ 152 00c4 034A     		ldr	r2, .L11
+ 153 00c6 1360     		str	r3, [r2]
+ 118:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 119:../Src/smtc_hal/smtc_hal_flash.c ****     return status;
+ 154              		.loc 1 119 12
+ 155 00c8 97F88730 		ldrb	r3, [r7, #135]	@ zero_extendqisi2
+ 120:../Src/smtc_hal/smtc_hal_flash.c **** }
+ 156              		.loc 1 120 1
+ 157 00cc 1846     		mov	r0, r3
+ 158 00ce A037     		adds	r7, r7, #160
+ 159              	.LCFI3:
+ 160              		.cfi_def_cfa_offset 16
+ 161 00d0 BD46     		mov	sp, r7
+ 162              	.LCFI4:
+ARM GAS  /tmp/cct1kBOw.s 			page 6
+
+
+ 163              		.cfi_def_cfa_register 13
+ 164              		@ sp needed
+ 165 00d2 B0BD     		pop	{r4, r5, r7, pc}
+ 166              	.L12:
+ 167              		.align	2
+ 168              	.L11:
+ 169 00d4 00000000 		.word	flash_user_start_addr
+ 170              		.cfi_endproc
+ 171              	.LFE316:
+ 173              		.section	.text.flash_erase_page,"ax",%progbits
+ 174              		.align	1
+ 175              		.global	flash_erase_page
+ 176              		.syntax unified
+ 177              		.thumb
+ 178              		.thumb_func
+ 179              		.fpu fpv4-sp-d16
+ 181              	flash_erase_page:
+ 182              	.LFB317:
+ 121:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 122:../Src/smtc_hal/smtc_hal_flash.c **** uint8_t flash_erase_page( uint32_t addr, uint8_t nb_page )
+ 123:../Src/smtc_hal/smtc_hal_flash.c **** {
+ 183              		.loc 1 123 1
+ 184              		.cfi_startproc
+ 185              		@ args = 0, pretend = 0, frame = 40
+ 186              		@ frame_needed = 1, uses_anonymous_args = 0
+ 187 0000 90B5     		push	{r4, r7, lr}
+ 188              	.LCFI5:
+ 189              		.cfi_def_cfa_offset 12
+ 190              		.cfi_offset 4, -12
+ 191              		.cfi_offset 7, -8
+ 192              		.cfi_offset 14, -4
+ 193 0002 8BB0     		sub	sp, sp, #44
+ 194              	.LCFI6:
+ 195              		.cfi_def_cfa_offset 56
+ 196 0004 00AF     		add	r7, sp, #0
+ 197              	.LCFI7:
+ 198              		.cfi_def_cfa_register 7
+ 199 0006 7860     		str	r0, [r7, #4]
+ 200 0008 0B46     		mov	r3, r1
+ 201 000a FB70     		strb	r3, [r7, #3]
+ 124:../Src/smtc_hal/smtc_hal_flash.c ****     uint8_t  status          = SMTC_SUCCESS;
+ 202              		.loc 1 124 14
+ 203 000c 0123     		movs	r3, #1
+ 204 000e 87F82630 		strb	r3, [r7, #38]
+ 125:../Src/smtc_hal/smtc_hal_flash.c ****     uint8_t  hal_status      = SMTC_SUCCESS;
+ 205              		.loc 1 125 14
+ 206 0012 0123     		movs	r3, #1
+ 207 0014 87F82530 		strb	r3, [r7, #37]
+ 126:../Src/smtc_hal/smtc_hal_flash.c ****     uint32_t first_user_page = 0, nb_of_pages_max = 0;
+ 208              		.loc 1 126 14
+ 209 0018 0023     		movs	r3, #0
+ 210 001a 3B62     		str	r3, [r7, #32]
+ 211              		.loc 1 126 35
+ 212 001c 0023     		movs	r3, #0
+ 213 001e FB61     		str	r3, [r7, #28]
+ 127:../Src/smtc_hal/smtc_hal_flash.c ****     uint32_t page_error            = 0;
+ 214              		.loc 1 127 14
+ARM GAS  /tmp/cct1kBOw.s 			page 7
+
+
+ 215 0020 0023     		movs	r3, #0
+ 216 0022 BB61     		str	r3, [r7, #24]
+ 128:../Src/smtc_hal/smtc_hal_flash.c ****     uint8_t  flash_operation_retry = 0;
+ 217              		.loc 1 128 14
+ 218 0024 0023     		movs	r3, #0
+ 219 0026 87F82730 		strb	r3, [r7, #39]
+ 129:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 130:../Src/smtc_hal/smtc_hal_flash.c ****     FLASH_EraseInitTypeDef EraseInitStruct;
+ 131:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 132:../Src/smtc_hal/smtc_hal_flash.c ****     /* Unlock the Flash to enable the flash control register access *************/
+ 133:../Src/smtc_hal/smtc_hal_flash.c ****     HAL_FLASH_Unlock( );
+ 220              		.loc 1 133 5
+ 221 002a FFF7FEFF 		bl	HAL_FLASH_Unlock
+ 134:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 135:../Src/smtc_hal/smtc_hal_flash.c ****     /* Clear OPTVERR bit set on virgin samples */
+ 136:../Src/smtc_hal/smtc_hal_flash.c ****     __HAL_FLASH_CLEAR_FLAG( FLASH_FLAG_OPTVERR );
+ 222              		.loc 1 136 5
+ 223 002e 2D4B     		ldr	r3, .L24
+ 224 0030 4FF40042 		mov	r2, #32768
+ 225 0034 1A61     		str	r2, [r3, #16]
+ 137:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 138:../Src/smtc_hal/smtc_hal_flash.c ****     /* Erase the user Flash area
+ 139:../Src/smtc_hal/smtc_hal_flash.c ****     (area defined by FlashUserStartAddr and FLASH_USER_END_ADDR) ***********/
+ 140:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 141:../Src/smtc_hal/smtc_hal_flash.c ****     /* Get the 1st page to erase */
+ 142:../Src/smtc_hal/smtc_hal_flash.c ****     first_user_page = get_page( addr );
+ 226              		.loc 1 142 23
+ 227 0036 7868     		ldr	r0, [r7, #4]
+ 228 0038 FFF7FEFF 		bl	get_page
+ 229 003c 3862     		str	r0, [r7, #32]
+ 143:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 144:../Src/smtc_hal/smtc_hal_flash.c ****     /* Get the number of pages to erase from 1st page */
+ 145:../Src/smtc_hal/smtc_hal_flash.c ****     nb_of_pages_max = get_page( FLASH_USER_END_ADDR ) - get_page( flash_user_start_addr ) + 1;
+ 230              		.loc 1 145 23
+ 231 003e 2A48     		ldr	r0, .L24+4
+ 232 0040 FFF7FEFF 		bl	get_page
+ 233 0044 0446     		mov	r4, r0
+ 234              		.loc 1 145 57
+ 235 0046 294B     		ldr	r3, .L24+8
+ 236 0048 1B68     		ldr	r3, [r3]
+ 237 004a 1846     		mov	r0, r3
+ 238 004c FFF7FEFF 		bl	get_page
+ 239 0050 0346     		mov	r3, r0
+ 240              		.loc 1 145 55
+ 241 0052 E31A     		subs	r3, r4, r3
+ 242              		.loc 1 145 21
+ 243 0054 0133     		adds	r3, r3, #1
+ 244 0056 FB61     		str	r3, [r7, #28]
+ 146:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 147:../Src/smtc_hal/smtc_hal_flash.c ****     if( ( flash_user_start_addr > addr ) || ( nb_page > nb_of_pages_max ) )
+ 245              		.loc 1 147 33
+ 246 0058 244B     		ldr	r3, .L24+8
+ 247 005a 1B68     		ldr	r3, [r3]
+ 248              		.loc 1 147 7
+ 249 005c 7A68     		ldr	r2, [r7, #4]
+ 250 005e 9A42     		cmp	r2, r3
+ 251 0060 03D3     		bcc	.L14
+ARM GAS  /tmp/cct1kBOw.s 			page 8
+
+
+ 252              		.loc 1 147 55 discriminator 1
+ 253 0062 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 254              		.loc 1 147 42 discriminator 1
+ 255 0064 FA69     		ldr	r2, [r7, #28]
+ 256 0066 9A42     		cmp	r2, r3
+ 257 0068 05D2     		bcs	.L15
+ 258              	.L14:
+ 148:../Src/smtc_hal/smtc_hal_flash.c ****     {
+ 149:../Src/smtc_hal/smtc_hal_flash.c ****         status = SMTC_FAIL;
+ 259              		.loc 1 149 16
+ 260 006a 0023     		movs	r3, #0
+ 261 006c 87F82630 		strb	r3, [r7, #38]
+ 150:../Src/smtc_hal/smtc_hal_flash.c ****         return status;
+ 262              		.loc 1 150 16
+ 263 0070 97F82630 		ldrb	r3, [r7, #38]	@ zero_extendqisi2
+ 264 0074 31E0     		b	.L23
+ 265              	.L15:
+ 151:../Src/smtc_hal/smtc_hal_flash.c ****     }
+ 152:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 153:../Src/smtc_hal/smtc_hal_flash.c ****     /* Fill EraseInit structure*/
+ 154:../Src/smtc_hal/smtc_hal_flash.c ****     EraseInitStruct.TypeErase = FLASH_TYPEERASE_PAGES;
+ 266              		.loc 1 154 31
+ 267 0076 0023     		movs	r3, #0
+ 268 0078 BB60     		str	r3, [r7, #8]
+ 155:../Src/smtc_hal/smtc_hal_flash.c ****     EraseInitStruct.Page      = first_user_page;
+ 269              		.loc 1 155 31
+ 270 007a 3B6A     		ldr	r3, [r7, #32]
+ 271 007c 3B61     		str	r3, [r7, #16]
+ 156:../Src/smtc_hal/smtc_hal_flash.c ****     EraseInitStruct.NbPages   = nb_page;
+ 272              		.loc 1 156 31
+ 273 007e FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 274 0080 7B61     		str	r3, [r7, #20]
+ 157:../Src/smtc_hal/smtc_hal_flash.c ****     if( first_user_page < 256 )
+ 275              		.loc 1 157 7
+ 276 0082 3B6A     		ldr	r3, [r7, #32]
+ 277 0084 FF2B     		cmp	r3, #255
+ 278 0086 02D8     		bhi	.L17
+ 158:../Src/smtc_hal/smtc_hal_flash.c ****     {
+ 159:../Src/smtc_hal/smtc_hal_flash.c ****         EraseInitStruct.Banks     = FLASH_BANK_1;
+ 279              		.loc 1 159 35
+ 280 0088 0123     		movs	r3, #1
+ 281 008a FB60     		str	r3, [r7, #12]
+ 282 008c 01E0     		b	.L20
+ 283              	.L17:
+ 160:../Src/smtc_hal/smtc_hal_flash.c ****     }
+ 161:../Src/smtc_hal/smtc_hal_flash.c ****     else
+ 162:../Src/smtc_hal/smtc_hal_flash.c ****     {
+ 163:../Src/smtc_hal/smtc_hal_flash.c ****         EraseInitStruct.Banks     = FLASH_BANK_2;
+ 284              		.loc 1 163 35
+ 285 008e 0223     		movs	r3, #2
+ 286 0090 FB60     		str	r3, [r7, #12]
+ 287              	.L20:
+ 164:../Src/smtc_hal/smtc_hal_flash.c ****     }
+ 165:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 166:../Src/smtc_hal/smtc_hal_flash.c ****     /* Note: If an erase operation in Flash memory also concerns data in the data or instruction ca
+ 167:../Src/smtc_hal/smtc_hal_flash.c ****      you have to make sure that these data are rewritten before they are accessed during code
+ 168:../Src/smtc_hal/smtc_hal_flash.c ****      execution. If this cannot be done safely, it is recommended to flush the caches by setting the
+ARM GAS  /tmp/cct1kBOw.s 			page 9
+
+
+ 169:../Src/smtc_hal/smtc_hal_flash.c ****      DCRST and ICRST bits in the FLASH_CR register. */
+ 170:../Src/smtc_hal/smtc_hal_flash.c ****     do
+ 171:../Src/smtc_hal/smtc_hal_flash.c ****     {
+ 172:../Src/smtc_hal/smtc_hal_flash.c ****         hal_status = HAL_FLASHEx_Erase( &EraseInitStruct, &page_error );
+ 288              		.loc 1 172 22 discriminator 2
+ 289 0092 07F11802 		add	r2, r7, #24
+ 290 0096 07F10803 		add	r3, r7, #8
+ 291 009a 1146     		mov	r1, r2
+ 292 009c 1846     		mov	r0, r3
+ 293 009e FFF7FEFF 		bl	HAL_FLASHEx_Erase
+ 294 00a2 0346     		mov	r3, r0
+ 295 00a4 87F82530 		strb	r3, [r7, #37]
+ 173:../Src/smtc_hal/smtc_hal_flash.c ****         flash_operation_retry++;
+ 296              		.loc 1 173 30 discriminator 2
+ 297 00a8 97F82730 		ldrb	r3, [r7, #39]	@ zero_extendqisi2
+ 298 00ac 0133     		adds	r3, r3, #1
+ 299 00ae 87F82730 		strb	r3, [r7, #39]
+ 174:../Src/smtc_hal/smtc_hal_flash.c ****     } while( ( hal_status != HAL_OK ) && ( flash_operation_retry < FLASH_OPERATION_MAX_RETRY ) );
+ 300              		.loc 1 174 5 discriminator 2
+ 301 00b2 97F82530 		ldrb	r3, [r7, #37]	@ zero_extendqisi2
+ 302 00b6 002B     		cmp	r3, #0
+ 303 00b8 03D0     		beq	.L19
+ 304              		.loc 1 174 39 discriminator 1
+ 305 00ba 97F82730 		ldrb	r3, [r7, #39]	@ zero_extendqisi2
+ 306 00be 032B     		cmp	r3, #3
+ 307 00c0 E7D9     		bls	.L20
+ 308              	.L19:
+ 175:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 176:../Src/smtc_hal/smtc_hal_flash.c ****     if( flash_operation_retry >= FLASH_OPERATION_MAX_RETRY )
+ 309              		.loc 1 176 7
+ 310 00c2 97F82730 		ldrb	r3, [r7, #39]	@ zero_extendqisi2
+ 311 00c6 032B     		cmp	r3, #3
+ 312 00c8 00D9     		bls	.L21
+ 313              	.L22:
+ 177:../Src/smtc_hal/smtc_hal_flash.c ****     {
+ 178:../Src/smtc_hal/smtc_hal_flash.c ****         /*
+ 179:../Src/smtc_hal/smtc_hal_flash.c ****           Error occurred while  erase.
+ 180:../Src/smtc_hal/smtc_hal_flash.c ****           User can add here some code to deal with this error.
+ 181:../Src/smtc_hal/smtc_hal_flash.c ****           PageError will contain the faulty  and then to know the code error on this ,
+ 182:../Src/smtc_hal/smtc_hal_flash.c ****           user can call function 'HAL_FLASH_GetError()'
+ 183:../Src/smtc_hal/smtc_hal_flash.c ****         */
+ 184:../Src/smtc_hal/smtc_hal_flash.c ****         /* Infinite loop */
+ 185:../Src/smtc_hal/smtc_hal_flash.c ****         while( 1 )
+ 314              		.loc 1 185 14 discriminator 1
+ 315 00ca FEE7     		b	.L22
+ 316              	.L21:
+ 186:../Src/smtc_hal/smtc_hal_flash.c ****         {
+ 187:../Src/smtc_hal/smtc_hal_flash.c ****         }
+ 188:../Src/smtc_hal/smtc_hal_flash.c ****     }
+ 189:../Src/smtc_hal/smtc_hal_flash.c ****     else
+ 190:../Src/smtc_hal/smtc_hal_flash.c ****     {
+ 191:../Src/smtc_hal/smtc_hal_flash.c ****         flash_operation_retry = 0;
+ 317              		.loc 1 191 31
+ 318 00cc 0023     		movs	r3, #0
+ 319 00ce 87F82730 		strb	r3, [r7, #39]
+ 192:../Src/smtc_hal/smtc_hal_flash.c ****     }
+ 193:../Src/smtc_hal/smtc_hal_flash.c **** 
+ARM GAS  /tmp/cct1kBOw.s 			page 10
+
+
+ 194:../Src/smtc_hal/smtc_hal_flash.c ****     /* Lock the Flash to disable the flash control register access (recommended
+ 195:../Src/smtc_hal/smtc_hal_flash.c ****     to protect the FLASH memory against possible unwanted operation) *********/
+ 196:../Src/smtc_hal/smtc_hal_flash.c ****     HAL_FLASH_Lock( );
+ 320              		.loc 1 196 5
+ 321 00d2 FFF7FEFF 		bl	HAL_FLASH_Lock
+ 197:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 198:../Src/smtc_hal/smtc_hal_flash.c ****     return status;
+ 322              		.loc 1 198 12
+ 323 00d6 97F82630 		ldrb	r3, [r7, #38]	@ zero_extendqisi2
+ 324              	.L23:
+ 199:../Src/smtc_hal/smtc_hal_flash.c **** }
+ 325              		.loc 1 199 1 discriminator 2
+ 326 00da 1846     		mov	r0, r3
+ 327 00dc 2C37     		adds	r7, r7, #44
+ 328              	.LCFI8:
+ 329              		.cfi_def_cfa_offset 12
+ 330 00de BD46     		mov	sp, r7
+ 331              	.LCFI9:
+ 332              		.cfi_def_cfa_register 13
+ 333              		@ sp needed
+ 334 00e0 90BD     		pop	{r4, r7, pc}
+ 335              	.L25:
+ 336 00e2 00BF     		.align	2
+ 337              	.L24:
+ 338 00e4 00200240 		.word	1073881088
+ 339 00e8 FFEF0F08 		.word	135262207
+ 340 00ec 00000000 		.word	flash_user_start_addr
+ 341              		.cfi_endproc
+ 342              	.LFE317:
+ 344              		.section	.text.flash_force_erase_page,"ax",%progbits
+ 345              		.align	1
+ 346              		.global	flash_force_erase_page
+ 347              		.syntax unified
+ 348              		.thumb
+ 349              		.thumb_func
+ 350              		.fpu fpv4-sp-d16
+ 352              	flash_force_erase_page:
+ 353              	.LFB318:
+ 200:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 201:../Src/smtc_hal/smtc_hal_flash.c **** uint8_t flash_force_erase_page( uint32_t addr, uint8_t nb_page )
+ 202:../Src/smtc_hal/smtc_hal_flash.c **** {
+ 354              		.loc 1 202 1
+ 355              		.cfi_startproc
+ 356              		@ args = 0, pretend = 0, frame = 40
+ 357              		@ frame_needed = 1, uses_anonymous_args = 0
+ 358 0000 80B5     		push	{r7, lr}
+ 359              	.LCFI10:
+ 360              		.cfi_def_cfa_offset 8
+ 361              		.cfi_offset 7, -8
+ 362              		.cfi_offset 14, -4
+ 363 0002 8AB0     		sub	sp, sp, #40
+ 364              	.LCFI11:
+ 365              		.cfi_def_cfa_offset 48
+ 366 0004 00AF     		add	r7, sp, #0
+ 367              	.LCFI12:
+ 368              		.cfi_def_cfa_register 7
+ 369 0006 7860     		str	r0, [r7, #4]
+ARM GAS  /tmp/cct1kBOw.s 			page 11
+
+
+ 370 0008 0B46     		mov	r3, r1
+ 371 000a FB70     		strb	r3, [r7, #3]
+ 203:../Src/smtc_hal/smtc_hal_flash.c ****     uint8_t  status                = SMTC_SUCCESS;
+ 372              		.loc 1 203 14
+ 373 000c 0123     		movs	r3, #1
+ 374 000e 87F82630 		strb	r3, [r7, #38]
+ 204:../Src/smtc_hal/smtc_hal_flash.c ****     uint8_t  hal_status            = SMTC_SUCCESS;
+ 375              		.loc 1 204 14
+ 376 0012 0123     		movs	r3, #1
+ 377 0014 87F82530 		strb	r3, [r7, #37]
+ 205:../Src/smtc_hal/smtc_hal_flash.c ****     uint32_t first_user_page       = 0;
+ 378              		.loc 1 205 14
+ 379 0018 0023     		movs	r3, #0
+ 380 001a 3B62     		str	r3, [r7, #32]
+ 206:../Src/smtc_hal/smtc_hal_flash.c ****     uint32_t page_error            = 0;
+ 381              		.loc 1 206 14
+ 382 001c 0023     		movs	r3, #0
+ 383 001e FB61     		str	r3, [r7, #28]
+ 207:../Src/smtc_hal/smtc_hal_flash.c ****     uint8_t  flash_operation_retry = 0;
+ 384              		.loc 1 207 14
+ 385 0020 0023     		movs	r3, #0
+ 386 0022 87F82730 		strb	r3, [r7, #39]
+ 208:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 209:../Src/smtc_hal/smtc_hal_flash.c ****     FLASH_EraseInitTypeDef EraseInitStruct;
+ 210:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 211:../Src/smtc_hal/smtc_hal_flash.c ****     /* Unlock the Flash to enable the flash control register access *************/
+ 212:../Src/smtc_hal/smtc_hal_flash.c ****     HAL_FLASH_Unlock( );
+ 387              		.loc 1 212 5
+ 388 0026 FFF7FEFF 		bl	HAL_FLASH_Unlock
+ 213:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 214:../Src/smtc_hal/smtc_hal_flash.c ****     /* Clear OPTVERR bit set on virgin samples */
+ 215:../Src/smtc_hal/smtc_hal_flash.c ****     __HAL_FLASH_CLEAR_FLAG( FLASH_FLAG_OPTVERR );
+ 389              		.loc 1 215 5
+ 390 002a 1B4B     		ldr	r3, .L32
+ 391 002c 4FF40042 		mov	r2, #32768
+ 392 0030 1A61     		str	r2, [r3, #16]
+ 216:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 217:../Src/smtc_hal/smtc_hal_flash.c ****     /* Erase the user Flash area
+ 218:../Src/smtc_hal/smtc_hal_flash.c ****     (area defined by FlashUserStartAddr and FLASH_USER_END_ADDR) ***********/
+ 219:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 220:../Src/smtc_hal/smtc_hal_flash.c ****     /* Get the 1st page to erase */
+ 221:../Src/smtc_hal/smtc_hal_flash.c ****     first_user_page = get_page( addr );
+ 393              		.loc 1 221 23
+ 394 0032 7868     		ldr	r0, [r7, #4]
+ 395 0034 FFF7FEFF 		bl	get_page
+ 396 0038 3862     		str	r0, [r7, #32]
+ 222:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 223:../Src/smtc_hal/smtc_hal_flash.c ****     /* Fill EraseInit structure*/
+ 224:../Src/smtc_hal/smtc_hal_flash.c ****     EraseInitStruct.TypeErase = FLASH_TYPEERASE_PAGES;
+ 397              		.loc 1 224 31
+ 398 003a 0023     		movs	r3, #0
+ 399 003c FB60     		str	r3, [r7, #12]
+ 225:../Src/smtc_hal/smtc_hal_flash.c ****     EraseInitStruct.Page      = first_user_page;
+ 400              		.loc 1 225 31
+ 401 003e 3B6A     		ldr	r3, [r7, #32]
+ 402 0040 7B61     		str	r3, [r7, #20]
+ 226:../Src/smtc_hal/smtc_hal_flash.c ****     EraseInitStruct.NbPages   = nb_page;
+ARM GAS  /tmp/cct1kBOw.s 			page 12
+
+
+ 403              		.loc 1 226 31
+ 404 0042 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 405 0044 BB61     		str	r3, [r7, #24]
+ 406              	.L28:
+ 227:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 228:../Src/smtc_hal/smtc_hal_flash.c ****     /* Note: If an erase operation in Flash memory also concerns data in the data or instruction ca
+ 229:../Src/smtc_hal/smtc_hal_flash.c ****      you have to make sure that these data are rewritten before they are accessed during code
+ 230:../Src/smtc_hal/smtc_hal_flash.c ****      execution. If this cannot be done safely, it is recommended to flush the caches by setting the
+ 231:../Src/smtc_hal/smtc_hal_flash.c ****      DCRST and ICRST bits in the FLASH_CR register. */
+ 232:../Src/smtc_hal/smtc_hal_flash.c ****     do
+ 233:../Src/smtc_hal/smtc_hal_flash.c ****     {
+ 234:../Src/smtc_hal/smtc_hal_flash.c ****         hal_status = HAL_FLASHEx_Erase( &EraseInitStruct, &page_error );
+ 407              		.loc 1 234 22 discriminator 2
+ 408 0046 07F11C02 		add	r2, r7, #28
+ 409 004a 07F10C03 		add	r3, r7, #12
+ 410 004e 1146     		mov	r1, r2
+ 411 0050 1846     		mov	r0, r3
+ 412 0052 FFF7FEFF 		bl	HAL_FLASHEx_Erase
+ 413 0056 0346     		mov	r3, r0
+ 414 0058 87F82530 		strb	r3, [r7, #37]
+ 235:../Src/smtc_hal/smtc_hal_flash.c ****         flash_operation_retry++;
+ 415              		.loc 1 235 30 discriminator 2
+ 416 005c 97F82730 		ldrb	r3, [r7, #39]	@ zero_extendqisi2
+ 417 0060 0133     		adds	r3, r3, #1
+ 418 0062 87F82730 		strb	r3, [r7, #39]
+ 236:../Src/smtc_hal/smtc_hal_flash.c ****     } while( ( hal_status != HAL_OK ) && ( flash_operation_retry < FLASH_OPERATION_MAX_RETRY ) );
+ 419              		.loc 1 236 5 discriminator 2
+ 420 0066 97F82530 		ldrb	r3, [r7, #37]	@ zero_extendqisi2
+ 421 006a 002B     		cmp	r3, #0
+ 422 006c 03D0     		beq	.L27
+ 423              		.loc 1 236 39 discriminator 1
+ 424 006e 97F82730 		ldrb	r3, [r7, #39]	@ zero_extendqisi2
+ 425 0072 032B     		cmp	r3, #3
+ 426 0074 E7D9     		bls	.L28
+ 427              	.L27:
+ 237:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 238:../Src/smtc_hal/smtc_hal_flash.c ****     if( flash_operation_retry >= FLASH_OPERATION_MAX_RETRY )
+ 428              		.loc 1 238 7
+ 429 0076 97F82730 		ldrb	r3, [r7, #39]	@ zero_extendqisi2
+ 430 007a 032B     		cmp	r3, #3
+ 431 007c 00D9     		bls	.L29
+ 432              	.L30:
+ 239:../Src/smtc_hal/smtc_hal_flash.c ****     {
+ 240:../Src/smtc_hal/smtc_hal_flash.c ****         /*
+ 241:../Src/smtc_hal/smtc_hal_flash.c ****           Error occurred while  erase.
+ 242:../Src/smtc_hal/smtc_hal_flash.c ****           User can add here some code to deal with this error.
+ 243:../Src/smtc_hal/smtc_hal_flash.c ****           PageError will contain the faulty  and then to know the code error on this ,
+ 244:../Src/smtc_hal/smtc_hal_flash.c ****           user can call function 'HAL_FLASH_GetError()'
+ 245:../Src/smtc_hal/smtc_hal_flash.c ****         */
+ 246:../Src/smtc_hal/smtc_hal_flash.c ****         /* Infinite loop */
+ 247:../Src/smtc_hal/smtc_hal_flash.c ****         while( 1 )
+ 433              		.loc 1 247 14 discriminator 1
+ 434 007e FEE7     		b	.L30
+ 435              	.L29:
+ 248:../Src/smtc_hal/smtc_hal_flash.c ****         {
+ 249:../Src/smtc_hal/smtc_hal_flash.c ****         }
+ 250:../Src/smtc_hal/smtc_hal_flash.c ****     }
+ARM GAS  /tmp/cct1kBOw.s 			page 13
+
+
+ 251:../Src/smtc_hal/smtc_hal_flash.c ****     else
+ 252:../Src/smtc_hal/smtc_hal_flash.c ****     {
+ 253:../Src/smtc_hal/smtc_hal_flash.c ****         flash_operation_retry = 0;
+ 436              		.loc 1 253 31
+ 437 0080 0023     		movs	r3, #0
+ 438 0082 87F82730 		strb	r3, [r7, #39]
+ 254:../Src/smtc_hal/smtc_hal_flash.c ****     }
+ 255:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 256:../Src/smtc_hal/smtc_hal_flash.c ****     /* Lock the Flash to disable the flash control register access (recommended
+ 257:../Src/smtc_hal/smtc_hal_flash.c ****     to protect the FLASH memory against possible unwanted operation) *********/
+ 258:../Src/smtc_hal/smtc_hal_flash.c ****     HAL_FLASH_Lock( );
+ 439              		.loc 1 258 5
+ 440 0086 FFF7FEFF 		bl	HAL_FLASH_Lock
+ 259:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 260:../Src/smtc_hal/smtc_hal_flash.c ****     return status;
+ 441              		.loc 1 260 12
+ 442 008a 97F82630 		ldrb	r3, [r7, #38]	@ zero_extendqisi2
+ 261:../Src/smtc_hal/smtc_hal_flash.c **** }
+ 443              		.loc 1 261 1
+ 444 008e 1846     		mov	r0, r3
+ 445 0090 2837     		adds	r7, r7, #40
+ 446              	.LCFI13:
+ 447              		.cfi_def_cfa_offset 8
+ 448 0092 BD46     		mov	sp, r7
+ 449              	.LCFI14:
+ 450              		.cfi_def_cfa_register 13
+ 451              		@ sp needed
+ 452 0094 80BD     		pop	{r7, pc}
+ 453              	.L33:
+ 454 0096 00BF     		.align	2
+ 455              	.L32:
+ 456 0098 00200240 		.word	1073881088
+ 457              		.cfi_endproc
+ 458              	.LFE318:
+ 460              		.section	.text.flash_write_buffer,"ax",%progbits
+ 461              		.align	1
+ 462              		.global	flash_write_buffer
+ 463              		.syntax unified
+ 464              		.thumb
+ 465              		.thumb_func
+ 466              		.fpu fpv4-sp-d16
+ 468              	flash_write_buffer:
+ 469              	.LFB319:
+ 262:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 263:../Src/smtc_hal/smtc_hal_flash.c **** uint32_t flash_write_buffer( uint32_t addr, uint8_t* buffer, uint32_t size )
+ 264:../Src/smtc_hal/smtc_hal_flash.c **** {
+ 470              		.loc 1 264 1
+ 471              		.cfi_startproc
+ 472              		@ args = 0, pretend = 0, frame = 48
+ 473              		@ frame_needed = 1, uses_anonymous_args = 0
+ 474 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 475              	.LCFI15:
+ 476              		.cfi_def_cfa_offset 36
+ 477              		.cfi_offset 4, -36
+ 478              		.cfi_offset 5, -32
+ 479              		.cfi_offset 6, -28
+ 480              		.cfi_offset 7, -24
+ARM GAS  /tmp/cct1kBOw.s 			page 14
+
+
+ 481              		.cfi_offset 8, -20
+ 482              		.cfi_offset 9, -16
+ 483              		.cfi_offset 10, -12
+ 484              		.cfi_offset 11, -8
+ 485              		.cfi_offset 14, -4
+ 486 0004 8DB0     		sub	sp, sp, #52
+ 487              	.LCFI16:
+ 488              		.cfi_def_cfa_offset 88
+ 489 0006 00AF     		add	r7, sp, #0
+ 490              	.LCFI17:
+ 491              		.cfi_def_cfa_register 7
+ 492 0008 F860     		str	r0, [r7, #12]
+ 493 000a B960     		str	r1, [r7, #8]
+ 494 000c 7A60     		str	r2, [r7, #4]
+ 265:../Src/smtc_hal/smtc_hal_flash.c ****     uint8_t  status       = SMTC_SUCCESS;
+ 495              		.loc 1 265 14
+ 496 000e 0123     		movs	r3, #1
+ 497 0010 7B77     		strb	r3, [r7, #29]
+ 266:../Src/smtc_hal/smtc_hal_flash.c ****     uint8_t  hal_status   = SMTC_SUCCESS;
+ 498              		.loc 1 266 14
+ 499 0012 0123     		movs	r3, #1
+ 500 0014 3B77     		strb	r3, [r7, #28]
+ 267:../Src/smtc_hal/smtc_hal_flash.c ****     uint32_t buffer_index = 0, nb_of_pages_max = 0, real_size = 0, addr_end = 0;
+ 501              		.loc 1 267 14
+ 502 0016 0023     		movs	r3, #0
+ 503 0018 FB62     		str	r3, [r7, #44]
+ 504              		.loc 1 267 32
+ 505 001a 0023     		movs	r3, #0
+ 506 001c BB61     		str	r3, [r7, #24]
+ 507              		.loc 1 267 53
+ 508 001e 0023     		movs	r3, #0
+ 509 0020 BB62     		str	r3, [r7, #40]
+ 510              		.loc 1 267 68
+ 511 0022 0023     		movs	r3, #0
+ 512 0024 7B61     		str	r3, [r7, #20]
+ 268:../Src/smtc_hal/smtc_hal_flash.c ****     uint64_t data64                = 0;
+ 513              		.loc 1 268 14
+ 514 0026 4FF00002 		mov	r2, #0
+ 515 002a 4FF00003 		mov	r3, #0
+ 516 002e C7E90823 		strd	r2, [r7, #32]
+ 269:../Src/smtc_hal/smtc_hal_flash.c ****     uint8_t  flash_operation_retry = 0;
+ 517              		.loc 1 269 14
+ 518 0032 0023     		movs	r3, #0
+ 519 0034 FB77     		strb	r3, [r7, #31]
+ 270:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 271:../Src/smtc_hal/smtc_hal_flash.c ****     /* Complete size for FLASH_TYPEPROGRAM_DOUBLEWORD operation*/
+ 272:../Src/smtc_hal/smtc_hal_flash.c ****     if( ( size % 8 ) != 0 )
+ 520              		.loc 1 272 16
+ 521 0036 7B68     		ldr	r3, [r7, #4]
+ 522 0038 03F00703 		and	r3, r3, #7
+ 523              		.loc 1 272 7
+ 524 003c 002B     		cmp	r3, #0
+ 525 003e 05D0     		beq	.L35
+ 273:../Src/smtc_hal/smtc_hal_flash.c ****     {
+ 274:../Src/smtc_hal/smtc_hal_flash.c ****         real_size = size + ( 8 - ( size % 8 ) );
+ 526              		.loc 1 274 26
+ 527 0040 7B68     		ldr	r3, [r7, #4]
+ARM GAS  /tmp/cct1kBOw.s 			page 15
+
+
+ 528 0042 23F00703 		bic	r3, r3, #7
+ 529              		.loc 1 274 19
+ 530 0046 0833     		adds	r3, r3, #8
+ 531 0048 BB62     		str	r3, [r7, #40]
+ 532 004a 01E0     		b	.L36
+ 533              	.L35:
+ 275:../Src/smtc_hal/smtc_hal_flash.c ****     }
+ 276:../Src/smtc_hal/smtc_hal_flash.c ****     else
+ 277:../Src/smtc_hal/smtc_hal_flash.c ****     {
+ 278:../Src/smtc_hal/smtc_hal_flash.c ****         real_size = size;
+ 534              		.loc 1 278 19
+ 535 004c 7B68     		ldr	r3, [r7, #4]
+ 536 004e BB62     		str	r3, [r7, #40]
+ 537              	.L36:
+ 279:../Src/smtc_hal/smtc_hal_flash.c ****     }
+ 280:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 281:../Src/smtc_hal/smtc_hal_flash.c ****     addr_end = addr + real_size;
+ 538              		.loc 1 281 14
+ 539 0050 FA68     		ldr	r2, [r7, #12]
+ 540 0052 BB6A     		ldr	r3, [r7, #40]
+ 541 0054 1344     		add	r3, r3, r2
+ 542 0056 7B61     		str	r3, [r7, #20]
+ 282:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 283:../Src/smtc_hal/smtc_hal_flash.c ****     /* Unlock the Flash to enable the flash control register access *************/
+ 284:../Src/smtc_hal/smtc_hal_flash.c ****     HAL_FLASH_Unlock( );
+ 543              		.loc 1 284 5
+ 544 0058 FFF7FEFF 		bl	HAL_FLASH_Unlock
+ 285:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 286:../Src/smtc_hal/smtc_hal_flash.c ****     /* Clear OPTVERR bit set on virgin samples */
+ 287:../Src/smtc_hal/smtc_hal_flash.c ****     __HAL_FLASH_CLEAR_FLAG( FLASH_FLAG_OPTVERR );
+ 545              		.loc 1 287 5
+ 546 005c 3C4B     		ldr	r3, .L48
+ 547 005e 4FF40042 		mov	r2, #32768
+ 548 0062 1A61     		str	r2, [r3, #16]
+ 288:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 289:../Src/smtc_hal/smtc_hal_flash.c ****     /* Get the number of pages available */
+ 290:../Src/smtc_hal/smtc_hal_flash.c ****     nb_of_pages_max = get_page( FLASH_USER_END_ADDR ) - get_page( flash_user_start_addr ) + 1;
+ 549              		.loc 1 290 23
+ 550 0064 3B48     		ldr	r0, .L48+4
+ 551 0066 FFF7FEFF 		bl	get_page
+ 552 006a 0646     		mov	r6, r0
+ 553              		.loc 1 290 57
+ 554 006c 3A4B     		ldr	r3, .L48+8
+ 555 006e 1B68     		ldr	r3, [r3]
+ 556 0070 1846     		mov	r0, r3
+ 557 0072 FFF7FEFF 		bl	get_page
+ 558 0076 0346     		mov	r3, r0
+ 559              		.loc 1 290 55
+ 560 0078 F31A     		subs	r3, r6, r3
+ 561              		.loc 1 290 21
+ 562 007a 0133     		adds	r3, r3, #1
+ 563 007c BB61     		str	r3, [r7, #24]
+ 291:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 292:../Src/smtc_hal/smtc_hal_flash.c ****     if( ( flash_user_start_addr > addr ) || ( ( real_size / ADDR_FLASH_PAGE_SIZE ) > nb_of_pages_ma
+ 564              		.loc 1 292 33
+ 565 007e 364B     		ldr	r3, .L48+8
+ 566 0080 1B68     		ldr	r3, [r3]
+ARM GAS  /tmp/cct1kBOw.s 			page 16
+
+
+ 567              		.loc 1 292 7
+ 568 0082 FA68     		ldr	r2, [r7, #12]
+ 569 0084 9A42     		cmp	r2, r3
+ 570 0086 04D3     		bcc	.L37
+ 571              		.loc 1 292 59 discriminator 1
+ 572 0088 BB6A     		ldr	r3, [r7, #40]
+ 573 008a DB0A     		lsrs	r3, r3, #11
+ 574              		.loc 1 292 42 discriminator 1
+ 575 008c BA69     		ldr	r2, [r7, #24]
+ 576 008e 9A42     		cmp	r2, r3
+ 577 0090 51D2     		bcs	.L40
+ 578              	.L37:
+ 293:../Src/smtc_hal/smtc_hal_flash.c ****     {
+ 294:../Src/smtc_hal/smtc_hal_flash.c ****         status = SMTC_FAIL;
+ 579              		.loc 1 294 16
+ 580 0092 0023     		movs	r3, #0
+ 581 0094 7B77     		strb	r3, [r7, #29]
+ 295:../Src/smtc_hal/smtc_hal_flash.c ****         return status;
+ 582              		.loc 1 295 16
+ 583 0096 7B7F     		ldrb	r3, [r7, #29]	@ zero_extendqisi2
+ 584 0098 54E0     		b	.L39
+ 585              	.L47:
+ 296:../Src/smtc_hal/smtc_hal_flash.c ****     }
+ 297:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 298:../Src/smtc_hal/smtc_hal_flash.c ****     /* Program the user Flash area word by word
+ 299:../Src/smtc_hal/smtc_hal_flash.c ****     (area defined by FlashUserStartAddr and FLASH_USER_END_ADDR) ***********/
+ 300:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 301:../Src/smtc_hal/smtc_hal_flash.c ****     while( addr < addr_end )
+ 302:../Src/smtc_hal/smtc_hal_flash.c ****     {
+ 303:../Src/smtc_hal/smtc_hal_flash.c ****         data64 = 0;
+ 586              		.loc 1 303 16
+ 587 009a 4FF00002 		mov	r2, #0
+ 588 009e 4FF00003 		mov	r3, #0
+ 589 00a2 C7E90823 		strd	r2, [r7, #32]
+ 590              	.LBB4:
+ 304:../Src/smtc_hal/smtc_hal_flash.c ****         for( uint8_t i = 0; i < 8; i++ )
+ 591              		.loc 1 304 22
+ 592 00a6 0023     		movs	r3, #0
+ 593 00a8 BB77     		strb	r3, [r7, #30]
+ 594              		.loc 1 304 9
+ 595 00aa 24E0     		b	.L41
+ 596              	.L42:
+ 305:../Src/smtc_hal/smtc_hal_flash.c ****         {
+ 306:../Src/smtc_hal/smtc_hal_flash.c ****             data64 += ( ( ( uint64_t ) buffer[buffer_index + i] ) << ( i * 8 ) );
+ 597              		.loc 1 306 60 discriminator 3
+ 598 00ac BA7F     		ldrb	r2, [r7, #30]	@ zero_extendqisi2
+ 599 00ae FB6A     		ldr	r3, [r7, #44]
+ 600 00b0 1344     		add	r3, r3, r2
+ 601              		.loc 1 306 46 discriminator 3
+ 602 00b2 BA68     		ldr	r2, [r7, #8]
+ 603 00b4 1344     		add	r3, r3, r2
+ 604 00b6 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 605              		.loc 1 306 27 discriminator 3
+ 606 00b8 DBB2     		uxtb	r3, r3
+ 607 00ba 0022     		movs	r2, #0
+ 608 00bc 9846     		mov	r8, r3
+ 609 00be 9146     		mov	r9, r2
+ARM GAS  /tmp/cct1kBOw.s 			page 17
+
+
+ 610              		.loc 1 306 74 discriminator 3
+ 611 00c0 BB7F     		ldrb	r3, [r7, #30]	@ zero_extendqisi2
+ 612 00c2 DB00     		lsls	r3, r3, #3
+ 613              		.loc 1 306 67 discriminator 3
+ 614 00c4 A3F12001 		sub	r1, r3, #32
+ 615 00c8 C3F12002 		rsb	r2, r3, #32
+ 616 00cc 09FA03F5 		lsl	r5, r9, r3
+ 617 00d0 08FA01F1 		lsl	r1, r8, r1
+ 618 00d4 0D43     		orrs	r5, r5, r1
+ 619 00d6 28FA02F2 		lsr	r2, r8, r2
+ 620 00da 1543     		orrs	r5, r5, r2
+ 621 00dc 08FA03F4 		lsl	r4, r8, r3
+ 622              		.loc 1 306 20 discriminator 3
+ 623 00e0 D7E90823 		ldrd	r2, [r7, #32]
+ 624 00e4 12EB040A 		adds	r10, r2, r4
+ 625 00e8 43EB050B 		adc	fp, r3, r5
+ 626 00ec C7E908AB 		strd	r10, [r7, #32]
+ 304:../Src/smtc_hal/smtc_hal_flash.c ****         for( uint8_t i = 0; i < 8; i++ )
+ 627              		.loc 1 304 37 discriminator 3
+ 628 00f0 BB7F     		ldrb	r3, [r7, #30]	@ zero_extendqisi2
+ 629 00f2 0133     		adds	r3, r3, #1
+ 630 00f4 BB77     		strb	r3, [r7, #30]
+ 631              	.L41:
+ 304:../Src/smtc_hal/smtc_hal_flash.c ****         for( uint8_t i = 0; i < 8; i++ )
+ 632              		.loc 1 304 9 discriminator 1
+ 633 00f6 BB7F     		ldrb	r3, [r7, #30]	@ zero_extendqisi2
+ 634 00f8 072B     		cmp	r3, #7
+ 635 00fa D7D9     		bls	.L42
+ 636              	.L44:
+ 637              	.LBE4:
+ 307:../Src/smtc_hal/smtc_hal_flash.c ****         }
+ 308:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 309:../Src/smtc_hal/smtc_hal_flash.c ****         do
+ 310:../Src/smtc_hal/smtc_hal_flash.c ****         {
+ 311:../Src/smtc_hal/smtc_hal_flash.c ****             hal_status = HAL_FLASH_Program( FLASH_TYPEPROGRAM_DOUBLEWORD, addr, data64 );
+ 638              		.loc 1 311 26 discriminator 2
+ 639 00fc D7E90823 		ldrd	r2, [r7, #32]
+ 640 0100 F968     		ldr	r1, [r7, #12]
+ 641 0102 0020     		movs	r0, #0
+ 642 0104 FFF7FEFF 		bl	HAL_FLASH_Program
+ 643 0108 0346     		mov	r3, r0
+ 644 010a 3B77     		strb	r3, [r7, #28]
+ 312:../Src/smtc_hal/smtc_hal_flash.c ****             flash_operation_retry++;
+ 645              		.loc 1 312 34 discriminator 2
+ 646 010c FB7F     		ldrb	r3, [r7, #31]	@ zero_extendqisi2
+ 647 010e 0133     		adds	r3, r3, #1
+ 648 0110 FB77     		strb	r3, [r7, #31]
+ 313:../Src/smtc_hal/smtc_hal_flash.c ****         } while( ( hal_status != HAL_OK ) && ( flash_operation_retry < FLASH_OPERATION_MAX_RETRY ) 
+ 649              		.loc 1 313 9 discriminator 2
+ 650 0112 3B7F     		ldrb	r3, [r7, #28]	@ zero_extendqisi2
+ 651 0114 002B     		cmp	r3, #0
+ 652 0116 02D0     		beq	.L43
+ 653              		.loc 1 313 43 discriminator 1
+ 654 0118 FB7F     		ldrb	r3, [r7, #31]	@ zero_extendqisi2
+ 655 011a 032B     		cmp	r3, #3
+ 656 011c EED9     		bls	.L44
+ 657              	.L43:
+ARM GAS  /tmp/cct1kBOw.s 			page 18
+
+
+ 314:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 315:../Src/smtc_hal/smtc_hal_flash.c ****         if( flash_operation_retry >= FLASH_OPERATION_MAX_RETRY )
+ 658              		.loc 1 315 11
+ 659 011e FB7F     		ldrb	r3, [r7, #31]	@ zero_extendqisi2
+ 660 0120 032B     		cmp	r3, #3
+ 661 0122 00D9     		bls	.L45
+ 662              	.L46:
+ 316:../Src/smtc_hal/smtc_hal_flash.c ****         {
+ 317:../Src/smtc_hal/smtc_hal_flash.c ****             /* Error occurred while writing data in Flash memory.
+ 318:../Src/smtc_hal/smtc_hal_flash.c ****             User can add here some code to deal with this error */
+ 319:../Src/smtc_hal/smtc_hal_flash.c ****             /* Infinite loop */
+ 320:../Src/smtc_hal/smtc_hal_flash.c ****             while( 1 )
+ 663              		.loc 1 320 18 discriminator 1
+ 664 0124 FEE7     		b	.L46
+ 665              	.L45:
+ 321:../Src/smtc_hal/smtc_hal_flash.c ****             {
+ 322:../Src/smtc_hal/smtc_hal_flash.c ****             }
+ 323:../Src/smtc_hal/smtc_hal_flash.c ****         }
+ 324:../Src/smtc_hal/smtc_hal_flash.c ****         else
+ 325:../Src/smtc_hal/smtc_hal_flash.c ****         {
+ 326:../Src/smtc_hal/smtc_hal_flash.c ****             flash_operation_retry = 0;
+ 666              		.loc 1 326 35
+ 667 0126 0023     		movs	r3, #0
+ 668 0128 FB77     		strb	r3, [r7, #31]
+ 327:../Src/smtc_hal/smtc_hal_flash.c ****             /* increment to next double word*/
+ 328:../Src/smtc_hal/smtc_hal_flash.c ****             addr         = addr + 8;
+ 669              		.loc 1 328 26
+ 670 012a FB68     		ldr	r3, [r7, #12]
+ 671 012c 0833     		adds	r3, r3, #8
+ 672 012e FB60     		str	r3, [r7, #12]
+ 329:../Src/smtc_hal/smtc_hal_flash.c ****             buffer_index = buffer_index + 8;
+ 673              		.loc 1 329 26
+ 674 0130 FB6A     		ldr	r3, [r7, #44]
+ 675 0132 0833     		adds	r3, r3, #8
+ 676 0134 FB62     		str	r3, [r7, #44]
+ 677              	.L40:
+ 301:../Src/smtc_hal/smtc_hal_flash.c ****     {
+ 678              		.loc 1 301 10
+ 679 0136 FA68     		ldr	r2, [r7, #12]
+ 680 0138 7B69     		ldr	r3, [r7, #20]
+ 681 013a 9A42     		cmp	r2, r3
+ 682 013c ADD3     		bcc	.L47
+ 330:../Src/smtc_hal/smtc_hal_flash.c ****         }
+ 331:../Src/smtc_hal/smtc_hal_flash.c ****     }
+ 332:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 333:../Src/smtc_hal/smtc_hal_flash.c ****     /* Lock the Flash to disable the flash control register access (recommended
+ 334:../Src/smtc_hal/smtc_hal_flash.c ****     to protect the FLASH memory against possible unwanted operation) *********/
+ 335:../Src/smtc_hal/smtc_hal_flash.c ****     HAL_FLASH_Lock( );
+ 683              		.loc 1 335 5
+ 684 013e FFF7FEFF 		bl	HAL_FLASH_Lock
+ 336:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 337:../Src/smtc_hal/smtc_hal_flash.c ****     return real_size;
+ 685              		.loc 1 337 12
+ 686 0142 BB6A     		ldr	r3, [r7, #40]
+ 687              	.L39:
+ 338:../Src/smtc_hal/smtc_hal_flash.c **** }
+ 688              		.loc 1 338 1
+ARM GAS  /tmp/cct1kBOw.s 			page 19
+
+
+ 689 0144 1846     		mov	r0, r3
+ 690 0146 3437     		adds	r7, r7, #52
+ 691              	.LCFI18:
+ 692              		.cfi_def_cfa_offset 36
+ 693 0148 BD46     		mov	sp, r7
+ 694              	.LCFI19:
+ 695              		.cfi_def_cfa_register 13
+ 696              		@ sp needed
+ 697 014a BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 698              	.L49:
+ 699 014e 00BF     		.align	2
+ 700              	.L48:
+ 701 0150 00200240 		.word	1073881088
+ 702 0154 FFEF0F08 		.word	135262207
+ 703 0158 00000000 		.word	flash_user_start_addr
+ 704              		.cfi_endproc
+ 705              	.LFE319:
+ 707              		.section	.text.flash_read_buffer,"ax",%progbits
+ 708              		.align	1
+ 709              		.global	flash_read_buffer
+ 710              		.syntax unified
+ 711              		.thumb
+ 712              		.thumb_func
+ 713              		.fpu fpv4-sp-d16
+ 715              	flash_read_buffer:
+ 716              	.LFB320:
+ 339:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 340:../Src/smtc_hal/smtc_hal_flash.c **** void flash_read_buffer( uint32_t addr, uint8_t* buffer, uint32_t size )
+ 341:../Src/smtc_hal/smtc_hal_flash.c **** {
+ 717              		.loc 1 341 1
+ 718              		.cfi_startproc
+ 719              		@ args = 0, pretend = 0, frame = 24
+ 720              		@ frame_needed = 1, uses_anonymous_args = 0
+ 721              		@ link register save eliminated.
+ 722 0000 80B4     		push	{r7}
+ 723              	.LCFI20:
+ 724              		.cfi_def_cfa_offset 4
+ 725              		.cfi_offset 7, -4
+ 726 0002 87B0     		sub	sp, sp, #28
+ 727              	.LCFI21:
+ 728              		.cfi_def_cfa_offset 32
+ 729 0004 00AF     		add	r7, sp, #0
+ 730              	.LCFI22:
+ 731              		.cfi_def_cfa_register 7
+ 732 0006 F860     		str	r0, [r7, #12]
+ 733 0008 B960     		str	r1, [r7, #8]
+ 734 000a 7A60     		str	r2, [r7, #4]
+ 342:../Src/smtc_hal/smtc_hal_flash.c ****     uint32_t flash_index = 0;
+ 735              		.loc 1 342 14
+ 736 000c 0023     		movs	r3, #0
+ 737 000e 7B61     		str	r3, [r7, #20]
+ 343:../Src/smtc_hal/smtc_hal_flash.c ****     __IO uint8_t data8   = 0;
+ 738              		.loc 1 343 18
+ 739 0010 0023     		movs	r3, #0
+ 740 0012 FB74     		strb	r3, [r7, #19]
+ 344:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 345:../Src/smtc_hal/smtc_hal_flash.c ****     while( flash_index < size )
+ARM GAS  /tmp/cct1kBOw.s 			page 20
+
+
+ 741              		.loc 1 345 10
+ 742 0014 0EE0     		b	.L51
+ 743              	.L52:
+ 346:../Src/smtc_hal/smtc_hal_flash.c ****     {
+ 347:../Src/smtc_hal/smtc_hal_flash.c ****         data8 = *( __IO uint32_t* ) ( addr + flash_index );
+ 744              		.loc 1 347 44
+ 745 0016 FA68     		ldr	r2, [r7, #12]
+ 746 0018 7B69     		ldr	r3, [r7, #20]
+ 747 001a 1344     		add	r3, r3, r2
+ 748              		.loc 1 347 17
+ 749 001c 1B68     		ldr	r3, [r3]
+ 750              		.loc 1 347 15
+ 751 001e DBB2     		uxtb	r3, r3
+ 752 0020 FB74     		strb	r3, [r7, #19]
+ 348:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 349:../Src/smtc_hal/smtc_hal_flash.c ****         buffer[flash_index] = data8;
+ 753              		.loc 1 349 15
+ 754 0022 BA68     		ldr	r2, [r7, #8]
+ 755 0024 7B69     		ldr	r3, [r7, #20]
+ 756 0026 1344     		add	r3, r3, r2
+ 757              		.loc 1 349 29
+ 758 0028 FA7C     		ldrb	r2, [r7, #19]
+ 759 002a D2B2     		uxtb	r2, r2
+ 760 002c 1A70     		strb	r2, [r3]
+ 350:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 351:../Src/smtc_hal/smtc_hal_flash.c ****         flash_index++;
+ 761              		.loc 1 351 20
+ 762 002e 7B69     		ldr	r3, [r7, #20]
+ 763 0030 0133     		adds	r3, r3, #1
+ 764 0032 7B61     		str	r3, [r7, #20]
+ 765              	.L51:
+ 345:../Src/smtc_hal/smtc_hal_flash.c ****     {
+ 766              		.loc 1 345 10
+ 767 0034 7A69     		ldr	r2, [r7, #20]
+ 768 0036 7B68     		ldr	r3, [r7, #4]
+ 769 0038 9A42     		cmp	r2, r3
+ 770 003a ECD3     		bcc	.L52
+ 352:../Src/smtc_hal/smtc_hal_flash.c ****     }
+ 353:../Src/smtc_hal/smtc_hal_flash.c **** }
+ 771              		.loc 1 353 1
+ 772 003c 00BF     		nop
+ 773 003e 00BF     		nop
+ 774 0040 1C37     		adds	r7, r7, #28
+ 775              	.LCFI23:
+ 776              		.cfi_def_cfa_offset 4
+ 777 0042 BD46     		mov	sp, r7
+ 778              	.LCFI24:
+ 779              		.cfi_def_cfa_register 13
+ 780              		@ sp needed
+ 781 0044 5DF8047B 		ldr	r7, [sp], #4
+ 782              	.LCFI25:
+ 783              		.cfi_restore 7
+ 784              		.cfi_def_cfa_offset 0
+ 785 0048 7047     		bx	lr
+ 786              		.cfi_endproc
+ 787              	.LFE320:
+ 789              		.section	.text.flash_get_user_start_addr,"ax",%progbits
+ARM GAS  /tmp/cct1kBOw.s 			page 21
+
+
+ 790              		.align	1
+ 791              		.global	flash_get_user_start_addr
+ 792              		.syntax unified
+ 793              		.thumb
+ 794              		.thumb_func
+ 795              		.fpu fpv4-sp-d16
+ 797              	flash_get_user_start_addr:
+ 798              	.LFB321:
+ 354:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 355:../Src/smtc_hal/smtc_hal_flash.c **** uint32_t flash_get_user_start_addr( void ) { return flash_user_start_addr; }
+ 799              		.loc 1 355 44
+ 800              		.cfi_startproc
+ 801              		@ args = 0, pretend = 0, frame = 0
+ 802              		@ frame_needed = 1, uses_anonymous_args = 0
+ 803              		@ link register save eliminated.
+ 804 0000 80B4     		push	{r7}
+ 805              	.LCFI26:
+ 806              		.cfi_def_cfa_offset 4
+ 807              		.cfi_offset 7, -4
+ 808 0002 00AF     		add	r7, sp, #0
+ 809              	.LCFI27:
+ 810              		.cfi_def_cfa_register 7
+ 811              		.loc 1 355 53
+ 812 0004 034B     		ldr	r3, .L55
+ 813 0006 1B68     		ldr	r3, [r3]
+ 814              		.loc 1 355 76
+ 815 0008 1846     		mov	r0, r3
+ 816 000a BD46     		mov	sp, r7
+ 817              	.LCFI28:
+ 818              		.cfi_def_cfa_register 13
+ 819              		@ sp needed
+ 820 000c 5DF8047B 		ldr	r7, [sp], #4
+ 821              	.LCFI29:
+ 822              		.cfi_restore 7
+ 823              		.cfi_def_cfa_offset 0
+ 824 0010 7047     		bx	lr
+ 825              	.L56:
+ 826 0012 00BF     		.align	2
+ 827              	.L55:
+ 828 0014 00000000 		.word	flash_user_start_addr
+ 829              		.cfi_endproc
+ 830              	.LFE321:
+ 832              		.section	.text.flash_set_user_start_addr,"ax",%progbits
+ 833              		.align	1
+ 834              		.global	flash_set_user_start_addr
+ 835              		.syntax unified
+ 836              		.thumb
+ 837              		.thumb_func
+ 838              		.fpu fpv4-sp-d16
+ 840              	flash_set_user_start_addr:
+ 841              	.LFB322:
+ 356:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 357:../Src/smtc_hal/smtc_hal_flash.c **** void flash_set_user_start_addr( uint32_t addr ) { flash_user_start_addr = addr; }
+ 842              		.loc 1 357 49
+ 843              		.cfi_startproc
+ 844              		@ args = 0, pretend = 0, frame = 8
+ 845              		@ frame_needed = 1, uses_anonymous_args = 0
+ARM GAS  /tmp/cct1kBOw.s 			page 22
+
+
+ 846              		@ link register save eliminated.
+ 847 0000 80B4     		push	{r7}
+ 848              	.LCFI30:
+ 849              		.cfi_def_cfa_offset 4
+ 850              		.cfi_offset 7, -4
+ 851 0002 83B0     		sub	sp, sp, #12
+ 852              	.LCFI31:
+ 853              		.cfi_def_cfa_offset 16
+ 854 0004 00AF     		add	r7, sp, #0
+ 855              	.LCFI32:
+ 856              		.cfi_def_cfa_register 7
+ 857 0006 7860     		str	r0, [r7, #4]
+ 858              		.loc 1 357 73
+ 859 0008 044A     		ldr	r2, .L58
+ 860 000a 7B68     		ldr	r3, [r7, #4]
+ 861 000c 1360     		str	r3, [r2]
+ 862              		.loc 1 357 81
+ 863 000e 00BF     		nop
+ 864 0010 0C37     		adds	r7, r7, #12
+ 865              	.LCFI33:
+ 866              		.cfi_def_cfa_offset 4
+ 867 0012 BD46     		mov	sp, r7
+ 868              	.LCFI34:
+ 869              		.cfi_def_cfa_register 13
+ 870              		@ sp needed
+ 871 0014 5DF8047B 		ldr	r7, [sp], #4
+ 872              	.LCFI35:
+ 873              		.cfi_restore 7
+ 874              		.cfi_def_cfa_offset 0
+ 875 0018 7047     		bx	lr
+ 876              	.L59:
+ 877 001a 00BF     		.align	2
+ 878              	.L58:
+ 879 001c 00000000 		.word	flash_user_start_addr
+ 880              		.cfi_endproc
+ 881              	.LFE322:
+ 883              		.section	.text.get_page,"ax",%progbits
+ 884              		.align	1
+ 885              		.syntax unified
+ 886              		.thumb
+ 887              		.thumb_func
+ 888              		.fpu fpv4-sp-d16
+ 890              	get_page:
+ 891              	.LFB323:
+ 358:../Src/smtc_hal/smtc_hal_flash.c **** 
+ 359:../Src/smtc_hal/smtc_hal_flash.c **** static uint32_t get_page( uint32_t addr ) { return ( addr - FLASH_BASE ) / FLASH_PAGE_SIZE; }
+ 892              		.loc 1 359 43
+ 893              		.cfi_startproc
+ 894              		@ args = 0, pretend = 0, frame = 8
+ 895              		@ frame_needed = 1, uses_anonymous_args = 0
+ 896              		@ link register save eliminated.
+ 897 0000 80B4     		push	{r7}
+ 898              	.LCFI36:
+ 899              		.cfi_def_cfa_offset 4
+ 900              		.cfi_offset 7, -4
+ 901 0002 83B0     		sub	sp, sp, #12
+ 902              	.LCFI37:
+ARM GAS  /tmp/cct1kBOw.s 			page 23
+
+
+ 903              		.cfi_def_cfa_offset 16
+ 904 0004 00AF     		add	r7, sp, #0
+ 905              	.LCFI38:
+ 906              		.cfi_def_cfa_register 7
+ 907 0006 7860     		str	r0, [r7, #4]
+ 908              		.loc 1 359 59
+ 909 0008 7B68     		ldr	r3, [r7, #4]
+ 910 000a 03F17843 		add	r3, r3, #-134217728
+ 911              		.loc 1 359 74
+ 912 000e DB0A     		lsrs	r3, r3, #11
+ 913              		.loc 1 359 93
+ 914 0010 1846     		mov	r0, r3
+ 915 0012 0C37     		adds	r7, r7, #12
+ 916              	.LCFI39:
+ 917              		.cfi_def_cfa_offset 4
+ 918 0014 BD46     		mov	sp, r7
+ 919              	.LCFI40:
+ 920              		.cfi_def_cfa_register 13
+ 921              		@ sp needed
+ 922 0016 5DF8047B 		ldr	r7, [sp], #4
+ 923              	.LCFI41:
+ 924              		.cfi_restore 7
+ 925              		.cfi_def_cfa_offset 0
+ 926 001a 7047     		bx	lr
+ 927              		.cfi_endproc
+ 928              	.LFE323:
+ 930              		.text
+ 931              	.Letext0:
+ 932              		.file 2 "/usr/lib/gcc/arm-none-eabi/10.3.1/include/stdint.h"
+ 933              		.file 3 "../Drivers/CMSIS/Device/ST/STM32L4xx/Include/stm32l476xx.h"
+ 934              		.file 4 "../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_flash.h"
+ 935              		.file 5 "../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def.h"
+ARM GAS  /tmp/cct1kBOw.s 			page 24
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 smtc_hal_flash.c
+     /tmp/cct1kBOw.s:22     .data.flash_user_start_addr:0000000000000000 flash_user_start_addr
+     /tmp/cct1kBOw.s:19     .data.flash_user_start_addr:0000000000000000 $d
+     /tmp/cct1kBOw.s:25     .text.flash_init:0000000000000000 $t
+     /tmp/cct1kBOw.s:33     .text.flash_init:0000000000000000 flash_init
+     /tmp/cct1kBOw.s:715    .text.flash_read_buffer:0000000000000000 flash_read_buffer
+     /tmp/cct1kBOw.s:169    .text.flash_init:00000000000000d4 $d
+     /tmp/cct1kBOw.s:174    .text.flash_erase_page:0000000000000000 $t
+     /tmp/cct1kBOw.s:181    .text.flash_erase_page:0000000000000000 flash_erase_page
+     /tmp/cct1kBOw.s:890    .text.get_page:0000000000000000 get_page
+     /tmp/cct1kBOw.s:338    .text.flash_erase_page:00000000000000e4 $d
+     /tmp/cct1kBOw.s:345    .text.flash_force_erase_page:0000000000000000 $t
+     /tmp/cct1kBOw.s:352    .text.flash_force_erase_page:0000000000000000 flash_force_erase_page
+     /tmp/cct1kBOw.s:456    .text.flash_force_erase_page:0000000000000098 $d
+     /tmp/cct1kBOw.s:461    .text.flash_write_buffer:0000000000000000 $t
+     /tmp/cct1kBOw.s:468    .text.flash_write_buffer:0000000000000000 flash_write_buffer
+     /tmp/cct1kBOw.s:701    .text.flash_write_buffer:0000000000000150 $d
+     /tmp/cct1kBOw.s:708    .text.flash_read_buffer:0000000000000000 $t
+     /tmp/cct1kBOw.s:790    .text.flash_get_user_start_addr:0000000000000000 $t
+     /tmp/cct1kBOw.s:797    .text.flash_get_user_start_addr:0000000000000000 flash_get_user_start_addr
+     /tmp/cct1kBOw.s:828    .text.flash_get_user_start_addr:0000000000000014 $d
+     /tmp/cct1kBOw.s:833    .text.flash_set_user_start_addr:0000000000000000 $t
+     /tmp/cct1kBOw.s:840    .text.flash_set_user_start_addr:0000000000000000 flash_set_user_start_addr
+     /tmp/cct1kBOw.s:879    .text.flash_set_user_start_addr:000000000000001c $d
+     /tmp/cct1kBOw.s:884    .text.get_page:0000000000000000 $t
+
+UNDEFINED SYMBOLS
+HAL_FLASH_Unlock
+HAL_FLASHEx_Erase
+HAL_FLASH_Lock
+HAL_FLASH_Program

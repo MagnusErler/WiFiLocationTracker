@@ -1,0 +1,619 @@
+ARM GAS  /tmp/ccPjzfRA.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"smtc_utilities.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.data.next,"aw"
+  18              		.align	2
+  21              	next:
+  22 0000 01000000 		.word	1
+  23              		.section	.text.rand1,"ax",%progbits
+  24              		.align	1
+  25              		.global	rand1
+  26              		.arch armv7e-m
+  27              		.syntax unified
+  28              		.thumb
+  29              		.thumb_func
+  30              		.fpu fpv4-sp-d16
+  32              	rand1:
+  33              	.LFB3:
+  34              		.file 1 "../Src/smtc_hal/smtc_utilities.c"
+   1:../Src/smtc_hal/smtc_utilities.c **** /*!
+   2:../Src/smtc_hal/smtc_utilities.c ****  * @file      utilities.c
+   3:../Src/smtc_hal/smtc_utilities.c ****  *
+   4:../Src/smtc_hal/smtc_utilities.c ****  * @brief     Helper functions implementation
+   5:../Src/smtc_hal/smtc_utilities.c ****  *
+   6:../Src/smtc_hal/smtc_utilities.c ****  * Revised BSD License
+   7:../Src/smtc_hal/smtc_utilities.c ****  * Copyright Semtech Corporation 2020. All rights reserved.
+   8:../Src/smtc_hal/smtc_utilities.c ****  *
+   9:../Src/smtc_hal/smtc_utilities.c ****  * Redistribution and use in source and binary forms, with or without
+  10:../Src/smtc_hal/smtc_utilities.c ****  * modification, are permitted provided that the following conditions are met:
+  11:../Src/smtc_hal/smtc_utilities.c ****  *     * Redistributions of source code must retain the above copyright
+  12:../Src/smtc_hal/smtc_utilities.c ****  *       notice, this list of conditions and the following disclaimer.
+  13:../Src/smtc_hal/smtc_utilities.c ****  *     * Redistributions in binary form must reproduce the above copyright
+  14:../Src/smtc_hal/smtc_utilities.c ****  *       notice, this list of conditions and the following disclaimer in the
+  15:../Src/smtc_hal/smtc_utilities.c ****  *       documentation and/or other materials provided with the distribution.
+  16:../Src/smtc_hal/smtc_utilities.c ****  *     * Neither the name of the Semtech corporation nor the
+  17:../Src/smtc_hal/smtc_utilities.c ****  *       names of its contributors may be used to endorse or promote products
+  18:../Src/smtc_hal/smtc_utilities.c ****  *       derived from this software without specific prior written permission.
+  19:../Src/smtc_hal/smtc_utilities.c ****  *
+  20:../Src/smtc_hal/smtc_utilities.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  21:../Src/smtc_hal/smtc_utilities.c ****  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  22:../Src/smtc_hal/smtc_utilities.c ****  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  23:../Src/smtc_hal/smtc_utilities.c ****  * ARE DISCLAIMED. IN NO EVENT SHALL SEMTECH CORPORATION BE LIABLE FOR ANY
+  24:../Src/smtc_hal/smtc_utilities.c ****  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+  25:../Src/smtc_hal/smtc_utilities.c ****  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  26:../Src/smtc_hal/smtc_utilities.c ****  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ARM GAS  /tmp/ccPjzfRA.s 			page 2
+
+
+  27:../Src/smtc_hal/smtc_utilities.c ****  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  28:../Src/smtc_hal/smtc_utilities.c ****  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  29:../Src/smtc_hal/smtc_utilities.c ****  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  30:../Src/smtc_hal/smtc_utilities.c ****  */
+  31:../Src/smtc_hal/smtc_utilities.c **** #include <stdlib.h>
+  32:../Src/smtc_hal/smtc_utilities.c **** #include <stdio.h>
+  33:../Src/smtc_hal/smtc_utilities.c **** #include "smtc_utilities.h"
+  34:../Src/smtc_hal/smtc_utilities.c **** 
+  35:../Src/smtc_hal/smtc_utilities.c **** /*!
+  36:../Src/smtc_hal/smtc_utilities.c ****  * Redefinition of rand() and srand() standard C functions.
+  37:../Src/smtc_hal/smtc_utilities.c ****  * These functions are redefined in order to get the same behavior across
+  38:../Src/smtc_hal/smtc_utilities.c ****  * different compiler toolchains implementations.
+  39:../Src/smtc_hal/smtc_utilities.c ****  */
+  40:../Src/smtc_hal/smtc_utilities.c **** // Standard random functions redefinition start
+  41:../Src/smtc_hal/smtc_utilities.c **** #define RAND_LOCAL_MAX 2147483647L
+  42:../Src/smtc_hal/smtc_utilities.c **** 
+  43:../Src/smtc_hal/smtc_utilities.c **** static uint32_t next = 1;
+  44:../Src/smtc_hal/smtc_utilities.c **** 
+  45:../Src/smtc_hal/smtc_utilities.c **** int32_t rand1( void ) { return ( ( next = next * 1103515245L + 12345L ) % RAND_LOCAL_MAX ); }
+  35              		.loc 1 45 23
+  36              		.cfi_startproc
+  37              		@ args = 0, pretend = 0, frame = 0
+  38              		@ frame_needed = 1, uses_anonymous_args = 0
+  39              		@ link register save eliminated.
+  40 0000 80B4     		push	{r7}
+  41              	.LCFI0:
+  42              		.cfi_def_cfa_offset 4
+  43              		.cfi_offset 7, -4
+  44 0002 00AF     		add	r7, sp, #0
+  45              	.LCFI1:
+  46              		.cfi_def_cfa_register 7
+  47              		.loc 1 45 48
+  48 0004 0E4B     		ldr	r3, .L3
+  49 0006 1B68     		ldr	r3, [r3]
+  50 0008 0E4A     		ldr	r2, .L3+4
+  51 000a 02FB03F3 		mul	r3, r2, r3
+  52              		.loc 1 45 62
+  53 000e 03F54053 		add	r3, r3, #12288
+  54 0012 3933     		adds	r3, r3, #57
+  55              		.loc 1 45 41
+  56 0014 0A4A     		ldr	r2, .L3
+  57 0016 1360     		str	r3, [r2]
+  58 0018 094B     		ldr	r3, .L3
+  59 001a 1A68     		ldr	r2, [r3]
+  60              		.loc 1 45 73
+  61 001c 0323     		movs	r3, #3
+  62 001e A3FB0213 		umull	r1, r3, r3, r2
+  63 0022 D11A     		subs	r1, r2, r3
+  64 0024 4908     		lsrs	r1, r1, #1
+  65 0026 0B44     		add	r3, r3, r1
+  66 0028 990F     		lsrs	r1, r3, #30
+  67 002a 0B46     		mov	r3, r1
+  68 002c DB07     		lsls	r3, r3, #31
+  69 002e 5B1A     		subs	r3, r3, r1
+  70 0030 D11A     		subs	r1, r2, r3
+  71 0032 0B46     		mov	r3, r1
+  72              		.loc 1 45 93
+ARM GAS  /tmp/ccPjzfRA.s 			page 3
+
+
+  73 0034 1846     		mov	r0, r3
+  74 0036 BD46     		mov	sp, r7
+  75              	.LCFI2:
+  76              		.cfi_def_cfa_register 13
+  77              		@ sp needed
+  78 0038 5DF8047B 		ldr	r7, [sp], #4
+  79              	.LCFI3:
+  80              		.cfi_restore 7
+  81              		.cfi_def_cfa_offset 0
+  82 003c 7047     		bx	lr
+  83              	.L4:
+  84 003e 00BF     		.align	2
+  85              	.L3:
+  86 0040 00000000 		.word	next
+  87 0044 6D4EC641 		.word	1103515245
+  88              		.cfi_endproc
+  89              	.LFE3:
+  91              		.section	.text.srand1,"ax",%progbits
+  92              		.align	1
+  93              		.global	srand1
+  94              		.syntax unified
+  95              		.thumb
+  96              		.thumb_func
+  97              		.fpu fpv4-sp-d16
+  99              	srand1:
+ 100              	.LFB4:
+  46:../Src/smtc_hal/smtc_utilities.c **** 
+  47:../Src/smtc_hal/smtc_utilities.c **** void srand1( uint32_t seed ) { next = seed; }
+ 101              		.loc 1 47 30
+ 102              		.cfi_startproc
+ 103              		@ args = 0, pretend = 0, frame = 8
+ 104              		@ frame_needed = 1, uses_anonymous_args = 0
+ 105              		@ link register save eliminated.
+ 106 0000 80B4     		push	{r7}
+ 107              	.LCFI4:
+ 108              		.cfi_def_cfa_offset 4
+ 109              		.cfi_offset 7, -4
+ 110 0002 83B0     		sub	sp, sp, #12
+ 111              	.LCFI5:
+ 112              		.cfi_def_cfa_offset 16
+ 113 0004 00AF     		add	r7, sp, #0
+ 114              	.LCFI6:
+ 115              		.cfi_def_cfa_register 7
+ 116 0006 7860     		str	r0, [r7, #4]
+ 117              		.loc 1 47 37
+ 118 0008 044A     		ldr	r2, .L6
+ 119 000a 7B68     		ldr	r3, [r7, #4]
+ 120 000c 1360     		str	r3, [r2]
+ 121              		.loc 1 47 45
+ 122 000e 00BF     		nop
+ 123 0010 0C37     		adds	r7, r7, #12
+ 124              	.LCFI7:
+ 125              		.cfi_def_cfa_offset 4
+ 126 0012 BD46     		mov	sp, r7
+ 127              	.LCFI8:
+ 128              		.cfi_def_cfa_register 13
+ 129              		@ sp needed
+ARM GAS  /tmp/ccPjzfRA.s 			page 4
+
+
+ 130 0014 5DF8047B 		ldr	r7, [sp], #4
+ 131              	.LCFI9:
+ 132              		.cfi_restore 7
+ 133              		.cfi_def_cfa_offset 0
+ 134 0018 7047     		bx	lr
+ 135              	.L7:
+ 136 001a 00BF     		.align	2
+ 137              	.L6:
+ 138 001c 00000000 		.word	next
+ 139              		.cfi_endproc
+ 140              	.LFE4:
+ 142              		.section	.text.randr,"ax",%progbits
+ 143              		.align	1
+ 144              		.global	randr
+ 145              		.syntax unified
+ 146              		.thumb
+ 147              		.thumb_func
+ 148              		.fpu fpv4-sp-d16
+ 150              	randr:
+ 151              	.LFB5:
+  48:../Src/smtc_hal/smtc_utilities.c **** // Standard random functions redefinition end
+  49:../Src/smtc_hal/smtc_utilities.c **** 
+  50:../Src/smtc_hal/smtc_utilities.c **** int32_t randr( int32_t min, int32_t max ) { return ( int32_t ) rand1( ) % ( max - min + 1 ) + min; 
+ 152              		.loc 1 50 43
+ 153              		.cfi_startproc
+ 154              		@ args = 0, pretend = 0, frame = 8
+ 155              		@ frame_needed = 1, uses_anonymous_args = 0
+ 156 0000 80B5     		push	{r7, lr}
+ 157              	.LCFI10:
+ 158              		.cfi_def_cfa_offset 8
+ 159              		.cfi_offset 7, -8
+ 160              		.cfi_offset 14, -4
+ 161 0002 82B0     		sub	sp, sp, #8
+ 162              	.LCFI11:
+ 163              		.cfi_def_cfa_offset 16
+ 164 0004 00AF     		add	r7, sp, #0
+ 165              	.LCFI12:
+ 166              		.cfi_def_cfa_register 7
+ 167 0006 7860     		str	r0, [r7, #4]
+ 168 0008 3960     		str	r1, [r7]
+ 169              		.loc 1 50 64
+ 170 000a FFF7FEFF 		bl	rand1
+ 171 000e 0246     		mov	r2, r0
+ 172              		.loc 1 50 81
+ 173 0010 3968     		ldr	r1, [r7]
+ 174 0012 7B68     		ldr	r3, [r7, #4]
+ 175 0014 CB1A     		subs	r3, r1, r3
+ 176              		.loc 1 50 87
+ 177 0016 0133     		adds	r3, r3, #1
+ 178              		.loc 1 50 73
+ 179 0018 92FBF3F1 		sdiv	r1, r2, r3
+ 180 001c 01FB03F3 		mul	r3, r1, r3
+ 181 0020 D21A     		subs	r2, r2, r3
+ 182              		.loc 1 50 93
+ 183 0022 7B68     		ldr	r3, [r7, #4]
+ 184 0024 1344     		add	r3, r3, r2
+ 185              		.loc 1 50 100
+ARM GAS  /tmp/ccPjzfRA.s 			page 5
+
+
+ 186 0026 1846     		mov	r0, r3
+ 187 0028 0837     		adds	r7, r7, #8
+ 188              	.LCFI13:
+ 189              		.cfi_def_cfa_offset 8
+ 190 002a BD46     		mov	sp, r7
+ 191              	.LCFI14:
+ 192              		.cfi_def_cfa_register 13
+ 193              		@ sp needed
+ 194 002c 80BD     		pop	{r7, pc}
+ 195              		.cfi_endproc
+ 196              	.LFE5:
+ 198              		.section	.text.memcpy1,"ax",%progbits
+ 199              		.align	1
+ 200              		.global	memcpy1
+ 201              		.syntax unified
+ 202              		.thumb
+ 203              		.thumb_func
+ 204              		.fpu fpv4-sp-d16
+ 206              	memcpy1:
+ 207              	.LFB6:
+  51:../Src/smtc_hal/smtc_utilities.c **** 
+  52:../Src/smtc_hal/smtc_utilities.c **** void memcpy1( uint8_t* dst, const uint8_t* src, uint16_t size )
+  53:../Src/smtc_hal/smtc_utilities.c **** {
+ 208              		.loc 1 53 1
+ 209              		.cfi_startproc
+ 210              		@ args = 0, pretend = 0, frame = 16
+ 211              		@ frame_needed = 1, uses_anonymous_args = 0
+ 212              		@ link register save eliminated.
+ 213 0000 80B4     		push	{r7}
+ 214              	.LCFI15:
+ 215              		.cfi_def_cfa_offset 4
+ 216              		.cfi_offset 7, -4
+ 217 0002 85B0     		sub	sp, sp, #20
+ 218              	.LCFI16:
+ 219              		.cfi_def_cfa_offset 24
+ 220 0004 00AF     		add	r7, sp, #0
+ 221              	.LCFI17:
+ 222              		.cfi_def_cfa_register 7
+ 223 0006 F860     		str	r0, [r7, #12]
+ 224 0008 B960     		str	r1, [r7, #8]
+ 225 000a 1346     		mov	r3, r2
+ 226 000c FB80     		strh	r3, [r7, #6]	@ movhi
+  54:../Src/smtc_hal/smtc_utilities.c ****     while( size-- )
+ 227              		.loc 1 54 10
+ 228 000e 07E0     		b	.L11
+ 229              	.L12:
+  55:../Src/smtc_hal/smtc_utilities.c ****     {
+  56:../Src/smtc_hal/smtc_utilities.c ****         *dst++ = *src++;
+ 230              		.loc 1 56 22
+ 231 0010 BA68     		ldr	r2, [r7, #8]
+ 232 0012 531C     		adds	r3, r2, #1
+ 233 0014 BB60     		str	r3, [r7, #8]
+ 234              		.loc 1 56 13
+ 235 0016 FB68     		ldr	r3, [r7, #12]
+ 236 0018 591C     		adds	r1, r3, #1
+ 237 001a F960     		str	r1, [r7, #12]
+ 238              		.loc 1 56 18
+ARM GAS  /tmp/ccPjzfRA.s 			page 6
+
+
+ 239 001c 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 240              		.loc 1 56 16
+ 241 001e 1A70     		strb	r2, [r3]
+ 242              	.L11:
+  54:../Src/smtc_hal/smtc_utilities.c ****     while( size-- )
+ 243              		.loc 1 54 16
+ 244 0020 FB88     		ldrh	r3, [r7, #6]
+ 245 0022 5A1E     		subs	r2, r3, #1
+ 246 0024 FA80     		strh	r2, [r7, #6]	@ movhi
+  54:../Src/smtc_hal/smtc_utilities.c ****     while( size-- )
+ 247              		.loc 1 54 10
+ 248 0026 002B     		cmp	r3, #0
+ 249 0028 F2D1     		bne	.L12
+  57:../Src/smtc_hal/smtc_utilities.c ****     }
+  58:../Src/smtc_hal/smtc_utilities.c **** }
+ 250              		.loc 1 58 1
+ 251 002a 00BF     		nop
+ 252 002c 00BF     		nop
+ 253 002e 1437     		adds	r7, r7, #20
+ 254              	.LCFI18:
+ 255              		.cfi_def_cfa_offset 4
+ 256 0030 BD46     		mov	sp, r7
+ 257              	.LCFI19:
+ 258              		.cfi_def_cfa_register 13
+ 259              		@ sp needed
+ 260 0032 5DF8047B 		ldr	r7, [sp], #4
+ 261              	.LCFI20:
+ 262              		.cfi_restore 7
+ 263              		.cfi_def_cfa_offset 0
+ 264 0036 7047     		bx	lr
+ 265              		.cfi_endproc
+ 266              	.LFE6:
+ 268              		.section	.text.memcpyr,"ax",%progbits
+ 269              		.align	1
+ 270              		.global	memcpyr
+ 271              		.syntax unified
+ 272              		.thumb
+ 273              		.thumb_func
+ 274              		.fpu fpv4-sp-d16
+ 276              	memcpyr:
+ 277              	.LFB7:
+  59:../Src/smtc_hal/smtc_utilities.c **** 
+  60:../Src/smtc_hal/smtc_utilities.c **** void memcpyr( uint8_t* dst, const uint8_t* src, uint16_t size )
+  61:../Src/smtc_hal/smtc_utilities.c **** {
+ 278              		.loc 1 61 1
+ 279              		.cfi_startproc
+ 280              		@ args = 0, pretend = 0, frame = 16
+ 281              		@ frame_needed = 1, uses_anonymous_args = 0
+ 282              		@ link register save eliminated.
+ 283 0000 80B4     		push	{r7}
+ 284              	.LCFI21:
+ 285              		.cfi_def_cfa_offset 4
+ 286              		.cfi_offset 7, -4
+ 287 0002 85B0     		sub	sp, sp, #20
+ 288              	.LCFI22:
+ 289              		.cfi_def_cfa_offset 24
+ 290 0004 00AF     		add	r7, sp, #0
+ARM GAS  /tmp/ccPjzfRA.s 			page 7
+
+
+ 291              	.LCFI23:
+ 292              		.cfi_def_cfa_register 7
+ 293 0006 F860     		str	r0, [r7, #12]
+ 294 0008 B960     		str	r1, [r7, #8]
+ 295 000a 1346     		mov	r3, r2
+ 296 000c FB80     		strh	r3, [r7, #6]	@ movhi
+  62:../Src/smtc_hal/smtc_utilities.c ****     dst = dst + ( size - 1 );
+ 297              		.loc 1 62 15
+ 298 000e FB88     		ldrh	r3, [r7, #6]
+ 299 0010 013B     		subs	r3, r3, #1
+ 300              		.loc 1 62 9
+ 301 0012 FA68     		ldr	r2, [r7, #12]
+ 302 0014 1344     		add	r3, r3, r2
+ 303 0016 FB60     		str	r3, [r7, #12]
+  63:../Src/smtc_hal/smtc_utilities.c ****     while( size-- )
+ 304              		.loc 1 63 10
+ 305 0018 07E0     		b	.L14
+ 306              	.L15:
+  64:../Src/smtc_hal/smtc_utilities.c ****     {
+  65:../Src/smtc_hal/smtc_utilities.c ****         *dst-- = *src++;
+ 307              		.loc 1 65 22
+ 308 001a BA68     		ldr	r2, [r7, #8]
+ 309 001c 531C     		adds	r3, r2, #1
+ 310 001e BB60     		str	r3, [r7, #8]
+ 311              		.loc 1 65 13
+ 312 0020 FB68     		ldr	r3, [r7, #12]
+ 313 0022 591E     		subs	r1, r3, #1
+ 314 0024 F960     		str	r1, [r7, #12]
+ 315              		.loc 1 65 18
+ 316 0026 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 317              		.loc 1 65 16
+ 318 0028 1A70     		strb	r2, [r3]
+ 319              	.L14:
+  63:../Src/smtc_hal/smtc_utilities.c ****     while( size-- )
+ 320              		.loc 1 63 16
+ 321 002a FB88     		ldrh	r3, [r7, #6]
+ 322 002c 5A1E     		subs	r2, r3, #1
+ 323 002e FA80     		strh	r2, [r7, #6]	@ movhi
+  63:../Src/smtc_hal/smtc_utilities.c ****     while( size-- )
+ 324              		.loc 1 63 10
+ 325 0030 002B     		cmp	r3, #0
+ 326 0032 F2D1     		bne	.L15
+  66:../Src/smtc_hal/smtc_utilities.c ****     }
+  67:../Src/smtc_hal/smtc_utilities.c **** }
+ 327              		.loc 1 67 1
+ 328 0034 00BF     		nop
+ 329 0036 00BF     		nop
+ 330 0038 1437     		adds	r7, r7, #20
+ 331              	.LCFI24:
+ 332              		.cfi_def_cfa_offset 4
+ 333 003a BD46     		mov	sp, r7
+ 334              	.LCFI25:
+ 335              		.cfi_def_cfa_register 13
+ 336              		@ sp needed
+ 337 003c 5DF8047B 		ldr	r7, [sp], #4
+ 338              	.LCFI26:
+ 339              		.cfi_restore 7
+ARM GAS  /tmp/ccPjzfRA.s 			page 8
+
+
+ 340              		.cfi_def_cfa_offset 0
+ 341 0040 7047     		bx	lr
+ 342              		.cfi_endproc
+ 343              	.LFE7:
+ 345              		.section	.text.memset1,"ax",%progbits
+ 346              		.align	1
+ 347              		.global	memset1
+ 348              		.syntax unified
+ 349              		.thumb
+ 350              		.thumb_func
+ 351              		.fpu fpv4-sp-d16
+ 353              	memset1:
+ 354              	.LFB8:
+  68:../Src/smtc_hal/smtc_utilities.c **** 
+  69:../Src/smtc_hal/smtc_utilities.c **** void memset1( uint8_t* dst, uint8_t value, uint16_t size )
+  70:../Src/smtc_hal/smtc_utilities.c **** {
+ 355              		.loc 1 70 1
+ 356              		.cfi_startproc
+ 357              		@ args = 0, pretend = 0, frame = 8
+ 358              		@ frame_needed = 1, uses_anonymous_args = 0
+ 359              		@ link register save eliminated.
+ 360 0000 80B4     		push	{r7}
+ 361              	.LCFI27:
+ 362              		.cfi_def_cfa_offset 4
+ 363              		.cfi_offset 7, -4
+ 364 0002 83B0     		sub	sp, sp, #12
+ 365              	.LCFI28:
+ 366              		.cfi_def_cfa_offset 16
+ 367 0004 00AF     		add	r7, sp, #0
+ 368              	.LCFI29:
+ 369              		.cfi_def_cfa_register 7
+ 370 0006 7860     		str	r0, [r7, #4]
+ 371 0008 0B46     		mov	r3, r1
+ 372 000a FB70     		strb	r3, [r7, #3]
+ 373 000c 1346     		mov	r3, r2	@ movhi
+ 374 000e 3B80     		strh	r3, [r7]	@ movhi
+  71:../Src/smtc_hal/smtc_utilities.c ****     while( size-- )
+ 375              		.loc 1 71 10
+ 376 0010 04E0     		b	.L17
+ 377              	.L18:
+  72:../Src/smtc_hal/smtc_utilities.c ****     {
+  73:../Src/smtc_hal/smtc_utilities.c ****         *dst++ = value;
+ 378              		.loc 1 73 13
+ 379 0012 7B68     		ldr	r3, [r7, #4]
+ 380 0014 5A1C     		adds	r2, r3, #1
+ 381 0016 7A60     		str	r2, [r7, #4]
+ 382              		.loc 1 73 16
+ 383 0018 FA78     		ldrb	r2, [r7, #3]
+ 384 001a 1A70     		strb	r2, [r3]
+ 385              	.L17:
+  71:../Src/smtc_hal/smtc_utilities.c ****     while( size-- )
+ 386              		.loc 1 71 16
+ 387 001c 3B88     		ldrh	r3, [r7]
+ 388 001e 5A1E     		subs	r2, r3, #1
+ 389 0020 3A80     		strh	r2, [r7]	@ movhi
+  71:../Src/smtc_hal/smtc_utilities.c ****     while( size-- )
+ 390              		.loc 1 71 10
+ARM GAS  /tmp/ccPjzfRA.s 			page 9
+
+
+ 391 0022 002B     		cmp	r3, #0
+ 392 0024 F5D1     		bne	.L18
+  74:../Src/smtc_hal/smtc_utilities.c ****     }
+  75:../Src/smtc_hal/smtc_utilities.c **** }
+ 393              		.loc 1 75 1
+ 394 0026 00BF     		nop
+ 395 0028 00BF     		nop
+ 396 002a 0C37     		adds	r7, r7, #12
+ 397              	.LCFI30:
+ 398              		.cfi_def_cfa_offset 4
+ 399 002c BD46     		mov	sp, r7
+ 400              	.LCFI31:
+ 401              		.cfi_def_cfa_register 13
+ 402              		@ sp needed
+ 403 002e 5DF8047B 		ldr	r7, [sp], #4
+ 404              	.LCFI32:
+ 405              		.cfi_restore 7
+ 406              		.cfi_def_cfa_offset 0
+ 407 0032 7047     		bx	lr
+ 408              		.cfi_endproc
+ 409              	.LFE8:
+ 411              		.section	.text.Nibble2HexChar,"ax",%progbits
+ 412              		.align	1
+ 413              		.global	Nibble2HexChar
+ 414              		.syntax unified
+ 415              		.thumb
+ 416              		.thumb_func
+ 417              		.fpu fpv4-sp-d16
+ 419              	Nibble2HexChar:
+ 420              	.LFB9:
+  76:../Src/smtc_hal/smtc_utilities.c **** 
+  77:../Src/smtc_hal/smtc_utilities.c **** int8_t Nibble2HexChar( uint8_t a )
+  78:../Src/smtc_hal/smtc_utilities.c **** {
+ 421              		.loc 1 78 1
+ 422              		.cfi_startproc
+ 423              		@ args = 0, pretend = 0, frame = 8
+ 424              		@ frame_needed = 1, uses_anonymous_args = 0
+ 425              		@ link register save eliminated.
+ 426 0000 80B4     		push	{r7}
+ 427              	.LCFI33:
+ 428              		.cfi_def_cfa_offset 4
+ 429              		.cfi_offset 7, -4
+ 430 0002 83B0     		sub	sp, sp, #12
+ 431              	.LCFI34:
+ 432              		.cfi_def_cfa_offset 16
+ 433 0004 00AF     		add	r7, sp, #0
+ 434              	.LCFI35:
+ 435              		.cfi_def_cfa_register 7
+ 436 0006 0346     		mov	r3, r0
+ 437 0008 FB71     		strb	r3, [r7, #7]
+  79:../Src/smtc_hal/smtc_utilities.c ****     if( a < 10 )
+ 438              		.loc 1 79 7
+ 439 000a FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 440 000c 092B     		cmp	r3, #9
+ 441 000e 04D8     		bhi	.L20
+  80:../Src/smtc_hal/smtc_utilities.c ****     {
+  81:../Src/smtc_hal/smtc_utilities.c ****         return '0' + a;
+ARM GAS  /tmp/ccPjzfRA.s 			page 10
+
+
+ 442              		.loc 1 81 20
+ 443 0010 FB79     		ldrb	r3, [r7, #7]
+ 444 0012 3033     		adds	r3, r3, #48
+ 445 0014 DBB2     		uxtb	r3, r3
+ 446 0016 5BB2     		sxtb	r3, r3
+ 447 0018 08E0     		b	.L21
+ 448              	.L20:
+  82:../Src/smtc_hal/smtc_utilities.c ****     }
+  83:../Src/smtc_hal/smtc_utilities.c ****     else if( a < 16 )
+ 449              		.loc 1 83 12
+ 450 001a FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 451 001c 0F2B     		cmp	r3, #15
+ 452 001e 04D8     		bhi	.L22
+  84:../Src/smtc_hal/smtc_utilities.c ****     {
+  85:../Src/smtc_hal/smtc_utilities.c ****         return 'A' + ( a - 10 );
+ 453              		.loc 1 85 20
+ 454 0020 FB79     		ldrb	r3, [r7, #7]
+ 455 0022 3733     		adds	r3, r3, #55
+ 456 0024 DBB2     		uxtb	r3, r3
+ 457 0026 5BB2     		sxtb	r3, r3
+ 458 0028 00E0     		b	.L21
+ 459              	.L22:
+  86:../Src/smtc_hal/smtc_utilities.c ****     }
+  87:../Src/smtc_hal/smtc_utilities.c ****     else
+  88:../Src/smtc_hal/smtc_utilities.c ****     {
+  89:../Src/smtc_hal/smtc_utilities.c ****         return '?';
+ 460              		.loc 1 89 16
+ 461 002a 3F23     		movs	r3, #63
+ 462              	.L21:
+  90:../Src/smtc_hal/smtc_utilities.c ****     }
+  91:../Src/smtc_hal/smtc_utilities.c **** }
+ 463              		.loc 1 91 1
+ 464 002c 1846     		mov	r0, r3
+ 465 002e 0C37     		adds	r7, r7, #12
+ 466              	.LCFI36:
+ 467              		.cfi_def_cfa_offset 4
+ 468 0030 BD46     		mov	sp, r7
+ 469              	.LCFI37:
+ 470              		.cfi_def_cfa_register 13
+ 471              		@ sp needed
+ 472 0032 5DF8047B 		ldr	r7, [sp], #4
+ 473              	.LCFI38:
+ 474              		.cfi_restore 7
+ 475              		.cfi_def_cfa_offset 0
+ 476 0036 7047     		bx	lr
+ 477              		.cfi_endproc
+ 478              	.LFE9:
+ 480              		.text
+ 481              	.Letext0:
+ 482              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 483              		.file 3 "/usr/include/newlib/sys/_stdint.h"
+ARM GAS  /tmp/ccPjzfRA.s 			page 11
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 smtc_utilities.c
+     /tmp/ccPjzfRA.s:18     .data.next:0000000000000000 $d
+     /tmp/ccPjzfRA.s:21     .data.next:0000000000000000 next
+     /tmp/ccPjzfRA.s:24     .text.rand1:0000000000000000 $t
+     /tmp/ccPjzfRA.s:32     .text.rand1:0000000000000000 rand1
+     /tmp/ccPjzfRA.s:86     .text.rand1:0000000000000040 $d
+     /tmp/ccPjzfRA.s:92     .text.srand1:0000000000000000 $t
+     /tmp/ccPjzfRA.s:99     .text.srand1:0000000000000000 srand1
+     /tmp/ccPjzfRA.s:138    .text.srand1:000000000000001c $d
+     /tmp/ccPjzfRA.s:143    .text.randr:0000000000000000 $t
+     /tmp/ccPjzfRA.s:150    .text.randr:0000000000000000 randr
+     /tmp/ccPjzfRA.s:199    .text.memcpy1:0000000000000000 $t
+     /tmp/ccPjzfRA.s:206    .text.memcpy1:0000000000000000 memcpy1
+     /tmp/ccPjzfRA.s:269    .text.memcpyr:0000000000000000 $t
+     /tmp/ccPjzfRA.s:276    .text.memcpyr:0000000000000000 memcpyr
+     /tmp/ccPjzfRA.s:346    .text.memset1:0000000000000000 $t
+     /tmp/ccPjzfRA.s:353    .text.memset1:0000000000000000 memset1
+     /tmp/ccPjzfRA.s:412    .text.Nibble2HexChar:0000000000000000 $t
+     /tmp/ccPjzfRA.s:419    .text.Nibble2HexChar:0000000000000000 Nibble2HexChar
+
+NO UNDEFINED SYMBOLS

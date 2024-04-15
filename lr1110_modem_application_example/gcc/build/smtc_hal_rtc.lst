@@ -1,0 +1,2917 @@
+ARM GAS  /tmp/ccviTP8r.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"smtc_hal_rtc.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.global	hal_rtc
+  18              		.section	.bss.hal_rtc,"aw",%nobits
+  19              		.align	2
+  22              	hal_rtc:
+  23 0000 00000000 		.space	64
+  23      00000000 
+  23      00000000 
+  23      00000000 
+  23      00000000 
+  24              		.section	.bss.rtc_alarm,"aw",%nobits
+  25              		.align	2
+  28              	rtc_alarm:
+  29 0000 00000000 		.space	40
+  29      00000000 
+  29      00000000 
+  29      00000000 
+  29      00000000 
+  30              		.section	.rodata.days_in_month,"a"
+  31              		.align	2
+  34              	days_in_month:
+  35 0000 1F1C1F1E 		.ascii	"\037\034\037\036\037\036\037\037\036\037\036\037"
+  35      1F1E1F1F 
+  35      1E1F1E1F 
+  36              		.section	.rodata.days_in_month_leap_year,"a"
+  37              		.align	2
+  40              	days_in_month_leap_year:
+  41 0000 1F1D1F1E 		.ascii	"\037\035\037\036\037\036\037\037\036\037\036\037"
+  41      1F1E1F1F 
+  41      1E1F1E1F 
+  42              		.section	.text.hal_rtc_init,"ax",%progbits
+  43              		.align	1
+  44              		.global	hal_rtc_init
+  45              		.arch armv7e-m
+  46              		.syntax unified
+  47              		.thumb
+  48              		.thumb_func
+  49              		.fpu fpv4-sp-d16
+  51              	hal_rtc_init:
+  52              	.LFB513:
+  53              		.file 1 "../Src/smtc_hal/smtc_hal_rtc.c"
+   1:../Src/smtc_hal/smtc_hal_rtc.c **** /*!
+ARM GAS  /tmp/ccviTP8r.s 			page 2
+
+
+   2:../Src/smtc_hal/smtc_hal_rtc.c ****  * @file      smtc_hal_rtc.c
+   3:../Src/smtc_hal/smtc_hal_rtc.c ****  *
+   4:../Src/smtc_hal/smtc_hal_rtc.c ****  * @brief     Board specific package RTC API implementation
+   5:../Src/smtc_hal/smtc_hal_rtc.c ****  *
+   6:../Src/smtc_hal/smtc_hal_rtc.c ****  * Revised BSD License
+   7:../Src/smtc_hal/smtc_hal_rtc.c ****  * Copyright Semtech Corporation 2020. All rights reserved.
+   8:../Src/smtc_hal/smtc_hal_rtc.c ****  *
+   9:../Src/smtc_hal/smtc_hal_rtc.c ****  * Redistribution and use in source and binary forms, with or without
+  10:../Src/smtc_hal/smtc_hal_rtc.c ****  * modification, are permitted provided that the following conditions are met:
+  11:../Src/smtc_hal/smtc_hal_rtc.c ****  *     * Redistributions of source code must retain the above copyright
+  12:../Src/smtc_hal/smtc_hal_rtc.c ****  *       notice, this list of conditions and the following disclaimer.
+  13:../Src/smtc_hal/smtc_hal_rtc.c ****  *     * Redistributions in binary form must reproduce the above copyright
+  14:../Src/smtc_hal/smtc_hal_rtc.c ****  *       notice, this list of conditions and the following disclaimer in the
+  15:../Src/smtc_hal/smtc_hal_rtc.c ****  *       documentation and/or other materials provided with the distribution.
+  16:../Src/smtc_hal/smtc_hal_rtc.c ****  *     * Neither the name of the Semtech corporation nor the
+  17:../Src/smtc_hal/smtc_hal_rtc.c ****  *       names of its contributors may be used to endorse or promote products
+  18:../Src/smtc_hal/smtc_hal_rtc.c ****  *       derived from this software without specific prior written permission.
+  19:../Src/smtc_hal/smtc_hal_rtc.c ****  *
+  20:../Src/smtc_hal/smtc_hal_rtc.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  21:../Src/smtc_hal/smtc_hal_rtc.c ****  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  22:../Src/smtc_hal/smtc_hal_rtc.c ****  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  23:../Src/smtc_hal/smtc_hal_rtc.c ****  * ARE DISCLAIMED. IN NO EVENT SHALL SEMTECH CORPORATION BE LIABLE FOR ANY
+  24:../Src/smtc_hal/smtc_hal_rtc.c ****  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+  25:../Src/smtc_hal/smtc_hal_rtc.c ****  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  26:../Src/smtc_hal/smtc_hal_rtc.c ****  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+  27:../Src/smtc_hal/smtc_hal_rtc.c ****  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  28:../Src/smtc_hal/smtc_hal_rtc.c ****  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  29:../Src/smtc_hal/smtc_hal_rtc.c ****  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  30:../Src/smtc_hal/smtc_hal_rtc.c ****  */
+  31:../Src/smtc_hal/smtc_hal_rtc.c ****  
+  32:../Src/smtc_hal/smtc_hal_rtc.c ****  /*
+  33:../Src/smtc_hal/smtc_hal_rtc.c ****  * -----------------------------------------------------------------------------
+  34:../Src/smtc_hal/smtc_hal_rtc.c ****  * --- DEPENDENCIES ------------------------------------------------------------
+  35:../Src/smtc_hal/smtc_hal_rtc.c ****  */
+  36:../Src/smtc_hal/smtc_hal_rtc.c **** 
+  37:../Src/smtc_hal/smtc_hal_rtc.c **** #include <time.h>
+  38:../Src/smtc_hal/smtc_hal_rtc.c **** #include <math.h>
+  39:../Src/smtc_hal/smtc_hal_rtc.c **** #include "stm32l4xx_hal.h"
+  40:../Src/smtc_hal/smtc_hal_rtc.c **** #include "stm32l4xx_ll_rtc.h"
+  41:../Src/smtc_hal/smtc_hal_rtc.c **** #include "smtc_hal_mcu.h"
+  42:../Src/smtc_hal/smtc_hal_rtc.c **** #include "smtc_hal_rtc.h"
+  43:../Src/smtc_hal/smtc_hal_rtc.c **** #include "smtc_hal_tmr_list.h"
+  44:../Src/smtc_hal/smtc_hal_rtc.c **** 
+  45:../Src/smtc_hal/smtc_hal_rtc.c **** /*
+  46:../Src/smtc_hal/smtc_hal_rtc.c ****  * -----------------------------------------------------------------------------
+  47:../Src/smtc_hal/smtc_hal_rtc.c ****  * --- PRIVATE MACROS-----------------------------------------------------------
+  48:../Src/smtc_hal/smtc_hal_rtc.c ****  */
+  49:../Src/smtc_hal/smtc_hal_rtc.c **** 
+  50:../Src/smtc_hal/smtc_hal_rtc.c **** /*
+  51:../Src/smtc_hal/smtc_hal_rtc.c ****  * -----------------------------------------------------------------------------
+  52:../Src/smtc_hal/smtc_hal_rtc.c ****  * --- PRIVATE CONSTANTS -------------------------------------------------------
+  53:../Src/smtc_hal/smtc_hal_rtc.c ****  */
+  54:../Src/smtc_hal/smtc_hal_rtc.c **** 
+  55:../Src/smtc_hal/smtc_hal_rtc.c **** /* MCU Wake Up Time */
+  56:../Src/smtc_hal/smtc_hal_rtc.c **** #define MIN_ALARM_DELAY_IN_TICKS       3U              // in ticks
+  57:../Src/smtc_hal/smtc_hal_rtc.c **** 
+  58:../Src/smtc_hal/smtc_hal_rtc.c **** /* sub-second number of bits */
+ARM GAS  /tmp/ccviTP8r.s 			page 3
+
+
+  59:../Src/smtc_hal/smtc_hal_rtc.c **** #define N_PREDIV_S                     10U
+  60:../Src/smtc_hal/smtc_hal_rtc.c **** 
+  61:../Src/smtc_hal/smtc_hal_rtc.c **** /* Synchronous prediv */
+  62:../Src/smtc_hal/smtc_hal_rtc.c **** #define PREDIV_S                       ( ( 1U << N_PREDIV_S ) - 1U )
+  63:../Src/smtc_hal/smtc_hal_rtc.c **** 
+  64:../Src/smtc_hal/smtc_hal_rtc.c **** /* Asynchronous prediv */
+  65:../Src/smtc_hal/smtc_hal_rtc.c **** #define PREDIV_A                       ( ( 1U << ( 15U - N_PREDIV_S ) ) - 1U )
+  66:../Src/smtc_hal/smtc_hal_rtc.c **** 
+  67:../Src/smtc_hal/smtc_hal_rtc.c **** /* Sub-second mask definition */
+  68:../Src/smtc_hal/smtc_hal_rtc.c **** #define ALARM_SUBSECOND_MASK           ( N_PREDIV_S << RTC_ALRMASSR_MASKSS_Pos )
+  69:../Src/smtc_hal/smtc_hal_rtc.c **** 
+  70:../Src/smtc_hal/smtc_hal_rtc.c **** /* RTC Time base in us */
+  71:../Src/smtc_hal/smtc_hal_rtc.c **** #define USEC_NUMBER                    1000000U
+  72:../Src/smtc_hal/smtc_hal_rtc.c **** #define MSEC_NUMBER                    ( USEC_NUMBER / 1000 )
+  73:../Src/smtc_hal/smtc_hal_rtc.c **** 
+  74:../Src/smtc_hal/smtc_hal_rtc.c **** #define COMMON_FACTOR                  3U
+  75:../Src/smtc_hal/smtc_hal_rtc.c **** #define CONV_NUMER                     ( MSEC_NUMBER >> COMMON_FACTOR )
+  76:../Src/smtc_hal/smtc_hal_rtc.c **** #define CONV_DENOM                     ( 1U << ( N_PREDIV_S - COMMON_FACTOR ) )
+  77:../Src/smtc_hal/smtc_hal_rtc.c **** 
+  78:../Src/smtc_hal/smtc_hal_rtc.c **** /*!
+  79:../Src/smtc_hal/smtc_hal_rtc.c ****  * @brief Days, Hours, Minutes and seconds
+  80:../Src/smtc_hal/smtc_hal_rtc.c ****  */
+  81:../Src/smtc_hal/smtc_hal_rtc.c **** #define DAYS_IN_LEAP_YEAR              ( ( uint32_t ) 366U )
+  82:../Src/smtc_hal/smtc_hal_rtc.c **** #define DAYS_IN_YEAR                   ( ( uint32_t ) 365U )
+  83:../Src/smtc_hal/smtc_hal_rtc.c **** #define SECONDS_IN_1DAY                ( ( uint32_t ) 86400U )
+  84:../Src/smtc_hal/smtc_hal_rtc.c **** #define SECONDS_IN_1HOUR               ( ( uint32_t ) 3600U )
+  85:../Src/smtc_hal/smtc_hal_rtc.c **** #define SECONDS_IN_1MINUTE             ( ( uint32_t ) 60U )
+  86:../Src/smtc_hal/smtc_hal_rtc.c **** #define MINUTES_IN_1HOUR               ( ( uint32_t ) 60U )
+  87:../Src/smtc_hal/smtc_hal_rtc.c **** #define HOURS_IN_1DAY                  ( ( uint32_t ) 24U )
+  88:../Src/smtc_hal/smtc_hal_rtc.c **** 
+  89:../Src/smtc_hal/smtc_hal_rtc.c **** /*!
+  90:../Src/smtc_hal/smtc_hal_rtc.c ****  * @brief Correction factors
+  91:../Src/smtc_hal/smtc_hal_rtc.c ****  */
+  92:../Src/smtc_hal/smtc_hal_rtc.c **** #define DAYS_IN_MONTH_CORRECTION_NORM  ( ( uint32_t ) 0x99AAA0 )
+  93:../Src/smtc_hal/smtc_hal_rtc.c **** #define DAYS_IN_MONTH_CORRECTION_LEAP  ( ( uint32_t ) 0x445550 )
+  94:../Src/smtc_hal/smtc_hal_rtc.c **** 
+  95:../Src/smtc_hal/smtc_hal_rtc.c **** /*!
+  96:../Src/smtc_hal/smtc_hal_rtc.c ****  * @brief Calculates ceiling( X / N )
+  97:../Src/smtc_hal/smtc_hal_rtc.c ****  */
+  98:../Src/smtc_hal/smtc_hal_rtc.c **** #define DIVC( X, N )                   ( ( ( X ) + ( N ) -1 ) / ( N ) )
+  99:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 100:../Src/smtc_hal/smtc_hal_rtc.c **** /*
+ 101:../Src/smtc_hal/smtc_hal_rtc.c ****  * -----------------------------------------------------------------------------
+ 102:../Src/smtc_hal/smtc_hal_rtc.c ****  * --- PRIVATE TYPES -----------------------------------------------------------
+ 103:../Src/smtc_hal/smtc_hal_rtc.c ****  */
+ 104:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 105:../Src/smtc_hal/smtc_hal_rtc.c **** /*
+ 106:../Src/smtc_hal/smtc_hal_rtc.c ****  * -----------------------------------------------------------------------------
+ 107:../Src/smtc_hal/smtc_hal_rtc.c ****  * --- PRIVATE VARIABLES -------------------------------------------------------
+ 108:../Src/smtc_hal/smtc_hal_rtc.c ****  */
+ 109:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 110:../Src/smtc_hal/smtc_hal_rtc.c **** hal_rtc_t hal_rtc;
+ 111:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 112:../Src/smtc_hal/smtc_hal_rtc.c **** /*!
+ 113:../Src/smtc_hal/smtc_hal_rtc.c ****  * @brief RTC Alarm
+ 114:../Src/smtc_hal/smtc_hal_rtc.c ****  */
+ 115:../Src/smtc_hal/smtc_hal_rtc.c **** static RTC_AlarmTypeDef rtc_alarm;
+ARM GAS  /tmp/ccviTP8r.s 			page 4
+
+
+ 116:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 117:../Src/smtc_hal/smtc_hal_rtc.c **** /*!
+ 118:../Src/smtc_hal/smtc_hal_rtc.c ****  * @brief Number of days in each month on a normal year
+ 119:../Src/smtc_hal/smtc_hal_rtc.c ****  */
+ 120:../Src/smtc_hal/smtc_hal_rtc.c **** static const uint8_t days_in_month[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+ 121:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 122:../Src/smtc_hal/smtc_hal_rtc.c **** /*!
+ 123:../Src/smtc_hal/smtc_hal_rtc.c ****  * @brief Number of days in each month on a leap year
+ 124:../Src/smtc_hal/smtc_hal_rtc.c ****  */
+ 125:../Src/smtc_hal/smtc_hal_rtc.c **** static const uint8_t days_in_month_leap_year[] = { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 }
+ 126:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 127:../Src/smtc_hal/smtc_hal_rtc.c **** /*
+ 128:../Src/smtc_hal/smtc_hal_rtc.c ****  * -----------------------------------------------------------------------------
+ 129:../Src/smtc_hal/smtc_hal_rtc.c ****  * --- PRIVATE FUNCTIONS DECLARATION -------------------------------------------
+ 130:../Src/smtc_hal/smtc_hal_rtc.c ****  */
+ 131:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 132:../Src/smtc_hal/smtc_hal_rtc.c **** /*!
+ 133:../Src/smtc_hal/smtc_hal_rtc.c ****  * @brief Converts time in ms to time in wake up timer ticks
+ 134:../Src/smtc_hal/smtc_hal_rtc.c ****  * Assuming WUCKSEL[2:0] = 000: RTCCLK/16 clock is selected
+ 135:../Src/smtc_hal/smtc_hal_rtc.c ****  *
+ 136:../Src/smtc_hal/smtc_hal_rtc.c ****  * @param [in] milliseconds Time in milliseconds
+ 137:../Src/smtc_hal/smtc_hal_rtc.c ****  * @returns ticks Time in wake up timer ticks
+ 138:../Src/smtc_hal/smtc_hal_rtc.c ****  */
+ 139:../Src/smtc_hal/smtc_hal_rtc.c **** static uint32_t hal_rtc_ms_2_wakeup_timer_tick( const uint32_t milliseconds );
+ 140:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 141:../Src/smtc_hal/smtc_hal_rtc.c **** /*!
+ 142:../Src/smtc_hal/smtc_hal_rtc.c ****  * @brief Converts time in s to time in wake up timer ticks
+ 143:../Src/smtc_hal/smtc_hal_rtc.c ****  * When RTCCLK = 32768 Hz and ck_spre (Synchronous prescaler output clock) is
+ 144:../Src/smtc_hal/smtc_hal_rtc.c ****  * adjusted to 1 Hz
+ 145:../Src/smtc_hal/smtc_hal_rtc.c ****  *
+ 146:../Src/smtc_hal/smtc_hal_rtc.c ****  * @param [in] seconds Time in seconds
+ 147:../Src/smtc_hal/smtc_hal_rtc.c ****  * @returns ticks Time in wake up timer ticks
+ 148:../Src/smtc_hal/smtc_hal_rtc.c ****  */
+ 149:../Src/smtc_hal/smtc_hal_rtc.c **** static uint32_t hal_rtc_s_2_wakeup_timer_tick( const uint32_t seconds );
+ 150:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 151:../Src/smtc_hal/smtc_hal_rtc.c **** /*!
+ 152:../Src/smtc_hal/smtc_hal_rtc.c ****  * @brief Get the elapsed time in seconds and milliseconds since RTC initialization
+ 153:../Src/smtc_hal/smtc_hal_rtc.c ****  *
+ 154:../Src/smtc_hal/smtc_hal_rtc.c ****  * @param [out] milliseconds Number of milliseconds elapsed since RTC
+ 155:../Src/smtc_hal/smtc_hal_rtc.c ****  *                           initialization
+ 156:../Src/smtc_hal/smtc_hal_rtc.c ****  * @returns seconds           Number of seconds elapsed since RTC initialization
+ 157:../Src/smtc_hal/smtc_hal_rtc.c ****  */
+ 158:../Src/smtc_hal/smtc_hal_rtc.c **** static uint32_t hal_rtc_get_calendar_time( uint16_t* milliseconds );
+ 159:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 160:../Src/smtc_hal/smtc_hal_rtc.c **** /*!
+ 161:../Src/smtc_hal/smtc_hal_rtc.c ****  * @brief Get current full resolution RTC timestamp in ticks
+ 162:../Src/smtc_hal/smtc_hal_rtc.c ****  *
+ 163:../Src/smtc_hal/smtc_hal_rtc.c ****  * @returns timestamp_in_ticks Current timestamp in ticks
+ 164:../Src/smtc_hal/smtc_hal_rtc.c ****  */
+ 165:../Src/smtc_hal/smtc_hal_rtc.c **** static uint64_t rtc_get_timestamp_in_ticks( RTC_DateTypeDef* date, RTC_TimeTypeDef* time );
+ 166:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 167:../Src/smtc_hal/smtc_hal_rtc.c **** void hal_rtc_init( void )
+ 168:../Src/smtc_hal/smtc_hal_rtc.c **** {
+  54              		.loc 1 168 1
+  55              		.cfi_startproc
+  56              		@ args = 0, pretend = 0, frame = 24
+  57              		@ frame_needed = 1, uses_anonymous_args = 0
+ARM GAS  /tmp/ccviTP8r.s 			page 5
+
+
+  58 0000 80B5     		push	{r7, lr}
+  59              	.LCFI0:
+  60              		.cfi_def_cfa_offset 8
+  61              		.cfi_offset 7, -8
+  62              		.cfi_offset 14, -4
+  63 0002 86B0     		sub	sp, sp, #24
+  64              	.LCFI1:
+  65              		.cfi_def_cfa_offset 32
+  66 0004 00AF     		add	r7, sp, #0
+  67              	.LCFI2:
+  68              		.cfi_def_cfa_register 7
+ 169:../Src/smtc_hal/smtc_hal_rtc.c ****     RTC_TimeTypeDef time;
+ 170:../Src/smtc_hal/smtc_hal_rtc.c ****     RTC_DateTypeDef date;
+ 171:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 172:../Src/smtc_hal/smtc_hal_rtc.c ****     __HAL_RCC_RTC_ENABLE( );
+  69              		.loc 1 172 5
+  70 0006 304B     		ldr	r3, .L3
+  71 0008 D3F89030 		ldr	r3, [r3, #144]
+  72 000c 2E4A     		ldr	r2, .L3
+  73 000e 43F40043 		orr	r3, r3, #32768
+  74 0012 C2F89030 		str	r3, [r2, #144]
+ 173:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 174:../Src/smtc_hal/smtc_hal_rtc.c ****     hal_rtc.handle.Instance            = RTC;
+  75              		.loc 1 174 40
+  76 0016 2D4B     		ldr	r3, .L3+4
+  77 0018 2D4A     		ldr	r2, .L3+8
+  78 001a 1A60     		str	r2, [r3]
+ 175:../Src/smtc_hal/smtc_hal_rtc.c ****     hal_rtc.handle.Init.HourFormat     = RTC_HOURFORMAT_24;
+  79              		.loc 1 175 40
+  80 001c 2B4B     		ldr	r3, .L3+4
+  81 001e 0022     		movs	r2, #0
+  82 0020 5A60     		str	r2, [r3, #4]
+ 176:../Src/smtc_hal/smtc_hal_rtc.c ****     hal_rtc.handle.Init.AsynchPrediv   = PREDIV_A;
+  83              		.loc 1 176 40
+  84 0022 2A4B     		ldr	r3, .L3+4
+  85 0024 1F22     		movs	r2, #31
+  86 0026 9A60     		str	r2, [r3, #8]
+ 177:../Src/smtc_hal/smtc_hal_rtc.c ****     hal_rtc.handle.Init.SynchPrediv    = PREDIV_S;
+  87              		.loc 1 177 40
+  88 0028 284B     		ldr	r3, .L3+4
+  89 002a 40F2FF32 		movw	r2, #1023
+  90 002e DA60     		str	r2, [r3, #12]
+ 178:../Src/smtc_hal/smtc_hal_rtc.c ****     hal_rtc.handle.Init.OutPut         = RTC_OUTPUT_DISABLE;
+  91              		.loc 1 178 40
+  92 0030 264B     		ldr	r3, .L3+4
+  93 0032 0022     		movs	r2, #0
+  94 0034 1A61     		str	r2, [r3, #16]
+ 179:../Src/smtc_hal/smtc_hal_rtc.c ****     hal_rtc.handle.Init.OutPutRemap    = RTC_OUTPUT_REMAP_NONE;
+  95              		.loc 1 179 40
+  96 0036 254B     		ldr	r3, .L3+4
+  97 0038 0022     		movs	r2, #0
+  98 003a 5A61     		str	r2, [r3, #20]
+ 180:../Src/smtc_hal/smtc_hal_rtc.c ****     hal_rtc.handle.Init.OutPutPolarity = RTC_OUTPUT_POLARITY_HIGH;
+  99              		.loc 1 180 40
+ 100 003c 234B     		ldr	r3, .L3+4
+ 101 003e 0022     		movs	r2, #0
+ 102 0040 9A61     		str	r2, [r3, #24]
+ARM GAS  /tmp/ccviTP8r.s 			page 6
+
+
+ 181:../Src/smtc_hal/smtc_hal_rtc.c ****     hal_rtc.handle.Init.OutPutType     = RTC_OUTPUT_TYPE_OPENDRAIN;
+ 103              		.loc 1 181 40
+ 104 0042 224B     		ldr	r3, .L3+4
+ 105 0044 0022     		movs	r2, #0
+ 106 0046 DA61     		str	r2, [r3, #28]
+ 182:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 183:../Src/smtc_hal/smtc_hal_rtc.c ****     if( HAL_RTC_Init( &hal_rtc.handle ) != HAL_OK )
+ 107              		.loc 1 183 9
+ 108 0048 2048     		ldr	r0, .L3+4
+ 109 004a FFF7FEFF 		bl	HAL_RTC_Init
+ 110 004e 0346     		mov	r3, r0
+ 111              		.loc 1 183 7
+ 112 0050 002B     		cmp	r3, #0
+ 113 0052 01D0     		beq	.L2
+ 184:../Src/smtc_hal/smtc_hal_rtc.c ****     {
+ 185:../Src/smtc_hal/smtc_hal_rtc.c ****         hal_mcu_panic( );
+ 114              		.loc 1 185 9
+ 115 0054 FFF7FEFF 		bl	hal_mcu_panic
+ 116              	.L2:
+ 186:../Src/smtc_hal/smtc_hal_rtc.c ****     }
+ 187:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 188:../Src/smtc_hal/smtc_hal_rtc.c ****     /* Initialize RTC counter to 0 */
+ 189:../Src/smtc_hal/smtc_hal_rtc.c ****     date.Year    = 0;
+ 117              		.loc 1 189 18
+ 118 0058 0023     		movs	r3, #0
+ 119 005a FB70     		strb	r3, [r7, #3]
+ 190:../Src/smtc_hal/smtc_hal_rtc.c ****     date.Month   = RTC_MONTH_JANUARY;
+ 120              		.loc 1 190 18
+ 121 005c 0123     		movs	r3, #1
+ 122 005e 7B70     		strb	r3, [r7, #1]
+ 191:../Src/smtc_hal/smtc_hal_rtc.c ****     date.Date    = 1;
+ 123              		.loc 1 191 18
+ 124 0060 0123     		movs	r3, #1
+ 125 0062 BB70     		strb	r3, [r7, #2]
+ 192:../Src/smtc_hal/smtc_hal_rtc.c ****     date.WeekDay = RTC_WEEKDAY_MONDAY;
+ 126              		.loc 1 192 18
+ 127 0064 0123     		movs	r3, #1
+ 128 0066 3B70     		strb	r3, [r7]
+ 193:../Src/smtc_hal/smtc_hal_rtc.c ****     HAL_RTC_SetDate( &hal_rtc.handle, &date, RTC_FORMAT_BIN );
+ 129              		.loc 1 193 5
+ 130 0068 3B46     		mov	r3, r7
+ 131 006a 0022     		movs	r2, #0
+ 132 006c 1946     		mov	r1, r3
+ 133 006e 1748     		ldr	r0, .L3+4
+ 134 0070 FFF7FEFF 		bl	HAL_RTC_SetDate
+ 194:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 195:../Src/smtc_hal/smtc_hal_rtc.c ****     /*at 0:0:0*/
+ 196:../Src/smtc_hal/smtc_hal_rtc.c ****     time.Hours          = 0;
+ 135              		.loc 1 196 25
+ 136 0074 0023     		movs	r3, #0
+ 137 0076 3B71     		strb	r3, [r7, #4]
+ 197:../Src/smtc_hal/smtc_hal_rtc.c ****     time.Minutes        = 0;
+ 138              		.loc 1 197 25
+ 139 0078 0023     		movs	r3, #0
+ 140 007a 7B71     		strb	r3, [r7, #5]
+ 198:../Src/smtc_hal/smtc_hal_rtc.c ****     time.Seconds        = 0;
+ 141              		.loc 1 198 25
+ARM GAS  /tmp/ccviTP8r.s 			page 7
+
+
+ 142 007c 0023     		movs	r3, #0
+ 143 007e BB71     		strb	r3, [r7, #6]
+ 199:../Src/smtc_hal/smtc_hal_rtc.c ****     time.SubSeconds     = 0;
+ 144              		.loc 1 199 25
+ 145 0080 0023     		movs	r3, #0
+ 146 0082 BB60     		str	r3, [r7, #8]
+ 200:../Src/smtc_hal/smtc_hal_rtc.c ****     time.TimeFormat     = 0;
+ 147              		.loc 1 200 25
+ 148 0084 0023     		movs	r3, #0
+ 149 0086 FB71     		strb	r3, [r7, #7]
+ 201:../Src/smtc_hal/smtc_hal_rtc.c ****     time.StoreOperation = RTC_DAYLIGHTSAVING_NONE;
+ 150              		.loc 1 201 25
+ 151 0088 0023     		movs	r3, #0
+ 152 008a 7B61     		str	r3, [r7, #20]
+ 202:../Src/smtc_hal/smtc_hal_rtc.c ****     time.DayLightSaving = RTC_STOREOPERATION_RESET;
+ 153              		.loc 1 202 25
+ 154 008c 0023     		movs	r3, #0
+ 155 008e 3B61     		str	r3, [r7, #16]
+ 203:../Src/smtc_hal/smtc_hal_rtc.c ****     HAL_RTC_SetTime( &hal_rtc.handle, &time, RTC_FORMAT_BIN );
+ 156              		.loc 1 203 5
+ 157 0090 3B1D     		adds	r3, r7, #4
+ 158 0092 0022     		movs	r2, #0
+ 159 0094 1946     		mov	r1, r3
+ 160 0096 0D48     		ldr	r0, .L3+4
+ 161 0098 FFF7FEFF 		bl	HAL_RTC_SetTime
+ 204:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 205:../Src/smtc_hal/smtc_hal_rtc.c ****     /* Enable Direct Read of the calendar registers (not through Shadow
+ 206:../Src/smtc_hal/smtc_hal_rtc.c ****        registers) */
+ 207:../Src/smtc_hal/smtc_hal_rtc.c ****     HAL_RTCEx_EnableBypassShadow( &hal_rtc.handle );
+ 162              		.loc 1 207 5
+ 163 009c 0B48     		ldr	r0, .L3+4
+ 164 009e FFF7FEFF 		bl	HAL_RTCEx_EnableBypassShadow
+ 208:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 209:../Src/smtc_hal/smtc_hal_rtc.c ****     HAL_NVIC_SetPriority( RTC_Alarm_IRQn, 1, 0 );
+ 165              		.loc 1 209 5
+ 166 00a2 0022     		movs	r2, #0
+ 167 00a4 0121     		movs	r1, #1
+ 168 00a6 2920     		movs	r0, #41
+ 169 00a8 FFF7FEFF 		bl	HAL_NVIC_SetPriority
+ 210:../Src/smtc_hal/smtc_hal_rtc.c ****     HAL_NVIC_EnableIRQ( RTC_Alarm_IRQn );
+ 170              		.loc 1 210 5
+ 171 00ac 2920     		movs	r0, #41
+ 172 00ae FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
+ 211:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 212:../Src/smtc_hal/smtc_hal_rtc.c ****     /* Init alarm. */
+ 213:../Src/smtc_hal/smtc_hal_rtc.c ****     HAL_RTC_DeactivateAlarm( &hal_rtc.handle, RTC_ALARM_A );
+ 173              		.loc 1 213 5
+ 174 00b2 4FF48071 		mov	r1, #256
+ 175 00b6 0548     		ldr	r0, .L3+4
+ 176 00b8 FFF7FEFF 		bl	HAL_RTC_DeactivateAlarm
+ 214:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 215:../Src/smtc_hal/smtc_hal_rtc.c ****     hal_rtc_set_time_ref_in_ticks( );
+ 177              		.loc 1 215 5
+ 178 00bc FFF7FEFF 		bl	hal_rtc_set_time_ref_in_ticks
+ 216:../Src/smtc_hal/smtc_hal_rtc.c **** }
+ 179              		.loc 1 216 1
+ 180 00c0 00BF     		nop
+ARM GAS  /tmp/ccviTP8r.s 			page 8
+
+
+ 181 00c2 1837     		adds	r7, r7, #24
+ 182              	.LCFI3:
+ 183              		.cfi_def_cfa_offset 8
+ 184 00c4 BD46     		mov	sp, r7
+ 185              	.LCFI4:
+ 186              		.cfi_def_cfa_register 13
+ 187              		@ sp needed
+ 188 00c6 80BD     		pop	{r7, pc}
+ 189              	.L4:
+ 190              		.align	2
+ 191              	.L3:
+ 192 00c8 00100240 		.word	1073876992
+ 193 00cc 00000000 		.word	hal_rtc
+ 194 00d0 00280040 		.word	1073752064
+ 195              		.cfi_endproc
+ 196              	.LFE513:
+ 198              		.section	.text.hal_rtc_get_time_s,"ax",%progbits
+ 199              		.align	1
+ 200              		.global	hal_rtc_get_time_s
+ 201              		.syntax unified
+ 202              		.thumb
+ 203              		.thumb_func
+ 204              		.fpu fpv4-sp-d16
+ 206              	hal_rtc_get_time_s:
+ 207              	.LFB514:
+ 217:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 218:../Src/smtc_hal/smtc_hal_rtc.c **** uint32_t hal_rtc_get_time_s( void )
+ 219:../Src/smtc_hal/smtc_hal_rtc.c **** {
+ 208              		.loc 1 219 1
+ 209              		.cfi_startproc
+ 210              		@ args = 0, pretend = 0, frame = 8
+ 211              		@ frame_needed = 1, uses_anonymous_args = 0
+ 212 0000 80B5     		push	{r7, lr}
+ 213              	.LCFI5:
+ 214              		.cfi_def_cfa_offset 8
+ 215              		.cfi_offset 7, -8
+ 216              		.cfi_offset 14, -4
+ 217 0002 82B0     		sub	sp, sp, #8
+ 218              	.LCFI6:
+ 219              		.cfi_def_cfa_offset 16
+ 220 0004 00AF     		add	r7, sp, #0
+ 221              	.LCFI7:
+ 222              		.cfi_def_cfa_register 7
+ 220:../Src/smtc_hal/smtc_hal_rtc.c ****     uint16_t milliseconds = 0;
+ 223              		.loc 1 220 14
+ 224 0006 0023     		movs	r3, #0
+ 225 0008 FB80     		strh	r3, [r7, #6]	@ movhi
+ 221:../Src/smtc_hal/smtc_hal_rtc.c ****     return hal_rtc_get_calendar_time( &milliseconds );
+ 226              		.loc 1 221 12
+ 227 000a BB1D     		adds	r3, r7, #6
+ 228 000c 1846     		mov	r0, r3
+ 229 000e FFF7FEFF 		bl	hal_rtc_get_calendar_time
+ 230 0012 0346     		mov	r3, r0
+ 222:../Src/smtc_hal/smtc_hal_rtc.c **** }
+ 231              		.loc 1 222 1
+ 232 0014 1846     		mov	r0, r3
+ 233 0016 0837     		adds	r7, r7, #8
+ARM GAS  /tmp/ccviTP8r.s 			page 9
+
+
+ 234              	.LCFI8:
+ 235              		.cfi_def_cfa_offset 8
+ 236 0018 BD46     		mov	sp, r7
+ 237              	.LCFI9:
+ 238              		.cfi_def_cfa_register 13
+ 239              		@ sp needed
+ 240 001a 80BD     		pop	{r7, pc}
+ 241              		.cfi_endproc
+ 242              	.LFE514:
+ 244              		.section	.text.hal_rtc_get_time_ms,"ax",%progbits
+ 245              		.align	1
+ 246              		.global	hal_rtc_get_time_ms
+ 247              		.syntax unified
+ 248              		.thumb
+ 249              		.thumb_func
+ 250              		.fpu fpv4-sp-d16
+ 252              	hal_rtc_get_time_ms:
+ 253              	.LFB515:
+ 223:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 224:../Src/smtc_hal/smtc_hal_rtc.c **** uint32_t hal_rtc_get_time_ms( void )
+ 225:../Src/smtc_hal/smtc_hal_rtc.c **** {
+ 254              		.loc 1 225 1
+ 255              		.cfi_startproc
+ 256              		@ args = 0, pretend = 0, frame = 8
+ 257              		@ frame_needed = 1, uses_anonymous_args = 0
+ 258 0000 80B5     		push	{r7, lr}
+ 259              	.LCFI10:
+ 260              		.cfi_def_cfa_offset 8
+ 261              		.cfi_offset 7, -8
+ 262              		.cfi_offset 14, -4
+ 263 0002 82B0     		sub	sp, sp, #8
+ 264              	.LCFI11:
+ 265              		.cfi_def_cfa_offset 16
+ 266 0004 00AF     		add	r7, sp, #0
+ 267              	.LCFI12:
+ 268              		.cfi_def_cfa_register 7
+ 226:../Src/smtc_hal/smtc_hal_rtc.c ****     uint32_t seconds      = 0;
+ 269              		.loc 1 226 14
+ 270 0006 0023     		movs	r3, #0
+ 271 0008 7B60     		str	r3, [r7, #4]
+ 227:../Src/smtc_hal/smtc_hal_rtc.c ****     uint16_t milliseconds = 0;
+ 272              		.loc 1 227 14
+ 273 000a 0023     		movs	r3, #0
+ 274 000c 7B80     		strh	r3, [r7, #2]	@ movhi
+ 228:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 229:../Src/smtc_hal/smtc_hal_rtc.c ****     seconds = hal_rtc_get_calendar_time( &milliseconds );
+ 275              		.loc 1 229 15
+ 276 000e BB1C     		adds	r3, r7, #2
+ 277 0010 1846     		mov	r0, r3
+ 278 0012 FFF7FEFF 		bl	hal_rtc_get_calendar_time
+ 279 0016 7860     		str	r0, [r7, #4]
+ 230:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 231:../Src/smtc_hal/smtc_hal_rtc.c ****     return seconds * 1000 + milliseconds;
+ 280              		.loc 1 231 20
+ 281 0018 7B68     		ldr	r3, [r7, #4]
+ 282 001a 4FF47A72 		mov	r2, #1000
+ 283 001e 02FB03F3 		mul	r3, r2, r3
+ARM GAS  /tmp/ccviTP8r.s 			page 10
+
+
+ 284              		.loc 1 231 27
+ 285 0022 7A88     		ldrh	r2, [r7, #2]
+ 286 0024 1344     		add	r3, r3, r2
+ 232:../Src/smtc_hal/smtc_hal_rtc.c **** }
+ 287              		.loc 1 232 1
+ 288 0026 1846     		mov	r0, r3
+ 289 0028 0837     		adds	r7, r7, #8
+ 290              	.LCFI13:
+ 291              		.cfi_def_cfa_offset 8
+ 292 002a BD46     		mov	sp, r7
+ 293              	.LCFI14:
+ 294              		.cfi_def_cfa_register 13
+ 295              		@ sp needed
+ 296 002c 80BD     		pop	{r7, pc}
+ 297              		.cfi_endproc
+ 298              	.LFE515:
+ 300              		.section	.text.hal_rtc_stop_alarm,"ax",%progbits
+ 301              		.align	1
+ 302              		.global	hal_rtc_stop_alarm
+ 303              		.syntax unified
+ 304              		.thumb
+ 305              		.thumb_func
+ 306              		.fpu fpv4-sp-d16
+ 308              	hal_rtc_stop_alarm:
+ 309              	.LFB516:
+ 233:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 234:../Src/smtc_hal/smtc_hal_rtc.c **** void hal_rtc_stop_alarm( void )
+ 235:../Src/smtc_hal/smtc_hal_rtc.c **** {
+ 310              		.loc 1 235 1
+ 311              		.cfi_startproc
+ 312              		@ args = 0, pretend = 0, frame = 0
+ 313              		@ frame_needed = 1, uses_anonymous_args = 0
+ 314 0000 80B5     		push	{r7, lr}
+ 315              	.LCFI15:
+ 316              		.cfi_def_cfa_offset 8
+ 317              		.cfi_offset 7, -8
+ 318              		.cfi_offset 14, -4
+ 319 0002 00AF     		add	r7, sp, #0
+ 320              	.LCFI16:
+ 321              		.cfi_def_cfa_register 7
+ 236:../Src/smtc_hal/smtc_hal_rtc.c ****     /* Disable the Alarm A interrupt */
+ 237:../Src/smtc_hal/smtc_hal_rtc.c ****     HAL_RTC_DeactivateAlarm( &hal_rtc.handle, RTC_ALARM_A );
+ 322              		.loc 1 237 5
+ 323 0004 4FF48071 		mov	r1, #256
+ 324 0008 0848     		ldr	r0, .L10
+ 325 000a FFF7FEFF 		bl	HAL_RTC_DeactivateAlarm
+ 238:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 239:../Src/smtc_hal/smtc_hal_rtc.c ****     /* Clear RTC Alarm Flag */
+ 240:../Src/smtc_hal/smtc_hal_rtc.c ****     __HAL_RTC_ALARM_CLEAR_FLAG( &hal_rtc.handle, RTC_FLAG_ALRAF );
+ 326              		.loc 1 240 5
+ 327 000e 074B     		ldr	r3, .L10
+ 328 0010 1B68     		ldr	r3, [r3]
+ 329 0012 DB68     		ldr	r3, [r3, #12]
+ 330 0014 DAB2     		uxtb	r2, r3
+ 331 0016 054B     		ldr	r3, .L10
+ 332 0018 1B68     		ldr	r3, [r3]
+ 333 001a 62F4C072 		orn	r2, r2, #384
+ARM GAS  /tmp/ccviTP8r.s 			page 11
+
+
+ 334 001e DA60     		str	r2, [r3, #12]
+ 241:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 242:../Src/smtc_hal/smtc_hal_rtc.c ****     /* Clear the EXTI's line Flag for RTC Alarm */
+ 243:../Src/smtc_hal/smtc_hal_rtc.c ****     __HAL_RTC_ALARM_EXTI_CLEAR_FLAG( );
+ 335              		.loc 1 243 5
+ 336 0020 034B     		ldr	r3, .L10+4
+ 337 0022 4FF48022 		mov	r2, #262144
+ 338 0026 5A61     		str	r2, [r3, #20]
+ 244:../Src/smtc_hal/smtc_hal_rtc.c **** }
+ 339              		.loc 1 244 1
+ 340 0028 00BF     		nop
+ 341 002a 80BD     		pop	{r7, pc}
+ 342              	.L11:
+ 343              		.align	2
+ 344              	.L10:
+ 345 002c 00000000 		.word	hal_rtc
+ 346 0030 00040140 		.word	1073808384
+ 347              		.cfi_endproc
+ 348              	.LFE516:
+ 350              		.section	.text.hal_rtc_start_alarm,"ax",%progbits
+ 351              		.align	1
+ 352              		.global	hal_rtc_start_alarm
+ 353              		.syntax unified
+ 354              		.thumb
+ 355              		.thumb_func
+ 356              		.fpu fpv4-sp-d16
+ 358              	hal_rtc_start_alarm:
+ 359              	.LFB517:
+ 245:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 246:../Src/smtc_hal/smtc_hal_rtc.c **** /*!
+ 247:../Src/smtc_hal/smtc_hal_rtc.c ****  * @brief Sets the alarm
+ 248:../Src/smtc_hal/smtc_hal_rtc.c ****  *
+ 249:../Src/smtc_hal/smtc_hal_rtc.c ****  * @remark The alarm is set at now (read in this function) + timeout
+ 250:../Src/smtc_hal/smtc_hal_rtc.c ****  *
+ 251:../Src/smtc_hal/smtc_hal_rtc.c ****  * @param [in] timeout Duration of the Timer ticks
+ 252:../Src/smtc_hal/smtc_hal_rtc.c ****  */
+ 253:../Src/smtc_hal/smtc_hal_rtc.c **** void hal_rtc_start_alarm( uint32_t timeout )
+ 254:../Src/smtc_hal/smtc_hal_rtc.c **** {
+ 360              		.loc 1 254 1
+ 361              		.cfi_startproc
+ 362              		@ args = 0, pretend = 0, frame = 48
+ 363              		@ frame_needed = 1, uses_anonymous_args = 0
+ 364 0000 B0B5     		push	{r4, r5, r7, lr}
+ 365              	.LCFI17:
+ 366              		.cfi_def_cfa_offset 16
+ 367              		.cfi_offset 4, -16
+ 368              		.cfi_offset 5, -12
+ 369              		.cfi_offset 7, -8
+ 370              		.cfi_offset 14, -4
+ 371 0002 8CB0     		sub	sp, sp, #48
+ 372              	.LCFI18:
+ 373              		.cfi_def_cfa_offset 64
+ 374 0004 00AF     		add	r7, sp, #0
+ 375              	.LCFI19:
+ 376              		.cfi_def_cfa_register 7
+ 377 0006 7860     		str	r0, [r7, #4]
+ 255:../Src/smtc_hal/smtc_hal_rtc.c ****     uint16_t        rtc_alarm_sub_seconds = 0;
+ARM GAS  /tmp/ccviTP8r.s 			page 12
+
+
+ 378              		.loc 1 255 21
+ 379 0008 0023     		movs	r3, #0
+ 380 000a FB85     		strh	r3, [r7, #46]	@ movhi
+ 256:../Src/smtc_hal/smtc_hal_rtc.c ****     uint16_t        rtc_alarm_seconds     = 0;
+ 381              		.loc 1 256 21
+ 382 000c 0023     		movs	r3, #0
+ 383 000e BB85     		strh	r3, [r7, #44]	@ movhi
+ 257:../Src/smtc_hal/smtc_hal_rtc.c ****     uint16_t        rtc_alarm_minutes     = 0;
+ 384              		.loc 1 257 21
+ 385 0010 0023     		movs	r3, #0
+ 386 0012 7B85     		strh	r3, [r7, #42]	@ movhi
+ 258:../Src/smtc_hal/smtc_hal_rtc.c ****     uint16_t        rtc_alarm_hours       = 0;
+ 387              		.loc 1 258 21
+ 388 0014 0023     		movs	r3, #0
+ 389 0016 3B85     		strh	r3, [r7, #40]	@ movhi
+ 259:../Src/smtc_hal/smtc_hal_rtc.c ****     uint16_t        rtc_alarm_days        = 0;
+ 390              		.loc 1 259 21
+ 391 0018 0023     		movs	r3, #0
+ 392 001a FB84     		strh	r3, [r7, #38]	@ movhi
+ 260:../Src/smtc_hal/smtc_hal_rtc.c ****     RTC_TimeTypeDef time                  = hal_rtc.context.calendar_time;  // rtc_timer_context.ca
+ 393              		.loc 1 260 21
+ 394 001c 6E4B     		ldr	r3, .L29
+ 395 001e 07F11004 		add	r4, r7, #16
+ 396 0022 03F12805 		add	r5, r3, #40
+ 397 0026 0FCD     		ldmia	r5!, {r0, r1, r2, r3}
+ 398 0028 0FC4     		stmia	r4!, {r0, r1, r2, r3}
+ 399 002a 2B68     		ldr	r3, [r5]
+ 400 002c 2360     		str	r3, [r4]
+ 261:../Src/smtc_hal/smtc_hal_rtc.c ****     RTC_DateTypeDef date                  = hal_rtc.context.calendar_date;
+ 401              		.loc 1 261 21
+ 402 002e 6A4B     		ldr	r3, .L29
+ 403 0030 DB6B     		ldr	r3, [r3, #60]
+ 404 0032 FB60     		str	r3, [r7, #12]
+ 262:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 263:../Src/smtc_hal/smtc_hal_rtc.c ****     hal_rtc_stop_alarm( );
+ 405              		.loc 1 263 5
+ 406 0034 FFF7FEFF 		bl	hal_rtc_stop_alarm
+ 264:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 265:../Src/smtc_hal/smtc_hal_rtc.c ****     /*reverse counter */
+ 266:../Src/smtc_hal/smtc_hal_rtc.c ****     rtc_alarm_sub_seconds = PREDIV_S - time.SubSeconds;
+ 407              		.loc 1 266 44
+ 408 0038 7B69     		ldr	r3, [r7, #20]
+ 409              		.loc 1 266 38
+ 410 003a 9BB2     		uxth	r3, r3
+ 411              		.loc 1 266 27
+ 412 003c C3F57F73 		rsb	r3, r3, #1020
+ 413 0040 0333     		adds	r3, r3, #3
+ 414 0042 FB85     		strh	r3, [r7, #46]	@ movhi
+ 267:../Src/smtc_hal/smtc_hal_rtc.c ****     rtc_alarm_sub_seconds += ( timeout & PREDIV_S );
+ 415              		.loc 1 267 40
+ 416 0044 7B68     		ldr	r3, [r7, #4]
+ 417 0046 9BB2     		uxth	r3, r3
+ 418 0048 C3F30903 		ubfx	r3, r3, #0, #10
+ 419 004c 9AB2     		uxth	r2, r3
+ 420              		.loc 1 267 27
+ 421 004e FB8D     		ldrh	r3, [r7, #46]	@ movhi
+ 422 0050 1344     		add	r3, r3, r2
+ARM GAS  /tmp/ccviTP8r.s 			page 13
+
+
+ 423 0052 FB85     		strh	r3, [r7, #46]	@ movhi
+ 268:../Src/smtc_hal/smtc_hal_rtc.c ****     /* convert timeout  to seconds */
+ 269:../Src/smtc_hal/smtc_hal_rtc.c ****     timeout >>= N_PREDIV_S;
+ 424              		.loc 1 269 13
+ 425 0054 7B68     		ldr	r3, [r7, #4]
+ 426 0056 9B0A     		lsrs	r3, r3, #10
+ 427 0058 7B60     		str	r3, [r7, #4]
+ 270:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 271:../Src/smtc_hal/smtc_hal_rtc.c ****     /* Convert microsecs to RTC format and add to 'Now' */
+ 272:../Src/smtc_hal/smtc_hal_rtc.c ****     rtc_alarm_days = date.Date;
+ 428              		.loc 1 272 26
+ 429 005a BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
+ 430              		.loc 1 272 20
+ 431 005c FB84     		strh	r3, [r7, #38]	@ movhi
+ 273:../Src/smtc_hal/smtc_hal_rtc.c ****     while( timeout >= SECONDS_IN_1DAY )
+ 432              		.loc 1 273 10
+ 433 005e 08E0     		b	.L13
+ 434              	.L14:
+ 274:../Src/smtc_hal/smtc_hal_rtc.c ****     {
+ 275:../Src/smtc_hal/smtc_hal_rtc.c ****         timeout -= SECONDS_IN_1DAY;
+ 435              		.loc 1 275 17
+ 436 0060 7B68     		ldr	r3, [r7, #4]
+ 437 0062 A3F5A833 		sub	r3, r3, #86016
+ 438 0066 A3F5C073 		sub	r3, r3, #384
+ 439 006a 7B60     		str	r3, [r7, #4]
+ 276:../Src/smtc_hal/smtc_hal_rtc.c ****         rtc_alarm_days++;
+ 440              		.loc 1 276 23
+ 441 006c FB8C     		ldrh	r3, [r7, #38]
+ 442 006e 0133     		adds	r3, r3, #1
+ 443 0070 FB84     		strh	r3, [r7, #38]	@ movhi
+ 444              	.L13:
+ 273:../Src/smtc_hal/smtc_hal_rtc.c ****     while( timeout >= SECONDS_IN_1DAY )
+ 445              		.loc 1 273 10
+ 446 0072 7B68     		ldr	r3, [r7, #4]
+ 447 0074 594A     		ldr	r2, .L29+4
+ 448 0076 9342     		cmp	r3, r2
+ 449 0078 F2D8     		bhi	.L14
+ 277:../Src/smtc_hal/smtc_hal_rtc.c ****     }
+ 278:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 279:../Src/smtc_hal/smtc_hal_rtc.c ****     /* Calc hours */
+ 280:../Src/smtc_hal/smtc_hal_rtc.c ****     rtc_alarm_hours = time.Hours;
+ 450              		.loc 1 280 27
+ 451 007a 3B7C     		ldrb	r3, [r7, #16]	@ zero_extendqisi2
+ 452              		.loc 1 280 21
+ 453 007c 3B85     		strh	r3, [r7, #40]	@ movhi
+ 281:../Src/smtc_hal/smtc_hal_rtc.c ****     while( timeout >= SECONDS_IN_1HOUR )
+ 454              		.loc 1 281 10
+ 455 007e 06E0     		b	.L15
+ 456              	.L16:
+ 282:../Src/smtc_hal/smtc_hal_rtc.c ****     {
+ 283:../Src/smtc_hal/smtc_hal_rtc.c ****         timeout -= SECONDS_IN_1HOUR;
+ 457              		.loc 1 283 17
+ 458 0080 7B68     		ldr	r3, [r7, #4]
+ 459 0082 A3F56163 		sub	r3, r3, #3600
+ 460 0086 7B60     		str	r3, [r7, #4]
+ 284:../Src/smtc_hal/smtc_hal_rtc.c ****         rtc_alarm_hours++;
+ 461              		.loc 1 284 24
+ARM GAS  /tmp/ccviTP8r.s 			page 14
+
+
+ 462 0088 3B8D     		ldrh	r3, [r7, #40]
+ 463 008a 0133     		adds	r3, r3, #1
+ 464 008c 3B85     		strh	r3, [r7, #40]	@ movhi
+ 465              	.L15:
+ 281:../Src/smtc_hal/smtc_hal_rtc.c ****     while( timeout >= SECONDS_IN_1HOUR )
+ 466              		.loc 1 281 10
+ 467 008e 7B68     		ldr	r3, [r7, #4]
+ 468 0090 B3F5616F 		cmp	r3, #3600
+ 469 0094 F4D2     		bcs	.L16
+ 285:../Src/smtc_hal/smtc_hal_rtc.c ****     }
+ 286:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 287:../Src/smtc_hal/smtc_hal_rtc.c ****     /* Calc minutes */
+ 288:../Src/smtc_hal/smtc_hal_rtc.c ****     rtc_alarm_minutes = time.Minutes;
+ 470              		.loc 1 288 29
+ 471 0096 7B7C     		ldrb	r3, [r7, #17]	@ zero_extendqisi2
+ 472              		.loc 1 288 23
+ 473 0098 7B85     		strh	r3, [r7, #42]	@ movhi
+ 289:../Src/smtc_hal/smtc_hal_rtc.c ****     while( timeout >= SECONDS_IN_1MINUTE )
+ 474              		.loc 1 289 10
+ 475 009a 05E0     		b	.L17
+ 476              	.L18:
+ 290:../Src/smtc_hal/smtc_hal_rtc.c ****     {
+ 291:../Src/smtc_hal/smtc_hal_rtc.c ****         timeout -= SECONDS_IN_1MINUTE;
+ 477              		.loc 1 291 17
+ 478 009c 7B68     		ldr	r3, [r7, #4]
+ 479 009e 3C3B     		subs	r3, r3, #60
+ 480 00a0 7B60     		str	r3, [r7, #4]
+ 292:../Src/smtc_hal/smtc_hal_rtc.c ****         rtc_alarm_minutes++;
+ 481              		.loc 1 292 26
+ 482 00a2 7B8D     		ldrh	r3, [r7, #42]
+ 483 00a4 0133     		adds	r3, r3, #1
+ 484 00a6 7B85     		strh	r3, [r7, #42]	@ movhi
+ 485              	.L17:
+ 289:../Src/smtc_hal/smtc_hal_rtc.c ****     while( timeout >= SECONDS_IN_1MINUTE )
+ 486              		.loc 1 289 10
+ 487 00a8 7B68     		ldr	r3, [r7, #4]
+ 488 00aa 3B2B     		cmp	r3, #59
+ 489 00ac F6D8     		bhi	.L18
+ 293:../Src/smtc_hal/smtc_hal_rtc.c ****     }
+ 294:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 295:../Src/smtc_hal/smtc_hal_rtc.c ****     /* Calc seconds */
+ 296:../Src/smtc_hal/smtc_hal_rtc.c ****     rtc_alarm_seconds = time.Seconds + timeout;
+ 490              		.loc 1 296 29
+ 491 00ae BB7C     		ldrb	r3, [r7, #18]	@ zero_extendqisi2
+ 492 00b0 9AB2     		uxth	r2, r3
+ 493              		.loc 1 296 38
+ 494 00b2 7B68     		ldr	r3, [r7, #4]
+ 495 00b4 9BB2     		uxth	r3, r3
+ 496              		.loc 1 296 23
+ 497 00b6 1344     		add	r3, r3, r2
+ 498 00b8 BB85     		strh	r3, [r7, #44]	@ movhi
+ 297:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 298:../Src/smtc_hal/smtc_hal_rtc.c ****     /***** Correct for modulo*********/
+ 299:../Src/smtc_hal/smtc_hal_rtc.c ****     while( rtc_alarm_sub_seconds >= ( PREDIV_S + 1 ) )
+ 499              		.loc 1 299 10
+ 500 00ba 06E0     		b	.L19
+ 501              	.L20:
+ARM GAS  /tmp/ccviTP8r.s 			page 15
+
+
+ 300:../Src/smtc_hal/smtc_hal_rtc.c ****     {
+ 301:../Src/smtc_hal/smtc_hal_rtc.c ****         rtc_alarm_sub_seconds -= ( PREDIV_S + 1 );
+ 502              		.loc 1 301 31
+ 503 00bc FB8D     		ldrh	r3, [r7, #46]	@ movhi
+ 504 00be A3F58063 		sub	r3, r3, #1024
+ 505 00c2 FB85     		strh	r3, [r7, #46]	@ movhi
+ 302:../Src/smtc_hal/smtc_hal_rtc.c ****         rtc_alarm_seconds++;
+ 506              		.loc 1 302 26
+ 507 00c4 BB8D     		ldrh	r3, [r7, #44]
+ 508 00c6 0133     		adds	r3, r3, #1
+ 509 00c8 BB85     		strh	r3, [r7, #44]	@ movhi
+ 510              	.L19:
+ 299:../Src/smtc_hal/smtc_hal_rtc.c ****     {
+ 511              		.loc 1 299 10
+ 512 00ca FB8D     		ldrh	r3, [r7, #46]
+ 513 00cc B3F5806F 		cmp	r3, #1024
+ 514 00d0 F4D2     		bcs	.L20
+ 303:../Src/smtc_hal/smtc_hal_rtc.c ****     }
+ 304:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 305:../Src/smtc_hal/smtc_hal_rtc.c ****     while( rtc_alarm_seconds >= SECONDS_IN_1MINUTE )
+ 515              		.loc 1 305 10
+ 516 00d2 05E0     		b	.L21
+ 517              	.L22:
+ 306:../Src/smtc_hal/smtc_hal_rtc.c ****     {
+ 307:../Src/smtc_hal/smtc_hal_rtc.c ****         rtc_alarm_seconds -= SECONDS_IN_1MINUTE;
+ 518              		.loc 1 307 27
+ 519 00d4 BB8D     		ldrh	r3, [r7, #44]	@ movhi
+ 520 00d6 3C3B     		subs	r3, r3, #60
+ 521 00d8 BB85     		strh	r3, [r7, #44]	@ movhi
+ 308:../Src/smtc_hal/smtc_hal_rtc.c ****         rtc_alarm_minutes++;
+ 522              		.loc 1 308 26
+ 523 00da 7B8D     		ldrh	r3, [r7, #42]
+ 524 00dc 0133     		adds	r3, r3, #1
+ 525 00de 7B85     		strh	r3, [r7, #42]	@ movhi
+ 526              	.L21:
+ 305:../Src/smtc_hal/smtc_hal_rtc.c ****     {
+ 527              		.loc 1 305 10
+ 528 00e0 BB8D     		ldrh	r3, [r7, #44]
+ 529 00e2 3B2B     		cmp	r3, #59
+ 530 00e4 F6D8     		bhi	.L22
+ 309:../Src/smtc_hal/smtc_hal_rtc.c ****     }
+ 310:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 311:../Src/smtc_hal/smtc_hal_rtc.c ****     while( rtc_alarm_minutes >= MINUTES_IN_1HOUR )
+ 531              		.loc 1 311 10
+ 532 00e6 05E0     		b	.L23
+ 533              	.L24:
+ 312:../Src/smtc_hal/smtc_hal_rtc.c ****     {
+ 313:../Src/smtc_hal/smtc_hal_rtc.c ****         rtc_alarm_minutes -= MINUTES_IN_1HOUR;
+ 534              		.loc 1 313 27
+ 535 00e8 7B8D     		ldrh	r3, [r7, #42]	@ movhi
+ 536 00ea 3C3B     		subs	r3, r3, #60
+ 537 00ec 7B85     		strh	r3, [r7, #42]	@ movhi
+ 314:../Src/smtc_hal/smtc_hal_rtc.c ****         rtc_alarm_hours++;
+ 538              		.loc 1 314 24
+ 539 00ee 3B8D     		ldrh	r3, [r7, #40]
+ 540 00f0 0133     		adds	r3, r3, #1
+ 541 00f2 3B85     		strh	r3, [r7, #40]	@ movhi
+ARM GAS  /tmp/ccviTP8r.s 			page 16
+
+
+ 542              	.L23:
+ 311:../Src/smtc_hal/smtc_hal_rtc.c ****     {
+ 543              		.loc 1 311 10
+ 544 00f4 7B8D     		ldrh	r3, [r7, #42]
+ 545 00f6 3B2B     		cmp	r3, #59
+ 546 00f8 F6D8     		bhi	.L24
+ 315:../Src/smtc_hal/smtc_hal_rtc.c ****     }
+ 316:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 317:../Src/smtc_hal/smtc_hal_rtc.c ****     while( rtc_alarm_hours >= HOURS_IN_1DAY )
+ 547              		.loc 1 317 10
+ 548 00fa 05E0     		b	.L25
+ 549              	.L26:
+ 318:../Src/smtc_hal/smtc_hal_rtc.c ****     {
+ 319:../Src/smtc_hal/smtc_hal_rtc.c ****         rtc_alarm_hours -= HOURS_IN_1DAY;
+ 550              		.loc 1 319 25
+ 551 00fc 3B8D     		ldrh	r3, [r7, #40]	@ movhi
+ 552 00fe 183B     		subs	r3, r3, #24
+ 553 0100 3B85     		strh	r3, [r7, #40]	@ movhi
+ 320:../Src/smtc_hal/smtc_hal_rtc.c ****         rtc_alarm_days++;
+ 554              		.loc 1 320 23
+ 555 0102 FB8C     		ldrh	r3, [r7, #38]
+ 556 0104 0133     		adds	r3, r3, #1
+ 557 0106 FB84     		strh	r3, [r7, #38]	@ movhi
+ 558              	.L25:
+ 317:../Src/smtc_hal/smtc_hal_rtc.c ****     {
+ 559              		.loc 1 317 10
+ 560 0108 3B8D     		ldrh	r3, [r7, #40]
+ 561 010a 172B     		cmp	r3, #23
+ 562 010c F6D8     		bhi	.L26
+ 321:../Src/smtc_hal/smtc_hal_rtc.c ****     }
+ 322:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 323:../Src/smtc_hal/smtc_hal_rtc.c ****     if( date.Year % 4 == 0 )
+ 563              		.loc 1 323 13
+ 564 010e FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 565              		.loc 1 323 23
+ 566 0110 03F00303 		and	r3, r3, #3
+ 567 0114 DBB2     		uxtb	r3, r3
+ 568              		.loc 1 323 7
+ 569 0116 002B     		cmp	r3, #0
+ 570 0118 13D1     		bne	.L27
+ 324:../Src/smtc_hal/smtc_hal_rtc.c ****     {
+ 325:../Src/smtc_hal/smtc_hal_rtc.c ****         if( rtc_alarm_days > days_in_month_leap_year[date.Month - 1] )
+ 571              		.loc 1 325 58
+ 572 011a 7B7B     		ldrb	r3, [r7, #13]	@ zero_extendqisi2
+ 573              		.loc 1 325 65
+ 574 011c 013B     		subs	r3, r3, #1
+ 575              		.loc 1 325 53
+ 576 011e 304A     		ldr	r2, .L29+8
+ 577 0120 D35C     		ldrb	r3, [r2, r3]	@ zero_extendqisi2
+ 578 0122 9BB2     		uxth	r3, r3
+ 579              		.loc 1 325 11
+ 580 0124 FA8C     		ldrh	r2, [r7, #38]
+ 581 0126 9A42     		cmp	r2, r3
+ 582 0128 1ED9     		bls	.L28
+ 326:../Src/smtc_hal/smtc_hal_rtc.c ****         {
+ 327:../Src/smtc_hal/smtc_hal_rtc.c ****             rtc_alarm_days = rtc_alarm_days % days_in_month_leap_year[date.Month - 1];
+ 583              		.loc 1 327 45
+ARM GAS  /tmp/ccviTP8r.s 			page 17
+
+
+ 584 012a FB8C     		ldrh	r3, [r7, #38]
+ 585              		.loc 1 327 75
+ 586 012c 7A7B     		ldrb	r2, [r7, #13]	@ zero_extendqisi2
+ 587              		.loc 1 327 82
+ 588 012e 013A     		subs	r2, r2, #1
+ 589              		.loc 1 327 70
+ 590 0130 2B49     		ldr	r1, .L29+8
+ 591 0132 8A5C     		ldrb	r2, [r1, r2]	@ zero_extendqisi2
+ 592              		.loc 1 327 45
+ 593 0134 93FBF2F1 		sdiv	r1, r3, r2
+ 594 0138 01FB02F2 		mul	r2, r1, r2
+ 595 013c 9B1A     		subs	r3, r3, r2
+ 596              		.loc 1 327 28
+ 597 013e FB84     		strh	r3, [r7, #38]	@ movhi
+ 598 0140 12E0     		b	.L28
+ 599              	.L27:
+ 328:../Src/smtc_hal/smtc_hal_rtc.c ****         }
+ 329:../Src/smtc_hal/smtc_hal_rtc.c ****     }
+ 330:../Src/smtc_hal/smtc_hal_rtc.c ****     else
+ 331:../Src/smtc_hal/smtc_hal_rtc.c ****     {
+ 332:../Src/smtc_hal/smtc_hal_rtc.c ****         if( rtc_alarm_days > days_in_month[date.Month - 1] )
+ 600              		.loc 1 332 48
+ 601 0142 7B7B     		ldrb	r3, [r7, #13]	@ zero_extendqisi2
+ 602              		.loc 1 332 55
+ 603 0144 013B     		subs	r3, r3, #1
+ 604              		.loc 1 332 43
+ 605 0146 274A     		ldr	r2, .L29+12
+ 606 0148 D35C     		ldrb	r3, [r2, r3]	@ zero_extendqisi2
+ 607 014a 9BB2     		uxth	r3, r3
+ 608              		.loc 1 332 11
+ 609 014c FA8C     		ldrh	r2, [r7, #38]
+ 610 014e 9A42     		cmp	r2, r3
+ 611 0150 0AD9     		bls	.L28
+ 333:../Src/smtc_hal/smtc_hal_rtc.c ****         {
+ 334:../Src/smtc_hal/smtc_hal_rtc.c ****             rtc_alarm_days = rtc_alarm_days % days_in_month[date.Month - 1];
+ 612              		.loc 1 334 45
+ 613 0152 FB8C     		ldrh	r3, [r7, #38]
+ 614              		.loc 1 334 65
+ 615 0154 7A7B     		ldrb	r2, [r7, #13]	@ zero_extendqisi2
+ 616              		.loc 1 334 72
+ 617 0156 013A     		subs	r2, r2, #1
+ 618              		.loc 1 334 60
+ 619 0158 2249     		ldr	r1, .L29+12
+ 620 015a 8A5C     		ldrb	r2, [r1, r2]	@ zero_extendqisi2
+ 621              		.loc 1 334 45
+ 622 015c 93FBF2F1 		sdiv	r1, r3, r2
+ 623 0160 01FB02F2 		mul	r2, r1, r2
+ 624 0164 9B1A     		subs	r3, r3, r2
+ 625              		.loc 1 334 28
+ 626 0166 FB84     		strh	r3, [r7, #38]	@ movhi
+ 627              	.L28:
+ 335:../Src/smtc_hal/smtc_hal_rtc.c ****         }
+ 336:../Src/smtc_hal/smtc_hal_rtc.c ****     }
+ 337:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 338:../Src/smtc_hal/smtc_hal_rtc.c ****     /* Set RTC_AlarmStructure with calculated values */
+ 339:../Src/smtc_hal/smtc_hal_rtc.c ****     rtc_alarm.AlarmTime.SubSeconds     = PREDIV_S - rtc_alarm_sub_seconds;
+ 628              		.loc 1 339 51
+ARM GAS  /tmp/ccviTP8r.s 			page 18
+
+
+ 629 0168 FB8D     		ldrh	r3, [r7, #46]
+ 630 016a C3F57F73 		rsb	r3, r3, #1020
+ 631 016e 0333     		adds	r3, r3, #3
+ 632              		.loc 1 339 40
+ 633 0170 1D4A     		ldr	r2, .L29+16
+ 634 0172 5360     		str	r3, [r2, #4]
+ 340:../Src/smtc_hal/smtc_hal_rtc.c ****     rtc_alarm.AlarmSubSecondMask       = ALARM_SUBSECOND_MASK;
+ 635              		.loc 1 340 40
+ 636 0174 1C4B     		ldr	r3, .L29+16
+ 637 0176 4FF02062 		mov	r2, #167772160
+ 638 017a 9A61     		str	r2, [r3, #24]
+ 341:../Src/smtc_hal/smtc_hal_rtc.c ****     rtc_alarm.AlarmTime.Seconds        = rtc_alarm_seconds;
+ 639              		.loc 1 341 40
+ 640 017c BB8D     		ldrh	r3, [r7, #44]	@ movhi
+ 641 017e DAB2     		uxtb	r2, r3
+ 642 0180 194B     		ldr	r3, .L29+16
+ 643 0182 9A70     		strb	r2, [r3, #2]
+ 342:../Src/smtc_hal/smtc_hal_rtc.c ****     rtc_alarm.AlarmTime.Minutes        = rtc_alarm_minutes;
+ 644              		.loc 1 342 40
+ 645 0184 7B8D     		ldrh	r3, [r7, #42]	@ movhi
+ 646 0186 DAB2     		uxtb	r2, r3
+ 647 0188 174B     		ldr	r3, .L29+16
+ 648 018a 5A70     		strb	r2, [r3, #1]
+ 343:../Src/smtc_hal/smtc_hal_rtc.c ****     rtc_alarm.AlarmTime.Hours          = rtc_alarm_hours;
+ 649              		.loc 1 343 40
+ 650 018c 3B8D     		ldrh	r3, [r7, #40]	@ movhi
+ 651 018e DAB2     		uxtb	r2, r3
+ 652 0190 154B     		ldr	r3, .L29+16
+ 653 0192 1A70     		strb	r2, [r3]
+ 344:../Src/smtc_hal/smtc_hal_rtc.c ****     rtc_alarm.AlarmDateWeekDay         = ( uint8_t ) rtc_alarm_days;
+ 654              		.loc 1 344 42
+ 655 0194 FB8C     		ldrh	r3, [r7, #38]	@ movhi
+ 656 0196 DAB2     		uxtb	r2, r3
+ 657              		.loc 1 344 40
+ 658 0198 134B     		ldr	r3, .L29+16
+ 659 019a 83F82020 		strb	r2, [r3, #32]
+ 345:../Src/smtc_hal/smtc_hal_rtc.c ****     rtc_alarm.AlarmTime.TimeFormat     = time.TimeFormat;
+ 660              		.loc 1 345 46
+ 661 019e FA7C     		ldrb	r2, [r7, #19]	@ zero_extendqisi2
+ 662              		.loc 1 345 40
+ 663 01a0 114B     		ldr	r3, .L29+16
+ 664 01a2 DA70     		strb	r2, [r3, #3]
+ 346:../Src/smtc_hal/smtc_hal_rtc.c ****     rtc_alarm.AlarmDateWeekDaySel      = RTC_ALARMDATEWEEKDAYSEL_DATE;
+ 665              		.loc 1 346 40
+ 666 01a4 104B     		ldr	r3, .L29+16
+ 667 01a6 0022     		movs	r2, #0
+ 668 01a8 DA61     		str	r2, [r3, #28]
+ 347:../Src/smtc_hal/smtc_hal_rtc.c ****     rtc_alarm.AlarmMask                = RTC_ALARMMASK_NONE;
+ 669              		.loc 1 347 40
+ 670 01aa 0F4B     		ldr	r3, .L29+16
+ 671 01ac 0022     		movs	r2, #0
+ 672 01ae 5A61     		str	r2, [r3, #20]
+ 348:../Src/smtc_hal/smtc_hal_rtc.c ****     rtc_alarm.Alarm                    = RTC_ALARM_A;
+ 673              		.loc 1 348 40
+ 674 01b0 0D4B     		ldr	r3, .L29+16
+ 675 01b2 4FF48072 		mov	r2, #256
+ 676 01b6 5A62     		str	r2, [r3, #36]
+ARM GAS  /tmp/ccviTP8r.s 			page 19
+
+
+ 349:../Src/smtc_hal/smtc_hal_rtc.c ****     rtc_alarm.AlarmTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
+ 677              		.loc 1 349 40
+ 678 01b8 0B4B     		ldr	r3, .L29+16
+ 679 01ba 0022     		movs	r2, #0
+ 680 01bc DA60     		str	r2, [r3, #12]
+ 350:../Src/smtc_hal/smtc_hal_rtc.c ****     rtc_alarm.AlarmTime.StoreOperation = RTC_STOREOPERATION_RESET;
+ 681              		.loc 1 350 40
+ 682 01be 0A4B     		ldr	r3, .L29+16
+ 683 01c0 0022     		movs	r2, #0
+ 684 01c2 1A61     		str	r2, [r3, #16]
+ 351:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 352:../Src/smtc_hal/smtc_hal_rtc.c ****     /* Set RTC_Alarm */
+ 353:../Src/smtc_hal/smtc_hal_rtc.c ****     HAL_RTC_SetAlarm_IT( &hal_rtc.handle, &rtc_alarm, RTC_FORMAT_BIN );
+ 685              		.loc 1 353 5
+ 686 01c4 0022     		movs	r2, #0
+ 687 01c6 0849     		ldr	r1, .L29+16
+ 688 01c8 0348     		ldr	r0, .L29
+ 689 01ca FFF7FEFF 		bl	HAL_RTC_SetAlarm_IT
+ 354:../Src/smtc_hal/smtc_hal_rtc.c **** }
+ 690              		.loc 1 354 1
+ 691 01ce 00BF     		nop
+ 692 01d0 3037     		adds	r7, r7, #48
+ 693              	.LCFI20:
+ 694              		.cfi_def_cfa_offset 16
+ 695 01d2 BD46     		mov	sp, r7
+ 696              	.LCFI21:
+ 697              		.cfi_def_cfa_register 13
+ 698              		@ sp needed
+ 699 01d4 B0BD     		pop	{r4, r5, r7, pc}
+ 700              	.L30:
+ 701 01d6 00BF     		.align	2
+ 702              	.L29:
+ 703 01d8 00000000 		.word	hal_rtc
+ 704 01dc 7F510100 		.word	86399
+ 705 01e0 00000000 		.word	days_in_month_leap_year
+ 706 01e4 00000000 		.word	days_in_month
+ 707 01e8 00000000 		.word	rtc_alarm
+ 708              		.cfi_endproc
+ 709              	.LFE517:
+ 711              		.section	.text.hal_rtc_get_timer_value,"ax",%progbits
+ 712              		.align	1
+ 713              		.global	hal_rtc_get_timer_value
+ 714              		.syntax unified
+ 715              		.thumb
+ 716              		.thumb_func
+ 717              		.fpu fpv4-sp-d16
+ 719              	hal_rtc_get_timer_value:
+ 720              	.LFB518:
+ 355:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 356:../Src/smtc_hal/smtc_hal_rtc.c **** uint32_t hal_rtc_get_timer_value( void )
+ 357:../Src/smtc_hal/smtc_hal_rtc.c **** {
+ 721              		.loc 1 357 1
+ 722              		.cfi_startproc
+ 723              		@ args = 0, pretend = 0, frame = 32
+ 724              		@ frame_needed = 1, uses_anonymous_args = 0
+ 725 0000 80B5     		push	{r7, lr}
+ 726              	.LCFI22:
+ARM GAS  /tmp/ccviTP8r.s 			page 20
+
+
+ 727              		.cfi_def_cfa_offset 8
+ 728              		.cfi_offset 7, -8
+ 729              		.cfi_offset 14, -4
+ 730 0002 88B0     		sub	sp, sp, #32
+ 731              	.LCFI23:
+ 732              		.cfi_def_cfa_offset 40
+ 733 0004 00AF     		add	r7, sp, #0
+ 734              	.LCFI24:
+ 735              		.cfi_def_cfa_register 7
+ 358:../Src/smtc_hal/smtc_hal_rtc.c ****     RTC_TimeTypeDef time;
+ 359:../Src/smtc_hal/smtc_hal_rtc.c ****     RTC_DateTypeDef date;
+ 360:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 361:../Src/smtc_hal/smtc_hal_rtc.c ****     uint32_t timestamp_value = ( uint32_t ) rtc_get_timestamp_in_ticks( &date, &time );
+ 736              		.loc 1 361 45
+ 737 0006 07F10802 		add	r2, r7, #8
+ 738 000a 3B1D     		adds	r3, r7, #4
+ 739 000c 1146     		mov	r1, r2
+ 740 000e 1846     		mov	r0, r3
+ 741 0010 FFF7FEFF 		bl	rtc_get_timestamp_in_ticks
+ 742 0014 0246     		mov	r2, r0
+ 743 0016 0B46     		mov	r3, r1
+ 744              		.loc 1 361 14
+ 745 0018 1346     		mov	r3, r2
+ 746 001a FB61     		str	r3, [r7, #28]
+ 362:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 363:../Src/smtc_hal/smtc_hal_rtc.c ****     return ( timestamp_value );
+ 747              		.loc 1 363 12
+ 748 001c FB69     		ldr	r3, [r7, #28]
+ 364:../Src/smtc_hal/smtc_hal_rtc.c **** }
+ 749              		.loc 1 364 1
+ 750 001e 1846     		mov	r0, r3
+ 751 0020 2037     		adds	r7, r7, #32
+ 752              	.LCFI25:
+ 753              		.cfi_def_cfa_offset 8
+ 754 0022 BD46     		mov	sp, r7
+ 755              	.LCFI26:
+ 756              		.cfi_def_cfa_register 13
+ 757              		@ sp needed
+ 758 0024 80BD     		pop	{r7, pc}
+ 759              		.cfi_endproc
+ 760              	.LFE518:
+ 762              		.section	.text.hal_rtc_get_timer_elapsed_value,"ax",%progbits
+ 763              		.align	1
+ 764              		.global	hal_rtc_get_timer_elapsed_value
+ 765              		.syntax unified
+ 766              		.thumb
+ 767              		.thumb_func
+ 768              		.fpu fpv4-sp-d16
+ 770              	hal_rtc_get_timer_elapsed_value:
+ 771              	.LFB519:
+ 365:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 366:../Src/smtc_hal/smtc_hal_rtc.c **** uint32_t hal_rtc_get_timer_elapsed_value( void )
+ 367:../Src/smtc_hal/smtc_hal_rtc.c **** {
+ 772              		.loc 1 367 1
+ 773              		.cfi_startproc
+ 774              		@ args = 0, pretend = 0, frame = 32
+ 775              		@ frame_needed = 1, uses_anonymous_args = 0
+ARM GAS  /tmp/ccviTP8r.s 			page 21
+
+
+ 776 0000 80B5     		push	{r7, lr}
+ 777              	.LCFI27:
+ 778              		.cfi_def_cfa_offset 8
+ 779              		.cfi_offset 7, -8
+ 780              		.cfi_offset 14, -4
+ 781 0002 88B0     		sub	sp, sp, #32
+ 782              	.LCFI28:
+ 783              		.cfi_def_cfa_offset 40
+ 784 0004 00AF     		add	r7, sp, #0
+ 785              	.LCFI29:
+ 786              		.cfi_def_cfa_register 7
+ 368:../Src/smtc_hal/smtc_hal_rtc.c ****     RTC_TimeTypeDef time;
+ 369:../Src/smtc_hal/smtc_hal_rtc.c ****     RTC_DateTypeDef date;
+ 370:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 371:../Src/smtc_hal/smtc_hal_rtc.c ****     uint32_t timestamp_value = ( uint32_t ) rtc_get_timestamp_in_ticks( &date, &time );
+ 787              		.loc 1 371 45
+ 788 0006 07F10802 		add	r2, r7, #8
+ 789 000a 3B1D     		adds	r3, r7, #4
+ 790 000c 1146     		mov	r1, r2
+ 791 000e 1846     		mov	r0, r3
+ 792 0010 FFF7FEFF 		bl	rtc_get_timestamp_in_ticks
+ 793 0014 0246     		mov	r2, r0
+ 794 0016 0B46     		mov	r3, r1
+ 795              		.loc 1 371 14
+ 796 0018 1346     		mov	r3, r2
+ 797 001a FB61     		str	r3, [r7, #28]
+ 372:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 373:../Src/smtc_hal/smtc_hal_rtc.c ****     return ( ( uint32_t )( timestamp_value - hal_rtc.context.time_ref_in_ticks ) );
+ 798              		.loc 1 373 61
+ 799 001c 034B     		ldr	r3, .L35
+ 800 001e 5B6A     		ldr	r3, [r3, #36]
+ 801              		.loc 1 373 14
+ 802 0020 FA69     		ldr	r2, [r7, #28]
+ 803 0022 D31A     		subs	r3, r2, r3
+ 374:../Src/smtc_hal/smtc_hal_rtc.c **** }
+ 804              		.loc 1 374 1
+ 805 0024 1846     		mov	r0, r3
+ 806 0026 2037     		adds	r7, r7, #32
+ 807              	.LCFI30:
+ 808              		.cfi_def_cfa_offset 8
+ 809 0028 BD46     		mov	sp, r7
+ 810              	.LCFI31:
+ 811              		.cfi_def_cfa_register 13
+ 812              		@ sp needed
+ 813 002a 80BD     		pop	{r7, pc}
+ 814              	.L36:
+ 815              		.align	2
+ 816              	.L35:
+ 817 002c 00000000 		.word	hal_rtc
+ 818              		.cfi_endproc
+ 819              	.LFE519:
+ 821              		.section	.text.hal_rtc_delay_in_ms,"ax",%progbits
+ 822              		.align	1
+ 823              		.global	hal_rtc_delay_in_ms
+ 824              		.syntax unified
+ 825              		.thumb
+ 826              		.thumb_func
+ARM GAS  /tmp/ccviTP8r.s 			page 22
+
+
+ 827              		.fpu fpv4-sp-d16
+ 829              	hal_rtc_delay_in_ms:
+ 830              	.LFB520:
+ 375:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 376:../Src/smtc_hal/smtc_hal_rtc.c **** void hal_rtc_delay_in_ms( const uint32_t milliseconds )
+ 377:../Src/smtc_hal/smtc_hal_rtc.c **** {
+ 831              		.loc 1 377 1
+ 832              		.cfi_startproc
+ 833              		@ args = 0, pretend = 0, frame = 48
+ 834              		@ frame_needed = 1, uses_anonymous_args = 0
+ 835 0000 2DE9B043 		push	{r4, r5, r7, r8, r9, lr}
+ 836              	.LCFI32:
+ 837              		.cfi_def_cfa_offset 24
+ 838              		.cfi_offset 4, -24
+ 839              		.cfi_offset 5, -20
+ 840              		.cfi_offset 7, -16
+ 841              		.cfi_offset 8, -12
+ 842              		.cfi_offset 9, -8
+ 843              		.cfi_offset 14, -4
+ 844 0004 8CB0     		sub	sp, sp, #48
+ 845              	.LCFI33:
+ 846              		.cfi_def_cfa_offset 72
+ 847 0006 00AF     		add	r7, sp, #0
+ 848              	.LCFI34:
+ 849              		.cfi_def_cfa_register 7
+ 850 0008 7860     		str	r0, [r7, #4]
+ 378:../Src/smtc_hal/smtc_hal_rtc.c ****     RTC_TimeTypeDef time;
+ 379:../Src/smtc_hal/smtc_hal_rtc.c ****     RTC_DateTypeDef date;
+ 380:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 381:../Src/smtc_hal/smtc_hal_rtc.c ****     uint64_t delay_in_ticks     = 0;
+ 851              		.loc 1 381 14
+ 852 000a 4FF00002 		mov	r2, #0
+ 853 000e 4FF00003 		mov	r3, #0
+ 854 0012 C7E90A23 		strd	r2, [r7, #40]
+ 382:../Src/smtc_hal/smtc_hal_rtc.c ****     uint64_t ref_delay_in_ticks = rtc_get_timestamp_in_ticks( &date, &time );
+ 855              		.loc 1 382 35
+ 856 0016 07F10C02 		add	r2, r7, #12
+ 857 001a 07F10803 		add	r3, r7, #8
+ 858 001e 1146     		mov	r1, r2
+ 859 0020 1846     		mov	r0, r3
+ 860 0022 FFF7FEFF 		bl	rtc_get_timestamp_in_ticks
+ 861 0026 C7E90801 		strd	r0, [r7, #32]
+ 383:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 384:../Src/smtc_hal/smtc_hal_rtc.c ****     delay_in_ticks = hal_rtc_ms_2_tick( milliseconds );
+ 862              		.loc 1 384 22
+ 863 002a 7868     		ldr	r0, [r7, #4]
+ 864 002c FFF7FEFF 		bl	hal_rtc_ms_2_tick
+ 865 0030 0346     		mov	r3, r0
+ 866              		.loc 1 384 20
+ 867 0032 0022     		movs	r2, #0
+ 868 0034 9846     		mov	r8, r3
+ 869 0036 9146     		mov	r9, r2
+ 870 0038 C7E90A89 		strd	r8, [r7, #40]
+ 385:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 386:../Src/smtc_hal/smtc_hal_rtc.c ****     /* Wait delay ms */
+ 387:../Src/smtc_hal/smtc_hal_rtc.c ****     while( ( ( rtc_get_timestamp_in_ticks( &date, &time ) - ref_delay_in_ticks ) ) < delay_in_ticks
+ 871              		.loc 1 387 10
+ARM GAS  /tmp/ccviTP8r.s 			page 23
+
+
+ 872 003c 00E0     		b	.L38
+ 873              	.L39:
+ 388:../Src/smtc_hal/smtc_hal_rtc.c ****     {
+ 389:../Src/smtc_hal/smtc_hal_rtc.c ****         __NOP( );
+ 874              		.loc 1 389 9
+ 875              		.syntax unified
+ 876              	@ 389 "../Src/smtc_hal/smtc_hal_rtc.c" 1
+ 877 003e 00BF     		nop
+ 878              	@ 0 "" 2
+ 879              		.thumb
+ 880              		.syntax unified
+ 881              	.L38:
+ 387:../Src/smtc_hal/smtc_hal_rtc.c ****     {
+ 882              		.loc 1 387 16
+ 883 0040 07F10C02 		add	r2, r7, #12
+ 884 0044 07F10803 		add	r3, r7, #8
+ 885 0048 1146     		mov	r1, r2
+ 886 004a 1846     		mov	r0, r3
+ 887 004c FFF7FEFF 		bl	rtc_get_timestamp_in_ticks
+ 387:../Src/smtc_hal/smtc_hal_rtc.c ****     {
+ 888              		.loc 1 387 59
+ 889 0050 D7E90823 		ldrd	r2, [r7, #32]
+ 890 0054 841A     		subs	r4, r0, r2
+ 891 0056 61EB0305 		sbc	r5, r1, r3
+ 387:../Src/smtc_hal/smtc_hal_rtc.c ****     {
+ 892              		.loc 1 387 10
+ 893 005a D7E90A23 		ldrd	r2, [r7, #40]
+ 894 005e 9442     		cmp	r4, r2
+ 895 0060 75EB0303 		sbcs	r3, r5, r3
+ 896 0064 EBD3     		bcc	.L39
+ 390:../Src/smtc_hal/smtc_hal_rtc.c ****     }
+ 391:../Src/smtc_hal/smtc_hal_rtc.c **** }
+ 897              		.loc 1 391 1
+ 898 0066 00BF     		nop
+ 899 0068 00BF     		nop
+ 900 006a 3037     		adds	r7, r7, #48
+ 901              	.LCFI35:
+ 902              		.cfi_def_cfa_offset 24
+ 903 006c BD46     		mov	sp, r7
+ 904              	.LCFI36:
+ 905              		.cfi_def_cfa_register 13
+ 906              		@ sp needed
+ 907 006e BDE8B083 		pop	{r4, r5, r7, r8, r9, pc}
+ 908              		.cfi_endproc
+ 909              	.LFE520:
+ 911              		.section	.text.hal_rtc_wakeup_timer_set_s,"ax",%progbits
+ 912              		.align	1
+ 913              		.global	hal_rtc_wakeup_timer_set_s
+ 914              		.syntax unified
+ 915              		.thumb
+ 916              		.thumb_func
+ 917              		.fpu fpv4-sp-d16
+ 919              	hal_rtc_wakeup_timer_set_s:
+ 920              	.LFB521:
+ 392:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 393:../Src/smtc_hal/smtc_hal_rtc.c **** void hal_rtc_wakeup_timer_set_s( const int32_t seconds )
+ 394:../Src/smtc_hal/smtc_hal_rtc.c **** {
+ARM GAS  /tmp/ccviTP8r.s 			page 24
+
+
+ 921              		.loc 1 394 1
+ 922              		.cfi_startproc
+ 923              		@ args = 0, pretend = 0, frame = 16
+ 924              		@ frame_needed = 1, uses_anonymous_args = 0
+ 925 0000 80B5     		push	{r7, lr}
+ 926              	.LCFI37:
+ 927              		.cfi_def_cfa_offset 8
+ 928              		.cfi_offset 7, -8
+ 929              		.cfi_offset 14, -4
+ 930 0002 84B0     		sub	sp, sp, #16
+ 931              	.LCFI38:
+ 932              		.cfi_def_cfa_offset 24
+ 933 0004 00AF     		add	r7, sp, #0
+ 934              	.LCFI39:
+ 935              		.cfi_def_cfa_register 7
+ 936 0006 7860     		str	r0, [r7, #4]
+ 395:../Src/smtc_hal/smtc_hal_rtc.c ****     uint32_t delay_s_2_tick = hal_rtc_s_2_wakeup_timer_tick( seconds );
+ 937              		.loc 1 395 31
+ 938 0008 7B68     		ldr	r3, [r7, #4]
+ 939 000a 1846     		mov	r0, r3
+ 940 000c FFF7FEFF 		bl	hal_rtc_s_2_wakeup_timer_tick
+ 941 0010 F860     		str	r0, [r7, #12]
+ 396:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 397:../Src/smtc_hal/smtc_hal_rtc.c ****     HAL_RTCEx_SetWakeUpTimer_IT( &hal_rtc.handle, delay_s_2_tick, RTC_WAKEUPCLOCK_CK_SPRE_16BITS );
+ 942              		.loc 1 397 5
+ 943 0012 0422     		movs	r2, #4
+ 944 0014 F968     		ldr	r1, [r7, #12]
+ 945 0016 0348     		ldr	r0, .L41
+ 946 0018 FFF7FEFF 		bl	HAL_RTCEx_SetWakeUpTimer_IT
+ 398:../Src/smtc_hal/smtc_hal_rtc.c **** }
+ 947              		.loc 1 398 1
+ 948 001c 00BF     		nop
+ 949 001e 1037     		adds	r7, r7, #16
+ 950              	.LCFI40:
+ 951              		.cfi_def_cfa_offset 8
+ 952 0020 BD46     		mov	sp, r7
+ 953              	.LCFI41:
+ 954              		.cfi_def_cfa_register 13
+ 955              		@ sp needed
+ 956 0022 80BD     		pop	{r7, pc}
+ 957              	.L42:
+ 958              		.align	2
+ 959              	.L41:
+ 960 0024 00000000 		.word	hal_rtc
+ 961              		.cfi_endproc
+ 962              	.LFE521:
+ 964              		.section	.text.hal_rtc_wakeup_timer_set_ms,"ax",%progbits
+ 965              		.align	1
+ 966              		.global	hal_rtc_wakeup_timer_set_ms
+ 967              		.syntax unified
+ 968              		.thumb
+ 969              		.thumb_func
+ 970              		.fpu fpv4-sp-d16
+ 972              	hal_rtc_wakeup_timer_set_ms:
+ 973              	.LFB522:
+ 399:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 400:../Src/smtc_hal/smtc_hal_rtc.c **** void hal_rtc_wakeup_timer_set_ms( const int32_t milliseconds )
+ARM GAS  /tmp/ccviTP8r.s 			page 25
+
+
+ 401:../Src/smtc_hal/smtc_hal_rtc.c **** {
+ 974              		.loc 1 401 1
+ 975              		.cfi_startproc
+ 976              		@ args = 0, pretend = 0, frame = 16
+ 977              		@ frame_needed = 1, uses_anonymous_args = 0
+ 978 0000 80B5     		push	{r7, lr}
+ 979              	.LCFI42:
+ 980              		.cfi_def_cfa_offset 8
+ 981              		.cfi_offset 7, -8
+ 982              		.cfi_offset 14, -4
+ 983 0002 84B0     		sub	sp, sp, #16
+ 984              	.LCFI43:
+ 985              		.cfi_def_cfa_offset 24
+ 986 0004 00AF     		add	r7, sp, #0
+ 987              	.LCFI44:
+ 988              		.cfi_def_cfa_register 7
+ 989 0006 7860     		str	r0, [r7, #4]
+ 402:../Src/smtc_hal/smtc_hal_rtc.c ****     uint32_t delay_ms_2_tick = hal_rtc_ms_2_wakeup_timer_tick( milliseconds );
+ 990              		.loc 1 402 32
+ 991 0008 7B68     		ldr	r3, [r7, #4]
+ 992 000a 1846     		mov	r0, r3
+ 993 000c FFF7FEFF 		bl	hal_rtc_ms_2_wakeup_timer_tick
+ 994 0010 F860     		str	r0, [r7, #12]
+ 403:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 404:../Src/smtc_hal/smtc_hal_rtc.c ****     HAL_RTCEx_DeactivateWakeUpTimer( &hal_rtc.handle );
+ 995              		.loc 1 404 5
+ 996 0012 0648     		ldr	r0, .L44
+ 997 0014 FFF7FEFF 		bl	HAL_RTCEx_DeactivateWakeUpTimer
+ 405:../Src/smtc_hal/smtc_hal_rtc.c ****     HAL_RTCEx_SetWakeUpTimer_IT( &hal_rtc.handle, delay_ms_2_tick, RTC_WAKEUPCLOCK_RTCCLK_DIV16 );
+ 998              		.loc 1 405 5
+ 999 0018 0022     		movs	r2, #0
+ 1000 001a F968     		ldr	r1, [r7, #12]
+ 1001 001c 0348     		ldr	r0, .L44
+ 1002 001e FFF7FEFF 		bl	HAL_RTCEx_SetWakeUpTimer_IT
+ 406:../Src/smtc_hal/smtc_hal_rtc.c **** }
+ 1003              		.loc 1 406 1
+ 1004 0022 00BF     		nop
+ 1005 0024 1037     		adds	r7, r7, #16
+ 1006              	.LCFI45:
+ 1007              		.cfi_def_cfa_offset 8
+ 1008 0026 BD46     		mov	sp, r7
+ 1009              	.LCFI46:
+ 1010              		.cfi_def_cfa_register 13
+ 1011              		@ sp needed
+ 1012 0028 80BD     		pop	{r7, pc}
+ 1013              	.L45:
+ 1014 002a 00BF     		.align	2
+ 1015              	.L44:
+ 1016 002c 00000000 		.word	hal_rtc
+ 1017              		.cfi_endproc
+ 1018              	.LFE522:
+ 1020              		.section	.text.hal_rtc_stop_timer,"ax",%progbits
+ 1021              		.align	1
+ 1022              		.global	hal_rtc_stop_timer
+ 1023              		.syntax unified
+ 1024              		.thumb
+ 1025              		.thumb_func
+ARM GAS  /tmp/ccviTP8r.s 			page 26
+
+
+ 1026              		.fpu fpv4-sp-d16
+ 1028              	hal_rtc_stop_timer:
+ 1029              	.LFB523:
+ 407:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 408:../Src/smtc_hal/smtc_hal_rtc.c **** void hal_rtc_stop_timer( void ) { HAL_RTCEx_DeactivateWakeUpTimer( &hal_rtc.handle ); }
+ 1030              		.loc 1 408 33
+ 1031              		.cfi_startproc
+ 1032              		@ args = 0, pretend = 0, frame = 0
+ 1033              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1034 0000 80B5     		push	{r7, lr}
+ 1035              	.LCFI47:
+ 1036              		.cfi_def_cfa_offset 8
+ 1037              		.cfi_offset 7, -8
+ 1038              		.cfi_offset 14, -4
+ 1039 0002 00AF     		add	r7, sp, #0
+ 1040              	.LCFI48:
+ 1041              		.cfi_def_cfa_register 7
+ 1042              		.loc 1 408 35
+ 1043 0004 0248     		ldr	r0, .L47
+ 1044 0006 FFF7FEFF 		bl	HAL_RTCEx_DeactivateWakeUpTimer
+ 1045              		.loc 1 408 87
+ 1046 000a 00BF     		nop
+ 1047 000c 80BD     		pop	{r7, pc}
+ 1048              	.L48:
+ 1049 000e 00BF     		.align	2
+ 1050              	.L47:
+ 1051 0010 00000000 		.word	hal_rtc
+ 1052              		.cfi_endproc
+ 1053              	.LFE523:
+ 1055              		.section	.text.hal_rtc_set_time_ref_in_ticks,"ax",%progbits
+ 1056              		.align	1
+ 1057              		.global	hal_rtc_set_time_ref_in_ticks
+ 1058              		.syntax unified
+ 1059              		.thumb
+ 1060              		.thumb_func
+ 1061              		.fpu fpv4-sp-d16
+ 1063              	hal_rtc_set_time_ref_in_ticks:
+ 1064              	.LFB524:
+ 409:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 410:../Src/smtc_hal/smtc_hal_rtc.c **** uint32_t hal_rtc_set_time_ref_in_ticks( void )
+ 411:../Src/smtc_hal/smtc_hal_rtc.c **** {
+ 1065              		.loc 1 411 1
+ 1066              		.cfi_startproc
+ 1067              		@ args = 0, pretend = 0, frame = 0
+ 1068              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1069 0000 80B5     		push	{r7, lr}
+ 1070              	.LCFI49:
+ 1071              		.cfi_def_cfa_offset 8
+ 1072              		.cfi_offset 7, -8
+ 1073              		.cfi_offset 14, -4
+ 1074 0002 00AF     		add	r7, sp, #0
+ 1075              	.LCFI50:
+ 1076              		.cfi_def_cfa_register 7
+ 412:../Src/smtc_hal/smtc_hal_rtc.c ****     hal_rtc.context.time_ref_in_ticks =
+ 413:../Src/smtc_hal/smtc_hal_rtc.c ****         ( uint32_t ) rtc_get_timestamp_in_ticks( &hal_rtc.context.calendar_date, &hal_rtc.context.c
+ 1077              		.loc 1 413 22
+ 1078 0004 0549     		ldr	r1, .L51
+ARM GAS  /tmp/ccviTP8r.s 			page 27
+
+
+ 1079 0006 0648     		ldr	r0, .L51+4
+ 1080 0008 FFF7FEFF 		bl	rtc_get_timestamp_in_ticks
+ 1081 000c 0246     		mov	r2, r0
+ 1082 000e 0B46     		mov	r3, r1
+ 412:../Src/smtc_hal/smtc_hal_rtc.c ****     hal_rtc.context.time_ref_in_ticks =
+ 1083              		.loc 1 412 39
+ 1084 0010 044B     		ldr	r3, .L51+8
+ 1085 0012 5A62     		str	r2, [r3, #36]
+ 414:../Src/smtc_hal/smtc_hal_rtc.c ****     return hal_rtc.context.time_ref_in_ticks;
+ 1086              		.loc 1 414 27
+ 1087 0014 034B     		ldr	r3, .L51+8
+ 1088 0016 5B6A     		ldr	r3, [r3, #36]
+ 415:../Src/smtc_hal/smtc_hal_rtc.c **** }
+ 1089              		.loc 1 415 1
+ 1090 0018 1846     		mov	r0, r3
+ 1091 001a 80BD     		pop	{r7, pc}
+ 1092              	.L52:
+ 1093              		.align	2
+ 1094              	.L51:
+ 1095 001c 28000000 		.word	hal_rtc+40
+ 1096 0020 3C000000 		.word	hal_rtc+60
+ 1097 0024 00000000 		.word	hal_rtc
+ 1098              		.cfi_endproc
+ 1099              	.LFE524:
+ 1101              		.section	.text.hal_rtc_get_time_ref_in_ticks,"ax",%progbits
+ 1102              		.align	1
+ 1103              		.global	hal_rtc_get_time_ref_in_ticks
+ 1104              		.syntax unified
+ 1105              		.thumb
+ 1106              		.thumb_func
+ 1107              		.fpu fpv4-sp-d16
+ 1109              	hal_rtc_get_time_ref_in_ticks:
+ 1110              	.LFB525:
+ 416:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 417:../Src/smtc_hal/smtc_hal_rtc.c **** uint32_t hal_rtc_get_time_ref_in_ticks( void ) { return hal_rtc.context.time_ref_in_ticks; }
+ 1111              		.loc 1 417 48
+ 1112              		.cfi_startproc
+ 1113              		@ args = 0, pretend = 0, frame = 0
+ 1114              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1115              		@ link register save eliminated.
+ 1116 0000 80B4     		push	{r7}
+ 1117              	.LCFI51:
+ 1118              		.cfi_def_cfa_offset 4
+ 1119              		.cfi_offset 7, -4
+ 1120 0002 00AF     		add	r7, sp, #0
+ 1121              	.LCFI52:
+ 1122              		.cfi_def_cfa_register 7
+ 1123              		.loc 1 417 72
+ 1124 0004 034B     		ldr	r3, .L55
+ 1125 0006 5B6A     		ldr	r3, [r3, #36]
+ 1126              		.loc 1 417 92
+ 1127 0008 1846     		mov	r0, r3
+ 1128 000a BD46     		mov	sp, r7
+ 1129              	.LCFI53:
+ 1130              		.cfi_def_cfa_register 13
+ 1131              		@ sp needed
+ 1132 000c 5DF8047B 		ldr	r7, [sp], #4
+ARM GAS  /tmp/ccviTP8r.s 			page 28
+
+
+ 1133              	.LCFI54:
+ 1134              		.cfi_restore 7
+ 1135              		.cfi_def_cfa_offset 0
+ 1136 0010 7047     		bx	lr
+ 1137              	.L56:
+ 1138 0012 00BF     		.align	2
+ 1139              	.L55:
+ 1140 0014 00000000 		.word	hal_rtc
+ 1141              		.cfi_endproc
+ 1142              	.LFE525:
+ 1144              		.global	__aeabi_uldivmod
+ 1145              		.section	.text.hal_rtc_ms_2_tick,"ax",%progbits
+ 1146              		.align	1
+ 1147              		.global	hal_rtc_ms_2_tick
+ 1148              		.syntax unified
+ 1149              		.thumb
+ 1150              		.thumb_func
+ 1151              		.fpu fpv4-sp-d16
+ 1153              	hal_rtc_ms_2_tick:
+ 1154              	.LFB526:
+ 418:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 419:../Src/smtc_hal/smtc_hal_rtc.c **** uint32_t hal_rtc_ms_2_tick( const uint32_t milliseconds )
+ 420:../Src/smtc_hal/smtc_hal_rtc.c **** {
+ 1155              		.loc 1 420 1
+ 1156              		.cfi_startproc
+ 1157              		@ args = 0, pretend = 0, frame = 8
+ 1158              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1159 0000 80B5     		push	{r7, lr}
+ 1160              	.LCFI55:
+ 1161              		.cfi_def_cfa_offset 8
+ 1162              		.cfi_offset 7, -8
+ 1163              		.cfi_offset 14, -4
+ 1164 0002 82B0     		sub	sp, sp, #8
+ 1165              	.LCFI56:
+ 1166              		.cfi_def_cfa_offset 16
+ 1167 0004 00AF     		add	r7, sp, #0
+ 1168              	.LCFI57:
+ 1169              		.cfi_def_cfa_register 7
+ 1170 0006 7860     		str	r0, [r7, #4]
+ 421:../Src/smtc_hal/smtc_hal_rtc.c ****     return ( uint32_t )( ( ( ( uint64_t ) milliseconds ) * CONV_DENOM ) / CONV_NUMER );
+ 1171              		.loc 1 421 30
+ 1172 0008 7968     		ldr	r1, [r7, #4]
+ 1173 000a 0020     		movs	r0, #0
+ 1174 000c 0A46     		mov	r2, r1
+ 1175 000e 0346     		mov	r3, r0
+ 1176              		.loc 1 421 58
+ 1177 0010 4FF00000 		mov	r0, #0
+ 1178 0014 4FF00001 		mov	r1, #0
+ 1179 0018 D901     		lsls	r1, r3, #7
+ 1180 001a 41EA5261 		orr	r1, r1, r2, lsr #25
+ 1181 001e D001     		lsls	r0, r2, #7
+ 1182              		.loc 1 421 73
+ 1183 0020 4FF07D02 		mov	r2, #125
+ 1184 0024 4FF00003 		mov	r3, #0
+ 1185 0028 FFF7FEFF 		bl	__aeabi_uldivmod
+ 1186 002c 0246     		mov	r2, r0
+ 1187 002e 0B46     		mov	r3, r1
+ARM GAS  /tmp/ccviTP8r.s 			page 29
+
+
+ 1188              		.loc 1 421 12
+ 1189 0030 1346     		mov	r3, r2
+ 422:../Src/smtc_hal/smtc_hal_rtc.c **** }
+ 1190              		.loc 1 422 1
+ 1191 0032 1846     		mov	r0, r3
+ 1192 0034 0837     		adds	r7, r7, #8
+ 1193              	.LCFI58:
+ 1194              		.cfi_def_cfa_offset 8
+ 1195 0036 BD46     		mov	sp, r7
+ 1196              	.LCFI59:
+ 1197              		.cfi_def_cfa_register 13
+ 1198              		@ sp needed
+ 1199 0038 80BD     		pop	{r7, pc}
+ 1200              		.cfi_endproc
+ 1201              	.LFE526:
+ 1203              		.section	.text.hal_rtc_tick_2_ms,"ax",%progbits
+ 1204              		.align	1
+ 1205              		.global	hal_rtc_tick_2_ms
+ 1206              		.syntax unified
+ 1207              		.thumb
+ 1208              		.thumb_func
+ 1209              		.fpu fpv4-sp-d16
+ 1211              	hal_rtc_tick_2_ms:
+ 1212              	.LFB527:
+ 423:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 424:../Src/smtc_hal/smtc_hal_rtc.c **** uint32_t hal_rtc_tick_2_ms( const uint32_t tick )
+ 425:../Src/smtc_hal/smtc_hal_rtc.c **** {
+ 1213              		.loc 1 425 1
+ 1214              		.cfi_startproc
+ 1215              		@ args = 0, pretend = 0, frame = 16
+ 1216              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1217              		@ link register save eliminated.
+ 1218 0000 80B4     		push	{r7}
+ 1219              	.LCFI60:
+ 1220              		.cfi_def_cfa_offset 4
+ 1221              		.cfi_offset 7, -4
+ 1222 0002 85B0     		sub	sp, sp, #20
+ 1223              	.LCFI61:
+ 1224              		.cfi_def_cfa_offset 24
+ 1225 0004 00AF     		add	r7, sp, #0
+ 1226              	.LCFI62:
+ 1227              		.cfi_def_cfa_register 7
+ 1228 0006 7860     		str	r0, [r7, #4]
+ 426:../Src/smtc_hal/smtc_hal_rtc.c ****     uint32_t seconds    = tick >> N_PREDIV_S;
+ 1229              		.loc 1 426 14
+ 1230 0008 7B68     		ldr	r3, [r7, #4]
+ 1231 000a 9B0A     		lsrs	r3, r3, #10
+ 1232 000c FB60     		str	r3, [r7, #12]
+ 427:../Src/smtc_hal/smtc_hal_rtc.c ****     uint32_t local_tick = tick & PREDIV_S;
+ 1233              		.loc 1 427 14
+ 1234 000e 7B68     		ldr	r3, [r7, #4]
+ 1235 0010 C3F30903 		ubfx	r3, r3, #0, #10
+ 1236 0014 BB60     		str	r3, [r7, #8]
+ 428:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 429:../Src/smtc_hal/smtc_hal_rtc.c ****     return ( uint32_t )( ( seconds * 1000 ) + ( ( local_tick * 1000 ) >> N_PREDIV_S ) );
+ 1237              		.loc 1 429 36
+ 1238 0016 FB68     		ldr	r3, [r7, #12]
+ARM GAS  /tmp/ccviTP8r.s 			page 30
+
+
+ 1239 0018 4FF47A72 		mov	r2, #1000
+ 1240 001c 03FB02F2 		mul	r2, r3, r2
+ 1241              		.loc 1 429 62
+ 1242 0020 BB68     		ldr	r3, [r7, #8]
+ 1243 0022 4FF47A71 		mov	r1, #1000
+ 1244 0026 01FB03F3 		mul	r3, r1, r3
+ 1245              		.loc 1 429 71
+ 1246 002a 9B0A     		lsrs	r3, r3, #10
+ 1247              		.loc 1 429 12
+ 1248 002c 1344     		add	r3, r3, r2
+ 430:../Src/smtc_hal/smtc_hal_rtc.c **** }
+ 1249              		.loc 1 430 1
+ 1250 002e 1846     		mov	r0, r3
+ 1251 0030 1437     		adds	r7, r7, #20
+ 1252              	.LCFI63:
+ 1253              		.cfi_def_cfa_offset 4
+ 1254 0032 BD46     		mov	sp, r7
+ 1255              	.LCFI64:
+ 1256              		.cfi_def_cfa_register 13
+ 1257              		@ sp needed
+ 1258 0034 5DF8047B 		ldr	r7, [sp], #4
+ 1259              	.LCFI65:
+ 1260              		.cfi_restore 7
+ 1261              		.cfi_def_cfa_offset 0
+ 1262 0038 7047     		bx	lr
+ 1263              		.cfi_endproc
+ 1264              	.LFE527:
+ 1266              		.section	.text.hal_rtc_ms_2_wakeup_timer_tick,"ax",%progbits
+ 1267              		.align	1
+ 1268              		.syntax unified
+ 1269              		.thumb
+ 1270              		.thumb_func
+ 1271              		.fpu fpv4-sp-d16
+ 1273              	hal_rtc_ms_2_wakeup_timer_tick:
+ 1274              	.LFB528:
+ 431:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 432:../Src/smtc_hal/smtc_hal_rtc.c **** static uint32_t hal_rtc_ms_2_wakeup_timer_tick( const uint32_t milliseconds )
+ 433:../Src/smtc_hal/smtc_hal_rtc.c **** {
+ 1275              		.loc 1 433 1
+ 1276              		.cfi_startproc
+ 1277              		@ args = 0, pretend = 0, frame = 16
+ 1278              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1279              		@ link register save eliminated.
+ 1280 0000 80B4     		push	{r7}
+ 1281              	.LCFI66:
+ 1282              		.cfi_def_cfa_offset 4
+ 1283              		.cfi_offset 7, -4
+ 1284 0002 85B0     		sub	sp, sp, #20
+ 1285              	.LCFI67:
+ 1286              		.cfi_def_cfa_offset 24
+ 1287 0004 00AF     		add	r7, sp, #0
+ 1288              	.LCFI68:
+ 1289              		.cfi_def_cfa_register 7
+ 1290 0006 7860     		str	r0, [r7, #4]
+ 434:../Src/smtc_hal/smtc_hal_rtc.c ****     uint32_t nb_tick = 0;
+ 1291              		.loc 1 434 14
+ 1292 0008 0023     		movs	r3, #0
+ARM GAS  /tmp/ccviTP8r.s 			page 31
+
+
+ 1293 000a FB60     		str	r3, [r7, #12]
+ 435:../Src/smtc_hal/smtc_hal_rtc.c ****     /* Compute is done for LSE @ 32.768kHz
+ 436:../Src/smtc_hal/smtc_hal_rtc.c ****        Assuming that RTC_WAKEUPCLOCK_RTCCLK_DIV16 is used => tick is 488.281µs */
+ 437:../Src/smtc_hal/smtc_hal_rtc.c ****     nb_tick = milliseconds * 2 + ( ( 6 * milliseconds ) >> 7 );
+ 1294              		.loc 1 437 28
+ 1295 000c 7B68     		ldr	r3, [r7, #4]
+ 1296 000e 5900     		lsls	r1, r3, #1
+ 1297              		.loc 1 437 40
+ 1298 0010 7A68     		ldr	r2, [r7, #4]
+ 1299 0012 1346     		mov	r3, r2
+ 1300 0014 5B00     		lsls	r3, r3, #1
+ 1301 0016 1344     		add	r3, r3, r2
+ 1302 0018 5B00     		lsls	r3, r3, #1
+ 1303              		.loc 1 437 57
+ 1304 001a DB09     		lsrs	r3, r3, #7
+ 1305              		.loc 1 437 13
+ 1306 001c 0B44     		add	r3, r3, r1
+ 1307 001e FB60     		str	r3, [r7, #12]
+ 438:../Src/smtc_hal/smtc_hal_rtc.c ****     return nb_tick;
+ 1308              		.loc 1 438 12
+ 1309 0020 FB68     		ldr	r3, [r7, #12]
+ 439:../Src/smtc_hal/smtc_hal_rtc.c **** }
+ 1310              		.loc 1 439 1
+ 1311 0022 1846     		mov	r0, r3
+ 1312 0024 1437     		adds	r7, r7, #20
+ 1313              	.LCFI69:
+ 1314              		.cfi_def_cfa_offset 4
+ 1315 0026 BD46     		mov	sp, r7
+ 1316              	.LCFI70:
+ 1317              		.cfi_def_cfa_register 13
+ 1318              		@ sp needed
+ 1319 0028 5DF8047B 		ldr	r7, [sp], #4
+ 1320              	.LCFI71:
+ 1321              		.cfi_restore 7
+ 1322              		.cfi_def_cfa_offset 0
+ 1323 002c 7047     		bx	lr
+ 1324              		.cfi_endproc
+ 1325              	.LFE528:
+ 1327              		.section	.text.hal_rtc_s_2_wakeup_timer_tick,"ax",%progbits
+ 1328              		.align	1
+ 1329              		.syntax unified
+ 1330              		.thumb
+ 1331              		.thumb_func
+ 1332              		.fpu fpv4-sp-d16
+ 1334              	hal_rtc_s_2_wakeup_timer_tick:
+ 1335              	.LFB529:
+ 440:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 441:../Src/smtc_hal/smtc_hal_rtc.c **** static uint32_t hal_rtc_s_2_wakeup_timer_tick( const uint32_t seconds )
+ 442:../Src/smtc_hal/smtc_hal_rtc.c **** {
+ 1336              		.loc 1 442 1
+ 1337              		.cfi_startproc
+ 1338              		@ args = 0, pretend = 0, frame = 16
+ 1339              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1340              		@ link register save eliminated.
+ 1341 0000 80B4     		push	{r7}
+ 1342              	.LCFI72:
+ 1343              		.cfi_def_cfa_offset 4
+ARM GAS  /tmp/ccviTP8r.s 			page 32
+
+
+ 1344              		.cfi_offset 7, -4
+ 1345 0002 85B0     		sub	sp, sp, #20
+ 1346              	.LCFI73:
+ 1347              		.cfi_def_cfa_offset 24
+ 1348 0004 00AF     		add	r7, sp, #0
+ 1349              	.LCFI74:
+ 1350              		.cfi_def_cfa_register 7
+ 1351 0006 7860     		str	r0, [r7, #4]
+ 443:../Src/smtc_hal/smtc_hal_rtc.c ****     uint32_t nb_tick = 0;
+ 1352              		.loc 1 443 14
+ 1353 0008 0023     		movs	r3, #0
+ 1354 000a FB60     		str	r3, [r7, #12]
+ 444:../Src/smtc_hal/smtc_hal_rtc.c ****     /* Compute is done for LSE @ 32.768kHz
+ 445:../Src/smtc_hal/smtc_hal_rtc.c ****        Assuming that RTC_WAKEUPCLOCK_CK_SPRE_16BITS is used => tick is 1s */
+ 446:../Src/smtc_hal/smtc_hal_rtc.c ****     nb_tick = seconds;
+ 1355              		.loc 1 446 13
+ 1356 000c 7B68     		ldr	r3, [r7, #4]
+ 1357 000e FB60     		str	r3, [r7, #12]
+ 447:../Src/smtc_hal/smtc_hal_rtc.c ****     return nb_tick;
+ 1358              		.loc 1 447 12
+ 1359 0010 FB68     		ldr	r3, [r7, #12]
+ 448:../Src/smtc_hal/smtc_hal_rtc.c **** }
+ 1360              		.loc 1 448 1
+ 1361 0012 1846     		mov	r0, r3
+ 1362 0014 1437     		adds	r7, r7, #20
+ 1363              	.LCFI75:
+ 1364              		.cfi_def_cfa_offset 4
+ 1365 0016 BD46     		mov	sp, r7
+ 1366              	.LCFI76:
+ 1367              		.cfi_def_cfa_register 13
+ 1368              		@ sp needed
+ 1369 0018 5DF8047B 		ldr	r7, [sp], #4
+ 1370              	.LCFI77:
+ 1371              		.cfi_restore 7
+ 1372              		.cfi_def_cfa_offset 0
+ 1373 001c 7047     		bx	lr
+ 1374              		.cfi_endproc
+ 1375              	.LFE529:
+ 1377              		.section	.text.hal_rtc_get_calendar_time,"ax",%progbits
+ 1378              		.align	1
+ 1379              		.syntax unified
+ 1380              		.thumb
+ 1381              		.thumb_func
+ 1382              		.fpu fpv4-sp-d16
+ 1384              	hal_rtc_get_calendar_time:
+ 1385              	.LFB530:
+ 449:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 450:../Src/smtc_hal/smtc_hal_rtc.c **** static uint32_t hal_rtc_get_calendar_time( uint16_t* milliseconds )
+ 451:../Src/smtc_hal/smtc_hal_rtc.c **** {
+ 1386              		.loc 1 451 1
+ 1387              		.cfi_startproc
+ 1388              		@ args = 0, pretend = 0, frame = 48
+ 1389              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1390 0000 80B5     		push	{r7, lr}
+ 1391              	.LCFI78:
+ 1392              		.cfi_def_cfa_offset 8
+ 1393              		.cfi_offset 7, -8
+ARM GAS  /tmp/ccviTP8r.s 			page 33
+
+
+ 1394              		.cfi_offset 14, -4
+ 1395 0002 8CB0     		sub	sp, sp, #48
+ 1396              	.LCFI79:
+ 1397              		.cfi_def_cfa_offset 56
+ 1398 0004 00AF     		add	r7, sp, #0
+ 1399              	.LCFI80:
+ 1400              		.cfi_def_cfa_register 7
+ 1401 0006 7860     		str	r0, [r7, #4]
+ 452:../Src/smtc_hal/smtc_hal_rtc.c ****     RTC_TimeTypeDef time;
+ 453:../Src/smtc_hal/smtc_hal_rtc.c ****     RTC_DateTypeDef date;
+ 454:../Src/smtc_hal/smtc_hal_rtc.c ****     uint32_t        ticks;
+ 455:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 456:../Src/smtc_hal/smtc_hal_rtc.c ****     uint64_t timestamp_in_ticks = rtc_get_timestamp_in_ticks( &date, &time );
+ 1402              		.loc 1 456 35
+ 1403 0008 07F10C02 		add	r2, r7, #12
+ 1404 000c 07F10803 		add	r3, r7, #8
+ 1405 0010 1146     		mov	r1, r2
+ 1406 0012 1846     		mov	r0, r3
+ 1407 0014 FFF7FEFF 		bl	rtc_get_timestamp_in_ticks
+ 1408 0018 C7E90A01 		strd	r0, [r7, #40]
+ 457:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 458:../Src/smtc_hal/smtc_hal_rtc.c ****     uint32_t seconds = ( uint32_t )( timestamp_in_ticks >> N_PREDIV_S );
+ 1409              		.loc 1 458 57
+ 1410 001c D7E90A01 		ldrd	r0, [r7, #40]
+ 1411 0020 4FF00002 		mov	r2, #0
+ 1412 0024 4FF00003 		mov	r3, #0
+ 1413 0028 820A     		lsrs	r2, r0, #10
+ 1414 002a 42EA8152 		orr	r2, r2, r1, lsl #22
+ 1415 002e 8B0A     		lsrs	r3, r1, #10
+ 1416              		.loc 1 458 14
+ 1417 0030 1346     		mov	r3, r2
+ 1418 0032 7B62     		str	r3, [r7, #36]
+ 459:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 460:../Src/smtc_hal/smtc_hal_rtc.c ****     ticks = ( uint32_t ) timestamp_in_ticks & PREDIV_S;
+ 1419              		.loc 1 460 13
+ 1420 0034 BB6A     		ldr	r3, [r7, #40]
+ 1421              		.loc 1 460 11
+ 1422 0036 C3F30903 		ubfx	r3, r3, #0, #10
+ 1423 003a 3B62     		str	r3, [r7, #32]
+ 461:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 462:../Src/smtc_hal/smtc_hal_rtc.c ****     *milliseconds = hal_rtc_tick_2_ms( ticks );
+ 1424              		.loc 1 462 21
+ 1425 003c 386A     		ldr	r0, [r7, #32]
+ 1426 003e FFF7FEFF 		bl	hal_rtc_tick_2_ms
+ 1427 0042 0346     		mov	r3, r0
+ 1428              		.loc 1 462 19
+ 1429 0044 9AB2     		uxth	r2, r3
+ 1430 0046 7B68     		ldr	r3, [r7, #4]
+ 1431 0048 1A80     		strh	r2, [r3]	@ movhi
+ 463:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 464:../Src/smtc_hal/smtc_hal_rtc.c ****     return seconds;
+ 1432              		.loc 1 464 12
+ 1433 004a 7B6A     		ldr	r3, [r7, #36]
+ 465:../Src/smtc_hal/smtc_hal_rtc.c **** }
+ 1434              		.loc 1 465 1
+ 1435 004c 1846     		mov	r0, r3
+ 1436 004e 3037     		adds	r7, r7, #48
+ARM GAS  /tmp/ccviTP8r.s 			page 34
+
+
+ 1437              	.LCFI81:
+ 1438              		.cfi_def_cfa_offset 8
+ 1439 0050 BD46     		mov	sp, r7
+ 1440              	.LCFI82:
+ 1441              		.cfi_def_cfa_register 13
+ 1442              		@ sp needed
+ 1443 0052 80BD     		pop	{r7, pc}
+ 1444              		.cfi_endproc
+ 1445              	.LFE530:
+ 1447              		.section	.text.RTC_Alarm_IRQHandler,"ax",%progbits
+ 1448              		.align	1
+ 1449              		.global	RTC_Alarm_IRQHandler
+ 1450              		.syntax unified
+ 1451              		.thumb
+ 1452              		.thumb_func
+ 1453              		.fpu fpv4-sp-d16
+ 1455              	RTC_Alarm_IRQHandler:
+ 1456              	.LFB531:
+ 466:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 467:../Src/smtc_hal/smtc_hal_rtc.c **** /*!
+ 468:../Src/smtc_hal/smtc_hal_rtc.c ****  * @brief RTC IRQ Handler of the RTC Alarm
+ 469:../Src/smtc_hal/smtc_hal_rtc.c ****  */
+ 470:../Src/smtc_hal/smtc_hal_rtc.c **** void RTC_Alarm_IRQHandler( void )
+ 471:../Src/smtc_hal/smtc_hal_rtc.c **** {
+ 1457              		.loc 1 471 1
+ 1458              		.cfi_startproc
+ 1459              		@ args = 0, pretend = 0, frame = 8
+ 1460              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1461 0000 80B5     		push	{r7, lr}
+ 1462              	.LCFI83:
+ 1463              		.cfi_def_cfa_offset 8
+ 1464              		.cfi_offset 7, -8
+ 1465              		.cfi_offset 14, -4
+ 1466 0002 82B0     		sub	sp, sp, #8
+ 1467              	.LCFI84:
+ 1468              		.cfi_def_cfa_offset 16
+ 1469 0004 00AF     		add	r7, sp, #0
+ 1470              	.LCFI85:
+ 1471              		.cfi_def_cfa_register 7
+ 472:../Src/smtc_hal/smtc_hal_rtc.c ****     RTC_HandleTypeDef* hrtc = &hal_rtc.handle;
+ 1472              		.loc 1 472 24
+ 1473 0006 124B     		ldr	r3, .L70
+ 1474 0008 7B60     		str	r3, [r7, #4]
+ 473:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 474:../Src/smtc_hal/smtc_hal_rtc.c ****     /* Clear the EXTI's line Flag for RTC Alarm */
+ 475:../Src/smtc_hal/smtc_hal_rtc.c ****     __HAL_RTC_ALARM_EXTI_CLEAR_FLAG( );
+ 1475              		.loc 1 475 5
+ 1476 000a 124B     		ldr	r3, .L70+4
+ 1477 000c 4FF48022 		mov	r2, #262144
+ 1478 0010 5A61     		str	r2, [r3, #20]
+ 476:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 477:../Src/smtc_hal/smtc_hal_rtc.c ****     /* Gets the AlarmA interrupt source enable status */
+ 478:../Src/smtc_hal/smtc_hal_rtc.c ****     if( __HAL_RTC_ALARM_GET_IT_SOURCE( hrtc, RTC_IT_ALRA ) != RESET )
+ 1479              		.loc 1 478 9
+ 1480 0012 7B68     		ldr	r3, [r7, #4]
+ 1481 0014 1B68     		ldr	r3, [r3]
+ 1482 0016 9B68     		ldr	r3, [r3, #8]
+ARM GAS  /tmp/ccviTP8r.s 			page 35
+
+
+ 1483 0018 03F48053 		and	r3, r3, #4096
+ 1484              		.loc 1 478 7
+ 1485 001c 002B     		cmp	r3, #0
+ 1486 001e 12D0     		beq	.L69
+ 479:../Src/smtc_hal/smtc_hal_rtc.c ****     {
+ 480:../Src/smtc_hal/smtc_hal_rtc.c ****         /* Gets the pending status of the AlarmA interrupt */
+ 481:../Src/smtc_hal/smtc_hal_rtc.c ****         if( __HAL_RTC_ALARM_GET_FLAG( hrtc, RTC_FLAG_ALRAF ) != RESET )
+ 1487              		.loc 1 481 13
+ 1488 0020 7B68     		ldr	r3, [r7, #4]
+ 1489 0022 1B68     		ldr	r3, [r3]
+ 1490 0024 DB68     		ldr	r3, [r3, #12]
+ 1491 0026 03F48073 		and	r3, r3, #256
+ 1492              		.loc 1 481 11
+ 1493 002a 002B     		cmp	r3, #0
+ 1494 002c 0BD0     		beq	.L69
+ 482:../Src/smtc_hal/smtc_hal_rtc.c ****         {
+ 483:../Src/smtc_hal/smtc_hal_rtc.c ****             /* Clear the AlarmA interrupt pending bit */
+ 484:../Src/smtc_hal/smtc_hal_rtc.c ****             __HAL_RTC_ALARM_CLEAR_FLAG( hrtc, RTC_FLAG_ALRAF );
+ 1495              		.loc 1 484 13
+ 1496 002e 7B68     		ldr	r3, [r7, #4]
+ 1497 0030 1B68     		ldr	r3, [r3]
+ 1498 0032 DB68     		ldr	r3, [r3, #12]
+ 1499 0034 DAB2     		uxtb	r2, r3
+ 1500 0036 7B68     		ldr	r3, [r7, #4]
+ 1501 0038 1B68     		ldr	r3, [r3]
+ 1502 003a 62F4C072 		orn	r2, r2, #384
+ 1503 003e DA60     		str	r2, [r3, #12]
+ 485:../Src/smtc_hal/smtc_hal_rtc.c ****             /* AlarmA callback */
+ 486:../Src/smtc_hal/smtc_hal_rtc.c ****             HAL_RTC_AlarmAEventCallback( hrtc );
+ 1504              		.loc 1 486 13
+ 1505 0040 7868     		ldr	r0, [r7, #4]
+ 1506 0042 FFF7FEFF 		bl	HAL_RTC_AlarmAEventCallback
+ 1507              	.L69:
+ 487:../Src/smtc_hal/smtc_hal_rtc.c ****         }
+ 488:../Src/smtc_hal/smtc_hal_rtc.c ****     }
+ 489:../Src/smtc_hal/smtc_hal_rtc.c **** }
+ 1508              		.loc 1 489 1
+ 1509 0046 00BF     		nop
+ 1510 0048 0837     		adds	r7, r7, #8
+ 1511              	.LCFI86:
+ 1512              		.cfi_def_cfa_offset 8
+ 1513 004a BD46     		mov	sp, r7
+ 1514              	.LCFI87:
+ 1515              		.cfi_def_cfa_register 13
+ 1516              		@ sp needed
+ 1517 004c 80BD     		pop	{r7, pc}
+ 1518              	.L71:
+ 1519 004e 00BF     		.align	2
+ 1520              	.L70:
+ 1521 0050 00000000 		.word	hal_rtc
+ 1522 0054 00040140 		.word	1073808384
+ 1523              		.cfi_endproc
+ 1524              	.LFE531:
+ 1526              		.section	.text.HAL_RTC_AlarmAEventCallback,"ax",%progbits
+ 1527              		.align	1
+ 1528              		.global	HAL_RTC_AlarmAEventCallback
+ 1529              		.syntax unified
+ARM GAS  /tmp/ccviTP8r.s 			page 36
+
+
+ 1530              		.thumb
+ 1531              		.thumb_func
+ 1532              		.fpu fpv4-sp-d16
+ 1534              	HAL_RTC_AlarmAEventCallback:
+ 1535              	.LFB532:
+ 490:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 491:../Src/smtc_hal/smtc_hal_rtc.c **** /*!
+ 492:../Src/smtc_hal/smtc_hal_rtc.c ****  * @brief  Alarm A callback.
+ 493:../Src/smtc_hal/smtc_hal_rtc.c ****  *
+ 494:../Src/smtc_hal/smtc_hal_rtc.c ****  * @param [in] hrtc RTC handle
+ 495:../Src/smtc_hal/smtc_hal_rtc.c ****  */
+ 496:../Src/smtc_hal/smtc_hal_rtc.c **** void HAL_RTC_AlarmAEventCallback( RTC_HandleTypeDef* hrtc ) { timer_irq_handler( ); }
+ 1536              		.loc 1 496 61
+ 1537              		.cfi_startproc
+ 1538              		@ args = 0, pretend = 0, frame = 8
+ 1539              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1540 0000 80B5     		push	{r7, lr}
+ 1541              	.LCFI88:
+ 1542              		.cfi_def_cfa_offset 8
+ 1543              		.cfi_offset 7, -8
+ 1544              		.cfi_offset 14, -4
+ 1545 0002 82B0     		sub	sp, sp, #8
+ 1546              	.LCFI89:
+ 1547              		.cfi_def_cfa_offset 16
+ 1548 0004 00AF     		add	r7, sp, #0
+ 1549              	.LCFI90:
+ 1550              		.cfi_def_cfa_register 7
+ 1551 0006 7860     		str	r0, [r7, #4]
+ 1552              		.loc 1 496 63
+ 1553 0008 FFF7FEFF 		bl	timer_irq_handler
+ 1554              		.loc 1 496 85
+ 1555 000c 00BF     		nop
+ 1556 000e 0837     		adds	r7, r7, #8
+ 1557              	.LCFI91:
+ 1558              		.cfi_def_cfa_offset 8
+ 1559 0010 BD46     		mov	sp, r7
+ 1560              	.LCFI92:
+ 1561              		.cfi_def_cfa_register 13
+ 1562              		@ sp needed
+ 1563 0012 80BD     		pop	{r7, pc}
+ 1564              		.cfi_endproc
+ 1565              	.LFE532:
+ 1567              		.section	.text.rtc_get_timestamp_in_ticks,"ax",%progbits
+ 1568              		.align	1
+ 1569              		.syntax unified
+ 1570              		.thumb
+ 1571              		.thumb_func
+ 1572              		.fpu fpv4-sp-d16
+ 1574              	rtc_get_timestamp_in_ticks:
+ 1575              	.LFB533:
+ 497:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 498:../Src/smtc_hal/smtc_hal_rtc.c **** static uint64_t rtc_get_timestamp_in_ticks( RTC_DateTypeDef* date, RTC_TimeTypeDef* time )
+ 499:../Src/smtc_hal/smtc_hal_rtc.c **** {
+ 1576              		.loc 1 499 1
+ 1577              		.cfi_startproc
+ 1578              		@ args = 0, pretend = 0, frame = 40
+ 1579              		@ frame_needed = 1, uses_anonymous_args = 0
+ARM GAS  /tmp/ccviTP8r.s 			page 37
+
+
+ 1580 0000 2DE9B04F 		push	{r4, r5, r7, r8, r9, r10, fp, lr}
+ 1581              	.LCFI93:
+ 1582              		.cfi_def_cfa_offset 32
+ 1583              		.cfi_offset 4, -32
+ 1584              		.cfi_offset 5, -28
+ 1585              		.cfi_offset 7, -24
+ 1586              		.cfi_offset 8, -20
+ 1587              		.cfi_offset 9, -16
+ 1588              		.cfi_offset 10, -12
+ 1589              		.cfi_offset 11, -8
+ 1590              		.cfi_offset 14, -4
+ 1591 0004 8AB0     		sub	sp, sp, #40
+ 1592              	.LCFI94:
+ 1593              		.cfi_def_cfa_offset 72
+ 1594 0006 00AF     		add	r7, sp, #0
+ 1595              	.LCFI95:
+ 1596              		.cfi_def_cfa_register 7
+ 1597 0008 F860     		str	r0, [r7, #12]
+ 1598 000a B960     		str	r1, [r7, #8]
+ 500:../Src/smtc_hal/smtc_hal_rtc.c ****     uint64_t timestamp_in_ticks = 0;
+ 1599              		.loc 1 500 14
+ 1600 000c 4FF00002 		mov	r2, #0
+ 1601 0010 4FF00003 		mov	r3, #0
+ 1602 0014 C7E90823 		strd	r2, [r7, #32]
+ 1603              	.L74:
+ 501:../Src/smtc_hal/smtc_hal_rtc.c ****     uint32_t correction;
+ 502:../Src/smtc_hal/smtc_hal_rtc.c ****     uint32_t seconds;
+ 503:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 504:../Src/smtc_hal/smtc_hal_rtc.c ****     /* Make sure it is correct due to asynchronous nature of RTC */
+ 505:../Src/smtc_hal/smtc_hal_rtc.c ****     volatile uint32_t ssr;
+ 506:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 507:../Src/smtc_hal/smtc_hal_rtc.c ****     do
+ 508:../Src/smtc_hal/smtc_hal_rtc.c ****     {
+ 509:../Src/smtc_hal/smtc_hal_rtc.c ****         ssr = RTC->SSR;
+ 1604              		.loc 1 509 18 discriminator 1
+ 1605 0018 424B     		ldr	r3, .L78
+ 1606 001a 9B6A     		ldr	r3, [r3, #40]
+ 1607              		.loc 1 509 13 discriminator 1
+ 1608 001c 7B61     		str	r3, [r7, #20]
+ 510:../Src/smtc_hal/smtc_hal_rtc.c ****         HAL_RTC_GetDate( &hal_rtc.handle, date, RTC_FORMAT_BIN );
+ 1609              		.loc 1 510 9 discriminator 1
+ 1610 001e 0022     		movs	r2, #0
+ 1611 0020 F968     		ldr	r1, [r7, #12]
+ 1612 0022 4148     		ldr	r0, .L78+4
+ 1613 0024 FFF7FEFF 		bl	HAL_RTC_GetDate
+ 511:../Src/smtc_hal/smtc_hal_rtc.c ****         HAL_RTC_GetTime( &hal_rtc.handle, time, RTC_FORMAT_BIN );
+ 1614              		.loc 1 511 9 discriminator 1
+ 1615 0028 0022     		movs	r2, #0
+ 1616 002a B968     		ldr	r1, [r7, #8]
+ 1617 002c 3E48     		ldr	r0, .L78+4
+ 1618 002e FFF7FEFF 		bl	HAL_RTC_GetTime
+ 512:../Src/smtc_hal/smtc_hal_rtc.c ****     } while( ssr != RTC->SSR );
+ 1619              		.loc 1 512 24 discriminator 1
+ 1620 0032 3C4B     		ldr	r3, .L78
+ 1621 0034 9A6A     		ldr	r2, [r3, #40]
+ 1622              		.loc 1 512 18 discriminator 1
+ 1623 0036 7B69     		ldr	r3, [r7, #20]
+ARM GAS  /tmp/ccviTP8r.s 			page 38
+
+
+ 1624              		.loc 1 512 5 discriminator 1
+ 1625 0038 9A42     		cmp	r2, r3
+ 1626 003a EDD1     		bne	.L74
+ 513:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 514:../Src/smtc_hal/smtc_hal_rtc.c ****     /* Calculate amount of elapsed days since 01/01/2000 */
+ 515:../Src/smtc_hal/smtc_hal_rtc.c ****     seconds = DIVC( ( DAYS_IN_YEAR * 3 + DAYS_IN_LEAP_YEAR ) * date->Year, 4 );
+ 1627              		.loc 1 515 15
+ 1628 003c FB68     		ldr	r3, [r7, #12]
+ 1629 003e DB78     		ldrb	r3, [r3, #3]	@ zero_extendqisi2
+ 1630 0040 1A46     		mov	r2, r3
+ 1631 0042 40F2B553 		movw	r3, #1461
+ 1632 0046 02FB03F3 		mul	r3, r2, r3
+ 1633 004a 0333     		adds	r3, r3, #3
+ 1634              		.loc 1 515 13
+ 1635 004c 9B08     		lsrs	r3, r3, #2
+ 1636 004e FB61     		str	r3, [r7, #28]
+ 516:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 517:../Src/smtc_hal/smtc_hal_rtc.c ****     correction = ( ( date->Year % 4 ) == 0 ) ? DAYS_IN_MONTH_CORRECTION_LEAP : DAYS_IN_MONTH_CORREC
+ 1637              		.loc 1 517 26
+ 1638 0050 FB68     		ldr	r3, [r7, #12]
+ 1639 0052 DB78     		ldrb	r3, [r3, #3]	@ zero_extendqisi2
+ 1640              		.loc 1 517 39
+ 1641 0054 03F00303 		and	r3, r3, #3
+ 1642 0058 DBB2     		uxtb	r3, r3
+ 1643              		.loc 1 517 78
+ 1644 005a 002B     		cmp	r3, #0
+ 1645 005c 01D1     		bne	.L75
+ 1646              		.loc 1 517 78 is_stmt 0 discriminator 1
+ 1647 005e 334B     		ldr	r3, .L78+8
+ 1648 0060 00E0     		b	.L76
+ 1649              	.L75:
+ 1650              		.loc 1 517 78 discriminator 2
+ 1651 0062 334B     		ldr	r3, .L78+12
+ 1652              	.L76:
+ 1653              		.loc 1 517 16 is_stmt 1 discriminator 4
+ 1654 0064 BB61     		str	r3, [r7, #24]
+ 518:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 519:../Src/smtc_hal/smtc_hal_rtc.c ****     seconds +=
+ 520:../Src/smtc_hal/smtc_hal_rtc.c ****         ( DIVC( ( date->Month - 1 ) * ( 30 + 31 ), 2 ) - ( ( ( correction >> ( ( date->Month - 1 ) 
+ 1655              		.loc 1 520 11 discriminator 4
+ 1656 0066 FB68     		ldr	r3, [r7, #12]
+ 1657 0068 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1658 006a 5A1E     		subs	r2, r3, #1
+ 1659 006c 1346     		mov	r3, r2
+ 1660 006e 1B01     		lsls	r3, r3, #4
+ 1661 0070 9B1A     		subs	r3, r3, r2
+ 1662 0072 9B00     		lsls	r3, r3, #2
+ 1663 0074 1344     		add	r3, r3, r2
+ 1664 0076 0133     		adds	r3, r3, #1
+ 1665 0078 DA0F     		lsrs	r2, r3, #31
+ 1666 007a 1344     		add	r3, r3, r2
+ 1667 007c 5B10     		asrs	r3, r3, #1
+ 1668 007e 1946     		mov	r1, r3
+ 1669              		.loc 1 520 86 discriminator 4
+ 1670 0080 FB68     		ldr	r3, [r7, #12]
+ 1671 0082 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1672              		.loc 1 520 94 discriminator 4
+ARM GAS  /tmp/ccviTP8r.s 			page 39
+
+
+ 1673 0084 013B     		subs	r3, r3, #1
+ 1674              		.loc 1 520 100 discriminator 4
+ 1675 0086 5B00     		lsls	r3, r3, #1
+ 1676              		.loc 1 520 75 discriminator 4
+ 1677 0088 BA69     		ldr	r2, [r7, #24]
+ 1678 008a 22FA03F3 		lsr	r3, r2, r3
+ 1679              		.loc 1 520 108 discriminator 4
+ 1680 008e 03F00303 		and	r3, r3, #3
+ 1681              		.loc 1 520 56 discriminator 4
+ 1682 0092 CB1A     		subs	r3, r1, r3
+ 519:../Src/smtc_hal/smtc_hal_rtc.c ****         ( DIVC( ( date->Month - 1 ) * ( 30 + 31 ), 2 ) - ( ( ( correction >> ( ( date->Month - 1 ) 
+ 1683              		.loc 1 519 13 discriminator 4
+ 1684 0094 FA69     		ldr	r2, [r7, #28]
+ 1685 0096 1344     		add	r3, r3, r2
+ 1686 0098 FB61     		str	r3, [r7, #28]
+ 521:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 522:../Src/smtc_hal/smtc_hal_rtc.c ****     seconds += ( date->Date - 1 );
+ 1687              		.loc 1 522 22 discriminator 4
+ 1688 009a FB68     		ldr	r3, [r7, #12]
+ 1689 009c 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+ 1690              		.loc 1 522 13 discriminator 4
+ 1691 009e 1A46     		mov	r2, r3
+ 1692 00a0 FB69     		ldr	r3, [r7, #28]
+ 1693 00a2 1344     		add	r3, r3, r2
+ 1694 00a4 013B     		subs	r3, r3, #1
+ 1695 00a6 FB61     		str	r3, [r7, #28]
+ 523:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 524:../Src/smtc_hal/smtc_hal_rtc.c ****     /* Convert from days to seconds */
+ 525:../Src/smtc_hal/smtc_hal_rtc.c ****     seconds *= SECONDS_IN_1DAY;
+ 1696              		.loc 1 525 13 discriminator 4
+ 1697 00a8 FB69     		ldr	r3, [r7, #28]
+ 1698 00aa 224A     		ldr	r2, .L78+16
+ 1699 00ac 02FB03F3 		mul	r3, r2, r3
+ 1700 00b0 FB61     		str	r3, [r7, #28]
+ 526:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 527:../Src/smtc_hal/smtc_hal_rtc.c ****     seconds += ( ( uint32_t ) time->Seconds + ( ( uint32_t ) time->Minutes * SECONDS_IN_1MINUTE ) +
+ 1701              		.loc 1 527 35 discriminator 4
+ 1702 00b2 BB68     		ldr	r3, [r7, #8]
+ 1703 00b4 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+ 1704              		.loc 1 527 18 discriminator 4
+ 1705 00b6 1846     		mov	r0, r3
+ 528:../Src/smtc_hal/smtc_hal_rtc.c ****                  ( ( uint32_t ) time->Hours * SECONDS_IN_1HOUR ) );
+ 1706              		.loc 1 528 37 discriminator 4
+ 1707 00b8 BB68     		ldr	r3, [r7, #8]
+ 1708 00ba 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1709              		.loc 1 528 20 discriminator 4
+ 1710 00bc 1A46     		mov	r2, r3
+ 1711              		.loc 1 528 45 discriminator 4
+ 1712 00be 4FF46163 		mov	r3, #3600
+ 1713 00c2 03FB02F2 		mul	r2, r3, r2
+ 527:../Src/smtc_hal/smtc_hal_rtc.c ****                  ( ( uint32_t ) time->Hours * SECONDS_IN_1HOUR ) );
+ 1714              		.loc 1 527 66 discriminator 4
+ 1715 00c6 BB68     		ldr	r3, [r7, #8]
+ 1716 00c8 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 527:../Src/smtc_hal/smtc_hal_rtc.c ****                  ( ( uint32_t ) time->Hours * SECONDS_IN_1HOUR ) );
+ 1717              		.loc 1 527 49 discriminator 4
+ 1718 00ca 1946     		mov	r1, r3
+ARM GAS  /tmp/ccviTP8r.s 			page 40
+
+
+ 527:../Src/smtc_hal/smtc_hal_rtc.c ****                  ( ( uint32_t ) time->Hours * SECONDS_IN_1HOUR ) );
+ 1719              		.loc 1 527 76 discriminator 4
+ 1720 00cc 0B46     		mov	r3, r1
+ 1721 00ce 1B01     		lsls	r3, r3, #4
+ 1722 00d0 5B1A     		subs	r3, r3, r1
+ 1723 00d2 9B00     		lsls	r3, r3, #2
+ 527:../Src/smtc_hal/smtc_hal_rtc.c ****                  ( ( uint32_t ) time->Hours * SECONDS_IN_1HOUR ) );
+ 1724              		.loc 1 527 99 discriminator 4
+ 1725 00d4 1344     		add	r3, r3, r2
+ 1726 00d6 0344     		add	r3, r3, r0
+ 527:../Src/smtc_hal/smtc_hal_rtc.c ****                  ( ( uint32_t ) time->Hours * SECONDS_IN_1HOUR ) );
+ 1727              		.loc 1 527 13 discriminator 4
+ 1728 00d8 FA69     		ldr	r2, [r7, #28]
+ 1729 00da 1344     		add	r3, r3, r2
+ 1730 00dc FB61     		str	r3, [r7, #28]
+ 529:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 530:../Src/smtc_hal/smtc_hal_rtc.c ****     timestamp_in_ticks = ( ( ( uint64_t ) seconds ) << N_PREDIV_S ) + ( PREDIV_S - time->SubSeconds
+ 1731              		.loc 1 530 30 discriminator 4
+ 1732 00de FB69     		ldr	r3, [r7, #28]
+ 1733 00e0 0022     		movs	r2, #0
+ 1734 00e2 9A46     		mov	r10, r3
+ 1735 00e4 9346     		mov	fp, r2
+ 1736              		.loc 1 530 53 discriminator 4
+ 1737 00e6 4FEA9A55 		lsr	r5, r10, #22
+ 1738 00ea 4FEA8A24 		lsl	r4, r10, #10
+ 1739              		.loc 1 530 88 discriminator 4
+ 1740 00ee BB68     		ldr	r3, [r7, #8]
+ 1741 00f0 5B68     		ldr	r3, [r3, #4]
+ 1742              		.loc 1 530 82 discriminator 4
+ 1743 00f2 C3F57F73 		rsb	r3, r3, #1020
+ 1744 00f6 0333     		adds	r3, r3, #3
+ 1745 00f8 0022     		movs	r2, #0
+ 1746 00fa 9846     		mov	r8, r3
+ 1747 00fc 9146     		mov	r9, r2
+ 1748              		.loc 1 530 24 discriminator 4
+ 1749 00fe 14EB0803 		adds	r3, r4, r8
+ 1750 0102 3B60     		str	r3, [r7]
+ 1751 0104 45EB0903 		adc	r3, r5, r9
+ 1752 0108 7B60     		str	r3, [r7, #4]
+ 1753 010a D7E90034 		ldrd	r3, [r7]
+ 1754 010e C7E90834 		strd	r3, [r7, #32]
+ 531:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 532:../Src/smtc_hal/smtc_hal_rtc.c ****     return timestamp_in_ticks;
+ 1755              		.loc 1 532 12 discriminator 4
+ 1756 0112 D7E90823 		ldrd	r2, [r7, #32]
+ 533:../Src/smtc_hal/smtc_hal_rtc.c **** }
+ 1757              		.loc 1 533 1 discriminator 4
+ 1758 0116 1046     		mov	r0, r2
+ 1759 0118 1946     		mov	r1, r3
+ 1760 011a 2837     		adds	r7, r7, #40
+ 1761              	.LCFI96:
+ 1762              		.cfi_def_cfa_offset 32
+ 1763 011c BD46     		mov	sp, r7
+ 1764              	.LCFI97:
+ 1765              		.cfi_def_cfa_register 13
+ 1766              		@ sp needed
+ 1767 011e BDE8B08F 		pop	{r4, r5, r7, r8, r9, r10, fp, pc}
+ARM GAS  /tmp/ccviTP8r.s 			page 41
+
+
+ 1768              	.L79:
+ 1769 0122 00BF     		.align	2
+ 1770              	.L78:
+ 1771 0124 00280040 		.word	1073752064
+ 1772 0128 00000000 		.word	hal_rtc
+ 1773 012c 50554400 		.word	4478288
+ 1774 0130 A0AA9900 		.word	10070688
+ 1775 0134 80510100 		.word	86400
+ 1776              		.cfi_endproc
+ 1777              	.LFE533:
+ 1779              		.section	.text.RTC_WKUP_IRQHandler,"ax",%progbits
+ 1780              		.align	1
+ 1781              		.global	RTC_WKUP_IRQHandler
+ 1782              		.syntax unified
+ 1783              		.thumb
+ 1784              		.thumb_func
+ 1785              		.fpu fpv4-sp-d16
+ 1787              	RTC_WKUP_IRQHandler:
+ 1788              	.LFB534:
+ 534:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 535:../Src/smtc_hal/smtc_hal_rtc.c **** void RTC_WKUP_IRQHandler( void ) { HAL_RTCEx_WakeUpTimerIRQHandler( &hal_rtc.handle ); }
+ 1789              		.loc 1 535 34
+ 1790              		.cfi_startproc
+ 1791              		@ args = 0, pretend = 0, frame = 0
+ 1792              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1793 0000 80B5     		push	{r7, lr}
+ 1794              	.LCFI98:
+ 1795              		.cfi_def_cfa_offset 8
+ 1796              		.cfi_offset 7, -8
+ 1797              		.cfi_offset 14, -4
+ 1798 0002 00AF     		add	r7, sp, #0
+ 1799              	.LCFI99:
+ 1800              		.cfi_def_cfa_register 7
+ 1801              		.loc 1 535 36
+ 1802 0004 0248     		ldr	r0, .L81
+ 1803 0006 FFF7FEFF 		bl	HAL_RTCEx_WakeUpTimerIRQHandler
+ 1804              		.loc 1 535 88
+ 1805 000a 00BF     		nop
+ 1806 000c 80BD     		pop	{r7, pc}
+ 1807              	.L82:
+ 1808 000e 00BF     		.align	2
+ 1809              	.L81:
+ 1810 0010 00000000 		.word	hal_rtc
+ 1811              		.cfi_endproc
+ 1812              	.LFE534:
+ 1814              		.section	.text.HAL_RTC_MspInit,"ax",%progbits
+ 1815              		.align	1
+ 1816              		.global	HAL_RTC_MspInit
+ 1817              		.syntax unified
+ 1818              		.thumb
+ 1819              		.thumb_func
+ 1820              		.fpu fpv4-sp-d16
+ 1822              	HAL_RTC_MspInit:
+ 1823              	.LFB535:
+ 536:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 537:../Src/smtc_hal/smtc_hal_rtc.c **** void HAL_RTC_MspInit( RTC_HandleTypeDef* rtc_handle )
+ 538:../Src/smtc_hal/smtc_hal_rtc.c **** {
+ARM GAS  /tmp/ccviTP8r.s 			page 42
+
+
+ 1824              		.loc 1 538 1
+ 1825              		.cfi_startproc
+ 1826              		@ args = 0, pretend = 0, frame = 8
+ 1827              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1828 0000 80B5     		push	{r7, lr}
+ 1829              	.LCFI100:
+ 1830              		.cfi_def_cfa_offset 8
+ 1831              		.cfi_offset 7, -8
+ 1832              		.cfi_offset 14, -4
+ 1833 0002 82B0     		sub	sp, sp, #8
+ 1834              	.LCFI101:
+ 1835              		.cfi_def_cfa_offset 16
+ 1836 0004 00AF     		add	r7, sp, #0
+ 1837              	.LCFI102:
+ 1838              		.cfi_def_cfa_register 7
+ 1839 0006 7860     		str	r0, [r7, #4]
+ 539:../Src/smtc_hal/smtc_hal_rtc.c ****     __HAL_RCC_RTC_ENABLE( );
+ 1840              		.loc 1 539 5
+ 1841 0008 094B     		ldr	r3, .L84
+ 1842 000a D3F89030 		ldr	r3, [r3, #144]
+ 1843 000e 084A     		ldr	r2, .L84
+ 1844 0010 43F40043 		orr	r3, r3, #32768
+ 1845 0014 C2F89030 		str	r3, [r2, #144]
+ 540:../Src/smtc_hal/smtc_hal_rtc.c ****     HAL_NVIC_SetPriority( RTC_WKUP_IRQn, 0, 0 );
+ 1846              		.loc 1 540 5
+ 1847 0018 0022     		movs	r2, #0
+ 1848 001a 0021     		movs	r1, #0
+ 1849 001c 0320     		movs	r0, #3
+ 1850 001e FFF7FEFF 		bl	HAL_NVIC_SetPriority
+ 541:../Src/smtc_hal/smtc_hal_rtc.c ****     HAL_NVIC_EnableIRQ( RTC_WKUP_IRQn );
+ 1851              		.loc 1 541 5
+ 1852 0022 0320     		movs	r0, #3
+ 1853 0024 FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
+ 542:../Src/smtc_hal/smtc_hal_rtc.c **** }
+ 1854              		.loc 1 542 1
+ 1855 0028 00BF     		nop
+ 1856 002a 0837     		adds	r7, r7, #8
+ 1857              	.LCFI103:
+ 1858              		.cfi_def_cfa_offset 8
+ 1859 002c BD46     		mov	sp, r7
+ 1860              	.LCFI104:
+ 1861              		.cfi_def_cfa_register 13
+ 1862              		@ sp needed
+ 1863 002e 80BD     		pop	{r7, pc}
+ 1864              	.L85:
+ 1865              		.align	2
+ 1866              	.L84:
+ 1867 0030 00100240 		.word	1073876992
+ 1868              		.cfi_endproc
+ 1869              	.LFE535:
+ 1871              		.section	.text.HAL_RTC_MspDeInit,"ax",%progbits
+ 1872              		.align	1
+ 1873              		.global	HAL_RTC_MspDeInit
+ 1874              		.syntax unified
+ 1875              		.thumb
+ 1876              		.thumb_func
+ 1877              		.fpu fpv4-sp-d16
+ARM GAS  /tmp/ccviTP8r.s 			page 43
+
+
+ 1879              	HAL_RTC_MspDeInit:
+ 1880              	.LFB536:
+ 543:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 544:../Src/smtc_hal/smtc_hal_rtc.c **** void HAL_RTC_MspDeInit( RTC_HandleTypeDef* rtc_handle )
+ 545:../Src/smtc_hal/smtc_hal_rtc.c **** {
+ 1881              		.loc 1 545 1
+ 1882              		.cfi_startproc
+ 1883              		@ args = 0, pretend = 0, frame = 8
+ 1884              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1885 0000 80B5     		push	{r7, lr}
+ 1886              	.LCFI105:
+ 1887              		.cfi_def_cfa_offset 8
+ 1888              		.cfi_offset 7, -8
+ 1889              		.cfi_offset 14, -4
+ 1890 0002 82B0     		sub	sp, sp, #8
+ 1891              	.LCFI106:
+ 1892              		.cfi_def_cfa_offset 16
+ 1893 0004 00AF     		add	r7, sp, #0
+ 1894              	.LCFI107:
+ 1895              		.cfi_def_cfa_register 7
+ 1896 0006 7860     		str	r0, [r7, #4]
+ 546:../Src/smtc_hal/smtc_hal_rtc.c ****     __HAL_RCC_RTC_DISABLE( );
+ 1897              		.loc 1 546 5
+ 1898 0008 074B     		ldr	r3, .L87
+ 1899 000a D3F89030 		ldr	r3, [r3, #144]
+ 1900 000e 064A     		ldr	r2, .L87
+ 1901 0010 23F40043 		bic	r3, r3, #32768
+ 1902 0014 C2F89030 		str	r3, [r2, #144]
+ 547:../Src/smtc_hal/smtc_hal_rtc.c ****     HAL_NVIC_DisableIRQ( RTC_WKUP_IRQn );
+ 1903              		.loc 1 547 5
+ 1904 0018 0320     		movs	r0, #3
+ 1905 001a FFF7FEFF 		bl	HAL_NVIC_DisableIRQ
+ 548:../Src/smtc_hal/smtc_hal_rtc.c **** }
+ 1906              		.loc 1 548 1
+ 1907 001e 00BF     		nop
+ 1908 0020 0837     		adds	r7, r7, #8
+ 1909              	.LCFI108:
+ 1910              		.cfi_def_cfa_offset 8
+ 1911 0022 BD46     		mov	sp, r7
+ 1912              	.LCFI109:
+ 1913              		.cfi_def_cfa_register 13
+ 1914              		@ sp needed
+ 1915 0024 80BD     		pop	{r7, pc}
+ 1916              	.L88:
+ 1917 0026 00BF     		.align	2
+ 1918              	.L87:
+ 1919 0028 00100240 		.word	1073876992
+ 1920              		.cfi_endproc
+ 1921              	.LFE536:
+ 1923              		.section	.text.hal_rtc_get_minimum_timeout,"ax",%progbits
+ 1924              		.align	1
+ 1925              		.global	hal_rtc_get_minimum_timeout
+ 1926              		.syntax unified
+ 1927              		.thumb
+ 1928              		.thumb_func
+ 1929              		.fpu fpv4-sp-d16
+ 1931              	hal_rtc_get_minimum_timeout:
+ARM GAS  /tmp/ccviTP8r.s 			page 44
+
+
+ 1932              	.LFB537:
+ 549:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 550:../Src/smtc_hal/smtc_hal_rtc.c **** uint32_t hal_rtc_get_minimum_timeout( void ) { return ( MIN_ALARM_DELAY_IN_TICKS ); }
+ 1933              		.loc 1 550 46
+ 1934              		.cfi_startproc
+ 1935              		@ args = 0, pretend = 0, frame = 0
+ 1936              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1937              		@ link register save eliminated.
+ 1938 0000 80B4     		push	{r7}
+ 1939              	.LCFI110:
+ 1940              		.cfi_def_cfa_offset 4
+ 1941              		.cfi_offset 7, -4
+ 1942 0002 00AF     		add	r7, sp, #0
+ 1943              	.LCFI111:
+ 1944              		.cfi_def_cfa_register 7
+ 1945              		.loc 1 550 55
+ 1946 0004 0323     		movs	r3, #3
+ 1947              		.loc 1 550 85
+ 1948 0006 1846     		mov	r0, r3
+ 1949 0008 BD46     		mov	sp, r7
+ 1950              	.LCFI112:
+ 1951              		.cfi_def_cfa_register 13
+ 1952              		@ sp needed
+ 1953 000a 5DF8047B 		ldr	r7, [sp], #4
+ 1954              	.LCFI113:
+ 1955              		.cfi_restore 7
+ 1956              		.cfi_def_cfa_offset 0
+ 1957 000e 7047     		bx	lr
+ 1958              		.cfi_endproc
+ 1959              	.LFE537:
+ 1961              		.global	__aeabi_f2d
+ 1962              		.global	__aeabi_d2f
+ 1963              		.section	.text.hal_rtc_temp_compensation,"ax",%progbits
+ 1964              		.align	1
+ 1965              		.global	hal_rtc_temp_compensation
+ 1966              		.syntax unified
+ 1967              		.thumb
+ 1968              		.thumb_func
+ 1969              		.fpu fpv4-sp-d16
+ 1971              	hal_rtc_temp_compensation:
+ 1972              	.LFB538:
+ 551:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 552:../Src/smtc_hal/smtc_hal_rtc.c **** uint32_t hal_rtc_temp_compensation( uint32_t period, float temperature )
+ 553:../Src/smtc_hal/smtc_hal_rtc.c **** {
+ 1973              		.loc 1 553 1
+ 1974              		.cfi_startproc
+ 1975              		@ args = 0, pretend = 0, frame = 32
+ 1976              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1977 0000 80B5     		push	{r7, lr}
+ 1978              	.LCFI114:
+ 1979              		.cfi_def_cfa_offset 8
+ 1980              		.cfi_offset 7, -8
+ 1981              		.cfi_offset 14, -4
+ 1982 0002 88B0     		sub	sp, sp, #32
+ 1983              	.LCFI115:
+ 1984              		.cfi_def_cfa_offset 40
+ 1985 0004 00AF     		add	r7, sp, #0
+ARM GAS  /tmp/ccviTP8r.s 			page 45
+
+
+ 1986              	.LCFI116:
+ 1987              		.cfi_def_cfa_register 7
+ 1988 0006 7860     		str	r0, [r7, #4]
+ 1989 0008 87ED000A 		vstr.32	s0, [r7]
+ 554:../Src/smtc_hal/smtc_hal_rtc.c ****     float k       = RTC_TEMP_COEFFICIENT;
+ 1990              		.loc 1 554 11
+ 1991 000c 3F4B     		ldr	r3, .L101
+ 1992 000e 7B61     		str	r3, [r7, #20]	@ float
+ 555:../Src/smtc_hal/smtc_hal_rtc.c ****     float k_dev   = RTC_TEMP_DEV_COEFFICIENT;
+ 1993              		.loc 1 555 11
+ 1994 0010 3F4B     		ldr	r3, .L101+4
+ 1995 0012 3B61     		str	r3, [r7, #16]	@ float
+ 556:../Src/smtc_hal/smtc_hal_rtc.c ****     float t       = RTC_TEMP_TURNOVER;
+ 1996              		.loc 1 556 11
+ 1997 0014 3F4B     		ldr	r3, .L101+8
+ 1998 0016 FB60     		str	r3, [r7, #12]	@ float
+ 557:../Src/smtc_hal/smtc_hal_rtc.c ****     float t_dev   = RTC_TEMP_DEV_TURNOVER;
+ 1999              		.loc 1 557 11
+ 2000 0018 3F4B     		ldr	r3, .L101+12
+ 2001 001a BB60     		str	r3, [r7, #8]	@ float
+ 558:../Src/smtc_hal/smtc_hal_rtc.c ****     float interim = 0.0;
+ 2002              		.loc 1 558 11
+ 2003 001c 4FF00003 		mov	r3, #0
+ 2004 0020 FB61     		str	r3, [r7, #28]	@ float
+ 559:../Src/smtc_hal/smtc_hal_rtc.c ****     float ppm     = 0.0;
+ 2005              		.loc 1 559 11
+ 2006 0022 4FF00003 		mov	r3, #0
+ 2007 0026 BB61     		str	r3, [r7, #24]	@ float
+ 560:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 561:../Src/smtc_hal/smtc_hal_rtc.c ****     if( k < ( float ) 0.0 )
+ 2008              		.loc 1 561 7
+ 2009 0028 D7ED057A 		vldr.32	s15, [r7, #20]
+ 2010 002c F5EEC07A 		vcmpe.f32	s15, #0
+ 2011 0030 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 2012 0034 08D5     		bpl	.L100
+ 562:../Src/smtc_hal/smtc_hal_rtc.c ****     {
+ 563:../Src/smtc_hal/smtc_hal_rtc.c ****         ppm = ( k - k_dev );
+ 2013              		.loc 1 563 13
+ 2014 0036 97ED057A 		vldr.32	s14, [r7, #20]
+ 2015 003a D7ED047A 		vldr.32	s15, [r7, #16]
+ 2016 003e 77EE677A 		vsub.f32	s15, s14, s15
+ 2017 0042 C7ED067A 		vstr.32	s15, [r7, #24]
+ 2018 0046 07E0     		b	.L94
+ 2019              	.L100:
+ 564:../Src/smtc_hal/smtc_hal_rtc.c ****     }
+ 565:../Src/smtc_hal/smtc_hal_rtc.c ****     else
+ 566:../Src/smtc_hal/smtc_hal_rtc.c ****     {
+ 567:../Src/smtc_hal/smtc_hal_rtc.c ****         ppm = ( k + k_dev );
+ 2020              		.loc 1 567 13
+ 2021 0048 97ED057A 		vldr.32	s14, [r7, #20]
+ 2022 004c D7ED047A 		vldr.32	s15, [r7, #16]
+ 2023 0050 77EE277A 		vadd.f32	s15, s14, s15
+ 2024 0054 C7ED067A 		vstr.32	s15, [r7, #24]
+ 2025              	.L94:
+ 568:../Src/smtc_hal/smtc_hal_rtc.c ****     }
+ 569:../Src/smtc_hal/smtc_hal_rtc.c ****     interim = ( temperature - ( t - t_dev ) );
+ 2026              		.loc 1 569 35
+ARM GAS  /tmp/ccviTP8r.s 			page 46
+
+
+ 2027 0058 97ED037A 		vldr.32	s14, [r7, #12]
+ 2028 005c D7ED027A 		vldr.32	s15, [r7, #8]
+ 2029 0060 77EE677A 		vsub.f32	s15, s14, s15
+ 2030              		.loc 1 569 13
+ 2031 0064 97ED007A 		vldr.32	s14, [r7]
+ 2032 0068 77EE677A 		vsub.f32	s15, s14, s15
+ 2033 006c C7ED077A 		vstr.32	s15, [r7, #28]
+ 570:../Src/smtc_hal/smtc_hal_rtc.c ****     ppm *= interim * interim;
+ 2034              		.loc 1 570 20
+ 2035 0070 D7ED077A 		vldr.32	s15, [r7, #28]
+ 2036 0074 67EEA77A 		vmul.f32	s15, s15, s15
+ 2037              		.loc 1 570 9
+ 2038 0078 97ED067A 		vldr.32	s14, [r7, #24]
+ 2039 007c 67EE277A 		vmul.f32	s15, s14, s15
+ 2040 0080 C7ED067A 		vstr.32	s15, [r7, #24]
+ 571:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 572:../Src/smtc_hal/smtc_hal_rtc.c ****     /* Calculate the drift in time */
+ 573:../Src/smtc_hal/smtc_hal_rtc.c ****     interim = ( ( float ) period * ppm ) / ( ( float ) 1e6 );
+ 2041              		.loc 1 573 17
+ 2042 0084 7B68     		ldr	r3, [r7, #4]
+ 2043 0086 07EE903A 		vmov	s15, r3	@ int
+ 2044 008a B8EE677A 		vcvt.f32.u32	s14, s15
+ 2045              		.loc 1 573 34
+ 2046 008e D7ED067A 		vldr.32	s15, [r7, #24]
+ 2047 0092 27EE277A 		vmul.f32	s14, s14, s15
+ 2048              		.loc 1 573 13
+ 2049 0096 DFED216A 		vldr.32	s13, .L101+16
+ 2050 009a C7EE267A 		vdiv.f32	s15, s14, s13
+ 2051 009e C7ED077A 		vstr.32	s15, [r7, #28]
+ 574:../Src/smtc_hal/smtc_hal_rtc.c ****     /* Calculate the resulting time period */
+ 575:../Src/smtc_hal/smtc_hal_rtc.c ****     interim += period;
+ 2052              		.loc 1 575 13
+ 2053 00a2 7B68     		ldr	r3, [r7, #4]
+ 2054 00a4 07EE903A 		vmov	s15, r3	@ int
+ 2055 00a8 F8EE677A 		vcvt.f32.u32	s15, s15
+ 2056 00ac 97ED077A 		vldr.32	s14, [r7, #28]
+ 2057 00b0 77EE277A 		vadd.f32	s15, s14, s15
+ 2058 00b4 C7ED077A 		vstr.32	s15, [r7, #28]
+ 576:../Src/smtc_hal/smtc_hal_rtc.c ****     interim = floor( interim );
+ 2059              		.loc 1 576 15
+ 2060 00b8 F869     		ldr	r0, [r7, #28]	@ float
+ 2061 00ba FFF7FEFF 		bl	__aeabi_f2d
+ 2062 00be 0246     		mov	r2, r0
+ 2063 00c0 0B46     		mov	r3, r1
+ 2064 00c2 43EC102B 		vmov	d0, r2, r3
+ 2065 00c6 FFF7FEFF 		bl	floor
+ 2066 00ca 53EC102B 		vmov	r2, r3, d0
+ 2067              		.loc 1 576 13
+ 2068 00ce 1046     		mov	r0, r2
+ 2069 00d0 1946     		mov	r1, r3
+ 2070 00d2 FFF7FEFF 		bl	__aeabi_d2f
+ 2071 00d6 0346     		mov	r3, r0	@ float
+ 2072 00d8 FB61     		str	r3, [r7, #28]	@ float
+ 577:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 578:../Src/smtc_hal/smtc_hal_rtc.c ****     if( interim < ( float ) 0.0 )
+ 2073              		.loc 1 578 7
+ 2074 00da D7ED077A 		vldr.32	s15, [r7, #28]
+ARM GAS  /tmp/ccviTP8r.s 			page 47
+
+
+ 2075 00de F5EEC07A 		vcmpe.f32	s15, #0
+ 2076 00e2 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 2077 00e6 06D5     		bpl	.L95
+ 579:../Src/smtc_hal/smtc_hal_rtc.c ****     {
+ 580:../Src/smtc_hal/smtc_hal_rtc.c ****         interim = ( float ) period;
+ 2078              		.loc 1 580 17
+ 2079 00e8 7B68     		ldr	r3, [r7, #4]
+ 2080 00ea 07EE903A 		vmov	s15, r3	@ int
+ 2081 00ee F8EE677A 		vcvt.f32.u32	s15, s15
+ 2082 00f2 C7ED077A 		vstr.32	s15, [r7, #28]
+ 2083              	.L95:
+ 581:../Src/smtc_hal/smtc_hal_rtc.c ****     }
+ 582:../Src/smtc_hal/smtc_hal_rtc.c **** 
+ 583:../Src/smtc_hal/smtc_hal_rtc.c ****     /* Calculate the resulting period */
+ 584:../Src/smtc_hal/smtc_hal_rtc.c ****     return ( uint32_t ) interim;
+ 2084              		.loc 1 584 12
+ 2085 00f6 D7ED077A 		vldr.32	s15, [r7, #28]
+ 2086 00fa FCEEE77A 		vcvt.u32.f32	s15, s15
+ 2087 00fe 17EE903A 		vmov	r3, s15	@ int
+ 585:../Src/smtc_hal/smtc_hal_rtc.c **** }
+ 2088              		.loc 1 585 1
+ 2089 0102 1846     		mov	r0, r3
+ 2090 0104 2037     		adds	r7, r7, #32
+ 2091              	.LCFI117:
+ 2092              		.cfi_def_cfa_offset 8
+ 2093 0106 BD46     		mov	sp, r7
+ 2094              	.LCFI118:
+ 2095              		.cfi_def_cfa_register 13
+ 2096              		@ sp needed
+ 2097 0108 80BD     		pop	{r7, pc}
+ 2098              	.L102:
+ 2099 010a 00BF     		.align	2
+ 2100              	.L101:
+ 2101 010c 295C0FBD 		.word	-1123066839
+ 2102 0110 4260653B 		.word	996499522
+ 2103 0114 0000C841 		.word	1103626240
+ 2104 0118 0000A040 		.word	1084227584
+ 2105 011c 00247449 		.word	1232348160
+ 2106              		.cfi_endproc
+ 2107              	.LFE538:
+ 2109              		.text
+ 2110              	.Letext0:
+ 2111              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 2112              		.file 3 "/usr/include/newlib/sys/_stdint.h"
+ 2113              		.file 4 "../Drivers/CMSIS/Device/ST/STM32L4xx/Include/stm32l476xx.h"
+ 2114              		.file 5 "../Drivers/CMSIS/Device/ST/STM32L4xx/Include/stm32l4xx.h"
+ 2115              		.file 6 "../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def.h"
+ 2116              		.file 7 "../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rtc.h"
+ 2117              		.file 8 "../Inc/smtc_hal/smtc_hal_rtc.h"
+ARM GAS  /tmp/ccviTP8r.s 			page 48
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 smtc_hal_rtc.c
+     /tmp/ccviTP8r.s:22     .bss.hal_rtc:0000000000000000 hal_rtc
+     /tmp/ccviTP8r.s:19     .bss.hal_rtc:0000000000000000 $d
+     /tmp/ccviTP8r.s:25     .bss.rtc_alarm:0000000000000000 $d
+     /tmp/ccviTP8r.s:28     .bss.rtc_alarm:0000000000000000 rtc_alarm
+     /tmp/ccviTP8r.s:31     .rodata.days_in_month:0000000000000000 $d
+     /tmp/ccviTP8r.s:34     .rodata.days_in_month:0000000000000000 days_in_month
+     /tmp/ccviTP8r.s:37     .rodata.days_in_month_leap_year:0000000000000000 $d
+     /tmp/ccviTP8r.s:40     .rodata.days_in_month_leap_year:0000000000000000 days_in_month_leap_year
+     /tmp/ccviTP8r.s:43     .text.hal_rtc_init:0000000000000000 $t
+     /tmp/ccviTP8r.s:51     .text.hal_rtc_init:0000000000000000 hal_rtc_init
+     /tmp/ccviTP8r.s:1063   .text.hal_rtc_set_time_ref_in_ticks:0000000000000000 hal_rtc_set_time_ref_in_ticks
+     /tmp/ccviTP8r.s:192    .text.hal_rtc_init:00000000000000c8 $d
+     /tmp/ccviTP8r.s:199    .text.hal_rtc_get_time_s:0000000000000000 $t
+     /tmp/ccviTP8r.s:206    .text.hal_rtc_get_time_s:0000000000000000 hal_rtc_get_time_s
+     /tmp/ccviTP8r.s:1384   .text.hal_rtc_get_calendar_time:0000000000000000 hal_rtc_get_calendar_time
+     /tmp/ccviTP8r.s:245    .text.hal_rtc_get_time_ms:0000000000000000 $t
+     /tmp/ccviTP8r.s:252    .text.hal_rtc_get_time_ms:0000000000000000 hal_rtc_get_time_ms
+     /tmp/ccviTP8r.s:301    .text.hal_rtc_stop_alarm:0000000000000000 $t
+     /tmp/ccviTP8r.s:308    .text.hal_rtc_stop_alarm:0000000000000000 hal_rtc_stop_alarm
+     /tmp/ccviTP8r.s:345    .text.hal_rtc_stop_alarm:000000000000002c $d
+     /tmp/ccviTP8r.s:351    .text.hal_rtc_start_alarm:0000000000000000 $t
+     /tmp/ccviTP8r.s:358    .text.hal_rtc_start_alarm:0000000000000000 hal_rtc_start_alarm
+     /tmp/ccviTP8r.s:703    .text.hal_rtc_start_alarm:00000000000001d8 $d
+     /tmp/ccviTP8r.s:712    .text.hal_rtc_get_timer_value:0000000000000000 $t
+     /tmp/ccviTP8r.s:719    .text.hal_rtc_get_timer_value:0000000000000000 hal_rtc_get_timer_value
+     /tmp/ccviTP8r.s:1574   .text.rtc_get_timestamp_in_ticks:0000000000000000 rtc_get_timestamp_in_ticks
+     /tmp/ccviTP8r.s:763    .text.hal_rtc_get_timer_elapsed_value:0000000000000000 $t
+     /tmp/ccviTP8r.s:770    .text.hal_rtc_get_timer_elapsed_value:0000000000000000 hal_rtc_get_timer_elapsed_value
+     /tmp/ccviTP8r.s:817    .text.hal_rtc_get_timer_elapsed_value:000000000000002c $d
+     /tmp/ccviTP8r.s:822    .text.hal_rtc_delay_in_ms:0000000000000000 $t
+     /tmp/ccviTP8r.s:829    .text.hal_rtc_delay_in_ms:0000000000000000 hal_rtc_delay_in_ms
+     /tmp/ccviTP8r.s:1153   .text.hal_rtc_ms_2_tick:0000000000000000 hal_rtc_ms_2_tick
+     /tmp/ccviTP8r.s:912    .text.hal_rtc_wakeup_timer_set_s:0000000000000000 $t
+     /tmp/ccviTP8r.s:919    .text.hal_rtc_wakeup_timer_set_s:0000000000000000 hal_rtc_wakeup_timer_set_s
+     /tmp/ccviTP8r.s:1334   .text.hal_rtc_s_2_wakeup_timer_tick:0000000000000000 hal_rtc_s_2_wakeup_timer_tick
+     /tmp/ccviTP8r.s:960    .text.hal_rtc_wakeup_timer_set_s:0000000000000024 $d
+     /tmp/ccviTP8r.s:965    .text.hal_rtc_wakeup_timer_set_ms:0000000000000000 $t
+     /tmp/ccviTP8r.s:972    .text.hal_rtc_wakeup_timer_set_ms:0000000000000000 hal_rtc_wakeup_timer_set_ms
+     /tmp/ccviTP8r.s:1273   .text.hal_rtc_ms_2_wakeup_timer_tick:0000000000000000 hal_rtc_ms_2_wakeup_timer_tick
+     /tmp/ccviTP8r.s:1016   .text.hal_rtc_wakeup_timer_set_ms:000000000000002c $d
+     /tmp/ccviTP8r.s:1021   .text.hal_rtc_stop_timer:0000000000000000 $t
+     /tmp/ccviTP8r.s:1028   .text.hal_rtc_stop_timer:0000000000000000 hal_rtc_stop_timer
+     /tmp/ccviTP8r.s:1051   .text.hal_rtc_stop_timer:0000000000000010 $d
+     /tmp/ccviTP8r.s:1056   .text.hal_rtc_set_time_ref_in_ticks:0000000000000000 $t
+     /tmp/ccviTP8r.s:1095   .text.hal_rtc_set_time_ref_in_ticks:000000000000001c $d
+     /tmp/ccviTP8r.s:1102   .text.hal_rtc_get_time_ref_in_ticks:0000000000000000 $t
+     /tmp/ccviTP8r.s:1109   .text.hal_rtc_get_time_ref_in_ticks:0000000000000000 hal_rtc_get_time_ref_in_ticks
+     /tmp/ccviTP8r.s:1140   .text.hal_rtc_get_time_ref_in_ticks:0000000000000014 $d
+     /tmp/ccviTP8r.s:1146   .text.hal_rtc_ms_2_tick:0000000000000000 $t
+     /tmp/ccviTP8r.s:1204   .text.hal_rtc_tick_2_ms:0000000000000000 $t
+     /tmp/ccviTP8r.s:1211   .text.hal_rtc_tick_2_ms:0000000000000000 hal_rtc_tick_2_ms
+     /tmp/ccviTP8r.s:1267   .text.hal_rtc_ms_2_wakeup_timer_tick:0000000000000000 $t
+     /tmp/ccviTP8r.s:1328   .text.hal_rtc_s_2_wakeup_timer_tick:0000000000000000 $t
+     /tmp/ccviTP8r.s:1378   .text.hal_rtc_get_calendar_time:0000000000000000 $t
+     /tmp/ccviTP8r.s:1448   .text.RTC_Alarm_IRQHandler:0000000000000000 $t
+ARM GAS  /tmp/ccviTP8r.s 			page 49
+
+
+     /tmp/ccviTP8r.s:1455   .text.RTC_Alarm_IRQHandler:0000000000000000 RTC_Alarm_IRQHandler
+     /tmp/ccviTP8r.s:1534   .text.HAL_RTC_AlarmAEventCallback:0000000000000000 HAL_RTC_AlarmAEventCallback
+     /tmp/ccviTP8r.s:1521   .text.RTC_Alarm_IRQHandler:0000000000000050 $d
+     /tmp/ccviTP8r.s:1527   .text.HAL_RTC_AlarmAEventCallback:0000000000000000 $t
+     /tmp/ccviTP8r.s:1568   .text.rtc_get_timestamp_in_ticks:0000000000000000 $t
+     /tmp/ccviTP8r.s:1771   .text.rtc_get_timestamp_in_ticks:0000000000000124 $d
+     /tmp/ccviTP8r.s:1780   .text.RTC_WKUP_IRQHandler:0000000000000000 $t
+     /tmp/ccviTP8r.s:1787   .text.RTC_WKUP_IRQHandler:0000000000000000 RTC_WKUP_IRQHandler
+     /tmp/ccviTP8r.s:1810   .text.RTC_WKUP_IRQHandler:0000000000000010 $d
+     /tmp/ccviTP8r.s:1815   .text.HAL_RTC_MspInit:0000000000000000 $t
+     /tmp/ccviTP8r.s:1822   .text.HAL_RTC_MspInit:0000000000000000 HAL_RTC_MspInit
+     /tmp/ccviTP8r.s:1867   .text.HAL_RTC_MspInit:0000000000000030 $d
+     /tmp/ccviTP8r.s:1872   .text.HAL_RTC_MspDeInit:0000000000000000 $t
+     /tmp/ccviTP8r.s:1879   .text.HAL_RTC_MspDeInit:0000000000000000 HAL_RTC_MspDeInit
+     /tmp/ccviTP8r.s:1919   .text.HAL_RTC_MspDeInit:0000000000000028 $d
+     /tmp/ccviTP8r.s:1924   .text.hal_rtc_get_minimum_timeout:0000000000000000 $t
+     /tmp/ccviTP8r.s:1931   .text.hal_rtc_get_minimum_timeout:0000000000000000 hal_rtc_get_minimum_timeout
+     /tmp/ccviTP8r.s:1964   .text.hal_rtc_temp_compensation:0000000000000000 $t
+     /tmp/ccviTP8r.s:1971   .text.hal_rtc_temp_compensation:0000000000000000 hal_rtc_temp_compensation
+     /tmp/ccviTP8r.s:2101   .text.hal_rtc_temp_compensation:000000000000010c $d
+
+UNDEFINED SYMBOLS
+HAL_RTC_Init
+hal_mcu_panic
+HAL_RTC_SetDate
+HAL_RTC_SetTime
+HAL_RTCEx_EnableBypassShadow
+HAL_NVIC_SetPriority
+HAL_NVIC_EnableIRQ
+HAL_RTC_DeactivateAlarm
+HAL_RTC_SetAlarm_IT
+HAL_RTCEx_SetWakeUpTimer_IT
+HAL_RTCEx_DeactivateWakeUpTimer
+__aeabi_uldivmod
+timer_irq_handler
+HAL_RTC_GetDate
+HAL_RTC_GetTime
+HAL_RTCEx_WakeUpTimerIRQHandler
+HAL_NVIC_DisableIRQ
+__aeabi_f2d
+__aeabi_d2f
+floor

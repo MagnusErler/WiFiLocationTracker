@@ -1,0 +1,1216 @@
+ARM GAS  /tmp/ccD4ZTTM.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"lr1110.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.global	lr1110_modem_event_callback
+  18              		.section	.bss.lr1110_modem_event_callback,"aw",%nobits
+  19              		.align	2
+  22              	lr1110_modem_event_callback:
+  23 0000 00000000 		.space	4
+  24              		.section	.text.radio_event_init,"ax",%progbits
+  25              		.align	1
+  26              		.global	radio_event_init
+  27              		.arch armv7e-m
+  28              		.syntax unified
+  29              		.thumb
+  30              		.thumb_func
+  31              		.fpu fpv4-sp-d16
+  33              	radio_event_init:
+  34              	.LFB590:
+  35              		.file 1 "../Src/radio/lr1110.c"
+   1:../Src/radio/lr1110.c **** /*!
+   2:../Src/radio/lr1110.c ****  * @file      lr1110.c
+   3:../Src/radio/lr1110.c ****  *
+   4:../Src/radio/lr1110.c ****  * @brief     LR1110 top level implementation
+   5:../Src/radio/lr1110.c ****  *
+   6:../Src/radio/lr1110.c ****  * Revised BSD License
+   7:../Src/radio/lr1110.c ****  * Copyright Semtech Corporation 2020. All rights reserved.
+   8:../Src/radio/lr1110.c ****  *
+   9:../Src/radio/lr1110.c ****  * Redistribution and use in source and binary forms, with or without
+  10:../Src/radio/lr1110.c ****  * modification, are permitted provided that the following conditions are met:
+  11:../Src/radio/lr1110.c ****  *     * Redistributions of source code must retain the above copyright
+  12:../Src/radio/lr1110.c ****  *       notice, this list of conditions and the following disclaimer.
+  13:../Src/radio/lr1110.c ****  *     * Redistributions in binary form must reproduce the above copyright
+  14:../Src/radio/lr1110.c ****  *       notice, this list of conditions and the following disclaimer in the
+  15:../Src/radio/lr1110.c ****  *       documentation and/or other materials provided with the distribution.
+  16:../Src/radio/lr1110.c ****  *     * Neither the name of the Semtech corporation nor the
+  17:../Src/radio/lr1110.c ****  *       names of its contributors may be used to endorse or promote products
+  18:../Src/radio/lr1110.c ****  *       derived from this software without specific prior written permission.
+  19:../Src/radio/lr1110.c ****  *
+  20:../Src/radio/lr1110.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  21:../Src/radio/lr1110.c ****  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  22:../Src/radio/lr1110.c ****  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  23:../Src/radio/lr1110.c ****  * ARE DISCLAIMED. IN NO EVENT SHALL SEMTECH CORPORATION BE LIABLE FOR ANY
+  24:../Src/radio/lr1110.c ****  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+  25:../Src/radio/lr1110.c ****  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ARM GAS  /tmp/ccD4ZTTM.s 			page 2
+
+
+  26:../Src/radio/lr1110.c ****  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+  27:../Src/radio/lr1110.c ****  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  28:../Src/radio/lr1110.c ****  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  29:../Src/radio/lr1110.c ****  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  30:../Src/radio/lr1110.c ****  */
+  31:../Src/radio/lr1110.c **** 
+  32:../Src/radio/lr1110.c **** /*
+  33:../Src/radio/lr1110.c ****  * -----------------------------------------------------------------------------
+  34:../Src/radio/lr1110.c ****  * --- DEPENDENCIES ------------------------------------------------------------
+  35:../Src/radio/lr1110.c ****  */
+  36:../Src/radio/lr1110.c **** 
+  37:../Src/radio/lr1110.c **** #include "lr1110.h"
+  38:../Src/radio/lr1110.c **** #include "lr1110_modem_board.h"
+  39:../Src/radio/lr1110.c **** 
+  40:../Src/radio/lr1110.c **** /*
+  41:../Src/radio/lr1110.c ****  * -----------------------------------------------------------------------------
+  42:../Src/radio/lr1110.c ****  * --- PRIVATE MACROS-----------------------------------------------------------
+  43:../Src/radio/lr1110.c ****  */
+  44:../Src/radio/lr1110.c **** 
+  45:../Src/radio/lr1110.c **** /*
+  46:../Src/radio/lr1110.c ****  * -----------------------------------------------------------------------------
+  47:../Src/radio/lr1110.c ****  * --- PRIVATE CONSTANTS -------------------------------------------------------
+  48:../Src/radio/lr1110.c ****  */
+  49:../Src/radio/lr1110.c **** 
+  50:../Src/radio/lr1110.c **** /*
+  51:../Src/radio/lr1110.c ****  * -----------------------------------------------------------------------------
+  52:../Src/radio/lr1110.c ****  * --- PRIVATE TYPES -----------------------------------------------------------
+  53:../Src/radio/lr1110.c ****  */
+  54:../Src/radio/lr1110.c **** 
+  55:../Src/radio/lr1110.c **** /*
+  56:../Src/radio/lr1110.c ****  * -----------------------------------------------------------------------------
+  57:../Src/radio/lr1110.c ****  * --- PRIVATE VARIABLES -------------------------------------------------------
+  58:../Src/radio/lr1110.c ****  */
+  59:../Src/radio/lr1110.c **** 
+  60:../Src/radio/lr1110.c **** /*!
+  61:../Src/radio/lr1110.c ****  * @brief lr1110 modem-e event callback functions
+  62:../Src/radio/lr1110.c ****  */
+  63:../Src/radio/lr1110.c **** lr1110_modem_event_callback_t* lr1110_modem_event_callback;
+  64:../Src/radio/lr1110.c **** 
+  65:../Src/radio/lr1110.c **** /*
+  66:../Src/radio/lr1110.c ****  * -----------------------------------------------------------------------------
+  67:../Src/radio/lr1110.c ****  * --- PRIVATE FUNCTIONS DECLARATION -------------------------------------------
+  68:../Src/radio/lr1110.c ****  */
+  69:../Src/radio/lr1110.c **** 
+  70:../Src/radio/lr1110.c **** /*!
+  71:../Src/radio/lr1110.c ****  * @brief Hardware INT IRQ callback initialization
+  72:../Src/radio/lr1110.c ****  */
+  73:../Src/radio/lr1110.c **** void radio_event_callback( void* obj );
+  74:../Src/radio/lr1110.c **** 
+  75:../Src/radio/lr1110.c **** /*
+  76:../Src/radio/lr1110.c ****  * -----------------------------------------------------------------------------
+  77:../Src/radio/lr1110.c ****  * --- PUBLIC FUNCTIONS DEFINITION ---------------------------------------------
+  78:../Src/radio/lr1110.c ****  */
+  79:../Src/radio/lr1110.c **** 
+  80:../Src/radio/lr1110.c **** void radio_event_init( lr1110_modem_event_callback_t* event ) { lr1110_modem_event_callback = event
+  36              		.loc 1 80 63
+  37              		.cfi_startproc
+ARM GAS  /tmp/ccD4ZTTM.s 			page 3
+
+
+  38              		@ args = 0, pretend = 0, frame = 8
+  39              		@ frame_needed = 1, uses_anonymous_args = 0
+  40              		@ link register save eliminated.
+  41 0000 80B4     		push	{r7}
+  42              	.LCFI0:
+  43              		.cfi_def_cfa_offset 4
+  44              		.cfi_offset 7, -4
+  45 0002 83B0     		sub	sp, sp, #12
+  46              	.LCFI1:
+  47              		.cfi_def_cfa_offset 16
+  48 0004 00AF     		add	r7, sp, #0
+  49              	.LCFI2:
+  50              		.cfi_def_cfa_register 7
+  51 0006 7860     		str	r0, [r7, #4]
+  52              		.loc 1 80 93
+  53 0008 044A     		ldr	r2, .L2
+  54 000a 7B68     		ldr	r3, [r7, #4]
+  55 000c 1360     		str	r3, [r2]
+  56              		.loc 1 80 102
+  57 000e 00BF     		nop
+  58 0010 0C37     		adds	r7, r7, #12
+  59              	.LCFI3:
+  60              		.cfi_def_cfa_offset 4
+  61 0012 BD46     		mov	sp, r7
+  62              	.LCFI4:
+  63              		.cfi_def_cfa_register 13
+  64              		@ sp needed
+  65 0014 5DF8047B 		ldr	r7, [sp], #4
+  66              	.LCFI5:
+  67              		.cfi_restore 7
+  68              		.cfi_def_cfa_offset 0
+  69 0018 7047     		bx	lr
+  70              	.L3:
+  71 001a 00BF     		.align	2
+  72              	.L2:
+  73 001c 00000000 		.word	lr1110_modem_event_callback
+  74              		.cfi_endproc
+  75              	.LFE590:
+  77              		.section	.rodata
+  78              		.align	2
+  79              	.LC0:
+  80 0000 1B5B303B 		.ascii	"\033[0;31m\000"
+  80      33316D00 
+  81              		.align	2
+  82              	.LC1:
+  83 0008 4552524F 		.ascii	"ERROR: \000"
+  83      523A2000 
+  84              		.align	2
+  85              	.LC2:
+  86 0010 6C723131 		.ascii	"lr1110_modem_helper_get_event_data RC = %d\015\012\015"
+  86      31305F6D 
+  86      6F64656D 
+  86      5F68656C 
+  86      7065725F 
+  87 003d 0A00     		.ascii	"\012\000"
+  88 003f 00       		.align	2
+  89              	.LC3:
+ARM GAS  /tmp/ccD4ZTTM.s 			page 4
+
+
+  90 0040 1B5B306D 		.ascii	"\033[0m\000"
+  90      00
+  91              		.section	.text.lr1110_modem_event_process,"ax",%progbits
+  92              		.align	1
+  93              		.global	lr1110_modem_event_process
+  94              		.syntax unified
+  95              		.thumb
+  96              		.thumb_func
+  97              		.fpu fpv4-sp-d16
+  99              	lr1110_modem_event_process:
+ 100              	.LFB591:
+  81:../Src/radio/lr1110.c **** 
+  82:../Src/radio/lr1110.c **** void lr1110_modem_event_process( const void* context )
+  83:../Src/radio/lr1110.c **** {
+ 101              		.loc 1 83 1
+ 102              		.cfi_startproc
+ 103              		@ args = 0, pretend = 0, frame = 968
+ 104              		@ frame_needed = 1, uses_anonymous_args = 0
+ 105 0000 B0B5     		push	{r4, r5, r7, lr}
+ 106              	.LCFI6:
+ 107              		.cfi_def_cfa_offset 16
+ 108              		.cfi_offset 4, -16
+ 109              		.cfi_offset 5, -12
+ 110              		.cfi_offset 7, -8
+ 111              		.cfi_offset 14, -4
+ 112 0002 ADF5747D 		sub	sp, sp, #976
+ 113              	.LCFI7:
+ 114              		.cfi_def_cfa_offset 992
+ 115 0006 02AF     		add	r7, sp, #8
+ 116              	.LCFI8:
+ 117              		.cfi_def_cfa 7, 984
+ 118 0008 07F57273 		add	r3, r7, #968
+ 119 000c A3F57173 		sub	r3, r3, #964
+ 120 0010 1860     		str	r0, [r3]
+  84:../Src/radio/lr1110.c ****     if( lr1110_modem_board_read_event_line( context ) == 1 )
+ 121              		.loc 1 84 9
+ 122 0012 07F57273 		add	r3, r7, #968
+ 123 0016 A3F57173 		sub	r3, r3, #964
+ 124 001a 1868     		ldr	r0, [r3]
+ 125 001c FFF7FEFF 		bl	lr1110_modem_board_read_event_line
+ 126 0020 0346     		mov	r3, r0
+ 127              		.loc 1 84 7
+ 128 0022 002B     		cmp	r3, #0
+ 129 0024 00F0DA81 		beq	.L46
+ 130              	.LBB2:
+  85:../Src/radio/lr1110.c ****     {
+  86:../Src/radio/lr1110.c ****         lr1110_modem_helper_status_t modem_response_code = LR1110_MODEM_HELPER_STATUS_OK;
+ 131              		.loc 1 86 38
+ 132 0028 0023     		movs	r3, #0
+ 133 002a 87F8C733 		strb	r3, [r7, #967]
+ 134              	.L45:
+  87:../Src/radio/lr1110.c ****         lr1110_modem_event_t         modem_event;
+  88:../Src/radio/lr1110.c **** 
+  89:../Src/radio/lr1110.c ****         do
+  90:../Src/radio/lr1110.c ****         {
+  91:../Src/radio/lr1110.c ****             modem_response_code = lr1110_modem_helper_get_event_data( context, &modem_event );
+ 135              		.loc 1 91 35
+ARM GAS  /tmp/ccD4ZTTM.s 			page 5
+
+
+ 136 002e 07F10C02 		add	r2, r7, #12
+ 137 0032 07F57273 		add	r3, r7, #968
+ 138 0036 A3F57173 		sub	r3, r3, #964
+ 139 003a 1146     		mov	r1, r2
+ 140 003c 1868     		ldr	r0, [r3]
+ 141 003e FFF7FEFF 		bl	lr1110_modem_helper_get_event_data
+ 142 0042 0346     		mov	r3, r0
+ 143 0044 87F8C733 		strb	r3, [r7, #967]
+  92:../Src/radio/lr1110.c **** 
+  93:../Src/radio/lr1110.c ****             if( modem_response_code == LR1110_MODEM_HELPER_STATUS_OK )
+ 144              		.loc 1 93 15
+ 145 0048 97F8C733 		ldrb	r3, [r7, #967]	@ zero_extendqisi2
+ 146 004c 002B     		cmp	r3, #0
+ 147 004e 40F08581 		bne	.L6
+  94:../Src/radio/lr1110.c ****             {
+  95:../Src/radio/lr1110.c ****                 switch( modem_event.event_type )
+ 148              		.loc 1 95 36
+ 149 0052 07F57273 		add	r3, r7, #968
+ 150 0056 A3F56F73 		sub	r3, r3, #956
+ 151 005a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 152              		.loc 1 95 17
+ 153 005c 0F2B     		cmp	r3, #15
+ 154 005e 29DC     		bgt	.L7
+ 155 0060 002B     		cmp	r3, #0
+ 156 0062 C0F28B81 		blt	.L47
+ 157 0066 0F2B     		cmp	r3, #15
+ 158 0068 00F28881 		bhi	.L47
+ 159 006c 01A2     		adr	r2, .L10
+ 160 006e 52F823F0 		ldr	pc, [r2, r3, lsl #2]
+ 161 0072 00BF     		.p2align 2
+ 162              	.L10:
+ 163 0074 BD000000 		.word	.L24+1
+ 164 0078 E9000000 		.word	.L23+1
+ 165 007c 09010000 		.word	.L22+1
+ 166 0080 49010000 		.word	.L21+1
+ 167 0084 75010000 		.word	.L20+1
+ 168 0088 D9010000 		.word	.L19+1
+ 169 008c 05020000 		.word	.L18+1
+ 170 0090 31020000 		.word	.L17+1
+ 171 0094 5D020000 		.word	.L16+1
+ 172 0098 7D030000 		.word	.L47+1
+ 173 009c 29010000 		.word	.L15+1
+ 174 00a0 7D020000 		.word	.L14+1
+ 175 00a4 AF020000 		.word	.L13+1
+ 176 00a8 DD020000 		.word	.L12+1
+ 177 00ac 05030000 		.word	.L11+1
+ 178 00b0 25030000 		.word	.L9+1
+ 179              		.p2align 1
+ 180              	.L7:
+ 181 00b4 FF2B     		cmp	r3, #255
+ 182 00b6 00F04381 		beq	.L25
+  96:../Src/radio/lr1110.c ****                 {
+  97:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_RESET:
+  98:../Src/radio/lr1110.c ****                     if( ( lr1110_modem_event_callback != NULL ) && ( lr1110_modem_event_callback->r
+  99:../Src/radio/lr1110.c ****                     {
+ 100:../Src/radio/lr1110.c ****                         lr1110_modem_event_callback->reset( modem_event.event_data.reset.count );
+ 101:../Src/radio/lr1110.c ****                     }
+ARM GAS  /tmp/ccD4ZTTM.s 			page 6
+
+
+ 102:../Src/radio/lr1110.c ****                     break;
+ 103:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_ALARM:
+ 104:../Src/radio/lr1110.c ****                     if( ( lr1110_modem_event_callback != NULL ) && ( lr1110_modem_event_callback->a
+ 105:../Src/radio/lr1110.c ****                     {
+ 106:../Src/radio/lr1110.c ****                         lr1110_modem_event_callback->alarm( );
+ 107:../Src/radio/lr1110.c ****                     }
+ 108:../Src/radio/lr1110.c ****                     break;
+ 109:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_JOINED:
+ 110:../Src/radio/lr1110.c ****                     if( ( lr1110_modem_event_callback != NULL ) && ( lr1110_modem_event_callback->j
+ 111:../Src/radio/lr1110.c ****                     {
+ 112:../Src/radio/lr1110.c ****                         lr1110_modem_event_callback->joined( );
+ 113:../Src/radio/lr1110.c ****                     }
+ 114:../Src/radio/lr1110.c ****                     break;
+ 115:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_JOIN_FAIL:
+ 116:../Src/radio/lr1110.c ****                     if( ( lr1110_modem_event_callback != NULL ) && ( lr1110_modem_event_callback->j
+ 117:../Src/radio/lr1110.c ****                     {
+ 118:../Src/radio/lr1110.c ****                         lr1110_modem_event_callback->join_fail( );
+ 119:../Src/radio/lr1110.c ****                     }
+ 120:../Src/radio/lr1110.c ****                     break;
+ 121:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_TX_DONE:
+ 122:../Src/radio/lr1110.c ****                     if( ( lr1110_modem_event_callback != NULL ) && ( lr1110_modem_event_callback->t
+ 123:../Src/radio/lr1110.c ****                     {
+ 124:../Src/radio/lr1110.c ****                         lr1110_modem_event_callback->tx_done( modem_event.event_data.txdone.status 
+ 125:../Src/radio/lr1110.c ****                     }
+ 126:../Src/radio/lr1110.c ****                     break;
+ 127:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_DOWN_DATA:
+ 128:../Src/radio/lr1110.c ****                     if( ( lr1110_modem_event_callback != NULL ) && ( lr1110_modem_event_callback->d
+ 129:../Src/radio/lr1110.c ****                     {
+ 130:../Src/radio/lr1110.c ****                         lr1110_modem_event_callback->down_data(
+ 131:../Src/radio/lr1110.c ****                             modem_event.event_data.downdata.rssi, modem_event.event_data.downdata.s
+ 132:../Src/radio/lr1110.c ****                             modem_event.event_data.downdata.flag, modem_event.event_data.downdata.f
+ 133:../Src/radio/lr1110.c ****                             modem_event.event_data.downdata.data, modem_event.event_data.downdata.l
+ 134:../Src/radio/lr1110.c ****                     }
+ 135:../Src/radio/lr1110.c ****                     break;
+ 136:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_UPLOAD_DONE:
+ 137:../Src/radio/lr1110.c ****                     if( ( lr1110_modem_event_callback != NULL ) &&
+ 138:../Src/radio/lr1110.c ****                         ( lr1110_modem_event_callback->upload_done != NULL ) )
+ 139:../Src/radio/lr1110.c ****                     {
+ 140:../Src/radio/lr1110.c ****                         lr1110_modem_event_callback->upload_done( modem_event.event_data.upload.sta
+ 141:../Src/radio/lr1110.c ****                     }
+ 142:../Src/radio/lr1110.c ****                     break;
+ 143:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_SET_CONF:
+ 144:../Src/radio/lr1110.c ****                     if( ( lr1110_modem_event_callback != NULL ) && ( lr1110_modem_event_callback->s
+ 145:../Src/radio/lr1110.c ****                     {
+ 146:../Src/radio/lr1110.c ****                         lr1110_modem_event_callback->set_conf( modem_event.event_data.setconf.tag )
+ 147:../Src/radio/lr1110.c ****                     }
+ 148:../Src/radio/lr1110.c ****                     break;
+ 149:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_MUTE:
+ 150:../Src/radio/lr1110.c ****                     if( ( lr1110_modem_event_callback != NULL ) && ( lr1110_modem_event_callback->m
+ 151:../Src/radio/lr1110.c ****                     {
+ 152:../Src/radio/lr1110.c ****                         lr1110_modem_event_callback->mute( modem_event.event_data.mute.status );
+ 153:../Src/radio/lr1110.c ****                     }
+ 154:../Src/radio/lr1110.c ****                     break;
+ 155:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_STREAM_DONE:
+ 156:../Src/radio/lr1110.c ****                     if( ( lr1110_modem_event_callback != NULL ) &&
+ 157:../Src/radio/lr1110.c ****                         ( lr1110_modem_event_callback->stream_done != NULL ) )
+ 158:../Src/radio/lr1110.c ****                     {
+ARM GAS  /tmp/ccD4ZTTM.s 			page 7
+
+
+ 159:../Src/radio/lr1110.c ****                         lr1110_modem_event_callback->stream_done( );
+ 160:../Src/radio/lr1110.c ****                     }
+ 161:../Src/radio/lr1110.c ****                     break;
+ 162:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_WIFI_SCAN_DONE:
+ 163:../Src/radio/lr1110.c ****                     if( ( lr1110_modem_event_callback != NULL ) &&
+ 164:../Src/radio/lr1110.c ****                         ( lr1110_modem_event_callback->wifi_scan_done != NULL ) )
+ 165:../Src/radio/lr1110.c ****                     {
+ 166:../Src/radio/lr1110.c ****                         lr1110_modem_event_callback->wifi_scan_done( modem_event.event_data.wifi.bu
+ 167:../Src/radio/lr1110.c ****                                                                      modem_event.event_data.wifi.le
+ 168:../Src/radio/lr1110.c ****                     }
+ 169:../Src/radio/lr1110.c ****                     break;
+ 170:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_GNSS_SCAN_DONE:
+ 171:../Src/radio/lr1110.c ****                     if( ( lr1110_modem_event_callback != NULL ) &&
+ 172:../Src/radio/lr1110.c ****                         ( lr1110_modem_event_callback->gnss_scan_done != NULL ) )
+ 173:../Src/radio/lr1110.c ****                     {
+ 174:../Src/radio/lr1110.c ****                         lr1110_modem_event_callback->gnss_scan_done( modem_event.event_data.gnss.na
+ 175:../Src/radio/lr1110.c ****                                                                      modem_event.event_data.gnss.le
+ 176:../Src/radio/lr1110.c ****                     }
+ 177:../Src/radio/lr1110.c ****                     break;
+ 178:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_TIME_UPDATED_ALC_SYNC:
+ 179:../Src/radio/lr1110.c ****                     if( ( lr1110_modem_event_callback != NULL ) &&
+ 180:../Src/radio/lr1110.c ****                         ( lr1110_modem_event_callback->time_updated_alc_sync != NULL ) )
+ 181:../Src/radio/lr1110.c ****                     {
+ 182:../Src/radio/lr1110.c ****                         lr1110_modem_event_callback->time_updated_alc_sync( modem_event.event_data.
+ 183:../Src/radio/lr1110.c ****                     }
+ 184:../Src/radio/lr1110.c ****                     break;
+ 185:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_ADR_MOBILE_TO_STATIC:
+ 186:../Src/radio/lr1110.c ****                     if( ( lr1110_modem_event_callback != NULL ) &&
+ 187:../Src/radio/lr1110.c ****                         ( lr1110_modem_event_callback->adr_mobile_to_static != NULL ) )
+ 188:../Src/radio/lr1110.c ****                     {
+ 189:../Src/radio/lr1110.c ****                         lr1110_modem_event_callback->adr_mobile_to_static( );
+ 190:../Src/radio/lr1110.c ****                     }
+ 191:../Src/radio/lr1110.c ****                     break;
+ 192:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_NEW_LINK_ADR:
+ 193:../Src/radio/lr1110.c ****                     if( ( lr1110_modem_event_callback != NULL ) &&
+ 194:../Src/radio/lr1110.c ****                         ( lr1110_modem_event_callback->new_link_adr != NULL ) )
+ 195:../Src/radio/lr1110.c ****                     {
+ 196:../Src/radio/lr1110.c ****                         lr1110_modem_event_callback->new_link_adr( );
+ 197:../Src/radio/lr1110.c ****                     }
+ 198:../Src/radio/lr1110.c ****                     break;
+ 199:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_NO_EVENT:
+ 200:../Src/radio/lr1110.c ****                     if( ( lr1110_modem_event_callback != NULL ) && ( lr1110_modem_event_callback->n
+ 201:../Src/radio/lr1110.c ****                     {
+ 202:../Src/radio/lr1110.c ****                         lr1110_modem_event_callback->no_event( );
+ 203:../Src/radio/lr1110.c ****                     }
+ 204:../Src/radio/lr1110.c ****                     break;
+ 205:../Src/radio/lr1110.c ****                 default:
+ 206:../Src/radio/lr1110.c ****                     break;
+ 183              		.loc 1 206 21
+ 184 00ba 5FE1     		b	.L47
+ 185              	.L24:
+  98:../Src/radio/lr1110.c ****                     {
+ 186              		.loc 1 98 55
+ 187 00bc 984B     		ldr	r3, .L64
+ 188 00be 1B68     		ldr	r3, [r3]
+  98:../Src/radio/lr1110.c ****                     {
+ 189              		.loc 1 98 23
+ARM GAS  /tmp/ccD4ZTTM.s 			page 8
+
+
+ 190 00c0 002B     		cmp	r3, #0
+ 191 00c2 00F05D81 		beq	.L48
+  98:../Src/radio/lr1110.c ****                     {
+ 192              		.loc 1 98 97 discriminator 1
+ 193 00c6 964B     		ldr	r3, .L64
+ 194 00c8 1B68     		ldr	r3, [r3]
+ 195 00ca 1B68     		ldr	r3, [r3]
+  98:../Src/radio/lr1110.c ****                     {
+ 196              		.loc 1 98 65 discriminator 1
+ 197 00cc 002B     		cmp	r3, #0
+ 198 00ce 00F05781 		beq	.L48
+ 100:../Src/radio/lr1110.c ****                     }
+ 199              		.loc 1 100 52
+ 200 00d2 934B     		ldr	r3, .L64
+ 201 00d4 1B68     		ldr	r3, [r3]
+ 202 00d6 1B68     		ldr	r3, [r3]
+ 100:../Src/radio/lr1110.c ****                     }
+ 203              		.loc 1 100 25
+ 204 00d8 07F57272 		add	r2, r7, #968
+ 205 00dc A2F56F72 		sub	r2, r2, #956
+ 206 00e0 5288     		ldrh	r2, [r2, #2]
+ 207 00e2 1046     		mov	r0, r2
+ 208 00e4 9847     		blx	r3
+ 209              	.LVL0:
+ 102:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_ALARM:
+ 210              		.loc 1 102 21
+ 211 00e6 4BE1     		b	.L48
+ 212              	.L23:
+ 104:../Src/radio/lr1110.c ****                     {
+ 213              		.loc 1 104 55
+ 214 00e8 8D4B     		ldr	r3, .L64
+ 215 00ea 1B68     		ldr	r3, [r3]
+ 104:../Src/radio/lr1110.c ****                     {
+ 216              		.loc 1 104 23
+ 217 00ec 002B     		cmp	r3, #0
+ 218 00ee 00F04981 		beq	.L49
+ 104:../Src/radio/lr1110.c ****                     {
+ 219              		.loc 1 104 97 discriminator 1
+ 220 00f2 8B4B     		ldr	r3, .L64
+ 221 00f4 1B68     		ldr	r3, [r3]
+ 222 00f6 5B68     		ldr	r3, [r3, #4]
+ 104:../Src/radio/lr1110.c ****                     {
+ 223              		.loc 1 104 65 discriminator 1
+ 224 00f8 002B     		cmp	r3, #0
+ 225 00fa 00F04381 		beq	.L49
+ 106:../Src/radio/lr1110.c ****                     }
+ 226              		.loc 1 106 52
+ 227 00fe 884B     		ldr	r3, .L64
+ 228 0100 1B68     		ldr	r3, [r3]
+ 229 0102 5B68     		ldr	r3, [r3, #4]
+ 106:../Src/radio/lr1110.c ****                     }
+ 230              		.loc 1 106 25
+ 231 0104 9847     		blx	r3
+ 232              	.LVL1:
+ 108:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_JOINED:
+ 233              		.loc 1 108 21
+ 234 0106 3DE1     		b	.L49
+ARM GAS  /tmp/ccD4ZTTM.s 			page 9
+
+
+ 235              	.L22:
+ 110:../Src/radio/lr1110.c ****                     {
+ 236              		.loc 1 110 55
+ 237 0108 854B     		ldr	r3, .L64
+ 238 010a 1B68     		ldr	r3, [r3]
+ 110:../Src/radio/lr1110.c ****                     {
+ 239              		.loc 1 110 23
+ 240 010c 002B     		cmp	r3, #0
+ 241 010e 00F03B81 		beq	.L50
+ 110:../Src/radio/lr1110.c ****                     {
+ 242              		.loc 1 110 97 discriminator 1
+ 243 0112 834B     		ldr	r3, .L64
+ 244 0114 1B68     		ldr	r3, [r3]
+ 245 0116 9B68     		ldr	r3, [r3, #8]
+ 110:../Src/radio/lr1110.c ****                     {
+ 246              		.loc 1 110 65 discriminator 1
+ 247 0118 002B     		cmp	r3, #0
+ 248 011a 00F03581 		beq	.L50
+ 112:../Src/radio/lr1110.c ****                     }
+ 249              		.loc 1 112 52
+ 250 011e 804B     		ldr	r3, .L64
+ 251 0120 1B68     		ldr	r3, [r3]
+ 252 0122 9B68     		ldr	r3, [r3, #8]
+ 112:../Src/radio/lr1110.c ****                     }
+ 253              		.loc 1 112 25
+ 254 0124 9847     		blx	r3
+ 255              	.LVL2:
+ 114:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_JOIN_FAIL:
+ 256              		.loc 1 114 21
+ 257 0126 2FE1     		b	.L50
+ 258              	.L15:
+ 116:../Src/radio/lr1110.c ****                     {
+ 259              		.loc 1 116 55
+ 260 0128 7D4B     		ldr	r3, .L64
+ 261 012a 1B68     		ldr	r3, [r3]
+ 116:../Src/radio/lr1110.c ****                     {
+ 262              		.loc 1 116 23
+ 263 012c 002B     		cmp	r3, #0
+ 264 012e 00F02D81 		beq	.L51
+ 116:../Src/radio/lr1110.c ****                     {
+ 265              		.loc 1 116 97 discriminator 1
+ 266 0132 7B4B     		ldr	r3, .L64
+ 267 0134 1B68     		ldr	r3, [r3]
+ 268 0136 DB68     		ldr	r3, [r3, #12]
+ 116:../Src/radio/lr1110.c ****                     {
+ 269              		.loc 1 116 65 discriminator 1
+ 270 0138 002B     		cmp	r3, #0
+ 271 013a 00F02781 		beq	.L51
+ 118:../Src/radio/lr1110.c ****                     }
+ 272              		.loc 1 118 52
+ 273 013e 784B     		ldr	r3, .L64
+ 274 0140 1B68     		ldr	r3, [r3]
+ 275 0142 DB68     		ldr	r3, [r3, #12]
+ 118:../Src/radio/lr1110.c ****                     }
+ 276              		.loc 1 118 25
+ 277 0144 9847     		blx	r3
+ 278              	.LVL3:
+ARM GAS  /tmp/ccD4ZTTM.s 			page 10
+
+
+ 120:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_TX_DONE:
+ 279              		.loc 1 120 21
+ 280 0146 21E1     		b	.L51
+ 281              	.L21:
+ 122:../Src/radio/lr1110.c ****                     {
+ 282              		.loc 1 122 55
+ 283 0148 754B     		ldr	r3, .L64
+ 284 014a 1B68     		ldr	r3, [r3]
+ 122:../Src/radio/lr1110.c ****                     {
+ 285              		.loc 1 122 23
+ 286 014c 002B     		cmp	r3, #0
+ 287 014e 00F01F81 		beq	.L52
+ 122:../Src/radio/lr1110.c ****                     {
+ 288              		.loc 1 122 97 discriminator 1
+ 289 0152 734B     		ldr	r3, .L64
+ 290 0154 1B68     		ldr	r3, [r3]
+ 291 0156 1B69     		ldr	r3, [r3, #16]
+ 122:../Src/radio/lr1110.c ****                     {
+ 292              		.loc 1 122 65 discriminator 1
+ 293 0158 002B     		cmp	r3, #0
+ 294 015a 00F01981 		beq	.L52
+ 124:../Src/radio/lr1110.c ****                     }
+ 295              		.loc 1 124 52
+ 296 015e 704B     		ldr	r3, .L64
+ 297 0160 1B68     		ldr	r3, [r3]
+ 298 0162 1B69     		ldr	r3, [r3, #16]
+ 124:../Src/radio/lr1110.c ****                     }
+ 299              		.loc 1 124 25
+ 300 0164 07F57272 		add	r2, r7, #968
+ 301 0168 A2F56F72 		sub	r2, r2, #956
+ 302 016c 9278     		ldrb	r2, [r2, #2]	@ zero_extendqisi2
+ 303 016e 1046     		mov	r0, r2
+ 304 0170 9847     		blx	r3
+ 305              	.LVL4:
+ 126:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_DOWN_DATA:
+ 306              		.loc 1 126 21
+ 307 0172 0DE1     		b	.L52
+ 308              	.L20:
+ 128:../Src/radio/lr1110.c ****                     {
+ 309              		.loc 1 128 55
+ 310 0174 6A4B     		ldr	r3, .L64
+ 311 0176 1B68     		ldr	r3, [r3]
+ 128:../Src/radio/lr1110.c ****                     {
+ 312              		.loc 1 128 23
+ 313 0178 002B     		cmp	r3, #0
+ 314 017a 00F00B81 		beq	.L53
+ 128:../Src/radio/lr1110.c ****                     {
+ 315              		.loc 1 128 97 discriminator 1
+ 316 017e 684B     		ldr	r3, .L64
+ 317 0180 1B68     		ldr	r3, [r3]
+ 318 0182 5B69     		ldr	r3, [r3, #20]
+ 128:../Src/radio/lr1110.c ****                     {
+ 319              		.loc 1 128 65 discriminator 1
+ 320 0184 002B     		cmp	r3, #0
+ 321 0186 00F00581 		beq	.L53
+ 130:../Src/radio/lr1110.c ****                             modem_event.event_data.downdata.rssi, modem_event.event_data.downdata.s
+ 322              		.loc 1 130 52
+ARM GAS  /tmp/ccD4ZTTM.s 			page 11
+
+
+ 323 018a 654B     		ldr	r3, .L64
+ 324 018c 1B68     		ldr	r3, [r3]
+ 325 018e 5C69     		ldr	r4, [r3, #20]
+ 130:../Src/radio/lr1110.c ****                             modem_event.event_data.downdata.rssi, modem_event.event_data.downdata.s
+ 326              		.loc 1 130 25
+ 327 0190 07F57273 		add	r3, r7, #968
+ 328 0194 A3F56F73 		sub	r3, r3, #956
+ 329 0198 93F90200 		ldrsb	r0, [r3, #2]
+ 330 019c 07F57273 		add	r3, r7, #968
+ 331 01a0 A3F56F73 		sub	r3, r3, #956
+ 332 01a4 93F90310 		ldrsb	r1, [r3, #3]
+ 333 01a8 07F57273 		add	r3, r7, #968
+ 334 01ac A3F56F73 		sub	r3, r3, #956
+ 335 01b0 1A79     		ldrb	r2, [r3, #4]	@ zero_extendqisi2
+ 336 01b2 07F57273 		add	r3, r7, #968
+ 337 01b6 A3F56F73 		sub	r3, r3, #956
+ 338 01ba 5D79     		ldrb	r5, [r3, #5]	@ zero_extendqisi2
+ 339 01bc 07F57273 		add	r3, r7, #968
+ 340 01c0 A3F56F73 		sub	r3, r3, #956
+ 341 01c4 93F8F830 		ldrb	r3, [r3, #248]	@ zero_extendqisi2
+ 342 01c8 0193     		str	r3, [sp, #4]
+ 343 01ca 07F10C03 		add	r3, r7, #12
+ 344 01ce 0633     		adds	r3, r3, #6
+ 345 01d0 0093     		str	r3, [sp]
+ 346 01d2 2B46     		mov	r3, r5
+ 347 01d4 A047     		blx	r4
+ 348              	.LVL5:
+ 135:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_UPLOAD_DONE:
+ 349              		.loc 1 135 21
+ 350 01d6 DDE0     		b	.L53
+ 351              	.L19:
+ 137:../Src/radio/lr1110.c ****                         ( lr1110_modem_event_callback->upload_done != NULL ) )
+ 352              		.loc 1 137 55
+ 353 01d8 514B     		ldr	r3, .L64
+ 354 01da 1B68     		ldr	r3, [r3]
+ 137:../Src/radio/lr1110.c ****                         ( lr1110_modem_event_callback->upload_done != NULL ) )
+ 355              		.loc 1 137 23
+ 356 01dc 002B     		cmp	r3, #0
+ 357 01de 00F0DB80 		beq	.L54
+ 138:../Src/radio/lr1110.c ****                     {
+ 358              		.loc 1 138 54 discriminator 1
+ 359 01e2 4F4B     		ldr	r3, .L64
+ 360 01e4 1B68     		ldr	r3, [r3]
+ 361 01e6 9B69     		ldr	r3, [r3, #24]
+ 137:../Src/radio/lr1110.c ****                         ( lr1110_modem_event_callback->upload_done != NULL ) )
+ 362              		.loc 1 137 65 discriminator 1
+ 363 01e8 002B     		cmp	r3, #0
+ 364 01ea 00F0D580 		beq	.L54
+ 140:../Src/radio/lr1110.c ****                     }
+ 365              		.loc 1 140 52
+ 366 01ee 4C4B     		ldr	r3, .L64
+ 367 01f0 1B68     		ldr	r3, [r3]
+ 368 01f2 9B69     		ldr	r3, [r3, #24]
+ 140:../Src/radio/lr1110.c ****                     }
+ 369              		.loc 1 140 25
+ 370 01f4 07F57272 		add	r2, r7, #968
+ 371 01f8 A2F56F72 		sub	r2, r2, #956
+ARM GAS  /tmp/ccD4ZTTM.s 			page 12
+
+
+ 372 01fc 9278     		ldrb	r2, [r2, #2]	@ zero_extendqisi2
+ 373 01fe 1046     		mov	r0, r2
+ 374 0200 9847     		blx	r3
+ 375              	.LVL6:
+ 142:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_SET_CONF:
+ 376              		.loc 1 142 21
+ 377 0202 C9E0     		b	.L54
+ 378              	.L18:
+ 144:../Src/radio/lr1110.c ****                     {
+ 379              		.loc 1 144 55
+ 380 0204 464B     		ldr	r3, .L64
+ 381 0206 1B68     		ldr	r3, [r3]
+ 144:../Src/radio/lr1110.c ****                     {
+ 382              		.loc 1 144 23
+ 383 0208 002B     		cmp	r3, #0
+ 384 020a 00F0C780 		beq	.L55
+ 144:../Src/radio/lr1110.c ****                     {
+ 385              		.loc 1 144 97 discriminator 1
+ 386 020e 444B     		ldr	r3, .L64
+ 387 0210 1B68     		ldr	r3, [r3]
+ 388 0212 DB69     		ldr	r3, [r3, #28]
+ 144:../Src/radio/lr1110.c ****                     {
+ 389              		.loc 1 144 65 discriminator 1
+ 390 0214 002B     		cmp	r3, #0
+ 391 0216 00F0C180 		beq	.L55
+ 146:../Src/radio/lr1110.c ****                     }
+ 392              		.loc 1 146 52
+ 393 021a 414B     		ldr	r3, .L64
+ 394 021c 1B68     		ldr	r3, [r3]
+ 395 021e DB69     		ldr	r3, [r3, #28]
+ 146:../Src/radio/lr1110.c ****                     }
+ 396              		.loc 1 146 25
+ 397 0220 07F57272 		add	r2, r7, #968
+ 398 0224 A2F56F72 		sub	r2, r2, #956
+ 399 0228 9278     		ldrb	r2, [r2, #2]	@ zero_extendqisi2
+ 400 022a 1046     		mov	r0, r2
+ 401 022c 9847     		blx	r3
+ 402              	.LVL7:
+ 148:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_MUTE:
+ 403              		.loc 1 148 21
+ 404 022e B5E0     		b	.L55
+ 405              	.L17:
+ 150:../Src/radio/lr1110.c ****                     {
+ 406              		.loc 1 150 55
+ 407 0230 3B4B     		ldr	r3, .L64
+ 408 0232 1B68     		ldr	r3, [r3]
+ 150:../Src/radio/lr1110.c ****                     {
+ 409              		.loc 1 150 23
+ 410 0234 002B     		cmp	r3, #0
+ 411 0236 00F0B380 		beq	.L56
+ 150:../Src/radio/lr1110.c ****                     {
+ 412              		.loc 1 150 97 discriminator 1
+ 413 023a 394B     		ldr	r3, .L64
+ 414 023c 1B68     		ldr	r3, [r3]
+ 415 023e 1B6A     		ldr	r3, [r3, #32]
+ 150:../Src/radio/lr1110.c ****                     {
+ 416              		.loc 1 150 65 discriminator 1
+ARM GAS  /tmp/ccD4ZTTM.s 			page 13
+
+
+ 417 0240 002B     		cmp	r3, #0
+ 418 0242 00F0AD80 		beq	.L56
+ 152:../Src/radio/lr1110.c ****                     }
+ 419              		.loc 1 152 52
+ 420 0246 364B     		ldr	r3, .L64
+ 421 0248 1B68     		ldr	r3, [r3]
+ 422 024a 1B6A     		ldr	r3, [r3, #32]
+ 152:../Src/radio/lr1110.c ****                     }
+ 423              		.loc 1 152 25
+ 424 024c 07F57272 		add	r2, r7, #968
+ 425 0250 A2F56F72 		sub	r2, r2, #956
+ 426 0254 9278     		ldrb	r2, [r2, #2]	@ zero_extendqisi2
+ 427 0256 1046     		mov	r0, r2
+ 428 0258 9847     		blx	r3
+ 429              	.LVL8:
+ 154:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_STREAM_DONE:
+ 430              		.loc 1 154 21
+ 431 025a A1E0     		b	.L56
+ 432              	.L16:
+ 156:../Src/radio/lr1110.c ****                         ( lr1110_modem_event_callback->stream_done != NULL ) )
+ 433              		.loc 1 156 55
+ 434 025c 304B     		ldr	r3, .L64
+ 435 025e 1B68     		ldr	r3, [r3]
+ 156:../Src/radio/lr1110.c ****                         ( lr1110_modem_event_callback->stream_done != NULL ) )
+ 436              		.loc 1 156 23
+ 437 0260 002B     		cmp	r3, #0
+ 438 0262 00F09F80 		beq	.L57
+ 157:../Src/radio/lr1110.c ****                     {
+ 439              		.loc 1 157 54 discriminator 1
+ 440 0266 2E4B     		ldr	r3, .L64
+ 441 0268 1B68     		ldr	r3, [r3]
+ 442 026a 5B6A     		ldr	r3, [r3, #36]
+ 156:../Src/radio/lr1110.c ****                         ( lr1110_modem_event_callback->stream_done != NULL ) )
+ 443              		.loc 1 156 65 discriminator 1
+ 444 026c 002B     		cmp	r3, #0
+ 445 026e 00F09980 		beq	.L57
+ 159:../Src/radio/lr1110.c ****                     }
+ 446              		.loc 1 159 52
+ 447 0272 2B4B     		ldr	r3, .L64
+ 448 0274 1B68     		ldr	r3, [r3]
+ 449 0276 5B6A     		ldr	r3, [r3, #36]
+ 159:../Src/radio/lr1110.c ****                     }
+ 450              		.loc 1 159 25
+ 451 0278 9847     		blx	r3
+ 452              	.LVL9:
+ 161:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_WIFI_SCAN_DONE:
+ 453              		.loc 1 161 21
+ 454 027a 93E0     		b	.L57
+ 455              	.L14:
+ 163:../Src/radio/lr1110.c ****                         ( lr1110_modem_event_callback->wifi_scan_done != NULL ) )
+ 456              		.loc 1 163 55
+ 457 027c 284B     		ldr	r3, .L64
+ 458 027e 1B68     		ldr	r3, [r3]
+ 163:../Src/radio/lr1110.c ****                         ( lr1110_modem_event_callback->wifi_scan_done != NULL ) )
+ 459              		.loc 1 163 23
+ 460 0280 002B     		cmp	r3, #0
+ 461 0282 00F09180 		beq	.L58
+ARM GAS  /tmp/ccD4ZTTM.s 			page 14
+
+
+ 164:../Src/radio/lr1110.c ****                     {
+ 462              		.loc 1 164 54 discriminator 1
+ 463 0286 264B     		ldr	r3, .L64
+ 464 0288 1B68     		ldr	r3, [r3]
+ 465 028a DB6A     		ldr	r3, [r3, #44]
+ 163:../Src/radio/lr1110.c ****                         ( lr1110_modem_event_callback->wifi_scan_done != NULL ) )
+ 466              		.loc 1 163 65 discriminator 1
+ 467 028c 002B     		cmp	r3, #0
+ 468 028e 00F08B80 		beq	.L58
+ 166:../Src/radio/lr1110.c ****                                                                      modem_event.event_data.wifi.le
+ 469              		.loc 1 166 52
+ 470 0292 234B     		ldr	r3, .L64
+ 471 0294 1B68     		ldr	r3, [r3]
+ 472 0296 DB6A     		ldr	r3, [r3, #44]
+ 166:../Src/radio/lr1110.c ****                                                                      modem_event.event_data.wifi.le
+ 473              		.loc 1 166 25
+ 474 0298 07F57272 		add	r2, r7, #968
+ 475 029c A2F56F72 		sub	r2, r2, #956
+ 476 02a0 5188     		ldrh	r1, [r2, #2]
+ 477 02a2 07F10C02 		add	r2, r7, #12
+ 478 02a6 0432     		adds	r2, r2, #4
+ 479 02a8 1046     		mov	r0, r2
+ 480 02aa 9847     		blx	r3
+ 481              	.LVL10:
+ 169:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_GNSS_SCAN_DONE:
+ 482              		.loc 1 169 21
+ 483 02ac 7CE0     		b	.L58
+ 484              	.L13:
+ 171:../Src/radio/lr1110.c ****                         ( lr1110_modem_event_callback->gnss_scan_done != NULL ) )
+ 485              		.loc 1 171 55
+ 486 02ae 1C4B     		ldr	r3, .L64
+ 487 02b0 1B68     		ldr	r3, [r3]
+ 171:../Src/radio/lr1110.c ****                         ( lr1110_modem_event_callback->gnss_scan_done != NULL ) )
+ 488              		.loc 1 171 23
+ 489 02b2 002B     		cmp	r3, #0
+ 490 02b4 7AD0     		beq	.L59
+ 172:../Src/radio/lr1110.c ****                     {
+ 491              		.loc 1 172 54 discriminator 1
+ 492 02b6 1A4B     		ldr	r3, .L64
+ 493 02b8 1B68     		ldr	r3, [r3]
+ 494 02ba 9B6A     		ldr	r3, [r3, #40]
+ 171:../Src/radio/lr1110.c ****                         ( lr1110_modem_event_callback->gnss_scan_done != NULL ) )
+ 495              		.loc 1 171 65 discriminator 1
+ 496 02bc 002B     		cmp	r3, #0
+ 497 02be 75D0     		beq	.L59
+ 174:../Src/radio/lr1110.c ****                                                                      modem_event.event_data.gnss.le
+ 498              		.loc 1 174 52
+ 499 02c0 174B     		ldr	r3, .L64
+ 500 02c2 1B68     		ldr	r3, [r3]
+ 501 02c4 9B6A     		ldr	r3, [r3, #40]
+ 174:../Src/radio/lr1110.c ****                                                                      modem_event.event_data.gnss.le
+ 502              		.loc 1 174 25
+ 503 02c6 07F57272 		add	r2, r7, #968
+ 504 02ca A2F56F72 		sub	r2, r2, #956
+ 505 02ce 5188     		ldrh	r1, [r2, #2]
+ 506 02d0 07F10C02 		add	r2, r7, #12
+ 507 02d4 0432     		adds	r2, r2, #4
+ARM GAS  /tmp/ccD4ZTTM.s 			page 15
+
+
+ 508 02d6 1046     		mov	r0, r2
+ 509 02d8 9847     		blx	r3
+ 510              	.LVL11:
+ 177:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_TIME_UPDATED_ALC_SYNC:
+ 511              		.loc 1 177 21
+ 512 02da 67E0     		b	.L59
+ 513              	.L12:
+ 179:../Src/radio/lr1110.c ****                         ( lr1110_modem_event_callback->time_updated_alc_sync != NULL ) )
+ 514              		.loc 1 179 55
+ 515 02dc 104B     		ldr	r3, .L64
+ 516 02de 1B68     		ldr	r3, [r3]
+ 179:../Src/radio/lr1110.c ****                         ( lr1110_modem_event_callback->time_updated_alc_sync != NULL ) )
+ 517              		.loc 1 179 23
+ 518 02e0 002B     		cmp	r3, #0
+ 519 02e2 65D0     		beq	.L60
+ 180:../Src/radio/lr1110.c ****                     {
+ 520              		.loc 1 180 54 discriminator 1
+ 521 02e4 0E4B     		ldr	r3, .L64
+ 522 02e6 1B68     		ldr	r3, [r3]
+ 523 02e8 1B6B     		ldr	r3, [r3, #48]
+ 179:../Src/radio/lr1110.c ****                         ( lr1110_modem_event_callback->time_updated_alc_sync != NULL ) )
+ 524              		.loc 1 179 65 discriminator 1
+ 525 02ea 002B     		cmp	r3, #0
+ 526 02ec 60D0     		beq	.L60
+ 182:../Src/radio/lr1110.c ****                     }
+ 527              		.loc 1 182 52
+ 528 02ee 0C4B     		ldr	r3, .L64
+ 529 02f0 1B68     		ldr	r3, [r3]
+ 530 02f2 1B6B     		ldr	r3, [r3, #48]
+ 182:../Src/radio/lr1110.c ****                     }
+ 531              		.loc 1 182 25
+ 532 02f4 07F57272 		add	r2, r7, #968
+ 533 02f8 A2F56F72 		sub	r2, r2, #956
+ 534 02fc 9278     		ldrb	r2, [r2, #2]	@ zero_extendqisi2
+ 535 02fe 1046     		mov	r0, r2
+ 536 0300 9847     		blx	r3
+ 537              	.LVL12:
+ 184:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_ADR_MOBILE_TO_STATIC:
+ 538              		.loc 1 184 21
+ 539 0302 55E0     		b	.L60
+ 540              	.L11:
+ 186:../Src/radio/lr1110.c ****                         ( lr1110_modem_event_callback->adr_mobile_to_static != NULL ) )
+ 541              		.loc 1 186 55
+ 542 0304 064B     		ldr	r3, .L64
+ 543 0306 1B68     		ldr	r3, [r3]
+ 186:../Src/radio/lr1110.c ****                         ( lr1110_modem_event_callback->adr_mobile_to_static != NULL ) )
+ 544              		.loc 1 186 23
+ 545 0308 002B     		cmp	r3, #0
+ 546 030a 53D0     		beq	.L61
+ 187:../Src/radio/lr1110.c ****                     {
+ 547              		.loc 1 187 54 discriminator 1
+ 548 030c 044B     		ldr	r3, .L64
+ 549 030e 1B68     		ldr	r3, [r3]
+ 550 0310 5B6B     		ldr	r3, [r3, #52]
+ 186:../Src/radio/lr1110.c ****                         ( lr1110_modem_event_callback->adr_mobile_to_static != NULL ) )
+ 551              		.loc 1 186 65 discriminator 1
+ 552 0312 002B     		cmp	r3, #0
+ARM GAS  /tmp/ccD4ZTTM.s 			page 16
+
+
+ 553 0314 4ED0     		beq	.L61
+ 189:../Src/radio/lr1110.c ****                     }
+ 554              		.loc 1 189 52
+ 555 0316 024B     		ldr	r3, .L64
+ 556 0318 1B68     		ldr	r3, [r3]
+ 557 031a 5B6B     		ldr	r3, [r3, #52]
+ 189:../Src/radio/lr1110.c ****                     }
+ 558              		.loc 1 189 25
+ 559 031c 9847     		blx	r3
+ 560              	.LVL13:
+ 191:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_NEW_LINK_ADR:
+ 561              		.loc 1 191 21
+ 562 031e 49E0     		b	.L61
+ 563              	.L65:
+ 564              		.align	2
+ 565              	.L64:
+ 566 0320 00000000 		.word	lr1110_modem_event_callback
+ 567              	.L9:
+ 193:../Src/radio/lr1110.c ****                         ( lr1110_modem_event_callback->new_link_adr != NULL ) )
+ 568              		.loc 1 193 55
+ 569 0324 304B     		ldr	r3, .L66
+ 570 0326 1B68     		ldr	r3, [r3]
+ 193:../Src/radio/lr1110.c ****                         ( lr1110_modem_event_callback->new_link_adr != NULL ) )
+ 571              		.loc 1 193 23
+ 572 0328 002B     		cmp	r3, #0
+ 573 032a 45D0     		beq	.L62
+ 194:../Src/radio/lr1110.c ****                     {
+ 574              		.loc 1 194 54 discriminator 1
+ 575 032c 2E4B     		ldr	r3, .L66
+ 576 032e 1B68     		ldr	r3, [r3]
+ 577 0330 9B6B     		ldr	r3, [r3, #56]
+ 193:../Src/radio/lr1110.c ****                         ( lr1110_modem_event_callback->new_link_adr != NULL ) )
+ 578              		.loc 1 193 65 discriminator 1
+ 579 0332 002B     		cmp	r3, #0
+ 580 0334 40D0     		beq	.L62
+ 196:../Src/radio/lr1110.c ****                     }
+ 581              		.loc 1 196 52
+ 582 0336 2C4B     		ldr	r3, .L66
+ 583 0338 1B68     		ldr	r3, [r3]
+ 584 033a 9B6B     		ldr	r3, [r3, #56]
+ 196:../Src/radio/lr1110.c ****                     }
+ 585              		.loc 1 196 25
+ 586 033c 9847     		blx	r3
+ 587              	.LVL14:
+ 198:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_NO_EVENT:
+ 588              		.loc 1 198 21
+ 589 033e 3BE0     		b	.L62
+ 590              	.L25:
+ 200:../Src/radio/lr1110.c ****                     {
+ 591              		.loc 1 200 55
+ 592 0340 294B     		ldr	r3, .L66
+ 593 0342 1B68     		ldr	r3, [r3]
+ 200:../Src/radio/lr1110.c ****                     {
+ 594              		.loc 1 200 23
+ 595 0344 002B     		cmp	r3, #0
+ 596 0346 39D0     		beq	.L63
+ 200:../Src/radio/lr1110.c ****                     {
+ARM GAS  /tmp/ccD4ZTTM.s 			page 17
+
+
+ 597              		.loc 1 200 97 discriminator 1
+ 598 0348 274B     		ldr	r3, .L66
+ 599 034a 1B68     		ldr	r3, [r3]
+ 600 034c DB6B     		ldr	r3, [r3, #60]
+ 200:../Src/radio/lr1110.c ****                     {
+ 601              		.loc 1 200 65 discriminator 1
+ 602 034e 002B     		cmp	r3, #0
+ 603 0350 34D0     		beq	.L63
+ 202:../Src/radio/lr1110.c ****                     }
+ 604              		.loc 1 202 52
+ 605 0352 254B     		ldr	r3, .L66
+ 606 0354 1B68     		ldr	r3, [r3]
+ 607 0356 DB6B     		ldr	r3, [r3, #60]
+ 202:../Src/radio/lr1110.c ****                     }
+ 608              		.loc 1 202 25
+ 609 0358 9847     		blx	r3
+ 610              	.LVL15:
+ 204:../Src/radio/lr1110.c ****                 default:
+ 611              		.loc 1 204 21
+ 612 035a 2FE0     		b	.L63
+ 613              	.L6:
+ 207:../Src/radio/lr1110.c ****                 }
+ 208:../Src/radio/lr1110.c ****             }
+ 209:../Src/radio/lr1110.c ****             else
+ 210:../Src/radio/lr1110.c ****             {
+ 211:../Src/radio/lr1110.c ****                 HAL_DBG_TRACE_ERROR( "lr1110_modem_helper_get_event_data RC = %d\r\n\r\n", modem_re
+ 614              		.loc 1 211 17
+ 615 035c 2348     		ldr	r0, .L66+4
+ 616 035e FFF7FEFF 		bl	hal_mcu_trace_print
+ 617 0362 2348     		ldr	r0, .L66+8
+ 618 0364 FFF7FEFF 		bl	hal_mcu_trace_print
+ 619 0368 97F8C733 		ldrb	r3, [r7, #967]	@ zero_extendqisi2
+ 620 036c 1946     		mov	r1, r3
+ 621 036e 2148     		ldr	r0, .L66+12
+ 622 0370 FFF7FEFF 		bl	hal_mcu_trace_print
+ 623 0374 2048     		ldr	r0, .L66+16
+ 624 0376 FFF7FEFF 		bl	hal_mcu_trace_print
+ 625 037a 20E0     		b	.L43
+ 626              	.L47:
+ 206:../Src/radio/lr1110.c ****                 }
+ 627              		.loc 1 206 21
+ 628 037c 00BF     		nop
+ 629 037e 1EE0     		b	.L43
+ 630              	.L48:
+ 102:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_ALARM:
+ 631              		.loc 1 102 21
+ 632 0380 00BF     		nop
+ 633 0382 1CE0     		b	.L43
+ 634              	.L49:
+ 108:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_JOINED:
+ 635              		.loc 1 108 21
+ 636 0384 00BF     		nop
+ 637 0386 1AE0     		b	.L43
+ 638              	.L50:
+ 114:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_JOIN_FAIL:
+ 639              		.loc 1 114 21
+ 640 0388 00BF     		nop
+ARM GAS  /tmp/ccD4ZTTM.s 			page 18
+
+
+ 641 038a 18E0     		b	.L43
+ 642              	.L51:
+ 120:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_TX_DONE:
+ 643              		.loc 1 120 21
+ 644 038c 00BF     		nop
+ 645 038e 16E0     		b	.L43
+ 646              	.L52:
+ 126:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_DOWN_DATA:
+ 647              		.loc 1 126 21
+ 648 0390 00BF     		nop
+ 649 0392 14E0     		b	.L43
+ 650              	.L53:
+ 135:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_UPLOAD_DONE:
+ 651              		.loc 1 135 21
+ 652 0394 00BF     		nop
+ 653 0396 12E0     		b	.L43
+ 654              	.L54:
+ 142:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_SET_CONF:
+ 655              		.loc 1 142 21
+ 656 0398 00BF     		nop
+ 657 039a 10E0     		b	.L43
+ 658              	.L55:
+ 148:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_MUTE:
+ 659              		.loc 1 148 21
+ 660 039c 00BF     		nop
+ 661 039e 0EE0     		b	.L43
+ 662              	.L56:
+ 154:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_STREAM_DONE:
+ 663              		.loc 1 154 21
+ 664 03a0 00BF     		nop
+ 665 03a2 0CE0     		b	.L43
+ 666              	.L57:
+ 161:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_WIFI_SCAN_DONE:
+ 667              		.loc 1 161 21
+ 668 03a4 00BF     		nop
+ 669 03a6 0AE0     		b	.L43
+ 670              	.L58:
+ 169:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_GNSS_SCAN_DONE:
+ 671              		.loc 1 169 21
+ 672 03a8 00BF     		nop
+ 673 03aa 08E0     		b	.L43
+ 674              	.L59:
+ 177:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_TIME_UPDATED_ALC_SYNC:
+ 675              		.loc 1 177 21
+ 676 03ac 00BF     		nop
+ 677 03ae 06E0     		b	.L43
+ 678              	.L60:
+ 184:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_ADR_MOBILE_TO_STATIC:
+ 679              		.loc 1 184 21
+ 680 03b0 00BF     		nop
+ 681 03b2 04E0     		b	.L43
+ 682              	.L61:
+ 191:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_NEW_LINK_ADR:
+ 683              		.loc 1 191 21
+ 684 03b4 00BF     		nop
+ 685 03b6 02E0     		b	.L43
+ 686              	.L62:
+ARM GAS  /tmp/ccD4ZTTM.s 			page 19
+
+
+ 198:../Src/radio/lr1110.c ****                 case LR1110_MODEM_LORAWAN_EVENT_NO_EVENT:
+ 687              		.loc 1 198 21
+ 688 03b8 00BF     		nop
+ 689 03ba 00E0     		b	.L43
+ 690              	.L63:
+ 204:../Src/radio/lr1110.c ****                 default:
+ 691              		.loc 1 204 21
+ 692 03bc 00BF     		nop
+ 693              	.L43:
+ 212:../Src/radio/lr1110.c ****             }
+ 213:../Src/radio/lr1110.c ****         } while( ( lr1110_modem_board_read_event_line( context ) == 1 ) &&
+ 694              		.loc 1 213 20
+ 695 03be 07F57273 		add	r3, r7, #968
+ 696 03c2 A3F57173 		sub	r3, r3, #964
+ 697 03c6 1868     		ldr	r0, [r3]
+ 698 03c8 FFF7FEFF 		bl	lr1110_modem_board_read_event_line
+ 699 03cc 0346     		mov	r3, r0
+ 214:../Src/radio/lr1110.c ****                  ( modem_response_code == LR1110_MODEM_HELPER_STATUS_OK ) );
+ 700              		.loc 1 214 18
+ 701 03ce 002B     		cmp	r3, #0
+ 702 03d0 04D0     		beq	.L46
+ 213:../Src/radio/lr1110.c ****                  ( modem_response_code == LR1110_MODEM_HELPER_STATUS_OK ) );
+ 703              		.loc 1 213 73
+ 704 03d2 97F8C733 		ldrb	r3, [r7, #967]	@ zero_extendqisi2
+ 705 03d6 002B     		cmp	r3, #0
+ 706 03d8 3FF429AE 		beq	.L45
+ 707              	.L46:
+ 708              	.LBE2:
+ 215:../Src/radio/lr1110.c ****     }
+ 216:../Src/radio/lr1110.c **** }
+ 709              		.loc 1 216 1
+ 710 03dc 00BF     		nop
+ 711 03de 07F57277 		add	r7, r7, #968
+ 712              	.LCFI9:
+ 713              		.cfi_def_cfa_offset 16
+ 714 03e2 BD46     		mov	sp, r7
+ 715              	.LCFI10:
+ 716              		.cfi_def_cfa_register 13
+ 717              		@ sp needed
+ 718 03e4 B0BD     		pop	{r4, r5, r7, pc}
+ 719              	.L67:
+ 720 03e6 00BF     		.align	2
+ 721              	.L66:
+ 722 03e8 00000000 		.word	lr1110_modem_event_callback
+ 723 03ec 00000000 		.word	.LC0
+ 724 03f0 08000000 		.word	.LC1
+ 725 03f4 10000000 		.word	.LC2
+ 726 03f8 40000000 		.word	.LC3
+ 727              		.cfi_endproc
+ 728              	.LFE591:
+ 730              		.section	.text.radio_event_callback,"ax",%progbits
+ 731              		.align	1
+ 732              		.global	radio_event_callback
+ 733              		.syntax unified
+ 734              		.thumb
+ 735              		.thumb_func
+ 736              		.fpu fpv4-sp-d16
+ARM GAS  /tmp/ccD4ZTTM.s 			page 20
+
+
+ 738              	radio_event_callback:
+ 739              	.LFB592:
+ 217:../Src/radio/lr1110.c **** 
+ 218:../Src/radio/lr1110.c **** /*
+ 219:../Src/radio/lr1110.c ****  * -----------------------------------------------------------------------------
+ 220:../Src/radio/lr1110.c ****  * --- PRIVATE FUNCTIONS DEFINITION --------------------------------------------
+ 221:../Src/radio/lr1110.c ****  */
+ 222:../Src/radio/lr1110.c **** 
+ 223:../Src/radio/lr1110.c **** void radio_event_callback( void* obj ) {}
+ 740              		.loc 1 223 40
+ 741              		.cfi_startproc
+ 742              		@ args = 0, pretend = 0, frame = 8
+ 743              		@ frame_needed = 1, uses_anonymous_args = 0
+ 744              		@ link register save eliminated.
+ 745 0000 80B4     		push	{r7}
+ 746              	.LCFI11:
+ 747              		.cfi_def_cfa_offset 4
+ 748              		.cfi_offset 7, -4
+ 749 0002 83B0     		sub	sp, sp, #12
+ 750              	.LCFI12:
+ 751              		.cfi_def_cfa_offset 16
+ 752 0004 00AF     		add	r7, sp, #0
+ 753              	.LCFI13:
+ 754              		.cfi_def_cfa_register 7
+ 755 0006 7860     		str	r0, [r7, #4]
+ 756              		.loc 1 223 41
+ 757 0008 00BF     		nop
+ 758 000a 0C37     		adds	r7, r7, #12
+ 759              	.LCFI14:
+ 760              		.cfi_def_cfa_offset 4
+ 761 000c BD46     		mov	sp, r7
+ 762              	.LCFI15:
+ 763              		.cfi_def_cfa_register 13
+ 764              		@ sp needed
+ 765 000e 5DF8047B 		ldr	r7, [sp], #4
+ 766              	.LCFI16:
+ 767              		.cfi_restore 7
+ 768              		.cfi_def_cfa_offset 0
+ 769 0012 7047     		bx	lr
+ 770              		.cfi_endproc
+ 771              	.LFE592:
+ 773              		.text
+ 774              	.Letext0:
+ 775              		.file 2 "/usr/lib/gcc/arm-none-eabi/10.3.1/include/stdint.h"
+ 776              		.file 3 "../Src/radio/lr1110_modem/src/lr1110_modem_common.h"
+ 777              		.file 4 "../Src/radio/lr1110_modem/src/lr1110_modem_lorawan.h"
+ 778              		.file 5 "../Src/radio/lr1110_modem/src/lr1110_modem_helper.h"
+ 779              		.file 6 "../Src/radio/lr1110.h"
+ARM GAS  /tmp/ccD4ZTTM.s 			page 21
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 lr1110.c
+     /tmp/ccD4ZTTM.s:22     .bss.lr1110_modem_event_callback:0000000000000000 lr1110_modem_event_callback
+     /tmp/ccD4ZTTM.s:19     .bss.lr1110_modem_event_callback:0000000000000000 $d
+     /tmp/ccD4ZTTM.s:25     .text.radio_event_init:0000000000000000 $t
+     /tmp/ccD4ZTTM.s:33     .text.radio_event_init:0000000000000000 radio_event_init
+     /tmp/ccD4ZTTM.s:73     .text.radio_event_init:000000000000001c $d
+     /tmp/ccD4ZTTM.s:78     .rodata:0000000000000000 $d
+     /tmp/ccD4ZTTM.s:92     .text.lr1110_modem_event_process:0000000000000000 $t
+     /tmp/ccD4ZTTM.s:99     .text.lr1110_modem_event_process:0000000000000000 lr1110_modem_event_process
+     /tmp/ccD4ZTTM.s:163    .text.lr1110_modem_event_process:0000000000000074 $d
+     /tmp/ccD4ZTTM.s:179    .text.lr1110_modem_event_process:00000000000000b4 $t
+     /tmp/ccD4ZTTM.s:566    .text.lr1110_modem_event_process:0000000000000320 $d
+     /tmp/ccD4ZTTM.s:569    .text.lr1110_modem_event_process:0000000000000324 $t
+     /tmp/ccD4ZTTM.s:722    .text.lr1110_modem_event_process:00000000000003e8 $d
+     /tmp/ccD4ZTTM.s:731    .text.radio_event_callback:0000000000000000 $t
+     /tmp/ccD4ZTTM.s:738    .text.radio_event_callback:0000000000000000 radio_event_callback
+
+UNDEFINED SYMBOLS
+lr1110_modem_board_read_event_line
+lr1110_modem_helper_get_event_data
+hal_mcu_trace_print

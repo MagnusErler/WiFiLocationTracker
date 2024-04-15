@@ -1,0 +1,142 @@
+ARM GAS  /tmp/ccyWpcc9.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"lr1110_modem_driver_version.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.rodata
+  18              		.align	2
+  19              	.LC0:
+  20 0000 76332E31 		.ascii	"v3.1.0\000"
+  20      2E3000
+  21              		.section	.text.lr1110_modem_driver_version_get_version_string,"ax",%progbits
+  22              		.align	1
+  23              		.global	lr1110_modem_driver_version_get_version_string
+  24              		.arch armv7e-m
+  25              		.syntax unified
+  26              		.thumb
+  27              		.thumb_func
+  28              		.fpu fpv4-sp-d16
+  30              	lr1110_modem_driver_version_get_version_string:
+  31              	.LFB0:
+  32              		.file 1 "../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c"
+   1:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c **** /**
+   2:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  * @file lr1110_modem_driver_version.c
+   3:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  *
+   4:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  * @brief Implementation of the get version function
+   5:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  *
+   6:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  * Revised BSD License
+   7:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  * Copyright Semtech Corporation 2020. All rights reserved.
+   8:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  *
+   9:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  * Redistribution and use in source and binary forms, with or without
+  10:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  * modification, are permitted provided that the following conditions are met:
+  11:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  *     * Redistributions of source code must retain the above copyright
+  12:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  *       notice, this list of conditions and the following disclaimer.
+  13:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  *     * Redistributions in binary form must reproduce the above copyright
+  14:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  *       notice, this list of conditions and the following disclaimer in the
+  15:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  *       documentation and/or other materials provided with the distribution.
+  16:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  *     * Neither the name of the Semtech corporation nor the
+  17:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  *       names of its contributors may be used to endorse or promote products
+  18:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  *       derived from this software without specific prior written permission.
+  19:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  *
+  20:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  21:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  22:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  23:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  * ARE DISCLAIMED. IN NO EVENT SHALL SEMTECH CORPORATION BE LIABLE FOR ANY
+  24:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+  25:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ARM GAS  /tmp/ccyWpcc9.s 			page 2
+
+
+  26:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+  27:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  28:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  29:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  30:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  */
+  31:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c **** 
+  32:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c **** #include "lr1110_modem_driver_version.h"
+  33:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c **** 
+  34:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c **** /*!
+  35:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  * @brief Helper macro to concatenate string
+  36:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  */
+  37:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c **** #define STR_HELPER( x ) #x
+  38:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c **** 
+  39:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c **** /*!
+  40:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  * @brief Macro to stringify names
+  41:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  */
+  42:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c **** #define STR( x ) STR_HELPER( x )
+  43:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c **** 
+  44:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c **** /*!
+  45:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  * @brief String representation of the driver version
+  46:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  */
+  47:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c **** #define LR1110_MODEM_DRIVER_VERSION_FULL                                                           
+  48:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****     "v" STR( LR1110_MODEM_DRIVER_VERSION_MAJOR ) "." STR( LR1110_MODEM_DRIVER_VERSION_MINOR ) "." S
+  49:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****         LR1110_MODEM_DRIVER_VERSION_PATCH )
+  50:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c **** 
+  51:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c **** /*!
+  52:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  * @brief Returns version string
+  53:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****  */
+  54:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c **** const char* lr1110_modem_driver_version_get_version_string( void )
+  55:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c **** {
+  33              		.loc 1 55 1
+  34              		.cfi_startproc
+  35              		@ args = 0, pretend = 0, frame = 0
+  36              		@ frame_needed = 1, uses_anonymous_args = 0
+  37              		@ link register save eliminated.
+  38 0000 80B4     		push	{r7}
+  39              	.LCFI0:
+  40              		.cfi_def_cfa_offset 4
+  41              		.cfi_offset 7, -4
+  42 0002 00AF     		add	r7, sp, #0
+  43              	.LCFI1:
+  44              		.cfi_def_cfa_register 7
+  56:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c ****     return ( const char* ) LR1110_MODEM_DRIVER_VERSION_FULL;
+  45              		.loc 1 56 12
+  46 0004 024B     		ldr	r3, .L3
+  57:../Src/radio/lr1110_modem/src/lr1110_modem_driver_version.c **** }
+  47              		.loc 1 57 1
+  48 0006 1846     		mov	r0, r3
+  49 0008 BD46     		mov	sp, r7
+  50              	.LCFI2:
+  51              		.cfi_def_cfa_register 13
+  52              		@ sp needed
+  53 000a 5DF8047B 		ldr	r7, [sp], #4
+  54              	.LCFI3:
+  55              		.cfi_restore 7
+  56              		.cfi_def_cfa_offset 0
+  57 000e 7047     		bx	lr
+ARM GAS  /tmp/ccyWpcc9.s 			page 3
+
+
+  58              	.L4:
+  59              		.align	2
+  60              	.L3:
+  61 0010 00000000 		.word	.LC0
+  62              		.cfi_endproc
+  63              	.LFE0:
+  65              		.text
+  66              	.Letext0:
+ARM GAS  /tmp/ccyWpcc9.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 lr1110_modem_driver_version.c
+     /tmp/ccyWpcc9.s:18     .rodata:0000000000000000 $d
+     /tmp/ccyWpcc9.s:22     .text.lr1110_modem_driver_version_get_version_string:0000000000000000 $t
+     /tmp/ccyWpcc9.s:30     .text.lr1110_modem_driver_version_get_version_string:0000000000000000 lr1110_modem_driver_version_get_version_string
+     /tmp/ccyWpcc9.s:61     .text.lr1110_modem_driver_version_get_version_string:0000000000000010 $d
+
+NO UNDEFINED SYMBOLS

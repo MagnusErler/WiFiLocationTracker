@@ -1,0 +1,1815 @@
+ARM GAS  /tmp/ccX64pwJ.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"smtc_hal_i2c.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.data.hal_i2c,"aw"
+  18              		.align	2
+  21              	hal_i2c:
+  22 0000 00540040 		.word	1073763328
+  23 0004 00000000 		.word	0
+  24 0008 00000000 		.space	72
+  24      00000000 
+  24      00000000 
+  24      00000000 
+  24      00000000 
+  25 0050 FFFF     		.short	-1
+  26 0052 FFFF     		.short	-1
+  27 0054 00580040 		.word	1073764352
+  28 0058 00000000 		.word	0
+  29 005c 00000000 		.space	72
+  29      00000000 
+  29      00000000 
+  29      00000000 
+  29      00000000 
+  30 00a4 FFFF     		.short	-1
+  31 00a6 FFFF     		.short	-1
+  32 00a8 005C0040 		.word	1073765376
+  33 00ac 00000000 		.word	0
+  34 00b0 00000000 		.space	72
+  34      00000000 
+  34      00000000 
+  34      00000000 
+  34      00000000 
+  35 00f8 FFFF     		.short	-1
+  36 00fa FFFF     		.short	-1
+  37              		.section	.bss.i2c_internal_addr_size,"aw",%nobits
+  40              	i2c_internal_addr_size:
+  41 0000 00       		.space	1
+  42              		.section	.text.hal_i2c_init,"ax",%progbits
+  43              		.align	1
+  44              		.global	hal_i2c_init
+  45              		.arch armv7e-m
+  46              		.syntax unified
+  47              		.thumb
+  48              		.thumb_func
+  49              		.fpu fpv4-sp-d16
+ARM GAS  /tmp/ccX64pwJ.s 			page 2
+
+
+  51              	hal_i2c_init:
+  52              	.LFB313:
+  53              		.file 1 "../Src/smtc_hal/smtc_hal_i2c.c"
+   1:../Src/smtc_hal/smtc_hal_i2c.c **** /*!
+   2:../Src/smtc_hal/smtc_hal_i2c.c ****  * @file      smtc_hal_i2c.c
+   3:../Src/smtc_hal/smtc_hal_i2c.c ****  *
+   4:../Src/smtc_hal/smtc_hal_i2c.c ****  * @brief     Implements the i2c HAL functions
+   5:../Src/smtc_hal/smtc_hal_i2c.c ****  *
+   6:../Src/smtc_hal/smtc_hal_i2c.c ****  * Revised BSD License
+   7:../Src/smtc_hal/smtc_hal_i2c.c ****  * Copyright Semtech Corporation 2020. All rights reserved.
+   8:../Src/smtc_hal/smtc_hal_i2c.c ****  *
+   9:../Src/smtc_hal/smtc_hal_i2c.c ****  * Redistribution and use in source and binary forms, with or without
+  10:../Src/smtc_hal/smtc_hal_i2c.c ****  * modification, are permitted provided that the following conditions are met:
+  11:../Src/smtc_hal/smtc_hal_i2c.c ****  *     * Redistributions of source code must retain the above copyright
+  12:../Src/smtc_hal/smtc_hal_i2c.c ****  *       notice, this list of conditions and the following disclaimer.
+  13:../Src/smtc_hal/smtc_hal_i2c.c ****  *     * Redistributions in binary form must reproduce the above copyright
+  14:../Src/smtc_hal/smtc_hal_i2c.c ****  *       notice, this list of conditions and the following disclaimer in the
+  15:../Src/smtc_hal/smtc_hal_i2c.c ****  *       documentation and/or other materials provided with the distribution.
+  16:../Src/smtc_hal/smtc_hal_i2c.c ****  *     * Neither the name of the Semtech corporation nor the
+  17:../Src/smtc_hal/smtc_hal_i2c.c ****  *       names of its contributors may be used to endorse or promote products
+  18:../Src/smtc_hal/smtc_hal_i2c.c ****  *       derived from this software without specific prior written permission.
+  19:../Src/smtc_hal/smtc_hal_i2c.c ****  *
+  20:../Src/smtc_hal/smtc_hal_i2c.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  21:../Src/smtc_hal/smtc_hal_i2c.c ****  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  22:../Src/smtc_hal/smtc_hal_i2c.c ****  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  23:../Src/smtc_hal/smtc_hal_i2c.c ****  * ARE DISCLAIMED. IN NO EVENT SHALL SEMTECH CORPORATION BE LIABLE FOR ANY
+  24:../Src/smtc_hal/smtc_hal_i2c.c ****  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+  25:../Src/smtc_hal/smtc_hal_i2c.c ****  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  26:../Src/smtc_hal/smtc_hal_i2c.c ****  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+  27:../Src/smtc_hal/smtc_hal_i2c.c ****  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  28:../Src/smtc_hal/smtc_hal_i2c.c ****  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  29:../Src/smtc_hal/smtc_hal_i2c.c ****  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  30:../Src/smtc_hal/smtc_hal_i2c.c ****  */
+  31:../Src/smtc_hal/smtc_hal_i2c.c **** 
+  32:../Src/smtc_hal/smtc_hal_i2c.c **** /*
+  33:../Src/smtc_hal/smtc_hal_i2c.c ****  * -----------------------------------------------------------------------------
+  34:../Src/smtc_hal/smtc_hal_i2c.c ****  * --- DEPENDENCIES ------------------------------------------------------------
+  35:../Src/smtc_hal/smtc_hal_i2c.c ****  */
+  36:../Src/smtc_hal/smtc_hal_i2c.c **** #include "stm32l4xx_hal.h"
+  37:../Src/smtc_hal/smtc_hal_i2c.c **** #include "smtc_hal_gpio_pin_names.h"
+  38:../Src/smtc_hal/smtc_hal_i2c.c **** #include "smtc_hal_i2c.h"
+  39:../Src/smtc_hal/smtc_hal_i2c.c **** #include "smtc_hal_mcu.h"
+  40:../Src/smtc_hal/smtc_hal_i2c.c **** 
+  41:../Src/smtc_hal/smtc_hal_i2c.c **** /*
+  42:../Src/smtc_hal/smtc_hal_i2c.c ****  * -----------------------------------------------------------------------------
+  43:../Src/smtc_hal/smtc_hal_i2c.c ****  * --- PRIVATE MACROS-----------------------------------------------------------
+  44:../Src/smtc_hal/smtc_hal_i2c.c ****  */
+  45:../Src/smtc_hal/smtc_hal_i2c.c **** 
+  46:../Src/smtc_hal/smtc_hal_i2c.c **** /*
+  47:../Src/smtc_hal/smtc_hal_i2c.c ****  * -----------------------------------------------------------------------------
+  48:../Src/smtc_hal/smtc_hal_i2c.c ****  * --- PRIVATE CONSTANTS -------------------------------------------------------
+  49:../Src/smtc_hal/smtc_hal_i2c.c ****  */
+  50:../Src/smtc_hal/smtc_hal_i2c.c **** 
+  51:../Src/smtc_hal/smtc_hal_i2c.c **** /*
+  52:../Src/smtc_hal/smtc_hal_i2c.c ****  * -----------------------------------------------------------------------------
+  53:../Src/smtc_hal/smtc_hal_i2c.c ****  * --- PRIVATE TYPES -----------------------------------------------------------
+  54:../Src/smtc_hal/smtc_hal_i2c.c ****  */
+ARM GAS  /tmp/ccX64pwJ.s 			page 3
+
+
+  55:../Src/smtc_hal/smtc_hal_i2c.c **** 
+  56:../Src/smtc_hal/smtc_hal_i2c.c **** /*
+  57:../Src/smtc_hal/smtc_hal_i2c.c ****  * -----------------------------------------------------------------------------
+  58:../Src/smtc_hal/smtc_hal_i2c.c ****  * --- PRIVATE VARIABLES -------------------------------------------------------
+  59:../Src/smtc_hal/smtc_hal_i2c.c ****  */
+  60:../Src/smtc_hal/smtc_hal_i2c.c **** static hal_i2c_t hal_i2c[] = {
+  61:../Src/smtc_hal/smtc_hal_i2c.c ****     [0] =
+  62:../Src/smtc_hal/smtc_hal_i2c.c ****         {
+  63:../Src/smtc_hal/smtc_hal_i2c.c ****             .interface = I2C1,
+  64:../Src/smtc_hal/smtc_hal_i2c.c ****             .handle    = { NULL },
+  65:../Src/smtc_hal/smtc_hal_i2c.c ****             .pins =
+  66:../Src/smtc_hal/smtc_hal_i2c.c ****                 {
+  67:../Src/smtc_hal/smtc_hal_i2c.c ****                     .sda = NC,
+  68:../Src/smtc_hal/smtc_hal_i2c.c ****                     .scl = NC,
+  69:../Src/smtc_hal/smtc_hal_i2c.c ****                 },
+  70:../Src/smtc_hal/smtc_hal_i2c.c ****         },
+  71:../Src/smtc_hal/smtc_hal_i2c.c ****     [1] =
+  72:../Src/smtc_hal/smtc_hal_i2c.c ****         {
+  73:../Src/smtc_hal/smtc_hal_i2c.c ****             .interface = I2C2,
+  74:../Src/smtc_hal/smtc_hal_i2c.c ****             .handle    = { NULL },
+  75:../Src/smtc_hal/smtc_hal_i2c.c ****             .pins =
+  76:../Src/smtc_hal/smtc_hal_i2c.c ****                 {
+  77:../Src/smtc_hal/smtc_hal_i2c.c ****                     .sda = NC,
+  78:../Src/smtc_hal/smtc_hal_i2c.c ****                     .scl = NC,
+  79:../Src/smtc_hal/smtc_hal_i2c.c ****                 },
+  80:../Src/smtc_hal/smtc_hal_i2c.c ****         },
+  81:../Src/smtc_hal/smtc_hal_i2c.c ****     [2] =
+  82:../Src/smtc_hal/smtc_hal_i2c.c ****         {
+  83:../Src/smtc_hal/smtc_hal_i2c.c ****             .interface = I2C3,
+  84:../Src/smtc_hal/smtc_hal_i2c.c ****             .handle    = { NULL },
+  85:../Src/smtc_hal/smtc_hal_i2c.c ****             .pins =
+  86:../Src/smtc_hal/smtc_hal_i2c.c ****                 {
+  87:../Src/smtc_hal/smtc_hal_i2c.c ****                     .sda = NC,
+  88:../Src/smtc_hal/smtc_hal_i2c.c ****                     .scl = NC,
+  89:../Src/smtc_hal/smtc_hal_i2c.c ****                 },
+  90:../Src/smtc_hal/smtc_hal_i2c.c ****         },
+  91:../Src/smtc_hal/smtc_hal_i2c.c **** };
+  92:../Src/smtc_hal/smtc_hal_i2c.c **** 
+  93:../Src/smtc_hal/smtc_hal_i2c.c **** static i2c_addr_size i2c_internal_addr_size;
+  94:../Src/smtc_hal/smtc_hal_i2c.c **** 
+  95:../Src/smtc_hal/smtc_hal_i2c.c **** /*
+  96:../Src/smtc_hal/smtc_hal_i2c.c ****  * -----------------------------------------------------------------------------
+  97:../Src/smtc_hal/smtc_hal_i2c.c ****  * --- PRIVATE FUNCTIONS DECLARATION -------------------------------------------
+  98:../Src/smtc_hal/smtc_hal_i2c.c ****  */
+  99:../Src/smtc_hal/smtc_hal_i2c.c **** 
+ 100:../Src/smtc_hal/smtc_hal_i2c.c **** /*!
+ 101:../Src/smtc_hal/smtc_hal_i2c.c ****  * @brief Write data buffer to the I2C device
+ 102:../Src/smtc_hal/smtc_hal_i2c.c ****  *
+ 103:../Src/smtc_hal/smtc_hal_i2c.c ****  * @param [in] id               I2C interface id [1:N]
+ 104:../Src/smtc_hal/smtc_hal_i2c.c ****  * @param [in] deviceAddr       device address
+ 105:../Src/smtc_hal/smtc_hal_i2c.c ****  * @param [in] addr             data address
+ 106:../Src/smtc_hal/smtc_hal_i2c.c ****  * @param [in] buffer           data buffer to write
+ 107:../Src/smtc_hal/smtc_hal_i2c.c ****  * @param [in] size             number of data bytes to write
+ 108:../Src/smtc_hal/smtc_hal_i2c.c ****  *
+ 109:../Src/smtc_hal/smtc_hal_i2c.c ****  * @returns status [SMTC_SUCCESS, SMTC_FAIL]
+ 110:../Src/smtc_hal/smtc_hal_i2c.c ****  */
+ 111:../Src/smtc_hal/smtc_hal_i2c.c **** static uint8_t i2c_write_buffer( const uint32_t id, uint8_t device_addr, uint16_t addr, uint8_t* bu
+ARM GAS  /tmp/ccX64pwJ.s 			page 4
+
+
+ 112:../Src/smtc_hal/smtc_hal_i2c.c ****                                  uint16_t size );
+ 113:../Src/smtc_hal/smtc_hal_i2c.c **** 
+ 114:../Src/smtc_hal/smtc_hal_i2c.c **** /*!
+ 115:../Src/smtc_hal/smtc_hal_i2c.c ****  * @brief Write data buffer to the I2C device
+ 116:../Src/smtc_hal/smtc_hal_i2c.c ****  *
+ 117:../Src/smtc_hal/smtc_hal_i2c.c ****  * @param [in] id               I2C interface id [1:N]
+ 118:../Src/smtc_hal/smtc_hal_i2c.c ****  * @param [in] deviceAddr       device address
+ 119:../Src/smtc_hal/smtc_hal_i2c.c ****  * @param [in] addr             data address
+ 120:../Src/smtc_hal/smtc_hal_i2c.c ****  * @param [in] buffer           data buffer to write
+ 121:../Src/smtc_hal/smtc_hal_i2c.c ****  * @param [in] size             number of data bytes to write
+ 122:../Src/smtc_hal/smtc_hal_i2c.c ****  *
+ 123:../Src/smtc_hal/smtc_hal_i2c.c ****  * @returns status [SMTC_SUCCESS, SMTC_FAIL]
+ 124:../Src/smtc_hal/smtc_hal_i2c.c ****  */
+ 125:../Src/smtc_hal/smtc_hal_i2c.c **** static uint8_t i2c_read_buffer( const uint32_t id, uint8_t device_addr, uint16_t addr, uint8_t* buf
+ 126:../Src/smtc_hal/smtc_hal_i2c.c **** 
+ 127:../Src/smtc_hal/smtc_hal_i2c.c **** /*
+ 128:../Src/smtc_hal/smtc_hal_i2c.c ****  * -----------------------------------------------------------------------------
+ 129:../Src/smtc_hal/smtc_hal_i2c.c ****  * --- PUBLIC FUNCTIONS DEFINITION ---------------------------------------------
+ 130:../Src/smtc_hal/smtc_hal_i2c.c ****  */
+ 131:../Src/smtc_hal/smtc_hal_i2c.c **** 
+ 132:../Src/smtc_hal/smtc_hal_i2c.c **** void hal_i2c_init( const uint32_t id, const hal_gpio_pin_names_t sda, const hal_gpio_pin_names_t sc
+ 133:../Src/smtc_hal/smtc_hal_i2c.c **** {
+  54              		.loc 1 133 1
+  55              		.cfi_startproc
+  56              		@ args = 0, pretend = 0, frame = 16
+  57              		@ frame_needed = 1, uses_anonymous_args = 0
+  58 0000 80B5     		push	{r7, lr}
+  59              	.LCFI0:
+  60              		.cfi_def_cfa_offset 8
+  61              		.cfi_offset 7, -8
+  62              		.cfi_offset 14, -4
+  63 0002 84B0     		sub	sp, sp, #16
+  64              	.LCFI1:
+  65              		.cfi_def_cfa_offset 24
+  66 0004 00AF     		add	r7, sp, #0
+  67              	.LCFI2:
+  68              		.cfi_def_cfa_register 7
+  69 0006 7860     		str	r0, [r7, #4]
+  70 0008 0B46     		mov	r3, r1
+  71 000a 7B80     		strh	r3, [r7, #2]	@ movhi
+  72 000c 1346     		mov	r3, r2	@ movhi
+  73 000e 3B80     		strh	r3, [r7]	@ movhi
+ 134:../Src/smtc_hal/smtc_hal_i2c.c ****     assert_param( ( id > 0 ) && ( ( id - 1 ) < sizeof( hal_i2c ) ) );
+ 135:../Src/smtc_hal/smtc_hal_i2c.c ****     uint32_t local_id = id - 1;
+  74              		.loc 1 135 14
+  75 0010 7B68     		ldr	r3, [r7, #4]
+  76 0012 013B     		subs	r3, r3, #1
+  77 0014 FB60     		str	r3, [r7, #12]
+ 136:../Src/smtc_hal/smtc_hal_i2c.c **** 
+ 137:../Src/smtc_hal/smtc_hal_i2c.c ****     hal_i2c[local_id].handle.Instance              = hal_i2c[local_id].interface;
+  78              		.loc 1 137 71
+  79 0016 4E4A     		ldr	r2, .L6
+  80 0018 FB68     		ldr	r3, [r7, #12]
+  81 001a 5421     		movs	r1, #84
+  82 001c 01FB03F3 		mul	r3, r1, r3
+  83 0020 1344     		add	r3, r3, r2
+  84 0022 1A68     		ldr	r2, [r3]
+ARM GAS  /tmp/ccX64pwJ.s 			page 5
+
+
+  85              		.loc 1 137 52
+  86 0024 4A49     		ldr	r1, .L6
+  87 0026 FB68     		ldr	r3, [r7, #12]
+  88 0028 5420     		movs	r0, #84
+  89 002a 00FB03F3 		mul	r3, r0, r3
+  90 002e 0B44     		add	r3, r3, r1
+  91 0030 0433     		adds	r3, r3, #4
+  92 0032 1A60     		str	r2, [r3]
+ 138:../Src/smtc_hal/smtc_hal_i2c.c ****     hal_i2c[local_id].handle.Init.Timing           = 0x10909CEC;
+  93              		.loc 1 138 52
+  94 0034 464A     		ldr	r2, .L6
+  95 0036 FB68     		ldr	r3, [r7, #12]
+  96 0038 5421     		movs	r1, #84
+  97 003a 01FB03F3 		mul	r3, r1, r3
+  98 003e 1344     		add	r3, r3, r2
+  99 0040 0833     		adds	r3, r3, #8
+ 100 0042 444A     		ldr	r2, .L6+4
+ 101 0044 1A60     		str	r2, [r3]
+ 139:../Src/smtc_hal/smtc_hal_i2c.c ****     hal_i2c[local_id].handle.Init.OwnAddress1      = 0;
+ 102              		.loc 1 139 52
+ 103 0046 424A     		ldr	r2, .L6
+ 104 0048 FB68     		ldr	r3, [r7, #12]
+ 105 004a 5421     		movs	r1, #84
+ 106 004c 01FB03F3 		mul	r3, r1, r3
+ 107 0050 1344     		add	r3, r3, r2
+ 108 0052 0C33     		adds	r3, r3, #12
+ 109 0054 0022     		movs	r2, #0
+ 110 0056 1A60     		str	r2, [r3]
+ 140:../Src/smtc_hal/smtc_hal_i2c.c ****     hal_i2c[local_id].handle.Init.AddressingMode   = I2C_ADDRESSINGMODE_7BIT;
+ 111              		.loc 1 140 52
+ 112 0058 3D4A     		ldr	r2, .L6
+ 113 005a FB68     		ldr	r3, [r7, #12]
+ 114 005c 5421     		movs	r1, #84
+ 115 005e 01FB03F3 		mul	r3, r1, r3
+ 116 0062 1344     		add	r3, r3, r2
+ 117 0064 1033     		adds	r3, r3, #16
+ 118 0066 0122     		movs	r2, #1
+ 119 0068 1A60     		str	r2, [r3]
+ 141:../Src/smtc_hal/smtc_hal_i2c.c ****     hal_i2c[local_id].handle.Init.DualAddressMode  = I2C_DUALADDRESS_DISABLE;
+ 120              		.loc 1 141 52
+ 121 006a 394A     		ldr	r2, .L6
+ 122 006c FB68     		ldr	r3, [r7, #12]
+ 123 006e 5421     		movs	r1, #84
+ 124 0070 01FB03F3 		mul	r3, r1, r3
+ 125 0074 1344     		add	r3, r3, r2
+ 126 0076 1433     		adds	r3, r3, #20
+ 127 0078 0022     		movs	r2, #0
+ 128 007a 1A60     		str	r2, [r3]
+ 142:../Src/smtc_hal/smtc_hal_i2c.c ****     hal_i2c[local_id].handle.Init.OwnAddress2      = 0;
+ 129              		.loc 1 142 52
+ 130 007c 344A     		ldr	r2, .L6
+ 131 007e FB68     		ldr	r3, [r7, #12]
+ 132 0080 5421     		movs	r1, #84
+ 133 0082 01FB03F3 		mul	r3, r1, r3
+ 134 0086 1344     		add	r3, r3, r2
+ 135 0088 1833     		adds	r3, r3, #24
+ 136 008a 0022     		movs	r2, #0
+ARM GAS  /tmp/ccX64pwJ.s 			page 6
+
+
+ 137 008c 1A60     		str	r2, [r3]
+ 143:../Src/smtc_hal/smtc_hal_i2c.c ****     hal_i2c[local_id].handle.Init.OwnAddress2Masks = I2C_OA2_NOMASK;
+ 138              		.loc 1 143 52
+ 139 008e 304A     		ldr	r2, .L6
+ 140 0090 FB68     		ldr	r3, [r7, #12]
+ 141 0092 5421     		movs	r1, #84
+ 142 0094 01FB03F3 		mul	r3, r1, r3
+ 143 0098 1344     		add	r3, r3, r2
+ 144 009a 1C33     		adds	r3, r3, #28
+ 145 009c 0022     		movs	r2, #0
+ 146 009e 1A60     		str	r2, [r3]
+ 144:../Src/smtc_hal/smtc_hal_i2c.c ****     hal_i2c[local_id].handle.Init.GeneralCallMode  = I2C_GENERALCALL_DISABLE;
+ 147              		.loc 1 144 52
+ 148 00a0 2B4A     		ldr	r2, .L6
+ 149 00a2 FB68     		ldr	r3, [r7, #12]
+ 150 00a4 5421     		movs	r1, #84
+ 151 00a6 01FB03F3 		mul	r3, r1, r3
+ 152 00aa 1344     		add	r3, r3, r2
+ 153 00ac 2033     		adds	r3, r3, #32
+ 154 00ae 0022     		movs	r2, #0
+ 155 00b0 1A60     		str	r2, [r3]
+ 145:../Src/smtc_hal/smtc_hal_i2c.c ****     hal_i2c[local_id].handle.Init.NoStretchMode    = I2C_NOSTRETCH_DISABLE;
+ 156              		.loc 1 145 52
+ 157 00b2 274A     		ldr	r2, .L6
+ 158 00b4 FB68     		ldr	r3, [r7, #12]
+ 159 00b6 5421     		movs	r1, #84
+ 160 00b8 01FB03F3 		mul	r3, r1, r3
+ 161 00bc 1344     		add	r3, r3, r2
+ 162 00be 2433     		adds	r3, r3, #36
+ 163 00c0 0022     		movs	r2, #0
+ 164 00c2 1A60     		str	r2, [r3]
+ 146:../Src/smtc_hal/smtc_hal_i2c.c **** 
+ 147:../Src/smtc_hal/smtc_hal_i2c.c ****     hal_i2c[local_id].pins.sda = sda;
+ 165              		.loc 1 147 32
+ 166 00c4 224A     		ldr	r2, .L6
+ 167 00c6 FB68     		ldr	r3, [r7, #12]
+ 168 00c8 5421     		movs	r1, #84
+ 169 00ca 01FB03F3 		mul	r3, r1, r3
+ 170 00ce 1344     		add	r3, r3, r2
+ 171 00d0 5033     		adds	r3, r3, #80
+ 172 00d2 7A88     		ldrh	r2, [r7, #2]	@ movhi
+ 173 00d4 1A80     		strh	r2, [r3]	@ movhi
+ 148:../Src/smtc_hal/smtc_hal_i2c.c ****     hal_i2c[local_id].pins.scl = scl;
+ 174              		.loc 1 148 32
+ 175 00d6 1E4A     		ldr	r2, .L6
+ 176 00d8 FB68     		ldr	r3, [r7, #12]
+ 177 00da 5421     		movs	r1, #84
+ 178 00dc 01FB03F3 		mul	r3, r1, r3
+ 179 00e0 1344     		add	r3, r3, r2
+ 180 00e2 5233     		adds	r3, r3, #82
+ 181 00e4 3A88     		ldrh	r2, [r7]	@ movhi
+ 182 00e6 1A80     		strh	r2, [r3]	@ movhi
+ 149:../Src/smtc_hal/smtc_hal_i2c.c **** 
+ 150:../Src/smtc_hal/smtc_hal_i2c.c ****     if( HAL_I2C_Init( &hal_i2c[local_id].handle ) != HAL_OK )
+ 183              		.loc 1 150 9
+ 184 00e8 FB68     		ldr	r3, [r7, #12]
+ 185 00ea 5422     		movs	r2, #84
+ARM GAS  /tmp/ccX64pwJ.s 			page 7
+
+
+ 186 00ec 02FB03F3 		mul	r3, r2, r3
+ 187 00f0 174A     		ldr	r2, .L6
+ 188 00f2 1344     		add	r3, r3, r2
+ 189 00f4 0433     		adds	r3, r3, #4
+ 190 00f6 1846     		mov	r0, r3
+ 191 00f8 FFF7FEFF 		bl	HAL_I2C_Init
+ 192 00fc 0346     		mov	r3, r0
+ 193              		.loc 1 150 7
+ 194 00fe 002B     		cmp	r3, #0
+ 195 0100 01D0     		beq	.L2
+ 151:../Src/smtc_hal/smtc_hal_i2c.c ****     {
+ 152:../Src/smtc_hal/smtc_hal_i2c.c ****         hal_mcu_panic( );
+ 196              		.loc 1 152 9
+ 197 0102 FFF7FEFF 		bl	hal_mcu_panic
+ 198              	.L2:
+ 153:../Src/smtc_hal/smtc_hal_i2c.c ****     }
+ 154:../Src/smtc_hal/smtc_hal_i2c.c **** 
+ 155:../Src/smtc_hal/smtc_hal_i2c.c ****     /**Configure Analogue filter
+ 156:../Src/smtc_hal/smtc_hal_i2c.c ****      */
+ 157:../Src/smtc_hal/smtc_hal_i2c.c ****     if( HAL_I2CEx_ConfigAnalogFilter( &hal_i2c[local_id].handle, I2C_ANALOGFILTER_ENABLE ) != HAL_O
+ 199              		.loc 1 157 9
+ 200 0106 FB68     		ldr	r3, [r7, #12]
+ 201 0108 5422     		movs	r2, #84
+ 202 010a 02FB03F3 		mul	r3, r2, r3
+ 203 010e 104A     		ldr	r2, .L6
+ 204 0110 1344     		add	r3, r3, r2
+ 205 0112 0433     		adds	r3, r3, #4
+ 206 0114 0021     		movs	r1, #0
+ 207 0116 1846     		mov	r0, r3
+ 208 0118 FFF7FEFF 		bl	HAL_I2CEx_ConfigAnalogFilter
+ 209 011c 0346     		mov	r3, r0
+ 210              		.loc 1 157 7
+ 211 011e 002B     		cmp	r3, #0
+ 212 0120 01D0     		beq	.L3
+ 158:../Src/smtc_hal/smtc_hal_i2c.c ****     {
+ 159:../Src/smtc_hal/smtc_hal_i2c.c ****         hal_mcu_panic( );
+ 213              		.loc 1 159 9
+ 214 0122 FFF7FEFF 		bl	hal_mcu_panic
+ 215              	.L3:
+ 160:../Src/smtc_hal/smtc_hal_i2c.c ****     }
+ 161:../Src/smtc_hal/smtc_hal_i2c.c **** 
+ 162:../Src/smtc_hal/smtc_hal_i2c.c ****     /**Configure Digital filter
+ 163:../Src/smtc_hal/smtc_hal_i2c.c ****      */
+ 164:../Src/smtc_hal/smtc_hal_i2c.c ****     if( HAL_I2CEx_ConfigDigitalFilter( &hal_i2c[local_id].handle, 0 ) != HAL_OK )
+ 216              		.loc 1 164 9
+ 217 0126 FB68     		ldr	r3, [r7, #12]
+ 218 0128 5422     		movs	r2, #84
+ 219 012a 02FB03F3 		mul	r3, r2, r3
+ 220 012e 084A     		ldr	r2, .L6
+ 221 0130 1344     		add	r3, r3, r2
+ 222 0132 0433     		adds	r3, r3, #4
+ 223 0134 0021     		movs	r1, #0
+ 224 0136 1846     		mov	r0, r3
+ 225 0138 FFF7FEFF 		bl	HAL_I2CEx_ConfigDigitalFilter
+ 226 013c 0346     		mov	r3, r0
+ 227              		.loc 1 164 7
+ 228 013e 002B     		cmp	r3, #0
+ARM GAS  /tmp/ccX64pwJ.s 			page 8
+
+
+ 229 0140 01D0     		beq	.L5
+ 165:../Src/smtc_hal/smtc_hal_i2c.c ****     {
+ 166:../Src/smtc_hal/smtc_hal_i2c.c ****         hal_mcu_panic( );
+ 230              		.loc 1 166 9
+ 231 0142 FFF7FEFF 		bl	hal_mcu_panic
+ 232              	.L5:
+ 167:../Src/smtc_hal/smtc_hal_i2c.c ****     }
+ 168:../Src/smtc_hal/smtc_hal_i2c.c **** }
+ 233              		.loc 1 168 1
+ 234 0146 00BF     		nop
+ 235 0148 1037     		adds	r7, r7, #16
+ 236              	.LCFI3:
+ 237              		.cfi_def_cfa_offset 8
+ 238 014a BD46     		mov	sp, r7
+ 239              	.LCFI4:
+ 240              		.cfi_def_cfa_register 13
+ 241              		@ sp needed
+ 242 014c 80BD     		pop	{r7, pc}
+ 243              	.L7:
+ 244 014e 00BF     		.align	2
+ 245              	.L6:
+ 246 0150 00000000 		.word	hal_i2c
+ 247 0154 EC9C9010 		.word	277912812
+ 248              		.cfi_endproc
+ 249              	.LFE313:
+ 251              		.section	.text.hal_i2c_deinit,"ax",%progbits
+ 252              		.align	1
+ 253              		.global	hal_i2c_deinit
+ 254              		.syntax unified
+ 255              		.thumb
+ 256              		.thumb_func
+ 257              		.fpu fpv4-sp-d16
+ 259              	hal_i2c_deinit:
+ 260              	.LFB314:
+ 169:../Src/smtc_hal/smtc_hal_i2c.c **** 
+ 170:../Src/smtc_hal/smtc_hal_i2c.c **** void hal_i2c_deinit( const uint32_t id )
+ 171:../Src/smtc_hal/smtc_hal_i2c.c **** {
+ 261              		.loc 1 171 1
+ 262              		.cfi_startproc
+ 263              		@ args = 0, pretend = 0, frame = 16
+ 264              		@ frame_needed = 1, uses_anonymous_args = 0
+ 265 0000 80B5     		push	{r7, lr}
+ 266              	.LCFI5:
+ 267              		.cfi_def_cfa_offset 8
+ 268              		.cfi_offset 7, -8
+ 269              		.cfi_offset 14, -4
+ 270 0002 84B0     		sub	sp, sp, #16
+ 271              	.LCFI6:
+ 272              		.cfi_def_cfa_offset 24
+ 273 0004 00AF     		add	r7, sp, #0
+ 274              	.LCFI7:
+ 275              		.cfi_def_cfa_register 7
+ 276 0006 7860     		str	r0, [r7, #4]
+ 172:../Src/smtc_hal/smtc_hal_i2c.c ****     assert_param( ( id > 0 ) && ( ( id - 1 ) < sizeof( hal_i2c ) ) );
+ 173:../Src/smtc_hal/smtc_hal_i2c.c ****     uint32_t local_id = id - 1;
+ 277              		.loc 1 173 14
+ 278 0008 7B68     		ldr	r3, [r7, #4]
+ARM GAS  /tmp/ccX64pwJ.s 			page 9
+
+
+ 279 000a 013B     		subs	r3, r3, #1
+ 280 000c FB60     		str	r3, [r7, #12]
+ 174:../Src/smtc_hal/smtc_hal_i2c.c **** 
+ 175:../Src/smtc_hal/smtc_hal_i2c.c ****     HAL_I2C_DeInit( &hal_i2c[local_id].handle );
+ 281              		.loc 1 175 5
+ 282 000e FB68     		ldr	r3, [r7, #12]
+ 283 0010 5422     		movs	r2, #84
+ 284 0012 02FB03F3 		mul	r3, r2, r3
+ 285 0016 054A     		ldr	r2, .L9
+ 286 0018 1344     		add	r3, r3, r2
+ 287 001a 0433     		adds	r3, r3, #4
+ 288 001c 1846     		mov	r0, r3
+ 289 001e FFF7FEFF 		bl	HAL_I2C_DeInit
+ 176:../Src/smtc_hal/smtc_hal_i2c.c **** }
+ 290              		.loc 1 176 1
+ 291 0022 00BF     		nop
+ 292 0024 1037     		adds	r7, r7, #16
+ 293              	.LCFI8:
+ 294              		.cfi_def_cfa_offset 8
+ 295 0026 BD46     		mov	sp, r7
+ 296              	.LCFI9:
+ 297              		.cfi_def_cfa_register 13
+ 298              		@ sp needed
+ 299 0028 80BD     		pop	{r7, pc}
+ 300              	.L10:
+ 301 002a 00BF     		.align	2
+ 302              	.L9:
+ 303 002c 00000000 		.word	hal_i2c
+ 304              		.cfi_endproc
+ 305              	.LFE314:
+ 307              		.section	.text.HAL_I2C_MspInit,"ax",%progbits
+ 308              		.align	1
+ 309              		.global	HAL_I2C_MspInit
+ 310              		.syntax unified
+ 311              		.thumb
+ 312              		.thumb_func
+ 313              		.fpu fpv4-sp-d16
+ 315              	HAL_I2C_MspInit:
+ 316              	.LFB315:
+ 177:../Src/smtc_hal/smtc_hal_i2c.c **** 
+ 178:../Src/smtc_hal/smtc_hal_i2c.c **** void HAL_I2C_MspInit( I2C_HandleTypeDef* i2cHandle )
+ 179:../Src/smtc_hal/smtc_hal_i2c.c **** {
+ 317              		.loc 1 179 1
+ 318              		.cfi_startproc
+ 319              		@ args = 0, pretend = 0, frame = 96
+ 320              		@ frame_needed = 1, uses_anonymous_args = 0
+ 321 0000 80B5     		push	{r7, lr}
+ 322              	.LCFI10:
+ 323              		.cfi_def_cfa_offset 8
+ 324              		.cfi_offset 7, -8
+ 325              		.cfi_offset 14, -4
+ 326 0002 98B0     		sub	sp, sp, #96
+ 327              	.LCFI11:
+ 328              		.cfi_def_cfa_offset 104
+ 329 0004 00AF     		add	r7, sp, #0
+ 330              	.LCFI12:
+ 331              		.cfi_def_cfa_register 7
+ARM GAS  /tmp/ccX64pwJ.s 			page 10
+
+
+ 332 0006 7860     		str	r0, [r7, #4]
+ 180:../Src/smtc_hal/smtc_hal_i2c.c ****     if( i2cHandle->Instance == hal_i2c[0].interface )
+ 333              		.loc 1 180 18
+ 334 0008 7B68     		ldr	r3, [r7, #4]
+ 335 000a 1A68     		ldr	r2, [r3]
+ 336              		.loc 1 180 42
+ 337 000c 694B     		ldr	r3, .L17
+ 338 000e 1B68     		ldr	r3, [r3]
+ 339              		.loc 1 180 7
+ 340 0010 9A42     		cmp	r2, r3
+ 341 0012 3FD1     		bne	.L12
+ 342              	.LBB2:
+ 181:../Src/smtc_hal/smtc_hal_i2c.c ****     {
+ 182:../Src/smtc_hal/smtc_hal_i2c.c ****         GPIO_TypeDef*    gpio_port = ( GPIO_TypeDef* ) ( AHB2PERIPH_BASE + ( ( hal_i2c[0].pins.sda 
+ 343              		.loc 1 182 95
+ 344 0014 674B     		ldr	r3, .L17
+ 345 0016 B3F95030 		ldrsh	r3, [r3, #80]
+ 346              		.loc 1 182 109
+ 347 001a 9BB2     		uxth	r3, r3
+ 348 001c 9B01     		lsls	r3, r3, #6
+ 349 001e 03F47053 		and	r3, r3, #15360
+ 350              		.loc 1 182 74
+ 351 0022 03F19043 		add	r3, r3, #1207959552
+ 352              		.loc 1 182 26
+ 353 0026 7B65     		str	r3, [r7, #84]
+ 183:../Src/smtc_hal/smtc_hal_i2c.c ****         GPIO_InitTypeDef gpio      = {
+ 354              		.loc 1 183 26
+ 355 0028 07F14003 		add	r3, r7, #64
+ 356 002c 0022     		movs	r2, #0
+ 357 002e 1A60     		str	r2, [r3]
+ 358 0030 5A60     		str	r2, [r3, #4]
+ 359 0032 9A60     		str	r2, [r3, #8]
+ 360 0034 DA60     		str	r2, [r3, #12]
+ 361 0036 1A61     		str	r2, [r3, #16]
+ 362 0038 1223     		movs	r3, #18
+ 363 003a 7B64     		str	r3, [r7, #68]
+ 364 003c 0123     		movs	r3, #1
+ 365 003e BB64     		str	r3, [r7, #72]
+ 366 0040 0323     		movs	r3, #3
+ 367 0042 FB64     		str	r3, [r7, #76]
+ 368 0044 0423     		movs	r3, #4
+ 369 0046 3B65     		str	r3, [r7, #80]
+ 184:../Src/smtc_hal/smtc_hal_i2c.c ****             .Mode      = GPIO_MODE_AF_OD,
+ 185:../Src/smtc_hal/smtc_hal_i2c.c ****             .Pull      = GPIO_PULLUP, // Pull UP instead of no pull because pull resistors are not 
+ 186:../Src/smtc_hal/smtc_hal_i2c.c ****             .Speed     = GPIO_SPEED_FREQ_VERY_HIGH,
+ 187:../Src/smtc_hal/smtc_hal_i2c.c ****             .Alternate = GPIO_AF4_I2C1,
+ 188:../Src/smtc_hal/smtc_hal_i2c.c ****         };
+ 189:../Src/smtc_hal/smtc_hal_i2c.c ****         gpio.Pin = ( 1 << ( hal_i2c[0].pins.scl & 0x0F ) ) | ( 1 << ( hal_i2c[0].pins.sda & 0x0F ) 
+ 370              		.loc 1 189 44
+ 371 0048 5A4B     		ldr	r3, .L17
+ 372 004a B3F95230 		ldrsh	r3, [r3, #82]
+ 373              		.loc 1 189 49
+ 374 004e 9BB2     		uxth	r3, r3
+ 375 0050 03F00F03 		and	r3, r3, #15
+ 376              		.loc 1 189 24
+ 377 0054 0122     		movs	r2, #1
+ 378 0056 9A40     		lsls	r2, r2, r3
+ARM GAS  /tmp/ccX64pwJ.s 			page 11
+
+
+ 379              		.loc 1 189 86
+ 380 0058 564B     		ldr	r3, .L17
+ 381 005a B3F95030 		ldrsh	r3, [r3, #80]
+ 382              		.loc 1 189 91
+ 383 005e 9BB2     		uxth	r3, r3
+ 384 0060 03F00F03 		and	r3, r3, #15
+ 385              		.loc 1 189 66
+ 386 0064 0121     		movs	r1, #1
+ 387 0066 01FA03F3 		lsl	r3, r1, r3
+ 388              		.loc 1 189 60
+ 389 006a 1343     		orrs	r3, r3, r2
+ 390              		.loc 1 189 18
+ 391 006c 3B64     		str	r3, [r7, #64]
+ 190:../Src/smtc_hal/smtc_hal_i2c.c ****         HAL_GPIO_Init( gpio_port, &gpio );
+ 392              		.loc 1 190 9
+ 393 006e 07F14003 		add	r3, r7, #64
+ 394 0072 1946     		mov	r1, r3
+ 395 0074 786D     		ldr	r0, [r7, #84]
+ 396 0076 FFF7FEFF 		bl	HAL_GPIO_Init
+ 397              	.LBB3:
+ 191:../Src/smtc_hal/smtc_hal_i2c.c **** 
+ 192:../Src/smtc_hal/smtc_hal_i2c.c ****         __HAL_RCC_I2C1_CLK_ENABLE( );
+ 398              		.loc 1 192 9
+ 399 007a 4F4B     		ldr	r3, .L17+4
+ 400 007c 9B6D     		ldr	r3, [r3, #88]
+ 401 007e 4E4A     		ldr	r2, .L17+4
+ 402 0080 43F40013 		orr	r3, r3, #2097152
+ 403 0084 9365     		str	r3, [r2, #88]
+ 404 0086 4C4B     		ldr	r3, .L17+4
+ 405 0088 9B6D     		ldr	r3, [r3, #88]
+ 406 008a 03F40013 		and	r3, r3, #2097152
+ 407 008e FB63     		str	r3, [r7, #60]
+ 408 0090 FB6B     		ldr	r3, [r7, #60]
+ 409              	.LBE3:
+ 410              	.LBE2:
+ 193:../Src/smtc_hal/smtc_hal_i2c.c ****     }
+ 194:../Src/smtc_hal/smtc_hal_i2c.c ****     else if( i2cHandle->Instance == hal_i2c[1].interface )
+ 195:../Src/smtc_hal/smtc_hal_i2c.c ****     {
+ 196:../Src/smtc_hal/smtc_hal_i2c.c ****         GPIO_TypeDef* gpio_port =
+ 197:../Src/smtc_hal/smtc_hal_i2c.c ****             ( GPIO_TypeDef* ) ( AHB2PERIPH_BASE +
+ 198:../Src/smtc_hal/smtc_hal_i2c.c ****                                 ( ( hal_i2c[1].pins.sda & 0xF0 ) << 6 ) );
+ 199:../Src/smtc_hal/smtc_hal_i2c.c ****         GPIO_InitTypeDef gpio = {
+ 200:../Src/smtc_hal/smtc_hal_i2c.c ****             .Mode      = GPIO_MODE_AF_OD,
+ 201:../Src/smtc_hal/smtc_hal_i2c.c ****             .Pull      = GPIO_NOPULL,
+ 202:../Src/smtc_hal/smtc_hal_i2c.c ****             .Speed     = GPIO_SPEED_FREQ_VERY_HIGH,
+ 203:../Src/smtc_hal/smtc_hal_i2c.c ****             .Alternate = GPIO_AF4_I2C2,
+ 204:../Src/smtc_hal/smtc_hal_i2c.c ****         };
+ 205:../Src/smtc_hal/smtc_hal_i2c.c ****         gpio.Pin = ( 1 << ( hal_i2c[1].pins.scl & 0x0F ) ) |
+ 206:../Src/smtc_hal/smtc_hal_i2c.c ****                    ( 1 << ( hal_i2c[1].pins.sda & 0x0F ) ) ;
+ 207:../Src/smtc_hal/smtc_hal_i2c.c ****         HAL_GPIO_Init( gpio_port, &gpio );
+ 208:../Src/smtc_hal/smtc_hal_i2c.c **** 
+ 209:../Src/smtc_hal/smtc_hal_i2c.c ****         __HAL_RCC_I2C2_CLK_ENABLE();
+ 210:../Src/smtc_hal/smtc_hal_i2c.c ****     }
+ 211:../Src/smtc_hal/smtc_hal_i2c.c ****     else if( i2cHandle->Instance == hal_i2c[2].interface )
+ 212:../Src/smtc_hal/smtc_hal_i2c.c ****     {
+ 213:../Src/smtc_hal/smtc_hal_i2c.c ****         GPIO_TypeDef*    gpio_port = ( GPIO_TypeDef* ) ( AHB2PERIPH_BASE + ( ( hal_i2c[2].pins.sda 
+ 214:../Src/smtc_hal/smtc_hal_i2c.c ****         GPIO_InitTypeDef gpio      = {
+ARM GAS  /tmp/ccX64pwJ.s 			page 12
+
+
+ 215:../Src/smtc_hal/smtc_hal_i2c.c ****             .Mode      = GPIO_MODE_AF_OD,
+ 216:../Src/smtc_hal/smtc_hal_i2c.c ****             .Pull      = GPIO_NOPULL,
+ 217:../Src/smtc_hal/smtc_hal_i2c.c ****             .Speed     = GPIO_SPEED_FREQ_VERY_HIGH,
+ 218:../Src/smtc_hal/smtc_hal_i2c.c ****             .Alternate = GPIO_AF4_I2C3,
+ 219:../Src/smtc_hal/smtc_hal_i2c.c ****         };
+ 220:../Src/smtc_hal/smtc_hal_i2c.c ****         gpio.Pin = ( 1 << ( hal_i2c[2].pins.scl & 0x0F ) ) | ( 1 << ( hal_i2c[2].pins.sda & 0x0F ) 
+ 221:../Src/smtc_hal/smtc_hal_i2c.c ****         HAL_GPIO_Init( gpio_port, &gpio );
+ 222:../Src/smtc_hal/smtc_hal_i2c.c **** 
+ 223:../Src/smtc_hal/smtc_hal_i2c.c ****         __HAL_RCC_I2C3_CLK_ENABLE( );
+ 224:../Src/smtc_hal/smtc_hal_i2c.c ****     }
+ 225:../Src/smtc_hal/smtc_hal_i2c.c ****     else
+ 226:../Src/smtc_hal/smtc_hal_i2c.c ****     {
+ 227:../Src/smtc_hal/smtc_hal_i2c.c ****         hal_mcu_panic( );
+ 228:../Src/smtc_hal/smtc_hal_i2c.c ****     }
+ 229:../Src/smtc_hal/smtc_hal_i2c.c **** }
+ 411              		.loc 1 229 1
+ 412 0092 8AE0     		b	.L16
+ 413              	.L12:
+ 194:../Src/smtc_hal/smtc_hal_i2c.c ****     {
+ 414              		.loc 1 194 23
+ 415 0094 7B68     		ldr	r3, [r7, #4]
+ 416 0096 1A68     		ldr	r2, [r3]
+ 194:../Src/smtc_hal/smtc_hal_i2c.c ****     {
+ 417              		.loc 1 194 47
+ 418 0098 464B     		ldr	r3, .L17
+ 419 009a 5B6D     		ldr	r3, [r3, #84]
+ 194:../Src/smtc_hal/smtc_hal_i2c.c ****     {
+ 420              		.loc 1 194 12
+ 421 009c 9A42     		cmp	r2, r3
+ 422 009e 3DD1     		bne	.L14
+ 423              	.LBB4:
+ 198:../Src/smtc_hal/smtc_hal_i2c.c ****         GPIO_InitTypeDef gpio = {
+ 424              		.loc 1 198 52
+ 425 00a0 444B     		ldr	r3, .L17
+ 426 00a2 B3F9A430 		ldrsh	r3, [r3, #164]
+ 198:../Src/smtc_hal/smtc_hal_i2c.c ****         GPIO_InitTypeDef gpio = {
+ 427              		.loc 1 198 66
+ 428 00a6 9BB2     		uxth	r3, r3
+ 429 00a8 9B01     		lsls	r3, r3, #6
+ 430 00aa 03F47053 		and	r3, r3, #15360
+ 197:../Src/smtc_hal/smtc_hal_i2c.c ****                                 ( ( hal_i2c[1].pins.sda & 0xF0 ) << 6 ) );
+ 431              		.loc 1 197 49
+ 432 00ae 03F19043 		add	r3, r3, #1207959552
+ 196:../Src/smtc_hal/smtc_hal_i2c.c ****             ( GPIO_TypeDef* ) ( AHB2PERIPH_BASE +
+ 433              		.loc 1 196 23
+ 434 00b2 BB65     		str	r3, [r7, #88]
+ 199:../Src/smtc_hal/smtc_hal_i2c.c ****             .Mode      = GPIO_MODE_AF_OD,
+ 435              		.loc 1 199 26
+ 436 00b4 07F12803 		add	r3, r7, #40
+ 437 00b8 0022     		movs	r2, #0
+ 438 00ba 1A60     		str	r2, [r3]
+ 439 00bc 5A60     		str	r2, [r3, #4]
+ 440 00be 9A60     		str	r2, [r3, #8]
+ 441 00c0 DA60     		str	r2, [r3, #12]
+ 442 00c2 1A61     		str	r2, [r3, #16]
+ 443 00c4 1223     		movs	r3, #18
+ 444 00c6 FB62     		str	r3, [r7, #44]
+ARM GAS  /tmp/ccX64pwJ.s 			page 13
+
+
+ 445 00c8 0323     		movs	r3, #3
+ 446 00ca 7B63     		str	r3, [r7, #52]
+ 447 00cc 0423     		movs	r3, #4
+ 448 00ce BB63     		str	r3, [r7, #56]
+ 205:../Src/smtc_hal/smtc_hal_i2c.c ****                    ( 1 << ( hal_i2c[1].pins.sda & 0x0F ) ) ;
+ 449              		.loc 1 205 44
+ 450 00d0 384B     		ldr	r3, .L17
+ 451 00d2 B3F9A630 		ldrsh	r3, [r3, #166]
+ 205:../Src/smtc_hal/smtc_hal_i2c.c ****                    ( 1 << ( hal_i2c[1].pins.sda & 0x0F ) ) ;
+ 452              		.loc 1 205 49
+ 453 00d6 9BB2     		uxth	r3, r3
+ 454 00d8 03F00F03 		and	r3, r3, #15
+ 205:../Src/smtc_hal/smtc_hal_i2c.c ****                    ( 1 << ( hal_i2c[1].pins.sda & 0x0F ) ) ;
+ 455              		.loc 1 205 24
+ 456 00dc 0122     		movs	r2, #1
+ 457 00de 9A40     		lsls	r2, r2, r3
+ 206:../Src/smtc_hal/smtc_hal_i2c.c ****         HAL_GPIO_Init( gpio_port, &gpio );
+ 458              		.loc 1 206 44
+ 459 00e0 344B     		ldr	r3, .L17
+ 460 00e2 B3F9A430 		ldrsh	r3, [r3, #164]
+ 206:../Src/smtc_hal/smtc_hal_i2c.c ****         HAL_GPIO_Init( gpio_port, &gpio );
+ 461              		.loc 1 206 49
+ 462 00e6 9BB2     		uxth	r3, r3
+ 463 00e8 03F00F03 		and	r3, r3, #15
+ 206:../Src/smtc_hal/smtc_hal_i2c.c ****         HAL_GPIO_Init( gpio_port, &gpio );
+ 464              		.loc 1 206 24
+ 465 00ec 0121     		movs	r1, #1
+ 466 00ee 01FA03F3 		lsl	r3, r1, r3
+ 205:../Src/smtc_hal/smtc_hal_i2c.c ****                    ( 1 << ( hal_i2c[1].pins.sda & 0x0F ) ) ;
+ 467              		.loc 1 205 60
+ 468 00f2 1343     		orrs	r3, r3, r2
+ 205:../Src/smtc_hal/smtc_hal_i2c.c ****                    ( 1 << ( hal_i2c[1].pins.sda & 0x0F ) ) ;
+ 469              		.loc 1 205 18
+ 470 00f4 BB62     		str	r3, [r7, #40]
+ 207:../Src/smtc_hal/smtc_hal_i2c.c **** 
+ 471              		.loc 1 207 9
+ 472 00f6 07F12803 		add	r3, r7, #40
+ 473 00fa 1946     		mov	r1, r3
+ 474 00fc B86D     		ldr	r0, [r7, #88]
+ 475 00fe FFF7FEFF 		bl	HAL_GPIO_Init
+ 476              	.LBB5:
+ 209:../Src/smtc_hal/smtc_hal_i2c.c ****     }
+ 477              		.loc 1 209 9
+ 478 0102 2D4B     		ldr	r3, .L17+4
+ 479 0104 9B6D     		ldr	r3, [r3, #88]
+ 480 0106 2C4A     		ldr	r2, .L17+4
+ 481 0108 43F48003 		orr	r3, r3, #4194304
+ 482 010c 9365     		str	r3, [r2, #88]
+ 483 010e 2A4B     		ldr	r3, .L17+4
+ 484 0110 9B6D     		ldr	r3, [r3, #88]
+ 485 0112 03F48003 		and	r3, r3, #4194304
+ 486 0116 7B62     		str	r3, [r7, #36]
+ 487 0118 7B6A     		ldr	r3, [r7, #36]
+ 488              	.LBE5:
+ 489              	.LBE4:
+ 490              		.loc 1 229 1
+ 491 011a 46E0     		b	.L16
+ARM GAS  /tmp/ccX64pwJ.s 			page 14
+
+
+ 492              	.L14:
+ 211:../Src/smtc_hal/smtc_hal_i2c.c ****     {
+ 493              		.loc 1 211 23
+ 494 011c 7B68     		ldr	r3, [r7, #4]
+ 495 011e 1A68     		ldr	r2, [r3]
+ 211:../Src/smtc_hal/smtc_hal_i2c.c ****     {
+ 496              		.loc 1 211 47
+ 497 0120 244B     		ldr	r3, .L17
+ 498 0122 D3F8A830 		ldr	r3, [r3, #168]
+ 211:../Src/smtc_hal/smtc_hal_i2c.c ****     {
+ 499              		.loc 1 211 12
+ 500 0126 9A42     		cmp	r2, r3
+ 501 0128 3DD1     		bne	.L15
+ 502              	.LBB6:
+ 213:../Src/smtc_hal/smtc_hal_i2c.c ****         GPIO_InitTypeDef gpio      = {
+ 503              		.loc 1 213 95
+ 504 012a 224B     		ldr	r3, .L17
+ 505 012c B3F9F830 		ldrsh	r3, [r3, #248]
+ 213:../Src/smtc_hal/smtc_hal_i2c.c ****         GPIO_InitTypeDef gpio      = {
+ 506              		.loc 1 213 109
+ 507 0130 9BB2     		uxth	r3, r3
+ 508 0132 9B01     		lsls	r3, r3, #6
+ 509 0134 03F47053 		and	r3, r3, #15360
+ 213:../Src/smtc_hal/smtc_hal_i2c.c ****         GPIO_InitTypeDef gpio      = {
+ 510              		.loc 1 213 74
+ 511 0138 03F19043 		add	r3, r3, #1207959552
+ 213:../Src/smtc_hal/smtc_hal_i2c.c ****         GPIO_InitTypeDef gpio      = {
+ 512              		.loc 1 213 26
+ 513 013c FB65     		str	r3, [r7, #92]
+ 214:../Src/smtc_hal/smtc_hal_i2c.c ****             .Mode      = GPIO_MODE_AF_OD,
+ 514              		.loc 1 214 26
+ 515 013e 07F11003 		add	r3, r7, #16
+ 516 0142 0022     		movs	r2, #0
+ 517 0144 1A60     		str	r2, [r3]
+ 518 0146 5A60     		str	r2, [r3, #4]
+ 519 0148 9A60     		str	r2, [r3, #8]
+ 520 014a DA60     		str	r2, [r3, #12]
+ 521 014c 1A61     		str	r2, [r3, #16]
+ 522 014e 1223     		movs	r3, #18
+ 523 0150 7B61     		str	r3, [r7, #20]
+ 524 0152 0323     		movs	r3, #3
+ 525 0154 FB61     		str	r3, [r7, #28]
+ 526 0156 0423     		movs	r3, #4
+ 527 0158 3B62     		str	r3, [r7, #32]
+ 220:../Src/smtc_hal/smtc_hal_i2c.c ****         HAL_GPIO_Init( gpio_port, &gpio );
+ 528              		.loc 1 220 44
+ 529 015a 164B     		ldr	r3, .L17
+ 530 015c B3F9FA30 		ldrsh	r3, [r3, #250]
+ 220:../Src/smtc_hal/smtc_hal_i2c.c ****         HAL_GPIO_Init( gpio_port, &gpio );
+ 531              		.loc 1 220 49
+ 532 0160 9BB2     		uxth	r3, r3
+ 533 0162 03F00F03 		and	r3, r3, #15
+ 220:../Src/smtc_hal/smtc_hal_i2c.c ****         HAL_GPIO_Init( gpio_port, &gpio );
+ 534              		.loc 1 220 24
+ 535 0166 0122     		movs	r2, #1
+ 536 0168 9A40     		lsls	r2, r2, r3
+ 220:../Src/smtc_hal/smtc_hal_i2c.c ****         HAL_GPIO_Init( gpio_port, &gpio );
+ARM GAS  /tmp/ccX64pwJ.s 			page 15
+
+
+ 537              		.loc 1 220 86
+ 538 016a 124B     		ldr	r3, .L17
+ 539 016c B3F9F830 		ldrsh	r3, [r3, #248]
+ 220:../Src/smtc_hal/smtc_hal_i2c.c ****         HAL_GPIO_Init( gpio_port, &gpio );
+ 540              		.loc 1 220 91
+ 541 0170 9BB2     		uxth	r3, r3
+ 542 0172 03F00F03 		and	r3, r3, #15
+ 220:../Src/smtc_hal/smtc_hal_i2c.c ****         HAL_GPIO_Init( gpio_port, &gpio );
+ 543              		.loc 1 220 66
+ 544 0176 0121     		movs	r1, #1
+ 545 0178 01FA03F3 		lsl	r3, r1, r3
+ 220:../Src/smtc_hal/smtc_hal_i2c.c ****         HAL_GPIO_Init( gpio_port, &gpio );
+ 546              		.loc 1 220 60
+ 547 017c 1343     		orrs	r3, r3, r2
+ 220:../Src/smtc_hal/smtc_hal_i2c.c ****         HAL_GPIO_Init( gpio_port, &gpio );
+ 548              		.loc 1 220 18
+ 549 017e 3B61     		str	r3, [r7, #16]
+ 221:../Src/smtc_hal/smtc_hal_i2c.c **** 
+ 550              		.loc 1 221 9
+ 551 0180 07F11003 		add	r3, r7, #16
+ 552 0184 1946     		mov	r1, r3
+ 553 0186 F86D     		ldr	r0, [r7, #92]
+ 554 0188 FFF7FEFF 		bl	HAL_GPIO_Init
+ 555              	.LBB7:
+ 223:../Src/smtc_hal/smtc_hal_i2c.c ****     }
+ 556              		.loc 1 223 9
+ 557 018c 0A4B     		ldr	r3, .L17+4
+ 558 018e 9B6D     		ldr	r3, [r3, #88]
+ 559 0190 094A     		ldr	r2, .L17+4
+ 560 0192 43F40003 		orr	r3, r3, #8388608
+ 561 0196 9365     		str	r3, [r2, #88]
+ 562 0198 074B     		ldr	r3, .L17+4
+ 563 019a 9B6D     		ldr	r3, [r3, #88]
+ 564 019c 03F40003 		and	r3, r3, #8388608
+ 565 01a0 FB60     		str	r3, [r7, #12]
+ 566 01a2 FB68     		ldr	r3, [r7, #12]
+ 567              	.LBE7:
+ 568              	.LBE6:
+ 569              		.loc 1 229 1
+ 570 01a4 01E0     		b	.L16
+ 571              	.L15:
+ 227:../Src/smtc_hal/smtc_hal_i2c.c ****     }
+ 572              		.loc 1 227 9
+ 573 01a6 FFF7FEFF 		bl	hal_mcu_panic
+ 574              	.L16:
+ 575              		.loc 1 229 1
+ 576 01aa 00BF     		nop
+ 577 01ac 6037     		adds	r7, r7, #96
+ 578              	.LCFI13:
+ 579              		.cfi_def_cfa_offset 8
+ 580 01ae BD46     		mov	sp, r7
+ 581              	.LCFI14:
+ 582              		.cfi_def_cfa_register 13
+ 583              		@ sp needed
+ 584 01b0 80BD     		pop	{r7, pc}
+ 585              	.L18:
+ 586 01b2 00BF     		.align	2
+ARM GAS  /tmp/ccX64pwJ.s 			page 16
+
+
+ 587              	.L17:
+ 588 01b4 00000000 		.word	hal_i2c
+ 589 01b8 00100240 		.word	1073876992
+ 590              		.cfi_endproc
+ 591              	.LFE315:
+ 593              		.section	.text.HAL_I2C_MspDeInit,"ax",%progbits
+ 594              		.align	1
+ 595              		.global	HAL_I2C_MspDeInit
+ 596              		.syntax unified
+ 597              		.thumb
+ 598              		.thumb_func
+ 599              		.fpu fpv4-sp-d16
+ 601              	HAL_I2C_MspDeInit:
+ 602              	.LFB316:
+ 230:../Src/smtc_hal/smtc_hal_i2c.c **** 
+ 231:../Src/smtc_hal/smtc_hal_i2c.c **** void HAL_I2C_MspDeInit( I2C_HandleTypeDef* i2cHandle )
+ 232:../Src/smtc_hal/smtc_hal_i2c.c **** {
+ 603              		.loc 1 232 1
+ 604              		.cfi_startproc
+ 605              		@ args = 0, pretend = 0, frame = 16
+ 606              		@ frame_needed = 1, uses_anonymous_args = 0
+ 607 0000 90B5     		push	{r4, r7, lr}
+ 608              	.LCFI15:
+ 609              		.cfi_def_cfa_offset 12
+ 610              		.cfi_offset 4, -12
+ 611              		.cfi_offset 7, -8
+ 612              		.cfi_offset 14, -4
+ 613 0002 85B0     		sub	sp, sp, #20
+ 614              	.LCFI16:
+ 615              		.cfi_def_cfa_offset 32
+ 616 0004 00AF     		add	r7, sp, #0
+ 617              	.LCFI17:
+ 618              		.cfi_def_cfa_register 7
+ 619 0006 7860     		str	r0, [r7, #4]
+ 233:../Src/smtc_hal/smtc_hal_i2c.c ****     uint32_t local_id = 0;
+ 620              		.loc 1 233 14
+ 621 0008 0023     		movs	r3, #0
+ 622 000a FB60     		str	r3, [r7, #12]
+ 234:../Src/smtc_hal/smtc_hal_i2c.c ****     if( i2cHandle->Instance == hal_i2c[0].interface )
+ 623              		.loc 1 234 18
+ 624 000c 7B68     		ldr	r3, [r7, #4]
+ 625 000e 1A68     		ldr	r2, [r3]
+ 626              		.loc 1 234 42
+ 627 0010 364B     		ldr	r3, .L23
+ 628 0012 1B68     		ldr	r3, [r3]
+ 629              		.loc 1 234 7
+ 630 0014 9A42     		cmp	r2, r3
+ 631 0016 14D1     		bne	.L20
+ 235:../Src/smtc_hal/smtc_hal_i2c.c ****     {
+ 236:../Src/smtc_hal/smtc_hal_i2c.c ****         local_id = 0;
+ 632              		.loc 1 236 18
+ 633 0018 0023     		movs	r3, #0
+ 634 001a FB60     		str	r3, [r7, #12]
+ 237:../Src/smtc_hal/smtc_hal_i2c.c ****         __HAL_RCC_I2C1_FORCE_RESET( );
+ 635              		.loc 1 237 9
+ 636 001c 344B     		ldr	r3, .L23+4
+ 637 001e 9B6B     		ldr	r3, [r3, #56]
+ARM GAS  /tmp/ccX64pwJ.s 			page 17
+
+
+ 638 0020 334A     		ldr	r2, .L23+4
+ 639 0022 43F40013 		orr	r3, r3, #2097152
+ 640 0026 9363     		str	r3, [r2, #56]
+ 238:../Src/smtc_hal/smtc_hal_i2c.c ****         __HAL_RCC_I2C1_RELEASE_RESET( );
+ 641              		.loc 1 238 9
+ 642 0028 314B     		ldr	r3, .L23+4
+ 643 002a 9B6B     		ldr	r3, [r3, #56]
+ 644 002c 304A     		ldr	r2, .L23+4
+ 645 002e 23F40013 		bic	r3, r3, #2097152
+ 646 0032 9363     		str	r3, [r2, #56]
+ 239:../Src/smtc_hal/smtc_hal_i2c.c ****         __HAL_RCC_I2C1_CLK_DISABLE( );
+ 647              		.loc 1 239 9
+ 648 0034 2E4B     		ldr	r3, .L23+4
+ 649 0036 9B6D     		ldr	r3, [r3, #88]
+ 650 0038 2D4A     		ldr	r2, .L23+4
+ 651 003a 23F40013 		bic	r3, r3, #2097152
+ 652 003e 9365     		str	r3, [r2, #88]
+ 653 0040 1DE0     		b	.L21
+ 654              	.L20:
+ 240:../Src/smtc_hal/smtc_hal_i2c.c ****     }
+ 241:../Src/smtc_hal/smtc_hal_i2c.c ****     else if( i2cHandle->Instance == hal_i2c[2].interface )
+ 655              		.loc 1 241 23
+ 656 0042 7B68     		ldr	r3, [r7, #4]
+ 657 0044 1A68     		ldr	r2, [r3]
+ 658              		.loc 1 241 47
+ 659 0046 294B     		ldr	r3, .L23
+ 660 0048 D3F8A830 		ldr	r3, [r3, #168]
+ 661              		.loc 1 241 12
+ 662 004c 9A42     		cmp	r2, r3
+ 663 004e 14D1     		bne	.L22
+ 242:../Src/smtc_hal/smtc_hal_i2c.c ****     {
+ 243:../Src/smtc_hal/smtc_hal_i2c.c ****         local_id = 2;
+ 664              		.loc 1 243 18
+ 665 0050 0223     		movs	r3, #2
+ 666 0052 FB60     		str	r3, [r7, #12]
+ 244:../Src/smtc_hal/smtc_hal_i2c.c ****         __HAL_RCC_I2C3_FORCE_RESET( );
+ 667              		.loc 1 244 9
+ 668 0054 264B     		ldr	r3, .L23+4
+ 669 0056 9B6B     		ldr	r3, [r3, #56]
+ 670 0058 254A     		ldr	r2, .L23+4
+ 671 005a 43F40003 		orr	r3, r3, #8388608
+ 672 005e 9363     		str	r3, [r2, #56]
+ 245:../Src/smtc_hal/smtc_hal_i2c.c ****         __HAL_RCC_I2C3_RELEASE_RESET( );
+ 673              		.loc 1 245 9
+ 674 0060 234B     		ldr	r3, .L23+4
+ 675 0062 9B6B     		ldr	r3, [r3, #56]
+ 676 0064 224A     		ldr	r2, .L23+4
+ 677 0066 23F40003 		bic	r3, r3, #8388608
+ 678 006a 9363     		str	r3, [r2, #56]
+ 246:../Src/smtc_hal/smtc_hal_i2c.c ****         __HAL_RCC_I2C3_CLK_DISABLE( );
+ 679              		.loc 1 246 9
+ 680 006c 204B     		ldr	r3, .L23+4
+ 681 006e 9B6D     		ldr	r3, [r3, #88]
+ 682 0070 1F4A     		ldr	r2, .L23+4
+ 683 0072 23F40003 		bic	r3, r3, #8388608
+ 684 0076 9365     		str	r3, [r2, #88]
+ 685 0078 01E0     		b	.L21
+ARM GAS  /tmp/ccX64pwJ.s 			page 18
+
+
+ 686              	.L22:
+ 247:../Src/smtc_hal/smtc_hal_i2c.c ****     }
+ 248:../Src/smtc_hal/smtc_hal_i2c.c ****     else
+ 249:../Src/smtc_hal/smtc_hal_i2c.c ****     {
+ 250:../Src/smtc_hal/smtc_hal_i2c.c ****         hal_mcu_panic( );
+ 687              		.loc 1 250 9
+ 688 007a FFF7FEFF 		bl	hal_mcu_panic
+ 689              	.L21:
+ 251:../Src/smtc_hal/smtc_hal_i2c.c ****     }
+ 252:../Src/smtc_hal/smtc_hal_i2c.c **** 
+ 253:../Src/smtc_hal/smtc_hal_i2c.c ****     HAL_GPIO_DeInit( ( GPIO_TypeDef* ) ( AHB2PERIPH_BASE + ( ( hal_i2c[local_id].pins.sda & 0xF0 ) 
+ 690              		.loc 1 253 86
+ 691 007e 1B4A     		ldr	r2, .L23
+ 692 0080 FB68     		ldr	r3, [r7, #12]
+ 693 0082 5421     		movs	r1, #84
+ 694 0084 01FB03F3 		mul	r3, r1, r3
+ 695 0088 1344     		add	r3, r3, r2
+ 696 008a 5033     		adds	r3, r3, #80
+ 697 008c B3F90030 		ldrsh	r3, [r3]
+ 698              		.loc 1 253 100
+ 699 0090 9BB2     		uxth	r3, r3
+ 700 0092 9B01     		lsls	r3, r3, #6
+ 701 0094 03F47053 		and	r3, r3, #15360
+ 702              		.loc 1 253 58
+ 703 0098 03F19043 		add	r3, r3, #1207959552
+ 704              		.loc 1 253 5
+ 705 009c 1C46     		mov	r4, r3
+ 254:../Src/smtc_hal/smtc_hal_i2c.c ****                      ( 1 << ( hal_i2c[local_id].pins.sda & 0x0F ) ) | ( 1 << ( hal_i2c[local_id].pi
+ 706              		.loc 1 254 53
+ 707 009e 134A     		ldr	r2, .L23
+ 708 00a0 FB68     		ldr	r3, [r7, #12]
+ 709 00a2 5421     		movs	r1, #84
+ 710 00a4 01FB03F3 		mul	r3, r1, r3
+ 711 00a8 1344     		add	r3, r3, r2
+ 712 00aa 5033     		adds	r3, r3, #80
+ 713 00ac B3F90030 		ldrsh	r3, [r3]
+ 714              		.loc 1 254 58
+ 715 00b0 9BB2     		uxth	r3, r3
+ 716 00b2 03F00F03 		and	r3, r3, #15
+ 717              		.loc 1 254 26
+ 718 00b6 0122     		movs	r2, #1
+ 719 00b8 9A40     		lsls	r2, r2, r3
+ 720              		.loc 1 254 102
+ 721 00ba 0C49     		ldr	r1, .L23
+ 722 00bc FB68     		ldr	r3, [r7, #12]
+ 723 00be 5420     		movs	r0, #84
+ 724 00c0 00FB03F3 		mul	r3, r0, r3
+ 725 00c4 0B44     		add	r3, r3, r1
+ 726 00c6 5233     		adds	r3, r3, #82
+ 727 00c8 B3F90030 		ldrsh	r3, [r3]
+ 728              		.loc 1 254 107
+ 729 00cc 9BB2     		uxth	r3, r3
+ 730 00ce 03F00F03 		and	r3, r3, #15
+ 731              		.loc 1 254 75
+ 732 00d2 0121     		movs	r1, #1
+ 733 00d4 01FA03F3 		lsl	r3, r1, r3
+ 734              		.loc 1 254 69
+ARM GAS  /tmp/ccX64pwJ.s 			page 19
+
+
+ 735 00d8 1343     		orrs	r3, r3, r2
+ 253:../Src/smtc_hal/smtc_hal_i2c.c ****                      ( 1 << ( hal_i2c[local_id].pins.sda & 0x0F ) ) | ( 1 << ( hal_i2c[local_id].pi
+ 736              		.loc 1 253 5
+ 737 00da 1946     		mov	r1, r3
+ 738 00dc 2046     		mov	r0, r4
+ 739 00de FFF7FEFF 		bl	HAL_GPIO_DeInit
+ 255:../Src/smtc_hal/smtc_hal_i2c.c **** }
+ 740              		.loc 1 255 1
+ 741 00e2 00BF     		nop
+ 742 00e4 1437     		adds	r7, r7, #20
+ 743              	.LCFI18:
+ 744              		.cfi_def_cfa_offset 12
+ 745 00e6 BD46     		mov	sp, r7
+ 746              	.LCFI19:
+ 747              		.cfi_def_cfa_register 13
+ 748              		@ sp needed
+ 749 00e8 90BD     		pop	{r4, r7, pc}
+ 750              	.L24:
+ 751 00ea 00BF     		.align	2
+ 752              	.L23:
+ 753 00ec 00000000 		.word	hal_i2c
+ 754 00f0 00100240 		.word	1073876992
+ 755              		.cfi_endproc
+ 756              	.LFE316:
+ 758              		.section	.text.hal_i2c_write,"ax",%progbits
+ 759              		.align	1
+ 760              		.global	hal_i2c_write
+ 761              		.syntax unified
+ 762              		.thumb
+ 763              		.thumb_func
+ 764              		.fpu fpv4-sp-d16
+ 766              	hal_i2c_write:
+ 767              	.LFB317:
+ 256:../Src/smtc_hal/smtc_hal_i2c.c **** 
+ 257:../Src/smtc_hal/smtc_hal_i2c.c **** uint8_t hal_i2c_write( const uint32_t id, uint8_t device_addr, uint16_t addr, uint8_t data )
+ 258:../Src/smtc_hal/smtc_hal_i2c.c **** {
+ 768              		.loc 1 258 1
+ 769              		.cfi_startproc
+ 770              		@ args = 0, pretend = 0, frame = 8
+ 771              		@ frame_needed = 1, uses_anonymous_args = 0
+ 772 0000 80B5     		push	{r7, lr}
+ 773              	.LCFI20:
+ 774              		.cfi_def_cfa_offset 8
+ 775              		.cfi_offset 7, -8
+ 776              		.cfi_offset 14, -4
+ 777 0002 84B0     		sub	sp, sp, #16
+ 778              	.LCFI21:
+ 779              		.cfi_def_cfa_offset 24
+ 780 0004 02AF     		add	r7, sp, #8
+ 781              	.LCFI22:
+ 782              		.cfi_def_cfa 7, 16
+ 783 0006 7860     		str	r0, [r7, #4]
+ 784 0008 0846     		mov	r0, r1
+ 785 000a 1146     		mov	r1, r2
+ 786 000c 1A46     		mov	r2, r3
+ 787 000e 0346     		mov	r3, r0
+ 788 0010 FB70     		strb	r3, [r7, #3]
+ARM GAS  /tmp/ccX64pwJ.s 			page 20
+
+
+ 789 0012 0B46     		mov	r3, r1	@ movhi
+ 790 0014 3B80     		strh	r3, [r7]	@ movhi
+ 791 0016 1346     		mov	r3, r2
+ 792 0018 BB70     		strb	r3, [r7, #2]
+ 259:../Src/smtc_hal/smtc_hal_i2c.c ****     if( i2c_write_buffer( id, device_addr, addr, &data, 1u ) == SMTC_FAIL )
+ 793              		.loc 1 259 9
+ 794 001a BB1C     		adds	r3, r7, #2
+ 795 001c 3A88     		ldrh	r2, [r7]
+ 796 001e F978     		ldrb	r1, [r7, #3]	@ zero_extendqisi2
+ 797 0020 0120     		movs	r0, #1
+ 798 0022 0090     		str	r0, [sp]
+ 799 0024 7868     		ldr	r0, [r7, #4]
+ 800 0026 FFF7FEFF 		bl	i2c_write_buffer
+ 801 002a 0346     		mov	r3, r0
+ 802              		.loc 1 259 7
+ 803 002c 002B     		cmp	r3, #0
+ 804 002e 0ED1     		bne	.L26
+ 260:../Src/smtc_hal/smtc_hal_i2c.c ****     {
+ 261:../Src/smtc_hal/smtc_hal_i2c.c ****         // if first attempt fails due to an IRQ, try a second time
+ 262:../Src/smtc_hal/smtc_hal_i2c.c ****         if( i2c_write_buffer( id, device_addr, addr, &data, 1u ) == SMTC_FAIL )
+ 805              		.loc 1 262 13
+ 806 0030 BB1C     		adds	r3, r7, #2
+ 807 0032 3A88     		ldrh	r2, [r7]
+ 808 0034 F978     		ldrb	r1, [r7, #3]	@ zero_extendqisi2
+ 809 0036 0120     		movs	r0, #1
+ 810 0038 0090     		str	r0, [sp]
+ 811 003a 7868     		ldr	r0, [r7, #4]
+ 812 003c FFF7FEFF 		bl	i2c_write_buffer
+ 813 0040 0346     		mov	r3, r0
+ 814              		.loc 1 262 11
+ 815 0042 002B     		cmp	r3, #0
+ 816 0044 01D1     		bne	.L27
+ 263:../Src/smtc_hal/smtc_hal_i2c.c ****         {
+ 264:../Src/smtc_hal/smtc_hal_i2c.c ****             return SMTC_FAIL;
+ 817              		.loc 1 264 20
+ 818 0046 0023     		movs	r3, #0
+ 819 0048 02E0     		b	.L28
+ 820              	.L27:
+ 265:../Src/smtc_hal/smtc_hal_i2c.c ****         }
+ 266:../Src/smtc_hal/smtc_hal_i2c.c ****         else
+ 267:../Src/smtc_hal/smtc_hal_i2c.c ****         {
+ 268:../Src/smtc_hal/smtc_hal_i2c.c ****             return SMTC_SUCCESS;
+ 821              		.loc 1 268 20
+ 822 004a 0123     		movs	r3, #1
+ 823 004c 00E0     		b	.L28
+ 824              	.L26:
+ 269:../Src/smtc_hal/smtc_hal_i2c.c ****         }
+ 270:../Src/smtc_hal/smtc_hal_i2c.c ****     }
+ 271:../Src/smtc_hal/smtc_hal_i2c.c ****     else
+ 272:../Src/smtc_hal/smtc_hal_i2c.c ****     {
+ 273:../Src/smtc_hal/smtc_hal_i2c.c ****         return SMTC_SUCCESS;
+ 825              		.loc 1 273 16
+ 826 004e 0123     		movs	r3, #1
+ 827              	.L28:
+ 274:../Src/smtc_hal/smtc_hal_i2c.c ****     }
+ 275:../Src/smtc_hal/smtc_hal_i2c.c **** }
+ 828              		.loc 1 275 1
+ARM GAS  /tmp/ccX64pwJ.s 			page 21
+
+
+ 829 0050 1846     		mov	r0, r3
+ 830 0052 0837     		adds	r7, r7, #8
+ 831              	.LCFI23:
+ 832              		.cfi_def_cfa_offset 8
+ 833 0054 BD46     		mov	sp, r7
+ 834              	.LCFI24:
+ 835              		.cfi_def_cfa_register 13
+ 836              		@ sp needed
+ 837 0056 80BD     		pop	{r7, pc}
+ 838              		.cfi_endproc
+ 839              	.LFE317:
+ 841              		.section	.text.hal_i2c_write_buffer,"ax",%progbits
+ 842              		.align	1
+ 843              		.global	hal_i2c_write_buffer
+ 844              		.syntax unified
+ 845              		.thumb
+ 846              		.thumb_func
+ 847              		.fpu fpv4-sp-d16
+ 849              	hal_i2c_write_buffer:
+ 850              	.LFB318:
+ 276:../Src/smtc_hal/smtc_hal_i2c.c **** 
+ 277:../Src/smtc_hal/smtc_hal_i2c.c **** uint8_t hal_i2c_write_buffer( const uint32_t id, uint8_t device_addr, uint16_t addr, uint8_t* buffe
+ 278:../Src/smtc_hal/smtc_hal_i2c.c **** {
+ 851              		.loc 1 278 1
+ 852              		.cfi_startproc
+ 853              		@ args = 4, pretend = 0, frame = 16
+ 854              		@ frame_needed = 1, uses_anonymous_args = 0
+ 855 0000 80B5     		push	{r7, lr}
+ 856              	.LCFI25:
+ 857              		.cfi_def_cfa_offset 8
+ 858              		.cfi_offset 7, -8
+ 859              		.cfi_offset 14, -4
+ 860 0002 86B0     		sub	sp, sp, #24
+ 861              	.LCFI26:
+ 862              		.cfi_def_cfa_offset 32
+ 863 0004 02AF     		add	r7, sp, #8
+ 864              	.LCFI27:
+ 865              		.cfi_def_cfa 7, 24
+ 866 0006 F860     		str	r0, [r7, #12]
+ 867 0008 7B60     		str	r3, [r7, #4]
+ 868 000a 0B46     		mov	r3, r1
+ 869 000c FB72     		strb	r3, [r7, #11]
+ 870 000e 1346     		mov	r3, r2	@ movhi
+ 871 0010 3B81     		strh	r3, [r7, #8]	@ movhi
+ 279:../Src/smtc_hal/smtc_hal_i2c.c ****     if( i2c_write_buffer( id, device_addr, addr, buffer, size ) == SMTC_FAIL )
+ 872              		.loc 1 279 9
+ 873 0012 3A89     		ldrh	r2, [r7, #8]
+ 874 0014 F97A     		ldrb	r1, [r7, #11]	@ zero_extendqisi2
+ 875 0016 3B8B     		ldrh	r3, [r7, #24]
+ 876 0018 0093     		str	r3, [sp]
+ 877 001a 7B68     		ldr	r3, [r7, #4]
+ 878 001c F868     		ldr	r0, [r7, #12]
+ 879 001e FFF7FEFF 		bl	i2c_write_buffer
+ 880 0022 0346     		mov	r3, r0
+ 881              		.loc 1 279 7
+ 882 0024 002B     		cmp	r3, #0
+ 883 0026 0ED1     		bne	.L30
+ARM GAS  /tmp/ccX64pwJ.s 			page 22
+
+
+ 280:../Src/smtc_hal/smtc_hal_i2c.c ****     {
+ 281:../Src/smtc_hal/smtc_hal_i2c.c ****         // if first attempt fails due to an IRQ, try a second time
+ 282:../Src/smtc_hal/smtc_hal_i2c.c ****         if( i2c_write_buffer( id, device_addr, addr, buffer, size ) == SMTC_FAIL )
+ 884              		.loc 1 282 13
+ 885 0028 3A89     		ldrh	r2, [r7, #8]
+ 886 002a F97A     		ldrb	r1, [r7, #11]	@ zero_extendqisi2
+ 887 002c 3B8B     		ldrh	r3, [r7, #24]
+ 888 002e 0093     		str	r3, [sp]
+ 889 0030 7B68     		ldr	r3, [r7, #4]
+ 890 0032 F868     		ldr	r0, [r7, #12]
+ 891 0034 FFF7FEFF 		bl	i2c_write_buffer
+ 892 0038 0346     		mov	r3, r0
+ 893              		.loc 1 282 11
+ 894 003a 002B     		cmp	r3, #0
+ 895 003c 01D1     		bne	.L31
+ 283:../Src/smtc_hal/smtc_hal_i2c.c ****         {
+ 284:../Src/smtc_hal/smtc_hal_i2c.c ****             return SMTC_FAIL;
+ 896              		.loc 1 284 20
+ 897 003e 0023     		movs	r3, #0
+ 898 0040 02E0     		b	.L32
+ 899              	.L31:
+ 285:../Src/smtc_hal/smtc_hal_i2c.c ****         }
+ 286:../Src/smtc_hal/smtc_hal_i2c.c ****         else
+ 287:../Src/smtc_hal/smtc_hal_i2c.c ****         {
+ 288:../Src/smtc_hal/smtc_hal_i2c.c ****             return SMTC_SUCCESS;
+ 900              		.loc 1 288 20
+ 901 0042 0123     		movs	r3, #1
+ 902 0044 00E0     		b	.L32
+ 903              	.L30:
+ 289:../Src/smtc_hal/smtc_hal_i2c.c ****         }
+ 290:../Src/smtc_hal/smtc_hal_i2c.c ****     }
+ 291:../Src/smtc_hal/smtc_hal_i2c.c ****     else
+ 292:../Src/smtc_hal/smtc_hal_i2c.c ****     {
+ 293:../Src/smtc_hal/smtc_hal_i2c.c ****         return SMTC_SUCCESS;
+ 904              		.loc 1 293 16
+ 905 0046 0123     		movs	r3, #1
+ 906              	.L32:
+ 294:../Src/smtc_hal/smtc_hal_i2c.c ****     }
+ 295:../Src/smtc_hal/smtc_hal_i2c.c **** }
+ 907              		.loc 1 295 1
+ 908 0048 1846     		mov	r0, r3
+ 909 004a 1037     		adds	r7, r7, #16
+ 910              	.LCFI28:
+ 911              		.cfi_def_cfa_offset 8
+ 912 004c BD46     		mov	sp, r7
+ 913              	.LCFI29:
+ 914              		.cfi_def_cfa_register 13
+ 915              		@ sp needed
+ 916 004e 80BD     		pop	{r7, pc}
+ 917              		.cfi_endproc
+ 918              	.LFE318:
+ 920              		.section	.text.hal_i2c_read,"ax",%progbits
+ 921              		.align	1
+ 922              		.global	hal_i2c_read
+ 923              		.syntax unified
+ 924              		.thumb
+ 925              		.thumb_func
+ARM GAS  /tmp/ccX64pwJ.s 			page 23
+
+
+ 926              		.fpu fpv4-sp-d16
+ 928              	hal_i2c_read:
+ 929              	.LFB319:
+ 296:../Src/smtc_hal/smtc_hal_i2c.c **** 
+ 297:../Src/smtc_hal/smtc_hal_i2c.c **** uint8_t hal_i2c_read( const uint32_t id, uint8_t device_addr, uint16_t addr, uint8_t* data )
+ 298:../Src/smtc_hal/smtc_hal_i2c.c **** {
+ 930              		.loc 1 298 1
+ 931              		.cfi_startproc
+ 932              		@ args = 0, pretend = 0, frame = 16
+ 933              		@ frame_needed = 1, uses_anonymous_args = 0
+ 934 0000 80B5     		push	{r7, lr}
+ 935              	.LCFI30:
+ 936              		.cfi_def_cfa_offset 8
+ 937              		.cfi_offset 7, -8
+ 938              		.cfi_offset 14, -4
+ 939 0002 86B0     		sub	sp, sp, #24
+ 940              	.LCFI31:
+ 941              		.cfi_def_cfa_offset 32
+ 942 0004 02AF     		add	r7, sp, #8
+ 943              	.LCFI32:
+ 944              		.cfi_def_cfa 7, 24
+ 945 0006 F860     		str	r0, [r7, #12]
+ 946 0008 7B60     		str	r3, [r7, #4]
+ 947 000a 0B46     		mov	r3, r1
+ 948 000c FB72     		strb	r3, [r7, #11]
+ 949 000e 1346     		mov	r3, r2	@ movhi
+ 950 0010 3B81     		strh	r3, [r7, #8]	@ movhi
+ 299:../Src/smtc_hal/smtc_hal_i2c.c ****     return ( i2c_read_buffer( id, device_addr, addr, data, 1 ) );
+ 951              		.loc 1 299 14
+ 952 0012 3A89     		ldrh	r2, [r7, #8]
+ 953 0014 F97A     		ldrb	r1, [r7, #11]	@ zero_extendqisi2
+ 954 0016 0123     		movs	r3, #1
+ 955 0018 0093     		str	r3, [sp]
+ 956 001a 7B68     		ldr	r3, [r7, #4]
+ 957 001c F868     		ldr	r0, [r7, #12]
+ 958 001e FFF7FEFF 		bl	i2c_read_buffer
+ 959 0022 0346     		mov	r3, r0
+ 300:../Src/smtc_hal/smtc_hal_i2c.c **** }
+ 960              		.loc 1 300 1
+ 961 0024 1846     		mov	r0, r3
+ 962 0026 1037     		adds	r7, r7, #16
+ 963              	.LCFI33:
+ 964              		.cfi_def_cfa_offset 8
+ 965 0028 BD46     		mov	sp, r7
+ 966              	.LCFI34:
+ 967              		.cfi_def_cfa_register 13
+ 968              		@ sp needed
+ 969 002a 80BD     		pop	{r7, pc}
+ 970              		.cfi_endproc
+ 971              	.LFE319:
+ 973              		.section	.text.hal_i2c_read_buffer,"ax",%progbits
+ 974              		.align	1
+ 975              		.global	hal_i2c_read_buffer
+ 976              		.syntax unified
+ 977              		.thumb
+ 978              		.thumb_func
+ 979              		.fpu fpv4-sp-d16
+ARM GAS  /tmp/ccX64pwJ.s 			page 24
+
+
+ 981              	hal_i2c_read_buffer:
+ 982              	.LFB320:
+ 301:../Src/smtc_hal/smtc_hal_i2c.c **** 
+ 302:../Src/smtc_hal/smtc_hal_i2c.c **** uint8_t hal_i2c_read_buffer( const uint32_t id, uint8_t device_addr, uint16_t addr, uint8_t* buffer
+ 303:../Src/smtc_hal/smtc_hal_i2c.c **** {
+ 983              		.loc 1 303 1
+ 984              		.cfi_startproc
+ 985              		@ args = 4, pretend = 0, frame = 16
+ 986              		@ frame_needed = 1, uses_anonymous_args = 0
+ 987 0000 80B5     		push	{r7, lr}
+ 988              	.LCFI35:
+ 989              		.cfi_def_cfa_offset 8
+ 990              		.cfi_offset 7, -8
+ 991              		.cfi_offset 14, -4
+ 992 0002 86B0     		sub	sp, sp, #24
+ 993              	.LCFI36:
+ 994              		.cfi_def_cfa_offset 32
+ 995 0004 02AF     		add	r7, sp, #8
+ 996              	.LCFI37:
+ 997              		.cfi_def_cfa 7, 24
+ 998 0006 F860     		str	r0, [r7, #12]
+ 999 0008 7B60     		str	r3, [r7, #4]
+ 1000 000a 0B46     		mov	r3, r1
+ 1001 000c FB72     		strb	r3, [r7, #11]
+ 1002 000e 1346     		mov	r3, r2	@ movhi
+ 1003 0010 3B81     		strh	r3, [r7, #8]	@ movhi
+ 304:../Src/smtc_hal/smtc_hal_i2c.c ****     return ( i2c_read_buffer( id, device_addr, addr, buffer, size ) );
+ 1004              		.loc 1 304 14
+ 1005 0012 3A89     		ldrh	r2, [r7, #8]
+ 1006 0014 F97A     		ldrb	r1, [r7, #11]	@ zero_extendqisi2
+ 1007 0016 3B8B     		ldrh	r3, [r7, #24]
+ 1008 0018 0093     		str	r3, [sp]
+ 1009 001a 7B68     		ldr	r3, [r7, #4]
+ 1010 001c F868     		ldr	r0, [r7, #12]
+ 1011 001e FFF7FEFF 		bl	i2c_read_buffer
+ 1012 0022 0346     		mov	r3, r0
+ 305:../Src/smtc_hal/smtc_hal_i2c.c **** }
+ 1013              		.loc 1 305 1
+ 1014 0024 1846     		mov	r0, r3
+ 1015 0026 1037     		adds	r7, r7, #16
+ 1016              	.LCFI38:
+ 1017              		.cfi_def_cfa_offset 8
+ 1018 0028 BD46     		mov	sp, r7
+ 1019              	.LCFI39:
+ 1020              		.cfi_def_cfa_register 13
+ 1021              		@ sp needed
+ 1022 002a 80BD     		pop	{r7, pc}
+ 1023              		.cfi_endproc
+ 1024              	.LFE320:
+ 1026              		.section	.text.i2c_set_addr_size,"ax",%progbits
+ 1027              		.align	1
+ 1028              		.global	i2c_set_addr_size
+ 1029              		.syntax unified
+ 1030              		.thumb
+ 1031              		.thumb_func
+ 1032              		.fpu fpv4-sp-d16
+ 1034              	i2c_set_addr_size:
+ARM GAS  /tmp/ccX64pwJ.s 			page 25
+
+
+ 1035              	.LFB321:
+ 306:../Src/smtc_hal/smtc_hal_i2c.c **** 
+ 307:../Src/smtc_hal/smtc_hal_i2c.c **** void i2c_set_addr_size( i2c_addr_size addr_size ) { i2c_internal_addr_size = addr_size; }
+ 1036              		.loc 1 307 51
+ 1037              		.cfi_startproc
+ 1038              		@ args = 0, pretend = 0, frame = 8
+ 1039              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1040              		@ link register save eliminated.
+ 1041 0000 80B4     		push	{r7}
+ 1042              	.LCFI40:
+ 1043              		.cfi_def_cfa_offset 4
+ 1044              		.cfi_offset 7, -4
+ 1045 0002 83B0     		sub	sp, sp, #12
+ 1046              	.LCFI41:
+ 1047              		.cfi_def_cfa_offset 16
+ 1048 0004 00AF     		add	r7, sp, #0
+ 1049              	.LCFI42:
+ 1050              		.cfi_def_cfa_register 7
+ 1051 0006 0346     		mov	r3, r0
+ 1052 0008 FB71     		strb	r3, [r7, #7]
+ 1053              		.loc 1 307 76
+ 1054 000a 044A     		ldr	r2, .L38
+ 1055 000c FB79     		ldrb	r3, [r7, #7]
+ 1056 000e 1370     		strb	r3, [r2]
+ 1057              		.loc 1 307 89
+ 1058 0010 00BF     		nop
+ 1059 0012 0C37     		adds	r7, r7, #12
+ 1060              	.LCFI43:
+ 1061              		.cfi_def_cfa_offset 4
+ 1062 0014 BD46     		mov	sp, r7
+ 1063              	.LCFI44:
+ 1064              		.cfi_def_cfa_register 13
+ 1065              		@ sp needed
+ 1066 0016 5DF8047B 		ldr	r7, [sp], #4
+ 1067              	.LCFI45:
+ 1068              		.cfi_restore 7
+ 1069              		.cfi_def_cfa_offset 0
+ 1070 001a 7047     		bx	lr
+ 1071              	.L39:
+ 1072              		.align	2
+ 1073              	.L38:
+ 1074 001c 00000000 		.word	i2c_internal_addr_size
+ 1075              		.cfi_endproc
+ 1076              	.LFE321:
+ 1078              		.section	.text.i2c_write_buffer,"ax",%progbits
+ 1079              		.align	1
+ 1080              		.syntax unified
+ 1081              		.thumb
+ 1082              		.thumb_func
+ 1083              		.fpu fpv4-sp-d16
+ 1085              	i2c_write_buffer:
+ 1086              	.LFB322:
+ 308:../Src/smtc_hal/smtc_hal_i2c.c **** 
+ 309:../Src/smtc_hal/smtc_hal_i2c.c **** /*
+ 310:../Src/smtc_hal/smtc_hal_i2c.c ****  * -----------------------------------------------------------------------------
+ 311:../Src/smtc_hal/smtc_hal_i2c.c ****  * --- PRIVATE FUNCTIONS DEFINITION --------------------------------------------
+ 312:../Src/smtc_hal/smtc_hal_i2c.c ****  */
+ARM GAS  /tmp/ccX64pwJ.s 			page 26
+
+
+ 313:../Src/smtc_hal/smtc_hal_i2c.c **** 
+ 314:../Src/smtc_hal/smtc_hal_i2c.c **** static uint8_t i2c_write_buffer( const uint32_t id, uint8_t device_addr, uint16_t addr, uint8_t* bu
+ 315:../Src/smtc_hal/smtc_hal_i2c.c **** {
+ 1087              		.loc 1 315 1
+ 1088              		.cfi_startproc
+ 1089              		@ args = 4, pretend = 0, frame = 24
+ 1090              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1091 0000 90B5     		push	{r4, r7, lr}
+ 1092              	.LCFI46:
+ 1093              		.cfi_def_cfa_offset 12
+ 1094              		.cfi_offset 4, -12
+ 1095              		.cfi_offset 7, -8
+ 1096              		.cfi_offset 14, -4
+ 1097 0002 8BB0     		sub	sp, sp, #44
+ 1098              	.LCFI47:
+ 1099              		.cfi_def_cfa_offset 56
+ 1100 0004 04AF     		add	r7, sp, #16
+ 1101              	.LCFI48:
+ 1102              		.cfi_def_cfa 7, 40
+ 1103 0006 F860     		str	r0, [r7, #12]
+ 1104 0008 7B60     		str	r3, [r7, #4]
+ 1105 000a 0B46     		mov	r3, r1
+ 1106 000c FB72     		strb	r3, [r7, #11]
+ 1107 000e 1346     		mov	r3, r2	@ movhi
+ 1108 0010 3B81     		strh	r3, [r7, #8]	@ movhi
+ 316:../Src/smtc_hal/smtc_hal_i2c.c ****     uint8_t  write_status = SMTC_FAIL;
+ 1109              		.loc 1 316 14
+ 1110 0012 0023     		movs	r3, #0
+ 1111 0014 FB75     		strb	r3, [r7, #23]
+ 317:../Src/smtc_hal/smtc_hal_i2c.c ****     uint16_t memAddSize   = 0u;
+ 1112              		.loc 1 317 14
+ 1113 0016 0023     		movs	r3, #0
+ 1114 0018 BB82     		strh	r3, [r7, #20]	@ movhi
+ 318:../Src/smtc_hal/smtc_hal_i2c.c **** 
+ 319:../Src/smtc_hal/smtc_hal_i2c.c ****     assert_param( ( id > 0 ) && ( ( id - 1 ) < sizeof( hal_i2c ) ) );
+ 320:../Src/smtc_hal/smtc_hal_i2c.c ****     uint32_t local_id = id - 1;
+ 1115              		.loc 1 320 14
+ 1116 001a FB68     		ldr	r3, [r7, #12]
+ 1117 001c 013B     		subs	r3, r3, #1
+ 1118 001e 3B61     		str	r3, [r7, #16]
+ 321:../Src/smtc_hal/smtc_hal_i2c.c **** 
+ 322:../Src/smtc_hal/smtc_hal_i2c.c ****     if( i2c_internal_addr_size == I2C_ADDR_SIZE_8 )
+ 1119              		.loc 1 322 32
+ 1120 0020 134B     		ldr	r3, .L45
+ 1121 0022 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1122              		.loc 1 322 7
+ 1123 0024 002B     		cmp	r3, #0
+ 1124 0026 02D1     		bne	.L41
+ 323:../Src/smtc_hal/smtc_hal_i2c.c ****     {
+ 324:../Src/smtc_hal/smtc_hal_i2c.c ****         memAddSize = I2C_MEMADD_SIZE_8BIT;
+ 1125              		.loc 1 324 20
+ 1126 0028 0123     		movs	r3, #1
+ 1127 002a BB82     		strh	r3, [r7, #20]	@ movhi
+ 1128 002c 01E0     		b	.L42
+ 1129              	.L41:
+ 325:../Src/smtc_hal/smtc_hal_i2c.c ****     }
+ 326:../Src/smtc_hal/smtc_hal_i2c.c ****     else
+ARM GAS  /tmp/ccX64pwJ.s 			page 27
+
+
+ 327:../Src/smtc_hal/smtc_hal_i2c.c ****     {
+ 328:../Src/smtc_hal/smtc_hal_i2c.c ****         memAddSize = I2C_MEMADD_SIZE_16BIT;
+ 1130              		.loc 1 328 20
+ 1131 002e 0223     		movs	r3, #2
+ 1132 0030 BB82     		strh	r3, [r7, #20]	@ movhi
+ 1133              	.L42:
+ 329:../Src/smtc_hal/smtc_hal_i2c.c ****     }
+ 330:../Src/smtc_hal/smtc_hal_i2c.c ****     if( HAL_I2C_Mem_Write( &hal_i2c[local_id].handle, device_addr, addr, memAddSize, buffer, size, 
+ 1134              		.loc 1 330 9
+ 1135 0032 3B69     		ldr	r3, [r7, #16]
+ 1136 0034 5422     		movs	r2, #84
+ 1137 0036 02FB03F3 		mul	r3, r2, r3
+ 1138 003a 0E4A     		ldr	r2, .L45+4
+ 1139 003c 1344     		add	r3, r3, r2
+ 1140 003e 181D     		adds	r0, r3, #4
+ 1141 0040 FB7A     		ldrb	r3, [r7, #11]	@ zero_extendqisi2
+ 1142 0042 99B2     		uxth	r1, r3
+ 1143 0044 BC8A     		ldrh	r4, [r7, #20]
+ 1144 0046 3A89     		ldrh	r2, [r7, #8]
+ 1145 0048 4FF4FA63 		mov	r3, #2000
+ 1146 004c 0293     		str	r3, [sp, #8]
+ 1147 004e 3B8D     		ldrh	r3, [r7, #40]
+ 1148 0050 0193     		str	r3, [sp, #4]
+ 1149 0052 7B68     		ldr	r3, [r7, #4]
+ 1150 0054 0093     		str	r3, [sp]
+ 1151 0056 2346     		mov	r3, r4
+ 1152 0058 FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 1153 005c 0346     		mov	r3, r0
+ 1154              		.loc 1 330 7
+ 1155 005e 002B     		cmp	r3, #0
+ 1156 0060 01D1     		bne	.L43
+ 331:../Src/smtc_hal/smtc_hal_i2c.c ****     {
+ 332:../Src/smtc_hal/smtc_hal_i2c.c ****         write_status = SMTC_SUCCESS;
+ 1157              		.loc 1 332 22
+ 1158 0062 0123     		movs	r3, #1
+ 1159 0064 FB75     		strb	r3, [r7, #23]
+ 1160              	.L43:
+ 333:../Src/smtc_hal/smtc_hal_i2c.c ****     }
+ 334:../Src/smtc_hal/smtc_hal_i2c.c ****     return write_status;
+ 1161              		.loc 1 334 12
+ 1162 0066 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 335:../Src/smtc_hal/smtc_hal_i2c.c **** }
+ 1163              		.loc 1 335 1
+ 1164 0068 1846     		mov	r0, r3
+ 1165 006a 1C37     		adds	r7, r7, #28
+ 1166              	.LCFI49:
+ 1167              		.cfi_def_cfa_offset 12
+ 1168 006c BD46     		mov	sp, r7
+ 1169              	.LCFI50:
+ 1170              		.cfi_def_cfa_register 13
+ 1171              		@ sp needed
+ 1172 006e 90BD     		pop	{r4, r7, pc}
+ 1173              	.L46:
+ 1174              		.align	2
+ 1175              	.L45:
+ 1176 0070 00000000 		.word	i2c_internal_addr_size
+ 1177 0074 00000000 		.word	hal_i2c
+ARM GAS  /tmp/ccX64pwJ.s 			page 28
+
+
+ 1178              		.cfi_endproc
+ 1179              	.LFE322:
+ 1181              		.section	.text.i2c_read_buffer,"ax",%progbits
+ 1182              		.align	1
+ 1183              		.syntax unified
+ 1184              		.thumb
+ 1185              		.thumb_func
+ 1186              		.fpu fpv4-sp-d16
+ 1188              	i2c_read_buffer:
+ 1189              	.LFB323:
+ 336:../Src/smtc_hal/smtc_hal_i2c.c **** 
+ 337:../Src/smtc_hal/smtc_hal_i2c.c **** static uint8_t i2c_read_buffer( const uint32_t id, uint8_t device_addr, uint16_t addr, uint8_t* buf
+ 338:../Src/smtc_hal/smtc_hal_i2c.c **** {
+ 1190              		.loc 1 338 1
+ 1191              		.cfi_startproc
+ 1192              		@ args = 4, pretend = 0, frame = 24
+ 1193              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1194 0000 90B5     		push	{r4, r7, lr}
+ 1195              	.LCFI51:
+ 1196              		.cfi_def_cfa_offset 12
+ 1197              		.cfi_offset 4, -12
+ 1198              		.cfi_offset 7, -8
+ 1199              		.cfi_offset 14, -4
+ 1200 0002 8BB0     		sub	sp, sp, #44
+ 1201              	.LCFI52:
+ 1202              		.cfi_def_cfa_offset 56
+ 1203 0004 04AF     		add	r7, sp, #16
+ 1204              	.LCFI53:
+ 1205              		.cfi_def_cfa 7, 40
+ 1206 0006 F860     		str	r0, [r7, #12]
+ 1207 0008 7B60     		str	r3, [r7, #4]
+ 1208 000a 0B46     		mov	r3, r1
+ 1209 000c FB72     		strb	r3, [r7, #11]
+ 1210 000e 1346     		mov	r3, r2	@ movhi
+ 1211 0010 3B81     		strh	r3, [r7, #8]	@ movhi
+ 339:../Src/smtc_hal/smtc_hal_i2c.c ****     uint8_t  readStatus = SMTC_FAIL;
+ 1212              		.loc 1 339 14
+ 1213 0012 0023     		movs	r3, #0
+ 1214 0014 FB75     		strb	r3, [r7, #23]
+ 340:../Src/smtc_hal/smtc_hal_i2c.c ****     uint16_t memAddSize = 0u;
+ 1215              		.loc 1 340 14
+ 1216 0016 0023     		movs	r3, #0
+ 1217 0018 BB82     		strh	r3, [r7, #20]	@ movhi
+ 341:../Src/smtc_hal/smtc_hal_i2c.c **** 
+ 342:../Src/smtc_hal/smtc_hal_i2c.c ****     assert_param( ( id > 0 ) && ( ( id - 1 ) < sizeof( hal_i2c ) ) );
+ 343:../Src/smtc_hal/smtc_hal_i2c.c ****     uint32_t local_id = id - 1;
+ 1218              		.loc 1 343 14
+ 1219 001a FB68     		ldr	r3, [r7, #12]
+ 1220 001c 013B     		subs	r3, r3, #1
+ 1221 001e 3B61     		str	r3, [r7, #16]
+ 344:../Src/smtc_hal/smtc_hal_i2c.c **** 
+ 345:../Src/smtc_hal/smtc_hal_i2c.c ****     if( i2c_internal_addr_size == I2C_ADDR_SIZE_8 )
+ 1222              		.loc 1 345 32
+ 1223 0020 134B     		ldr	r3, .L52
+ 1224 0022 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1225              		.loc 1 345 7
+ 1226 0024 002B     		cmp	r3, #0
+ARM GAS  /tmp/ccX64pwJ.s 			page 29
+
+
+ 1227 0026 02D1     		bne	.L48
+ 346:../Src/smtc_hal/smtc_hal_i2c.c ****     {
+ 347:../Src/smtc_hal/smtc_hal_i2c.c ****         memAddSize = I2C_MEMADD_SIZE_8BIT;
+ 1228              		.loc 1 347 20
+ 1229 0028 0123     		movs	r3, #1
+ 1230 002a BB82     		strh	r3, [r7, #20]	@ movhi
+ 1231 002c 01E0     		b	.L49
+ 1232              	.L48:
+ 348:../Src/smtc_hal/smtc_hal_i2c.c ****     }
+ 349:../Src/smtc_hal/smtc_hal_i2c.c ****     else
+ 350:../Src/smtc_hal/smtc_hal_i2c.c ****     {
+ 351:../Src/smtc_hal/smtc_hal_i2c.c ****         memAddSize = I2C_MEMADD_SIZE_16BIT;
+ 1233              		.loc 1 351 20
+ 1234 002e 0223     		movs	r3, #2
+ 1235 0030 BB82     		strh	r3, [r7, #20]	@ movhi
+ 1236              	.L49:
+ 352:../Src/smtc_hal/smtc_hal_i2c.c ****     }
+ 353:../Src/smtc_hal/smtc_hal_i2c.c ****     if( HAL_I2C_Mem_Read( &hal_i2c[local_id].handle, device_addr, addr, memAddSize, buffer, size, 2
+ 1237              		.loc 1 353 9
+ 1238 0032 3B69     		ldr	r3, [r7, #16]
+ 1239 0034 5422     		movs	r2, #84
+ 1240 0036 02FB03F3 		mul	r3, r2, r3
+ 1241 003a 0E4A     		ldr	r2, .L52+4
+ 1242 003c 1344     		add	r3, r3, r2
+ 1243 003e 181D     		adds	r0, r3, #4
+ 1244 0040 FB7A     		ldrb	r3, [r7, #11]	@ zero_extendqisi2
+ 1245 0042 99B2     		uxth	r1, r3
+ 1246 0044 BC8A     		ldrh	r4, [r7, #20]
+ 1247 0046 3A89     		ldrh	r2, [r7, #8]
+ 1248 0048 4FF4FA63 		mov	r3, #2000
+ 1249 004c 0293     		str	r3, [sp, #8]
+ 1250 004e 3B8D     		ldrh	r3, [r7, #40]
+ 1251 0050 0193     		str	r3, [sp, #4]
+ 1252 0052 7B68     		ldr	r3, [r7, #4]
+ 1253 0054 0093     		str	r3, [sp]
+ 1254 0056 2346     		mov	r3, r4
+ 1255 0058 FFF7FEFF 		bl	HAL_I2C_Mem_Read
+ 1256 005c 0346     		mov	r3, r0
+ 1257              		.loc 1 353 7
+ 1258 005e 002B     		cmp	r3, #0
+ 1259 0060 01D1     		bne	.L50
+ 354:../Src/smtc_hal/smtc_hal_i2c.c ****     {
+ 355:../Src/smtc_hal/smtc_hal_i2c.c ****         readStatus = SMTC_SUCCESS;
+ 1260              		.loc 1 355 20
+ 1261 0062 0123     		movs	r3, #1
+ 1262 0064 FB75     		strb	r3, [r7, #23]
+ 1263              	.L50:
+ 356:../Src/smtc_hal/smtc_hal_i2c.c ****     }
+ 357:../Src/smtc_hal/smtc_hal_i2c.c **** 
+ 358:../Src/smtc_hal/smtc_hal_i2c.c ****     return readStatus;
+ 1264              		.loc 1 358 12
+ 1265 0066 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 359:../Src/smtc_hal/smtc_hal_i2c.c **** }
+ 1266              		.loc 1 359 1
+ 1267 0068 1846     		mov	r0, r3
+ 1268 006a 1C37     		adds	r7, r7, #28
+ 1269              	.LCFI54:
+ARM GAS  /tmp/ccX64pwJ.s 			page 30
+
+
+ 1270              		.cfi_def_cfa_offset 12
+ 1271 006c BD46     		mov	sp, r7
+ 1272              	.LCFI55:
+ 1273              		.cfi_def_cfa_register 13
+ 1274              		@ sp needed
+ 1275 006e 90BD     		pop	{r4, r7, pc}
+ 1276              	.L53:
+ 1277              		.align	2
+ 1278              	.L52:
+ 1279 0070 00000000 		.word	i2c_internal_addr_size
+ 1280 0074 00000000 		.word	hal_i2c
+ 1281              		.cfi_endproc
+ 1282              	.LFE323:
+ 1284              		.text
+ 1285              	.Letext0:
+ 1286              		.file 2 "/usr/lib/gcc/arm-none-eabi/10.3.1/include/stdint.h"
+ 1287              		.file 3 "../Drivers/CMSIS/Device/ST/STM32L4xx/Include/stm32l476xx.h"
+ 1288              		.file 4 "../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def.h"
+ 1289              		.file 5 "../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_gpio.h"
+ 1290              		.file 6 "../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_dma.h"
+ 1291              		.file 7 "../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_i2c.h"
+ 1292              		.file 8 "../Inc/smtc_hal/smtc_hal_gpio_pin_names.h"
+ 1293              		.file 9 "../Inc/smtc_hal/smtc_hal_i2c.h"
+ARM GAS  /tmp/ccX64pwJ.s 			page 31
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 smtc_hal_i2c.c
+     /tmp/ccX64pwJ.s:18     .data.hal_i2c:0000000000000000 $d
+     /tmp/ccX64pwJ.s:21     .data.hal_i2c:0000000000000000 hal_i2c
+     /tmp/ccX64pwJ.s:40     .bss.i2c_internal_addr_size:0000000000000000 i2c_internal_addr_size
+     /tmp/ccX64pwJ.s:41     .bss.i2c_internal_addr_size:0000000000000000 $d
+     /tmp/ccX64pwJ.s:43     .text.hal_i2c_init:0000000000000000 $t
+     /tmp/ccX64pwJ.s:51     .text.hal_i2c_init:0000000000000000 hal_i2c_init
+     /tmp/ccX64pwJ.s:246    .text.hal_i2c_init:0000000000000150 $d
+     /tmp/ccX64pwJ.s:252    .text.hal_i2c_deinit:0000000000000000 $t
+     /tmp/ccX64pwJ.s:259    .text.hal_i2c_deinit:0000000000000000 hal_i2c_deinit
+     /tmp/ccX64pwJ.s:303    .text.hal_i2c_deinit:000000000000002c $d
+     /tmp/ccX64pwJ.s:308    .text.HAL_I2C_MspInit:0000000000000000 $t
+     /tmp/ccX64pwJ.s:315    .text.HAL_I2C_MspInit:0000000000000000 HAL_I2C_MspInit
+     /tmp/ccX64pwJ.s:588    .text.HAL_I2C_MspInit:00000000000001b4 $d
+     /tmp/ccX64pwJ.s:594    .text.HAL_I2C_MspDeInit:0000000000000000 $t
+     /tmp/ccX64pwJ.s:601    .text.HAL_I2C_MspDeInit:0000000000000000 HAL_I2C_MspDeInit
+     /tmp/ccX64pwJ.s:753    .text.HAL_I2C_MspDeInit:00000000000000ec $d
+     /tmp/ccX64pwJ.s:759    .text.hal_i2c_write:0000000000000000 $t
+     /tmp/ccX64pwJ.s:766    .text.hal_i2c_write:0000000000000000 hal_i2c_write
+     /tmp/ccX64pwJ.s:1085   .text.i2c_write_buffer:0000000000000000 i2c_write_buffer
+     /tmp/ccX64pwJ.s:842    .text.hal_i2c_write_buffer:0000000000000000 $t
+     /tmp/ccX64pwJ.s:849    .text.hal_i2c_write_buffer:0000000000000000 hal_i2c_write_buffer
+     /tmp/ccX64pwJ.s:921    .text.hal_i2c_read:0000000000000000 $t
+     /tmp/ccX64pwJ.s:928    .text.hal_i2c_read:0000000000000000 hal_i2c_read
+     /tmp/ccX64pwJ.s:1188   .text.i2c_read_buffer:0000000000000000 i2c_read_buffer
+     /tmp/ccX64pwJ.s:974    .text.hal_i2c_read_buffer:0000000000000000 $t
+     /tmp/ccX64pwJ.s:981    .text.hal_i2c_read_buffer:0000000000000000 hal_i2c_read_buffer
+     /tmp/ccX64pwJ.s:1027   .text.i2c_set_addr_size:0000000000000000 $t
+     /tmp/ccX64pwJ.s:1034   .text.i2c_set_addr_size:0000000000000000 i2c_set_addr_size
+     /tmp/ccX64pwJ.s:1074   .text.i2c_set_addr_size:000000000000001c $d
+     /tmp/ccX64pwJ.s:1079   .text.i2c_write_buffer:0000000000000000 $t
+     /tmp/ccX64pwJ.s:1176   .text.i2c_write_buffer:0000000000000070 $d
+     /tmp/ccX64pwJ.s:1182   .text.i2c_read_buffer:0000000000000000 $t
+     /tmp/ccX64pwJ.s:1279   .text.i2c_read_buffer:0000000000000070 $d
+
+UNDEFINED SYMBOLS
+HAL_I2C_Init
+hal_mcu_panic
+HAL_I2CEx_ConfigAnalogFilter
+HAL_I2CEx_ConfigDigitalFilter
+HAL_I2C_DeInit
+HAL_GPIO_Init
+HAL_GPIO_DeInit
+HAL_I2C_Mem_Write
+HAL_I2C_Mem_Read
