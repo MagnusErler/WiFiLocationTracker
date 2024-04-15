@@ -1,0 +1,2565 @@
+ARM GAS  /tmp/ccEFk68o.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"lr1110_modem_hal.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.lr1110_modem_compute_crc,"ax",%progbits
+  18              		.align	1
+  19              		.arch armv7e-m
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	lr1110_modem_compute_crc:
+  26              	.LFB0:
+  27              		.file 1 "../Src/radio/lr1110_modem/src/lr1110_modem_hal.h"
+   1:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h **** /*!
+   2:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  * @file      lr1110_modem_hal.h
+   3:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  *
+   4:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  * @brief     Hardware Abstraction Layer (HAL) interface for LR1110 modem
+   5:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  *
+   6:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  * Revised BSD License
+   7:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  * Copyright Semtech Corporation 2020. All rights reserved.
+   8:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  *
+   9:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  * Redistribution and use in source and binary forms, with or without
+  10:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  * modification, are permitted provided that the following conditions are met:
+  11:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  *     * Redistributions of source code must retain the above copyright
+  12:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  *       notice, this list of conditions and the following disclaimer.
+  13:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  *     * Redistributions in binary form must reproduce the above copyright
+  14:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  *       notice, this list of conditions and the following disclaimer in the
+  15:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  *       documentation and/or other materials provided with the distribution.
+  16:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  *     * Neither the name of the Semtech corporation nor the
+  17:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  *       names of its contributors may be used to endorse or promote products
+  18:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  *       derived from this software without specific prior written permission.
+  19:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  *
+  20:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  21:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  22:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  23:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  * ARE DISCLAIMED. IN NO EVENT SHALL SEMTECH CORPORATION BE LIABLE FOR ANY
+  24:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+  25:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  26:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+  27:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  28:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  29:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  30:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  */
+  31:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h **** 
+ARM GAS  /tmp/ccEFk68o.s 			page 2
+
+
+  32:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h **** #ifndef LR1110_MODEM_HAL_H
+  33:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h **** #define LR1110_MODEM_HAL_H
+  34:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h **** 
+  35:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h **** #ifdef __cplusplus
+  36:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h **** extern "C" {
+  37:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h **** #endif
+  38:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h **** 
+  39:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h **** /*
+  40:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  * -----------------------------------------------------------------------------
+  41:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  * --- DEPENDENCIES ------------------------------------------------------------
+  42:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  */
+  43:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h **** 
+  44:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h **** #include <stdint.h>
+  45:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h **** #include <stdbool.h>
+  46:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h **** #include "lr1110_modem_common.h"
+  47:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h **** 
+  48:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h **** /*
+  49:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  * -----------------------------------------------------------------------------
+  50:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  * --- PUBLIC MACROS -----------------------------------------------------------
+  51:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  */
+  52:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h **** 
+  53:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h **** /*!
+  54:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  * @brief Status reported by the HAL layer
+  55:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  */
+  56:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h **** typedef enum lr1110_modem_hal_status_e
+  57:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h **** {
+  58:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****     LR1110_MODEM_HAL_STATUS_OK           = 0x00,  //!< Operation terminated successfully
+  59:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****     LR1110_MODEM_HAL_STATUS_ERROR        = 0x01,  //!< Operation terminated with error
+  60:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****     LR1110_MODEM_HAL_STATUS_BAD_FRAME    = 0x0F,  //!< Bad frame detected in the exchange
+  61:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****     LR1110_MODEM_HAL_STATUS_BUSY_TIMEOUT = 0xFF,  //!< Timeout occured while waiting for Busy line 
+  62:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h **** } lr1110_modem_hal_status_t;
+  63:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h **** 
+  64:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h **** /*
+  65:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  * ============================================================================
+  66:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  * API definitions to be implemented by the user
+  67:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  * ============================================================================
+  68:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  */
+  69:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h **** 
+  70:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h **** /*!
+  71:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  * @brief Return the computed CRC
+  72:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  *
+  73:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  * @param [in] crc_initial_value initial value of the CRC
+  74:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  * @param [in] buffer Buffer used to compute the CRC
+  75:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  * @param [out] crc CRC computed
+  76:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  *
+  77:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  * @returns CRC value
+  78:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****  */
+  79:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h **** inline static uint8_t lr1110_modem_compute_crc( const uint8_t crc_initial_value, const uint8_t* buf
+  80:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****                                                 uint16_t length )
+  81:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h **** {
+  28              		.loc 1 81 1
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 24
+  31              		@ frame_needed = 1, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33 0000 80B4     		push	{r7}
+  34              	.LCFI0:
+ARM GAS  /tmp/ccEFk68o.s 			page 3
+
+
+  35              		.cfi_def_cfa_offset 4
+  36              		.cfi_offset 7, -4
+  37 0002 87B0     		sub	sp, sp, #28
+  38              	.LCFI1:
+  39              		.cfi_def_cfa_offset 32
+  40 0004 00AF     		add	r7, sp, #0
+  41              	.LCFI2:
+  42              		.cfi_def_cfa_register 7
+  43 0006 0346     		mov	r3, r0
+  44 0008 3960     		str	r1, [r7]
+  45 000a FB71     		strb	r3, [r7, #7]
+  46 000c 1346     		mov	r3, r2	@ movhi
+  47 000e BB80     		strh	r3, [r7, #4]	@ movhi
+  82:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****     uint8_t crc = crc_initial_value;
+  48              		.loc 1 82 13
+  49 0010 FB79     		ldrb	r3, [r7, #7]
+  50 0012 FB75     		strb	r3, [r7, #23]
+  51              	.LBB2:
+  83:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****     uint8_t extract;
+  84:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****     uint8_t sum;
+  85:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****     for( int i = 0; i < length; i++ )
+  52              		.loc 1 85 14
+  53 0014 0023     		movs	r3, #0
+  54 0016 3B61     		str	r3, [r7, #16]
+  55              		.loc 1 85 5
+  56 0018 25E0     		b	.L2
+  57              	.L6:
+  86:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****     {
+  87:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****         extract = *buffer;
+  58              		.loc 1 87 17
+  59 001a 3B68     		ldr	r3, [r7]
+  60 001c 1B78     		ldrb	r3, [r3]
+  61 001e BB75     		strb	r3, [r7, #22]
+  62              	.LBB3:
+  88:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****         for( uint8_t j = 8; j; j-- )
+  63              		.loc 1 88 22
+  64 0020 0823     		movs	r3, #8
+  65 0022 FB73     		strb	r3, [r7, #15]
+  66              		.loc 1 88 9
+  67 0024 16E0     		b	.L3
+  68              	.L5:
+  89:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****         {
+  90:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****             sum = ( crc ^ extract ) & 0x01;
+  69              		.loc 1 90 37
+  70 0026 FA7D     		ldrb	r2, [r7, #23]
+  71 0028 BB7D     		ldrb	r3, [r7, #22]
+  72 002a 5340     		eors	r3, r3, r2
+  73 002c DBB2     		uxtb	r3, r3
+  74              		.loc 1 90 17
+  75 002e 03F00103 		and	r3, r3, #1
+  76 0032 BB73     		strb	r3, [r7, #14]
+  91:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****             crc >>= 1;
+  77              		.loc 1 91 17
+  78 0034 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+  79 0036 5B08     		lsrs	r3, r3, #1
+  80 0038 FB75     		strb	r3, [r7, #23]
+  92:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****             if( sum )
+ARM GAS  /tmp/ccEFk68o.s 			page 4
+
+
+  81              		.loc 1 92 15
+  82 003a BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
+  83 003c 002B     		cmp	r3, #0
+  84 003e 03D0     		beq	.L4
+  93:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****             {
+  94:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****                 crc ^= 0x65;
+  85              		.loc 1 94 21
+  86 0040 FB7D     		ldrb	r3, [r7, #23]
+  87 0042 83F06503 		eor	r3, r3, #101
+  88 0046 FB75     		strb	r3, [r7, #23]
+  89              	.L4:
+  95:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****             }
+  96:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****             extract >>= 1;
+  90              		.loc 1 96 21 discriminator 2
+  91 0048 BB7D     		ldrb	r3, [r7, #22]	@ zero_extendqisi2
+  92 004a 5B08     		lsrs	r3, r3, #1
+  93 004c BB75     		strb	r3, [r7, #22]
+  88:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****         {
+  94              		.loc 1 88 33 discriminator 2
+  95 004e FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+  96 0050 013B     		subs	r3, r3, #1
+  97 0052 FB73     		strb	r3, [r7, #15]
+  98              	.L3:
+  88:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****         {
+  99              		.loc 1 88 9 discriminator 1
+ 100 0054 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 101 0056 002B     		cmp	r3, #0
+ 102 0058 E5D1     		bne	.L5
+ 103              	.LBE3:
+  97:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****         }
+  98:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****         buffer++;
+ 104              		.loc 1 98 15 discriminator 2
+ 105 005a 3B68     		ldr	r3, [r7]
+ 106 005c 0133     		adds	r3, r3, #1
+ 107 005e 3B60     		str	r3, [r7]
+  85:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****     {
+ 108              		.loc 1 85 34 discriminator 2
+ 109 0060 3B69     		ldr	r3, [r7, #16]
+ 110 0062 0133     		adds	r3, r3, #1
+ 111 0064 3B61     		str	r3, [r7, #16]
+ 112              	.L2:
+  85:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****     {
+ 113              		.loc 1 85 23 discriminator 1
+ 114 0066 BB88     		ldrh	r3, [r7, #4]
+  85:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****     {
+ 115              		.loc 1 85 5 discriminator 1
+ 116 0068 3A69     		ldr	r2, [r7, #16]
+ 117 006a 9A42     		cmp	r2, r3
+ 118 006c D5DB     		blt	.L6
+ 119              	.LBE2:
+  99:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****     }
+ 100:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h ****     return crc;
+ 120              		.loc 1 100 12
+ 121 006e FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 101:../Src/radio/lr1110_modem/src/lr1110_modem_hal.h **** }
+ 122              		.loc 1 101 1
+ 123 0070 1846     		mov	r0, r3
+ARM GAS  /tmp/ccEFk68o.s 			page 5
+
+
+ 124 0072 1C37     		adds	r7, r7, #28
+ 125              	.LCFI3:
+ 126              		.cfi_def_cfa_offset 4
+ 127 0074 BD46     		mov	sp, r7
+ 128              	.LCFI4:
+ 129              		.cfi_def_cfa_register 13
+ 130              		@ sp needed
+ 131 0076 5DF8047B 		ldr	r7, [sp], #4
+ 132              	.LCFI5:
+ 133              		.cfi_restore 7
+ 134              		.cfi_def_cfa_offset 0
+ 135 007a 7047     		bx	lr
+ 136              		.cfi_endproc
+ 137              	.LFE0:
+ 139              		.section	.bss.lr1110_modem_reset_timeout,"aw",%nobits
+ 142              	lr1110_modem_reset_timeout:
+ 143 0000 00       		.space	1
+ 144              		.section	.bss.lr1110_modem_reset_timeout_timer,"aw",%nobits
+ 145              		.align	2
+ 148              	lr1110_modem_reset_timeout_timer:
+ 149 0000 00000000 		.space	24
+ 149      00000000 
+ 149      00000000 
+ 149      00000000 
+ 149      00000000 
+ 150              		.section	.text.lr1110_modem_hal_write,"ax",%progbits
+ 151              		.align	1
+ 152              		.global	lr1110_modem_hal_write
+ 153              		.syntax unified
+ 154              		.thumb
+ 155              		.thumb_func
+ 156              		.fpu fpv4-sp-d16
+ 158              	lr1110_modem_hal_write:
+ 159              	.LFB590:
+ 160              		.file 2 "../Src/radio/lr1110_modem_hal.c"
+   1:../Src/radio/lr1110_modem_hal.c **** /*!
+   2:../Src/radio/lr1110_modem_hal.c ****  * @file      lr1110_modem_hal.c
+   3:../Src/radio/lr1110_modem_hal.c ****  *
+   4:../Src/radio/lr1110_modem_hal.c ****  * @brief     Hardware Abstraction Layer (HAL) implementation for LR1110
+   5:../Src/radio/lr1110_modem_hal.c ****  *
+   6:../Src/radio/lr1110_modem_hal.c ****  * Revised BSD License
+   7:../Src/radio/lr1110_modem_hal.c ****  * Copyright Semtech Corporation 2020. All rights reserved.
+   8:../Src/radio/lr1110_modem_hal.c ****  *
+   9:../Src/radio/lr1110_modem_hal.c ****  * Redistribution and use in source and binary forms, with or without
+  10:../Src/radio/lr1110_modem_hal.c ****  * modification, are permitted provided that the following conditions are met:
+  11:../Src/radio/lr1110_modem_hal.c ****  *     * Redistributions of source code must retain the above copyright
+  12:../Src/radio/lr1110_modem_hal.c ****  *       notice, this list of conditions and the following disclaimer.
+  13:../Src/radio/lr1110_modem_hal.c ****  *     * Redistributions in binary form must reproduce the above copyright
+  14:../Src/radio/lr1110_modem_hal.c ****  *       notice, this list of conditions and the following disclaimer in the
+  15:../Src/radio/lr1110_modem_hal.c ****  *       documentation and/or other materials provided with the distribution.
+  16:../Src/radio/lr1110_modem_hal.c ****  *     * Neither the name of the Semtech corporation nor the
+  17:../Src/radio/lr1110_modem_hal.c ****  *       names of its contributors may be used to endorse or promote products
+  18:../Src/radio/lr1110_modem_hal.c ****  *       derived from this software without specific prior written permission.
+  19:../Src/radio/lr1110_modem_hal.c ****  *
+  20:../Src/radio/lr1110_modem_hal.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  21:../Src/radio/lr1110_modem_hal.c ****  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  22:../Src/radio/lr1110_modem_hal.c ****  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARM GAS  /tmp/ccEFk68o.s 			page 6
+
+
+  23:../Src/radio/lr1110_modem_hal.c ****  * ARE DISCLAIMED. IN NO EVENT SHALL SEMTECH CORPORATION BE LIABLE FOR ANY
+  24:../Src/radio/lr1110_modem_hal.c ****  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+  25:../Src/radio/lr1110_modem_hal.c ****  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  26:../Src/radio/lr1110_modem_hal.c ****  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+  27:../Src/radio/lr1110_modem_hal.c ****  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  28:../Src/radio/lr1110_modem_hal.c ****  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  29:../Src/radio/lr1110_modem_hal.c ****  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  30:../Src/radio/lr1110_modem_hal.c ****  */
+  31:../Src/radio/lr1110_modem_hal.c **** 
+  32:../Src/radio/lr1110_modem_hal.c **** /*
+  33:../Src/radio/lr1110_modem_hal.c ****  * -----------------------------------------------------------------------------
+  34:../Src/radio/lr1110_modem_hal.c ****  * --- DEPENDENCIES ------------------------------------------------------------
+  35:../Src/radio/lr1110_modem_hal.c ****  */
+  36:../Src/radio/lr1110_modem_hal.c **** 
+  37:../Src/radio/lr1110_modem_hal.c **** #include <stdlib.h>
+  38:../Src/radio/lr1110_modem_hal.c **** #include "lr1110_hal.h"
+  39:../Src/radio/lr1110_modem_hal.c **** #include "lr1110_modem_hal.h"
+  40:../Src/radio/lr1110_modem_hal.c **** #include "lr1110_modem_system.h"
+  41:../Src/radio/lr1110_modem_hal.c **** #include "lr1110_modem_board.h"
+  42:../Src/radio/lr1110_modem_hal.c **** 
+  43:../Src/radio/lr1110_modem_hal.c **** /*
+  44:../Src/radio/lr1110_modem_hal.c ****  * -----------------------------------------------------------------------------
+  45:../Src/radio/lr1110_modem_hal.c ****  * --- PRIVATE MACROS-----------------------------------------------------------
+  46:../Src/radio/lr1110_modem_hal.c ****  */
+  47:../Src/radio/lr1110_modem_hal.c **** 
+  48:../Src/radio/lr1110_modem_hal.c **** /*
+  49:../Src/radio/lr1110_modem_hal.c ****  * -----------------------------------------------------------------------------
+  50:../Src/radio/lr1110_modem_hal.c ****  * --- PRIVATE CONSTANTS -------------------------------------------------------
+  51:../Src/radio/lr1110_modem_hal.c ****  */
+  52:../Src/radio/lr1110_modem_hal.c **** 
+  53:../Src/radio/lr1110_modem_hal.c **** #define LR1110_MODEM_RESET_TIMEOUT 3000
+  54:../Src/radio/lr1110_modem_hal.c **** 
+  55:../Src/radio/lr1110_modem_hal.c **** /*
+  56:../Src/radio/lr1110_modem_hal.c ****  * -----------------------------------------------------------------------------
+  57:../Src/radio/lr1110_modem_hal.c ****  * --- PRIVATE TYPES -----------------------------------------------------------
+  58:../Src/radio/lr1110_modem_hal.c ****  */
+  59:../Src/radio/lr1110_modem_hal.c **** 
+  60:../Src/radio/lr1110_modem_hal.c **** /*
+  61:../Src/radio/lr1110_modem_hal.c ****  * -----------------------------------------------------------------------------
+  62:../Src/radio/lr1110_modem_hal.c ****  * --- PRIVATE VARIABLES -------------------------------------------------------
+  63:../Src/radio/lr1110_modem_hal.c ****  */
+  64:../Src/radio/lr1110_modem_hal.c **** 
+  65:../Src/radio/lr1110_modem_hal.c **** /*!
+  66:../Src/radio/lr1110_modem_hal.c ****  * @brief LR1110 modem-e reset timeout flag
+  67:../Src/radio/lr1110_modem_hal.c ****  */
+  68:../Src/radio/lr1110_modem_hal.c **** static bool lr1110_modem_reset_timeout = false;
+  69:../Src/radio/lr1110_modem_hal.c **** 
+  70:../Src/radio/lr1110_modem_hal.c **** /*!
+  71:../Src/radio/lr1110_modem_hal.c ****  * @brief Timer to handle the scan timeout
+  72:../Src/radio/lr1110_modem_hal.c ****  */
+  73:../Src/radio/lr1110_modem_hal.c **** static timer_event_t lr1110_modem_reset_timeout_timer;
+  74:../Src/radio/lr1110_modem_hal.c **** 
+  75:../Src/radio/lr1110_modem_hal.c **** /*
+  76:../Src/radio/lr1110_modem_hal.c ****  * -----------------------------------------------------------------------------
+  77:../Src/radio/lr1110_modem_hal.c ****  * --- PRIVATE FUNCTIONS DECLARATION -------------------------------------------
+  78:../Src/radio/lr1110_modem_hal.c ****  */
+  79:../Src/radio/lr1110_modem_hal.c **** 
+ARM GAS  /tmp/ccEFk68o.s 			page 7
+
+
+  80:../Src/radio/lr1110_modem_hal.c **** /*!
+  81:../Src/radio/lr1110_modem_hal.c ****  * @brief Function to wait that the lr1110 transceiver busy line raise to high
+  82:../Src/radio/lr1110_modem_hal.c ****  *
+  83:../Src/radio/lr1110_modem_hal.c ****  * @param [in] context Chip implementation context
+  84:../Src/radio/lr1110_modem_hal.c ****  * @param [in] timeout_ms timeout in millisec before leave the function
+  85:../Src/radio/lr1110_modem_hal.c ****  *
+  86:../Src/radio/lr1110_modem_hal.c ****  * @returns lr1110_hal_status_t
+  87:../Src/radio/lr1110_modem_hal.c ****  */
+  88:../Src/radio/lr1110_modem_hal.c **** static lr1110_hal_status_t lr1110_hal_wait_on_busy( const void* context, uint32_t timeout_ms );
+  89:../Src/radio/lr1110_modem_hal.c **** 
+  90:../Src/radio/lr1110_modem_hal.c **** /*!
+  91:../Src/radio/lr1110_modem_hal.c ****  * @brief Function to wait that the lr1110 modem-e busy line fall to low
+  92:../Src/radio/lr1110_modem_hal.c ****  *
+  93:../Src/radio/lr1110_modem_hal.c ****  * @param [in] context Chip implementation context
+  94:../Src/radio/lr1110_modem_hal.c ****  * @param [in] timeout_ms timeout in millisec before leave the function
+  95:../Src/radio/lr1110_modem_hal.c ****  *
+  96:../Src/radio/lr1110_modem_hal.c ****  * @returns lr1110_hal_status_t
+  97:../Src/radio/lr1110_modem_hal.c ****  */
+  98:../Src/radio/lr1110_modem_hal.c **** static lr1110_modem_hal_status_t lr1110_modem_hal_wait_on_busy( const void* context, uint32_t timeo
+  99:../Src/radio/lr1110_modem_hal.c **** 
+ 100:../Src/radio/lr1110_modem_hal.c **** /*!
+ 101:../Src/radio/lr1110_modem_hal.c ****  * @brief Function to wait the that lr1110 modem-e busy line raise to high
+ 102:../Src/radio/lr1110_modem_hal.c ****  *
+ 103:../Src/radio/lr1110_modem_hal.c ****  * @param [in] context Chip implementation context
+ 104:../Src/radio/lr1110_modem_hal.c ****  * @param [in] timeout_ms timeout in millisec before leave the function
+ 105:../Src/radio/lr1110_modem_hal.c ****  *
+ 106:../Src/radio/lr1110_modem_hal.c ****  * @returns lr1110_hal_status_t
+ 107:../Src/radio/lr1110_modem_hal.c ****  */
+ 108:../Src/radio/lr1110_modem_hal.c **** static lr1110_modem_hal_status_t lr1110_modem_hal_wait_on_unbusy( const void* context, uint32_t tim
+ 109:../Src/radio/lr1110_modem_hal.c **** 
+ 110:../Src/radio/lr1110_modem_hal.c **** /*!
+ 111:../Src/radio/lr1110_modem_hal.c ****  * @brief Function executed on lr1110 modem-e reset timeout event
+ 112:../Src/radio/lr1110_modem_hal.c ****  */
+ 113:../Src/radio/lr1110_modem_hal.c **** static void on_lr1110_modem_reset_timeout_event( void* context );
+ 114:../Src/radio/lr1110_modem_hal.c **** 
+ 115:../Src/radio/lr1110_modem_hal.c **** /*
+ 116:../Src/radio/lr1110_modem_hal.c ****  * -----------------------------------------------------------------------------
+ 117:../Src/radio/lr1110_modem_hal.c ****  * --- PUBLIC FUNCTIONS DEFINITION ---------------------------------------------
+ 118:../Src/radio/lr1110_modem_hal.c ****  */
+ 119:../Src/radio/lr1110_modem_hal.c **** 
+ 120:../Src/radio/lr1110_modem_hal.c **** /*!
+ 121:../Src/radio/lr1110_modem_hal.c ****  * @brief lr1110_modem_hal.h API implementation
+ 122:../Src/radio/lr1110_modem_hal.c ****  */
+ 123:../Src/radio/lr1110_modem_hal.c **** 
+ 124:../Src/radio/lr1110_modem_hal.c **** lr1110_modem_hal_status_t lr1110_modem_hal_write( const void* context, const uint8_t* command,
+ 125:../Src/radio/lr1110_modem_hal.c ****                                                   const uint16_t command_length, const uint8_t* dat
+ 126:../Src/radio/lr1110_modem_hal.c ****                                                   const uint16_t data_length )
+ 127:../Src/radio/lr1110_modem_hal.c **** {
+ 161              		.loc 2 127 1
+ 162              		.cfi_startproc
+ 163              		@ args = 4, pretend = 0, frame = 24
+ 164              		@ frame_needed = 1, uses_anonymous_args = 0
+ 165 0000 80B5     		push	{r7, lr}
+ 166              	.LCFI6:
+ 167              		.cfi_def_cfa_offset 8
+ 168              		.cfi_offset 7, -8
+ 169              		.cfi_offset 14, -4
+ARM GAS  /tmp/ccEFk68o.s 			page 8
+
+
+ 170 0002 86B0     		sub	sp, sp, #24
+ 171              	.LCFI7:
+ 172              		.cfi_def_cfa_offset 32
+ 173 0004 00AF     		add	r7, sp, #0
+ 174              	.LCFI8:
+ 175              		.cfi_def_cfa_register 7
+ 176 0006 F860     		str	r0, [r7, #12]
+ 177 0008 B960     		str	r1, [r7, #8]
+ 178 000a 3B60     		str	r3, [r7]
+ 179 000c 1346     		mov	r3, r2	@ movhi
+ 180 000e FB80     		strh	r3, [r7, #6]	@ movhi
+ 128:../Src/radio/lr1110_modem_hal.c ****     if( lr1110_modem_hal_wakeup( context ) == LR1110_MODEM_HAL_STATUS_OK )
+ 181              		.loc 2 128 9
+ 182 0010 F868     		ldr	r0, [r7, #12]
+ 183 0012 FFF7FEFF 		bl	lr1110_modem_hal_wakeup
+ 184 0016 0346     		mov	r3, r0
+ 185              		.loc 2 128 7
+ 186 0018 002B     		cmp	r3, #0
+ 187 001a 40F09B80 		bne	.L9
+ 188              	.LBB4:
+ 129:../Src/radio/lr1110_modem_hal.c ****     {
+ 130:../Src/radio/lr1110_modem_hal.c ****         uint8_t                   crc          = 0;
+ 189              		.loc 2 130 35
+ 190 001e 0023     		movs	r3, #0
+ 191 0020 FB74     		strb	r3, [r7, #19]
+ 131:../Src/radio/lr1110_modem_hal.c ****         uint8_t                   crc_received = 0;
+ 192              		.loc 2 131 35
+ 193 0022 0023     		movs	r3, #0
+ 194 0024 BB74     		strb	r3, [r7, #18]
+ 132:../Src/radio/lr1110_modem_hal.c ****         lr1110_modem_hal_status_t status;
+ 133:../Src/radio/lr1110_modem_hal.c **** 
+ 134:../Src/radio/lr1110_modem_hal.c ****         /* NSS low */
+ 135:../Src/radio/lr1110_modem_hal.c ****         hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 0 );
+ 195              		.loc 2 135 9
+ 196 0026 FB68     		ldr	r3, [r7, #12]
+ 197 0028 B3F93430 		ldrsh	r3, [r3, #52]
+ 198 002c 0021     		movs	r1, #0
+ 199 002e 1846     		mov	r0, r3
+ 200 0030 FFF7FEFF 		bl	hal_gpio_set_value
+ 201              	.LBB5:
+ 136:../Src/radio/lr1110_modem_hal.c **** 
+ 137:../Src/radio/lr1110_modem_hal.c ****         /* Send CMD */
+ 138:../Src/radio/lr1110_modem_hal.c ****         for( uint16_t i = 0; i < command_length; i++ )
+ 202              		.loc 2 138 23
+ 203 0034 0023     		movs	r3, #0
+ 204 0036 FB82     		strh	r3, [r7, #22]	@ movhi
+ 205              		.loc 2 138 9
+ 206 0038 0DE0     		b	.L10
+ 207              	.L11:
+ 139:../Src/radio/lr1110_modem_hal.c ****         {
+ 140:../Src/radio/lr1110_modem_hal.c ****             hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, command[i] );
+ 208              		.loc 2 140 13 discriminator 3
+ 209 003a FB68     		ldr	r3, [r7, #12]
+ 210 003c D3F8B800 		ldr	r0, [r3, #184]
+ 211              		.loc 2 140 71 discriminator 3
+ 212 0040 FB8A     		ldrh	r3, [r7, #22]
+ 213 0042 BA68     		ldr	r2, [r7, #8]
+ARM GAS  /tmp/ccEFk68o.s 			page 9
+
+
+ 214 0044 1344     		add	r3, r3, r2
+ 215 0046 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 216              		.loc 2 140 13 discriminator 3
+ 217 0048 9BB2     		uxth	r3, r3
+ 218 004a 1946     		mov	r1, r3
+ 219 004c FFF7FEFF 		bl	hal_spi_in_out
+ 138:../Src/radio/lr1110_modem_hal.c ****         {
+ 220              		.loc 2 138 51 discriminator 3
+ 221 0050 FB8A     		ldrh	r3, [r7, #22]
+ 222 0052 0133     		adds	r3, r3, #1
+ 223 0054 FB82     		strh	r3, [r7, #22]	@ movhi
+ 224              	.L10:
+ 138:../Src/radio/lr1110_modem_hal.c ****         {
+ 225              		.loc 2 138 9 discriminator 1
+ 226 0056 FA8A     		ldrh	r2, [r7, #22]
+ 227 0058 FB88     		ldrh	r3, [r7, #6]
+ 228 005a 9A42     		cmp	r2, r3
+ 229 005c EDD3     		bcc	.L11
+ 230              	.LBE5:
+ 231              	.LBB6:
+ 141:../Src/radio/lr1110_modem_hal.c ****         }
+ 142:../Src/radio/lr1110_modem_hal.c ****         /* Send Data */
+ 143:../Src/radio/lr1110_modem_hal.c ****         for( uint16_t i = 0; i < data_length; i++ )
+ 232              		.loc 2 143 23
+ 233 005e 0023     		movs	r3, #0
+ 234 0060 BB82     		strh	r3, [r7, #20]	@ movhi
+ 235              		.loc 2 143 9
+ 236 0062 0DE0     		b	.L12
+ 237              	.L13:
+ 144:../Src/radio/lr1110_modem_hal.c ****         {
+ 145:../Src/radio/lr1110_modem_hal.c ****             hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, data[i] );
+ 238              		.loc 2 145 13 discriminator 3
+ 239 0064 FB68     		ldr	r3, [r7, #12]
+ 240 0066 D3F8B800 		ldr	r0, [r3, #184]
+ 241              		.loc 2 145 68 discriminator 3
+ 242 006a BB8A     		ldrh	r3, [r7, #20]
+ 243 006c 3A68     		ldr	r2, [r7]
+ 244 006e 1344     		add	r3, r3, r2
+ 245 0070 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 246              		.loc 2 145 13 discriminator 3
+ 247 0072 9BB2     		uxth	r3, r3
+ 248 0074 1946     		mov	r1, r3
+ 249 0076 FFF7FEFF 		bl	hal_spi_in_out
+ 143:../Src/radio/lr1110_modem_hal.c ****         {
+ 250              		.loc 2 143 48 discriminator 3
+ 251 007a BB8A     		ldrh	r3, [r7, #20]
+ 252 007c 0133     		adds	r3, r3, #1
+ 253 007e BB82     		strh	r3, [r7, #20]	@ movhi
+ 254              	.L12:
+ 143:../Src/radio/lr1110_modem_hal.c ****         {
+ 255              		.loc 2 143 9 discriminator 1
+ 256 0080 BA8A     		ldrh	r2, [r7, #20]
+ 257 0082 3B8C     		ldrh	r3, [r7, #32]
+ 258 0084 9A42     		cmp	r2, r3
+ 259 0086 EDD3     		bcc	.L13
+ 260              	.LBE6:
+ 146:../Src/radio/lr1110_modem_hal.c ****         }
+ARM GAS  /tmp/ccEFk68o.s 			page 10
+
+
+ 147:../Src/radio/lr1110_modem_hal.c ****         /* Compute and send CRC */
+ 148:../Src/radio/lr1110_modem_hal.c ****         crc = lr1110_modem_compute_crc( 0xFF, command, command_length );
+ 261              		.loc 2 148 15
+ 262 0088 FB88     		ldrh	r3, [r7, #6]
+ 263 008a 1A46     		mov	r2, r3
+ 264 008c B968     		ldr	r1, [r7, #8]
+ 265 008e FF20     		movs	r0, #255
+ 266 0090 FFF7FEFF 		bl	lr1110_modem_compute_crc
+ 267 0094 0346     		mov	r3, r0
+ 268 0096 FB74     		strb	r3, [r7, #19]
+ 149:../Src/radio/lr1110_modem_hal.c ****         crc = lr1110_modem_compute_crc( crc, data, data_length );
+ 269              		.loc 2 149 15
+ 270 0098 3A8C     		ldrh	r2, [r7, #32]
+ 271 009a FB7C     		ldrb	r3, [r7, #19]	@ zero_extendqisi2
+ 272 009c 3968     		ldr	r1, [r7]
+ 273 009e 1846     		mov	r0, r3
+ 274 00a0 FFF7FEFF 		bl	lr1110_modem_compute_crc
+ 275 00a4 0346     		mov	r3, r0
+ 276 00a6 FB74     		strb	r3, [r7, #19]
+ 150:../Src/radio/lr1110_modem_hal.c ****         /* Send CRC */
+ 151:../Src/radio/lr1110_modem_hal.c ****         hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, crc );
+ 277              		.loc 2 151 9
+ 278 00a8 FB68     		ldr	r3, [r7, #12]
+ 279 00aa D3F8B830 		ldr	r3, [r3, #184]
+ 280 00ae FA7C     		ldrb	r2, [r7, #19]	@ zero_extendqisi2
+ 281 00b0 92B2     		uxth	r2, r2
+ 282 00b2 1146     		mov	r1, r2
+ 283 00b4 1846     		mov	r0, r3
+ 284 00b6 FFF7FEFF 		bl	hal_spi_in_out
+ 152:../Src/radio/lr1110_modem_hal.c **** 
+ 153:../Src/radio/lr1110_modem_hal.c ****         /* NSS high */
+ 154:../Src/radio/lr1110_modem_hal.c ****         hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 1 );
+ 285              		.loc 2 154 9
+ 286 00ba FB68     		ldr	r3, [r7, #12]
+ 287 00bc B3F93430 		ldrsh	r3, [r3, #52]
+ 288 00c0 0121     		movs	r1, #1
+ 289 00c2 1846     		mov	r0, r3
+ 290 00c4 FFF7FEFF 		bl	hal_gpio_set_value
+ 155:../Src/radio/lr1110_modem_hal.c **** 
+ 156:../Src/radio/lr1110_modem_hal.c ****         /* Wait on busy pin up to 1000 ms */
+ 157:../Src/radio/lr1110_modem_hal.c ****         if( lr1110_modem_hal_wait_on_busy( context, 1000 ) != LR1110_MODEM_HAL_STATUS_OK )
+ 291              		.loc 2 157 13
+ 292 00c8 4FF47A71 		mov	r1, #1000
+ 293 00cc F868     		ldr	r0, [r7, #12]
+ 294 00ce FFF7FEFF 		bl	lr1110_modem_hal_wait_on_busy
+ 295 00d2 0346     		mov	r3, r0
+ 296              		.loc 2 157 11
+ 297 00d4 002B     		cmp	r3, #0
+ 298 00d6 01D0     		beq	.L14
+ 158:../Src/radio/lr1110_modem_hal.c ****         {
+ 159:../Src/radio/lr1110_modem_hal.c ****             return LR1110_MODEM_HAL_STATUS_BUSY_TIMEOUT;
+ 299              		.loc 2 159 20
+ 300 00d8 FF23     		movs	r3, #255
+ 301 00da 3CE0     		b	.L18
+ 302              	.L14:
+ 160:../Src/radio/lr1110_modem_hal.c ****         }
+ 161:../Src/radio/lr1110_modem_hal.c **** 
+ARM GAS  /tmp/ccEFk68o.s 			page 11
+
+
+ 162:../Src/radio/lr1110_modem_hal.c ****         /* Send dummy byte to retrieve RC & CRC */
+ 163:../Src/radio/lr1110_modem_hal.c **** 
+ 164:../Src/radio/lr1110_modem_hal.c ****         /* NSS low */
+ 165:../Src/radio/lr1110_modem_hal.c ****         hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 0 );
+ 303              		.loc 2 165 9
+ 304 00dc FB68     		ldr	r3, [r7, #12]
+ 305 00de B3F93430 		ldrsh	r3, [r3, #52]
+ 306 00e2 0021     		movs	r1, #0
+ 307 00e4 1846     		mov	r0, r3
+ 308 00e6 FFF7FEFF 		bl	hal_gpio_set_value
+ 166:../Src/radio/lr1110_modem_hal.c **** 
+ 167:../Src/radio/lr1110_modem_hal.c ****         /* read RC */
+ 168:../Src/radio/lr1110_modem_hal.c ****         status       = ( lr1110_modem_hal_status_t ) hal_spi_in_out( ( ( lr1110_t* ) context )->spi
+ 309              		.loc 2 168 54
+ 310 00ea FB68     		ldr	r3, [r7, #12]
+ 311 00ec D3F8B830 		ldr	r3, [r3, #184]
+ 312 00f0 0021     		movs	r1, #0
+ 313 00f2 1846     		mov	r0, r3
+ 314 00f4 FFF7FEFF 		bl	hal_spi_in_out
+ 315 00f8 0346     		mov	r3, r0
+ 316              		.loc 2 168 24
+ 317 00fa DBB2     		uxtb	r3, r3
+ 318              		.loc 2 168 22
+ 319 00fc 7B74     		strb	r3, [r7, #17]
+ 169:../Src/radio/lr1110_modem_hal.c ****         crc_received = hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, 0 );
+ 320              		.loc 2 169 24
+ 321 00fe FB68     		ldr	r3, [r7, #12]
+ 322 0100 D3F8B830 		ldr	r3, [r3, #184]
+ 323 0104 0021     		movs	r1, #0
+ 324 0106 1846     		mov	r0, r3
+ 325 0108 FFF7FEFF 		bl	hal_spi_in_out
+ 326 010c 0346     		mov	r3, r0
+ 327              		.loc 2 169 22
+ 328 010e BB74     		strb	r3, [r7, #18]
+ 170:../Src/radio/lr1110_modem_hal.c **** 
+ 171:../Src/radio/lr1110_modem_hal.c ****         /* Compute response crc */
+ 172:../Src/radio/lr1110_modem_hal.c ****         crc = lr1110_modem_compute_crc( 0xFF, ( uint8_t* ) &status, 1 );
+ 329              		.loc 2 172 15
+ 330 0110 07F11103 		add	r3, r7, #17
+ 331 0114 0122     		movs	r2, #1
+ 332 0116 1946     		mov	r1, r3
+ 333 0118 FF20     		movs	r0, #255
+ 334 011a FFF7FEFF 		bl	lr1110_modem_compute_crc
+ 335 011e 0346     		mov	r3, r0
+ 336 0120 FB74     		strb	r3, [r7, #19]
+ 173:../Src/radio/lr1110_modem_hal.c **** 
+ 174:../Src/radio/lr1110_modem_hal.c ****         /* NSS high */
+ 175:../Src/radio/lr1110_modem_hal.c ****         hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 1 );
+ 337              		.loc 2 175 9
+ 338 0122 FB68     		ldr	r3, [r7, #12]
+ 339 0124 B3F93430 		ldrsh	r3, [r3, #52]
+ 340 0128 0121     		movs	r1, #1
+ 341 012a 1846     		mov	r0, r3
+ 342 012c FFF7FEFF 		bl	hal_gpio_set_value
+ 176:../Src/radio/lr1110_modem_hal.c **** 
+ 177:../Src/radio/lr1110_modem_hal.c ****         if( crc != crc_received )
+ 343              		.loc 2 177 11
+ARM GAS  /tmp/ccEFk68o.s 			page 12
+
+
+ 344 0130 FA7C     		ldrb	r2, [r7, #19]	@ zero_extendqisi2
+ 345 0132 BB7C     		ldrb	r3, [r7, #18]	@ zero_extendqisi2
+ 346 0134 9A42     		cmp	r2, r3
+ 347 0136 01D0     		beq	.L16
+ 178:../Src/radio/lr1110_modem_hal.c ****         {
+ 179:../Src/radio/lr1110_modem_hal.c ****             /* change the response code */
+ 180:../Src/radio/lr1110_modem_hal.c ****             status = LR1110_MODEM_HAL_STATUS_BAD_FRAME;
+ 348              		.loc 2 180 20
+ 349 0138 0F23     		movs	r3, #15
+ 350 013a 7B74     		strb	r3, [r7, #17]
+ 351              	.L16:
+ 181:../Src/radio/lr1110_modem_hal.c ****         }
+ 182:../Src/radio/lr1110_modem_hal.c **** 
+ 183:../Src/radio/lr1110_modem_hal.c ****         /* Wait on busy pin up to 1000 ms */
+ 184:../Src/radio/lr1110_modem_hal.c ****         if( lr1110_modem_hal_wait_on_unbusy( context, 1000 ) != LR1110_MODEM_HAL_STATUS_OK )
+ 352              		.loc 2 184 13
+ 353 013c 4FF47A71 		mov	r1, #1000
+ 354 0140 F868     		ldr	r0, [r7, #12]
+ 355 0142 FFF7FEFF 		bl	lr1110_modem_hal_wait_on_unbusy
+ 356 0146 0346     		mov	r3, r0
+ 357              		.loc 2 184 11
+ 358 0148 002B     		cmp	r3, #0
+ 359 014a 01D0     		beq	.L17
+ 185:../Src/radio/lr1110_modem_hal.c ****         {
+ 186:../Src/radio/lr1110_modem_hal.c ****             return LR1110_MODEM_HAL_STATUS_BUSY_TIMEOUT;
+ 360              		.loc 2 186 20
+ 361 014c FF23     		movs	r3, #255
+ 362 014e 02E0     		b	.L18
+ 363              	.L17:
+ 187:../Src/radio/lr1110_modem_hal.c ****         }
+ 188:../Src/radio/lr1110_modem_hal.c **** 
+ 189:../Src/radio/lr1110_modem_hal.c ****         return status;
+ 364              		.loc 2 189 16
+ 365 0150 7B7C     		ldrb	r3, [r7, #17]	@ zero_extendqisi2
+ 366 0152 00E0     		b	.L18
+ 367              	.L9:
+ 368              	.LBE4:
+ 190:../Src/radio/lr1110_modem_hal.c ****     }
+ 191:../Src/radio/lr1110_modem_hal.c **** 
+ 192:../Src/radio/lr1110_modem_hal.c ****     return LR1110_MODEM_HAL_STATUS_BUSY_TIMEOUT;
+ 369              		.loc 2 192 12
+ 370 0154 FF23     		movs	r3, #255
+ 371              	.L18:
+ 193:../Src/radio/lr1110_modem_hal.c **** }
+ 372              		.loc 2 193 1 discriminator 1
+ 373 0156 1846     		mov	r0, r3
+ 374 0158 1837     		adds	r7, r7, #24
+ 375              	.LCFI9:
+ 376              		.cfi_def_cfa_offset 8
+ 377 015a BD46     		mov	sp, r7
+ 378              	.LCFI10:
+ 379              		.cfi_def_cfa_register 13
+ 380              		@ sp needed
+ 381 015c 80BD     		pop	{r7, pc}
+ 382              		.cfi_endproc
+ 383              	.LFE590:
+ 385              		.section	.text.lr1110_modem_hal_write_without_rc,"ax",%progbits
+ARM GAS  /tmp/ccEFk68o.s 			page 13
+
+
+ 386              		.align	1
+ 387              		.global	lr1110_modem_hal_write_without_rc
+ 388              		.syntax unified
+ 389              		.thumb
+ 390              		.thumb_func
+ 391              		.fpu fpv4-sp-d16
+ 393              	lr1110_modem_hal_write_without_rc:
+ 394              	.LFB591:
+ 194:../Src/radio/lr1110_modem_hal.c **** 
+ 195:../Src/radio/lr1110_modem_hal.c **** lr1110_modem_hal_status_t lr1110_modem_hal_write_without_rc( const void* context, const uint8_t* co
+ 196:../Src/radio/lr1110_modem_hal.c ****                                                              const uint16_t command_length, const u
+ 197:../Src/radio/lr1110_modem_hal.c ****                                                              const uint16_t data_length )
+ 198:../Src/radio/lr1110_modem_hal.c **** {
+ 395              		.loc 2 198 1
+ 396              		.cfi_startproc
+ 397              		@ args = 4, pretend = 0, frame = 24
+ 398              		@ frame_needed = 1, uses_anonymous_args = 0
+ 399 0000 80B5     		push	{r7, lr}
+ 400              	.LCFI11:
+ 401              		.cfi_def_cfa_offset 8
+ 402              		.cfi_offset 7, -8
+ 403              		.cfi_offset 14, -4
+ 404 0002 86B0     		sub	sp, sp, #24
+ 405              	.LCFI12:
+ 406              		.cfi_def_cfa_offset 32
+ 407 0004 00AF     		add	r7, sp, #0
+ 408              	.LCFI13:
+ 409              		.cfi_def_cfa_register 7
+ 410 0006 F860     		str	r0, [r7, #12]
+ 411 0008 B960     		str	r1, [r7, #8]
+ 412 000a 3B60     		str	r3, [r7]
+ 413 000c 1346     		mov	r3, r2	@ movhi
+ 414 000e FB80     		strh	r3, [r7, #6]	@ movhi
+ 199:../Src/radio/lr1110_modem_hal.c ****     if( lr1110_modem_hal_wakeup( context ) == LR1110_MODEM_HAL_STATUS_OK )
+ 415              		.loc 2 199 9
+ 416 0010 F868     		ldr	r0, [r7, #12]
+ 417 0012 FFF7FEFF 		bl	lr1110_modem_hal_wakeup
+ 418 0016 0346     		mov	r3, r0
+ 419              		.loc 2 199 7
+ 420 0018 002B     		cmp	r3, #0
+ 421 001a 56D1     		bne	.L20
+ 422              	.LBB7:
+ 200:../Src/radio/lr1110_modem_hal.c ****     {
+ 201:../Src/radio/lr1110_modem_hal.c ****         uint8_t                   crc    = 0;
+ 423              		.loc 2 201 35
+ 424 001c 0023     		movs	r3, #0
+ 425 001e FB74     		strb	r3, [r7, #19]
+ 202:../Src/radio/lr1110_modem_hal.c ****         lr1110_modem_hal_status_t status = LR1110_MODEM_HAL_STATUS_OK;
+ 426              		.loc 2 202 35
+ 427 0020 0023     		movs	r3, #0
+ 428 0022 BB74     		strb	r3, [r7, #18]
+ 203:../Src/radio/lr1110_modem_hal.c **** 
+ 204:../Src/radio/lr1110_modem_hal.c ****         /* NSS low */
+ 205:../Src/radio/lr1110_modem_hal.c ****         hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 0 );
+ 429              		.loc 2 205 9
+ 430 0024 FB68     		ldr	r3, [r7, #12]
+ 431 0026 B3F93430 		ldrsh	r3, [r3, #52]
+ARM GAS  /tmp/ccEFk68o.s 			page 14
+
+
+ 432 002a 0021     		movs	r1, #0
+ 433 002c 1846     		mov	r0, r3
+ 434 002e FFF7FEFF 		bl	hal_gpio_set_value
+ 435              	.LBB8:
+ 206:../Src/radio/lr1110_modem_hal.c **** 
+ 207:../Src/radio/lr1110_modem_hal.c ****         /* Send CMD */
+ 208:../Src/radio/lr1110_modem_hal.c ****         for( uint16_t i = 0; i < command_length; i++ )
+ 436              		.loc 2 208 23
+ 437 0032 0023     		movs	r3, #0
+ 438 0034 FB82     		strh	r3, [r7, #22]	@ movhi
+ 439              		.loc 2 208 9
+ 440 0036 0DE0     		b	.L21
+ 441              	.L22:
+ 209:../Src/radio/lr1110_modem_hal.c ****         {
+ 210:../Src/radio/lr1110_modem_hal.c ****             hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, command[i] );
+ 442              		.loc 2 210 13 discriminator 3
+ 443 0038 FB68     		ldr	r3, [r7, #12]
+ 444 003a D3F8B800 		ldr	r0, [r3, #184]
+ 445              		.loc 2 210 71 discriminator 3
+ 446 003e FB8A     		ldrh	r3, [r7, #22]
+ 447 0040 BA68     		ldr	r2, [r7, #8]
+ 448 0042 1344     		add	r3, r3, r2
+ 449 0044 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 450              		.loc 2 210 13 discriminator 3
+ 451 0046 9BB2     		uxth	r3, r3
+ 452 0048 1946     		mov	r1, r3
+ 453 004a FFF7FEFF 		bl	hal_spi_in_out
+ 208:../Src/radio/lr1110_modem_hal.c ****         {
+ 454              		.loc 2 208 51 discriminator 3
+ 455 004e FB8A     		ldrh	r3, [r7, #22]
+ 456 0050 0133     		adds	r3, r3, #1
+ 457 0052 FB82     		strh	r3, [r7, #22]	@ movhi
+ 458              	.L21:
+ 208:../Src/radio/lr1110_modem_hal.c ****         {
+ 459              		.loc 2 208 9 discriminator 1
+ 460 0054 FA8A     		ldrh	r2, [r7, #22]
+ 461 0056 FB88     		ldrh	r3, [r7, #6]
+ 462 0058 9A42     		cmp	r2, r3
+ 463 005a EDD3     		bcc	.L22
+ 464              	.LBE8:
+ 465              	.LBB9:
+ 211:../Src/radio/lr1110_modem_hal.c ****         }
+ 212:../Src/radio/lr1110_modem_hal.c ****         /* Send Data */
+ 213:../Src/radio/lr1110_modem_hal.c ****         for( uint16_t i = 0; i < data_length; i++ )
+ 466              		.loc 2 213 23
+ 467 005c 0023     		movs	r3, #0
+ 468 005e BB82     		strh	r3, [r7, #20]	@ movhi
+ 469              		.loc 2 213 9
+ 470 0060 0DE0     		b	.L23
+ 471              	.L24:
+ 214:../Src/radio/lr1110_modem_hal.c ****         {
+ 215:../Src/radio/lr1110_modem_hal.c ****             hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, data[i] );
+ 472              		.loc 2 215 13 discriminator 3
+ 473 0062 FB68     		ldr	r3, [r7, #12]
+ 474 0064 D3F8B800 		ldr	r0, [r3, #184]
+ 475              		.loc 2 215 68 discriminator 3
+ 476 0068 BB8A     		ldrh	r3, [r7, #20]
+ARM GAS  /tmp/ccEFk68o.s 			page 15
+
+
+ 477 006a 3A68     		ldr	r2, [r7]
+ 478 006c 1344     		add	r3, r3, r2
+ 479 006e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 480              		.loc 2 215 13 discriminator 3
+ 481 0070 9BB2     		uxth	r3, r3
+ 482 0072 1946     		mov	r1, r3
+ 483 0074 FFF7FEFF 		bl	hal_spi_in_out
+ 213:../Src/radio/lr1110_modem_hal.c ****         {
+ 484              		.loc 2 213 48 discriminator 3
+ 485 0078 BB8A     		ldrh	r3, [r7, #20]
+ 486 007a 0133     		adds	r3, r3, #1
+ 487 007c BB82     		strh	r3, [r7, #20]	@ movhi
+ 488              	.L23:
+ 213:../Src/radio/lr1110_modem_hal.c ****         {
+ 489              		.loc 2 213 9 discriminator 1
+ 490 007e BA8A     		ldrh	r2, [r7, #20]
+ 491 0080 3B8C     		ldrh	r3, [r7, #32]
+ 492 0082 9A42     		cmp	r2, r3
+ 493 0084 EDD3     		bcc	.L24
+ 494              	.LBE9:
+ 216:../Src/radio/lr1110_modem_hal.c ****         }
+ 217:../Src/radio/lr1110_modem_hal.c ****         /* Compute and send CRC */
+ 218:../Src/radio/lr1110_modem_hal.c ****         crc = lr1110_modem_compute_crc( 0xFF, command, command_length );
+ 495              		.loc 2 218 15
+ 496 0086 FB88     		ldrh	r3, [r7, #6]
+ 497 0088 1A46     		mov	r2, r3
+ 498 008a B968     		ldr	r1, [r7, #8]
+ 499 008c FF20     		movs	r0, #255
+ 500 008e FFF7FEFF 		bl	lr1110_modem_compute_crc
+ 501 0092 0346     		mov	r3, r0
+ 502 0094 FB74     		strb	r3, [r7, #19]
+ 219:../Src/radio/lr1110_modem_hal.c ****         crc = lr1110_modem_compute_crc( crc, data, data_length );
+ 503              		.loc 2 219 15
+ 504 0096 3A8C     		ldrh	r2, [r7, #32]
+ 505 0098 FB7C     		ldrb	r3, [r7, #19]	@ zero_extendqisi2
+ 506 009a 3968     		ldr	r1, [r7]
+ 507 009c 1846     		mov	r0, r3
+ 508 009e FFF7FEFF 		bl	lr1110_modem_compute_crc
+ 509 00a2 0346     		mov	r3, r0
+ 510 00a4 FB74     		strb	r3, [r7, #19]
+ 220:../Src/radio/lr1110_modem_hal.c ****         /* Send CRC */
+ 221:../Src/radio/lr1110_modem_hal.c ****         hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, crc );
+ 511              		.loc 2 221 9
+ 512 00a6 FB68     		ldr	r3, [r7, #12]
+ 513 00a8 D3F8B830 		ldr	r3, [r3, #184]
+ 514 00ac FA7C     		ldrb	r2, [r7, #19]	@ zero_extendqisi2
+ 515 00ae 92B2     		uxth	r2, r2
+ 516 00b0 1146     		mov	r1, r2
+ 517 00b2 1846     		mov	r0, r3
+ 518 00b4 FFF7FEFF 		bl	hal_spi_in_out
+ 222:../Src/radio/lr1110_modem_hal.c **** 
+ 223:../Src/radio/lr1110_modem_hal.c ****         /* NSS high */
+ 224:../Src/radio/lr1110_modem_hal.c ****         hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 1 );
+ 519              		.loc 2 224 9
+ 520 00b8 FB68     		ldr	r3, [r7, #12]
+ 521 00ba B3F93430 		ldrsh	r3, [r3, #52]
+ 522 00be 0121     		movs	r1, #1
+ARM GAS  /tmp/ccEFk68o.s 			page 16
+
+
+ 523 00c0 1846     		mov	r0, r3
+ 524 00c2 FFF7FEFF 		bl	hal_gpio_set_value
+ 225:../Src/radio/lr1110_modem_hal.c **** 
+ 226:../Src/radio/lr1110_modem_hal.c ****         return status;
+ 525              		.loc 2 226 16
+ 526 00c6 BB7C     		ldrb	r3, [r7, #18]	@ zero_extendqisi2
+ 527 00c8 00E0     		b	.L25
+ 528              	.L20:
+ 529              	.LBE7:
+ 227:../Src/radio/lr1110_modem_hal.c ****     }
+ 228:../Src/radio/lr1110_modem_hal.c **** 
+ 229:../Src/radio/lr1110_modem_hal.c ****     return LR1110_MODEM_HAL_STATUS_BUSY_TIMEOUT;
+ 530              		.loc 2 229 12
+ 531 00ca FF23     		movs	r3, #255
+ 532              	.L25:
+ 230:../Src/radio/lr1110_modem_hal.c **** }
+ 533              		.loc 2 230 1
+ 534 00cc 1846     		mov	r0, r3
+ 535 00ce 1837     		adds	r7, r7, #24
+ 536              	.LCFI14:
+ 537              		.cfi_def_cfa_offset 8
+ 538 00d0 BD46     		mov	sp, r7
+ 539              	.LCFI15:
+ 540              		.cfi_def_cfa_register 13
+ 541              		@ sp needed
+ 542 00d2 80BD     		pop	{r7, pc}
+ 543              		.cfi_endproc
+ 544              	.LFE591:
+ 546              		.section	.text.lr1110_modem_hal_read,"ax",%progbits
+ 547              		.align	1
+ 548              		.global	lr1110_modem_hal_read
+ 549              		.syntax unified
+ 550              		.thumb
+ 551              		.thumb_func
+ 552              		.fpu fpv4-sp-d16
+ 554              	lr1110_modem_hal_read:
+ 555              	.LFB592:
+ 231:../Src/radio/lr1110_modem_hal.c **** 
+ 232:../Src/radio/lr1110_modem_hal.c **** lr1110_modem_hal_status_t lr1110_modem_hal_read( const void* context, const uint8_t* command,
+ 233:../Src/radio/lr1110_modem_hal.c ****                                                  const uint16_t command_length, uint8_t* data,
+ 234:../Src/radio/lr1110_modem_hal.c ****                                                  const uint16_t data_length )
+ 235:../Src/radio/lr1110_modem_hal.c **** {
+ 556              		.loc 2 235 1
+ 557              		.cfi_startproc
+ 558              		@ args = 4, pretend = 0, frame = 24
+ 559              		@ frame_needed = 1, uses_anonymous_args = 0
+ 560 0000 80B5     		push	{r7, lr}
+ 561              	.LCFI16:
+ 562              		.cfi_def_cfa_offset 8
+ 563              		.cfi_offset 7, -8
+ 564              		.cfi_offset 14, -4
+ 565 0002 86B0     		sub	sp, sp, #24
+ 566              	.LCFI17:
+ 567              		.cfi_def_cfa_offset 32
+ 568 0004 00AF     		add	r7, sp, #0
+ 569              	.LCFI18:
+ 570              		.cfi_def_cfa_register 7
+ARM GAS  /tmp/ccEFk68o.s 			page 17
+
+
+ 571 0006 F860     		str	r0, [r7, #12]
+ 572 0008 B960     		str	r1, [r7, #8]
+ 573 000a 3B60     		str	r3, [r7]
+ 574 000c 1346     		mov	r3, r2	@ movhi
+ 575 000e FB80     		strh	r3, [r7, #6]	@ movhi
+ 236:../Src/radio/lr1110_modem_hal.c ****     if( lr1110_modem_hal_wakeup( context ) == LR1110_MODEM_HAL_STATUS_OK )
+ 576              		.loc 2 236 9
+ 577 0010 F868     		ldr	r0, [r7, #12]
+ 578 0012 FFF7FEFF 		bl	lr1110_modem_hal_wakeup
+ 579 0016 0346     		mov	r3, r0
+ 580              		.loc 2 236 7
+ 581 0018 002B     		cmp	r3, #0
+ 582 001a 40F0A480 		bne	.L27
+ 583              	.LBB10:
+ 237:../Src/radio/lr1110_modem_hal.c ****     {
+ 238:../Src/radio/lr1110_modem_hal.c ****         uint8_t                   crc          = 0;
+ 584              		.loc 2 238 35
+ 585 001e 0023     		movs	r3, #0
+ 586 0020 FB75     		strb	r3, [r7, #23]
+ 239:../Src/radio/lr1110_modem_hal.c ****         uint8_t                   crc_received = 0;
+ 587              		.loc 2 239 35
+ 588 0022 0023     		movs	r3, #0
+ 589 0024 7B74     		strb	r3, [r7, #17]
+ 240:../Src/radio/lr1110_modem_hal.c ****         lr1110_modem_hal_status_t status;
+ 241:../Src/radio/lr1110_modem_hal.c **** 
+ 242:../Src/radio/lr1110_modem_hal.c ****         /* NSS low */
+ 243:../Src/radio/lr1110_modem_hal.c ****         hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 0 );
+ 590              		.loc 2 243 9
+ 591 0026 FB68     		ldr	r3, [r7, #12]
+ 592 0028 B3F93430 		ldrsh	r3, [r3, #52]
+ 593 002c 0021     		movs	r1, #0
+ 594 002e 1846     		mov	r0, r3
+ 595 0030 FFF7FEFF 		bl	hal_gpio_set_value
+ 596              	.LBB11:
+ 244:../Src/radio/lr1110_modem_hal.c **** 
+ 245:../Src/radio/lr1110_modem_hal.c ****         /* Send CMD */
+ 246:../Src/radio/lr1110_modem_hal.c ****         for( uint16_t i = 0; i < command_length; i++ )
+ 597              		.loc 2 246 23
+ 598 0034 0023     		movs	r3, #0
+ 599 0036 BB82     		strh	r3, [r7, #20]	@ movhi
+ 600              		.loc 2 246 9
+ 601 0038 0DE0     		b	.L28
+ 602              	.L29:
+ 247:../Src/radio/lr1110_modem_hal.c ****         {
+ 248:../Src/radio/lr1110_modem_hal.c ****             hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, command[i] );
+ 603              		.loc 2 248 13 discriminator 3
+ 604 003a FB68     		ldr	r3, [r7, #12]
+ 605 003c D3F8B800 		ldr	r0, [r3, #184]
+ 606              		.loc 2 248 71 discriminator 3
+ 607 0040 BB8A     		ldrh	r3, [r7, #20]
+ 608 0042 BA68     		ldr	r2, [r7, #8]
+ 609 0044 1344     		add	r3, r3, r2
+ 610 0046 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 611              		.loc 2 248 13 discriminator 3
+ 612 0048 9BB2     		uxth	r3, r3
+ 613 004a 1946     		mov	r1, r3
+ 614 004c FFF7FEFF 		bl	hal_spi_in_out
+ARM GAS  /tmp/ccEFk68o.s 			page 18
+
+
+ 246:../Src/radio/lr1110_modem_hal.c ****         {
+ 615              		.loc 2 246 51 discriminator 3
+ 616 0050 BB8A     		ldrh	r3, [r7, #20]
+ 617 0052 0133     		adds	r3, r3, #1
+ 618 0054 BB82     		strh	r3, [r7, #20]	@ movhi
+ 619              	.L28:
+ 246:../Src/radio/lr1110_modem_hal.c ****         {
+ 620              		.loc 2 246 9 discriminator 1
+ 621 0056 BA8A     		ldrh	r2, [r7, #20]
+ 622 0058 FB88     		ldrh	r3, [r7, #6]
+ 623 005a 9A42     		cmp	r2, r3
+ 624 005c EDD3     		bcc	.L29
+ 625              	.LBE11:
+ 249:../Src/radio/lr1110_modem_hal.c ****         }
+ 250:../Src/radio/lr1110_modem_hal.c ****         /* Compute and send CRC */
+ 251:../Src/radio/lr1110_modem_hal.c ****         crc = lr1110_modem_compute_crc( 0xFF, command, command_length );
+ 626              		.loc 2 251 15
+ 627 005e FB88     		ldrh	r3, [r7, #6]
+ 628 0060 1A46     		mov	r2, r3
+ 629 0062 B968     		ldr	r1, [r7, #8]
+ 630 0064 FF20     		movs	r0, #255
+ 631 0066 FFF7FEFF 		bl	lr1110_modem_compute_crc
+ 632 006a 0346     		mov	r3, r0
+ 633 006c FB75     		strb	r3, [r7, #23]
+ 252:../Src/radio/lr1110_modem_hal.c ****         /* Send CRC */
+ 253:../Src/radio/lr1110_modem_hal.c ****         hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, crc );
+ 634              		.loc 2 253 9
+ 635 006e FB68     		ldr	r3, [r7, #12]
+ 636 0070 D3F8B830 		ldr	r3, [r3, #184]
+ 637 0074 FA7D     		ldrb	r2, [r7, #23]	@ zero_extendqisi2
+ 638 0076 92B2     		uxth	r2, r2
+ 639 0078 1146     		mov	r1, r2
+ 640 007a 1846     		mov	r0, r3
+ 641 007c FFF7FEFF 		bl	hal_spi_in_out
+ 254:../Src/radio/lr1110_modem_hal.c **** 
+ 255:../Src/radio/lr1110_modem_hal.c ****         /* NSS high */
+ 256:../Src/radio/lr1110_modem_hal.c ****         hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 1 );
+ 642              		.loc 2 256 9
+ 643 0080 FB68     		ldr	r3, [r7, #12]
+ 644 0082 B3F93430 		ldrsh	r3, [r3, #52]
+ 645 0086 0121     		movs	r1, #1
+ 646 0088 1846     		mov	r0, r3
+ 647 008a FFF7FEFF 		bl	hal_gpio_set_value
+ 257:../Src/radio/lr1110_modem_hal.c **** 
+ 258:../Src/radio/lr1110_modem_hal.c ****         /* Wait on busy pin up to 1000 ms */
+ 259:../Src/radio/lr1110_modem_hal.c ****         if( lr1110_modem_hal_wait_on_busy( context, 1000 ) != LR1110_MODEM_HAL_STATUS_OK )
+ 648              		.loc 2 259 13
+ 649 008e 4FF47A71 		mov	r1, #1000
+ 650 0092 F868     		ldr	r0, [r7, #12]
+ 651 0094 FFF7FEFF 		bl	lr1110_modem_hal_wait_on_busy
+ 652 0098 0346     		mov	r3, r0
+ 653              		.loc 2 259 11
+ 654 009a 002B     		cmp	r3, #0
+ 655 009c 01D0     		beq	.L30
+ 260:../Src/radio/lr1110_modem_hal.c ****         {
+ 261:../Src/radio/lr1110_modem_hal.c ****             return LR1110_MODEM_HAL_STATUS_BUSY_TIMEOUT;
+ 656              		.loc 2 261 20
+ARM GAS  /tmp/ccEFk68o.s 			page 19
+
+
+ 657 009e FF23     		movs	r3, #255
+ 658 00a0 62E0     		b	.L38
+ 659              	.L30:
+ 262:../Src/radio/lr1110_modem_hal.c ****         }
+ 263:../Src/radio/lr1110_modem_hal.c **** 
+ 264:../Src/radio/lr1110_modem_hal.c ****         /* Send dummy byte to retrieve RC & CRC */
+ 265:../Src/radio/lr1110_modem_hal.c **** 
+ 266:../Src/radio/lr1110_modem_hal.c ****         /* NSS low */
+ 267:../Src/radio/lr1110_modem_hal.c ****         hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 0 );
+ 660              		.loc 2 267 9
+ 661 00a2 FB68     		ldr	r3, [r7, #12]
+ 662 00a4 B3F93430 		ldrsh	r3, [r3, #52]
+ 663 00a8 0021     		movs	r1, #0
+ 664 00aa 1846     		mov	r0, r3
+ 665 00ac FFF7FEFF 		bl	hal_gpio_set_value
+ 268:../Src/radio/lr1110_modem_hal.c **** 
+ 269:../Src/radio/lr1110_modem_hal.c ****         /* read RC */
+ 270:../Src/radio/lr1110_modem_hal.c ****         status = ( lr1110_modem_hal_status_t ) hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, 0
+ 666              		.loc 2 270 48
+ 667 00b0 FB68     		ldr	r3, [r7, #12]
+ 668 00b2 D3F8B830 		ldr	r3, [r3, #184]
+ 669 00b6 0021     		movs	r1, #0
+ 670 00b8 1846     		mov	r0, r3
+ 671 00ba FFF7FEFF 		bl	hal_spi_in_out
+ 672 00be 0346     		mov	r3, r0
+ 673              		.loc 2 270 18
+ 674 00c0 DBB2     		uxtb	r3, r3
+ 675              		.loc 2 270 16
+ 676 00c2 3B74     		strb	r3, [r7, #16]
+ 271:../Src/radio/lr1110_modem_hal.c **** 
+ 272:../Src/radio/lr1110_modem_hal.c ****         if( status == LR1110_MODEM_HAL_STATUS_OK )
+ 677              		.loc 2 272 20
+ 678 00c4 3B7C     		ldrb	r3, [r7, #16]	@ zero_extendqisi2
+ 679              		.loc 2 272 11
+ 680 00c6 002B     		cmp	r3, #0
+ 681 00c8 17D1     		bne	.L32
+ 682              	.LBB12:
+ 273:../Src/radio/lr1110_modem_hal.c ****         {
+ 274:../Src/radio/lr1110_modem_hal.c ****             for( uint16_t i = 0; i < data_length; i++ )
+ 683              		.loc 2 274 27
+ 684 00ca 0023     		movs	r3, #0
+ 685 00cc 7B82     		strh	r3, [r7, #18]	@ movhi
+ 686              		.loc 2 274 13
+ 687 00ce 10E0     		b	.L33
+ 688              	.L34:
+ 275:../Src/radio/lr1110_modem_hal.c ****             {
+ 276:../Src/radio/lr1110_modem_hal.c ****                 data[i] = hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, 0 );
+ 689              		.loc 2 276 27 discriminator 3
+ 690 00d0 FB68     		ldr	r3, [r7, #12]
+ 691 00d2 D3F8B830 		ldr	r3, [r3, #184]
+ 692 00d6 0021     		movs	r1, #0
+ 693 00d8 1846     		mov	r0, r3
+ 694 00da FFF7FEFF 		bl	hal_spi_in_out
+ 695 00de 0346     		mov	r3, r0
+ 696 00e0 1946     		mov	r1, r3
+ 697              		.loc 2 276 21 discriminator 3
+ 698 00e2 7B8A     		ldrh	r3, [r7, #18]
+ARM GAS  /tmp/ccEFk68o.s 			page 20
+
+
+ 699 00e4 3A68     		ldr	r2, [r7]
+ 700 00e6 1344     		add	r3, r3, r2
+ 701              		.loc 2 276 25 discriminator 3
+ 702 00e8 CAB2     		uxtb	r2, r1
+ 703 00ea 1A70     		strb	r2, [r3]
+ 274:../Src/radio/lr1110_modem_hal.c ****             {
+ 704              		.loc 2 274 52 discriminator 3
+ 705 00ec 7B8A     		ldrh	r3, [r7, #18]
+ 706 00ee 0133     		adds	r3, r3, #1
+ 707 00f0 7B82     		strh	r3, [r7, #18]	@ movhi
+ 708              	.L33:
+ 274:../Src/radio/lr1110_modem_hal.c ****             {
+ 709              		.loc 2 274 13 discriminator 1
+ 710 00f2 7A8A     		ldrh	r2, [r7, #18]
+ 711 00f4 3B8C     		ldrh	r3, [r7, #32]
+ 712 00f6 9A42     		cmp	r2, r3
+ 713 00f8 EAD3     		bcc	.L34
+ 714              	.L32:
+ 715              	.LBE12:
+ 277:../Src/radio/lr1110_modem_hal.c ****             }
+ 278:../Src/radio/lr1110_modem_hal.c ****         }
+ 279:../Src/radio/lr1110_modem_hal.c **** 
+ 280:../Src/radio/lr1110_modem_hal.c ****         crc_received = hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, 0 );
+ 716              		.loc 2 280 24
+ 717 00fa FB68     		ldr	r3, [r7, #12]
+ 718 00fc D3F8B830 		ldr	r3, [r3, #184]
+ 719 0100 0021     		movs	r1, #0
+ 720 0102 1846     		mov	r0, r3
+ 721 0104 FFF7FEFF 		bl	hal_spi_in_out
+ 722 0108 0346     		mov	r3, r0
+ 723              		.loc 2 280 22
+ 724 010a 7B74     		strb	r3, [r7, #17]
+ 281:../Src/radio/lr1110_modem_hal.c **** 
+ 282:../Src/radio/lr1110_modem_hal.c ****         /* NSS high */
+ 283:../Src/radio/lr1110_modem_hal.c ****         hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 1 );
+ 725              		.loc 2 283 9
+ 726 010c FB68     		ldr	r3, [r7, #12]
+ 727 010e B3F93430 		ldrsh	r3, [r3, #52]
+ 728 0112 0121     		movs	r1, #1
+ 729 0114 1846     		mov	r0, r3
+ 730 0116 FFF7FEFF 		bl	hal_gpio_set_value
+ 284:../Src/radio/lr1110_modem_hal.c **** 
+ 285:../Src/radio/lr1110_modem_hal.c ****         /* Compute response crc */
+ 286:../Src/radio/lr1110_modem_hal.c ****         crc = lr1110_modem_compute_crc( 0xFF, ( uint8_t* ) &status, 1 );
+ 731              		.loc 2 286 15
+ 732 011a 07F11003 		add	r3, r7, #16
+ 733 011e 0122     		movs	r2, #1
+ 734 0120 1946     		mov	r1, r3
+ 735 0122 FF20     		movs	r0, #255
+ 736 0124 FFF7FEFF 		bl	lr1110_modem_compute_crc
+ 737 0128 0346     		mov	r3, r0
+ 738 012a FB75     		strb	r3, [r7, #23]
+ 287:../Src/radio/lr1110_modem_hal.c ****         if( status == LR1110_MODEM_HAL_STATUS_OK )
+ 739              		.loc 2 287 20
+ 740 012c 3B7C     		ldrb	r3, [r7, #16]	@ zero_extendqisi2
+ 741              		.loc 2 287 11
+ 742 012e 002B     		cmp	r3, #0
+ARM GAS  /tmp/ccEFk68o.s 			page 21
+
+
+ 743 0130 07D1     		bne	.L35
+ 288:../Src/radio/lr1110_modem_hal.c ****         {
+ 289:../Src/radio/lr1110_modem_hal.c ****             crc = lr1110_modem_compute_crc( crc, data, data_length );
+ 744              		.loc 2 289 19
+ 745 0132 3A8C     		ldrh	r2, [r7, #32]
+ 746 0134 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 747 0136 3968     		ldr	r1, [r7]
+ 748 0138 1846     		mov	r0, r3
+ 749 013a FFF7FEFF 		bl	lr1110_modem_compute_crc
+ 750 013e 0346     		mov	r3, r0
+ 751 0140 FB75     		strb	r3, [r7, #23]
+ 752              	.L35:
+ 290:../Src/radio/lr1110_modem_hal.c ****         }
+ 291:../Src/radio/lr1110_modem_hal.c **** 
+ 292:../Src/radio/lr1110_modem_hal.c ****         if( crc != crc_received )
+ 753              		.loc 2 292 11
+ 754 0142 FA7D     		ldrb	r2, [r7, #23]	@ zero_extendqisi2
+ 755 0144 7B7C     		ldrb	r3, [r7, #17]	@ zero_extendqisi2
+ 756 0146 9A42     		cmp	r2, r3
+ 757 0148 01D0     		beq	.L36
+ 293:../Src/radio/lr1110_modem_hal.c ****         {
+ 294:../Src/radio/lr1110_modem_hal.c ****             /* change the response code */
+ 295:../Src/radio/lr1110_modem_hal.c ****             status = LR1110_MODEM_HAL_STATUS_BAD_FRAME;
+ 758              		.loc 2 295 20
+ 759 014a 0F23     		movs	r3, #15
+ 760 014c 3B74     		strb	r3, [r7, #16]
+ 761              	.L36:
+ 296:../Src/radio/lr1110_modem_hal.c ****         }
+ 297:../Src/radio/lr1110_modem_hal.c **** 
+ 298:../Src/radio/lr1110_modem_hal.c ****         /* Wait on busy pin up to 1000 ms */
+ 299:../Src/radio/lr1110_modem_hal.c ****         if( lr1110_modem_hal_wait_on_unbusy( context, 1000 ) != LR1110_MODEM_HAL_STATUS_OK )
+ 762              		.loc 2 299 13
+ 763 014e 4FF47A71 		mov	r1, #1000
+ 764 0152 F868     		ldr	r0, [r7, #12]
+ 765 0154 FFF7FEFF 		bl	lr1110_modem_hal_wait_on_unbusy
+ 766 0158 0346     		mov	r3, r0
+ 767              		.loc 2 299 11
+ 768 015a 002B     		cmp	r3, #0
+ 769 015c 01D0     		beq	.L37
+ 300:../Src/radio/lr1110_modem_hal.c ****         {
+ 301:../Src/radio/lr1110_modem_hal.c ****             return LR1110_MODEM_HAL_STATUS_BUSY_TIMEOUT;
+ 770              		.loc 2 301 20
+ 771 015e FF23     		movs	r3, #255
+ 772 0160 02E0     		b	.L38
+ 773              	.L37:
+ 302:../Src/radio/lr1110_modem_hal.c ****         }
+ 303:../Src/radio/lr1110_modem_hal.c **** 
+ 304:../Src/radio/lr1110_modem_hal.c ****         return status;
+ 774              		.loc 2 304 16
+ 775 0162 3B7C     		ldrb	r3, [r7, #16]	@ zero_extendqisi2
+ 776 0164 00E0     		b	.L38
+ 777              	.L27:
+ 778              	.LBE10:
+ 305:../Src/radio/lr1110_modem_hal.c ****     }
+ 306:../Src/radio/lr1110_modem_hal.c **** 
+ 307:../Src/radio/lr1110_modem_hal.c ****     return LR1110_MODEM_HAL_STATUS_BUSY_TIMEOUT;
+ 779              		.loc 2 307 12
+ARM GAS  /tmp/ccEFk68o.s 			page 22
+
+
+ 780 0166 FF23     		movs	r3, #255
+ 781              	.L38:
+ 308:../Src/radio/lr1110_modem_hal.c **** }
+ 782              		.loc 2 308 1 discriminator 1
+ 783 0168 1846     		mov	r0, r3
+ 784 016a 1837     		adds	r7, r7, #24
+ 785              	.LCFI19:
+ 786              		.cfi_def_cfa_offset 8
+ 787 016c BD46     		mov	sp, r7
+ 788              	.LCFI20:
+ 789              		.cfi_def_cfa_register 13
+ 790              		@ sp needed
+ 791 016e 80BD     		pop	{r7, pc}
+ 792              		.cfi_endproc
+ 793              	.LFE592:
+ 795              		.section	.text.lr1110_modem_hal_reset,"ax",%progbits
+ 796              		.align	1
+ 797              		.global	lr1110_modem_hal_reset
+ 798              		.syntax unified
+ 799              		.thumb
+ 800              		.thumb_func
+ 801              		.fpu fpv4-sp-d16
+ 803              	lr1110_modem_hal_reset:
+ 804              	.LFB593:
+ 309:../Src/radio/lr1110_modem_hal.c **** 
+ 310:../Src/radio/lr1110_modem_hal.c **** lr1110_modem_hal_status_t lr1110_modem_hal_reset( const void* context )
+ 311:../Src/radio/lr1110_modem_hal.c **** {
+ 805              		.loc 2 311 1
+ 806              		.cfi_startproc
+ 807              		@ args = 0, pretend = 0, frame = 8
+ 808              		@ frame_needed = 1, uses_anonymous_args = 0
+ 809 0000 80B5     		push	{r7, lr}
+ 810              	.LCFI21:
+ 811              		.cfi_def_cfa_offset 8
+ 812              		.cfi_offset 7, -8
+ 813              		.cfi_offset 14, -4
+ 814 0002 82B0     		sub	sp, sp, #8
+ 815              	.LCFI22:
+ 816              		.cfi_def_cfa_offset 16
+ 817 0004 00AF     		add	r7, sp, #0
+ 818              	.LCFI23:
+ 819              		.cfi_def_cfa_register 7
+ 820 0006 7860     		str	r0, [r7, #4]
+ 312:../Src/radio/lr1110_modem_hal.c ****     lr1110_modem_board_set_ready( false );
+ 821              		.loc 2 312 5
+ 822 0008 0020     		movs	r0, #0
+ 823 000a FFF7FEFF 		bl	lr1110_modem_board_set_ready
+ 313:../Src/radio/lr1110_modem_hal.c **** 
+ 314:../Src/radio/lr1110_modem_hal.c ****     /* Start a reset timeout timer */
+ 315:../Src/radio/lr1110_modem_hal.c ****     timer_init( &lr1110_modem_reset_timeout_timer, on_lr1110_modem_reset_timeout_event );
+ 824              		.loc 2 315 5
+ 825 000e 1F49     		ldr	r1, .L45
+ 826 0010 1F48     		ldr	r0, .L45+4
+ 827 0012 FFF7FEFF 		bl	timer_init
+ 316:../Src/radio/lr1110_modem_hal.c ****     timer_set_value( &lr1110_modem_reset_timeout_timer, LR1110_MODEM_RESET_TIMEOUT );
+ 828              		.loc 2 316 5
+ 829 0016 40F6B831 		movw	r1, #3000
+ARM GAS  /tmp/ccEFk68o.s 			page 23
+
+
+ 830 001a 1D48     		ldr	r0, .L45+4
+ 831 001c FFF7FEFF 		bl	timer_set_value
+ 317:../Src/radio/lr1110_modem_hal.c ****     timer_start( &lr1110_modem_reset_timeout_timer );
+ 832              		.loc 2 317 5
+ 833 0020 1B48     		ldr	r0, .L45+4
+ 834 0022 FFF7FEFF 		bl	timer_start
+ 318:../Src/radio/lr1110_modem_hal.c ****     lr1110_modem_reset_timeout = false;
+ 835              		.loc 2 318 32
+ 836 0026 1B4B     		ldr	r3, .L45+8
+ 837 0028 0022     		movs	r2, #0
+ 838 002a 1A70     		strb	r2, [r3]
+ 319:../Src/radio/lr1110_modem_hal.c **** 
+ 320:../Src/radio/lr1110_modem_hal.c ****     hal_gpio_set_value( ( ( lr1110_t* ) context )->reset.pin, 0 );
+ 839              		.loc 2 320 5
+ 840 002c 7B68     		ldr	r3, [r7, #4]
+ 841 002e B3F90030 		ldrsh	r3, [r3]
+ 842 0032 0021     		movs	r1, #0
+ 843 0034 1846     		mov	r0, r3
+ 844 0036 FFF7FEFF 		bl	hal_gpio_set_value
+ 321:../Src/radio/lr1110_modem_hal.c ****     HAL_Delay( 1 );
+ 845              		.loc 2 321 5
+ 846 003a 0120     		movs	r0, #1
+ 847 003c FFF7FEFF 		bl	HAL_Delay
+ 322:../Src/radio/lr1110_modem_hal.c ****     hal_gpio_set_value( ( ( lr1110_t* ) context )->reset.pin, 1 );
+ 848              		.loc 2 322 5
+ 849 0040 7B68     		ldr	r3, [r7, #4]
+ 850 0042 B3F90030 		ldrsh	r3, [r3]
+ 851 0046 0121     		movs	r1, #1
+ 852 0048 1846     		mov	r0, r3
+ 853 004a FFF7FEFF 		bl	hal_gpio_set_value
+ 323:../Src/radio/lr1110_modem_hal.c **** 
+ 324:../Src/radio/lr1110_modem_hal.c ****     /* wait for reset event */
+ 325:../Src/radio/lr1110_modem_hal.c ****     while( ( lr1110_modem_board_is_ready( ) == false ) && ( lr1110_modem_reset_timeout == false ) )
+ 854              		.loc 2 325 10
+ 855 004e 02E0     		b	.L40
+ 856              	.L42:
+ 326:../Src/radio/lr1110_modem_hal.c ****     {
+ 327:../Src/radio/lr1110_modem_hal.c ****         lr1110_modem_event_process( context );
+ 857              		.loc 2 327 9
+ 858 0050 7868     		ldr	r0, [r7, #4]
+ 859 0052 FFF7FEFF 		bl	lr1110_modem_event_process
+ 860              	.L40:
+ 325:../Src/radio/lr1110_modem_hal.c ****     {
+ 861              		.loc 2 325 14
+ 862 0056 FFF7FEFF 		bl	lr1110_modem_board_is_ready
+ 863 005a 0346     		mov	r3, r0
+ 325:../Src/radio/lr1110_modem_hal.c ****     {
+ 864              		.loc 2 325 45
+ 865 005c 83F00103 		eor	r3, r3, #1
+ 866 0060 DBB2     		uxtb	r3, r3
+ 325:../Src/radio/lr1110_modem_hal.c ****     {
+ 867              		.loc 2 325 10
+ 868 0062 002B     		cmp	r3, #0
+ 869 0064 06D0     		beq	.L41
+ 325:../Src/radio/lr1110_modem_hal.c ****     {
+ 870              		.loc 2 325 88 discriminator 1
+ 871 0066 0B4B     		ldr	r3, .L45+8
+ARM GAS  /tmp/ccEFk68o.s 			page 24
+
+
+ 872 0068 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 873 006a 83F00103 		eor	r3, r3, #1
+ 874 006e DBB2     		uxtb	r3, r3
+ 325:../Src/radio/lr1110_modem_hal.c ****     {
+ 875              		.loc 2 325 56 discriminator 1
+ 876 0070 002B     		cmp	r3, #0
+ 877 0072 EDD1     		bne	.L42
+ 878              	.L41:
+ 328:../Src/radio/lr1110_modem_hal.c ****     }
+ 329:../Src/radio/lr1110_modem_hal.c **** 
+ 330:../Src/radio/lr1110_modem_hal.c ****     if( lr1110_modem_reset_timeout == true )
+ 879              		.loc 2 330 36
+ 880 0074 074B     		ldr	r3, .L45+8
+ 881 0076 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 882              		.loc 2 330 7
+ 883 0078 002B     		cmp	r3, #0
+ 884 007a 01D0     		beq	.L43
+ 331:../Src/radio/lr1110_modem_hal.c ****     {
+ 332:../Src/radio/lr1110_modem_hal.c ****         return LR1110_MODEM_HAL_STATUS_ERROR;
+ 885              		.loc 2 332 16
+ 886 007c 0123     		movs	r3, #1
+ 887 007e 00E0     		b	.L44
+ 888              	.L43:
+ 333:../Src/radio/lr1110_modem_hal.c ****     }
+ 334:../Src/radio/lr1110_modem_hal.c ****     else
+ 335:../Src/radio/lr1110_modem_hal.c ****     {
+ 336:../Src/radio/lr1110_modem_hal.c ****         return LR1110_MODEM_HAL_STATUS_OK;
+ 889              		.loc 2 336 16
+ 890 0080 0023     		movs	r3, #0
+ 891              	.L44:
+ 337:../Src/radio/lr1110_modem_hal.c ****     }
+ 338:../Src/radio/lr1110_modem_hal.c **** }
+ 892              		.loc 2 338 1
+ 893 0082 1846     		mov	r0, r3
+ 894 0084 0837     		adds	r7, r7, #8
+ 895              	.LCFI24:
+ 896              		.cfi_def_cfa_offset 8
+ 897 0086 BD46     		mov	sp, r7
+ 898              	.LCFI25:
+ 899              		.cfi_def_cfa_register 13
+ 900              		@ sp needed
+ 901 0088 80BD     		pop	{r7, pc}
+ 902              	.L46:
+ 903 008a 00BF     		.align	2
+ 904              	.L45:
+ 905 008c 00000000 		.word	on_lr1110_modem_reset_timeout_event
+ 906 0090 00000000 		.word	lr1110_modem_reset_timeout_timer
+ 907 0094 00000000 		.word	lr1110_modem_reset_timeout
+ 908              		.cfi_endproc
+ 909              	.LFE593:
+ 911              		.section	.text.lr1110_modem_hal_enter_dfu,"ax",%progbits
+ 912              		.align	1
+ 913              		.global	lr1110_modem_hal_enter_dfu
+ 914              		.syntax unified
+ 915              		.thumb
+ 916              		.thumb_func
+ 917              		.fpu fpv4-sp-d16
+ARM GAS  /tmp/ccEFk68o.s 			page 25
+
+
+ 919              	lr1110_modem_hal_enter_dfu:
+ 920              	.LFB594:
+ 339:../Src/radio/lr1110_modem_hal.c **** 
+ 340:../Src/radio/lr1110_modem_hal.c **** void lr1110_modem_hal_enter_dfu( const void* context )
+ 341:../Src/radio/lr1110_modem_hal.c **** {
+ 921              		.loc 2 341 1
+ 922              		.cfi_startproc
+ 923              		@ args = 0, pretend = 0, frame = 8
+ 924              		@ frame_needed = 1, uses_anonymous_args = 0
+ 925 0000 80B5     		push	{r7, lr}
+ 926              	.LCFI26:
+ 927              		.cfi_def_cfa_offset 8
+ 928              		.cfi_offset 7, -8
+ 929              		.cfi_offset 14, -4
+ 930 0002 82B0     		sub	sp, sp, #8
+ 931              	.LCFI27:
+ 932              		.cfi_def_cfa_offset 16
+ 933 0004 00AF     		add	r7, sp, #0
+ 934              	.LCFI28:
+ 935              		.cfi_def_cfa_register 7
+ 936 0006 7860     		str	r0, [r7, #4]
+ 342:../Src/radio/lr1110_modem_hal.c ****     /* Force dio0 to 0 */
+ 343:../Src/radio/lr1110_modem_hal.c ****     hal_gpio_init_out( ( ( lr1110_t* ) context )->busy.pin, 0 );
+ 937              		.loc 2 343 5
+ 938 0008 7B68     		ldr	r3, [r7, #4]
+ 939 000a B3F91430 		ldrsh	r3, [r3, #20]
+ 940 000e 0021     		movs	r1, #0
+ 941 0010 1846     		mov	r0, r3
+ 942 0012 FFF7FEFF 		bl	hal_gpio_init_out
+ 344:../Src/radio/lr1110_modem_hal.c **** 
+ 345:../Src/radio/lr1110_modem_hal.c ****     /* reset the chip */
+ 346:../Src/radio/lr1110_modem_hal.c ****     hal_gpio_set_value( ( ( lr1110_t* ) context )->reset.pin, 0 );
+ 943              		.loc 2 346 5
+ 944 0016 7B68     		ldr	r3, [r7, #4]
+ 945 0018 B3F90030 		ldrsh	r3, [r3]
+ 946 001c 0021     		movs	r1, #0
+ 947 001e 1846     		mov	r0, r3
+ 948 0020 FFF7FEFF 		bl	hal_gpio_set_value
+ 347:../Src/radio/lr1110_modem_hal.c ****     HAL_Delay( 1 );
+ 949              		.loc 2 347 5
+ 950 0024 0120     		movs	r0, #1
+ 951 0026 FFF7FEFF 		bl	HAL_Delay
+ 348:../Src/radio/lr1110_modem_hal.c ****     hal_gpio_set_value( ( ( lr1110_t* ) context )->reset.pin, 1 );
+ 952              		.loc 2 348 5
+ 953 002a 7B68     		ldr	r3, [r7, #4]
+ 954 002c B3F90030 		ldrsh	r3, [r3]
+ 955 0030 0121     		movs	r1, #1
+ 956 0032 1846     		mov	r0, r3
+ 957 0034 FFF7FEFF 		bl	hal_gpio_set_value
+ 349:../Src/radio/lr1110_modem_hal.c **** 
+ 350:../Src/radio/lr1110_modem_hal.c ****     /* wait 250ms */
+ 351:../Src/radio/lr1110_modem_hal.c ****     HAL_Delay( 250 );
+ 958              		.loc 2 351 5
+ 959 0038 FA20     		movs	r0, #250
+ 960 003a FFF7FEFF 		bl	HAL_Delay
+ 352:../Src/radio/lr1110_modem_hal.c **** 
+ 353:../Src/radio/lr1110_modem_hal.c ****     /* reinit dio0 */
+ARM GAS  /tmp/ccEFk68o.s 			page 26
+
+
+ 354:../Src/radio/lr1110_modem_hal.c ****     hal_gpio_init_in( ( ( lr1110_t* ) context )->busy.pin, HAL_GPIO_PULL_MODE_NONE, HAL_GPIO_IRQ_MO
+ 961              		.loc 2 354 5
+ 962 003e 7B68     		ldr	r3, [r7, #4]
+ 963 0040 B3F91400 		ldrsh	r0, [r3, #20]
+ 964 0044 0023     		movs	r3, #0
+ 965 0046 0022     		movs	r2, #0
+ 966 0048 0021     		movs	r1, #0
+ 967 004a FFF7FEFF 		bl	hal_gpio_init_in
+ 355:../Src/radio/lr1110_modem_hal.c **** }
+ 968              		.loc 2 355 1
+ 969 004e 00BF     		nop
+ 970 0050 0837     		adds	r7, r7, #8
+ 971              	.LCFI29:
+ 972              		.cfi_def_cfa_offset 8
+ 973 0052 BD46     		mov	sp, r7
+ 974              	.LCFI30:
+ 975              		.cfi_def_cfa_register 13
+ 976              		@ sp needed
+ 977 0054 80BD     		pop	{r7, pc}
+ 978              		.cfi_endproc
+ 979              	.LFE594:
+ 981              		.section	.text.lr1110_modem_hal_wakeup,"ax",%progbits
+ 982              		.align	1
+ 983              		.global	lr1110_modem_hal_wakeup
+ 984              		.syntax unified
+ 985              		.thumb
+ 986              		.thumb_func
+ 987              		.fpu fpv4-sp-d16
+ 989              	lr1110_modem_hal_wakeup:
+ 990              	.LFB595:
+ 356:../Src/radio/lr1110_modem_hal.c **** 
+ 357:../Src/radio/lr1110_modem_hal.c **** lr1110_modem_hal_status_t lr1110_modem_hal_wakeup( const void* context )
+ 358:../Src/radio/lr1110_modem_hal.c **** {
+ 991              		.loc 2 358 1
+ 992              		.cfi_startproc
+ 993              		@ args = 0, pretend = 0, frame = 8
+ 994              		@ frame_needed = 1, uses_anonymous_args = 0
+ 995 0000 80B5     		push	{r7, lr}
+ 996              	.LCFI31:
+ 997              		.cfi_def_cfa_offset 8
+ 998              		.cfi_offset 7, -8
+ 999              		.cfi_offset 14, -4
+ 1000 0002 82B0     		sub	sp, sp, #8
+ 1001              	.LCFI32:
+ 1002              		.cfi_def_cfa_offset 16
+ 1003 0004 00AF     		add	r7, sp, #0
+ 1004              	.LCFI33:
+ 1005              		.cfi_def_cfa_register 7
+ 1006 0006 7860     		str	r0, [r7, #4]
+ 359:../Src/radio/lr1110_modem_hal.c ****     if( lr1110_modem_hal_wait_on_busy( context, 10000 ) == LR1110_MODEM_HAL_STATUS_OK )
+ 1007              		.loc 2 359 9
+ 1008 0008 42F21071 		movw	r1, #10000
+ 1009 000c 7868     		ldr	r0, [r7, #4]
+ 1010 000e FFF7FEFF 		bl	lr1110_modem_hal_wait_on_busy
+ 1011 0012 0346     		mov	r3, r0
+ 1012              		.loc 2 359 7
+ 1013 0014 002B     		cmp	r3, #0
+ARM GAS  /tmp/ccEFk68o.s 			page 27
+
+
+ 1014 0016 14D1     		bne	.L49
+ 360:../Src/radio/lr1110_modem_hal.c ****     {
+ 361:../Src/radio/lr1110_modem_hal.c ****         /* Wakeup radio */
+ 362:../Src/radio/lr1110_modem_hal.c ****         hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 0 );
+ 1015              		.loc 2 362 9
+ 1016 0018 7B68     		ldr	r3, [r7, #4]
+ 1017 001a B3F93430 		ldrsh	r3, [r3, #52]
+ 1018 001e 0021     		movs	r1, #0
+ 1019 0020 1846     		mov	r0, r3
+ 1020 0022 FFF7FEFF 		bl	hal_gpio_set_value
+ 363:../Src/radio/lr1110_modem_hal.c ****         hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 1 );
+ 1021              		.loc 2 363 9
+ 1022 0026 7B68     		ldr	r3, [r7, #4]
+ 1023 0028 B3F93430 		ldrsh	r3, [r3, #52]
+ 1024 002c 0121     		movs	r1, #1
+ 1025 002e 1846     		mov	r0, r3
+ 1026 0030 FFF7FEFF 		bl	hal_gpio_set_value
+ 364:../Src/radio/lr1110_modem_hal.c ****     }
+ 365:../Src/radio/lr1110_modem_hal.c ****     else
+ 366:../Src/radio/lr1110_modem_hal.c ****     {
+ 367:../Src/radio/lr1110_modem_hal.c ****         return LR1110_MODEM_HAL_STATUS_BUSY_TIMEOUT;
+ 368:../Src/radio/lr1110_modem_hal.c ****     }
+ 369:../Src/radio/lr1110_modem_hal.c **** 
+ 370:../Src/radio/lr1110_modem_hal.c ****     /* Wait on busy pin for 1000 ms */
+ 371:../Src/radio/lr1110_modem_hal.c ****     return lr1110_modem_hal_wait_on_unbusy( context, 1000 );
+ 1027              		.loc 2 371 12
+ 1028 0034 4FF47A71 		mov	r1, #1000
+ 1029 0038 7868     		ldr	r0, [r7, #4]
+ 1030 003a FFF7FEFF 		bl	lr1110_modem_hal_wait_on_unbusy
+ 1031 003e 0346     		mov	r3, r0
+ 1032 0040 00E0     		b	.L51
+ 1033              	.L49:
+ 367:../Src/radio/lr1110_modem_hal.c ****     }
+ 1034              		.loc 2 367 16
+ 1035 0042 FF23     		movs	r3, #255
+ 1036              	.L51:
+ 372:../Src/radio/lr1110_modem_hal.c **** }
+ 1037              		.loc 2 372 1
+ 1038 0044 1846     		mov	r0, r3
+ 1039 0046 0837     		adds	r7, r7, #8
+ 1040              	.LCFI34:
+ 1041              		.cfi_def_cfa_offset 8
+ 1042 0048 BD46     		mov	sp, r7
+ 1043              	.LCFI35:
+ 1044              		.cfi_def_cfa_register 13
+ 1045              		@ sp needed
+ 1046 004a 80BD     		pop	{r7, pc}
+ 1047              		.cfi_endproc
+ 1048              	.LFE595:
+ 1050              		.section	.text.lr1110_hal_write,"ax",%progbits
+ 1051              		.align	1
+ 1052              		.global	lr1110_hal_write
+ 1053              		.syntax unified
+ 1054              		.thumb
+ 1055              		.thumb_func
+ 1056              		.fpu fpv4-sp-d16
+ 1058              	lr1110_hal_write:
+ARM GAS  /tmp/ccEFk68o.s 			page 28
+
+
+ 1059              	.LFB596:
+ 373:../Src/radio/lr1110_modem_hal.c **** 
+ 374:../Src/radio/lr1110_modem_hal.c **** /*!
+ 375:../Src/radio/lr1110_modem_hal.c ****  * @brief Bootstrap bootloader and SPI bootloader API implementation
+ 376:../Src/radio/lr1110_modem_hal.c ****  */
+ 377:../Src/radio/lr1110_modem_hal.c **** 
+ 378:../Src/radio/lr1110_modem_hal.c **** lr1110_hal_status_t lr1110_hal_write( const void* context, const uint8_t* command, const uint16_t c
+ 379:../Src/radio/lr1110_modem_hal.c ****                                       const uint8_t* data, const uint16_t data_length )
+ 380:../Src/radio/lr1110_modem_hal.c **** {
+ 1060              		.loc 2 380 1
+ 1061              		.cfi_startproc
+ 1062              		@ args = 4, pretend = 0, frame = 24
+ 1063              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1064 0000 80B5     		push	{r7, lr}
+ 1065              	.LCFI36:
+ 1066              		.cfi_def_cfa_offset 8
+ 1067              		.cfi_offset 7, -8
+ 1068              		.cfi_offset 14, -4
+ 1069 0002 86B0     		sub	sp, sp, #24
+ 1070              	.LCFI37:
+ 1071              		.cfi_def_cfa_offset 32
+ 1072 0004 00AF     		add	r7, sp, #0
+ 1073              	.LCFI38:
+ 1074              		.cfi_def_cfa_register 7
+ 1075 0006 F860     		str	r0, [r7, #12]
+ 1076 0008 B960     		str	r1, [r7, #8]
+ 1077 000a 3B60     		str	r3, [r7]
+ 1078 000c 1346     		mov	r3, r2	@ movhi
+ 1079 000e FB80     		strh	r3, [r7, #6]	@ movhi
+ 381:../Src/radio/lr1110_modem_hal.c ****     if( lr1110_hal_wakeup( context ) == LR1110_HAL_STATUS_OK )
+ 1080              		.loc 2 381 9
+ 1081 0010 F868     		ldr	r0, [r7, #12]
+ 1082 0012 FFF7FEFF 		bl	lr1110_hal_wakeup
+ 1083 0016 0346     		mov	r3, r0
+ 1084              		.loc 2 381 7
+ 1085 0018 002B     		cmp	r3, #0
+ 1086 001a 3ED1     		bne	.L53
+ 382:../Src/radio/lr1110_modem_hal.c ****     {
+ 383:../Src/radio/lr1110_modem_hal.c ****         hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 0 );
+ 1087              		.loc 2 383 9
+ 1088 001c FB68     		ldr	r3, [r7, #12]
+ 1089 001e B3F93430 		ldrsh	r3, [r3, #52]
+ 1090 0022 0021     		movs	r1, #0
+ 1091 0024 1846     		mov	r0, r3
+ 1092 0026 FFF7FEFF 		bl	hal_gpio_set_value
+ 1093              	.LBB13:
+ 384:../Src/radio/lr1110_modem_hal.c ****         for( uint16_t i = 0; i < command_length; i++ )
+ 1094              		.loc 2 384 23
+ 1095 002a 0023     		movs	r3, #0
+ 1096 002c FB82     		strh	r3, [r7, #22]	@ movhi
+ 1097              		.loc 2 384 9
+ 1098 002e 0DE0     		b	.L54
+ 1099              	.L55:
+ 385:../Src/radio/lr1110_modem_hal.c ****         {
+ 386:../Src/radio/lr1110_modem_hal.c ****             hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, command[i] );
+ 1100              		.loc 2 386 13 discriminator 3
+ 1101 0030 FB68     		ldr	r3, [r7, #12]
+ARM GAS  /tmp/ccEFk68o.s 			page 29
+
+
+ 1102 0032 D3F8B800 		ldr	r0, [r3, #184]
+ 1103              		.loc 2 386 71 discriminator 3
+ 1104 0036 FB8A     		ldrh	r3, [r7, #22]
+ 1105 0038 BA68     		ldr	r2, [r7, #8]
+ 1106 003a 1344     		add	r3, r3, r2
+ 1107 003c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1108              		.loc 2 386 13 discriminator 3
+ 1109 003e 9BB2     		uxth	r3, r3
+ 1110 0040 1946     		mov	r1, r3
+ 1111 0042 FFF7FEFF 		bl	hal_spi_in_out
+ 384:../Src/radio/lr1110_modem_hal.c ****         for( uint16_t i = 0; i < command_length; i++ )
+ 1112              		.loc 2 384 51 discriminator 3
+ 1113 0046 FB8A     		ldrh	r3, [r7, #22]
+ 1114 0048 0133     		adds	r3, r3, #1
+ 1115 004a FB82     		strh	r3, [r7, #22]	@ movhi
+ 1116              	.L54:
+ 384:../Src/radio/lr1110_modem_hal.c ****         for( uint16_t i = 0; i < command_length; i++ )
+ 1117              		.loc 2 384 9 discriminator 1
+ 1118 004c FA8A     		ldrh	r2, [r7, #22]
+ 1119 004e FB88     		ldrh	r3, [r7, #6]
+ 1120 0050 9A42     		cmp	r2, r3
+ 1121 0052 EDD3     		bcc	.L55
+ 1122              	.LBE13:
+ 1123              	.LBB14:
+ 387:../Src/radio/lr1110_modem_hal.c ****         }
+ 388:../Src/radio/lr1110_modem_hal.c ****         for( uint16_t i = 0; i < data_length; i++ )
+ 1124              		.loc 2 388 23
+ 1125 0054 0023     		movs	r3, #0
+ 1126 0056 BB82     		strh	r3, [r7, #20]	@ movhi
+ 1127              		.loc 2 388 9
+ 1128 0058 0DE0     		b	.L56
+ 1129              	.L57:
+ 389:../Src/radio/lr1110_modem_hal.c ****         {
+ 390:../Src/radio/lr1110_modem_hal.c ****             hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, data[i] );
+ 1130              		.loc 2 390 13 discriminator 3
+ 1131 005a FB68     		ldr	r3, [r7, #12]
+ 1132 005c D3F8B800 		ldr	r0, [r3, #184]
+ 1133              		.loc 2 390 68 discriminator 3
+ 1134 0060 BB8A     		ldrh	r3, [r7, #20]
+ 1135 0062 3A68     		ldr	r2, [r7]
+ 1136 0064 1344     		add	r3, r3, r2
+ 1137 0066 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1138              		.loc 2 390 13 discriminator 3
+ 1139 0068 9BB2     		uxth	r3, r3
+ 1140 006a 1946     		mov	r1, r3
+ 1141 006c FFF7FEFF 		bl	hal_spi_in_out
+ 388:../Src/radio/lr1110_modem_hal.c ****         {
+ 1142              		.loc 2 388 48 discriminator 3
+ 1143 0070 BB8A     		ldrh	r3, [r7, #20]
+ 1144 0072 0133     		adds	r3, r3, #1
+ 1145 0074 BB82     		strh	r3, [r7, #20]	@ movhi
+ 1146              	.L56:
+ 388:../Src/radio/lr1110_modem_hal.c ****         {
+ 1147              		.loc 2 388 9 discriminator 1
+ 1148 0076 BA8A     		ldrh	r2, [r7, #20]
+ 1149 0078 3B8C     		ldrh	r3, [r7, #32]
+ 1150 007a 9A42     		cmp	r2, r3
+ARM GAS  /tmp/ccEFk68o.s 			page 30
+
+
+ 1151 007c EDD3     		bcc	.L57
+ 1152              	.LBE14:
+ 391:../Src/radio/lr1110_modem_hal.c ****         }
+ 392:../Src/radio/lr1110_modem_hal.c ****         hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 1 );
+ 1153              		.loc 2 392 9
+ 1154 007e FB68     		ldr	r3, [r7, #12]
+ 1155 0080 B3F93430 		ldrsh	r3, [r3, #52]
+ 1156 0084 0121     		movs	r1, #1
+ 1157 0086 1846     		mov	r0, r3
+ 1158 0088 FFF7FEFF 		bl	hal_gpio_set_value
+ 393:../Src/radio/lr1110_modem_hal.c **** 
+ 394:../Src/radio/lr1110_modem_hal.c ****         return lr1110_hal_wait_on_busy( context, 5000 );
+ 1159              		.loc 2 394 16
+ 1160 008c 41F28831 		movw	r1, #5000
+ 1161 0090 F868     		ldr	r0, [r7, #12]
+ 1162 0092 FFF7FEFF 		bl	lr1110_hal_wait_on_busy
+ 1163 0096 0346     		mov	r3, r0
+ 1164 0098 00E0     		b	.L58
+ 1165              	.L53:
+ 395:../Src/radio/lr1110_modem_hal.c ****     }
+ 396:../Src/radio/lr1110_modem_hal.c ****     return LR1110_HAL_STATUS_ERROR;
+ 1166              		.loc 2 396 12
+ 1167 009a 0323     		movs	r3, #3
+ 1168              	.L58:
+ 397:../Src/radio/lr1110_modem_hal.c **** }
+ 1169              		.loc 2 397 1
+ 1170 009c 1846     		mov	r0, r3
+ 1171 009e 1837     		adds	r7, r7, #24
+ 1172              	.LCFI39:
+ 1173              		.cfi_def_cfa_offset 8
+ 1174 00a0 BD46     		mov	sp, r7
+ 1175              	.LCFI40:
+ 1176              		.cfi_def_cfa_register 13
+ 1177              		@ sp needed
+ 1178 00a2 80BD     		pop	{r7, pc}
+ 1179              		.cfi_endproc
+ 1180              	.LFE596:
+ 1182              		.section	.text.lr1110_hal_read,"ax",%progbits
+ 1183              		.align	1
+ 1184              		.global	lr1110_hal_read
+ 1185              		.syntax unified
+ 1186              		.thumb
+ 1187              		.thumb_func
+ 1188              		.fpu fpv4-sp-d16
+ 1190              	lr1110_hal_read:
+ 1191              	.LFB597:
+ 398:../Src/radio/lr1110_modem_hal.c **** 
+ 399:../Src/radio/lr1110_modem_hal.c **** lr1110_hal_status_t lr1110_hal_read( const void* context, const uint8_t* command, const uint16_t co
+ 400:../Src/radio/lr1110_modem_hal.c ****                                      uint8_t* data, const uint16_t data_length )
+ 401:../Src/radio/lr1110_modem_hal.c **** {
+ 1192              		.loc 2 401 1
+ 1193              		.cfi_startproc
+ 1194              		@ args = 4, pretend = 0, frame = 24
+ 1195              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1196 0000 80B5     		push	{r7, lr}
+ 1197              	.LCFI41:
+ 1198              		.cfi_def_cfa_offset 8
+ARM GAS  /tmp/ccEFk68o.s 			page 31
+
+
+ 1199              		.cfi_offset 7, -8
+ 1200              		.cfi_offset 14, -4
+ 1201 0002 86B0     		sub	sp, sp, #24
+ 1202              	.LCFI42:
+ 1203              		.cfi_def_cfa_offset 32
+ 1204 0004 00AF     		add	r7, sp, #0
+ 1205              	.LCFI43:
+ 1206              		.cfi_def_cfa_register 7
+ 1207 0006 F860     		str	r0, [r7, #12]
+ 1208 0008 B960     		str	r1, [r7, #8]
+ 1209 000a 3B60     		str	r3, [r7]
+ 1210 000c 1346     		mov	r3, r2	@ movhi
+ 1211 000e FB80     		strh	r3, [r7, #6]	@ movhi
+ 402:../Src/radio/lr1110_modem_hal.c ****     if( lr1110_hal_wakeup( context ) == LR1110_HAL_STATUS_OK )
+ 1212              		.loc 2 402 9
+ 1213 0010 F868     		ldr	r0, [r7, #12]
+ 1214 0012 FFF7FEFF 		bl	lr1110_hal_wakeup
+ 1215 0016 0346     		mov	r3, r0
+ 1216              		.loc 2 402 7
+ 1217 0018 002B     		cmp	r3, #0
+ 1218 001a 60D1     		bne	.L60
+ 403:../Src/radio/lr1110_modem_hal.c ****     {
+ 404:../Src/radio/lr1110_modem_hal.c ****         hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 0 );
+ 1219              		.loc 2 404 9
+ 1220 001c FB68     		ldr	r3, [r7, #12]
+ 1221 001e B3F93430 		ldrsh	r3, [r3, #52]
+ 1222 0022 0021     		movs	r1, #0
+ 1223 0024 1846     		mov	r0, r3
+ 1224 0026 FFF7FEFF 		bl	hal_gpio_set_value
+ 1225              	.LBB15:
+ 405:../Src/radio/lr1110_modem_hal.c **** 
+ 406:../Src/radio/lr1110_modem_hal.c ****         for( uint16_t i = 0; i < command_length; i++ )
+ 1226              		.loc 2 406 23
+ 1227 002a 0023     		movs	r3, #0
+ 1228 002c FB82     		strh	r3, [r7, #22]	@ movhi
+ 1229              		.loc 2 406 9
+ 1230 002e 0DE0     		b	.L61
+ 1231              	.L62:
+ 407:../Src/radio/lr1110_modem_hal.c ****         {
+ 408:../Src/radio/lr1110_modem_hal.c ****             hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, command[i] );
+ 1232              		.loc 2 408 13 discriminator 3
+ 1233 0030 FB68     		ldr	r3, [r7, #12]
+ 1234 0032 D3F8B800 		ldr	r0, [r3, #184]
+ 1235              		.loc 2 408 71 discriminator 3
+ 1236 0036 FB8A     		ldrh	r3, [r7, #22]
+ 1237 0038 BA68     		ldr	r2, [r7, #8]
+ 1238 003a 1344     		add	r3, r3, r2
+ 1239 003c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1240              		.loc 2 408 13 discriminator 3
+ 1241 003e 9BB2     		uxth	r3, r3
+ 1242 0040 1946     		mov	r1, r3
+ 1243 0042 FFF7FEFF 		bl	hal_spi_in_out
+ 406:../Src/radio/lr1110_modem_hal.c ****         {
+ 1244              		.loc 2 406 51 discriminator 3
+ 1245 0046 FB8A     		ldrh	r3, [r7, #22]
+ 1246 0048 0133     		adds	r3, r3, #1
+ 1247 004a FB82     		strh	r3, [r7, #22]	@ movhi
+ARM GAS  /tmp/ccEFk68o.s 			page 32
+
+
+ 1248              	.L61:
+ 406:../Src/radio/lr1110_modem_hal.c ****         {
+ 1249              		.loc 2 406 9 discriminator 1
+ 1250 004c FA8A     		ldrh	r2, [r7, #22]
+ 1251 004e FB88     		ldrh	r3, [r7, #6]
+ 1252 0050 9A42     		cmp	r2, r3
+ 1253 0052 EDD3     		bcc	.L62
+ 1254              	.LBE15:
+ 409:../Src/radio/lr1110_modem_hal.c ****         }
+ 410:../Src/radio/lr1110_modem_hal.c **** 
+ 411:../Src/radio/lr1110_modem_hal.c ****         hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 1 );
+ 1255              		.loc 2 411 9
+ 1256 0054 FB68     		ldr	r3, [r7, #12]
+ 1257 0056 B3F93430 		ldrsh	r3, [r3, #52]
+ 1258 005a 0121     		movs	r1, #1
+ 1259 005c 1846     		mov	r0, r3
+ 1260 005e FFF7FEFF 		bl	hal_gpio_set_value
+ 412:../Src/radio/lr1110_modem_hal.c **** 
+ 413:../Src/radio/lr1110_modem_hal.c ****         if( lr1110_hal_wait_on_busy( context, 5000 ) != LR1110_HAL_STATUS_OK )
+ 1261              		.loc 2 413 13
+ 1262 0062 41F28831 		movw	r1, #5000
+ 1263 0066 F868     		ldr	r0, [r7, #12]
+ 1264 0068 FFF7FEFF 		bl	lr1110_hal_wait_on_busy
+ 1265 006c 0346     		mov	r3, r0
+ 1266              		.loc 2 413 11
+ 1267 006e 002B     		cmp	r3, #0
+ 1268 0070 01D0     		beq	.L63
+ 414:../Src/radio/lr1110_modem_hal.c ****         {
+ 415:../Src/radio/lr1110_modem_hal.c ****             return LR1110_HAL_STATUS_ERROR;
+ 1269              		.loc 2 415 20
+ 1270 0072 0323     		movs	r3, #3
+ 1271 0074 34E0     		b	.L64
+ 1272              	.L63:
+ 416:../Src/radio/lr1110_modem_hal.c ****         }
+ 417:../Src/radio/lr1110_modem_hal.c **** 
+ 418:../Src/radio/lr1110_modem_hal.c ****         /* Send dummy byte */
+ 419:../Src/radio/lr1110_modem_hal.c ****         hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 0 );
+ 1273              		.loc 2 419 9
+ 1274 0076 FB68     		ldr	r3, [r7, #12]
+ 1275 0078 B3F93430 		ldrsh	r3, [r3, #52]
+ 1276 007c 0021     		movs	r1, #0
+ 1277 007e 1846     		mov	r0, r3
+ 1278 0080 FFF7FEFF 		bl	hal_gpio_set_value
+ 420:../Src/radio/lr1110_modem_hal.c **** 
+ 421:../Src/radio/lr1110_modem_hal.c ****         hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, 0 );
+ 1279              		.loc 2 421 9
+ 1280 0084 FB68     		ldr	r3, [r7, #12]
+ 1281 0086 D3F8B830 		ldr	r3, [r3, #184]
+ 1282 008a 0021     		movs	r1, #0
+ 1283 008c 1846     		mov	r0, r3
+ 1284 008e FFF7FEFF 		bl	hal_spi_in_out
+ 1285              	.LBB16:
+ 422:../Src/radio/lr1110_modem_hal.c **** 
+ 423:../Src/radio/lr1110_modem_hal.c ****         for( uint16_t i = 0; i < data_length; i++ )
+ 1286              		.loc 2 423 23
+ 1287 0092 0023     		movs	r3, #0
+ 1288 0094 BB82     		strh	r3, [r7, #20]	@ movhi
+ARM GAS  /tmp/ccEFk68o.s 			page 33
+
+
+ 1289              		.loc 2 423 9
+ 1290 0096 10E0     		b	.L65
+ 1291              	.L66:
+ 424:../Src/radio/lr1110_modem_hal.c ****         {
+ 425:../Src/radio/lr1110_modem_hal.c ****             data[i] = hal_spi_in_out( ( ( lr1110_t* ) context )->spi_id, 0 );
+ 1292              		.loc 2 425 23 discriminator 3
+ 1293 0098 FB68     		ldr	r3, [r7, #12]
+ 1294 009a D3F8B830 		ldr	r3, [r3, #184]
+ 1295 009e 0021     		movs	r1, #0
+ 1296 00a0 1846     		mov	r0, r3
+ 1297 00a2 FFF7FEFF 		bl	hal_spi_in_out
+ 1298 00a6 0346     		mov	r3, r0
+ 1299 00a8 1946     		mov	r1, r3
+ 1300              		.loc 2 425 17 discriminator 3
+ 1301 00aa BB8A     		ldrh	r3, [r7, #20]
+ 1302 00ac 3A68     		ldr	r2, [r7]
+ 1303 00ae 1344     		add	r3, r3, r2
+ 1304              		.loc 2 425 21 discriminator 3
+ 1305 00b0 CAB2     		uxtb	r2, r1
+ 1306 00b2 1A70     		strb	r2, [r3]
+ 423:../Src/radio/lr1110_modem_hal.c ****         {
+ 1307              		.loc 2 423 48 discriminator 3
+ 1308 00b4 BB8A     		ldrh	r3, [r7, #20]
+ 1309 00b6 0133     		adds	r3, r3, #1
+ 1310 00b8 BB82     		strh	r3, [r7, #20]	@ movhi
+ 1311              	.L65:
+ 423:../Src/radio/lr1110_modem_hal.c ****         {
+ 1312              		.loc 2 423 9 discriminator 1
+ 1313 00ba BA8A     		ldrh	r2, [r7, #20]
+ 1314 00bc 3B8C     		ldrh	r3, [r7, #32]
+ 1315 00be 9A42     		cmp	r2, r3
+ 1316 00c0 EAD3     		bcc	.L66
+ 1317              	.LBE16:
+ 426:../Src/radio/lr1110_modem_hal.c ****         }
+ 427:../Src/radio/lr1110_modem_hal.c **** 
+ 428:../Src/radio/lr1110_modem_hal.c ****         hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 1 );
+ 1318              		.loc 2 428 9
+ 1319 00c2 FB68     		ldr	r3, [r7, #12]
+ 1320 00c4 B3F93430 		ldrsh	r3, [r3, #52]
+ 1321 00c8 0121     		movs	r1, #1
+ 1322 00ca 1846     		mov	r0, r3
+ 1323 00cc FFF7FEFF 		bl	hal_gpio_set_value
+ 429:../Src/radio/lr1110_modem_hal.c **** 
+ 430:../Src/radio/lr1110_modem_hal.c ****         return lr1110_hal_wait_on_busy( context, 5000 );
+ 1324              		.loc 2 430 16
+ 1325 00d0 41F28831 		movw	r1, #5000
+ 1326 00d4 F868     		ldr	r0, [r7, #12]
+ 1327 00d6 FFF7FEFF 		bl	lr1110_hal_wait_on_busy
+ 1328 00da 0346     		mov	r3, r0
+ 1329 00dc 00E0     		b	.L64
+ 1330              	.L60:
+ 431:../Src/radio/lr1110_modem_hal.c ****     }
+ 432:../Src/radio/lr1110_modem_hal.c ****     return LR1110_HAL_STATUS_ERROR;
+ 1331              		.loc 2 432 12
+ 1332 00de 0323     		movs	r3, #3
+ 1333              	.L64:
+ 433:../Src/radio/lr1110_modem_hal.c **** }
+ARM GAS  /tmp/ccEFk68o.s 			page 34
+
+
+ 1334              		.loc 2 433 1
+ 1335 00e0 1846     		mov	r0, r3
+ 1336 00e2 1837     		adds	r7, r7, #24
+ 1337              	.LCFI44:
+ 1338              		.cfi_def_cfa_offset 8
+ 1339 00e4 BD46     		mov	sp, r7
+ 1340              	.LCFI45:
+ 1341              		.cfi_def_cfa_register 13
+ 1342              		@ sp needed
+ 1343 00e6 80BD     		pop	{r7, pc}
+ 1344              		.cfi_endproc
+ 1345              	.LFE597:
+ 1347              		.section	.text.lr1110_hal_wakeup,"ax",%progbits
+ 1348              		.align	1
+ 1349              		.global	lr1110_hal_wakeup
+ 1350              		.syntax unified
+ 1351              		.thumb
+ 1352              		.thumb_func
+ 1353              		.fpu fpv4-sp-d16
+ 1355              	lr1110_hal_wakeup:
+ 1356              	.LFB598:
+ 434:../Src/radio/lr1110_modem_hal.c **** 
+ 435:../Src/radio/lr1110_modem_hal.c **** lr1110_hal_status_t lr1110_hal_wakeup( const void* context )
+ 436:../Src/radio/lr1110_modem_hal.c **** {
+ 1357              		.loc 2 436 1
+ 1358              		.cfi_startproc
+ 1359              		@ args = 0, pretend = 0, frame = 8
+ 1360              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1361 0000 80B5     		push	{r7, lr}
+ 1362              	.LCFI46:
+ 1363              		.cfi_def_cfa_offset 8
+ 1364              		.cfi_offset 7, -8
+ 1365              		.cfi_offset 14, -4
+ 1366 0002 82B0     		sub	sp, sp, #8
+ 1367              	.LCFI47:
+ 1368              		.cfi_def_cfa_offset 16
+ 1369 0004 00AF     		add	r7, sp, #0
+ 1370              	.LCFI48:
+ 1371              		.cfi_def_cfa_register 7
+ 1372 0006 7860     		str	r0, [r7, #4]
+ 437:../Src/radio/lr1110_modem_hal.c ****     /* Wakeup radio */
+ 438:../Src/radio/lr1110_modem_hal.c ****     hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 0 );
+ 1373              		.loc 2 438 5
+ 1374 0008 7B68     		ldr	r3, [r7, #4]
+ 1375 000a B3F93430 		ldrsh	r3, [r3, #52]
+ 1376 000e 0021     		movs	r1, #0
+ 1377 0010 1846     		mov	r0, r3
+ 1378 0012 FFF7FEFF 		bl	hal_gpio_set_value
+ 439:../Src/radio/lr1110_modem_hal.c ****     hal_gpio_set_value( ( ( lr1110_t* ) context )->nss.pin, 1 );
+ 1379              		.loc 2 439 5
+ 1380 0016 7B68     		ldr	r3, [r7, #4]
+ 1381 0018 B3F93430 		ldrsh	r3, [r3, #52]
+ 1382 001c 0121     		movs	r1, #1
+ 1383 001e 1846     		mov	r0, r3
+ 1384 0020 FFF7FEFF 		bl	hal_gpio_set_value
+ 440:../Src/radio/lr1110_modem_hal.c **** 
+ 441:../Src/radio/lr1110_modem_hal.c ****     /* Wait on busy pin for 5000 ms */
+ARM GAS  /tmp/ccEFk68o.s 			page 35
+
+
+ 442:../Src/radio/lr1110_modem_hal.c ****     return lr1110_hal_wait_on_busy( context, 5000 );
+ 1385              		.loc 2 442 12
+ 1386 0024 41F28831 		movw	r1, #5000
+ 1387 0028 7868     		ldr	r0, [r7, #4]
+ 1388 002a FFF7FEFF 		bl	lr1110_hal_wait_on_busy
+ 1389 002e 0346     		mov	r3, r0
+ 443:../Src/radio/lr1110_modem_hal.c **** }
+ 1390              		.loc 2 443 1
+ 1391 0030 1846     		mov	r0, r3
+ 1392 0032 0837     		adds	r7, r7, #8
+ 1393              	.LCFI49:
+ 1394              		.cfi_def_cfa_offset 8
+ 1395 0034 BD46     		mov	sp, r7
+ 1396              	.LCFI50:
+ 1397              		.cfi_def_cfa_register 13
+ 1398              		@ sp needed
+ 1399 0036 80BD     		pop	{r7, pc}
+ 1400              		.cfi_endproc
+ 1401              	.LFE598:
+ 1403              		.section	.text.lr1110_hal_reset,"ax",%progbits
+ 1404              		.align	1
+ 1405              		.global	lr1110_hal_reset
+ 1406              		.syntax unified
+ 1407              		.thumb
+ 1408              		.thumb_func
+ 1409              		.fpu fpv4-sp-d16
+ 1411              	lr1110_hal_reset:
+ 1412              	.LFB599:
+ 444:../Src/radio/lr1110_modem_hal.c **** 
+ 445:../Src/radio/lr1110_modem_hal.c **** lr1110_hal_status_t lr1110_hal_reset( const void* context )
+ 446:../Src/radio/lr1110_modem_hal.c **** {
+ 1413              		.loc 2 446 1
+ 1414              		.cfi_startproc
+ 1415              		@ args = 0, pretend = 0, frame = 8
+ 1416              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1417 0000 80B5     		push	{r7, lr}
+ 1418              	.LCFI51:
+ 1419              		.cfi_def_cfa_offset 8
+ 1420              		.cfi_offset 7, -8
+ 1421              		.cfi_offset 14, -4
+ 1422 0002 82B0     		sub	sp, sp, #8
+ 1423              	.LCFI52:
+ 1424              		.cfi_def_cfa_offset 16
+ 1425 0004 00AF     		add	r7, sp, #0
+ 1426              	.LCFI53:
+ 1427              		.cfi_def_cfa_register 7
+ 1428 0006 7860     		str	r0, [r7, #4]
+ 447:../Src/radio/lr1110_modem_hal.c ****     hal_gpio_set_value( ( ( lr1110_t* ) context )->reset.pin, 0 );
+ 1429              		.loc 2 447 5
+ 1430 0008 7B68     		ldr	r3, [r7, #4]
+ 1431 000a B3F90030 		ldrsh	r3, [r3]
+ 1432 000e 0021     		movs	r1, #0
+ 1433 0010 1846     		mov	r0, r3
+ 1434 0012 FFF7FEFF 		bl	hal_gpio_set_value
+ 448:../Src/radio/lr1110_modem_hal.c ****     HAL_Delay( 1 );
+ 1435              		.loc 2 448 5
+ 1436 0016 0120     		movs	r0, #1
+ARM GAS  /tmp/ccEFk68o.s 			page 36
+
+
+ 1437 0018 FFF7FEFF 		bl	HAL_Delay
+ 449:../Src/radio/lr1110_modem_hal.c ****     hal_gpio_set_value( ( ( lr1110_t* ) context )->reset.pin, 1 );
+ 1438              		.loc 2 449 5
+ 1439 001c 7B68     		ldr	r3, [r7, #4]
+ 1440 001e B3F90030 		ldrsh	r3, [r3]
+ 1441 0022 0121     		movs	r1, #1
+ 1442 0024 1846     		mov	r0, r3
+ 1443 0026 FFF7FEFF 		bl	hal_gpio_set_value
+ 450:../Src/radio/lr1110_modem_hal.c **** 
+ 451:../Src/radio/lr1110_modem_hal.c ****     return LR1110_HAL_STATUS_OK;
+ 1444              		.loc 2 451 12
+ 1445 002a 0023     		movs	r3, #0
+ 452:../Src/radio/lr1110_modem_hal.c **** }
+ 1446              		.loc 2 452 1
+ 1447 002c 1846     		mov	r0, r3
+ 1448 002e 0837     		adds	r7, r7, #8
+ 1449              	.LCFI54:
+ 1450              		.cfi_def_cfa_offset 8
+ 1451 0030 BD46     		mov	sp, r7
+ 1452              	.LCFI55:
+ 1453              		.cfi_def_cfa_register 13
+ 1454              		@ sp needed
+ 1455 0032 80BD     		pop	{r7, pc}
+ 1456              		.cfi_endproc
+ 1457              	.LFE599:
+ 1459              		.section	.text.on_lr1110_modem_reset_timeout_event,"ax",%progbits
+ 1460              		.align	1
+ 1461              		.syntax unified
+ 1462              		.thumb
+ 1463              		.thumb_func
+ 1464              		.fpu fpv4-sp-d16
+ 1466              	on_lr1110_modem_reset_timeout_event:
+ 1467              	.LFB600:
+ 453:../Src/radio/lr1110_modem_hal.c **** 
+ 454:../Src/radio/lr1110_modem_hal.c **** /*
+ 455:../Src/radio/lr1110_modem_hal.c ****  * -----------------------------------------------------------------------------
+ 456:../Src/radio/lr1110_modem_hal.c ****  * --- PRIVATE FUNCTIONS DEFINITION --------------------------------------------
+ 457:../Src/radio/lr1110_modem_hal.c ****  */
+ 458:../Src/radio/lr1110_modem_hal.c **** 
+ 459:../Src/radio/lr1110_modem_hal.c **** static void on_lr1110_modem_reset_timeout_event( void* context ) { lr1110_modem_reset_timeout = tru
+ 1468              		.loc 2 459 66
+ 1469              		.cfi_startproc
+ 1470              		@ args = 0, pretend = 0, frame = 8
+ 1471              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1472              		@ link register save eliminated.
+ 1473 0000 80B4     		push	{r7}
+ 1474              	.LCFI56:
+ 1475              		.cfi_def_cfa_offset 4
+ 1476              		.cfi_offset 7, -4
+ 1477 0002 83B0     		sub	sp, sp, #12
+ 1478              	.LCFI57:
+ 1479              		.cfi_def_cfa_offset 16
+ 1480 0004 00AF     		add	r7, sp, #0
+ 1481              	.LCFI58:
+ 1482              		.cfi_def_cfa_register 7
+ 1483 0006 7860     		str	r0, [r7, #4]
+ 1484              		.loc 2 459 95
+ARM GAS  /tmp/ccEFk68o.s 			page 37
+
+
+ 1485 0008 044B     		ldr	r3, .L72
+ 1486 000a 0122     		movs	r2, #1
+ 1487 000c 1A70     		strb	r2, [r3]
+ 1488              		.loc 2 459 103
+ 1489 000e 00BF     		nop
+ 1490 0010 0C37     		adds	r7, r7, #12
+ 1491              	.LCFI59:
+ 1492              		.cfi_def_cfa_offset 4
+ 1493 0012 BD46     		mov	sp, r7
+ 1494              	.LCFI60:
+ 1495              		.cfi_def_cfa_register 13
+ 1496              		@ sp needed
+ 1497 0014 5DF8047B 		ldr	r7, [sp], #4
+ 1498              	.LCFI61:
+ 1499              		.cfi_restore 7
+ 1500              		.cfi_def_cfa_offset 0
+ 1501 0018 7047     		bx	lr
+ 1502              	.L73:
+ 1503 001a 00BF     		.align	2
+ 1504              	.L72:
+ 1505 001c 00000000 		.word	lr1110_modem_reset_timeout
+ 1506              		.cfi_endproc
+ 1507              	.LFE600:
+ 1509              		.section	.text.lr1110_hal_wait_on_busy,"ax",%progbits
+ 1510              		.align	1
+ 1511              		.syntax unified
+ 1512              		.thumb
+ 1513              		.thumb_func
+ 1514              		.fpu fpv4-sp-d16
+ 1516              	lr1110_hal_wait_on_busy:
+ 1517              	.LFB601:
+ 460:../Src/radio/lr1110_modem_hal.c **** 
+ 461:../Src/radio/lr1110_modem_hal.c **** static lr1110_hal_status_t lr1110_hal_wait_on_busy( const void* context, uint32_t timeout_ms )
+ 462:../Src/radio/lr1110_modem_hal.c **** {
+ 1518              		.loc 2 462 1
+ 1519              		.cfi_startproc
+ 1520              		@ args = 0, pretend = 0, frame = 16
+ 1521              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1522 0000 80B5     		push	{r7, lr}
+ 1523              	.LCFI62:
+ 1524              		.cfi_def_cfa_offset 8
+ 1525              		.cfi_offset 7, -8
+ 1526              		.cfi_offset 14, -4
+ 1527 0002 84B0     		sub	sp, sp, #16
+ 1528              	.LCFI63:
+ 1529              		.cfi_def_cfa_offset 24
+ 1530 0004 00AF     		add	r7, sp, #0
+ 1531              	.LCFI64:
+ 1532              		.cfi_def_cfa_register 7
+ 1533 0006 7860     		str	r0, [r7, #4]
+ 1534 0008 3960     		str	r1, [r7]
+ 463:../Src/radio/lr1110_modem_hal.c **** #if 0
+ 464:../Src/radio/lr1110_modem_hal.c ****     while( hal_gpio_get_value( ( ( lr1110_t* ) context )->busy.pin ) == 1 )
+ 465:../Src/radio/lr1110_modem_hal.c ****     {
+ 466:../Src/radio/lr1110_modem_hal.c ****         ;
+ 467:../Src/radio/lr1110_modem_hal.c ****     }
+ 468:../Src/radio/lr1110_modem_hal.c **** #else
+ARM GAS  /tmp/ccEFk68o.s 			page 38
+
+
+ 469:../Src/radio/lr1110_modem_hal.c ****     uint32_t start = hal_rtc_get_time_ms( );
+ 1535              		.loc 2 469 22
+ 1536 000a FFF7FEFF 		bl	hal_rtc_get_time_ms
+ 1537 000e F860     		str	r0, [r7, #12]
+ 470:../Src/radio/lr1110_modem_hal.c ****     while( hal_gpio_get_value( ( ( lr1110_t* ) context )->busy.pin ) == 1 )
+ 1538              		.loc 2 470 10
+ 1539 0010 0AE0     		b	.L75
+ 1540              	.L77:
+ 471:../Src/radio/lr1110_modem_hal.c ****     {
+ 472:../Src/radio/lr1110_modem_hal.c ****         if( ( int32_t )( hal_rtc_get_time_ms( ) - start ) > ( int32_t ) timeout_ms )
+ 1541              		.loc 2 472 26
+ 1542 0012 FFF7FEFF 		bl	hal_rtc_get_time_ms
+ 1543 0016 0246     		mov	r2, r0
+ 1544              		.loc 2 472 49
+ 1545 0018 FB68     		ldr	r3, [r7, #12]
+ 1546 001a D31A     		subs	r3, r2, r3
+ 1547              		.loc 2 472 13
+ 1548 001c 1A46     		mov	r2, r3
+ 1549              		.loc 2 472 61
+ 1550 001e 3B68     		ldr	r3, [r7]
+ 1551              		.loc 2 472 11
+ 1552 0020 9A42     		cmp	r2, r3
+ 1553 0022 01DD     		ble	.L75
+ 473:../Src/radio/lr1110_modem_hal.c ****         {
+ 474:../Src/radio/lr1110_modem_hal.c ****             return LR1110_HAL_STATUS_ERROR;
+ 1554              		.loc 2 474 20
+ 1555 0024 0323     		movs	r3, #3
+ 1556 0026 09E0     		b	.L76
+ 1557              	.L75:
+ 470:../Src/radio/lr1110_modem_hal.c ****     {
+ 1558              		.loc 2 470 12
+ 1559 0028 7B68     		ldr	r3, [r7, #4]
+ 1560 002a B3F91430 		ldrsh	r3, [r3, #20]
+ 1561 002e 1846     		mov	r0, r3
+ 1562 0030 FFF7FEFF 		bl	hal_gpio_get_value
+ 1563 0034 0346     		mov	r3, r0
+ 470:../Src/radio/lr1110_modem_hal.c ****     {
+ 1564              		.loc 2 470 10
+ 1565 0036 012B     		cmp	r3, #1
+ 1566 0038 EBD0     		beq	.L77
+ 475:../Src/radio/lr1110_modem_hal.c ****         }
+ 476:../Src/radio/lr1110_modem_hal.c ****     }
+ 477:../Src/radio/lr1110_modem_hal.c **** #endif
+ 478:../Src/radio/lr1110_modem_hal.c ****     return LR1110_HAL_STATUS_OK;
+ 1567              		.loc 2 478 12
+ 1568 003a 0023     		movs	r3, #0
+ 1569              	.L76:
+ 479:../Src/radio/lr1110_modem_hal.c **** }
+ 1570              		.loc 2 479 1
+ 1571 003c 1846     		mov	r0, r3
+ 1572 003e 1037     		adds	r7, r7, #16
+ 1573              	.LCFI65:
+ 1574              		.cfi_def_cfa_offset 8
+ 1575 0040 BD46     		mov	sp, r7
+ 1576              	.LCFI66:
+ 1577              		.cfi_def_cfa_register 13
+ 1578              		@ sp needed
+ARM GAS  /tmp/ccEFk68o.s 			page 39
+
+
+ 1579 0042 80BD     		pop	{r7, pc}
+ 1580              		.cfi_endproc
+ 1581              	.LFE601:
+ 1583              		.section	.text.lr1110_modem_hal_wait_on_busy,"ax",%progbits
+ 1584              		.align	1
+ 1585              		.syntax unified
+ 1586              		.thumb
+ 1587              		.thumb_func
+ 1588              		.fpu fpv4-sp-d16
+ 1590              	lr1110_modem_hal_wait_on_busy:
+ 1591              	.LFB602:
+ 480:../Src/radio/lr1110_modem_hal.c **** 
+ 481:../Src/radio/lr1110_modem_hal.c **** static lr1110_modem_hal_status_t lr1110_modem_hal_wait_on_busy( const void* context, uint32_t timeo
+ 482:../Src/radio/lr1110_modem_hal.c **** {
+ 1592              		.loc 2 482 1
+ 1593              		.cfi_startproc
+ 1594              		@ args = 0, pretend = 0, frame = 16
+ 1595              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1596 0000 80B5     		push	{r7, lr}
+ 1597              	.LCFI67:
+ 1598              		.cfi_def_cfa_offset 8
+ 1599              		.cfi_offset 7, -8
+ 1600              		.cfi_offset 14, -4
+ 1601 0002 84B0     		sub	sp, sp, #16
+ 1602              	.LCFI68:
+ 1603              		.cfi_def_cfa_offset 24
+ 1604 0004 00AF     		add	r7, sp, #0
+ 1605              	.LCFI69:
+ 1606              		.cfi_def_cfa_register 7
+ 1607 0006 7860     		str	r0, [r7, #4]
+ 1608 0008 3960     		str	r1, [r7]
+ 483:../Src/radio/lr1110_modem_hal.c **** #if 0
+ 484:../Src/radio/lr1110_modem_hal.c ****     while( hal_gpio_get_value( ( ( lr1110_t* ) context )->busy.pin ) == 0 )
+ 485:../Src/radio/lr1110_modem_hal.c ****     {
+ 486:../Src/radio/lr1110_modem_hal.c ****         ;
+ 487:../Src/radio/lr1110_modem_hal.c ****     }
+ 488:../Src/radio/lr1110_modem_hal.c **** #else
+ 489:../Src/radio/lr1110_modem_hal.c ****     uint32_t start   = hal_rtc_get_time_ms( );
+ 1609              		.loc 2 489 24
+ 1610 000a FFF7FEFF 		bl	hal_rtc_get_time_ms
+ 1611 000e F860     		str	r0, [r7, #12]
+ 490:../Src/radio/lr1110_modem_hal.c ****     uint32_t current = 0;
+ 1612              		.loc 2 490 14
+ 1613 0010 0023     		movs	r3, #0
+ 1614 0012 BB60     		str	r3, [r7, #8]
+ 491:../Src/radio/lr1110_modem_hal.c ****     while( hal_gpio_get_value( ( ( lr1110_t* ) context )->busy.pin ) == 0 )
+ 1615              		.loc 2 491 10
+ 1616 0014 0BE0     		b	.L79
+ 1617              	.L81:
+ 492:../Src/radio/lr1110_modem_hal.c ****     {
+ 493:../Src/radio/lr1110_modem_hal.c ****         current = hal_rtc_get_time_ms( );
+ 1618              		.loc 2 493 19
+ 1619 0016 FFF7FEFF 		bl	hal_rtc_get_time_ms
+ 1620 001a B860     		str	r0, [r7, #8]
+ 494:../Src/radio/lr1110_modem_hal.c ****         if( ( int32_t )( current - start ) > ( int32_t ) timeout_ms )
+ 1621              		.loc 2 494 34
+ 1622 001c BA68     		ldr	r2, [r7, #8]
+ARM GAS  /tmp/ccEFk68o.s 			page 40
+
+
+ 1623 001e FB68     		ldr	r3, [r7, #12]
+ 1624 0020 D31A     		subs	r3, r2, r3
+ 1625              		.loc 2 494 13
+ 1626 0022 1A46     		mov	r2, r3
+ 1627              		.loc 2 494 46
+ 1628 0024 3B68     		ldr	r3, [r7]
+ 1629              		.loc 2 494 11
+ 1630 0026 9A42     		cmp	r2, r3
+ 1631 0028 01DD     		ble	.L79
+ 495:../Src/radio/lr1110_modem_hal.c ****         {
+ 496:../Src/radio/lr1110_modem_hal.c ****             return LR1110_MODEM_HAL_STATUS_ERROR;
+ 1632              		.loc 2 496 20
+ 1633 002a 0123     		movs	r3, #1
+ 1634 002c 09E0     		b	.L80
+ 1635              	.L79:
+ 491:../Src/radio/lr1110_modem_hal.c ****     {
+ 1636              		.loc 2 491 12
+ 1637 002e 7B68     		ldr	r3, [r7, #4]
+ 1638 0030 B3F91430 		ldrsh	r3, [r3, #20]
+ 1639 0034 1846     		mov	r0, r3
+ 1640 0036 FFF7FEFF 		bl	hal_gpio_get_value
+ 1641 003a 0346     		mov	r3, r0
+ 491:../Src/radio/lr1110_modem_hal.c ****     {
+ 1642              		.loc 2 491 10
+ 1643 003c 002B     		cmp	r3, #0
+ 1644 003e EAD0     		beq	.L81
+ 497:../Src/radio/lr1110_modem_hal.c ****         }
+ 498:../Src/radio/lr1110_modem_hal.c ****     }
+ 499:../Src/radio/lr1110_modem_hal.c **** #endif
+ 500:../Src/radio/lr1110_modem_hal.c ****     return LR1110_MODEM_HAL_STATUS_OK;
+ 1645              		.loc 2 500 12
+ 1646 0040 0023     		movs	r3, #0
+ 1647              	.L80:
+ 501:../Src/radio/lr1110_modem_hal.c **** }
+ 1648              		.loc 2 501 1
+ 1649 0042 1846     		mov	r0, r3
+ 1650 0044 1037     		adds	r7, r7, #16
+ 1651              	.LCFI70:
+ 1652              		.cfi_def_cfa_offset 8
+ 1653 0046 BD46     		mov	sp, r7
+ 1654              	.LCFI71:
+ 1655              		.cfi_def_cfa_register 13
+ 1656              		@ sp needed
+ 1657 0048 80BD     		pop	{r7, pc}
+ 1658              		.cfi_endproc
+ 1659              	.LFE602:
+ 1661              		.section	.text.lr1110_modem_hal_wait_on_unbusy,"ax",%progbits
+ 1662              		.align	1
+ 1663              		.syntax unified
+ 1664              		.thumb
+ 1665              		.thumb_func
+ 1666              		.fpu fpv4-sp-d16
+ 1668              	lr1110_modem_hal_wait_on_unbusy:
+ 1669              	.LFB603:
+ 502:../Src/radio/lr1110_modem_hal.c **** 
+ 503:../Src/radio/lr1110_modem_hal.c **** static lr1110_modem_hal_status_t lr1110_modem_hal_wait_on_unbusy( const void* context, uint32_t tim
+ 504:../Src/radio/lr1110_modem_hal.c **** {
+ARM GAS  /tmp/ccEFk68o.s 			page 41
+
+
+ 1670              		.loc 2 504 1
+ 1671              		.cfi_startproc
+ 1672              		@ args = 0, pretend = 0, frame = 16
+ 1673              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1674 0000 80B5     		push	{r7, lr}
+ 1675              	.LCFI72:
+ 1676              		.cfi_def_cfa_offset 8
+ 1677              		.cfi_offset 7, -8
+ 1678              		.cfi_offset 14, -4
+ 1679 0002 84B0     		sub	sp, sp, #16
+ 1680              	.LCFI73:
+ 1681              		.cfi_def_cfa_offset 24
+ 1682 0004 00AF     		add	r7, sp, #0
+ 1683              	.LCFI74:
+ 1684              		.cfi_def_cfa_register 7
+ 1685 0006 7860     		str	r0, [r7, #4]
+ 1686 0008 3960     		str	r1, [r7]
+ 505:../Src/radio/lr1110_modem_hal.c **** #if 0
+ 506:../Src/radio/lr1110_modem_hal.c ****     while( hal_gpio_get_value( ( ( lr1110_t* ) context )->busy.pin ) == 1 )
+ 507:../Src/radio/lr1110_modem_hal.c ****     {
+ 508:../Src/radio/lr1110_modem_hal.c ****         ;
+ 509:../Src/radio/lr1110_modem_hal.c ****     }
+ 510:../Src/radio/lr1110_modem_hal.c **** #else
+ 511:../Src/radio/lr1110_modem_hal.c ****     uint32_t start   = hal_rtc_get_time_ms( );
+ 1687              		.loc 2 511 24
+ 1688 000a FFF7FEFF 		bl	hal_rtc_get_time_ms
+ 1689 000e F860     		str	r0, [r7, #12]
+ 512:../Src/radio/lr1110_modem_hal.c ****     uint32_t current = 0;
+ 1690              		.loc 2 512 14
+ 1691 0010 0023     		movs	r3, #0
+ 1692 0012 BB60     		str	r3, [r7, #8]
+ 513:../Src/radio/lr1110_modem_hal.c ****     while( hal_gpio_get_value( ( ( lr1110_t* ) context )->busy.pin ) == 1 )
+ 1693              		.loc 2 513 10
+ 1694 0014 0BE0     		b	.L83
+ 1695              	.L85:
+ 514:../Src/radio/lr1110_modem_hal.c ****     {
+ 515:../Src/radio/lr1110_modem_hal.c ****         current = hal_rtc_get_time_ms( );
+ 1696              		.loc 2 515 19
+ 1697 0016 FFF7FEFF 		bl	hal_rtc_get_time_ms
+ 1698 001a B860     		str	r0, [r7, #8]
+ 516:../Src/radio/lr1110_modem_hal.c ****         if( ( int32_t )( current - start ) > ( int32_t ) timeout_ms )
+ 1699              		.loc 2 516 34
+ 1700 001c BA68     		ldr	r2, [r7, #8]
+ 1701 001e FB68     		ldr	r3, [r7, #12]
+ 1702 0020 D31A     		subs	r3, r2, r3
+ 1703              		.loc 2 516 13
+ 1704 0022 1A46     		mov	r2, r3
+ 1705              		.loc 2 516 46
+ 1706 0024 3B68     		ldr	r3, [r7]
+ 1707              		.loc 2 516 11
+ 1708 0026 9A42     		cmp	r2, r3
+ 1709 0028 01DD     		ble	.L83
+ 517:../Src/radio/lr1110_modem_hal.c ****         {
+ 518:../Src/radio/lr1110_modem_hal.c ****             return LR1110_MODEM_HAL_STATUS_ERROR;
+ 1710              		.loc 2 518 20
+ 1711 002a 0123     		movs	r3, #1
+ 1712 002c 09E0     		b	.L84
+ARM GAS  /tmp/ccEFk68o.s 			page 42
+
+
+ 1713              	.L83:
+ 513:../Src/radio/lr1110_modem_hal.c ****     {
+ 1714              		.loc 2 513 12
+ 1715 002e 7B68     		ldr	r3, [r7, #4]
+ 1716 0030 B3F91430 		ldrsh	r3, [r3, #20]
+ 1717 0034 1846     		mov	r0, r3
+ 1718 0036 FFF7FEFF 		bl	hal_gpio_get_value
+ 1719 003a 0346     		mov	r3, r0
+ 513:../Src/radio/lr1110_modem_hal.c ****     {
+ 1720              		.loc 2 513 10
+ 1721 003c 012B     		cmp	r3, #1
+ 1722 003e EAD0     		beq	.L85
+ 519:../Src/radio/lr1110_modem_hal.c ****         }
+ 520:../Src/radio/lr1110_modem_hal.c ****     }
+ 521:../Src/radio/lr1110_modem_hal.c **** #endif
+ 522:../Src/radio/lr1110_modem_hal.c ****     return LR1110_MODEM_HAL_STATUS_OK;
+ 1723              		.loc 2 522 12
+ 1724 0040 0023     		movs	r3, #0
+ 1725              	.L84:
+ 523:../Src/radio/lr1110_modem_hal.c **** }
+ 1726              		.loc 2 523 1
+ 1727 0042 1846     		mov	r0, r3
+ 1728 0044 1037     		adds	r7, r7, #16
+ 1729              	.LCFI75:
+ 1730              		.cfi_def_cfa_offset 8
+ 1731 0046 BD46     		mov	sp, r7
+ 1732              	.LCFI76:
+ 1733              		.cfi_def_cfa_register 13
+ 1734              		@ sp needed
+ 1735 0048 80BD     		pop	{r7, pc}
+ 1736              		.cfi_endproc
+ 1737              	.LFE603:
+ 1739              		.text
+ 1740              	.Letext0:
+ 1741              		.file 3 "/usr/lib/gcc/arm-none-eabi/10.3.1/include/stdint.h"
+ 1742              		.file 4 "../Src/radio/lr1110_modem/src/lr1110_hal.h"
+ 1743              		.file 5 "../Inc/smtc_hal/smtc_hal_gpio_pin_names.h"
+ 1744              		.file 6 "../Inc/smtc_hal/smtc_hal_gpio.h"
+ 1745              		.file 7 "../Drivers/CMSIS/Device/ST/STM32L4xx/Include/stm32l476xx.h"
+ 1746              		.file 8 "../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def.h"
+ 1747              		.file 9 "../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_dma.h"
+ 1748              		.file 10 "../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_spi.h"
+ 1749              		.file 11 "../Inc/smtc_hal/smtc_hal_tmr_list.h"
+ 1750              		.file 12 "../Inc/smtc_hal/smtc_hal_spi.h"
+ 1751              		.file 13 "../Src/radio/lr1110_modem/src/lr1110_modem_lorawan.h"
+ 1752              		.file 14 "../Src/radio/lr1110.h"
+ARM GAS  /tmp/ccEFk68o.s 			page 43
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 lr1110_modem_hal.c
+     /tmp/ccEFk68o.s:18     .text.lr1110_modem_compute_crc:0000000000000000 $t
+     /tmp/ccEFk68o.s:25     .text.lr1110_modem_compute_crc:0000000000000000 lr1110_modem_compute_crc
+     /tmp/ccEFk68o.s:142    .bss.lr1110_modem_reset_timeout:0000000000000000 lr1110_modem_reset_timeout
+     /tmp/ccEFk68o.s:143    .bss.lr1110_modem_reset_timeout:0000000000000000 $d
+     /tmp/ccEFk68o.s:145    .bss.lr1110_modem_reset_timeout_timer:0000000000000000 $d
+     /tmp/ccEFk68o.s:148    .bss.lr1110_modem_reset_timeout_timer:0000000000000000 lr1110_modem_reset_timeout_timer
+     /tmp/ccEFk68o.s:151    .text.lr1110_modem_hal_write:0000000000000000 $t
+     /tmp/ccEFk68o.s:158    .text.lr1110_modem_hal_write:0000000000000000 lr1110_modem_hal_write
+     /tmp/ccEFk68o.s:989    .text.lr1110_modem_hal_wakeup:0000000000000000 lr1110_modem_hal_wakeup
+     /tmp/ccEFk68o.s:1590   .text.lr1110_modem_hal_wait_on_busy:0000000000000000 lr1110_modem_hal_wait_on_busy
+     /tmp/ccEFk68o.s:1668   .text.lr1110_modem_hal_wait_on_unbusy:0000000000000000 lr1110_modem_hal_wait_on_unbusy
+     /tmp/ccEFk68o.s:386    .text.lr1110_modem_hal_write_without_rc:0000000000000000 $t
+     /tmp/ccEFk68o.s:393    .text.lr1110_modem_hal_write_without_rc:0000000000000000 lr1110_modem_hal_write_without_rc
+     /tmp/ccEFk68o.s:547    .text.lr1110_modem_hal_read:0000000000000000 $t
+     /tmp/ccEFk68o.s:554    .text.lr1110_modem_hal_read:0000000000000000 lr1110_modem_hal_read
+     /tmp/ccEFk68o.s:796    .text.lr1110_modem_hal_reset:0000000000000000 $t
+     /tmp/ccEFk68o.s:803    .text.lr1110_modem_hal_reset:0000000000000000 lr1110_modem_hal_reset
+     /tmp/ccEFk68o.s:905    .text.lr1110_modem_hal_reset:000000000000008c $d
+     /tmp/ccEFk68o.s:1466   .text.on_lr1110_modem_reset_timeout_event:0000000000000000 on_lr1110_modem_reset_timeout_event
+     /tmp/ccEFk68o.s:912    .text.lr1110_modem_hal_enter_dfu:0000000000000000 $t
+     /tmp/ccEFk68o.s:919    .text.lr1110_modem_hal_enter_dfu:0000000000000000 lr1110_modem_hal_enter_dfu
+     /tmp/ccEFk68o.s:982    .text.lr1110_modem_hal_wakeup:0000000000000000 $t
+     /tmp/ccEFk68o.s:1051   .text.lr1110_hal_write:0000000000000000 $t
+     /tmp/ccEFk68o.s:1058   .text.lr1110_hal_write:0000000000000000 lr1110_hal_write
+     /tmp/ccEFk68o.s:1355   .text.lr1110_hal_wakeup:0000000000000000 lr1110_hal_wakeup
+     /tmp/ccEFk68o.s:1516   .text.lr1110_hal_wait_on_busy:0000000000000000 lr1110_hal_wait_on_busy
+     /tmp/ccEFk68o.s:1183   .text.lr1110_hal_read:0000000000000000 $t
+     /tmp/ccEFk68o.s:1190   .text.lr1110_hal_read:0000000000000000 lr1110_hal_read
+     /tmp/ccEFk68o.s:1348   .text.lr1110_hal_wakeup:0000000000000000 $t
+     /tmp/ccEFk68o.s:1404   .text.lr1110_hal_reset:0000000000000000 $t
+     /tmp/ccEFk68o.s:1411   .text.lr1110_hal_reset:0000000000000000 lr1110_hal_reset
+     /tmp/ccEFk68o.s:1460   .text.on_lr1110_modem_reset_timeout_event:0000000000000000 $t
+     /tmp/ccEFk68o.s:1505   .text.on_lr1110_modem_reset_timeout_event:000000000000001c $d
+     /tmp/ccEFk68o.s:1510   .text.lr1110_hal_wait_on_busy:0000000000000000 $t
+     /tmp/ccEFk68o.s:1584   .text.lr1110_modem_hal_wait_on_busy:0000000000000000 $t
+     /tmp/ccEFk68o.s:1662   .text.lr1110_modem_hal_wait_on_unbusy:0000000000000000 $t
+
+UNDEFINED SYMBOLS
+hal_gpio_set_value
+hal_spi_in_out
+lr1110_modem_board_set_ready
+timer_init
+timer_set_value
+timer_start
+HAL_Delay
+lr1110_modem_event_process
+lr1110_modem_board_is_ready
+hal_gpio_init_out
+hal_gpio_init_in
+hal_rtc_get_time_ms
+hal_gpio_get_value

@@ -1,0 +1,299 @@
+ARM GAS  /tmp/ccsruaMh.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"external_supply.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.external_supply_init,"ax",%progbits
+  18              		.align	1
+  19              		.global	external_supply_init
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	external_supply_init:
+  27              	.LFB586:
+  28              		.file 1 "../Drivers/BSP/Components/external_supply/external_supply.c"
+   1:../Drivers/BSP/Components/external_supply/external_supply.c **** /*!
+   2:../Drivers/BSP/Components/external_supply/external_supply.c ****  * @file      external_supply.c
+   3:../Drivers/BSP/Components/external_supply/external_supply.c ****  *
+   4:../Drivers/BSP/Components/external_supply/external_supply.c ****  * @brief     External supply driver implementation.
+   5:../Drivers/BSP/Components/external_supply/external_supply.c ****  *
+   6:../Drivers/BSP/Components/external_supply/external_supply.c ****  * Revised BSD License
+   7:../Drivers/BSP/Components/external_supply/external_supply.c ****  * Copyright Semtech Corporation 2020. All rights reserved.
+   8:../Drivers/BSP/Components/external_supply/external_supply.c ****  *
+   9:../Drivers/BSP/Components/external_supply/external_supply.c ****  * Redistribution and use in source and binary forms, with or without
+  10:../Drivers/BSP/Components/external_supply/external_supply.c ****  * modification, are permitted provided that the following conditions are met:
+  11:../Drivers/BSP/Components/external_supply/external_supply.c ****  *     * Redistributions of source code must retain the above copyright
+  12:../Drivers/BSP/Components/external_supply/external_supply.c ****  *       notice, this list of conditions and the following disclaimer.
+  13:../Drivers/BSP/Components/external_supply/external_supply.c ****  *     * Redistributions in binary form must reproduce the above copyright
+  14:../Drivers/BSP/Components/external_supply/external_supply.c ****  *       notice, this list of conditions and the following disclaimer in the
+  15:../Drivers/BSP/Components/external_supply/external_supply.c ****  *       documentation and/or other materials provided with the distribution.
+  16:../Drivers/BSP/Components/external_supply/external_supply.c ****  *     * Neither the name of the Semtech corporation nor the
+  17:../Drivers/BSP/Components/external_supply/external_supply.c ****  *       names of its contributors may be used to endorse or promote products
+  18:../Drivers/BSP/Components/external_supply/external_supply.c ****  *       derived from this software without specific prior written permission.
+  19:../Drivers/BSP/Components/external_supply/external_supply.c ****  *
+  20:../Drivers/BSP/Components/external_supply/external_supply.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  21:../Drivers/BSP/Components/external_supply/external_supply.c ****  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  22:../Drivers/BSP/Components/external_supply/external_supply.c ****  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  23:../Drivers/BSP/Components/external_supply/external_supply.c ****  * ARE DISCLAIMED. IN NO EVENT SHALL SEMTECH CORPORATION BE LIABLE FOR ANY
+  24:../Drivers/BSP/Components/external_supply/external_supply.c ****  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+  25:../Drivers/BSP/Components/external_supply/external_supply.c ****  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  26:../Drivers/BSP/Components/external_supply/external_supply.c ****  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+  27:../Drivers/BSP/Components/external_supply/external_supply.c ****  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  28:../Drivers/BSP/Components/external_supply/external_supply.c ****  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  29:../Drivers/BSP/Components/external_supply/external_supply.c ****  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  30:../Drivers/BSP/Components/external_supply/external_supply.c ****  */
+ARM GAS  /tmp/ccsruaMh.s 			page 2
+
+
+  31:../Drivers/BSP/Components/external_supply/external_supply.c **** 
+  32:../Drivers/BSP/Components/external_supply/external_supply.c **** /*
+  33:../Drivers/BSP/Components/external_supply/external_supply.c ****  * -----------------------------------------------------------------------------
+  34:../Drivers/BSP/Components/external_supply/external_supply.c ****  * --- DEPENDENCIES ------------------------------------------------------------
+  35:../Drivers/BSP/Components/external_supply/external_supply.c ****  */
+  36:../Drivers/BSP/Components/external_supply/external_supply.c **** 
+  37:../Drivers/BSP/Components/external_supply/external_supply.c **** #include "smtc_hal.h"
+  38:../Drivers/BSP/Components/external_supply/external_supply.c **** 
+  39:../Drivers/BSP/Components/external_supply/external_supply.c **** /*
+  40:../Drivers/BSP/Components/external_supply/external_supply.c ****  * -----------------------------------------------------------------------------
+  41:../Drivers/BSP/Components/external_supply/external_supply.c ****  * --- PRIVATE MACROS-----------------------------------------------------------
+  42:../Drivers/BSP/Components/external_supply/external_supply.c ****  */
+  43:../Drivers/BSP/Components/external_supply/external_supply.c **** 
+  44:../Drivers/BSP/Components/external_supply/external_supply.c **** /*
+  45:../Drivers/BSP/Components/external_supply/external_supply.c ****  * -----------------------------------------------------------------------------
+  46:../Drivers/BSP/Components/external_supply/external_supply.c ****  * --- PRIVATE CONSTANTS -------------------------------------------------------
+  47:../Drivers/BSP/Components/external_supply/external_supply.c ****  */
+  48:../Drivers/BSP/Components/external_supply/external_supply.c **** 
+  49:../Drivers/BSP/Components/external_supply/external_supply.c **** /*
+  50:../Drivers/BSP/Components/external_supply/external_supply.c ****  * -----------------------------------------------------------------------------
+  51:../Drivers/BSP/Components/external_supply/external_supply.c ****  * --- PRIVATE TYPES -----------------------------------------------------------
+  52:../Drivers/BSP/Components/external_supply/external_supply.c ****  */
+  53:../Drivers/BSP/Components/external_supply/external_supply.c **** 
+  54:../Drivers/BSP/Components/external_supply/external_supply.c **** /*
+  55:../Drivers/BSP/Components/external_supply/external_supply.c ****  * -----------------------------------------------------------------------------
+  56:../Drivers/BSP/Components/external_supply/external_supply.c ****  * --- PRIVATE VARIABLES -------------------------------------------------------
+  57:../Drivers/BSP/Components/external_supply/external_supply.c ****  */
+  58:../Drivers/BSP/Components/external_supply/external_supply.c **** 
+  59:../Drivers/BSP/Components/external_supply/external_supply.c **** /*
+  60:../Drivers/BSP/Components/external_supply/external_supply.c ****  * -----------------------------------------------------------------------------
+  61:../Drivers/BSP/Components/external_supply/external_supply.c ****  * --- PRIVATE FUNCTIONS DECLARATION -------------------------------------------
+  62:../Drivers/BSP/Components/external_supply/external_supply.c ****  */
+  63:../Drivers/BSP/Components/external_supply/external_supply.c **** 
+  64:../Drivers/BSP/Components/external_supply/external_supply.c **** /*
+  65:../Drivers/BSP/Components/external_supply/external_supply.c ****  * -----------------------------------------------------------------------------
+  66:../Drivers/BSP/Components/external_supply/external_supply.c ****  * --- PUBLIC FUNCTIONS DEFINITION ---------------------------------------------
+  67:../Drivers/BSP/Components/external_supply/external_supply.c ****  */
+  68:../Drivers/BSP/Components/external_supply/external_supply.c **** 
+  69:../Drivers/BSP/Components/external_supply/external_supply.c **** void external_supply_init( uint8_t vcc_mask )
+  70:../Drivers/BSP/Components/external_supply/external_supply.c **** {
+  29              		.loc 1 70 1
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 8
+  32              		@ frame_needed = 1, uses_anonymous_args = 0
+  33 0000 80B5     		push	{r7, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 7, -8
+  37              		.cfi_offset 14, -4
+  38 0002 82B0     		sub	sp, sp, #8
+  39              	.LCFI1:
+  40              		.cfi_def_cfa_offset 16
+  41 0004 00AF     		add	r7, sp, #0
+  42              	.LCFI2:
+  43              		.cfi_def_cfa_register 7
+  44 0006 0346     		mov	r3, r0
+  45 0008 FB71     		strb	r3, [r7, #7]
+ARM GAS  /tmp/ccsruaMh.s 			page 3
+
+
+  71:../Drivers/BSP/Components/external_supply/external_supply.c ****     if( vcc_mask & LNA_SUPPLY_MASK )
+  46              		.loc 1 71 18
+  47 000a FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+  48 000c 03F00103 		and	r3, r3, #1
+  49              		.loc 1 71 7
+  50 0010 002B     		cmp	r3, #0
+  51 0012 03D0     		beq	.L3
+  72:../Drivers/BSP/Components/external_supply/external_supply.c ****     {
+  73:../Drivers/BSP/Components/external_supply/external_supply.c ****         hal_gpio_init_out( LNA_PON, 0 );
+  52              		.loc 1 73 9
+  53 0014 0021     		movs	r1, #0
+  54 0016 1020     		movs	r0, #16
+  55 0018 FFF7FEFF 		bl	hal_gpio_init_out
+  56              	.L3:
+  74:../Drivers/BSP/Components/external_supply/external_supply.c ****     }
+  75:../Drivers/BSP/Components/external_supply/external_supply.c **** }
+  57              		.loc 1 75 1
+  58 001c 00BF     		nop
+  59 001e 0837     		adds	r7, r7, #8
+  60              	.LCFI3:
+  61              		.cfi_def_cfa_offset 8
+  62 0020 BD46     		mov	sp, r7
+  63              	.LCFI4:
+  64              		.cfi_def_cfa_register 13
+  65              		@ sp needed
+  66 0022 80BD     		pop	{r7, pc}
+  67              		.cfi_endproc
+  68              	.LFE586:
+  70              		.section	.text.external_supply_deinit,"ax",%progbits
+  71              		.align	1
+  72              		.global	external_supply_deinit
+  73              		.syntax unified
+  74              		.thumb
+  75              		.thumb_func
+  76              		.fpu fpv4-sp-d16
+  78              	external_supply_deinit:
+  79              	.LFB587:
+  76:../Drivers/BSP/Components/external_supply/external_supply.c **** 
+  77:../Drivers/BSP/Components/external_supply/external_supply.c **** void external_supply_deinit( uint8_t vcc_mask )
+  78:../Drivers/BSP/Components/external_supply/external_supply.c **** {
+  80              		.loc 1 78 1
+  81              		.cfi_startproc
+  82              		@ args = 0, pretend = 0, frame = 8
+  83              		@ frame_needed = 1, uses_anonymous_args = 0
+  84 0000 80B5     		push	{r7, lr}
+  85              	.LCFI5:
+  86              		.cfi_def_cfa_offset 8
+  87              		.cfi_offset 7, -8
+  88              		.cfi_offset 14, -4
+  89 0002 82B0     		sub	sp, sp, #8
+  90              	.LCFI6:
+  91              		.cfi_def_cfa_offset 16
+  92 0004 00AF     		add	r7, sp, #0
+  93              	.LCFI7:
+  94              		.cfi_def_cfa_register 7
+  95 0006 0346     		mov	r3, r0
+  96 0008 FB71     		strb	r3, [r7, #7]
+ARM GAS  /tmp/ccsruaMh.s 			page 4
+
+
+  79:../Drivers/BSP/Components/external_supply/external_supply.c ****     if( vcc_mask & LNA_SUPPLY_MASK )
+  97              		.loc 1 79 18
+  98 000a FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+  99 000c 03F00103 		and	r3, r3, #1
+ 100              		.loc 1 79 7
+ 101 0010 002B     		cmp	r3, #0
+ 102 0012 02D0     		beq	.L6
+  80:../Drivers/BSP/Components/external_supply/external_supply.c ****     {
+  81:../Drivers/BSP/Components/external_supply/external_supply.c ****         hal_gpio_deinit( LNA_PON );
+ 103              		.loc 1 81 9
+ 104 0014 1020     		movs	r0, #16
+ 105 0016 FFF7FEFF 		bl	hal_gpio_deinit
+ 106              	.L6:
+  82:../Drivers/BSP/Components/external_supply/external_supply.c ****     }
+  83:../Drivers/BSP/Components/external_supply/external_supply.c **** }
+ 107              		.loc 1 83 1
+ 108 001a 00BF     		nop
+ 109 001c 0837     		adds	r7, r7, #8
+ 110              	.LCFI8:
+ 111              		.cfi_def_cfa_offset 8
+ 112 001e BD46     		mov	sp, r7
+ 113              	.LCFI9:
+ 114              		.cfi_def_cfa_register 13
+ 115              		@ sp needed
+ 116 0020 80BD     		pop	{r7, pc}
+ 117              		.cfi_endproc
+ 118              	.LFE587:
+ 120              		.section	.text.lna_on,"ax",%progbits
+ 121              		.align	1
+ 122              		.global	lna_on
+ 123              		.syntax unified
+ 124              		.thumb
+ 125              		.thumb_func
+ 126              		.fpu fpv4-sp-d16
+ 128              	lna_on:
+ 129              	.LFB588:
+  84:../Drivers/BSP/Components/external_supply/external_supply.c **** 
+  85:../Drivers/BSP/Components/external_supply/external_supply.c **** void lna_on( void ) { hal_gpio_set_value( LNA_PON, 1 ); }
+ 130              		.loc 1 85 21
+ 131              		.cfi_startproc
+ 132              		@ args = 0, pretend = 0, frame = 0
+ 133              		@ frame_needed = 1, uses_anonymous_args = 0
+ 134 0000 80B5     		push	{r7, lr}
+ 135              	.LCFI10:
+ 136              		.cfi_def_cfa_offset 8
+ 137              		.cfi_offset 7, -8
+ 138              		.cfi_offset 14, -4
+ 139 0002 00AF     		add	r7, sp, #0
+ 140              	.LCFI11:
+ 141              		.cfi_def_cfa_register 7
+ 142              		.loc 1 85 23
+ 143 0004 0121     		movs	r1, #1
+ 144 0006 1020     		movs	r0, #16
+ 145 0008 FFF7FEFF 		bl	hal_gpio_set_value
+ 146              		.loc 1 85 57
+ 147 000c 00BF     		nop
+ 148 000e 80BD     		pop	{r7, pc}
+ARM GAS  /tmp/ccsruaMh.s 			page 5
+
+
+ 149              		.cfi_endproc
+ 150              	.LFE588:
+ 152              		.section	.text.lna_off,"ax",%progbits
+ 153              		.align	1
+ 154              		.global	lna_off
+ 155              		.syntax unified
+ 156              		.thumb
+ 157              		.thumb_func
+ 158              		.fpu fpv4-sp-d16
+ 160              	lna_off:
+ 161              	.LFB589:
+  86:../Drivers/BSP/Components/external_supply/external_supply.c **** 
+  87:../Drivers/BSP/Components/external_supply/external_supply.c **** void lna_off( void ) { hal_gpio_set_value( LNA_PON, 0 ); }
+ 162              		.loc 1 87 22
+ 163              		.cfi_startproc
+ 164              		@ args = 0, pretend = 0, frame = 0
+ 165              		@ frame_needed = 1, uses_anonymous_args = 0
+ 166 0000 80B5     		push	{r7, lr}
+ 167              	.LCFI12:
+ 168              		.cfi_def_cfa_offset 8
+ 169              		.cfi_offset 7, -8
+ 170              		.cfi_offset 14, -4
+ 171 0002 00AF     		add	r7, sp, #0
+ 172              	.LCFI13:
+ 173              		.cfi_def_cfa_register 7
+ 174              		.loc 1 87 24
+ 175 0004 0021     		movs	r1, #0
+ 176 0006 1020     		movs	r0, #16
+ 177 0008 FFF7FEFF 		bl	hal_gpio_set_value
+ 178              		.loc 1 87 58
+ 179 000c 00BF     		nop
+ 180 000e 80BD     		pop	{r7, pc}
+ 181              		.cfi_endproc
+ 182              	.LFE589:
+ 184              		.text
+ 185              	.Letext0:
+ 186              		.file 2 "/usr/lib/gcc/arm-none-eabi/10.3.1/include/stdint.h"
+ 187              		.file 3 "../Inc/smtc_hal/smtc_hal_gpio_pin_names.h"
+ARM GAS  /tmp/ccsruaMh.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 external_supply.c
+     /tmp/ccsruaMh.s:18     .text.external_supply_init:0000000000000000 $t
+     /tmp/ccsruaMh.s:26     .text.external_supply_init:0000000000000000 external_supply_init
+     /tmp/ccsruaMh.s:71     .text.external_supply_deinit:0000000000000000 $t
+     /tmp/ccsruaMh.s:78     .text.external_supply_deinit:0000000000000000 external_supply_deinit
+     /tmp/ccsruaMh.s:121    .text.lna_on:0000000000000000 $t
+     /tmp/ccsruaMh.s:128    .text.lna_on:0000000000000000 lna_on
+     /tmp/ccsruaMh.s:153    .text.lna_off:0000000000000000 $t
+     /tmp/ccsruaMh.s:160    .text.lna_off:0000000000000000 lna_off
+
+UNDEFINED SYMBOLS
+hal_gpio_init_out
+hal_gpio_deinit
+hal_gpio_set_value

@@ -1,0 +1,719 @@
+ARM GAS  /tmp/cc3eKWAy.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"lr1110_modem_helper.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.lr1110_modem_helper_get_utc_time,"ax",%progbits
+  18              		.align	1
+  19              		.global	lr1110_modem_helper_get_utc_time
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	lr1110_modem_helper_get_utc_time:
+  27              	.LFB0:
+  28              		.file 1 "../Src/radio/lr1110_modem/src/lr1110_modem_helper.c"
+   1:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** /*!
+   2:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  * @file      lr1110_modem_helper.c
+   3:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  *
+   4:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  * @brief     helper functions implementation for LR1110 modem
+   5:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  *
+   6:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  * Revised BSD License
+   7:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  * Copyright Semtech Corporation 2020. All rights reserved.
+   8:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  *
+   9:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  * Redistribution and use in source and binary forms, with or without
+  10:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  * modification, are permitted provided that the following conditions are met:
+  11:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  *     * Redistributions of source code must retain the above copyright
+  12:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  *       notice, this list of conditions and the following disclaimer.
+  13:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  *     * Redistributions in binary form must reproduce the above copyright
+  14:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  *       notice, this list of conditions and the following disclaimer in the
+  15:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  *       documentation and/or other materials provided with the distribution.
+  16:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  *     * Neither the name of the Semtech corporation nor the
+  17:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  *       names of its contributors may be used to endorse or promote products
+  18:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  *       derived from this software without specific prior written permission.
+  19:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  *
+  20:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  21:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  22:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  23:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  * ARE DISCLAIMED. IN NO EVENT SHALL SEMTECH CORPORATION BE LIABLE FOR ANY
+  24:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+  25:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  26:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+  27:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  28:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  29:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  30:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  */
+ARM GAS  /tmp/cc3eKWAy.s 			page 2
+
+
+  31:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** 
+  32:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** /*
+  33:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  * -----------------------------------------------------------------------------
+  34:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  * --- DEPENDENCIES ------------------------------------------------------------
+  35:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  */
+  36:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** 
+  37:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** #include "lr1110_modem_helper.h"
+  38:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** 
+  39:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** /*
+  40:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  * -----------------------------------------------------------------------------
+  41:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  * --- PRIVATE MACROS-----------------------------------------------------------
+  42:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  */
+  43:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** 
+  44:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** /*
+  45:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  * -----------------------------------------------------------------------------
+  46:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  * --- PRIVATE CONSTANTS -------------------------------------------------------
+  47:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  */
+  48:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** 
+  49:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** /*!
+  50:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  * @brief Offset for constellation ID
+  51:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  */
+  52:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** #define LR1110_MODEM_HELPER_GNSS_ALMANAC_SV_CONSTELLATION_ID_BUFFER_LOCATION ( 21 )
+  53:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** 
+  54:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** /*
+  55:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  * -----------------------------------------------------------------------------
+  56:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  * --- PRIVATE TYPES -----------------------------------------------------------
+  57:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  */
+  58:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** 
+  59:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** /*
+  60:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  * -----------------------------------------------------------------------------
+  61:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  * --- PRIVATE VARIABLES -------------------------------------------------------
+  62:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  */
+  63:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** 
+  64:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** /*
+  65:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  * -----------------------------------------------------------------------------
+  66:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  * --- PRIVATE FUNCTIONS DECLARATION -------------------------------------------
+  67:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  */
+  68:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** 
+  69:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** /*
+  70:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  * -----------------------------------------------------------------------------
+  71:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  * --- PUBLIC FUNCTIONS DEFINITION ---------------------------------------------
+  72:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****  */
+  73:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** 
+  74:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** lr1110_modem_response_code_t lr1110_modem_helper_get_utc_time( const void* context, uint32_t* time 
+  75:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** {
+  29              		.loc 1 75 1
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 16
+  32              		@ frame_needed = 1, uses_anonymous_args = 0
+  33 0000 80B5     		push	{r7, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 7, -8
+  37              		.cfi_offset 14, -4
+  38 0002 84B0     		sub	sp, sp, #16
+  39              	.LCFI1:
+  40              		.cfi_def_cfa_offset 24
+ARM GAS  /tmp/cc3eKWAy.s 			page 3
+
+
+  41 0004 00AF     		add	r7, sp, #0
+  42              	.LCFI2:
+  43              		.cfi_def_cfa_register 7
+  44 0006 7860     		str	r0, [r7, #4]
+  45 0008 3960     		str	r1, [r7]
+  76:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****     lr1110_modem_response_code_t rc;
+  77:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****     uint32_t                     gps_time;
+  78:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** 
+  79:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****     *time = 0;
+  46              		.loc 1 79 11
+  47 000a 3B68     		ldr	r3, [r7]
+  48 000c 0022     		movs	r2, #0
+  49 000e 1A60     		str	r2, [r3]
+  80:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** 
+  81:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****     rc = lr1110_modem_get_gps_time( context, &gps_time );
+  50              		.loc 1 81 10
+  51 0010 07F10803 		add	r3, r7, #8
+  52 0014 1946     		mov	r1, r3
+  53 0016 7868     		ldr	r0, [r7, #4]
+  54 0018 FFF7FEFF 		bl	lr1110_modem_get_gps_time
+  55 001c 0346     		mov	r3, r0
+  56 001e FB73     		strb	r3, [r7, #15]
+  82:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** 
+  83:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****     if( ( rc == LR1110_MODEM_RESPONSE_CODE_OK ) && ( gps_time != 0 ) )
+  57              		.loc 1 83 7
+  58 0020 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+  59 0022 002B     		cmp	r3, #0
+  60 0024 07D1     		bne	.L2
+  61              		.loc 1 83 63 discriminator 1
+  62 0026 BB68     		ldr	r3, [r7, #8]
+  63              		.loc 1 83 49 discriminator 1
+  64 0028 002B     		cmp	r3, #0
+  65 002a 04D0     		beq	.L2
+  84:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****     {
+  85:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****         *time =
+  86:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             gps_time + ( LR1110_MODEM_HELPER_INITAL_GNSS_DATE_SECONDS - LR1110_MODEM_HELPER_GNSS_LE
+  66              		.loc 1 86 22
+  67 002c BA68     		ldr	r2, [r7, #8]
+  68 002e 044B     		ldr	r3, .L4
+  69 0030 1344     		add	r3, r3, r2
+  85:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             gps_time + ( LR1110_MODEM_HELPER_INITAL_GNSS_DATE_SECONDS - LR1110_MODEM_HELPER_GNSS_LE
+  70              		.loc 1 85 15
+  71 0032 3A68     		ldr	r2, [r7]
+  72 0034 1360     		str	r3, [r2]
+  73              	.L2:
+  87:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****     }
+  88:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** 
+  89:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****     return rc;
+  74              		.loc 1 89 12
+  75 0036 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+  90:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** }
+  76              		.loc 1 90 1
+  77 0038 1846     		mov	r0, r3
+  78 003a 1037     		adds	r7, r7, #16
+  79              	.LCFI3:
+  80              		.cfi_def_cfa_offset 8
+  81 003c BD46     		mov	sp, r7
+ARM GAS  /tmp/cc3eKWAy.s 			page 4
+
+
+  82              	.LCFI4:
+  83              		.cfi_def_cfa_register 13
+  84              		@ sp needed
+  85 003e 80BD     		pop	{r7, pc}
+  86              	.L5:
+  87              		.align	2
+  88              	.L4:
+  89 0040 6E3DD512 		.word	315964782
+  90              		.cfi_endproc
+  91              	.LFE0:
+  93              		.section	.text.lr1110_modem_helper_get_event_data,"ax",%progbits
+  94              		.align	1
+  95              		.global	lr1110_modem_helper_get_event_data
+  96              		.syntax unified
+  97              		.thumb
+  98              		.thumb_func
+  99              		.fpu fpv4-sp-d16
+ 101              	lr1110_modem_helper_get_event_data:
+ 102              	.LFB1:
+  91:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** 
+  92:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** lr1110_modem_helper_status_t lr1110_modem_helper_get_event_data( const void*           context,
+  93:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****                                                                  lr1110_modem_event_t* modem_event 
+  94:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** {
+ 103              		.loc 1 94 1
+ 104              		.cfi_startproc
+ 105              		@ args = 0, pretend = 0, frame = 1048
+ 106              		@ frame_needed = 1, uses_anonymous_args = 0
+ 107 0000 80B5     		push	{r7, lr}
+ 108              	.LCFI5:
+ 109              		.cfi_def_cfa_offset 8
+ 110              		.cfi_offset 7, -8
+ 111              		.cfi_offset 14, -4
+ 112 0002 ADF5836D 		sub	sp, sp, #1048
+ 113              	.LCFI6:
+ 114              		.cfi_def_cfa_offset 1056
+ 115 0006 00AF     		add	r7, sp, #0
+ 116              	.LCFI7:
+ 117              		.cfi_def_cfa_register 7
+ 118 0008 07F58363 		add	r3, r7, #1048
+ 119 000c A3F21443 		subw	r3, r3, #1044
+ 120 0010 1860     		str	r0, [r3]
+ 121 0012 07F58363 		add	r3, r7, #1048
+ 122 0016 A3F58363 		sub	r3, r3, #1048
+ 123 001a 1960     		str	r1, [r3]
+  95:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****     lr1110_modem_helper_status_t status              = LR1110_MODEM_HELPER_STATUS_ERROR;
+ 124              		.loc 1 95 34
+ 125 001c 0323     		movs	r3, #3
+ 126 001e 87F81734 		strb	r3, [r7, #1047]
+  96:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****     lr1110_modem_response_code_t modem_response_code = LR1110_MODEM_RESPONSE_CODE_OK;
+ 127              		.loc 1 96 34
+ 128 0022 0023     		movs	r3, #0
+ 129 0024 87F81134 		strb	r3, [r7, #1041]
+  97:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****     lr1110_modem_event_fields_t  event_fields;
+  98:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** 
+  99:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****     modem_response_code = lr1110_modem_get_event( context, &event_fields );
+ 130              		.loc 1 99 27
+ 131 0028 07F10C02 		add	r2, r7, #12
+ARM GAS  /tmp/cc3eKWAy.s 			page 5
+
+
+ 132 002c 07F58363 		add	r3, r7, #1048
+ 133 0030 A3F21443 		subw	r3, r3, #1044
+ 134 0034 1146     		mov	r1, r2
+ 135 0036 1868     		ldr	r0, [r3]
+ 136 0038 FFF7FEFF 		bl	lr1110_modem_get_event
+ 137 003c 0346     		mov	r3, r0
+ 138 003e 87F81134 		strb	r3, [r7, #1041]
+ 100:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** 
+ 101:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****     if( modem_response_code == LR1110_MODEM_RESPONSE_CODE_OK )
+ 139              		.loc 1 101 7
+ 140 0042 97F81134 		ldrb	r3, [r7, #1041]	@ zero_extendqisi2
+ 141 0046 002B     		cmp	r3, #0
+ 142 0048 40F06381 		bne	.L26
+ 102:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****     {
+ 103:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****         status                     = LR1110_MODEM_HELPER_STATUS_OK;
+ 143              		.loc 1 103 36
+ 144 004c 0023     		movs	r3, #0
+ 145 004e 87F81734 		strb	r3, [r7, #1047]
+ 104:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****         modem_event->event_type    = event_fields.event_type;
+ 146              		.loc 1 104 50
+ 147 0052 07F58363 		add	r3, r7, #1048
+ 148 0056 A3F20C43 		subw	r3, r3, #1036
+ 149 005a 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 150              		.loc 1 104 36
+ 151 005c 07F58363 		add	r3, r7, #1048
+ 152 0060 A3F58363 		sub	r3, r3, #1048
+ 153 0064 1B68     		ldr	r3, [r3]
+ 154 0066 1A70     		strb	r2, [r3]
+ 105:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****         modem_event->missed_events = event_fields.missed_events_count;
+ 155              		.loc 1 105 50
+ 156 0068 07F58363 		add	r3, r7, #1048
+ 157 006c A3F20C43 		subw	r3, r3, #1036
+ 158 0070 5A78     		ldrb	r2, [r3, #1]	@ zero_extendqisi2
+ 159              		.loc 1 105 36
+ 160 0072 07F58363 		add	r3, r7, #1048
+ 161 0076 A3F58363 		sub	r3, r3, #1048
+ 162 007a 1B68     		ldr	r3, [r3]
+ 163 007c 5A70     		strb	r2, [r3, #1]
+ 106:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** 
+ 107:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****         switch( modem_event->event_type )
+ 164              		.loc 1 107 28
+ 165 007e 07F58363 		add	r3, r7, #1048
+ 166 0082 A3F58363 		sub	r3, r3, #1048
+ 167 0086 1B68     		ldr	r3, [r3]
+ 168 0088 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 169              		.loc 1 107 9
+ 170 008a 0D2B     		cmp	r3, #13
+ 171 008c 00F24381 		bhi	.L27
+ 172 0090 01A2     		adr	r2, .L10
+ 173 0092 52F823F0 		ldr	pc, [r2, r3, lsl #2]
+ 174 0096 00BF     		.p2align 2
+ 175              	.L10:
+ 176 0098 D1000000 		.word	.L18+1
+ 177 009c 17030000 		.word	.L27+1
+ 178 00a0 17030000 		.word	.L27+1
+ 179 00a4 FF000000 		.word	.L17+1
+ 180 00a8 17010000 		.word	.L16+1
+ARM GAS  /tmp/cc3eKWAy.s 			page 6
+
+
+ 181 00ac EB010000 		.word	.L15+1
+ 182 00b0 03020000 		.word	.L14+1
+ 183 00b4 1B020000 		.word	.L13+1
+ 184 00b8 17030000 		.word	.L27+1
+ 185 00bc 17030000 		.word	.L27+1
+ 186 00c0 17030000 		.word	.L27+1
+ 187 00c4 33020000 		.word	.L12+1
+ 188 00c8 97020000 		.word	.L11+1
+ 189 00cc FB020000 		.word	.L9+1
+ 190              		.p2align 1
+ 191              	.L18:
+ 108:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****         {
+ 109:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****         case LR1110_MODEM_LORAWAN_EVENT_RESET:
+ 110:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             modem_event->event_data.reset.count = ( ( uint16_t ) event_fields.buffer[0] << 8 ) + ev
+ 192              		.loc 1 110 85
+ 193 00d0 07F58363 		add	r3, r7, #1048
+ 194 00d4 A3F20C43 		subw	r3, r3, #1036
+ 195 00d8 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+ 196 00da 9BB2     		uxth	r3, r3
+ 197              		.loc 1 110 89
+ 198 00dc 1B02     		lsls	r3, r3, #8
+ 199 00de 9AB2     		uxth	r2, r3
+ 200              		.loc 1 110 117
+ 201 00e0 07F58363 		add	r3, r7, #1048
+ 202 00e4 A3F20C43 		subw	r3, r3, #1036
+ 203 00e8 DB78     		ldrb	r3, [r3, #3]	@ zero_extendqisi2
+ 204 00ea 9BB2     		uxth	r3, r3
+ 205              		.loc 1 110 96
+ 206 00ec 1344     		add	r3, r3, r2
+ 207 00ee 9AB2     		uxth	r2, r3
+ 208              		.loc 1 110 49
+ 209 00f0 07F58363 		add	r3, r7, #1048
+ 210 00f4 A3F58363 		sub	r3, r3, #1048
+ 211 00f8 1B68     		ldr	r3, [r3]
+ 212 00fa 5A80     		strh	r2, [r3, #2]	@ movhi
+ 111:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             break;
+ 213              		.loc 1 111 13
+ 214 00fc 0CE1     		b	.L7
+ 215              	.L17:
+ 112:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****         case LR1110_MODEM_LORAWAN_EVENT_TX_DONE:
+ 113:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             modem_event->event_data.txdone.status = ( lr1110_modem_tx_done_event_t ) event_fields.b
+ 216              		.loc 1 113 105
+ 217 00fe 07F58363 		add	r3, r7, #1048
+ 218 0102 A3F20C43 		subw	r3, r3, #1036
+ 219 0106 9A78     		ldrb	r2, [r3, #2]	@ zero_extendqisi2
+ 220              		.loc 1 113 51
+ 221 0108 07F58363 		add	r3, r7, #1048
+ 222 010c A3F58363 		sub	r3, r3, #1048
+ 223 0110 1B68     		ldr	r3, [r3]
+ 224 0112 9A70     		strb	r2, [r3, #2]
+ 114:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             break;
+ 225              		.loc 1 114 13
+ 226 0114 00E1     		b	.L7
+ 227              	.L16:
+ 115:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****         case LR1110_MODEM_LORAWAN_EVENT_DOWN_DATA:
+ 116:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             modem_event->event_data.downdata.rssi  = ( ( int8_t ) event_fields.buffer[0] ) - 64;
+ 228              		.loc 1 116 86
+ARM GAS  /tmp/cc3eKWAy.s 			page 7
+
+
+ 229 0116 07F58363 		add	r3, r7, #1048
+ 230 011a A3F20C43 		subw	r3, r3, #1036
+ 231 011e 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+ 232              		.loc 1 116 92
+ 233 0120 403B     		subs	r3, r3, #64
+ 234 0122 DBB2     		uxtb	r3, r3
+ 235 0124 5AB2     		sxtb	r2, r3
+ 236              		.loc 1 116 52
+ 237 0126 07F58363 		add	r3, r7, #1048
+ 238 012a A3F58363 		sub	r3, r3, #1048
+ 239 012e 1B68     		ldr	r3, [r3]
+ 240 0130 9A70     		strb	r2, [r3, #2]
+ 117:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             modem_event->event_data.downdata.snr   = ( ( ( int8_t ) event_fields.buffer[1] ) >> 2 )
+ 241              		.loc 1 117 88
+ 242 0132 07F58363 		add	r3, r7, #1048
+ 243 0136 A3F20C43 		subw	r3, r3, #1036
+ 244 013a DB78     		ldrb	r3, [r3, #3]	@ zero_extendqisi2
+ 245              		.loc 1 117 58
+ 246 013c 5BB2     		sxtb	r3, r3
+ 247              		.loc 1 117 52
+ 248 013e 9B10     		asrs	r3, r3, #2
+ 249 0140 5AB2     		sxtb	r2, r3
+ 250 0142 07F58363 		add	r3, r7, #1048
+ 251 0146 A3F58363 		sub	r3, r3, #1048
+ 252 014a 1B68     		ldr	r3, [r3]
+ 253 014c DA70     		strb	r2, [r3, #3]
+ 118:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             modem_event->event_data.downdata.flag  = ( lr1110_modem_down_data_flag_t ) event_fields
+ 254              		.loc 1 118 107
+ 255 014e 07F58363 		add	r3, r7, #1048
+ 256 0152 A3F20C43 		subw	r3, r3, #1036
+ 257 0156 1A79     		ldrb	r2, [r3, #4]	@ zero_extendqisi2
+ 258              		.loc 1 118 52
+ 259 0158 07F58363 		add	r3, r7, #1048
+ 260 015c A3F58363 		sub	r3, r3, #1048
+ 261 0160 1B68     		ldr	r3, [r3]
+ 262 0162 1A71     		strb	r2, [r3, #4]
+ 119:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             modem_event->event_data.downdata.fport = event_fields.buffer[3];
+ 263              		.loc 1 119 73
+ 264 0164 07F58363 		add	r3, r7, #1048
+ 265 0168 A3F20C43 		subw	r3, r3, #1036
+ 266 016c 5A79     		ldrb	r2, [r3, #5]	@ zero_extendqisi2
+ 267              		.loc 1 119 52
+ 268 016e 07F58363 		add	r3, r7, #1048
+ 269 0172 A3F58363 		sub	r3, r3, #1048
+ 270 0176 1B68     		ldr	r3, [r3]
+ 271 0178 5A71     		strb	r2, [r3, #5]
+ 120:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             modem_event->event_data.downdata.length =
+ 121:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****                 event_fields.buffer_len - 4;  // remove rssi/snr/flag and fport from buffer
+ 272              		.loc 1 121 29
+ 273 017a 07F58363 		add	r3, r7, #1048
+ 274 017e A3F20C43 		subw	r3, r3, #1036
+ 275 0182 B3F80234 		ldrh	r3, [r3, #1026]
+ 276              		.loc 1 121 41
+ 277 0186 DBB2     		uxtb	r3, r3
+ 278 0188 043B     		subs	r3, r3, #4
+ 279 018a DAB2     		uxtb	r2, r3
+ 120:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             modem_event->event_data.downdata.length =
+ARM GAS  /tmp/cc3eKWAy.s 			page 8
+
+
+ 280              		.loc 1 120 53
+ 281 018c 07F58363 		add	r3, r7, #1048
+ 282 0190 A3F58363 		sub	r3, r3, #1048
+ 283 0194 1B68     		ldr	r3, [r3]
+ 284 0196 83F8F820 		strb	r2, [r3, #248]
+ 285              	.LBB2:
+ 122:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             for( uint8_t i = 0; i < modem_event->event_data.downdata.length; i++ )
+ 286              		.loc 1 122 26
+ 287 019a 0023     		movs	r3, #0
+ 288 019c 87F81634 		strb	r3, [r7, #1046]
+ 289              		.loc 1 122 13
+ 290 01a0 17E0     		b	.L19
+ 291              	.L20:
+ 123:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             {
+ 124:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****                 modem_event->event_data.downdata.data[i] = event_fields.buffer[i + 4];
+ 292              		.loc 1 124 82 discriminator 3
+ 293 01a2 97F81634 		ldrb	r3, [r7, #1046]	@ zero_extendqisi2
+ 294 01a6 1A1D     		adds	r2, r3, #4
+ 295              		.loc 1 124 54 discriminator 3
+ 296 01a8 97F81634 		ldrb	r3, [r7, #1046]	@ zero_extendqisi2
+ 297              		.loc 1 124 79 discriminator 3
+ 298 01ac 07F58361 		add	r1, r7, #1048
+ 299 01b0 A1F20C41 		subw	r1, r1, #1036
+ 300 01b4 0A44     		add	r2, r2, r1
+ 301 01b6 9178     		ldrb	r1, [r2, #2]	@ zero_extendqisi2
+ 302              		.loc 1 124 58 discriminator 3
+ 303 01b8 07F58362 		add	r2, r7, #1048
+ 304 01bc A2F58362 		sub	r2, r2, #1048
+ 305 01c0 1268     		ldr	r2, [r2]
+ 306 01c2 1344     		add	r3, r3, r2
+ 307 01c4 0A46     		mov	r2, r1
+ 308 01c6 9A71     		strb	r2, [r3, #6]
+ 122:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             for( uint8_t i = 0; i < modem_event->event_data.downdata.length; i++ )
+ 309              		.loc 1 122 79 discriminator 3
+ 310 01c8 97F81634 		ldrb	r3, [r7, #1046]	@ zero_extendqisi2
+ 311 01cc 0133     		adds	r3, r3, #1
+ 312 01ce 87F81634 		strb	r3, [r7, #1046]
+ 313              	.L19:
+ 122:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             for( uint8_t i = 0; i < modem_event->event_data.downdata.length; i++ )
+ 314              		.loc 1 122 69 discriminator 1
+ 315 01d2 07F58363 		add	r3, r7, #1048
+ 316 01d6 A3F58363 		sub	r3, r3, #1048
+ 317 01da 1B68     		ldr	r3, [r3]
+ 318 01dc 93F8F830 		ldrb	r3, [r3, #248]	@ zero_extendqisi2
+ 122:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             for( uint8_t i = 0; i < modem_event->event_data.downdata.length; i++ )
+ 319              		.loc 1 122 13 discriminator 1
+ 320 01e0 97F81624 		ldrb	r2, [r7, #1046]	@ zero_extendqisi2
+ 321 01e4 9A42     		cmp	r2, r3
+ 322 01e6 DCD3     		bcc	.L20
+ 323              	.LBE2:
+ 125:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             }
+ 126:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             break;
+ 324              		.loc 1 126 13
+ 325 01e8 96E0     		b	.L7
+ 326              	.L15:
+ 127:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****         case LR1110_MODEM_LORAWAN_EVENT_UPLOAD_DONE:
+ 128:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             modem_event->event_data.upload.status = ( lr1110_modem_upload_event_t ) event_fields.bu
+ARM GAS  /tmp/cc3eKWAy.s 			page 9
+
+
+ 327              		.loc 1 128 104
+ 328 01ea 07F58363 		add	r3, r7, #1048
+ 329 01ee A3F20C43 		subw	r3, r3, #1036
+ 330 01f2 9A78     		ldrb	r2, [r3, #2]	@ zero_extendqisi2
+ 331              		.loc 1 128 51
+ 332 01f4 07F58363 		add	r3, r7, #1048
+ 333 01f8 A3F58363 		sub	r3, r3, #1048
+ 334 01fc 1B68     		ldr	r3, [r3]
+ 335 01fe 9A70     		strb	r2, [r3, #2]
+ 129:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             break;
+ 336              		.loc 1 129 13
+ 337 0200 8AE0     		b	.L7
+ 338              	.L14:
+ 130:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****         case LR1110_MODEM_LORAWAN_EVENT_SET_CONF:
+ 131:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             modem_event->event_data.setconf.tag = ( lr1110_modem_event_setconf_tag_t ) event_fields
+ 339              		.loc 1 131 107
+ 340 0202 07F58363 		add	r3, r7, #1048
+ 341 0206 A3F20C43 		subw	r3, r3, #1036
+ 342 020a 9A78     		ldrb	r2, [r3, #2]	@ zero_extendqisi2
+ 343              		.loc 1 131 49
+ 344 020c 07F58363 		add	r3, r7, #1048
+ 345 0210 A3F58363 		sub	r3, r3, #1048
+ 346 0214 1B68     		ldr	r3, [r3]
+ 347 0216 9A70     		strb	r2, [r3, #2]
+ 132:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             break;
+ 348              		.loc 1 132 13
+ 349 0218 7EE0     		b	.L7
+ 350              	.L13:
+ 133:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****         case LR1110_MODEM_LORAWAN_EVENT_MUTE:
+ 134:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             modem_event->event_data.mute.status = ( lr1110_modem_mute_t ) event_fields.buffer[0];
+ 351              		.loc 1 134 94
+ 352 021a 07F58363 		add	r3, r7, #1048
+ 353 021e A3F20C43 		subw	r3, r3, #1036
+ 354 0222 9A78     		ldrb	r2, [r3, #2]	@ zero_extendqisi2
+ 355              		.loc 1 134 49
+ 356 0224 07F58363 		add	r3, r7, #1048
+ 357 0228 A3F58363 		sub	r3, r3, #1048
+ 358 022c 1B68     		ldr	r3, [r3]
+ 359 022e 9A70     		strb	r2, [r3, #2]
+ 135:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             break;
+ 360              		.loc 1 135 13
+ 361 0230 72E0     		b	.L7
+ 362              	.L12:
+ 136:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****         case LR1110_MODEM_LORAWAN_EVENT_WIFI_SCAN_DONE:
+ 137:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             modem_event->event_data.wifi.len = event_fields.buffer_len;
+ 363              		.loc 1 137 60
+ 364 0232 07F58363 		add	r3, r7, #1048
+ 365 0236 A3F20C43 		subw	r3, r3, #1036
+ 366 023a B3F80224 		ldrh	r2, [r3, #1026]
+ 367              		.loc 1 137 46
+ 368 023e 07F58363 		add	r3, r7, #1048
+ 369 0242 A3F58363 		sub	r3, r3, #1048
+ 370 0246 1B68     		ldr	r3, [r3]
+ 371 0248 5A80     		strh	r2, [r3, #2]	@ movhi
+ 372              	.LBB3:
+ 138:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             for( uint16_t i = 0; i < event_fields.buffer_len; i++ )
+ 373              		.loc 1 138 27
+ARM GAS  /tmp/cc3eKWAy.s 			page 10
+
+
+ 374 024a 0023     		movs	r3, #0
+ 375 024c A7F81434 		strh	r3, [r7, #1044]	@ movhi
+ 376              		.loc 1 138 13
+ 377 0250 16E0     		b	.L21
+ 378              	.L22:
+ 139:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             {
+ 140:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****                 modem_event->event_data.wifi.buffer[i] = event_fields.buffer[i];
+ 379              		.loc 1 140 77 discriminator 3
+ 380 0252 B7F81424 		ldrh	r2, [r7, #1044]
+ 381              		.loc 1 140 52 discriminator 3
+ 382 0256 B7F81434 		ldrh	r3, [r7, #1044]
+ 383              		.loc 1 140 77 discriminator 3
+ 384 025a 07F58361 		add	r1, r7, #1048
+ 385 025e A1F20C41 		subw	r1, r1, #1036
+ 386 0262 0A44     		add	r2, r2, r1
+ 387 0264 9178     		ldrb	r1, [r2, #2]	@ zero_extendqisi2
+ 388              		.loc 1 140 56 discriminator 3
+ 389 0266 07F58362 		add	r2, r7, #1048
+ 390 026a A2F58362 		sub	r2, r2, #1048
+ 391 026e 1268     		ldr	r2, [r2]
+ 392 0270 1344     		add	r3, r3, r2
+ 393 0272 0A46     		mov	r2, r1
+ 394 0274 1A71     		strb	r2, [r3, #4]
+ 138:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             for( uint16_t i = 0; i < event_fields.buffer_len; i++ )
+ 395              		.loc 1 138 64 discriminator 3
+ 396 0276 B7F81434 		ldrh	r3, [r7, #1044]
+ 397 027a 0133     		adds	r3, r3, #1
+ 398 027c A7F81434 		strh	r3, [r7, #1044]	@ movhi
+ 399              	.L21:
+ 138:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             for( uint16_t i = 0; i < event_fields.buffer_len; i++ )
+ 400              		.loc 1 138 50 discriminator 1
+ 401 0280 07F58363 		add	r3, r7, #1048
+ 402 0284 A3F20C43 		subw	r3, r3, #1036
+ 403 0288 B3F80234 		ldrh	r3, [r3, #1026]
+ 138:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             for( uint16_t i = 0; i < event_fields.buffer_len; i++ )
+ 404              		.loc 1 138 13 discriminator 1
+ 405 028c B7F81424 		ldrh	r2, [r7, #1044]
+ 406 0290 9A42     		cmp	r2, r3
+ 407 0292 DED3     		bcc	.L22
+ 408              	.LBE3:
+ 141:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             }
+ 142:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             break;
+ 409              		.loc 1 142 13
+ 410 0294 40E0     		b	.L7
+ 411              	.L11:
+ 143:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****         case LR1110_MODEM_LORAWAN_EVENT_GNSS_SCAN_DONE:
+ 144:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             modem_event->event_data.gnss.len = event_fields.buffer_len;
+ 412              		.loc 1 144 60
+ 413 0296 07F58363 		add	r3, r7, #1048
+ 414 029a A3F20C43 		subw	r3, r3, #1036
+ 415 029e B3F80224 		ldrh	r2, [r3, #1026]
+ 416              		.loc 1 144 46
+ 417 02a2 07F58363 		add	r3, r7, #1048
+ 418 02a6 A3F58363 		sub	r3, r3, #1048
+ 419 02aa 1B68     		ldr	r3, [r3]
+ 420 02ac 5A80     		strh	r2, [r3, #2]	@ movhi
+ 421              	.LBB4:
+ARM GAS  /tmp/cc3eKWAy.s 			page 11
+
+
+ 145:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             for( uint16_t i = 0; i < event_fields.buffer_len; i++ )
+ 422              		.loc 1 145 27
+ 423 02ae 0023     		movs	r3, #0
+ 424 02b0 A7F81234 		strh	r3, [r7, #1042]	@ movhi
+ 425              		.loc 1 145 13
+ 426 02b4 16E0     		b	.L23
+ 427              	.L24:
+ 146:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             {
+ 147:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****                 modem_event->event_data.gnss.nav_message[i] = event_fields.buffer[i];
+ 428              		.loc 1 147 82 discriminator 3
+ 429 02b6 B7F81224 		ldrh	r2, [r7, #1042]
+ 430              		.loc 1 147 57 discriminator 3
+ 431 02ba B7F81234 		ldrh	r3, [r7, #1042]
+ 432              		.loc 1 147 82 discriminator 3
+ 433 02be 07F58361 		add	r1, r7, #1048
+ 434 02c2 A1F20C41 		subw	r1, r1, #1036
+ 435 02c6 0A44     		add	r2, r2, r1
+ 436 02c8 9178     		ldrb	r1, [r2, #2]	@ zero_extendqisi2
+ 437              		.loc 1 147 61 discriminator 3
+ 438 02ca 07F58362 		add	r2, r7, #1048
+ 439 02ce A2F58362 		sub	r2, r2, #1048
+ 440 02d2 1268     		ldr	r2, [r2]
+ 441 02d4 1344     		add	r3, r3, r2
+ 442 02d6 0A46     		mov	r2, r1
+ 443 02d8 1A71     		strb	r2, [r3, #4]
+ 145:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             for( uint16_t i = 0; i < event_fields.buffer_len; i++ )
+ 444              		.loc 1 145 64 discriminator 3
+ 445 02da B7F81234 		ldrh	r3, [r7, #1042]
+ 446 02de 0133     		adds	r3, r3, #1
+ 447 02e0 A7F81234 		strh	r3, [r7, #1042]	@ movhi
+ 448              	.L23:
+ 145:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             for( uint16_t i = 0; i < event_fields.buffer_len; i++ )
+ 449              		.loc 1 145 50 discriminator 1
+ 450 02e4 07F58363 		add	r3, r7, #1048
+ 451 02e8 A3F20C43 		subw	r3, r3, #1036
+ 452 02ec B3F80234 		ldrh	r3, [r3, #1026]
+ 145:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             for( uint16_t i = 0; i < event_fields.buffer_len; i++ )
+ 453              		.loc 1 145 13 discriminator 1
+ 454 02f0 B7F81224 		ldrh	r2, [r7, #1042]
+ 455 02f4 9A42     		cmp	r2, r3
+ 456 02f6 DED3     		bcc	.L24
+ 457              	.LBE4:
+ 148:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             }
+ 149:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             break;
+ 458              		.loc 1 149 13
+ 459 02f8 0EE0     		b	.L7
+ 460              	.L9:
+ 150:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****         case LR1110_MODEM_LORAWAN_EVENT_TIME_UPDATED_ALC_SYNC:
+ 151:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             modem_event->event_data.time.status = ( lr1110_modem_alc_sync_state_t ) event_fields.bu
+ 461              		.loc 1 151 104
+ 462 02fa 07F58363 		add	r3, r7, #1048
+ 463 02fe A3F20C43 		subw	r3, r3, #1036
+ 464 0302 9A78     		ldrb	r2, [r3, #2]	@ zero_extendqisi2
+ 465              		.loc 1 151 49
+ 466 0304 07F58363 		add	r3, r7, #1048
+ 467 0308 A3F58363 		sub	r3, r3, #1048
+ 468 030c 1B68     		ldr	r3, [r3]
+ARM GAS  /tmp/cc3eKWAy.s 			page 12
+
+
+ 469 030e 9A70     		strb	r2, [r3, #2]
+ 152:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             break;
+ 470              		.loc 1 152 13
+ 471 0310 02E0     		b	.L7
+ 472              	.L26:
+ 153:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****         default:
+ 154:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****             break;
+ 155:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****         }
+ 156:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****     }
+ 473              		.loc 1 156 5
+ 474 0312 00BF     		nop
+ 475 0314 00E0     		b	.L7
+ 476              	.L27:
+ 154:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****         }
+ 477              		.loc 1 154 13
+ 478 0316 00BF     		nop
+ 479              	.L7:
+ 157:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** 
+ 158:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c ****     return status;
+ 480              		.loc 1 158 12
+ 481 0318 97F81734 		ldrb	r3, [r7, #1047]	@ zero_extendqisi2
+ 159:../Src/radio/lr1110_modem/src/lr1110_modem_helper.c **** }
+ 482              		.loc 1 159 1
+ 483 031c 1846     		mov	r0, r3
+ 484 031e 07F58367 		add	r7, r7, #1048
+ 485              	.LCFI8:
+ 486              		.cfi_def_cfa_offset 8
+ 487 0322 BD46     		mov	sp, r7
+ 488              	.LCFI9:
+ 489              		.cfi_def_cfa_register 13
+ 490              		@ sp needed
+ 491 0324 80BD     		pop	{r7, pc}
+ 492              		.cfi_endproc
+ 493              	.LFE1:
+ 495 0326 00BF     		.text
+ 496              	.Letext0:
+ 497              		.file 2 "/usr/lib/gcc/arm-none-eabi/10.3.1/include/stdint.h"
+ 498              		.file 3 "../Src/radio/lr1110_modem/src/lr1110_modem_common.h"
+ 499              		.file 4 "../Src/radio/lr1110_modem/src/lr1110_modem_lorawan.h"
+ 500              		.file 5 "../Src/radio/lr1110_modem/src/lr1110_modem_helper.h"
+ARM GAS  /tmp/cc3eKWAy.s 			page 13
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 lr1110_modem_helper.c
+     /tmp/cc3eKWAy.s:18     .text.lr1110_modem_helper_get_utc_time:0000000000000000 $t
+     /tmp/cc3eKWAy.s:26     .text.lr1110_modem_helper_get_utc_time:0000000000000000 lr1110_modem_helper_get_utc_time
+     /tmp/cc3eKWAy.s:89     .text.lr1110_modem_helper_get_utc_time:0000000000000040 $d
+     /tmp/cc3eKWAy.s:94     .text.lr1110_modem_helper_get_event_data:0000000000000000 $t
+     /tmp/cc3eKWAy.s:101    .text.lr1110_modem_helper_get_event_data:0000000000000000 lr1110_modem_helper_get_event_data
+     /tmp/cc3eKWAy.s:176    .text.lr1110_modem_helper_get_event_data:0000000000000098 $d
+     /tmp/cc3eKWAy.s:190    .text.lr1110_modem_helper_get_event_data:00000000000000d0 $t
+
+UNDEFINED SYMBOLS
+lr1110_modem_get_gps_time
+lr1110_modem_get_event

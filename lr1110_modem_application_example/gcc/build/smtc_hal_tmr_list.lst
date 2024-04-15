@@ -1,0 +1,1890 @@
+ARM GAS  /tmp/ccQbWcaF.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"smtc_hal_tmr_list.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.bss.timer_list_head,"aw",%nobits
+  18              		.align	2
+  21              	timer_list_head:
+  22 0000 00000000 		.space	4
+  23              		.section	.text.timer_init,"ax",%progbits
+  24              		.align	1
+  25              		.global	timer_init
+  26              		.arch armv7e-m
+  27              		.syntax unified
+  28              		.thumb
+  29              		.thumb_func
+  30              		.fpu fpv4-sp-d16
+  32              	timer_init:
+  33              	.LFB513:
+  34              		.file 1 "../Src/smtc_hal/smtc_hal_tmr_list.c"
+   1:../Src/smtc_hal/smtc_hal_tmr_list.c **** /*!
+   2:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * @file      smtc_hal_tmr_list.c
+   3:../Src/smtc_hal/smtc_hal_tmr_list.c ****  *
+   4:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * @brief     Timer list API implementation.
+   5:../Src/smtc_hal/smtc_hal_tmr_list.c ****  *
+   6:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * Revised BSD License
+   7:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * Copyright Semtech Corporation 2020. All rights reserved.
+   8:../Src/smtc_hal/smtc_hal_tmr_list.c ****  *
+   9:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * Redistribution and use in source and binary forms, with or without
+  10:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * modification, are permitted provided that the following conditions are met:
+  11:../Src/smtc_hal/smtc_hal_tmr_list.c ****  *     * Redistributions of source code must retain the above copyright
+  12:../Src/smtc_hal/smtc_hal_tmr_list.c ****  *       notice, this list of conditions and the following disclaimer.
+  13:../Src/smtc_hal/smtc_hal_tmr_list.c ****  *     * Redistributions in binary form must reproduce the above copyright
+  14:../Src/smtc_hal/smtc_hal_tmr_list.c ****  *       notice, this list of conditions and the following disclaimer in the
+  15:../Src/smtc_hal/smtc_hal_tmr_list.c ****  *       documentation and/or other materials provided with the distribution.
+  16:../Src/smtc_hal/smtc_hal_tmr_list.c ****  *     * Neither the name of the Semtech corporation nor the
+  17:../Src/smtc_hal/smtc_hal_tmr_list.c ****  *       names of its contributors may be used to endorse or promote products
+  18:../Src/smtc_hal/smtc_hal_tmr_list.c ****  *       derived from this software without specific prior written permission.
+  19:../Src/smtc_hal/smtc_hal_tmr_list.c ****  *
+  20:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  21:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  22:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  23:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * ARE DISCLAIMED. IN NO EVENT SHALL SEMTECH CORPORATION BE LIABLE FOR ANY
+  24:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+  25:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  26:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ARM GAS  /tmp/ccQbWcaF.s 			page 2
+
+
+  27:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  28:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  29:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  30:../Src/smtc_hal/smtc_hal_tmr_list.c ****  */
+  31:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+  32:../Src/smtc_hal/smtc_hal_tmr_list.c **** /*
+  33:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * -----------------------------------------------------------------------------
+  34:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * --- DEPENDENCIES ------------------------------------------------------------
+  35:../Src/smtc_hal/smtc_hal_tmr_list.c ****  */
+  36:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+  37:../Src/smtc_hal/smtc_hal_tmr_list.c **** #include <stdint.h>   // C99 types
+  38:../Src/smtc_hal/smtc_hal_tmr_list.c **** #include <stdbool.h>  // bool type
+  39:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+  40:../Src/smtc_hal/smtc_hal_tmr_list.c **** #include "stm32l4xx_hal.h"
+  41:../Src/smtc_hal/smtc_hal_tmr_list.c **** #include "smtc_hal_mcu.h"
+  42:../Src/smtc_hal/smtc_hal_tmr_list.c **** #include "smtc_hal_tmr_list.h"
+  43:../Src/smtc_hal/smtc_hal_tmr_list.c **** #include "smtc_hal_rtc.h"
+  44:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+  45:../Src/smtc_hal/smtc_hal_tmr_list.c **** /*
+  46:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * -----------------------------------------------------------------------------
+  47:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * --- PRIVATE MACROS-----------------------------------------------------------
+  48:../Src/smtc_hal/smtc_hal_tmr_list.c ****  */
+  49:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+  50:../Src/smtc_hal/smtc_hal_tmr_list.c **** /*!
+  51:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * Safely execute call back
+  52:../Src/smtc_hal/smtc_hal_tmr_list.c ****  */
+  53:../Src/smtc_hal/smtc_hal_tmr_list.c **** #define execute_callback( _callback_, context ) \
+  54:../Src/smtc_hal/smtc_hal_tmr_list.c ****     do                                          \
+  55:../Src/smtc_hal/smtc_hal_tmr_list.c ****     {                                           \
+  56:../Src/smtc_hal/smtc_hal_tmr_list.c ****         if( _callback_ == NULL )                \
+  57:../Src/smtc_hal/smtc_hal_tmr_list.c ****         {                                       \
+  58:../Src/smtc_hal/smtc_hal_tmr_list.c ****             while( 1 )                          \
+  59:../Src/smtc_hal/smtc_hal_tmr_list.c ****                 ;                               \
+  60:../Src/smtc_hal/smtc_hal_tmr_list.c ****         }                                       \
+  61:../Src/smtc_hal/smtc_hal_tmr_list.c ****         else                                    \
+  62:../Src/smtc_hal/smtc_hal_tmr_list.c ****         {                                       \
+  63:../Src/smtc_hal/smtc_hal_tmr_list.c ****             _callback_( context );              \
+  64:../Src/smtc_hal/smtc_hal_tmr_list.c ****         }                                       \
+  65:../Src/smtc_hal/smtc_hal_tmr_list.c ****     } while( 0 );
+  66:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+  67:../Src/smtc_hal/smtc_hal_tmr_list.c **** /*
+  68:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * -----------------------------------------------------------------------------
+  69:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * --- PRIVATE CONSTANTS -------------------------------------------------------
+  70:../Src/smtc_hal/smtc_hal_tmr_list.c ****  */
+  71:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+  72:../Src/smtc_hal/smtc_hal_tmr_list.c **** /*
+  73:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * -----------------------------------------------------------------------------
+  74:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * --- PRIVATE TYPES -----------------------------------------------------------
+  75:../Src/smtc_hal/smtc_hal_tmr_list.c ****  */
+  76:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+  77:../Src/smtc_hal/smtc_hal_tmr_list.c **** /*
+  78:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * -----------------------------------------------------------------------------
+  79:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * --- PRIVATE VARIABLES -------------------------------------------------------
+  80:../Src/smtc_hal/smtc_hal_tmr_list.c ****  */
+  81:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+  82:../Src/smtc_hal/smtc_hal_tmr_list.c **** /*!
+  83:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * @brief Timers list head pointer
+ARM GAS  /tmp/ccQbWcaF.s 			page 3
+
+
+  84:../Src/smtc_hal/smtc_hal_tmr_list.c ****  */
+  85:../Src/smtc_hal/smtc_hal_tmr_list.c **** static timer_event_t* timer_list_head = NULL;
+  86:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+  87:../Src/smtc_hal/smtc_hal_tmr_list.c **** /*
+  88:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * -----------------------------------------------------------------------------
+  89:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * --- PRIVATE FUNCTIONS DECLARATION -------------------------------------------
+  90:../Src/smtc_hal/smtc_hal_tmr_list.c ****  */
+  91:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+  92:../Src/smtc_hal/smtc_hal_tmr_list.c **** /*!
+  93:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * @brief Adds or replace the head timer of the list.
+  94:../Src/smtc_hal/smtc_hal_tmr_list.c ****  *
+  95:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * @remark The list is automatically sorted. The list head always contains the
+  96:../Src/smtc_hal/smtc_hal_tmr_list.c ****  *         next timer to expire.
+  97:../Src/smtc_hal/smtc_hal_tmr_list.c ****  *
+  98:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * @param [in]  obj Timer object to be become the new head
+  99:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * @param [in]  remainingTime Remaining time of the previous head to be replaced
+ 100:../Src/smtc_hal/smtc_hal_tmr_list.c ****  */
+ 101:../Src/smtc_hal/smtc_hal_tmr_list.c **** static void timer_insert_new_head_timer( timer_event_t* obj );
+ 102:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 103:../Src/smtc_hal/smtc_hal_tmr_list.c **** /*!
+ 104:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * @brief Adds a timer to the list.
+ 105:../Src/smtc_hal/smtc_hal_tmr_list.c ****  *
+ 106:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * @remark The list is automatically sorted. The list head always contains the
+ 107:../Src/smtc_hal/smtc_hal_tmr_list.c ****  *         next timer to expire.
+ 108:../Src/smtc_hal/smtc_hal_tmr_list.c ****  *
+ 109:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * @param [in]  obj Timer object to be added to the list
+ 110:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * @param [in]  remainingTime Remaining time of the running head after which the object may be adde
+ 111:../Src/smtc_hal/smtc_hal_tmr_list.c ****  */
+ 112:../Src/smtc_hal/smtc_hal_tmr_list.c **** static void timer_insert_timer( timer_event_t* obj );
+ 113:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 114:../Src/smtc_hal/smtc_hal_tmr_list.c **** /*!
+ 115:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * @brief Sets a timeout with the duration "timestamp"
+ 116:../Src/smtc_hal/smtc_hal_tmr_list.c ****  *
+ 117:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * @param [in] timestamp Delay duration
+ 118:../Src/smtc_hal/smtc_hal_tmr_list.c ****  */
+ 119:../Src/smtc_hal/smtc_hal_tmr_list.c **** static void timer_set_timeout( timer_event_t* obj );
+ 120:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 121:../Src/smtc_hal/smtc_hal_tmr_list.c **** /*!
+ 122:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * @brief Check if the Object to be added is not already in the list
+ 123:../Src/smtc_hal/smtc_hal_tmr_list.c ****  *
+ 124:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * @param [in] timestamp Delay duration
+ 125:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * @returns true (the object is already in the list) or false
+ 126:../Src/smtc_hal/smtc_hal_tmr_list.c ****  */
+ 127:../Src/smtc_hal/smtc_hal_tmr_list.c **** static bool timer_exists( timer_event_t* obj );
+ 128:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 129:../Src/smtc_hal/smtc_hal_tmr_list.c **** /*
+ 130:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * -----------------------------------------------------------------------------
+ 131:../Src/smtc_hal/smtc_hal_tmr_list.c ****  * --- PUBLIC FUNCTIONS DEFINITION ---------------------------------------------
+ 132:../Src/smtc_hal/smtc_hal_tmr_list.c ****  */
+ 133:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 134:../Src/smtc_hal/smtc_hal_tmr_list.c **** void timer_init( timer_event_t* obj, void ( *callback )( void* context ) )
+ 135:../Src/smtc_hal/smtc_hal_tmr_list.c **** {
+  35              		.loc 1 135 1
+  36              		.cfi_startproc
+  37              		@ args = 0, pretend = 0, frame = 8
+  38              		@ frame_needed = 1, uses_anonymous_args = 0
+  39              		@ link register save eliminated.
+ARM GAS  /tmp/ccQbWcaF.s 			page 4
+
+
+  40 0000 80B4     		push	{r7}
+  41              	.LCFI0:
+  42              		.cfi_def_cfa_offset 4
+  43              		.cfi_offset 7, -4
+  44 0002 83B0     		sub	sp, sp, #12
+  45              	.LCFI1:
+  46              		.cfi_def_cfa_offset 16
+  47 0004 00AF     		add	r7, sp, #0
+  48              	.LCFI2:
+  49              		.cfi_def_cfa_register 7
+  50 0006 7860     		str	r0, [r7, #4]
+  51 0008 3960     		str	r1, [r7]
+ 136:../Src/smtc_hal/smtc_hal_tmr_list.c ****     obj->timestamp        = 0;
+  52              		.loc 1 136 27
+  53 000a 7B68     		ldr	r3, [r7, #4]
+  54 000c 0022     		movs	r2, #0
+  55 000e 1A60     		str	r2, [r3]
+ 137:../Src/smtc_hal/smtc_hal_tmr_list.c ****     obj->reload_value     = 0;
+  56              		.loc 1 137 27
+  57 0010 7B68     		ldr	r3, [r7, #4]
+  58 0012 0022     		movs	r2, #0
+  59 0014 5A60     		str	r2, [r3, #4]
+ 138:../Src/smtc_hal/smtc_hal_tmr_list.c ****     obj->is_started       = false;
+  60              		.loc 1 138 27
+  61 0016 7B68     		ldr	r3, [r7, #4]
+  62 0018 0022     		movs	r2, #0
+  63 001a 1A72     		strb	r2, [r3, #8]
+ 139:../Src/smtc_hal/smtc_hal_tmr_list.c ****     obj->is_next_2_expire = false;
+  64              		.loc 1 139 27
+  65 001c 7B68     		ldr	r3, [r7, #4]
+  66 001e 0022     		movs	r2, #0
+  67 0020 5A72     		strb	r2, [r3, #9]
+ 140:../Src/smtc_hal/smtc_hal_tmr_list.c ****     obj->callback         = callback;
+  68              		.loc 1 140 27
+  69 0022 7B68     		ldr	r3, [r7, #4]
+  70 0024 3A68     		ldr	r2, [r7]
+  71 0026 DA60     		str	r2, [r3, #12]
+ 141:../Src/smtc_hal/smtc_hal_tmr_list.c ****     obj->context          = NULL;
+  72              		.loc 1 141 27
+  73 0028 7B68     		ldr	r3, [r7, #4]
+  74 002a 0022     		movs	r2, #0
+  75 002c 1A61     		str	r2, [r3, #16]
+ 142:../Src/smtc_hal/smtc_hal_tmr_list.c ****     obj->next             = NULL;
+  76              		.loc 1 142 27
+  77 002e 7B68     		ldr	r3, [r7, #4]
+  78 0030 0022     		movs	r2, #0
+  79 0032 5A61     		str	r2, [r3, #20]
+ 143:../Src/smtc_hal/smtc_hal_tmr_list.c **** }
+  80              		.loc 1 143 1
+  81 0034 00BF     		nop
+  82 0036 0C37     		adds	r7, r7, #12
+  83              	.LCFI3:
+  84              		.cfi_def_cfa_offset 4
+  85 0038 BD46     		mov	sp, r7
+  86              	.LCFI4:
+  87              		.cfi_def_cfa_register 13
+  88              		@ sp needed
+ARM GAS  /tmp/ccQbWcaF.s 			page 5
+
+
+  89 003a 5DF8047B 		ldr	r7, [sp], #4
+  90              	.LCFI5:
+  91              		.cfi_restore 7
+  92              		.cfi_def_cfa_offset 0
+  93 003e 7047     		bx	lr
+  94              		.cfi_endproc
+  95              	.LFE513:
+  97              		.section	.text.timer_set_context,"ax",%progbits
+  98              		.align	1
+  99              		.global	timer_set_context
+ 100              		.syntax unified
+ 101              		.thumb
+ 102              		.thumb_func
+ 103              		.fpu fpv4-sp-d16
+ 105              	timer_set_context:
+ 106              	.LFB514:
+ 144:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 145:../Src/smtc_hal/smtc_hal_tmr_list.c **** void timer_set_context( timer_event_t* obj, void* context ) { obj->context = context; }
+ 107              		.loc 1 145 61
+ 108              		.cfi_startproc
+ 109              		@ args = 0, pretend = 0, frame = 8
+ 110              		@ frame_needed = 1, uses_anonymous_args = 0
+ 111              		@ link register save eliminated.
+ 112 0000 80B4     		push	{r7}
+ 113              	.LCFI6:
+ 114              		.cfi_def_cfa_offset 4
+ 115              		.cfi_offset 7, -4
+ 116 0002 83B0     		sub	sp, sp, #12
+ 117              	.LCFI7:
+ 118              		.cfi_def_cfa_offset 16
+ 119 0004 00AF     		add	r7, sp, #0
+ 120              	.LCFI8:
+ 121              		.cfi_def_cfa_register 7
+ 122 0006 7860     		str	r0, [r7, #4]
+ 123 0008 3960     		str	r1, [r7]
+ 124              		.loc 1 145 76
+ 125 000a 7B68     		ldr	r3, [r7, #4]
+ 126 000c 3A68     		ldr	r2, [r7]
+ 127 000e 1A61     		str	r2, [r3, #16]
+ 128              		.loc 1 145 87
+ 129 0010 00BF     		nop
+ 130 0012 0C37     		adds	r7, r7, #12
+ 131              	.LCFI9:
+ 132              		.cfi_def_cfa_offset 4
+ 133 0014 BD46     		mov	sp, r7
+ 134              	.LCFI10:
+ 135              		.cfi_def_cfa_register 13
+ 136              		@ sp needed
+ 137 0016 5DF8047B 		ldr	r7, [sp], #4
+ 138              	.LCFI11:
+ 139              		.cfi_restore 7
+ 140              		.cfi_def_cfa_offset 0
+ 141 001a 7047     		bx	lr
+ 142              		.cfi_endproc
+ 143              	.LFE514:
+ 145              		.section	.text.timer_start,"ax",%progbits
+ 146              		.align	1
+ARM GAS  /tmp/ccQbWcaF.s 			page 6
+
+
+ 147              		.global	timer_start
+ 148              		.syntax unified
+ 149              		.thumb
+ 150              		.thumb_func
+ 151              		.fpu fpv4-sp-d16
+ 153              	timer_start:
+ 154              	.LFB515:
+ 146:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 147:../Src/smtc_hal/smtc_hal_tmr_list.c **** void timer_start( timer_event_t* obj )
+ 148:../Src/smtc_hal/smtc_hal_tmr_list.c **** {
+ 155              		.loc 1 148 1
+ 156              		.cfi_startproc
+ 157              		@ args = 0, pretend = 0, frame = 16
+ 158              		@ frame_needed = 1, uses_anonymous_args = 0
+ 159 0000 80B5     		push	{r7, lr}
+ 160              	.LCFI12:
+ 161              		.cfi_def_cfa_offset 8
+ 162              		.cfi_offset 7, -8
+ 163              		.cfi_offset 14, -4
+ 164 0002 84B0     		sub	sp, sp, #16
+ 165              	.LCFI13:
+ 166              		.cfi_def_cfa_offset 24
+ 167 0004 00AF     		add	r7, sp, #0
+ 168              	.LCFI14:
+ 169              		.cfi_def_cfa_register 7
+ 170 0006 7860     		str	r0, [r7, #4]
+ 149:../Src/smtc_hal/smtc_hal_tmr_list.c ****     uint32_t elapsed_time = 0;
+ 171              		.loc 1 149 14
+ 172 0008 0023     		movs	r3, #0
+ 173 000a FB60     		str	r3, [r7, #12]
+ 150:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 151:../Src/smtc_hal/smtc_hal_tmr_list.c ****     CRITICAL_SECTION_BEGIN( );
+ 174              		.loc 1 151 5
+ 175 000c 07F10803 		add	r3, r7, #8
+ 176 0010 1846     		mov	r0, r3
+ 177 0012 FFF7FEFF 		bl	hal_mcu_critical_section_begin
+ 152:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 153:../Src/smtc_hal/smtc_hal_tmr_list.c ****     if( ( obj == NULL ) || ( timer_exists( obj ) == true ) )
+ 178              		.loc 1 153 7
+ 179 0016 7B68     		ldr	r3, [r7, #4]
+ 180 0018 002B     		cmp	r3, #0
+ 181 001a 05D0     		beq	.L4
+ 182              		.loc 1 153 30 discriminator 1
+ 183 001c 7868     		ldr	r0, [r7, #4]
+ 184 001e FFF7FEFF 		bl	timer_exists
+ 185 0022 0346     		mov	r3, r0
+ 186              		.loc 1 153 25 discriminator 1
+ 187 0024 002B     		cmp	r3, #0
+ 188 0026 05D0     		beq	.L5
+ 189              	.L4:
+ 154:../Src/smtc_hal/smtc_hal_tmr_list.c ****     {
+ 155:../Src/smtc_hal/smtc_hal_tmr_list.c ****         CRITICAL_SECTION_END( );
+ 190              		.loc 1 155 9
+ 191 0028 07F10803 		add	r3, r7, #8
+ 192 002c 1846     		mov	r0, r3
+ 193 002e FFF7FEFF 		bl	hal_mcu_critical_section_end
+ 194 0032 2FE0     		b	.L3
+ARM GAS  /tmp/ccQbWcaF.s 			page 7
+
+
+ 195              	.L5:
+ 156:../Src/smtc_hal/smtc_hal_tmr_list.c ****         return;
+ 157:../Src/smtc_hal/smtc_hal_tmr_list.c ****     }
+ 158:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 159:../Src/smtc_hal/smtc_hal_tmr_list.c ****     obj->timestamp        = obj->reload_value;
+ 196              		.loc 1 159 32
+ 197 0034 7B68     		ldr	r3, [r7, #4]
+ 198 0036 5A68     		ldr	r2, [r3, #4]
+ 199              		.loc 1 159 27
+ 200 0038 7B68     		ldr	r3, [r7, #4]
+ 201 003a 1A60     		str	r2, [r3]
+ 160:../Src/smtc_hal/smtc_hal_tmr_list.c ****     obj->is_started       = true;
+ 202              		.loc 1 160 27
+ 203 003c 7B68     		ldr	r3, [r7, #4]
+ 204 003e 0122     		movs	r2, #1
+ 205 0040 1A72     		strb	r2, [r3, #8]
+ 161:../Src/smtc_hal/smtc_hal_tmr_list.c ****     obj->is_next_2_expire = false;
+ 206              		.loc 1 161 27
+ 207 0042 7B68     		ldr	r3, [r7, #4]
+ 208 0044 0022     		movs	r2, #0
+ 209 0046 5A72     		strb	r2, [r3, #9]
+ 162:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 163:../Src/smtc_hal/smtc_hal_tmr_list.c ****     if( timer_list_head == NULL )
+ 210              		.loc 1 163 25
+ 211 0048 144B     		ldr	r3, .L10
+ 212 004a 1B68     		ldr	r3, [r3]
+ 213              		.loc 1 163 7
+ 214 004c 002B     		cmp	r3, #0
+ 215 004e 05D1     		bne	.L7
+ 164:../Src/smtc_hal/smtc_hal_tmr_list.c ****     {
+ 165:../Src/smtc_hal/smtc_hal_tmr_list.c ****         hal_rtc_set_time_ref_in_ticks( );
+ 216              		.loc 1 165 9
+ 217 0050 FFF7FEFF 		bl	hal_rtc_set_time_ref_in_ticks
+ 166:../Src/smtc_hal/smtc_hal_tmr_list.c ****         /* Inserts a timer at time now + obj->timestamp */
+ 167:../Src/smtc_hal/smtc_hal_tmr_list.c ****         timer_insert_new_head_timer( obj );
+ 218              		.loc 1 167 9
+ 219 0054 7868     		ldr	r0, [r7, #4]
+ 220 0056 FFF7FEFF 		bl	timer_insert_new_head_timer
+ 221 005a 16E0     		b	.L8
+ 222              	.L7:
+ 168:../Src/smtc_hal/smtc_hal_tmr_list.c ****     }
+ 169:../Src/smtc_hal/smtc_hal_tmr_list.c ****     else
+ 170:../Src/smtc_hal/smtc_hal_tmr_list.c ****     {
+ 171:../Src/smtc_hal/smtc_hal_tmr_list.c ****         elapsed_time = hal_rtc_get_timer_elapsed_value( );
+ 223              		.loc 1 171 24
+ 224 005c FFF7FEFF 		bl	hal_rtc_get_timer_elapsed_value
+ 225 0060 F860     		str	r0, [r7, #12]
+ 172:../Src/smtc_hal/smtc_hal_tmr_list.c ****         obj->timestamp += elapsed_time;
+ 226              		.loc 1 172 24
+ 227 0062 7B68     		ldr	r3, [r7, #4]
+ 228 0064 1A68     		ldr	r2, [r3]
+ 229 0066 FB68     		ldr	r3, [r7, #12]
+ 230 0068 1A44     		add	r2, r2, r3
+ 231 006a 7B68     		ldr	r3, [r7, #4]
+ 232 006c 1A60     		str	r2, [r3]
+ 173:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 174:../Src/smtc_hal/smtc_hal_tmr_list.c ****         if( obj->timestamp < timer_list_head->timestamp )
+ARM GAS  /tmp/ccQbWcaF.s 			page 8
+
+
+ 233              		.loc 1 174 16
+ 234 006e 7B68     		ldr	r3, [r7, #4]
+ 235 0070 1A68     		ldr	r2, [r3]
+ 236              		.loc 1 174 45
+ 237 0072 0A4B     		ldr	r3, .L10
+ 238 0074 1B68     		ldr	r3, [r3]
+ 239 0076 1B68     		ldr	r3, [r3]
+ 240              		.loc 1 174 11
+ 241 0078 9A42     		cmp	r2, r3
+ 242 007a 03D2     		bcs	.L9
+ 175:../Src/smtc_hal/smtc_hal_tmr_list.c ****         {
+ 176:../Src/smtc_hal/smtc_hal_tmr_list.c ****             timer_insert_new_head_timer( obj );
+ 243              		.loc 1 176 13
+ 244 007c 7868     		ldr	r0, [r7, #4]
+ 245 007e FFF7FEFF 		bl	timer_insert_new_head_timer
+ 246 0082 02E0     		b	.L8
+ 247              	.L9:
+ 177:../Src/smtc_hal/smtc_hal_tmr_list.c ****         }
+ 178:../Src/smtc_hal/smtc_hal_tmr_list.c ****         else
+ 179:../Src/smtc_hal/smtc_hal_tmr_list.c ****         {
+ 180:../Src/smtc_hal/smtc_hal_tmr_list.c ****             timer_insert_timer( obj );
+ 248              		.loc 1 180 13
+ 249 0084 7868     		ldr	r0, [r7, #4]
+ 250 0086 FFF7FEFF 		bl	timer_insert_timer
+ 251              	.L8:
+ 181:../Src/smtc_hal/smtc_hal_tmr_list.c ****         }
+ 182:../Src/smtc_hal/smtc_hal_tmr_list.c ****     }
+ 183:../Src/smtc_hal/smtc_hal_tmr_list.c ****     CRITICAL_SECTION_END( );
+ 252              		.loc 1 183 5
+ 253 008a 07F10803 		add	r3, r7, #8
+ 254 008e 1846     		mov	r0, r3
+ 255 0090 FFF7FEFF 		bl	hal_mcu_critical_section_end
+ 256              	.L3:
+ 184:../Src/smtc_hal/smtc_hal_tmr_list.c **** }
+ 257              		.loc 1 184 1
+ 258 0094 1037     		adds	r7, r7, #16
+ 259              	.LCFI15:
+ 260              		.cfi_def_cfa_offset 8
+ 261 0096 BD46     		mov	sp, r7
+ 262              	.LCFI16:
+ 263              		.cfi_def_cfa_register 13
+ 264              		@ sp needed
+ 265 0098 80BD     		pop	{r7, pc}
+ 266              	.L11:
+ 267 009a 00BF     		.align	2
+ 268              	.L10:
+ 269 009c 00000000 		.word	timer_list_head
+ 270              		.cfi_endproc
+ 271              	.LFE515:
+ 273              		.section	.text.is_timer_running,"ax",%progbits
+ 274              		.align	1
+ 275              		.global	is_timer_running
+ 276              		.syntax unified
+ 277              		.thumb
+ 278              		.thumb_func
+ 279              		.fpu fpv4-sp-d16
+ 281              	is_timer_running:
+ARM GAS  /tmp/ccQbWcaF.s 			page 9
+
+
+ 282              	.LFB516:
+ 185:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 186:../Src/smtc_hal/smtc_hal_tmr_list.c **** bool is_timer_running( void )
+ 187:../Src/smtc_hal/smtc_hal_tmr_list.c **** {
+ 283              		.loc 1 187 1
+ 284              		.cfi_startproc
+ 285              		@ args = 0, pretend = 0, frame = 0
+ 286              		@ frame_needed = 1, uses_anonymous_args = 0
+ 287              		@ link register save eliminated.
+ 288 0000 80B4     		push	{r7}
+ 289              	.LCFI17:
+ 290              		.cfi_def_cfa_offset 4
+ 291              		.cfi_offset 7, -4
+ 292 0002 00AF     		add	r7, sp, #0
+ 293              	.LCFI18:
+ 294              		.cfi_def_cfa_register 7
+ 188:../Src/smtc_hal/smtc_hal_tmr_list.c ****     if( timer_list_head == NULL )
+ 295              		.loc 1 188 25
+ 296 0004 054B     		ldr	r3, .L15
+ 297 0006 1B68     		ldr	r3, [r3]
+ 298              		.loc 1 188 7
+ 299 0008 002B     		cmp	r3, #0
+ 300 000a 01D1     		bne	.L13
+ 189:../Src/smtc_hal/smtc_hal_tmr_list.c ****     {
+ 190:../Src/smtc_hal/smtc_hal_tmr_list.c ****         return false;
+ 301              		.loc 1 190 16
+ 302 000c 0023     		movs	r3, #0
+ 303 000e 00E0     		b	.L14
+ 304              	.L13:
+ 191:../Src/smtc_hal/smtc_hal_tmr_list.c ****     }
+ 192:../Src/smtc_hal/smtc_hal_tmr_list.c ****     else
+ 193:../Src/smtc_hal/smtc_hal_tmr_list.c ****     {
+ 194:../Src/smtc_hal/smtc_hal_tmr_list.c ****         return true;
+ 305              		.loc 1 194 16
+ 306 0010 0123     		movs	r3, #1
+ 307              	.L14:
+ 195:../Src/smtc_hal/smtc_hal_tmr_list.c ****     }
+ 196:../Src/smtc_hal/smtc_hal_tmr_list.c **** }
+ 308              		.loc 1 196 1
+ 309 0012 1846     		mov	r0, r3
+ 310 0014 BD46     		mov	sp, r7
+ 311              	.LCFI19:
+ 312              		.cfi_def_cfa_register 13
+ 313              		@ sp needed
+ 314 0016 5DF8047B 		ldr	r7, [sp], #4
+ 315              	.LCFI20:
+ 316              		.cfi_restore 7
+ 317              		.cfi_def_cfa_offset 0
+ 318 001a 7047     		bx	lr
+ 319              	.L16:
+ 320              		.align	2
+ 321              	.L15:
+ 322 001c 00000000 		.word	timer_list_head
+ 323              		.cfi_endproc
+ 324              	.LFE516:
+ 326              		.section	.text.timer_insert_timer,"ax",%progbits
+ 327              		.align	1
+ARM GAS  /tmp/ccQbWcaF.s 			page 10
+
+
+ 328              		.syntax unified
+ 329              		.thumb
+ 330              		.thumb_func
+ 331              		.fpu fpv4-sp-d16
+ 333              	timer_insert_timer:
+ 334              	.LFB517:
+ 197:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 198:../Src/smtc_hal/smtc_hal_tmr_list.c **** static void timer_insert_timer( timer_event_t* obj )
+ 199:../Src/smtc_hal/smtc_hal_tmr_list.c **** {
+ 335              		.loc 1 199 1
+ 336              		.cfi_startproc
+ 337              		@ args = 0, pretend = 0, frame = 16
+ 338              		@ frame_needed = 1, uses_anonymous_args = 0
+ 339              		@ link register save eliminated.
+ 340 0000 80B4     		push	{r7}
+ 341              	.LCFI21:
+ 342              		.cfi_def_cfa_offset 4
+ 343              		.cfi_offset 7, -4
+ 344 0002 85B0     		sub	sp, sp, #20
+ 345              	.LCFI22:
+ 346              		.cfi_def_cfa_offset 24
+ 347 0004 00AF     		add	r7, sp, #0
+ 348              	.LCFI23:
+ 349              		.cfi_def_cfa_register 7
+ 350 0006 7860     		str	r0, [r7, #4]
+ 200:../Src/smtc_hal/smtc_hal_tmr_list.c ****     timer_event_t* cur  = timer_list_head;
+ 351              		.loc 1 200 20
+ 352 0008 144B     		ldr	r3, .L22
+ 353 000a 1B68     		ldr	r3, [r3]
+ 354 000c FB60     		str	r3, [r7, #12]
+ 201:../Src/smtc_hal/smtc_hal_tmr_list.c ****     timer_event_t* next = timer_list_head->next;
+ 355              		.loc 1 201 42
+ 356 000e 134B     		ldr	r3, .L22
+ 357 0010 1B68     		ldr	r3, [r3]
+ 358              		.loc 1 201 20
+ 359 0012 5B69     		ldr	r3, [r3, #20]
+ 360 0014 BB60     		str	r3, [r7, #8]
+ 202:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 203:../Src/smtc_hal/smtc_hal_tmr_list.c ****     while( cur->next != NULL )
+ 361              		.loc 1 203 10
+ 362 0016 12E0     		b	.L18
+ 363              	.L21:
+ 204:../Src/smtc_hal/smtc_hal_tmr_list.c ****     {
+ 205:../Src/smtc_hal/smtc_hal_tmr_list.c ****         if( obj->timestamp > next->timestamp )
+ 364              		.loc 1 205 16
+ 365 0018 7B68     		ldr	r3, [r7, #4]
+ 366 001a 1A68     		ldr	r2, [r3]
+ 367              		.loc 1 205 34
+ 368 001c BB68     		ldr	r3, [r7, #8]
+ 369 001e 1B68     		ldr	r3, [r3]
+ 370              		.loc 1 205 11
+ 371 0020 9A42     		cmp	r2, r3
+ 372 0022 05D9     		bls	.L19
+ 206:../Src/smtc_hal/smtc_hal_tmr_list.c ****         {
+ 207:../Src/smtc_hal/smtc_hal_tmr_list.c ****             cur  = next;
+ 373              		.loc 1 207 18
+ 374 0024 BB68     		ldr	r3, [r7, #8]
+ARM GAS  /tmp/ccQbWcaF.s 			page 11
+
+
+ 375 0026 FB60     		str	r3, [r7, #12]
+ 208:../Src/smtc_hal/smtc_hal_tmr_list.c ****             next = next->next;
+ 376              		.loc 1 208 18
+ 377 0028 BB68     		ldr	r3, [r7, #8]
+ 378 002a 5B69     		ldr	r3, [r3, #20]
+ 379 002c BB60     		str	r3, [r7, #8]
+ 380 002e 06E0     		b	.L18
+ 381              	.L19:
+ 209:../Src/smtc_hal/smtc_hal_tmr_list.c ****         }
+ 210:../Src/smtc_hal/smtc_hal_tmr_list.c ****         else
+ 211:../Src/smtc_hal/smtc_hal_tmr_list.c ****         {
+ 212:../Src/smtc_hal/smtc_hal_tmr_list.c ****             cur->next = obj;
+ 382              		.loc 1 212 23
+ 383 0030 FB68     		ldr	r3, [r7, #12]
+ 384 0032 7A68     		ldr	r2, [r7, #4]
+ 385 0034 5A61     		str	r2, [r3, #20]
+ 213:../Src/smtc_hal/smtc_hal_tmr_list.c ****             obj->next = next;
+ 386              		.loc 1 213 23
+ 387 0036 7B68     		ldr	r3, [r7, #4]
+ 388 0038 BA68     		ldr	r2, [r7, #8]
+ 389 003a 5A61     		str	r2, [r3, #20]
+ 214:../Src/smtc_hal/smtc_hal_tmr_list.c ****             return;
+ 390              		.loc 1 214 13
+ 391 003c 09E0     		b	.L17
+ 392              	.L18:
+ 203:../Src/smtc_hal/smtc_hal_tmr_list.c ****     {
+ 393              		.loc 1 203 15
+ 394 003e FB68     		ldr	r3, [r7, #12]
+ 395 0040 5B69     		ldr	r3, [r3, #20]
+ 203:../Src/smtc_hal/smtc_hal_tmr_list.c ****     {
+ 396              		.loc 1 203 10
+ 397 0042 002B     		cmp	r3, #0
+ 398 0044 E8D1     		bne	.L21
+ 215:../Src/smtc_hal/smtc_hal_tmr_list.c ****         }
+ 216:../Src/smtc_hal/smtc_hal_tmr_list.c ****     }
+ 217:../Src/smtc_hal/smtc_hal_tmr_list.c ****     cur->next = obj;
+ 399              		.loc 1 217 15
+ 400 0046 FB68     		ldr	r3, [r7, #12]
+ 401 0048 7A68     		ldr	r2, [r7, #4]
+ 402 004a 5A61     		str	r2, [r3, #20]
+ 218:../Src/smtc_hal/smtc_hal_tmr_list.c ****     obj->next = NULL;
+ 403              		.loc 1 218 15
+ 404 004c 7B68     		ldr	r3, [r7, #4]
+ 405 004e 0022     		movs	r2, #0
+ 406 0050 5A61     		str	r2, [r3, #20]
+ 407              	.L17:
+ 219:../Src/smtc_hal/smtc_hal_tmr_list.c **** }
+ 408              		.loc 1 219 1
+ 409 0052 1437     		adds	r7, r7, #20
+ 410              	.LCFI24:
+ 411              		.cfi_def_cfa_offset 4
+ 412 0054 BD46     		mov	sp, r7
+ 413              	.LCFI25:
+ 414              		.cfi_def_cfa_register 13
+ 415              		@ sp needed
+ 416 0056 5DF8047B 		ldr	r7, [sp], #4
+ 417              	.LCFI26:
+ARM GAS  /tmp/ccQbWcaF.s 			page 12
+
+
+ 418              		.cfi_restore 7
+ 419              		.cfi_def_cfa_offset 0
+ 420 005a 7047     		bx	lr
+ 421              	.L23:
+ 422              		.align	2
+ 423              	.L22:
+ 424 005c 00000000 		.word	timer_list_head
+ 425              		.cfi_endproc
+ 426              	.LFE517:
+ 428              		.section	.text.timer_insert_new_head_timer,"ax",%progbits
+ 429              		.align	1
+ 430              		.syntax unified
+ 431              		.thumb
+ 432              		.thumb_func
+ 433              		.fpu fpv4-sp-d16
+ 435              	timer_insert_new_head_timer:
+ 436              	.LFB518:
+ 220:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 221:../Src/smtc_hal/smtc_hal_tmr_list.c **** static void timer_insert_new_head_timer( timer_event_t* obj )
+ 222:../Src/smtc_hal/smtc_hal_tmr_list.c **** {
+ 437              		.loc 1 222 1
+ 438              		.cfi_startproc
+ 439              		@ args = 0, pretend = 0, frame = 16
+ 440              		@ frame_needed = 1, uses_anonymous_args = 0
+ 441 0000 80B5     		push	{r7, lr}
+ 442              	.LCFI27:
+ 443              		.cfi_def_cfa_offset 8
+ 444              		.cfi_offset 7, -8
+ 445              		.cfi_offset 14, -4
+ 446 0002 84B0     		sub	sp, sp, #16
+ 447              	.LCFI28:
+ 448              		.cfi_def_cfa_offset 24
+ 449 0004 00AF     		add	r7, sp, #0
+ 450              	.LCFI29:
+ 451              		.cfi_def_cfa_register 7
+ 452 0006 7860     		str	r0, [r7, #4]
+ 223:../Src/smtc_hal/smtc_hal_tmr_list.c ****     timer_event_t* cur = timer_list_head;
+ 453              		.loc 1 223 20
+ 454 0008 0B4B     		ldr	r3, .L26
+ 455 000a 1B68     		ldr	r3, [r3]
+ 456 000c FB60     		str	r3, [r7, #12]
+ 224:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 225:../Src/smtc_hal/smtc_hal_tmr_list.c ****     if( cur != NULL )
+ 457              		.loc 1 225 7
+ 458 000e FB68     		ldr	r3, [r7, #12]
+ 459 0010 002B     		cmp	r3, #0
+ 460 0012 02D0     		beq	.L25
+ 226:../Src/smtc_hal/smtc_hal_tmr_list.c ****     {
+ 227:../Src/smtc_hal/smtc_hal_tmr_list.c ****         cur->is_next_2_expire = false;
+ 461              		.loc 1 227 31
+ 462 0014 FB68     		ldr	r3, [r7, #12]
+ 463 0016 0022     		movs	r2, #0
+ 464 0018 5A72     		strb	r2, [r3, #9]
+ 465              	.L25:
+ 228:../Src/smtc_hal/smtc_hal_tmr_list.c ****     }
+ 229:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 230:../Src/smtc_hal/smtc_hal_tmr_list.c ****     obj->next       = cur;
+ARM GAS  /tmp/ccQbWcaF.s 			page 13
+
+
+ 466              		.loc 1 230 21
+ 467 001a 7B68     		ldr	r3, [r7, #4]
+ 468 001c FA68     		ldr	r2, [r7, #12]
+ 469 001e 5A61     		str	r2, [r3, #20]
+ 231:../Src/smtc_hal/smtc_hal_tmr_list.c ****     timer_list_head = obj;
+ 470              		.loc 1 231 21
+ 471 0020 054A     		ldr	r2, .L26
+ 472 0022 7B68     		ldr	r3, [r7, #4]
+ 473 0024 1360     		str	r3, [r2]
+ 232:../Src/smtc_hal/smtc_hal_tmr_list.c ****     timer_set_timeout( timer_list_head );
+ 474              		.loc 1 232 5
+ 475 0026 044B     		ldr	r3, .L26
+ 476 0028 1B68     		ldr	r3, [r3]
+ 477 002a 1846     		mov	r0, r3
+ 478 002c FFF7FEFF 		bl	timer_set_timeout
+ 233:../Src/smtc_hal/smtc_hal_tmr_list.c **** }
+ 479              		.loc 1 233 1
+ 480 0030 00BF     		nop
+ 481 0032 1037     		adds	r7, r7, #16
+ 482              	.LCFI30:
+ 483              		.cfi_def_cfa_offset 8
+ 484 0034 BD46     		mov	sp, r7
+ 485              	.LCFI31:
+ 486              		.cfi_def_cfa_register 13
+ 487              		@ sp needed
+ 488 0036 80BD     		pop	{r7, pc}
+ 489              	.L27:
+ 490              		.align	2
+ 491              	.L26:
+ 492 0038 00000000 		.word	timer_list_head
+ 493              		.cfi_endproc
+ 494              	.LFE518:
+ 496              		.section	.text.timer_is_started,"ax",%progbits
+ 497              		.align	1
+ 498              		.global	timer_is_started
+ 499              		.syntax unified
+ 500              		.thumb
+ 501              		.thumb_func
+ 502              		.fpu fpv4-sp-d16
+ 504              	timer_is_started:
+ 505              	.LFB519:
+ 234:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 235:../Src/smtc_hal/smtc_hal_tmr_list.c **** bool timer_is_started( timer_event_t* obj ) { return obj->is_started; }
+ 506              		.loc 1 235 45
+ 507              		.cfi_startproc
+ 508              		@ args = 0, pretend = 0, frame = 8
+ 509              		@ frame_needed = 1, uses_anonymous_args = 0
+ 510              		@ link register save eliminated.
+ 511 0000 80B4     		push	{r7}
+ 512              	.LCFI32:
+ 513              		.cfi_def_cfa_offset 4
+ 514              		.cfi_offset 7, -4
+ 515 0002 83B0     		sub	sp, sp, #12
+ 516              	.LCFI33:
+ 517              		.cfi_def_cfa_offset 16
+ 518 0004 00AF     		add	r7, sp, #0
+ 519              	.LCFI34:
+ARM GAS  /tmp/ccQbWcaF.s 			page 14
+
+
+ 520              		.cfi_def_cfa_register 7
+ 521 0006 7860     		str	r0, [r7, #4]
+ 522              		.loc 1 235 57
+ 523 0008 7B68     		ldr	r3, [r7, #4]
+ 524 000a 1B7A     		ldrb	r3, [r3, #8]	@ zero_extendqisi2
+ 525              		.loc 1 235 71
+ 526 000c 1846     		mov	r0, r3
+ 527 000e 0C37     		adds	r7, r7, #12
+ 528              	.LCFI35:
+ 529              		.cfi_def_cfa_offset 4
+ 530 0010 BD46     		mov	sp, r7
+ 531              	.LCFI36:
+ 532              		.cfi_def_cfa_register 13
+ 533              		@ sp needed
+ 534 0012 5DF8047B 		ldr	r7, [sp], #4
+ 535              	.LCFI37:
+ 536              		.cfi_restore 7
+ 537              		.cfi_def_cfa_offset 0
+ 538 0016 7047     		bx	lr
+ 539              		.cfi_endproc
+ 540              	.LFE519:
+ 542              		.section	.text.timer_irq_handler,"ax",%progbits
+ 543              		.align	1
+ 544              		.global	timer_irq_handler
+ 545              		.syntax unified
+ 546              		.thumb
+ 547              		.thumb_func
+ 548              		.fpu fpv4-sp-d16
+ 550              	timer_irq_handler:
+ 551              	.LFB520:
+ 236:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 237:../Src/smtc_hal/smtc_hal_tmr_list.c **** void timer_irq_handler( void )
+ 238:../Src/smtc_hal/smtc_hal_tmr_list.c **** {
+ 552              		.loc 1 238 1
+ 553              		.cfi_startproc
+ 554              		@ args = 0, pretend = 0, frame = 24
+ 555              		@ frame_needed = 1, uses_anonymous_args = 0
+ 556 0000 90B5     		push	{r4, r7, lr}
+ 557              	.LCFI38:
+ 558              		.cfi_def_cfa_offset 12
+ 559              		.cfi_offset 4, -12
+ 560              		.cfi_offset 7, -8
+ 561              		.cfi_offset 14, -4
+ 562 0002 87B0     		sub	sp, sp, #28
+ 563              	.LCFI39:
+ 564              		.cfi_def_cfa_offset 40
+ 565 0004 00AF     		add	r7, sp, #0
+ 566              	.LCFI40:
+ 567              		.cfi_def_cfa_register 7
+ 239:../Src/smtc_hal/smtc_hal_tmr_list.c ****     timer_event_t* cur;
+ 240:../Src/smtc_hal/smtc_hal_tmr_list.c ****     timer_event_t* next;
+ 241:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 242:../Src/smtc_hal/smtc_hal_tmr_list.c ****     uint32_t old           = hal_rtc_get_time_ref_in_ticks( );
+ 568              		.loc 1 242 30
+ 569 0006 FFF7FEFF 		bl	hal_rtc_get_time_ref_in_ticks
+ 570 000a 3861     		str	r0, [r7, #16]
+ 243:../Src/smtc_hal/smtc_hal_tmr_list.c ****     uint32_t now           = hal_rtc_set_time_ref_in_ticks( );
+ARM GAS  /tmp/ccQbWcaF.s 			page 15
+
+
+ 571              		.loc 1 243 30
+ 572 000c FFF7FEFF 		bl	hal_rtc_set_time_ref_in_ticks
+ 573 0010 F860     		str	r0, [r7, #12]
+ 244:../Src/smtc_hal/smtc_hal_tmr_list.c ****     uint32_t delta_context = now - old;  // intentional wrap around
+ 574              		.loc 1 244 14
+ 575 0012 FA68     		ldr	r2, [r7, #12]
+ 576 0014 3B69     		ldr	r3, [r7, #16]
+ 577 0016 D31A     		subs	r3, r2, r3
+ 578 0018 BB60     		str	r3, [r7, #8]
+ 245:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 246:../Src/smtc_hal/smtc_hal_tmr_list.c ****     /* Update timeStamp based upon new Time Reference
+ 247:../Src/smtc_hal/smtc_hal_tmr_list.c ****        because delta context should never exceed 2^32 */
+ 248:../Src/smtc_hal/smtc_hal_tmr_list.c ****     if( timer_list_head != NULL )
+ 579              		.loc 1 248 25
+ 580 001a 394B     		ldr	r3, .L46
+ 581 001c 1B68     		ldr	r3, [r3]
+ 582              		.loc 1 248 7
+ 583 001e 002B     		cmp	r3, #0
+ 584 0020 1CD0     		beq	.L31
+ 249:../Src/smtc_hal/smtc_hal_tmr_list.c ****     {
+ 250:../Src/smtc_hal/smtc_hal_tmr_list.c ****         for( cur = timer_list_head; cur->next != NULL; cur = cur->next )
+ 585              		.loc 1 250 18
+ 586 0022 374B     		ldr	r3, .L46
+ 587 0024 1B68     		ldr	r3, [r3]
+ 588 0026 7B61     		str	r3, [r7, #20]
+ 589              		.loc 1 250 9
+ 590 0028 14E0     		b	.L32
+ 591              	.L35:
+ 251:../Src/smtc_hal/smtc_hal_tmr_list.c ****         {
+ 252:../Src/smtc_hal/smtc_hal_tmr_list.c ****             next = cur->next;
+ 592              		.loc 1 252 18
+ 593 002a 7B69     		ldr	r3, [r7, #20]
+ 594 002c 5B69     		ldr	r3, [r3, #20]
+ 595 002e 7B60     		str	r3, [r7, #4]
+ 253:../Src/smtc_hal/smtc_hal_tmr_list.c ****             if( next->timestamp > delta_context )
+ 596              		.loc 1 253 21
+ 597 0030 7B68     		ldr	r3, [r7, #4]
+ 598 0032 1B68     		ldr	r3, [r3]
+ 599              		.loc 1 253 15
+ 600 0034 BA68     		ldr	r2, [r7, #8]
+ 601 0036 9A42     		cmp	r2, r3
+ 602 0038 06D2     		bcs	.L33
+ 254:../Src/smtc_hal/smtc_hal_tmr_list.c ****             {
+ 255:../Src/smtc_hal/smtc_hal_tmr_list.c ****                 next->timestamp -= delta_context;
+ 603              		.loc 1 255 33
+ 604 003a 7B68     		ldr	r3, [r7, #4]
+ 605 003c 1A68     		ldr	r2, [r3]
+ 606 003e BB68     		ldr	r3, [r7, #8]
+ 607 0040 D21A     		subs	r2, r2, r3
+ 608 0042 7B68     		ldr	r3, [r7, #4]
+ 609 0044 1A60     		str	r2, [r3]
+ 610 0046 02E0     		b	.L34
+ 611              	.L33:
+ 256:../Src/smtc_hal/smtc_hal_tmr_list.c ****             }
+ 257:../Src/smtc_hal/smtc_hal_tmr_list.c ****             else
+ 258:../Src/smtc_hal/smtc_hal_tmr_list.c ****             {
+ 259:../Src/smtc_hal/smtc_hal_tmr_list.c ****                 next->timestamp = 0;
+ARM GAS  /tmp/ccQbWcaF.s 			page 16
+
+
+ 612              		.loc 1 259 33
+ 613 0048 7B68     		ldr	r3, [r7, #4]
+ 614 004a 0022     		movs	r2, #0
+ 615 004c 1A60     		str	r2, [r3]
+ 616              	.L34:
+ 250:../Src/smtc_hal/smtc_hal_tmr_list.c ****         {
+ 617              		.loc 1 250 60 discriminator 2
+ 618 004e 7B69     		ldr	r3, [r7, #20]
+ 619 0050 5B69     		ldr	r3, [r3, #20]
+ 620 0052 7B61     		str	r3, [r7, #20]
+ 621              	.L32:
+ 250:../Src/smtc_hal/smtc_hal_tmr_list.c ****         {
+ 622              		.loc 1 250 40 discriminator 1
+ 623 0054 7B69     		ldr	r3, [r7, #20]
+ 624 0056 5B69     		ldr	r3, [r3, #20]
+ 250:../Src/smtc_hal/smtc_hal_tmr_list.c ****         {
+ 625              		.loc 1 250 9 discriminator 1
+ 626 0058 002B     		cmp	r3, #0
+ 627 005a E6D1     		bne	.L35
+ 628              	.L31:
+ 260:../Src/smtc_hal/smtc_hal_tmr_list.c ****             }
+ 261:../Src/smtc_hal/smtc_hal_tmr_list.c ****         }
+ 262:../Src/smtc_hal/smtc_hal_tmr_list.c ****     }
+ 263:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 264:../Src/smtc_hal/smtc_hal_tmr_list.c ****     /* Execute immediately the alarm callback */
+ 265:../Src/smtc_hal/smtc_hal_tmr_list.c ****     if( timer_list_head != NULL )
+ 629              		.loc 1 265 25
+ 630 005c 284B     		ldr	r3, .L46
+ 631 005e 1B68     		ldr	r3, [r3]
+ 632              		.loc 1 265 7
+ 633 0060 002B     		cmp	r3, #0
+ 634 0062 2CD0     		beq	.L39
+ 266:../Src/smtc_hal/smtc_hal_tmr_list.c ****     {
+ 267:../Src/smtc_hal/smtc_hal_tmr_list.c ****         cur             = timer_list_head;
+ 635              		.loc 1 267 25
+ 636 0064 264B     		ldr	r3, .L46
+ 637 0066 1B68     		ldr	r3, [r3]
+ 638 0068 7B61     		str	r3, [r7, #20]
+ 268:../Src/smtc_hal/smtc_hal_tmr_list.c ****         timer_list_head = timer_list_head->next;
+ 639              		.loc 1 268 42
+ 640 006a 254B     		ldr	r3, .L46
+ 641 006c 1B68     		ldr	r3, [r3]
+ 642 006e 5B69     		ldr	r3, [r3, #20]
+ 643              		.loc 1 268 25
+ 644 0070 234A     		ldr	r2, .L46
+ 645 0072 1360     		str	r3, [r2]
+ 269:../Src/smtc_hal/smtc_hal_tmr_list.c ****         cur->is_started = false;
+ 646              		.loc 1 269 25
+ 647 0074 7B69     		ldr	r3, [r7, #20]
+ 648 0076 0022     		movs	r2, #0
+ 649 0078 1A72     		strb	r2, [r3, #8]
+ 270:../Src/smtc_hal/smtc_hal_tmr_list.c ****         execute_callback( cur->callback, cur->context );
+ 650              		.loc 1 270 9
+ 651 007a 7B69     		ldr	r3, [r7, #20]
+ 652 007c DB68     		ldr	r3, [r3, #12]
+ 653 007e 002B     		cmp	r3, #0
+ 654 0080 00D1     		bne	.L37
+ARM GAS  /tmp/ccQbWcaF.s 			page 17
+
+
+ 655              	.L38:
+ 656              		.loc 1 270 9 is_stmt 0 discriminator 1
+ 657 0082 FEE7     		b	.L38
+ 658              	.L37:
+ 659 0084 7B69     		ldr	r3, [r7, #20]
+ 660 0086 DB68     		ldr	r3, [r3, #12]
+ 661 0088 7A69     		ldr	r2, [r7, #20]
+ 662 008a 1269     		ldr	r2, [r2, #16]
+ 663 008c 1046     		mov	r0, r2
+ 664 008e 9847     		blx	r3
+ 665              	.LVL0:
+ 271:../Src/smtc_hal/smtc_hal_tmr_list.c ****     }
+ 272:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 273:../Src/smtc_hal/smtc_hal_tmr_list.c ****     /* Remove all the expired object from the list */
+ 274:../Src/smtc_hal/smtc_hal_tmr_list.c ****     while( ( timer_list_head != NULL ) && ( timer_list_head->timestamp < hal_rtc_get_timer_elapsed_
+ 666              		.loc 1 274 10 is_stmt 1 discriminator 1
+ 667 0090 15E0     		b	.L39
+ 668              	.L43:
+ 275:../Src/smtc_hal/smtc_hal_tmr_list.c ****     {
+ 276:../Src/smtc_hal/smtc_hal_tmr_list.c ****         cur             = timer_list_head;
+ 669              		.loc 1 276 25
+ 670 0092 1B4B     		ldr	r3, .L46
+ 671 0094 1B68     		ldr	r3, [r3]
+ 672 0096 7B61     		str	r3, [r7, #20]
+ 277:../Src/smtc_hal/smtc_hal_tmr_list.c ****         timer_list_head = timer_list_head->next;
+ 673              		.loc 1 277 42
+ 674 0098 194B     		ldr	r3, .L46
+ 675 009a 1B68     		ldr	r3, [r3]
+ 676 009c 5B69     		ldr	r3, [r3, #20]
+ 677              		.loc 1 277 25
+ 678 009e 184A     		ldr	r2, .L46
+ 679 00a0 1360     		str	r3, [r2]
+ 278:../Src/smtc_hal/smtc_hal_tmr_list.c ****         cur->is_started = false;
+ 680              		.loc 1 278 25
+ 681 00a2 7B69     		ldr	r3, [r7, #20]
+ 682 00a4 0022     		movs	r2, #0
+ 683 00a6 1A72     		strb	r2, [r3, #8]
+ 279:../Src/smtc_hal/smtc_hal_tmr_list.c ****         execute_callback( cur->callback, cur->context );
+ 684              		.loc 1 279 9
+ 685 00a8 7B69     		ldr	r3, [r7, #20]
+ 686 00aa DB68     		ldr	r3, [r3, #12]
+ 687 00ac 002B     		cmp	r3, #0
+ 688 00ae 00D1     		bne	.L40
+ 689              	.L41:
+ 690              		.loc 1 279 9 is_stmt 0 discriminator 2
+ 691 00b0 FEE7     		b	.L41
+ 692              	.L40:
+ 693              		.loc 1 279 9 discriminator 1
+ 694 00b2 7B69     		ldr	r3, [r7, #20]
+ 695 00b4 DB68     		ldr	r3, [r3, #12]
+ 696 00b6 7A69     		ldr	r2, [r7, #20]
+ 697 00b8 1269     		ldr	r2, [r2, #16]
+ 698 00ba 1046     		mov	r0, r2
+ 699 00bc 9847     		blx	r3
+ 700              	.LVL1:
+ 701              	.L39:
+ 274:../Src/smtc_hal/smtc_hal_tmr_list.c ****     {
+ARM GAS  /tmp/ccQbWcaF.s 			page 18
+
+
+ 702              		.loc 1 274 30 is_stmt 1
+ 703 00be 104B     		ldr	r3, .L46
+ 704 00c0 1B68     		ldr	r3, [r3]
+ 274:../Src/smtc_hal/smtc_hal_tmr_list.c ****     {
+ 705              		.loc 1 274 10
+ 706 00c2 002B     		cmp	r3, #0
+ 707 00c4 07D0     		beq	.L42
+ 274:../Src/smtc_hal/smtc_hal_tmr_list.c ****     {
+ 708              		.loc 1 274 60 discriminator 1
+ 709 00c6 0E4B     		ldr	r3, .L46
+ 710 00c8 1B68     		ldr	r3, [r3]
+ 711 00ca 1C68     		ldr	r4, [r3]
+ 274:../Src/smtc_hal/smtc_hal_tmr_list.c ****     {
+ 712              		.loc 1 274 74 discriminator 1
+ 713 00cc FFF7FEFF 		bl	hal_rtc_get_timer_elapsed_value
+ 714 00d0 0346     		mov	r3, r0
+ 274:../Src/smtc_hal/smtc_hal_tmr_list.c ****     {
+ 715              		.loc 1 274 40 discriminator 1
+ 716 00d2 9C42     		cmp	r4, r3
+ 717 00d4 DDD3     		bcc	.L43
+ 718              	.L42:
+ 280:../Src/smtc_hal/smtc_hal_tmr_list.c ****     }
+ 281:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 282:../Src/smtc_hal/smtc_hal_tmr_list.c ****     /* Start the next timer_list_head if it exists AND NOT running */
+ 283:../Src/smtc_hal/smtc_hal_tmr_list.c ****     if( ( timer_list_head != NULL ) && ( timer_list_head->is_next_2_expire == false ) )
+ 719              		.loc 1 283 27
+ 720 00d6 0A4B     		ldr	r3, .L46
+ 721 00d8 1B68     		ldr	r3, [r3]
+ 722              		.loc 1 283 7
+ 723 00da 002B     		cmp	r3, #0
+ 724 00dc 0CD0     		beq	.L45
+ 725              		.loc 1 283 57 discriminator 1
+ 726 00de 084B     		ldr	r3, .L46
+ 727 00e0 1B68     		ldr	r3, [r3]
+ 728 00e2 5B7A     		ldrb	r3, [r3, #9]	@ zero_extendqisi2
+ 729              		.loc 1 283 76 discriminator 1
+ 730 00e4 83F00103 		eor	r3, r3, #1
+ 731 00e8 DBB2     		uxtb	r3, r3
+ 732              		.loc 1 283 37 discriminator 1
+ 733 00ea 002B     		cmp	r3, #0
+ 734 00ec 04D0     		beq	.L45
+ 284:../Src/smtc_hal/smtc_hal_tmr_list.c ****     {
+ 285:../Src/smtc_hal/smtc_hal_tmr_list.c ****         timer_set_timeout( timer_list_head );
+ 735              		.loc 1 285 9
+ 736 00ee 044B     		ldr	r3, .L46
+ 737 00f0 1B68     		ldr	r3, [r3]
+ 738 00f2 1846     		mov	r0, r3
+ 739 00f4 FFF7FEFF 		bl	timer_set_timeout
+ 740              	.L45:
+ 286:../Src/smtc_hal/smtc_hal_tmr_list.c ****     }
+ 287:../Src/smtc_hal/smtc_hal_tmr_list.c **** }
+ 741              		.loc 1 287 1
+ 742 00f8 00BF     		nop
+ 743 00fa 1C37     		adds	r7, r7, #28
+ 744              	.LCFI41:
+ 745              		.cfi_def_cfa_offset 12
+ 746 00fc BD46     		mov	sp, r7
+ARM GAS  /tmp/ccQbWcaF.s 			page 19
+
+
+ 747              	.LCFI42:
+ 748              		.cfi_def_cfa_register 13
+ 749              		@ sp needed
+ 750 00fe 90BD     		pop	{r4, r7, pc}
+ 751              	.L47:
+ 752              		.align	2
+ 753              	.L46:
+ 754 0100 00000000 		.word	timer_list_head
+ 755              		.cfi_endproc
+ 756              	.LFE520:
+ 758              		.section	.text.timer_stop,"ax",%progbits
+ 759              		.align	1
+ 760              		.global	timer_stop
+ 761              		.syntax unified
+ 762              		.thumb
+ 763              		.thumb_func
+ 764              		.fpu fpv4-sp-d16
+ 766              	timer_stop:
+ 767              	.LFB521:
+ 288:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 289:../Src/smtc_hal/smtc_hal_tmr_list.c **** void timer_stop( timer_event_t* obj )
+ 290:../Src/smtc_hal/smtc_hal_tmr_list.c **** {
+ 768              		.loc 1 290 1
+ 769              		.cfi_startproc
+ 770              		@ args = 0, pretend = 0, frame = 24
+ 771              		@ frame_needed = 1, uses_anonymous_args = 0
+ 772 0000 80B5     		push	{r7, lr}
+ 773              	.LCFI43:
+ 774              		.cfi_def_cfa_offset 8
+ 775              		.cfi_offset 7, -8
+ 776              		.cfi_offset 14, -4
+ 777 0002 86B0     		sub	sp, sp, #24
+ 778              	.LCFI44:
+ 779              		.cfi_def_cfa_offset 32
+ 780 0004 00AF     		add	r7, sp, #0
+ 781              	.LCFI45:
+ 782              		.cfi_def_cfa_register 7
+ 783 0006 7860     		str	r0, [r7, #4]
+ 291:../Src/smtc_hal/smtc_hal_tmr_list.c ****     CRITICAL_SECTION_BEGIN( );
+ 784              		.loc 1 291 5
+ 785 0008 07F10C03 		add	r3, r7, #12
+ 786 000c 1846     		mov	r0, r3
+ 787 000e FFF7FEFF 		bl	hal_mcu_critical_section_begin
+ 292:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 293:../Src/smtc_hal/smtc_hal_tmr_list.c ****     timer_event_t* prev = timer_list_head;
+ 788              		.loc 1 293 20
+ 789 0012 374B     		ldr	r3, .L62
+ 790 0014 1B68     		ldr	r3, [r3]
+ 791 0016 7B61     		str	r3, [r7, #20]
+ 294:../Src/smtc_hal/smtc_hal_tmr_list.c ****     timer_event_t* cur  = timer_list_head;
+ 792              		.loc 1 294 20
+ 793 0018 354B     		ldr	r3, .L62
+ 794 001a 1B68     		ldr	r3, [r3]
+ 795 001c 3B61     		str	r3, [r7, #16]
+ 295:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 296:../Src/smtc_hal/smtc_hal_tmr_list.c ****     /* List is empty or the obj to stop does not exist */
+ 297:../Src/smtc_hal/smtc_hal_tmr_list.c ****     if( ( timer_list_head == NULL ) || ( obj == NULL ) )
+ARM GAS  /tmp/ccQbWcaF.s 			page 20
+
+
+ 796              		.loc 1 297 27
+ 797 001e 344B     		ldr	r3, .L62
+ 798 0020 1B68     		ldr	r3, [r3]
+ 799              		.loc 1 297 7
+ 800 0022 002B     		cmp	r3, #0
+ 801 0024 02D0     		beq	.L49
+ 802              		.loc 1 297 37 discriminator 1
+ 803 0026 7B68     		ldr	r3, [r7, #4]
+ 804 0028 002B     		cmp	r3, #0
+ 805 002a 05D1     		bne	.L50
+ 806              	.L49:
+ 298:../Src/smtc_hal/smtc_hal_tmr_list.c ****     {
+ 299:../Src/smtc_hal/smtc_hal_tmr_list.c ****         CRITICAL_SECTION_END( );
+ 807              		.loc 1 299 9
+ 808 002c 07F10C03 		add	r3, r7, #12
+ 809 0030 1846     		mov	r0, r3
+ 810 0032 FFF7FEFF 		bl	hal_mcu_critical_section_end
+ 811 0036 57E0     		b	.L48
+ 812              	.L50:
+ 300:../Src/smtc_hal/smtc_hal_tmr_list.c ****         return;
+ 301:../Src/smtc_hal/smtc_hal_tmr_list.c ****     }
+ 302:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 303:../Src/smtc_hal/smtc_hal_tmr_list.c ****     obj->is_started = false;
+ 813              		.loc 1 303 21
+ 814 0038 7B68     		ldr	r3, [r7, #4]
+ 815 003a 0022     		movs	r2, #0
+ 816 003c 1A72     		strb	r2, [r3, #8]
+ 304:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 305:../Src/smtc_hal/smtc_hal_tmr_list.c ****     if( timer_list_head == obj )  // Stop the Head
+ 817              		.loc 1 305 25
+ 818 003e 2C4B     		ldr	r3, .L62
+ 819 0040 1B68     		ldr	r3, [r3]
+ 820              		.loc 1 305 7
+ 821 0042 7A68     		ldr	r2, [r7, #4]
+ 822 0044 9A42     		cmp	r2, r3
+ 823 0046 47D1     		bne	.L57
+ 306:../Src/smtc_hal/smtc_hal_tmr_list.c ****     {
+ 307:../Src/smtc_hal/smtc_hal_tmr_list.c ****         if( timer_list_head->is_next_2_expire == true )  // The head is already running
+ 824              		.loc 1 307 28
+ 825 0048 294B     		ldr	r3, .L62
+ 826 004a 1B68     		ldr	r3, [r3]
+ 827 004c 5B7A     		ldrb	r3, [r3, #9]	@ zero_extendqisi2
+ 828              		.loc 1 307 11
+ 829 004e 002B     		cmp	r3, #0
+ 830 0050 19D0     		beq	.L53
+ 308:../Src/smtc_hal/smtc_hal_tmr_list.c ****         {
+ 309:../Src/smtc_hal/smtc_hal_tmr_list.c ****             timer_list_head->is_next_2_expire = false;
+ 831              		.loc 1 309 28
+ 832 0052 274B     		ldr	r3, .L62
+ 833 0054 1B68     		ldr	r3, [r3]
+ 834              		.loc 1 309 47
+ 835 0056 0022     		movs	r2, #0
+ 836 0058 5A72     		strb	r2, [r3, #9]
+ 310:../Src/smtc_hal/smtc_hal_tmr_list.c ****             if( timer_list_head->next != NULL )
+ 837              		.loc 1 310 32
+ 838 005a 254B     		ldr	r3, .L62
+ 839 005c 1B68     		ldr	r3, [r3]
+ARM GAS  /tmp/ccQbWcaF.s 			page 21
+
+
+ 840 005e 5B69     		ldr	r3, [r3, #20]
+ 841              		.loc 1 310 15
+ 842 0060 002B     		cmp	r3, #0
+ 843 0062 0AD0     		beq	.L54
+ 311:../Src/smtc_hal/smtc_hal_tmr_list.c ****             {
+ 312:../Src/smtc_hal/smtc_hal_tmr_list.c ****                 timer_list_head = timer_list_head->next;
+ 844              		.loc 1 312 50
+ 845 0064 224B     		ldr	r3, .L62
+ 846 0066 1B68     		ldr	r3, [r3]
+ 847 0068 5B69     		ldr	r3, [r3, #20]
+ 848              		.loc 1 312 33
+ 849 006a 214A     		ldr	r2, .L62
+ 850 006c 1360     		str	r3, [r2]
+ 313:../Src/smtc_hal/smtc_hal_tmr_list.c ****                 timer_set_timeout( timer_list_head );
+ 851              		.loc 1 313 17
+ 852 006e 204B     		ldr	r3, .L62
+ 853 0070 1B68     		ldr	r3, [r3]
+ 854 0072 1846     		mov	r0, r3
+ 855 0074 FFF7FEFF 		bl	timer_set_timeout
+ 856 0078 31E0     		b	.L55
+ 857              	.L54:
+ 314:../Src/smtc_hal/smtc_hal_tmr_list.c ****             }
+ 315:../Src/smtc_hal/smtc_hal_tmr_list.c ****             else
+ 316:../Src/smtc_hal/smtc_hal_tmr_list.c ****             {
+ 317:../Src/smtc_hal/smtc_hal_tmr_list.c ****                 hal_rtc_stop_alarm( );
+ 858              		.loc 1 317 17
+ 859 007a FFF7FEFF 		bl	hal_rtc_stop_alarm
+ 318:../Src/smtc_hal/smtc_hal_tmr_list.c ****                 timer_list_head = NULL;
+ 860              		.loc 1 318 33
+ 861 007e 1C4B     		ldr	r3, .L62
+ 862 0080 0022     		movs	r2, #0
+ 863 0082 1A60     		str	r2, [r3]
+ 864 0084 2BE0     		b	.L55
+ 865              	.L53:
+ 319:../Src/smtc_hal/smtc_hal_tmr_list.c ****             }
+ 320:../Src/smtc_hal/smtc_hal_tmr_list.c ****         }
+ 321:../Src/smtc_hal/smtc_hal_tmr_list.c ****         else  // Stop the head before it is started
+ 322:../Src/smtc_hal/smtc_hal_tmr_list.c ****         {
+ 323:../Src/smtc_hal/smtc_hal_tmr_list.c ****             if( timer_list_head->next != NULL )
+ 866              		.loc 1 323 32
+ 867 0086 1A4B     		ldr	r3, .L62
+ 868 0088 1B68     		ldr	r3, [r3]
+ 869 008a 5B69     		ldr	r3, [r3, #20]
+ 870              		.loc 1 323 15
+ 871 008c 002B     		cmp	r3, #0
+ 872 008e 05D0     		beq	.L56
+ 324:../Src/smtc_hal/smtc_hal_tmr_list.c ****             {
+ 325:../Src/smtc_hal/smtc_hal_tmr_list.c ****                 timer_list_head = timer_list_head->next;
+ 873              		.loc 1 325 50
+ 874 0090 174B     		ldr	r3, .L62
+ 875 0092 1B68     		ldr	r3, [r3]
+ 876 0094 5B69     		ldr	r3, [r3, #20]
+ 877              		.loc 1 325 33
+ 878 0096 164A     		ldr	r2, .L62
+ 879 0098 1360     		str	r3, [r2]
+ 880 009a 20E0     		b	.L55
+ 881              	.L56:
+ARM GAS  /tmp/ccQbWcaF.s 			page 22
+
+
+ 326:../Src/smtc_hal/smtc_hal_tmr_list.c ****             }
+ 327:../Src/smtc_hal/smtc_hal_tmr_list.c ****             else
+ 328:../Src/smtc_hal/smtc_hal_tmr_list.c ****             {
+ 329:../Src/smtc_hal/smtc_hal_tmr_list.c ****                 timer_list_head = NULL;
+ 882              		.loc 1 329 33
+ 883 009c 144B     		ldr	r3, .L62
+ 884 009e 0022     		movs	r2, #0
+ 885 00a0 1A60     		str	r2, [r3]
+ 886 00a2 1CE0     		b	.L55
+ 887              	.L61:
+ 330:../Src/smtc_hal/smtc_hal_tmr_list.c ****             }
+ 331:../Src/smtc_hal/smtc_hal_tmr_list.c ****         }
+ 332:../Src/smtc_hal/smtc_hal_tmr_list.c ****     }
+ 333:../Src/smtc_hal/smtc_hal_tmr_list.c ****     else  // Stop an object within the list
+ 334:../Src/smtc_hal/smtc_hal_tmr_list.c ****     {
+ 335:../Src/smtc_hal/smtc_hal_tmr_list.c ****         while( cur != NULL )
+ 336:../Src/smtc_hal/smtc_hal_tmr_list.c ****         {
+ 337:../Src/smtc_hal/smtc_hal_tmr_list.c ****             if( cur == obj )
+ 888              		.loc 1 337 15
+ 889 00a4 3A69     		ldr	r2, [r7, #16]
+ 890 00a6 7B68     		ldr	r3, [r7, #4]
+ 891 00a8 9A42     		cmp	r2, r3
+ 892 00aa 10D1     		bne	.L58
+ 338:../Src/smtc_hal/smtc_hal_tmr_list.c ****             {
+ 339:../Src/smtc_hal/smtc_hal_tmr_list.c ****                 if( cur->next != NULL )
+ 893              		.loc 1 339 24
+ 894 00ac 3B69     		ldr	r3, [r7, #16]
+ 895 00ae 5B69     		ldr	r3, [r3, #20]
+ 896              		.loc 1 339 19
+ 897 00b0 002B     		cmp	r3, #0
+ 898 00b2 06D0     		beq	.L59
+ 340:../Src/smtc_hal/smtc_hal_tmr_list.c ****                 {
+ 341:../Src/smtc_hal/smtc_hal_tmr_list.c ****                     cur        = cur->next;
+ 899              		.loc 1 341 32
+ 900 00b4 3B69     		ldr	r3, [r7, #16]
+ 901 00b6 5B69     		ldr	r3, [r3, #20]
+ 902 00b8 3B61     		str	r3, [r7, #16]
+ 342:../Src/smtc_hal/smtc_hal_tmr_list.c ****                     prev->next = cur;
+ 903              		.loc 1 342 32
+ 904 00ba 7B69     		ldr	r3, [r7, #20]
+ 905 00bc 3A69     		ldr	r2, [r7, #16]
+ 906 00be 5A61     		str	r2, [r3, #20]
+ 343:../Src/smtc_hal/smtc_hal_tmr_list.c ****                 }
+ 344:../Src/smtc_hal/smtc_hal_tmr_list.c ****                 else
+ 345:../Src/smtc_hal/smtc_hal_tmr_list.c ****                 {
+ 346:../Src/smtc_hal/smtc_hal_tmr_list.c ****                     cur        = NULL;
+ 347:../Src/smtc_hal/smtc_hal_tmr_list.c ****                     prev->next = cur;
+ 348:../Src/smtc_hal/smtc_hal_tmr_list.c ****                 }
+ 349:../Src/smtc_hal/smtc_hal_tmr_list.c ****                 break;
+ 907              		.loc 1 349 17
+ 908 00c0 0DE0     		b	.L55
+ 909              	.L59:
+ 346:../Src/smtc_hal/smtc_hal_tmr_list.c ****                     prev->next = cur;
+ 910              		.loc 1 346 32
+ 911 00c2 0023     		movs	r3, #0
+ 912 00c4 3B61     		str	r3, [r7, #16]
+ 347:../Src/smtc_hal/smtc_hal_tmr_list.c ****                 }
+ARM GAS  /tmp/ccQbWcaF.s 			page 23
+
+
+ 913              		.loc 1 347 32
+ 914 00c6 7B69     		ldr	r3, [r7, #20]
+ 915 00c8 3A69     		ldr	r2, [r7, #16]
+ 916 00ca 5A61     		str	r2, [r3, #20]
+ 917              		.loc 1 349 17
+ 918 00cc 07E0     		b	.L55
+ 919              	.L58:
+ 350:../Src/smtc_hal/smtc_hal_tmr_list.c ****             }
+ 351:../Src/smtc_hal/smtc_hal_tmr_list.c ****             else
+ 352:../Src/smtc_hal/smtc_hal_tmr_list.c ****             {
+ 353:../Src/smtc_hal/smtc_hal_tmr_list.c ****                 prev = cur;
+ 920              		.loc 1 353 22
+ 921 00ce 3B69     		ldr	r3, [r7, #16]
+ 922 00d0 7B61     		str	r3, [r7, #20]
+ 354:../Src/smtc_hal/smtc_hal_tmr_list.c ****                 cur  = cur->next;
+ 923              		.loc 1 354 22
+ 924 00d2 3B69     		ldr	r3, [r7, #16]
+ 925 00d4 5B69     		ldr	r3, [r3, #20]
+ 926 00d6 3B61     		str	r3, [r7, #16]
+ 927              	.L57:
+ 335:../Src/smtc_hal/smtc_hal_tmr_list.c ****         {
+ 928              		.loc 1 335 14
+ 929 00d8 3B69     		ldr	r3, [r7, #16]
+ 930 00da 002B     		cmp	r3, #0
+ 931 00dc E2D1     		bne	.L61
+ 932              	.L55:
+ 355:../Src/smtc_hal/smtc_hal_tmr_list.c ****             }
+ 356:../Src/smtc_hal/smtc_hal_tmr_list.c ****         }
+ 357:../Src/smtc_hal/smtc_hal_tmr_list.c ****     }
+ 358:../Src/smtc_hal/smtc_hal_tmr_list.c ****     CRITICAL_SECTION_END( );
+ 933              		.loc 1 358 5 discriminator 2
+ 934 00de 07F10C03 		add	r3, r7, #12
+ 935 00e2 1846     		mov	r0, r3
+ 936 00e4 FFF7FEFF 		bl	hal_mcu_critical_section_end
+ 937              	.L48:
+ 359:../Src/smtc_hal/smtc_hal_tmr_list.c **** }
+ 938              		.loc 1 359 1
+ 939 00e8 1837     		adds	r7, r7, #24
+ 940              	.LCFI46:
+ 941              		.cfi_def_cfa_offset 8
+ 942 00ea BD46     		mov	sp, r7
+ 943              	.LCFI47:
+ 944              		.cfi_def_cfa_register 13
+ 945              		@ sp needed
+ 946 00ec 80BD     		pop	{r7, pc}
+ 947              	.L63:
+ 948 00ee 00BF     		.align	2
+ 949              	.L62:
+ 950 00f0 00000000 		.word	timer_list_head
+ 951              		.cfi_endproc
+ 952              	.LFE521:
+ 954              		.section	.text.timer_exists,"ax",%progbits
+ 955              		.align	1
+ 956              		.syntax unified
+ 957              		.thumb
+ 958              		.thumb_func
+ 959              		.fpu fpv4-sp-d16
+ARM GAS  /tmp/ccQbWcaF.s 			page 24
+
+
+ 961              	timer_exists:
+ 962              	.LFB522:
+ 360:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 361:../Src/smtc_hal/smtc_hal_tmr_list.c **** static bool timer_exists( timer_event_t* obj )
+ 362:../Src/smtc_hal/smtc_hal_tmr_list.c **** {
+ 963              		.loc 1 362 1
+ 964              		.cfi_startproc
+ 965              		@ args = 0, pretend = 0, frame = 16
+ 966              		@ frame_needed = 1, uses_anonymous_args = 0
+ 967              		@ link register save eliminated.
+ 968 0000 80B4     		push	{r7}
+ 969              	.LCFI48:
+ 970              		.cfi_def_cfa_offset 4
+ 971              		.cfi_offset 7, -4
+ 972 0002 85B0     		sub	sp, sp, #20
+ 973              	.LCFI49:
+ 974              		.cfi_def_cfa_offset 24
+ 975 0004 00AF     		add	r7, sp, #0
+ 976              	.LCFI50:
+ 977              		.cfi_def_cfa_register 7
+ 978 0006 7860     		str	r0, [r7, #4]
+ 363:../Src/smtc_hal/smtc_hal_tmr_list.c ****     timer_event_t* cur = timer_list_head;
+ 979              		.loc 1 363 20
+ 980 0008 0B4B     		ldr	r3, .L69
+ 981 000a 1B68     		ldr	r3, [r3]
+ 982 000c FB60     		str	r3, [r7, #12]
+ 364:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 365:../Src/smtc_hal/smtc_hal_tmr_list.c ****     while( cur != NULL )
+ 983              		.loc 1 365 10
+ 984 000e 08E0     		b	.L65
+ 985              	.L68:
+ 366:../Src/smtc_hal/smtc_hal_tmr_list.c ****     {
+ 367:../Src/smtc_hal/smtc_hal_tmr_list.c ****         if( cur == obj )
+ 986              		.loc 1 367 11
+ 987 0010 FA68     		ldr	r2, [r7, #12]
+ 988 0012 7B68     		ldr	r3, [r7, #4]
+ 989 0014 9A42     		cmp	r2, r3
+ 990 0016 01D1     		bne	.L66
+ 368:../Src/smtc_hal/smtc_hal_tmr_list.c ****         {
+ 369:../Src/smtc_hal/smtc_hal_tmr_list.c ****             return true;
+ 991              		.loc 1 369 20
+ 992 0018 0123     		movs	r3, #1
+ 993 001a 06E0     		b	.L67
+ 994              	.L66:
+ 370:../Src/smtc_hal/smtc_hal_tmr_list.c ****         }
+ 371:../Src/smtc_hal/smtc_hal_tmr_list.c ****         cur = cur->next;
+ 995              		.loc 1 371 13
+ 996 001c FB68     		ldr	r3, [r7, #12]
+ 997 001e 5B69     		ldr	r3, [r3, #20]
+ 998 0020 FB60     		str	r3, [r7, #12]
+ 999              	.L65:
+ 365:../Src/smtc_hal/smtc_hal_tmr_list.c ****     {
+ 1000              		.loc 1 365 10
+ 1001 0022 FB68     		ldr	r3, [r7, #12]
+ 1002 0024 002B     		cmp	r3, #0
+ 1003 0026 F3D1     		bne	.L68
+ 372:../Src/smtc_hal/smtc_hal_tmr_list.c ****     }
+ARM GAS  /tmp/ccQbWcaF.s 			page 25
+
+
+ 373:../Src/smtc_hal/smtc_hal_tmr_list.c ****     return false;
+ 1004              		.loc 1 373 12
+ 1005 0028 0023     		movs	r3, #0
+ 1006              	.L67:
+ 374:../Src/smtc_hal/smtc_hal_tmr_list.c **** }
+ 1007              		.loc 1 374 1
+ 1008 002a 1846     		mov	r0, r3
+ 1009 002c 1437     		adds	r7, r7, #20
+ 1010              	.LCFI51:
+ 1011              		.cfi_def_cfa_offset 4
+ 1012 002e BD46     		mov	sp, r7
+ 1013              	.LCFI52:
+ 1014              		.cfi_def_cfa_register 13
+ 1015              		@ sp needed
+ 1016 0030 5DF8047B 		ldr	r7, [sp], #4
+ 1017              	.LCFI53:
+ 1018              		.cfi_restore 7
+ 1019              		.cfi_def_cfa_offset 0
+ 1020 0034 7047     		bx	lr
+ 1021              	.L70:
+ 1022 0036 00BF     		.align	2
+ 1023              	.L69:
+ 1024 0038 00000000 		.word	timer_list_head
+ 1025              		.cfi_endproc
+ 1026              	.LFE522:
+ 1028              		.section	.text.timer_reset,"ax",%progbits
+ 1029              		.align	1
+ 1030              		.global	timer_reset
+ 1031              		.syntax unified
+ 1032              		.thumb
+ 1033              		.thumb_func
+ 1034              		.fpu fpv4-sp-d16
+ 1036              	timer_reset:
+ 1037              	.LFB523:
+ 375:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 376:../Src/smtc_hal/smtc_hal_tmr_list.c **** void timer_reset( timer_event_t* obj )
+ 377:../Src/smtc_hal/smtc_hal_tmr_list.c **** {
+ 1038              		.loc 1 377 1
+ 1039              		.cfi_startproc
+ 1040              		@ args = 0, pretend = 0, frame = 8
+ 1041              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1042 0000 80B5     		push	{r7, lr}
+ 1043              	.LCFI54:
+ 1044              		.cfi_def_cfa_offset 8
+ 1045              		.cfi_offset 7, -8
+ 1046              		.cfi_offset 14, -4
+ 1047 0002 82B0     		sub	sp, sp, #8
+ 1048              	.LCFI55:
+ 1049              		.cfi_def_cfa_offset 16
+ 1050 0004 00AF     		add	r7, sp, #0
+ 1051              	.LCFI56:
+ 1052              		.cfi_def_cfa_register 7
+ 1053 0006 7860     		str	r0, [r7, #4]
+ 378:../Src/smtc_hal/smtc_hal_tmr_list.c ****     timer_stop( obj );
+ 1054              		.loc 1 378 5
+ 1055 0008 7868     		ldr	r0, [r7, #4]
+ 1056 000a FFF7FEFF 		bl	timer_stop
+ARM GAS  /tmp/ccQbWcaF.s 			page 26
+
+
+ 379:../Src/smtc_hal/smtc_hal_tmr_list.c ****     timer_start( obj );
+ 1057              		.loc 1 379 5
+ 1058 000e 7868     		ldr	r0, [r7, #4]
+ 1059 0010 FFF7FEFF 		bl	timer_start
+ 380:../Src/smtc_hal/smtc_hal_tmr_list.c **** }
+ 1060              		.loc 1 380 1
+ 1061 0014 00BF     		nop
+ 1062 0016 0837     		adds	r7, r7, #8
+ 1063              	.LCFI57:
+ 1064              		.cfi_def_cfa_offset 8
+ 1065 0018 BD46     		mov	sp, r7
+ 1066              	.LCFI58:
+ 1067              		.cfi_def_cfa_register 13
+ 1068              		@ sp needed
+ 1069 001a 80BD     		pop	{r7, pc}
+ 1070              		.cfi_endproc
+ 1071              	.LFE523:
+ 1073              		.section	.text.timer_set_value,"ax",%progbits
+ 1074              		.align	1
+ 1075              		.global	timer_set_value
+ 1076              		.syntax unified
+ 1077              		.thumb
+ 1078              		.thumb_func
+ 1079              		.fpu fpv4-sp-d16
+ 1081              	timer_set_value:
+ 1082              	.LFB524:
+ 381:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 382:../Src/smtc_hal/smtc_hal_tmr_list.c **** void timer_set_value( timer_event_t* obj, uint32_t value )
+ 383:../Src/smtc_hal/smtc_hal_tmr_list.c **** {
+ 1083              		.loc 1 383 1
+ 1084              		.cfi_startproc
+ 1085              		@ args = 0, pretend = 0, frame = 16
+ 1086              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1087 0000 80B5     		push	{r7, lr}
+ 1088              	.LCFI59:
+ 1089              		.cfi_def_cfa_offset 8
+ 1090              		.cfi_offset 7, -8
+ 1091              		.cfi_offset 14, -4
+ 1092 0002 84B0     		sub	sp, sp, #16
+ 1093              	.LCFI60:
+ 1094              		.cfi_def_cfa_offset 24
+ 1095 0004 00AF     		add	r7, sp, #0
+ 1096              	.LCFI61:
+ 1097              		.cfi_def_cfa_register 7
+ 1098 0006 7860     		str	r0, [r7, #4]
+ 1099 0008 3960     		str	r1, [r7]
+ 384:../Src/smtc_hal/smtc_hal_tmr_list.c ****     uint32_t min_value = 0;
+ 1100              		.loc 1 384 14
+ 1101 000a 0023     		movs	r3, #0
+ 1102 000c BB60     		str	r3, [r7, #8]
+ 385:../Src/smtc_hal/smtc_hal_tmr_list.c ****     uint32_t ticks     = hal_rtc_ms_2_tick( value );
+ 1103              		.loc 1 385 26
+ 1104 000e 3868     		ldr	r0, [r7]
+ 1105 0010 FFF7FEFF 		bl	hal_rtc_ms_2_tick
+ 1106 0014 F860     		str	r0, [r7, #12]
+ 386:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 387:../Src/smtc_hal/smtc_hal_tmr_list.c ****     timer_stop( obj );
+ARM GAS  /tmp/ccQbWcaF.s 			page 27
+
+
+ 1107              		.loc 1 387 5
+ 1108 0016 7868     		ldr	r0, [r7, #4]
+ 1109 0018 FFF7FEFF 		bl	timer_stop
+ 388:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 389:../Src/smtc_hal/smtc_hal_tmr_list.c ****     min_value = hal_rtc_get_minimum_timeout( );
+ 1110              		.loc 1 389 17
+ 1111 001c FFF7FEFF 		bl	hal_rtc_get_minimum_timeout
+ 1112 0020 B860     		str	r0, [r7, #8]
+ 390:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 391:../Src/smtc_hal/smtc_hal_tmr_list.c ****     if( ticks < min_value )
+ 1113              		.loc 1 391 7
+ 1114 0022 FA68     		ldr	r2, [r7, #12]
+ 1115 0024 BB68     		ldr	r3, [r7, #8]
+ 1116 0026 9A42     		cmp	r2, r3
+ 1117 0028 01D2     		bcs	.L73
+ 392:../Src/smtc_hal/smtc_hal_tmr_list.c ****     {
+ 393:../Src/smtc_hal/smtc_hal_tmr_list.c ****         ticks = min_value;
+ 1118              		.loc 1 393 15
+ 1119 002a BB68     		ldr	r3, [r7, #8]
+ 1120 002c FB60     		str	r3, [r7, #12]
+ 1121              	.L73:
+ 394:../Src/smtc_hal/smtc_hal_tmr_list.c ****     }
+ 395:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 396:../Src/smtc_hal/smtc_hal_tmr_list.c ****     obj->timestamp    = ticks;
+ 1122              		.loc 1 396 23
+ 1123 002e 7B68     		ldr	r3, [r7, #4]
+ 1124 0030 FA68     		ldr	r2, [r7, #12]
+ 1125 0032 1A60     		str	r2, [r3]
+ 397:../Src/smtc_hal/smtc_hal_tmr_list.c ****     obj->reload_value = ticks;
+ 1126              		.loc 1 397 23
+ 1127 0034 7B68     		ldr	r3, [r7, #4]
+ 1128 0036 FA68     		ldr	r2, [r7, #12]
+ 1129 0038 5A60     		str	r2, [r3, #4]
+ 398:../Src/smtc_hal/smtc_hal_tmr_list.c **** }
+ 1130              		.loc 1 398 1
+ 1131 003a 00BF     		nop
+ 1132 003c 1037     		adds	r7, r7, #16
+ 1133              	.LCFI62:
+ 1134              		.cfi_def_cfa_offset 8
+ 1135 003e BD46     		mov	sp, r7
+ 1136              	.LCFI63:
+ 1137              		.cfi_def_cfa_register 13
+ 1138              		@ sp needed
+ 1139 0040 80BD     		pop	{r7, pc}
+ 1140              		.cfi_endproc
+ 1141              	.LFE524:
+ 1143              		.section	.text.timer_get_elapsed_time,"ax",%progbits
+ 1144              		.align	1
+ 1145              		.global	timer_get_elapsed_time
+ 1146              		.syntax unified
+ 1147              		.thumb
+ 1148              		.thumb_func
+ 1149              		.fpu fpv4-sp-d16
+ 1151              	timer_get_elapsed_time:
+ 1152              	.LFB525:
+ 399:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 400:../Src/smtc_hal/smtc_hal_tmr_list.c **** timer_time_t timer_get_elapsed_time( timer_time_t past )
+ARM GAS  /tmp/ccQbWcaF.s 			page 28
+
+
+ 401:../Src/smtc_hal/smtc_hal_tmr_list.c **** {
+ 1153              		.loc 1 401 1
+ 1154              		.cfi_startproc
+ 1155              		@ args = 0, pretend = 0, frame = 16
+ 1156              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1157 0000 80B5     		push	{r7, lr}
+ 1158              	.LCFI64:
+ 1159              		.cfi_def_cfa_offset 8
+ 1160              		.cfi_offset 7, -8
+ 1161              		.cfi_offset 14, -4
+ 1162 0002 84B0     		sub	sp, sp, #16
+ 1163              	.LCFI65:
+ 1164              		.cfi_def_cfa_offset 24
+ 1165 0004 00AF     		add	r7, sp, #0
+ 1166              	.LCFI66:
+ 1167              		.cfi_def_cfa_register 7
+ 1168 0006 7860     		str	r0, [r7, #4]
+ 402:../Src/smtc_hal/smtc_hal_tmr_list.c ****     if( past == 0 )
+ 1169              		.loc 1 402 7
+ 1170 0008 7B68     		ldr	r3, [r7, #4]
+ 1171 000a 002B     		cmp	r3, #0
+ 1172 000c 01D1     		bne	.L75
+ 403:../Src/smtc_hal/smtc_hal_tmr_list.c ****     {
+ 404:../Src/smtc_hal/smtc_hal_tmr_list.c ****         return 0;
+ 1173              		.loc 1 404 16
+ 1174 000e 0023     		movs	r3, #0
+ 1175 0010 0DE0     		b	.L76
+ 1176              	.L75:
+ 405:../Src/smtc_hal/smtc_hal_tmr_list.c ****     }
+ 406:../Src/smtc_hal/smtc_hal_tmr_list.c ****     uint32_t nowInTicks  = hal_rtc_get_timer_value( );
+ 1177              		.loc 1 406 28
+ 1178 0012 FFF7FEFF 		bl	hal_rtc_get_timer_value
+ 1179 0016 F860     		str	r0, [r7, #12]
+ 407:../Src/smtc_hal/smtc_hal_tmr_list.c ****     uint32_t pastInTicks = hal_rtc_ms_2_tick( past );
+ 1180              		.loc 1 407 28
+ 1181 0018 7868     		ldr	r0, [r7, #4]
+ 1182 001a FFF7FEFF 		bl	hal_rtc_ms_2_tick
+ 1183 001e B860     		str	r0, [r7, #8]
+ 408:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 409:../Src/smtc_hal/smtc_hal_tmr_list.c ****     /* Intentional wrap around. Works Ok if tick duration below 1ms */
+ 410:../Src/smtc_hal/smtc_hal_tmr_list.c ****     return hal_rtc_tick_2_ms( nowInTicks - pastInTicks );
+ 1184              		.loc 1 410 12
+ 1185 0020 FA68     		ldr	r2, [r7, #12]
+ 1186 0022 BB68     		ldr	r3, [r7, #8]
+ 1187 0024 D31A     		subs	r3, r2, r3
+ 1188 0026 1846     		mov	r0, r3
+ 1189 0028 FFF7FEFF 		bl	hal_rtc_tick_2_ms
+ 1190 002c 0346     		mov	r3, r0
+ 1191              	.L76:
+ 411:../Src/smtc_hal/smtc_hal_tmr_list.c **** }
+ 1192              		.loc 1 411 1
+ 1193 002e 1846     		mov	r0, r3
+ 1194 0030 1037     		adds	r7, r7, #16
+ 1195              	.LCFI67:
+ 1196              		.cfi_def_cfa_offset 8
+ 1197 0032 BD46     		mov	sp, r7
+ 1198              	.LCFI68:
+ARM GAS  /tmp/ccQbWcaF.s 			page 29
+
+
+ 1199              		.cfi_def_cfa_register 13
+ 1200              		@ sp needed
+ 1201 0034 80BD     		pop	{r7, pc}
+ 1202              		.cfi_endproc
+ 1203              	.LFE525:
+ 1205              		.section	.text.timer_set_timeout,"ax",%progbits
+ 1206              		.align	1
+ 1207              		.syntax unified
+ 1208              		.thumb
+ 1209              		.thumb_func
+ 1210              		.fpu fpv4-sp-d16
+ 1212              	timer_set_timeout:
+ 1213              	.LFB526:
+ 412:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 413:../Src/smtc_hal/smtc_hal_tmr_list.c **** static void timer_set_timeout( timer_event_t* obj )
+ 414:../Src/smtc_hal/smtc_hal_tmr_list.c **** {
+ 1214              		.loc 1 414 1
+ 1215              		.cfi_startproc
+ 1216              		@ args = 0, pretend = 0, frame = 16
+ 1217              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1218 0000 90B5     		push	{r4, r7, lr}
+ 1219              	.LCFI69:
+ 1220              		.cfi_def_cfa_offset 12
+ 1221              		.cfi_offset 4, -12
+ 1222              		.cfi_offset 7, -8
+ 1223              		.cfi_offset 14, -4
+ 1224 0002 85B0     		sub	sp, sp, #20
+ 1225              	.LCFI70:
+ 1226              		.cfi_def_cfa_offset 32
+ 1227 0004 00AF     		add	r7, sp, #0
+ 1228              	.LCFI71:
+ 1229              		.cfi_def_cfa_register 7
+ 1230 0006 7860     		str	r0, [r7, #4]
+ 415:../Src/smtc_hal/smtc_hal_tmr_list.c ****     int32_t min_ticks     = hal_rtc_get_minimum_timeout( );
+ 1231              		.loc 1 415 29
+ 1232 0008 FFF7FEFF 		bl	hal_rtc_get_minimum_timeout
+ 1233 000c 0346     		mov	r3, r0
+ 1234              		.loc 1 415 13
+ 1235 000e FB60     		str	r3, [r7, #12]
+ 416:../Src/smtc_hal/smtc_hal_tmr_list.c ****     obj->is_next_2_expire = true;
+ 1236              		.loc 1 416 27
+ 1237 0010 7B68     		ldr	r3, [r7, #4]
+ 1238 0012 0122     		movs	r2, #1
+ 1239 0014 5A72     		strb	r2, [r3, #9]
+ 417:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 418:../Src/smtc_hal/smtc_hal_tmr_list.c ****     /* In case deadline too soon */
+ 419:../Src/smtc_hal/smtc_hal_tmr_list.c ****     if( obj->timestamp < ( hal_rtc_get_timer_elapsed_value( ) + min_ticks ) )
+ 1240              		.loc 1 419 12
+ 1241 0016 7B68     		ldr	r3, [r7, #4]
+ 1242 0018 1C68     		ldr	r4, [r3]
+ 1243              		.loc 1 419 28
+ 1244 001a FFF7FEFF 		bl	hal_rtc_get_timer_elapsed_value
+ 1245 001e 0246     		mov	r2, r0
+ 1246              		.loc 1 419 63
+ 1247 0020 FB68     		ldr	r3, [r7, #12]
+ 1248 0022 1344     		add	r3, r3, r2
+ 1249              		.loc 1 419 7
+ARM GAS  /tmp/ccQbWcaF.s 			page 30
+
+
+ 1250 0024 9C42     		cmp	r4, r3
+ 1251 0026 06D2     		bcs	.L78
+ 420:../Src/smtc_hal/smtc_hal_tmr_list.c ****     {
+ 421:../Src/smtc_hal/smtc_hal_tmr_list.c ****         obj->timestamp = hal_rtc_get_timer_elapsed_value( ) + min_ticks;
+ 1252              		.loc 1 421 26
+ 1253 0028 FFF7FEFF 		bl	hal_rtc_get_timer_elapsed_value
+ 1254 002c 0246     		mov	r2, r0
+ 1255              		.loc 1 421 61
+ 1256 002e FB68     		ldr	r3, [r7, #12]
+ 1257 0030 1A44     		add	r2, r2, r3
+ 1258              		.loc 1 421 24
+ 1259 0032 7B68     		ldr	r3, [r7, #4]
+ 1260 0034 1A60     		str	r2, [r3]
+ 1261              	.L78:
+ 422:../Src/smtc_hal/smtc_hal_tmr_list.c ****     }
+ 423:../Src/smtc_hal/smtc_hal_tmr_list.c ****     hal_rtc_start_alarm( obj->timestamp );
+ 1262              		.loc 1 423 5
+ 1263 0036 7B68     		ldr	r3, [r7, #4]
+ 1264 0038 1B68     		ldr	r3, [r3]
+ 1265 003a 1846     		mov	r0, r3
+ 1266 003c FFF7FEFF 		bl	hal_rtc_start_alarm
+ 424:../Src/smtc_hal/smtc_hal_tmr_list.c **** }
+ 1267              		.loc 1 424 1
+ 1268 0040 00BF     		nop
+ 1269 0042 1437     		adds	r7, r7, #20
+ 1270              	.LCFI72:
+ 1271              		.cfi_def_cfa_offset 12
+ 1272 0044 BD46     		mov	sp, r7
+ 1273              	.LCFI73:
+ 1274              		.cfi_def_cfa_register 13
+ 1275              		@ sp needed
+ 1276 0046 90BD     		pop	{r4, r7, pc}
+ 1277              		.cfi_endproc
+ 1278              	.LFE526:
+ 1280              		.section	.text.timer_temp_compensation,"ax",%progbits
+ 1281              		.align	1
+ 1282              		.global	timer_temp_compensation
+ 1283              		.syntax unified
+ 1284              		.thumb
+ 1285              		.thumb_func
+ 1286              		.fpu fpv4-sp-d16
+ 1288              	timer_temp_compensation:
+ 1289              	.LFB527:
+ 425:../Src/smtc_hal/smtc_hal_tmr_list.c **** 
+ 426:../Src/smtc_hal/smtc_hal_tmr_list.c **** timer_time_t timer_temp_compensation( timer_time_t period, float temperature )
+ 427:../Src/smtc_hal/smtc_hal_tmr_list.c **** {
+ 1290              		.loc 1 427 1
+ 1291              		.cfi_startproc
+ 1292              		@ args = 0, pretend = 0, frame = 8
+ 1293              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1294 0000 80B5     		push	{r7, lr}
+ 1295              	.LCFI74:
+ 1296              		.cfi_def_cfa_offset 8
+ 1297              		.cfi_offset 7, -8
+ 1298              		.cfi_offset 14, -4
+ 1299 0002 82B0     		sub	sp, sp, #8
+ 1300              	.LCFI75:
+ARM GAS  /tmp/ccQbWcaF.s 			page 31
+
+
+ 1301              		.cfi_def_cfa_offset 16
+ 1302 0004 00AF     		add	r7, sp, #0
+ 1303              	.LCFI76:
+ 1304              		.cfi_def_cfa_register 7
+ 1305 0006 7860     		str	r0, [r7, #4]
+ 1306 0008 87ED000A 		vstr.32	s0, [r7]
+ 428:../Src/smtc_hal/smtc_hal_tmr_list.c ****     return hal_rtc_temp_compensation( period, temperature );
+ 1307              		.loc 1 428 12
+ 1308 000c 97ED000A 		vldr.32	s0, [r7]
+ 1309 0010 7868     		ldr	r0, [r7, #4]
+ 1310 0012 FFF7FEFF 		bl	hal_rtc_temp_compensation
+ 1311 0016 0346     		mov	r3, r0
+ 429:../Src/smtc_hal/smtc_hal_tmr_list.c **** }
+ 1312              		.loc 1 429 1
+ 1313 0018 1846     		mov	r0, r3
+ 1314 001a 0837     		adds	r7, r7, #8
+ 1315              	.LCFI77:
+ 1316              		.cfi_def_cfa_offset 8
+ 1317 001c BD46     		mov	sp, r7
+ 1318              	.LCFI78:
+ 1319              		.cfi_def_cfa_register 13
+ 1320              		@ sp needed
+ 1321 001e 80BD     		pop	{r7, pc}
+ 1322              		.cfi_endproc
+ 1323              	.LFE527:
+ 1325              		.text
+ 1326              	.Letext0:
+ 1327              		.file 2 "/usr/lib/gcc/arm-none-eabi/10.3.1/include/stdint.h"
+ 1328              		.file 3 "../Inc/smtc_hal/smtc_hal_tmr_list.h"
+ARM GAS  /tmp/ccQbWcaF.s 			page 32
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 smtc_hal_tmr_list.c
+     /tmp/ccQbWcaF.s:18     .bss.timer_list_head:0000000000000000 $d
+     /tmp/ccQbWcaF.s:21     .bss.timer_list_head:0000000000000000 timer_list_head
+     /tmp/ccQbWcaF.s:24     .text.timer_init:0000000000000000 $t
+     /tmp/ccQbWcaF.s:32     .text.timer_init:0000000000000000 timer_init
+     /tmp/ccQbWcaF.s:98     .text.timer_set_context:0000000000000000 $t
+     /tmp/ccQbWcaF.s:105    .text.timer_set_context:0000000000000000 timer_set_context
+     /tmp/ccQbWcaF.s:146    .text.timer_start:0000000000000000 $t
+     /tmp/ccQbWcaF.s:153    .text.timer_start:0000000000000000 timer_start
+     /tmp/ccQbWcaF.s:961    .text.timer_exists:0000000000000000 timer_exists
+     /tmp/ccQbWcaF.s:435    .text.timer_insert_new_head_timer:0000000000000000 timer_insert_new_head_timer
+     /tmp/ccQbWcaF.s:333    .text.timer_insert_timer:0000000000000000 timer_insert_timer
+     /tmp/ccQbWcaF.s:269    .text.timer_start:000000000000009c $d
+     /tmp/ccQbWcaF.s:274    .text.is_timer_running:0000000000000000 $t
+     /tmp/ccQbWcaF.s:281    .text.is_timer_running:0000000000000000 is_timer_running
+     /tmp/ccQbWcaF.s:322    .text.is_timer_running:000000000000001c $d
+     /tmp/ccQbWcaF.s:327    .text.timer_insert_timer:0000000000000000 $t
+     /tmp/ccQbWcaF.s:424    .text.timer_insert_timer:000000000000005c $d
+     /tmp/ccQbWcaF.s:429    .text.timer_insert_new_head_timer:0000000000000000 $t
+     /tmp/ccQbWcaF.s:1212   .text.timer_set_timeout:0000000000000000 timer_set_timeout
+     /tmp/ccQbWcaF.s:492    .text.timer_insert_new_head_timer:0000000000000038 $d
+     /tmp/ccQbWcaF.s:497    .text.timer_is_started:0000000000000000 $t
+     /tmp/ccQbWcaF.s:504    .text.timer_is_started:0000000000000000 timer_is_started
+     /tmp/ccQbWcaF.s:543    .text.timer_irq_handler:0000000000000000 $t
+     /tmp/ccQbWcaF.s:550    .text.timer_irq_handler:0000000000000000 timer_irq_handler
+     /tmp/ccQbWcaF.s:754    .text.timer_irq_handler:0000000000000100 $d
+     /tmp/ccQbWcaF.s:759    .text.timer_stop:0000000000000000 $t
+     /tmp/ccQbWcaF.s:766    .text.timer_stop:0000000000000000 timer_stop
+     /tmp/ccQbWcaF.s:950    .text.timer_stop:00000000000000f0 $d
+     /tmp/ccQbWcaF.s:955    .text.timer_exists:0000000000000000 $t
+     /tmp/ccQbWcaF.s:1024   .text.timer_exists:0000000000000038 $d
+     /tmp/ccQbWcaF.s:1029   .text.timer_reset:0000000000000000 $t
+     /tmp/ccQbWcaF.s:1036   .text.timer_reset:0000000000000000 timer_reset
+     /tmp/ccQbWcaF.s:1074   .text.timer_set_value:0000000000000000 $t
+     /tmp/ccQbWcaF.s:1081   .text.timer_set_value:0000000000000000 timer_set_value
+     /tmp/ccQbWcaF.s:1144   .text.timer_get_elapsed_time:0000000000000000 $t
+     /tmp/ccQbWcaF.s:1151   .text.timer_get_elapsed_time:0000000000000000 timer_get_elapsed_time
+     /tmp/ccQbWcaF.s:1206   .text.timer_set_timeout:0000000000000000 $t
+     /tmp/ccQbWcaF.s:1281   .text.timer_temp_compensation:0000000000000000 $t
+     /tmp/ccQbWcaF.s:1288   .text.timer_temp_compensation:0000000000000000 timer_temp_compensation
+
+UNDEFINED SYMBOLS
+hal_mcu_critical_section_begin
+hal_mcu_critical_section_end
+hal_rtc_set_time_ref_in_ticks
+hal_rtc_get_timer_elapsed_value
+hal_rtc_get_time_ref_in_ticks
+hal_rtc_stop_alarm
+hal_rtc_ms_2_tick
+hal_rtc_get_minimum_timeout
+hal_rtc_get_timer_value
+hal_rtc_tick_2_ms
+hal_rtc_start_alarm
+hal_rtc_temp_compensation

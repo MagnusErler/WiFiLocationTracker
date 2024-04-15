@@ -1,0 +1,1785 @@
+ARM GAS  /tmp/ccSOg6Kt.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"lr1110_modem_board.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.bss.modem_is_ready,"aw",%nobits
+  20              	modem_is_ready:
+  21 0000 00       		.space	1
+  22              		.section	.text.lr1110_modem_board_init_io_context,"ax",%progbits
+  23              		.align	1
+  24              		.global	lr1110_modem_board_init_io_context
+  25              		.arch armv7e-m
+  26              		.syntax unified
+  27              		.thumb
+  28              		.thumb_func
+  29              		.fpu fpv4-sp-d16
+  31              	lr1110_modem_board_init_io_context:
+  32              	.LFB590:
+  33              		.file 1 "../Src/boards/lr1110_modem_board.c"
+   1:../Src/boards/lr1110_modem_board.c **** /*!
+   2:../Src/boards/lr1110_modem_board.c ****  * @file      lr1110_modem_board.c
+   3:../Src/boards/lr1110_modem_board.c ****  *
+   4:../Src/boards/lr1110_modem_board.c ****  * @brief     Target board LR1110 EVK Modem board driver implementation
+   5:../Src/boards/lr1110_modem_board.c ****  *
+   6:../Src/boards/lr1110_modem_board.c ****  * Revised BSD License
+   7:../Src/boards/lr1110_modem_board.c ****  * Copyright Semtech Corporation 2020. All rights reserved.
+   8:../Src/boards/lr1110_modem_board.c ****  *
+   9:../Src/boards/lr1110_modem_board.c ****  * Redistribution and use in source and binary forms, with or without
+  10:../Src/boards/lr1110_modem_board.c ****  * modification, are permitted provided that the following conditions are met:
+  11:../Src/boards/lr1110_modem_board.c ****  *     * Redistributions of source code must retain the above copyright
+  12:../Src/boards/lr1110_modem_board.c ****  *       notice, this list of conditions and the following disclaimer.
+  13:../Src/boards/lr1110_modem_board.c ****  *     * Redistributions in binary form must reproduce the above copyright
+  14:../Src/boards/lr1110_modem_board.c ****  *       notice, this list of conditions and the following disclaimer in the
+  15:../Src/boards/lr1110_modem_board.c ****  *       documentation and/or other materials provided with the distribution.
+  16:../Src/boards/lr1110_modem_board.c ****  *     * Neither the name of the Semtech corporation nor the
+  17:../Src/boards/lr1110_modem_board.c ****  *       names of its contributors may be used to endorse or promote products
+  18:../Src/boards/lr1110_modem_board.c ****  *       derived from this software without specific prior written permission.
+  19:../Src/boards/lr1110_modem_board.c ****  *
+  20:../Src/boards/lr1110_modem_board.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  21:../Src/boards/lr1110_modem_board.c ****  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  22:../Src/boards/lr1110_modem_board.c ****  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  23:../Src/boards/lr1110_modem_board.c ****  * ARE DISCLAIMED. IN NO EVENT SHALL SEMTECH CORPORATION BE LIABLE FOR ANY
+  24:../Src/boards/lr1110_modem_board.c ****  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+  25:../Src/boards/lr1110_modem_board.c ****  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  26:../Src/boards/lr1110_modem_board.c ****  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+  27:../Src/boards/lr1110_modem_board.c ****  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ARM GAS  /tmp/ccSOg6Kt.s 			page 2
+
+
+  28:../Src/boards/lr1110_modem_board.c ****  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  29:../Src/boards/lr1110_modem_board.c ****  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  30:../Src/boards/lr1110_modem_board.c ****  */
+  31:../Src/boards/lr1110_modem_board.c **** 
+  32:../Src/boards/lr1110_modem_board.c **** /*
+  33:../Src/boards/lr1110_modem_board.c ****  * -----------------------------------------------------------------------------
+  34:../Src/boards/lr1110_modem_board.c ****  * --- DEPENDENCIES ------------------------------------------------------------
+  35:../Src/boards/lr1110_modem_board.c ****  */
+  36:../Src/boards/lr1110_modem_board.c **** 
+  37:../Src/boards/lr1110_modem_board.c **** #include <stdlib.h>
+  38:../Src/boards/lr1110_modem_board.c **** #include "lr1110_hal.h"
+  39:../Src/boards/lr1110_modem_board.c **** #include "lr1110_modem_hal.h"
+  40:../Src/boards/lr1110_modem_board.c **** #include "lr1110_modem_system.h"
+  41:../Src/boards/lr1110_modem_board.c **** #include "lr1110_modem_lorawan.h"
+  42:../Src/boards/lr1110_modem_board.c **** #include "lr1110_modem_board.h"
+  43:../Src/boards/lr1110_modem_board.c **** #include "lr1110.h"
+  44:../Src/boards/lr1110_modem_board.c **** #include "smtc_hal_tmr_list.h"
+  45:../Src/boards/lr1110_modem_board.c **** 
+  46:../Src/boards/lr1110_modem_board.c **** /*
+  47:../Src/boards/lr1110_modem_board.c ****  * -----------------------------------------------------------------------------
+  48:../Src/boards/lr1110_modem_board.c ****  * --- PRIVATE MACROS-----------------------------------------------------------
+  49:../Src/boards/lr1110_modem_board.c ****  */
+  50:../Src/boards/lr1110_modem_board.c **** 
+  51:../Src/boards/lr1110_modem_board.c **** /*
+  52:../Src/boards/lr1110_modem_board.c ****  * -----------------------------------------------------------------------------
+  53:../Src/boards/lr1110_modem_board.c ****  * --- PRIVATE CONSTANTS -------------------------------------------------------
+  54:../Src/boards/lr1110_modem_board.c ****  */
+  55:../Src/boards/lr1110_modem_board.c **** 
+  56:../Src/boards/lr1110_modem_board.c **** #define GNSS_WEEK_NUMBER_ROLLOVER_2019_2038 2
+  57:../Src/boards/lr1110_modem_board.c **** 
+  58:../Src/boards/lr1110_modem_board.c **** /*
+  59:../Src/boards/lr1110_modem_board.c ****  * -----------------------------------------------------------------------------
+  60:../Src/boards/lr1110_modem_board.c ****  * --- PRIVATE TYPES -----------------------------------------------------------
+  61:../Src/boards/lr1110_modem_board.c ****  */
+  62:../Src/boards/lr1110_modem_board.c **** 
+  63:../Src/boards/lr1110_modem_board.c **** /*!
+  64:../Src/boards/lr1110_modem_board.c ****  * @brief LR1110 EVK LED context
+  65:../Src/boards/lr1110_modem_board.c ****  */
+  66:../Src/boards/lr1110_modem_board.c **** typedef struct
+  67:../Src/boards/lr1110_modem_board.c **** {
+  68:../Src/boards/lr1110_modem_board.c ****     timer_event_t led_timer;         /*!< @brief Pulse timer */
+  69:../Src/boards/lr1110_modem_board.c ****     bool          timer_initialized; /*!< @brief True if the pulse timer has been initialized, fals
+  70:../Src/boards/lr1110_modem_board.c **** } lr1110_modem_board_led_ctx_t;
+  71:../Src/boards/lr1110_modem_board.c **** 
+  72:../Src/boards/lr1110_modem_board.c **** /*
+  73:../Src/boards/lr1110_modem_board.c ****  * -----------------------------------------------------------------------------
+  74:../Src/boards/lr1110_modem_board.c ****  * --- PRIVATE VARIABLES -------------------------------------------------------
+  75:../Src/boards/lr1110_modem_board.c ****  */
+  76:../Src/boards/lr1110_modem_board.c **** 
+  77:../Src/boards/lr1110_modem_board.c **** /*!
+  78:../Src/boards/lr1110_modem_board.c ****  * @brief modem ready flag
+  79:../Src/boards/lr1110_modem_board.c ****  */
+  80:../Src/boards/lr1110_modem_board.c **** static bool modem_is_ready = false;
+  81:../Src/boards/lr1110_modem_board.c **** 
+  82:../Src/boards/lr1110_modem_board.c **** /*
+  83:../Src/boards/lr1110_modem_board.c ****  * -----------------------------------------------------------------------------
+  84:../Src/boards/lr1110_modem_board.c ****  * --- PRIVATE FUNCTIONS DECLARATION -------------------------------------------
+ARM GAS  /tmp/ccSOg6Kt.s 			page 3
+
+
+  85:../Src/boards/lr1110_modem_board.c ****  */
+  86:../Src/boards/lr1110_modem_board.c **** 
+  87:../Src/boards/lr1110_modem_board.c **** /*!
+  88:../Src/boards/lr1110_modem_board.c ****  * @brief initialize the TCXO
+  89:../Src/boards/lr1110_modem_board.c ****  *
+  90:../Src/boards/lr1110_modem_board.c ****  * @param [in] context Chip implementation context
+  91:../Src/boards/lr1110_modem_board.c ****  */
+  92:../Src/boards/lr1110_modem_board.c **** static lr1110_modem_response_code_t lr1110_modem_board_init_tcxo_io( const void* context );
+  93:../Src/boards/lr1110_modem_board.c **** 
+  94:../Src/boards/lr1110_modem_board.c **** /*!
+  95:../Src/boards/lr1110_modem_board.c ****  * @brief Pulse timer timeout callback
+  96:../Src/boards/lr1110_modem_board.c ****  *
+  97:../Src/boards/lr1110_modem_board.c ****  * @param context Context used to retrieve the index of the relevant LED.
+  98:../Src/boards/lr1110_modem_board.c ****  */
+  99:../Src/boards/lr1110_modem_board.c **** static void on_led_timer_event( void* context );
+ 100:../Src/boards/lr1110_modem_board.c **** 
+ 101:../Src/boards/lr1110_modem_board.c **** /*
+ 102:../Src/boards/lr1110_modem_board.c ****  * -----------------------------------------------------------------------------
+ 103:../Src/boards/lr1110_modem_board.c ****  * --- PUBLIC VARIABLES --------------------------------------------------------
+ 104:../Src/boards/lr1110_modem_board.c ****  */
+ 105:../Src/boards/lr1110_modem_board.c **** 
+ 106:../Src/boards/lr1110_modem_board.c **** /*
+ 107:../Src/boards/lr1110_modem_board.c ****  * -----------------------------------------------------------------------------
+ 108:../Src/boards/lr1110_modem_board.c ****  * --- PUBLIC FUNCTIONS DEFINITION ---------------------------------------------
+ 109:../Src/boards/lr1110_modem_board.c ****  */
+ 110:../Src/boards/lr1110_modem_board.c **** 
+ 111:../Src/boards/lr1110_modem_board.c **** void lr1110_modem_board_init_io_context( void* context )
+ 112:../Src/boards/lr1110_modem_board.c **** {
+  34              		.loc 1 112 1
+  35              		.cfi_startproc
+  36              		@ args = 0, pretend = 0, frame = 8
+  37              		@ frame_needed = 1, uses_anonymous_args = 0
+  38              		@ link register save eliminated.
+  39 0000 80B4     		push	{r7}
+  40              	.LCFI0:
+  41              		.cfi_def_cfa_offset 4
+  42              		.cfi_offset 7, -4
+  43 0002 83B0     		sub	sp, sp, #12
+  44              	.LCFI1:
+  45              		.cfi_def_cfa_offset 16
+  46 0004 00AF     		add	r7, sp, #0
+  47              	.LCFI2:
+  48              		.cfi_def_cfa_register 7
+  49 0006 7860     		str	r0, [r7, #4]
+ 113:../Src/boards/lr1110_modem_board.c ****     ( ( lr1110_t* ) context )->reset.pin      = RADIO_RESET;
+  50              		.loc 1 113 47
+  51 0008 7B68     		ldr	r3, [r7, #4]
+  52 000a 0022     		movs	r2, #0
+  53 000c 1A80     		strh	r2, [r3]	@ movhi
+ 114:../Src/boards/lr1110_modem_board.c ****     ( ( lr1110_t* ) context )->nss.pin        = RADIO_NSS;
+  54              		.loc 1 114 47
+  55 000e 7B68     		ldr	r3, [r7, #4]
+  56 0010 0822     		movs	r2, #8
+  57 0012 9A86     		strh	r2, [r3, #52]	@ movhi
+ 115:../Src/boards/lr1110_modem_board.c ****     ( ( lr1110_t* ) context )->event.pin      = RADIO_EVENT;
+  58              		.loc 1 115 47
+  59 0014 7B68     		ldr	r3, [r7, #4]
+ARM GAS  /tmp/ccSOg6Kt.s 			page 4
+
+
+  60 0016 1422     		movs	r2, #20
+  61 0018 1A85     		strh	r2, [r3, #40]	@ movhi
+ 116:../Src/boards/lr1110_modem_board.c ****     ( ( lr1110_t* ) context )->event.callback = radio_event_callback;
+  62              		.loc 1 116 47
+  63 001a 7B68     		ldr	r3, [r7, #4]
+  64 001c 0E4A     		ldr	r2, .L2
+  65 001e 1A63     		str	r2, [r3, #48]
+ 117:../Src/boards/lr1110_modem_board.c ****     ( ( lr1110_t* ) context )->event.context  = ( ( lr1110_t* ) context );
+  66              		.loc 1 117 47
+  67 0020 7B68     		ldr	r3, [r7, #4]
+  68 0022 7A68     		ldr	r2, [r7, #4]
+  69 0024 DA62     		str	r2, [r3, #44]
+ 118:../Src/boards/lr1110_modem_board.c ****     ( ( lr1110_t* ) context )->busy.pin       = RADIO_BUSY;
+  70              		.loc 1 118 47
+  71 0026 7B68     		ldr	r3, [r7, #4]
+  72 0028 1322     		movs	r2, #19
+  73 002a 9A82     		strh	r2, [r3, #20]	@ movhi
+ 119:../Src/boards/lr1110_modem_board.c ****     ( ( lr1110_t* ) context )->spi.pins.miso  = RADIO_MISO;
+  74              		.loc 1 119 47
+  75 002c 7B68     		ldr	r3, [r7, #4]
+  76 002e 0622     		movs	r2, #6
+  77 0030 A3F8B220 		strh	r2, [r3, #178]	@ movhi
+ 120:../Src/boards/lr1110_modem_board.c ****     ( ( lr1110_t* ) context )->spi.pins.mosi  = RADIO_MOSI;
+  78              		.loc 1 120 47
+  79 0034 7B68     		ldr	r3, [r7, #4]
+  80 0036 0722     		movs	r2, #7
+  81 0038 A3F8B020 		strh	r2, [r3, #176]	@ movhi
+ 121:../Src/boards/lr1110_modem_board.c ****     ( ( lr1110_t* ) context )->spi.pins.sclk  = RADIO_SCLK;
+  82              		.loc 1 121 47
+  83 003c 7B68     		ldr	r3, [r7, #4]
+  84 003e 0522     		movs	r2, #5
+  85 0040 A3F8B420 		strh	r2, [r3, #180]	@ movhi
+ 122:../Src/boards/lr1110_modem_board.c ****     ( ( lr1110_t* ) context )->spi_id         = HAL_RADIO_SPI_ID;
+  86              		.loc 1 122 47
+  87 0044 7B68     		ldr	r3, [r7, #4]
+  88 0046 0122     		movs	r2, #1
+  89 0048 C3F8B820 		str	r2, [r3, #184]
+ 123:../Src/boards/lr1110_modem_board.c **** }
+  90              		.loc 1 123 1
+  91 004c 00BF     		nop
+  92 004e 0C37     		adds	r7, r7, #12
+  93              	.LCFI3:
+  94              		.cfi_def_cfa_offset 4
+  95 0050 BD46     		mov	sp, r7
+  96              	.LCFI4:
+  97              		.cfi_def_cfa_register 13
+  98              		@ sp needed
+  99 0052 5DF8047B 		ldr	r7, [sp], #4
+ 100              	.LCFI5:
+ 101              		.cfi_restore 7
+ 102              		.cfi_def_cfa_offset 0
+ 103 0056 7047     		bx	lr
+ 104              	.L3:
+ 105              		.align	2
+ 106              	.L2:
+ 107 0058 00000000 		.word	radio_event_callback
+ 108              		.cfi_endproc
+ARM GAS  /tmp/ccSOg6Kt.s 			page 5
+
+
+ 109              	.LFE590:
+ 111              		.section	.text.lr1110_modem_board_init_io,"ax",%progbits
+ 112              		.align	1
+ 113              		.global	lr1110_modem_board_init_io
+ 114              		.syntax unified
+ 115              		.thumb
+ 116              		.thumb_func
+ 117              		.fpu fpv4-sp-d16
+ 119              	lr1110_modem_board_init_io:
+ 120              	.LFB591:
+ 124:../Src/boards/lr1110_modem_board.c **** 
+ 125:../Src/boards/lr1110_modem_board.c **** void lr1110_modem_board_init_io( const void* context )
+ 126:../Src/boards/lr1110_modem_board.c **** {
+ 121              		.loc 1 126 1
+ 122              		.cfi_startproc
+ 123              		@ args = 0, pretend = 0, frame = 8
+ 124              		@ frame_needed = 1, uses_anonymous_args = 0
+ 125 0000 80B5     		push	{r7, lr}
+ 126              	.LCFI6:
+ 127              		.cfi_def_cfa_offset 8
+ 128              		.cfi_offset 7, -8
+ 129              		.cfi_offset 14, -4
+ 130 0002 82B0     		sub	sp, sp, #8
+ 131              	.LCFI7:
+ 132              		.cfi_def_cfa_offset 16
+ 133 0004 00AF     		add	r7, sp, #0
+ 134              	.LCFI8:
+ 135              		.cfi_def_cfa_register 7
+ 136 0006 7860     		str	r0, [r7, #4]
+ 127:../Src/boards/lr1110_modem_board.c ****     hal_gpio_init_out( ( ( lr1110_t* ) context )->reset.pin, 1 );
+ 137              		.loc 1 127 5
+ 138 0008 7B68     		ldr	r3, [r7, #4]
+ 139 000a B3F90030 		ldrsh	r3, [r3]
+ 140 000e 0121     		movs	r1, #1
+ 141 0010 1846     		mov	r0, r3
+ 142 0012 FFF7FEFF 		bl	hal_gpio_init_out
+ 128:../Src/boards/lr1110_modem_board.c ****     hal_gpio_init_out( ( ( lr1110_t* ) context )->nss.pin, 1 );
+ 143              		.loc 1 128 5
+ 144 0016 7B68     		ldr	r3, [r7, #4]
+ 145 0018 B3F93430 		ldrsh	r3, [r3, #52]
+ 146 001c 0121     		movs	r1, #1
+ 147 001e 1846     		mov	r0, r3
+ 148 0020 FFF7FEFF 		bl	hal_gpio_init_out
+ 129:../Src/boards/lr1110_modem_board.c ****     hal_gpio_init_in( ( ( lr1110_t* ) context )->busy.pin, HAL_GPIO_PULL_MODE_NONE, HAL_GPIO_IRQ_MO
+ 149              		.loc 1 129 5
+ 150 0024 7B68     		ldr	r3, [r7, #4]
+ 151 0026 B3F91400 		ldrsh	r0, [r3, #20]
+ 152 002a 0023     		movs	r3, #0
+ 153 002c 0022     		movs	r2, #0
+ 154 002e 0021     		movs	r1, #0
+ 155 0030 FFF7FEFF 		bl	hal_gpio_init_in
+ 130:../Src/boards/lr1110_modem_board.c ****     hal_gpio_init_in( ( ( lr1110_t* ) context )->event.pin, HAL_GPIO_PULL_MODE_NONE, HAL_GPIO_IRQ_M
+ 156              		.loc 1 130 5
+ 157 0034 7B68     		ldr	r3, [r7, #4]
+ 158 0036 B3F92800 		ldrsh	r0, [r3, #40]
+ 159 003a 7B68     		ldr	r3, [r7, #4]
+ 160 003c 2833     		adds	r3, r3, #40
+ARM GAS  /tmp/ccSOg6Kt.s 			page 6
+
+
+ 161 003e 0122     		movs	r2, #1
+ 162 0040 0021     		movs	r1, #0
+ 163 0042 FFF7FEFF 		bl	hal_gpio_init_in
+ 131:../Src/boards/lr1110_modem_board.c ****                       &( ( lr1110_t* ) context )->event );
+ 132:../Src/boards/lr1110_modem_board.c **** }
+ 164              		.loc 1 132 1
+ 165 0046 00BF     		nop
+ 166 0048 0837     		adds	r7, r7, #8
+ 167              	.LCFI9:
+ 168              		.cfi_def_cfa_offset 8
+ 169 004a BD46     		mov	sp, r7
+ 170              	.LCFI10:
+ 171              		.cfi_def_cfa_register 13
+ 172              		@ sp needed
+ 173 004c 80BD     		pop	{r7, pc}
+ 174              		.cfi_endproc
+ 175              	.LFE591:
+ 177              		.section	.text.lr1110_modem_board_deinit_io,"ax",%progbits
+ 178              		.align	1
+ 179              		.global	lr1110_modem_board_deinit_io
+ 180              		.syntax unified
+ 181              		.thumb
+ 182              		.thumb_func
+ 183              		.fpu fpv4-sp-d16
+ 185              	lr1110_modem_board_deinit_io:
+ 186              	.LFB592:
+ 133:../Src/boards/lr1110_modem_board.c **** 
+ 134:../Src/boards/lr1110_modem_board.c **** void lr1110_modem_board_deinit_io( const void* context )
+ 135:../Src/boards/lr1110_modem_board.c **** {
+ 187              		.loc 1 135 1
+ 188              		.cfi_startproc
+ 189              		@ args = 0, pretend = 0, frame = 8
+ 190              		@ frame_needed = 1, uses_anonymous_args = 0
+ 191 0000 80B5     		push	{r7, lr}
+ 192              	.LCFI11:
+ 193              		.cfi_def_cfa_offset 8
+ 194              		.cfi_offset 7, -8
+ 195              		.cfi_offset 14, -4
+ 196 0002 82B0     		sub	sp, sp, #8
+ 197              	.LCFI12:
+ 198              		.cfi_def_cfa_offset 16
+ 199 0004 00AF     		add	r7, sp, #0
+ 200              	.LCFI13:
+ 201              		.cfi_def_cfa_register 7
+ 202 0006 7860     		str	r0, [r7, #4]
+ 136:../Src/boards/lr1110_modem_board.c ****     hal_gpio_init_out( ( ( lr1110_t* ) context )->spi.pins.mosi, 0 );
+ 203              		.loc 1 136 5
+ 204 0008 7B68     		ldr	r3, [r7, #4]
+ 205 000a B3F9B030 		ldrsh	r3, [r3, #176]
+ 206 000e 0021     		movs	r1, #0
+ 207 0010 1846     		mov	r0, r3
+ 208 0012 FFF7FEFF 		bl	hal_gpio_init_out
+ 137:../Src/boards/lr1110_modem_board.c ****     hal_gpio_init_out( ( ( lr1110_t* ) context )->spi.pins.miso, 0 );
+ 209              		.loc 1 137 5
+ 210 0016 7B68     		ldr	r3, [r7, #4]
+ 211 0018 B3F9B230 		ldrsh	r3, [r3, #178]
+ 212 001c 0021     		movs	r1, #0
+ARM GAS  /tmp/ccSOg6Kt.s 			page 7
+
+
+ 213 001e 1846     		mov	r0, r3
+ 214 0020 FFF7FEFF 		bl	hal_gpio_init_out
+ 138:../Src/boards/lr1110_modem_board.c ****     hal_gpio_init_out( ( ( lr1110_t* ) context )->spi.pins.sclk, 0 );
+ 215              		.loc 1 138 5
+ 216 0024 7B68     		ldr	r3, [r7, #4]
+ 217 0026 B3F9B430 		ldrsh	r3, [r3, #180]
+ 218 002a 0021     		movs	r1, #0
+ 219 002c 1846     		mov	r0, r3
+ 220 002e FFF7FEFF 		bl	hal_gpio_init_out
+ 139:../Src/boards/lr1110_modem_board.c ****     hal_gpio_init_out( ( ( lr1110_t* ) context )->nss.pin, 1 );
+ 221              		.loc 1 139 5
+ 222 0032 7B68     		ldr	r3, [r7, #4]
+ 223 0034 B3F93430 		ldrsh	r3, [r3, #52]
+ 224 0038 0121     		movs	r1, #1
+ 225 003a 1846     		mov	r0, r3
+ 226 003c FFF7FEFF 		bl	hal_gpio_init_out
+ 140:../Src/boards/lr1110_modem_board.c ****     hal_gpio_init_out( ( ( lr1110_t* ) context )->reset.pin, 1 );
+ 227              		.loc 1 140 5
+ 228 0040 7B68     		ldr	r3, [r7, #4]
+ 229 0042 B3F90030 		ldrsh	r3, [r3]
+ 230 0046 0121     		movs	r1, #1
+ 231 0048 1846     		mov	r0, r3
+ 232 004a FFF7FEFF 		bl	hal_gpio_init_out
+ 141:../Src/boards/lr1110_modem_board.c ****     hal_gpio_init_in( ( ( lr1110_t* ) context )->busy.pin, HAL_GPIO_PULL_MODE_NONE, HAL_GPIO_IRQ_MO
+ 233              		.loc 1 141 5
+ 234 004e 7B68     		ldr	r3, [r7, #4]
+ 235 0050 B3F91400 		ldrsh	r0, [r3, #20]
+ 236 0054 0023     		movs	r3, #0
+ 237 0056 0022     		movs	r2, #0
+ 238 0058 0021     		movs	r1, #0
+ 239 005a FFF7FEFF 		bl	hal_gpio_init_in
+ 142:../Src/boards/lr1110_modem_board.c ****     hal_gpio_init_in( ( ( lr1110_t* ) context )->event.pin, HAL_GPIO_PULL_MODE_NONE, HAL_GPIO_IRQ_M
+ 240              		.loc 1 142 5
+ 241 005e 7B68     		ldr	r3, [r7, #4]
+ 242 0060 B3F92800 		ldrsh	r0, [r3, #40]
+ 243 0064 0023     		movs	r3, #0
+ 244 0066 0122     		movs	r2, #1
+ 245 0068 0021     		movs	r1, #0
+ 246 006a FFF7FEFF 		bl	hal_gpio_init_in
+ 143:../Src/boards/lr1110_modem_board.c **** }
+ 247              		.loc 1 143 1
+ 248 006e 00BF     		nop
+ 249 0070 0837     		adds	r7, r7, #8
+ 250              	.LCFI14:
+ 251              		.cfi_def_cfa_offset 8
+ 252 0072 BD46     		mov	sp, r7
+ 253              	.LCFI15:
+ 254              		.cfi_def_cfa_register 13
+ 255              		@ sp needed
+ 256 0074 80BD     		pop	{r7, pc}
+ 257              		.cfi_endproc
+ 258              	.LFE592:
+ 260              		.section	.text.lr1110_modem_board_analog_deinit_io,"ax",%progbits
+ 261              		.align	1
+ 262              		.global	lr1110_modem_board_analog_deinit_io
+ 263              		.syntax unified
+ 264              		.thumb
+ARM GAS  /tmp/ccSOg6Kt.s 			page 8
+
+
+ 265              		.thumb_func
+ 266              		.fpu fpv4-sp-d16
+ 268              	lr1110_modem_board_analog_deinit_io:
+ 269              	.LFB593:
+ 144:../Src/boards/lr1110_modem_board.c **** 
+ 145:../Src/boards/lr1110_modem_board.c **** void lr1110_modem_board_analog_deinit_io( const void* context )
+ 146:../Src/boards/lr1110_modem_board.c **** {
+ 270              		.loc 1 146 1
+ 271              		.cfi_startproc
+ 272              		@ args = 0, pretend = 0, frame = 8
+ 273              		@ frame_needed = 1, uses_anonymous_args = 0
+ 274 0000 80B5     		push	{r7, lr}
+ 275              	.LCFI16:
+ 276              		.cfi_def_cfa_offset 8
+ 277              		.cfi_offset 7, -8
+ 278              		.cfi_offset 14, -4
+ 279 0002 82B0     		sub	sp, sp, #8
+ 280              	.LCFI17:
+ 281              		.cfi_def_cfa_offset 16
+ 282 0004 00AF     		add	r7, sp, #0
+ 283              	.LCFI18:
+ 284              		.cfi_def_cfa_register 7
+ 285 0006 7860     		str	r0, [r7, #4]
+ 147:../Src/boards/lr1110_modem_board.c ****     hal_gpio_deinit( ( ( lr1110_t* ) context )->event.pin );
+ 286              		.loc 1 147 5
+ 287 0008 7B68     		ldr	r3, [r7, #4]
+ 288 000a B3F92830 		ldrsh	r3, [r3, #40]
+ 289 000e 1846     		mov	r0, r3
+ 290 0010 FFF7FEFF 		bl	hal_gpio_deinit
+ 148:../Src/boards/lr1110_modem_board.c ****     hal_gpio_deinit( ( ( lr1110_t* ) context )->busy.pin );
+ 291              		.loc 1 148 5
+ 292 0014 7B68     		ldr	r3, [r7, #4]
+ 293 0016 B3F91430 		ldrsh	r3, [r3, #20]
+ 294 001a 1846     		mov	r0, r3
+ 295 001c FFF7FEFF 		bl	hal_gpio_deinit
+ 149:../Src/boards/lr1110_modem_board.c **** }
+ 296              		.loc 1 149 1
+ 297 0020 00BF     		nop
+ 298 0022 0837     		adds	r7, r7, #8
+ 299              	.LCFI19:
+ 300              		.cfi_def_cfa_offset 8
+ 301 0024 BD46     		mov	sp, r7
+ 302              	.LCFI20:
+ 303              		.cfi_def_cfa_register 13
+ 304              		@ sp needed
+ 305 0026 80BD     		pop	{r7, pc}
+ 306              		.cfi_endproc
+ 307              	.LFE593:
+ 309              		.section	.text.lr1110_modem_board_get_tcxo_wakeup_time,"ax",%progbits
+ 310              		.align	1
+ 311              		.global	lr1110_modem_board_get_tcxo_wakeup_time
+ 312              		.syntax unified
+ 313              		.thumb
+ 314              		.thumb_func
+ 315              		.fpu fpv4-sp-d16
+ 317              	lr1110_modem_board_get_tcxo_wakeup_time:
+ 318              	.LFB594:
+ARM GAS  /tmp/ccSOg6Kt.s 			page 9
+
+
+ 150:../Src/boards/lr1110_modem_board.c **** 
+ 151:../Src/boards/lr1110_modem_board.c **** uint32_t lr1110_modem_board_get_tcxo_wakeup_time( void ) { return BOARD_TCXO_WAKEUP_TIME; }
+ 319              		.loc 1 151 58
+ 320              		.cfi_startproc
+ 321              		@ args = 0, pretend = 0, frame = 0
+ 322              		@ frame_needed = 1, uses_anonymous_args = 0
+ 323              		@ link register save eliminated.
+ 324 0000 80B4     		push	{r7}
+ 325              	.LCFI21:
+ 326              		.cfi_def_cfa_offset 4
+ 327              		.cfi_offset 7, -4
+ 328 0002 00AF     		add	r7, sp, #0
+ 329              	.LCFI22:
+ 330              		.cfi_def_cfa_register 7
+ 331              		.loc 1 151 67
+ 332 0004 0523     		movs	r3, #5
+ 333              		.loc 1 151 91
+ 334 0006 1846     		mov	r0, r3
+ 335 0008 BD46     		mov	sp, r7
+ 336              	.LCFI23:
+ 337              		.cfi_def_cfa_register 13
+ 338              		@ sp needed
+ 339 000a 5DF8047B 		ldr	r7, [sp], #4
+ 340              	.LCFI24:
+ 341              		.cfi_restore 7
+ 342              		.cfi_def_cfa_offset 0
+ 343 000e 7047     		bx	lr
+ 344              		.cfi_endproc
+ 345              	.LFE594:
+ 347              		.section	.text.lr1110_modem_board_init,"ax",%progbits
+ 348              		.align	1
+ 349              		.global	lr1110_modem_board_init
+ 350              		.syntax unified
+ 351              		.thumb
+ 352              		.thumb_func
+ 353              		.fpu fpv4-sp-d16
+ 355              	lr1110_modem_board_init:
+ 356              	.LFB595:
+ 152:../Src/boards/lr1110_modem_board.c **** 
+ 153:../Src/boards/lr1110_modem_board.c **** lr1110_modem_response_code_t lr1110_modem_board_init( const void* context, lr1110_modem_event_callb
+ 154:../Src/boards/lr1110_modem_board.c **** {
+ 357              		.loc 1 154 1
+ 358              		.cfi_startproc
+ 359              		@ args = 0, pretend = 0, frame = 24
+ 360              		@ frame_needed = 1, uses_anonymous_args = 0
+ 361 0000 80B5     		push	{r7, lr}
+ 362              	.LCFI25:
+ 363              		.cfi_def_cfa_offset 8
+ 364              		.cfi_offset 7, -8
+ 365              		.cfi_offset 14, -4
+ 366 0002 86B0     		sub	sp, sp, #24
+ 367              	.LCFI26:
+ 368              		.cfi_def_cfa_offset 32
+ 369 0004 00AF     		add	r7, sp, #0
+ 370              	.LCFI27:
+ 371              		.cfi_def_cfa_register 7
+ 372 0006 7860     		str	r0, [r7, #4]
+ARM GAS  /tmp/ccSOg6Kt.s 			page 10
+
+
+ 373 0008 3960     		str	r1, [r7]
+ 155:../Src/boards/lr1110_modem_board.c ****     lr1110_modem_response_code_t modem_response_code = LR1110_MODEM_RESPONSE_CODE_OK;
+ 374              		.loc 1 155 34
+ 375 000a 0023     		movs	r3, #0
+ 376 000c FB75     		strb	r3, [r7, #23]
+ 156:../Src/boards/lr1110_modem_board.c ****     lr1110_modem_hal_status_t    modem_hal_status    = LR1110_MODEM_HAL_STATUS_OK;
+ 377              		.loc 1 156 34
+ 378 000e 0023     		movs	r3, #0
+ 379 0010 BB75     		strb	r3, [r7, #22]
+ 157:../Src/boards/lr1110_modem_board.c **** 
+ 158:../Src/boards/lr1110_modem_board.c ****     radio_event_init( event );
+ 380              		.loc 1 158 5
+ 381 0012 3868     		ldr	r0, [r7]
+ 382 0014 FFF7FEFF 		bl	radio_event_init
+ 159:../Src/boards/lr1110_modem_board.c **** 
+ 160:../Src/boards/lr1110_modem_board.c ****     modem_hal_status = lr1110_modem_hal_reset( context );
+ 383              		.loc 1 160 24
+ 384 0018 7868     		ldr	r0, [r7, #4]
+ 385 001a FFF7FEFF 		bl	lr1110_modem_hal_reset
+ 386 001e 0346     		mov	r3, r0
+ 387 0020 BB75     		strb	r3, [r7, #22]
+ 161:../Src/boards/lr1110_modem_board.c **** 
+ 162:../Src/boards/lr1110_modem_board.c ****     if( modem_hal_status != LR1110_MODEM_HAL_STATUS_OK )
+ 388              		.loc 1 162 7
+ 389 0022 BB7D     		ldrb	r3, [r7, #22]	@ zero_extendqisi2
+ 390 0024 002B     		cmp	r3, #0
+ 391 0026 01D0     		beq	.L10
+ 163:../Src/boards/lr1110_modem_board.c ****     {
+ 164:../Src/boards/lr1110_modem_board.c ****         /* Something goes wrong with the lr1110 modem-e */
+ 165:../Src/boards/lr1110_modem_board.c ****         return LR1110_MODEM_RESPONSE_CODE_FAIL;
+ 392              		.loc 1 165 16
+ 393 0028 0623     		movs	r3, #6
+ 394 002a 31E0     		b	.L12
+ 395              	.L10:
+ 166:../Src/boards/lr1110_modem_board.c ****     }
+ 167:../Src/boards/lr1110_modem_board.c **** 
+ 168:../Src/boards/lr1110_modem_board.c ****     /* Initialize TCXO control */
+ 169:../Src/boards/lr1110_modem_board.c ****     modem_response_code |= lr1110_modem_board_init_tcxo_io( context );
+ 396              		.loc 1 169 28
+ 397 002c 7868     		ldr	r0, [r7, #4]
+ 398 002e FFF7FEFF 		bl	lr1110_modem_board_init_tcxo_io
+ 399 0032 0346     		mov	r3, r0
+ 400 0034 1A46     		mov	r2, r3
+ 401              		.loc 1 169 25
+ 402 0036 FB7D     		ldrb	r3, [r7, #23]
+ 403 0038 1343     		orrs	r3, r3, r2
+ 404 003a FB75     		strb	r3, [r7, #23]
+ 170:../Src/boards/lr1110_modem_board.c **** 
+ 171:../Src/boards/lr1110_modem_board.c ****     /* Initialize RF switch control */
+ 172:../Src/boards/lr1110_modem_board.c ****     lr1110_modem_system_rf_switch_cfg_t rf_switch_cfg;
+ 173:../Src/boards/lr1110_modem_board.c ****     rf_switch_cfg.enable = LR1110_MODEM_SYSTEM_RFSW0_HIGH | LR1110_MODEM_SYSTEM_RFSW1_HIGH |
+ 405              		.loc 1 173 26
+ 406 003c 0F23     		movs	r3, #15
+ 407 003e 3B73     		strb	r3, [r7, #12]
+ 174:../Src/boards/lr1110_modem_board.c ****                            LR1110_MODEM_SYSTEM_RFSW2_HIGH | LR1110_MODEM_SYSTEM_RFSW3_HIGH;
+ 175:../Src/boards/lr1110_modem_board.c ****     rf_switch_cfg.standby = 0;
+ 408              		.loc 1 175 27
+ARM GAS  /tmp/ccSOg6Kt.s 			page 11
+
+
+ 409 0040 0023     		movs	r3, #0
+ 410 0042 7B73     		strb	r3, [r7, #13]
+ 176:../Src/boards/lr1110_modem_board.c ****     /* LoRa SPDT */
+ 177:../Src/boards/lr1110_modem_board.c ****     rf_switch_cfg.rx = LR1110_MODEM_SYSTEM_RFSW0_HIGH | LR1110_MODEM_SYSTEM_RFSW3_HIGH;
+ 411              		.loc 1 177 22
+ 412 0044 0923     		movs	r3, #9
+ 413 0046 BB73     		strb	r3, [r7, #14]
+ 178:../Src/boards/lr1110_modem_board.c ****     rf_switch_cfg.tx = LR1110_MODEM_SYSTEM_RFSW0_HIGH | LR1110_MODEM_SYSTEM_RFSW1_HIGH | LR1110_MOD
+ 414              		.loc 1 178 22
+ 415 0048 0B23     		movs	r3, #11
+ 416 004a FB73     		strb	r3, [r7, #15]
+ 179:../Src/boards/lr1110_modem_board.c ****     rf_switch_cfg.tx_hp = LR1110_MODEM_SYSTEM_RFSW1_HIGH | LR1110_MODEM_SYSTEM_RFSW3_HIGH;
+ 417              		.loc 1 179 25
+ 418 004c 0A23     		movs	r3, #10
+ 419 004e 3B74     		strb	r3, [r7, #16]
+ 180:../Src/boards/lr1110_modem_board.c ****     /* GNSS LNA ON */
+ 181:../Src/boards/lr1110_modem_board.c ****     rf_switch_cfg.gnss = LR1110_MODEM_SYSTEM_RFSW2_HIGH;
+ 420              		.loc 1 181 24
+ 421 0050 0423     		movs	r3, #4
+ 422 0052 BB74     		strb	r3, [r7, #18]
+ 182:../Src/boards/lr1110_modem_board.c **** 
+ 183:../Src/boards/lr1110_modem_board.c ****     modem_response_code |= lr1110_modem_system_set_dio_as_rf_switch( context, &rf_switch_cfg );
+ 423              		.loc 1 183 28
+ 424 0054 07F10C03 		add	r3, r7, #12
+ 425 0058 1946     		mov	r1, r3
+ 426 005a 7868     		ldr	r0, [r7, #4]
+ 427 005c FFF7FEFF 		bl	lr1110_modem_system_set_dio_as_rf_switch
+ 428 0060 0346     		mov	r3, r0
+ 429 0062 1A46     		mov	r2, r3
+ 430              		.loc 1 183 25
+ 431 0064 FB7D     		ldrb	r3, [r7, #23]
+ 432 0066 1343     		orrs	r3, r3, r2
+ 433 0068 FB75     		strb	r3, [r7, #23]
+ 184:../Src/boards/lr1110_modem_board.c **** 
+ 185:../Src/boards/lr1110_modem_board.c ****     /* Set Pa Config */
+ 186:../Src/boards/lr1110_modem_board.c ****     modem_response_code |= lr1110_modem_set_rf_output( context, LR1110_MODEM_RADIO_PA_SEL_LP_HP_LF 
+ 434              		.loc 1 186 28
+ 435 006a 0221     		movs	r1, #2
+ 436 006c 7868     		ldr	r0, [r7, #4]
+ 437 006e FFF7FEFF 		bl	lr1110_modem_set_rf_output
+ 438 0072 0346     		mov	r3, r0
+ 439 0074 1A46     		mov	r2, r3
+ 440              		.loc 1 186 25
+ 441 0076 FB7D     		ldrb	r3, [r7, #23]
+ 442 0078 1343     		orrs	r3, r3, r2
+ 443 007a FB75     		strb	r3, [r7, #23]
+ 187:../Src/boards/lr1110_modem_board.c **** 
+ 188:../Src/boards/lr1110_modem_board.c ****     modem_response_code |= lr1110_modem_system_set_reg_mode( context, LR1110_MODEM_SYSTEM_REG_MODE_
+ 444              		.loc 1 188 28
+ 445 007c 0021     		movs	r1, #0
+ 446 007e 7868     		ldr	r0, [r7, #4]
+ 447 0080 FFF7FEFF 		bl	lr1110_modem_system_set_reg_mode
+ 448 0084 0346     		mov	r3, r0
+ 449 0086 1A46     		mov	r2, r3
+ 450              		.loc 1 188 25
+ 451 0088 FB7D     		ldrb	r3, [r7, #23]
+ 452 008a 1343     		orrs	r3, r3, r2
+ARM GAS  /tmp/ccSOg6Kt.s 			page 12
+
+
+ 453 008c FB75     		strb	r3, [r7, #23]
+ 189:../Src/boards/lr1110_modem_board.c **** 
+ 190:../Src/boards/lr1110_modem_board.c ****     return modem_response_code;
+ 454              		.loc 1 190 12
+ 455 008e FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 456              	.L12:
+ 191:../Src/boards/lr1110_modem_board.c **** }
+ 457              		.loc 1 191 1 discriminator 1
+ 458 0090 1846     		mov	r0, r3
+ 459 0092 1837     		adds	r7, r7, #24
+ 460              	.LCFI28:
+ 461              		.cfi_def_cfa_offset 8
+ 462 0094 BD46     		mov	sp, r7
+ 463              	.LCFI29:
+ 464              		.cfi_def_cfa_register 13
+ 465              		@ sp needed
+ 466 0096 80BD     		pop	{r7, pc}
+ 467              		.cfi_endproc
+ 468              	.LFE595:
+ 470              		.section	.text.lr1110_modem_board_get_systime_from_gps,"ax",%progbits
+ 471              		.align	1
+ 472              		.global	lr1110_modem_board_get_systime_from_gps
+ 473              		.syntax unified
+ 474              		.thumb
+ 475              		.thumb_func
+ 476              		.fpu fpv4-sp-d16
+ 478              	lr1110_modem_board_get_systime_from_gps:
+ 479              	.LFB596:
+ 192:../Src/boards/lr1110_modem_board.c **** 
+ 193:../Src/boards/lr1110_modem_board.c **** uint32_t lr1110_modem_board_get_systime_from_gps( const void* context )
+ 194:../Src/boards/lr1110_modem_board.c **** {
+ 480              		.loc 1 194 1
+ 481              		.cfi_startproc
+ 482              		@ args = 0, pretend = 0, frame = 16
+ 483              		@ frame_needed = 1, uses_anonymous_args = 0
+ 484 0000 80B5     		push	{r7, lr}
+ 485              	.LCFI30:
+ 486              		.cfi_def_cfa_offset 8
+ 487              		.cfi_offset 7, -8
+ 488              		.cfi_offset 14, -4
+ 489 0002 84B0     		sub	sp, sp, #16
+ 490              	.LCFI31:
+ 491              		.cfi_def_cfa_offset 24
+ 492 0004 00AF     		add	r7, sp, #0
+ 493              	.LCFI32:
+ 494              		.cfi_def_cfa_register 7
+ 495 0006 7860     		str	r0, [r7, #4]
+ 195:../Src/boards/lr1110_modem_board.c ****     uint32_t gps_time = 0;
+ 496              		.loc 1 195 14
+ 497 0008 0023     		movs	r3, #0
+ 498 000a FB60     		str	r3, [r7, #12]
+ 196:../Src/boards/lr1110_modem_board.c **** 
+ 197:../Src/boards/lr1110_modem_board.c ****     lr1110_modem_helper_get_utc_time( context, &gps_time );
+ 499              		.loc 1 197 5
+ 500 000c 07F10C03 		add	r3, r7, #12
+ 501 0010 1946     		mov	r1, r3
+ 502 0012 7868     		ldr	r0, [r7, #4]
+ARM GAS  /tmp/ccSOg6Kt.s 			page 13
+
+
+ 503 0014 FFF7FEFF 		bl	lr1110_modem_helper_get_utc_time
+ 198:../Src/boards/lr1110_modem_board.c **** 
+ 199:../Src/boards/lr1110_modem_board.c ****     return gps_time;
+ 504              		.loc 1 199 12
+ 505 0018 FB68     		ldr	r3, [r7, #12]
+ 200:../Src/boards/lr1110_modem_board.c **** }
+ 506              		.loc 1 200 1
+ 507 001a 1846     		mov	r0, r3
+ 508 001c 1037     		adds	r7, r7, #16
+ 509              	.LCFI33:
+ 510              		.cfi_def_cfa_offset 8
+ 511 001e BD46     		mov	sp, r7
+ 512              	.LCFI34:
+ 513              		.cfi_def_cfa_register 13
+ 514              		@ sp needed
+ 515 0020 80BD     		pop	{r7, pc}
+ 516              		.cfi_endproc
+ 517              	.LFE596:
+ 519              		.section	.text.lr1110_modem_get_almanac_dates,"ax",%progbits
+ 520              		.align	1
+ 521              		.global	lr1110_modem_get_almanac_dates
+ 522              		.syntax unified
+ 523              		.thumb
+ 524              		.thumb_func
+ 525              		.fpu fpv4-sp-d16
+ 527              	lr1110_modem_get_almanac_dates:
+ 528              	.LFB597:
+ 201:../Src/boards/lr1110_modem_board.c **** 
+ 202:../Src/boards/lr1110_modem_board.c **** lr1110_modem_response_code_t  lr1110_modem_get_almanac_dates( const void* context, uint32_t* oldest
+ 203:../Src/boards/lr1110_modem_board.c **** {
+ 529              		.loc 1 203 1
+ 530              		.cfi_startproc
+ 531              		@ args = 0, pretend = 0, frame = 24
+ 532              		@ frame_needed = 1, uses_anonymous_args = 0
+ 533 0000 80B5     		push	{r7, lr}
+ 534              	.LCFI35:
+ 535              		.cfi_def_cfa_offset 8
+ 536              		.cfi_offset 7, -8
+ 537              		.cfi_offset 14, -4
+ 538 0002 86B0     		sub	sp, sp, #24
+ 539              	.LCFI36:
+ 540              		.cfi_def_cfa_offset 32
+ 541 0004 00AF     		add	r7, sp, #0
+ 542              	.LCFI37:
+ 543              		.cfi_def_cfa_register 7
+ 544 0006 F860     		str	r0, [r7, #12]
+ 545 0008 B960     		str	r1, [r7, #8]
+ 546 000a 7A60     		str	r2, [r7, #4]
+ 204:../Src/boards/lr1110_modem_board.c ****     uint8_t                      i                   = 0;
+ 547              		.loc 1 204 34
+ 548 000c 0023     		movs	r3, #0
+ 549 000e FB75     		strb	r3, [r7, #23]
+ 205:../Src/boards/lr1110_modem_board.c ****     uint32_t                     almanac_date        = 0;
+ 550              		.loc 1 205 34
+ 551 0010 0023     		movs	r3, #0
+ 552 0012 3B61     		str	r3, [r7, #16]
+ 206:../Src/boards/lr1110_modem_board.c ****     lr1110_modem_response_code_t modem_response_code = LR1110_MODEM_RESPONSE_CODE_OK;
+ARM GAS  /tmp/ccSOg6Kt.s 			page 14
+
+
+ 553              		.loc 1 206 34
+ 554 0014 0023     		movs	r3, #0
+ 555 0016 BB75     		strb	r3, [r7, #22]
+ 207:../Src/boards/lr1110_modem_board.c **** 
+ 208:../Src/boards/lr1110_modem_board.c ****     *oldest_almanac_date = 0;
+ 556              		.loc 1 208 26
+ 557 0018 BB68     		ldr	r3, [r7, #8]
+ 558 001a 0022     		movs	r2, #0
+ 559 001c 1A60     		str	r2, [r3]
+ 209:../Src/boards/lr1110_modem_board.c ****     *newest_almanac_date = 0;
+ 560              		.loc 1 209 26
+ 561 001e 7B68     		ldr	r3, [r7, #4]
+ 562 0020 0022     		movs	r2, #0
+ 563 0022 1A60     		str	r2, [r3]
+ 210:../Src/boards/lr1110_modem_board.c **** 
+ 211:../Src/boards/lr1110_modem_board.c ****     for( i = 0; i < 127; i++ )
+ 564              		.loc 1 211 12
+ 565 0024 0023     		movs	r3, #0
+ 566 0026 FB75     		strb	r3, [r7, #23]
+ 567              		.loc 1 211 5
+ 568 0028 32E0     		b	.L16
+ 569              	.L22:
+ 570              	.LBB2:
+ 212:../Src/boards/lr1110_modem_board.c ****     {
+ 213:../Src/boards/lr1110_modem_board.c ****         modem_response_code = lr1110_modem_helper_gnss_get_almanac_date_by_index( context, i, &alma
+ 571              		.loc 1 213 31
+ 572 002a F97D     		ldrb	r1, [r7, #23]	@ zero_extendqisi2
+ 573 002c 07F11002 		add	r2, r7, #16
+ 574 0030 0223     		movs	r3, #2
+ 575 0032 F868     		ldr	r0, [r7, #12]
+ 576 0034 FFF7FEFF 		bl	lr1110_modem_helper_gnss_get_almanac_date_by_index
+ 577 0038 0346     		mov	r3, r0
+ 578              		.loc 1 213 29
+ 579 003a BB75     		strb	r3, [r7, #22]
+ 214:../Src/boards/lr1110_modem_board.c ****                                                                                   GNSS_WEEK_NUMBER_
+ 215:../Src/boards/lr1110_modem_board.c **** 
+ 216:../Src/boards/lr1110_modem_board.c ****         if( modem_response_code != LR1110_MODEM_RESPONSE_CODE_OK )
+ 580              		.loc 1 216 11
+ 581 003c BB7D     		ldrb	r3, [r7, #22]	@ zero_extendqisi2
+ 582 003e 002B     		cmp	r3, #0
+ 583 0040 01D0     		beq	.L17
+ 217:../Src/boards/lr1110_modem_board.c ****         {
+ 218:../Src/boards/lr1110_modem_board.c ****             return modem_response_code;
+ 584              		.loc 1 218 20
+ 585 0042 BB7D     		ldrb	r3, [r7, #22]	@ zero_extendqisi2
+ 586 0044 28E0     		b	.L23
+ 587              	.L17:
+ 219:../Src/boards/lr1110_modem_board.c ****         }
+ 220:../Src/boards/lr1110_modem_board.c **** 
+ 221:../Src/boards/lr1110_modem_board.c ****         if( almanac_date > 0 )
+ 588              		.loc 1 221 26
+ 589 0046 3B69     		ldr	r3, [r7, #16]
+ 590              		.loc 1 221 11
+ 591 0048 002B     		cmp	r3, #0
+ 592 004a 1ED0     		beq	.L19
+ 222:../Src/boards/lr1110_modem_board.c ****         {
+ 223:../Src/boards/lr1110_modem_board.c ****             if( ( *oldest_almanac_date == 0 ) && ( *newest_almanac_date == 0 ) )
+ARM GAS  /tmp/ccSOg6Kt.s 			page 15
+
+
+ 593              		.loc 1 223 19
+ 594 004c BB68     		ldr	r3, [r7, #8]
+ 595 004e 1B68     		ldr	r3, [r3]
+ 596              		.loc 1 223 15
+ 597 0050 002B     		cmp	r3, #0
+ 598 0052 0AD1     		bne	.L20
+ 599              		.loc 1 223 52 discriminator 1
+ 600 0054 7B68     		ldr	r3, [r7, #4]
+ 601 0056 1B68     		ldr	r3, [r3]
+ 602              		.loc 1 223 47 discriminator 1
+ 603 0058 002B     		cmp	r3, #0
+ 604 005a 06D1     		bne	.L20
+ 224:../Src/boards/lr1110_modem_board.c ****             {
+ 225:../Src/boards/lr1110_modem_board.c ****                 *oldest_almanac_date = almanac_date;
+ 605              		.loc 1 225 38
+ 606 005c 3A69     		ldr	r2, [r7, #16]
+ 607 005e BB68     		ldr	r3, [r7, #8]
+ 608 0060 1A60     		str	r2, [r3]
+ 226:../Src/boards/lr1110_modem_board.c ****                 *newest_almanac_date = almanac_date;
+ 609              		.loc 1 226 38
+ 610 0062 3A69     		ldr	r2, [r7, #16]
+ 611 0064 7B68     		ldr	r3, [r7, #4]
+ 612 0066 1A60     		str	r2, [r3]
+ 613 0068 0FE0     		b	.L19
+ 614              	.L20:
+ 227:../Src/boards/lr1110_modem_board.c ****             }
+ 228:../Src/boards/lr1110_modem_board.c ****             else
+ 229:../Src/boards/lr1110_modem_board.c ****             {
+ 230:../Src/boards/lr1110_modem_board.c ****                 if( almanac_date < *oldest_almanac_date )
+ 615              		.loc 1 230 36
+ 616 006a BB68     		ldr	r3, [r7, #8]
+ 617 006c 1A68     		ldr	r2, [r3]
+ 618              		.loc 1 230 34
+ 619 006e 3B69     		ldr	r3, [r7, #16]
+ 620              		.loc 1 230 19
+ 621 0070 9A42     		cmp	r2, r3
+ 622 0072 02D9     		bls	.L21
+ 231:../Src/boards/lr1110_modem_board.c ****                 {
+ 232:../Src/boards/lr1110_modem_board.c ****                     *oldest_almanac_date = almanac_date;
+ 623              		.loc 1 232 42
+ 624 0074 3A69     		ldr	r2, [r7, #16]
+ 625 0076 BB68     		ldr	r3, [r7, #8]
+ 626 0078 1A60     		str	r2, [r3]
+ 627              	.L21:
+ 233:../Src/boards/lr1110_modem_board.c ****                 }
+ 234:../Src/boards/lr1110_modem_board.c ****                 if( almanac_date > *newest_almanac_date )
+ 628              		.loc 1 234 36
+ 629 007a 7B68     		ldr	r3, [r7, #4]
+ 630 007c 1A68     		ldr	r2, [r3]
+ 631              		.loc 1 234 34
+ 632 007e 3B69     		ldr	r3, [r7, #16]
+ 633              		.loc 1 234 19
+ 634 0080 9A42     		cmp	r2, r3
+ 635 0082 02D2     		bcs	.L19
+ 235:../Src/boards/lr1110_modem_board.c ****                 {
+ 236:../Src/boards/lr1110_modem_board.c ****                     *newest_almanac_date = almanac_date;
+ 636              		.loc 1 236 42
+ARM GAS  /tmp/ccSOg6Kt.s 			page 16
+
+
+ 637 0084 3A69     		ldr	r2, [r7, #16]
+ 638 0086 7B68     		ldr	r3, [r7, #4]
+ 639 0088 1A60     		str	r2, [r3]
+ 640              	.L19:
+ 641              	.LBE2:
+ 211:../Src/boards/lr1110_modem_board.c ****     {
+ 642              		.loc 1 211 27 discriminator 2
+ 643 008a FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 644 008c 0133     		adds	r3, r3, #1
+ 645 008e FB75     		strb	r3, [r7, #23]
+ 646              	.L16:
+ 211:../Src/boards/lr1110_modem_board.c ****     {
+ 647              		.loc 1 211 5 discriminator 1
+ 648 0090 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 649 0092 7E2B     		cmp	r3, #126
+ 650 0094 C9D9     		bls	.L22
+ 237:../Src/boards/lr1110_modem_board.c ****                 }
+ 238:../Src/boards/lr1110_modem_board.c ****             }
+ 239:../Src/boards/lr1110_modem_board.c ****         }
+ 240:../Src/boards/lr1110_modem_board.c ****     }
+ 241:../Src/boards/lr1110_modem_board.c **** 
+ 242:../Src/boards/lr1110_modem_board.c ****     return modem_response_code;
+ 651              		.loc 1 242 12
+ 652 0096 BB7D     		ldrb	r3, [r7, #22]	@ zero_extendqisi2
+ 653              	.L23:
+ 243:../Src/boards/lr1110_modem_board.c **** }
+ 654              		.loc 1 243 1 discriminator 1
+ 655 0098 1846     		mov	r0, r3
+ 656 009a 1837     		adds	r7, r7, #24
+ 657              	.LCFI38:
+ 658              		.cfi_def_cfa_offset 8
+ 659 009c BD46     		mov	sp, r7
+ 660              	.LCFI39:
+ 661              		.cfi_def_cfa_register 13
+ 662              		@ sp needed
+ 663 009e 80BD     		pop	{r7, pc}
+ 664              		.cfi_endproc
+ 665              	.LFE597:
+ 667              		.section	.text.lr1110_modem_board_lna_on,"ax",%progbits
+ 668              		.align	1
+ 669              		.global	lr1110_modem_board_lna_on
+ 670              		.syntax unified
+ 671              		.thumb
+ 672              		.thumb_func
+ 673              		.fpu fpv4-sp-d16
+ 675              	lr1110_modem_board_lna_on:
+ 676              	.LFB598:
+ 244:../Src/boards/lr1110_modem_board.c **** 
+ 245:../Src/boards/lr1110_modem_board.c **** void lr1110_modem_board_lna_on( void ) { lna_on( ); }
+ 677              		.loc 1 245 40
+ 678              		.cfi_startproc
+ 679              		@ args = 0, pretend = 0, frame = 0
+ 680              		@ frame_needed = 1, uses_anonymous_args = 0
+ 681 0000 80B5     		push	{r7, lr}
+ 682              	.LCFI40:
+ 683              		.cfi_def_cfa_offset 8
+ 684              		.cfi_offset 7, -8
+ARM GAS  /tmp/ccSOg6Kt.s 			page 17
+
+
+ 685              		.cfi_offset 14, -4
+ 686 0002 00AF     		add	r7, sp, #0
+ 687              	.LCFI41:
+ 688              		.cfi_def_cfa_register 7
+ 689              		.loc 1 245 42
+ 690 0004 FFF7FEFF 		bl	lna_on
+ 691              		.loc 1 245 53
+ 692 0008 00BF     		nop
+ 693 000a 80BD     		pop	{r7, pc}
+ 694              		.cfi_endproc
+ 695              	.LFE598:
+ 697              		.section	.text.lr1110_modem_board_lna_off,"ax",%progbits
+ 698              		.align	1
+ 699              		.global	lr1110_modem_board_lna_off
+ 700              		.syntax unified
+ 701              		.thumb
+ 702              		.thumb_func
+ 703              		.fpu fpv4-sp-d16
+ 705              	lr1110_modem_board_lna_off:
+ 706              	.LFB599:
+ 246:../Src/boards/lr1110_modem_board.c **** 
+ 247:../Src/boards/lr1110_modem_board.c **** void lr1110_modem_board_lna_off( void ) { lna_off( ); }
+ 707              		.loc 1 247 41
+ 708              		.cfi_startproc
+ 709              		@ args = 0, pretend = 0, frame = 0
+ 710              		@ frame_needed = 1, uses_anonymous_args = 0
+ 711 0000 80B5     		push	{r7, lr}
+ 712              	.LCFI42:
+ 713              		.cfi_def_cfa_offset 8
+ 714              		.cfi_offset 7, -8
+ 715              		.cfi_offset 14, -4
+ 716 0002 00AF     		add	r7, sp, #0
+ 717              	.LCFI43:
+ 718              		.cfi_def_cfa_register 7
+ 719              		.loc 1 247 43
+ 720 0004 FFF7FEFF 		bl	lna_off
+ 721              		.loc 1 247 55
+ 722 0008 00BF     		nop
+ 723 000a 80BD     		pop	{r7, pc}
+ 724              		.cfi_endproc
+ 725              	.LFE599:
+ 727              		.section	.text.lr1110_modem_board_event_flush,"ax",%progbits
+ 728              		.align	1
+ 729              		.global	lr1110_modem_board_event_flush
+ 730              		.syntax unified
+ 731              		.thumb
+ 732              		.thumb_func
+ 733              		.fpu fpv4-sp-d16
+ 735              	lr1110_modem_board_event_flush:
+ 736              	.LFB600:
+ 248:../Src/boards/lr1110_modem_board.c **** 
+ 249:../Src/boards/lr1110_modem_board.c **** lr1110_modem_response_code_t lr1110_modem_board_event_flush( const void* context )
+ 250:../Src/boards/lr1110_modem_board.c **** {
+ 737              		.loc 1 250 1
+ 738              		.cfi_startproc
+ 739              		@ args = 0, pretend = 0, frame = 1040
+ 740              		@ frame_needed = 1, uses_anonymous_args = 0
+ARM GAS  /tmp/ccSOg6Kt.s 			page 18
+
+
+ 741 0000 80B5     		push	{r7, lr}
+ 742              	.LCFI44:
+ 743              		.cfi_def_cfa_offset 8
+ 744              		.cfi_offset 7, -8
+ 745              		.cfi_offset 14, -4
+ 746 0002 ADF5826D 		sub	sp, sp, #1040
+ 747              	.LCFI45:
+ 748              		.cfi_def_cfa_offset 1048
+ 749 0006 00AF     		add	r7, sp, #0
+ 750              	.LCFI46:
+ 751              		.cfi_def_cfa_register 7
+ 752 0008 07F58263 		add	r3, r7, #1040
+ 753 000c A3F20C43 		subw	r3, r3, #1036
+ 754 0010 1860     		str	r0, [r3]
+ 251:../Src/boards/lr1110_modem_board.c ****     lr1110_modem_response_code_t modem_response_code = LR1110_MODEM_RESPONSE_CODE_OK;
+ 755              		.loc 1 251 34
+ 756 0012 0023     		movs	r3, #0
+ 757 0014 87F80F34 		strb	r3, [r7, #1039]
+ 758              	.L27:
+ 252:../Src/boards/lr1110_modem_board.c ****     lr1110_modem_event_fields_t  event_fields;
+ 253:../Src/boards/lr1110_modem_board.c **** 
+ 254:../Src/boards/lr1110_modem_board.c ****     do
+ 255:../Src/boards/lr1110_modem_board.c ****     {
+ 256:../Src/boards/lr1110_modem_board.c ****         modem_response_code = lr1110_modem_get_event( context, &event_fields );
+ 759              		.loc 1 256 31 discriminator 1
+ 760 0018 07F10802 		add	r2, r7, #8
+ 761 001c 07F58263 		add	r3, r7, #1040
+ 762 0020 A3F20C43 		subw	r3, r3, #1036
+ 763 0024 1146     		mov	r1, r2
+ 764 0026 1868     		ldr	r0, [r3]
+ 765 0028 FFF7FEFF 		bl	lr1110_modem_get_event
+ 766 002c 0346     		mov	r3, r0
+ 767 002e 87F80F34 		strb	r3, [r7, #1039]
+ 257:../Src/boards/lr1110_modem_board.c ****     } while( lr1110_modem_board_read_event_line( context ) == 1 );
+ 768              		.loc 1 257 14 discriminator 1
+ 769 0032 07F58263 		add	r3, r7, #1040
+ 770 0036 A3F20C43 		subw	r3, r3, #1036
+ 771 003a 1868     		ldr	r0, [r3]
+ 772 003c FFF7FEFF 		bl	lr1110_modem_board_read_event_line
+ 773 0040 0346     		mov	r3, r0
+ 774              		.loc 1 257 5 discriminator 1
+ 775 0042 002B     		cmp	r3, #0
+ 776 0044 E8D1     		bne	.L27
+ 258:../Src/boards/lr1110_modem_board.c **** 
+ 259:../Src/boards/lr1110_modem_board.c ****     return modem_response_code;
+ 777              		.loc 1 259 12
+ 778 0046 97F80F34 		ldrb	r3, [r7, #1039]	@ zero_extendqisi2
+ 260:../Src/boards/lr1110_modem_board.c **** }
+ 779              		.loc 1 260 1
+ 780 004a 1846     		mov	r0, r3
+ 781 004c 07F58267 		add	r7, r7, #1040
+ 782              	.LCFI47:
+ 783              		.cfi_def_cfa_offset 8
+ 784 0050 BD46     		mov	sp, r7
+ 785              	.LCFI48:
+ 786              		.cfi_def_cfa_register 13
+ 787              		@ sp needed
+ARM GAS  /tmp/ccSOg6Kt.s 			page 19
+
+
+ 788 0052 80BD     		pop	{r7, pc}
+ 789              		.cfi_endproc
+ 790              	.LFE600:
+ 792              		.section	.text.lr1110_modem_board_read_event_line,"ax",%progbits
+ 793              		.align	1
+ 794              		.global	lr1110_modem_board_read_event_line
+ 795              		.syntax unified
+ 796              		.thumb
+ 797              		.thumb_func
+ 798              		.fpu fpv4-sp-d16
+ 800              	lr1110_modem_board_read_event_line:
+ 801              	.LFB601:
+ 261:../Src/boards/lr1110_modem_board.c **** 
+ 262:../Src/boards/lr1110_modem_board.c **** bool lr1110_modem_board_read_event_line( const void* context )
+ 263:../Src/boards/lr1110_modem_board.c **** {
+ 802              		.loc 1 263 1
+ 803              		.cfi_startproc
+ 804              		@ args = 0, pretend = 0, frame = 8
+ 805              		@ frame_needed = 1, uses_anonymous_args = 0
+ 806 0000 80B5     		push	{r7, lr}
+ 807              	.LCFI49:
+ 808              		.cfi_def_cfa_offset 8
+ 809              		.cfi_offset 7, -8
+ 810              		.cfi_offset 14, -4
+ 811 0002 82B0     		sub	sp, sp, #8
+ 812              	.LCFI50:
+ 813              		.cfi_def_cfa_offset 16
+ 814 0004 00AF     		add	r7, sp, #0
+ 815              	.LCFI51:
+ 816              		.cfi_def_cfa_register 7
+ 817 0006 7860     		str	r0, [r7, #4]
+ 264:../Src/boards/lr1110_modem_board.c ****     return hal_gpio_get_value( ( ( lr1110_t* ) context )->event.pin );
+ 818              		.loc 1 264 12
+ 819 0008 7B68     		ldr	r3, [r7, #4]
+ 820 000a B3F92830 		ldrsh	r3, [r3, #40]
+ 821 000e 1846     		mov	r0, r3
+ 822 0010 FFF7FEFF 		bl	hal_gpio_get_value
+ 823 0014 0346     		mov	r3, r0
+ 824 0016 002B     		cmp	r3, #0
+ 825 0018 14BF     		ite	ne
+ 826 001a 0123     		movne	r3, #1
+ 827 001c 0023     		moveq	r3, #0
+ 828 001e DBB2     		uxtb	r3, r3
+ 265:../Src/boards/lr1110_modem_board.c **** }
+ 829              		.loc 1 265 1
+ 830 0020 1846     		mov	r0, r3
+ 831 0022 0837     		adds	r7, r7, #8
+ 832              	.LCFI52:
+ 833              		.cfi_def_cfa_offset 8
+ 834 0024 BD46     		mov	sp, r7
+ 835              	.LCFI53:
+ 836              		.cfi_def_cfa_register 13
+ 837              		@ sp needed
+ 838 0026 80BD     		pop	{r7, pc}
+ 839              		.cfi_endproc
+ 840              	.LFE601:
+ 842              		.section	.text.lr1110_modem_board_is_ready,"ax",%progbits
+ARM GAS  /tmp/ccSOg6Kt.s 			page 20
+
+
+ 843              		.align	1
+ 844              		.global	lr1110_modem_board_is_ready
+ 845              		.syntax unified
+ 846              		.thumb
+ 847              		.thumb_func
+ 848              		.fpu fpv4-sp-d16
+ 850              	lr1110_modem_board_is_ready:
+ 851              	.LFB602:
+ 266:../Src/boards/lr1110_modem_board.c **** 
+ 267:../Src/boards/lr1110_modem_board.c **** bool lr1110_modem_board_is_ready( void ) { return modem_is_ready; }
+ 852              		.loc 1 267 42
+ 853              		.cfi_startproc
+ 854              		@ args = 0, pretend = 0, frame = 0
+ 855              		@ frame_needed = 1, uses_anonymous_args = 0
+ 856              		@ link register save eliminated.
+ 857 0000 80B4     		push	{r7}
+ 858              	.LCFI54:
+ 859              		.cfi_def_cfa_offset 4
+ 860              		.cfi_offset 7, -4
+ 861 0002 00AF     		add	r7, sp, #0
+ 862              	.LCFI55:
+ 863              		.cfi_def_cfa_register 7
+ 864              		.loc 1 267 51
+ 865 0004 034B     		ldr	r3, .L33
+ 866 0006 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 867              		.loc 1 267 67
+ 868 0008 1846     		mov	r0, r3
+ 869 000a BD46     		mov	sp, r7
+ 870              	.LCFI56:
+ 871              		.cfi_def_cfa_register 13
+ 872              		@ sp needed
+ 873 000c 5DF8047B 		ldr	r7, [sp], #4
+ 874              	.LCFI57:
+ 875              		.cfi_restore 7
+ 876              		.cfi_def_cfa_offset 0
+ 877 0010 7047     		bx	lr
+ 878              	.L34:
+ 879 0012 00BF     		.align	2
+ 880              	.L33:
+ 881 0014 00000000 		.word	modem_is_ready
+ 882              		.cfi_endproc
+ 883              	.LFE602:
+ 885              		.section	.text.lr1110_modem_board_set_ready,"ax",%progbits
+ 886              		.align	1
+ 887              		.global	lr1110_modem_board_set_ready
+ 888              		.syntax unified
+ 889              		.thumb
+ 890              		.thumb_func
+ 891              		.fpu fpv4-sp-d16
+ 893              	lr1110_modem_board_set_ready:
+ 894              	.LFB603:
+ 268:../Src/boards/lr1110_modem_board.c **** 
+ 269:../Src/boards/lr1110_modem_board.c **** void lr1110_modem_board_set_ready( bool ready ) { modem_is_ready = ready; }
+ 895              		.loc 1 269 49
+ 896              		.cfi_startproc
+ 897              		@ args = 0, pretend = 0, frame = 8
+ 898              		@ frame_needed = 1, uses_anonymous_args = 0
+ARM GAS  /tmp/ccSOg6Kt.s 			page 21
+
+
+ 899              		@ link register save eliminated.
+ 900 0000 80B4     		push	{r7}
+ 901              	.LCFI58:
+ 902              		.cfi_def_cfa_offset 4
+ 903              		.cfi_offset 7, -4
+ 904 0002 83B0     		sub	sp, sp, #12
+ 905              	.LCFI59:
+ 906              		.cfi_def_cfa_offset 16
+ 907 0004 00AF     		add	r7, sp, #0
+ 908              	.LCFI60:
+ 909              		.cfi_def_cfa_register 7
+ 910 0006 0346     		mov	r3, r0
+ 911 0008 FB71     		strb	r3, [r7, #7]
+ 912              		.loc 1 269 66
+ 913 000a 044A     		ldr	r2, .L36
+ 914 000c FB79     		ldrb	r3, [r7, #7]
+ 915 000e 1370     		strb	r3, [r2]
+ 916              		.loc 1 269 75
+ 917 0010 00BF     		nop
+ 918 0012 0C37     		adds	r7, r7, #12
+ 919              	.LCFI61:
+ 920              		.cfi_def_cfa_offset 4
+ 921 0014 BD46     		mov	sp, r7
+ 922              	.LCFI62:
+ 923              		.cfi_def_cfa_register 13
+ 924              		@ sp needed
+ 925 0016 5DF8047B 		ldr	r7, [sp], #4
+ 926              	.LCFI63:
+ 927              		.cfi_restore 7
+ 928              		.cfi_def_cfa_offset 0
+ 929 001a 7047     		bx	lr
+ 930              	.L37:
+ 931              		.align	2
+ 932              	.L36:
+ 933 001c 00000000 		.word	modem_is_ready
+ 934              		.cfi_endproc
+ 935              	.LFE603:
+ 937              		.section	.rodata
+ 938              		.align	2
+ 939              	.LC0:
+ 940 0000 1B5B303B 		.ascii	"\033[0;31m\000"
+ 940      33316D00 
+ 941              		.align	2
+ 942              	.LC1:
+ 943 0008 4552524F 		.ascii	"ERROR: \000"
+ 943      523A2000 
+ 944              		.align	2
+ 945              	.LC2:
+ 946 0010 54686973 		.ascii	"This region is not covered by this test\012\015\000"
+ 946      20726567 
+ 946      696F6E20 
+ 946      6973206E 
+ 946      6F742063 
+ 947 003a 0000     		.align	2
+ 948              	.LC3:
+ 949 003c 1B5B306D 		.ascii	"\033[0m\000"
+ 949      00
+ARM GAS  /tmp/ccSOg6Kt.s 			page 22
+
+
+ 950 0041 000000   		.align	2
+ 951              	.LC4:
+ 952 0044 42617474 		.ascii	"Battery voltage drop = %d mV\012\015\000"
+ 952      65727920 
+ 952      766F6C74 
+ 952      61676520 
+ 952      64726F70 
+ 953 0063 00       		.align	2
+ 954              	.LC5:
+ 955 0064 566F6C74 		.ascii	"Voltage recovery time = %d ms\012\015\000"
+ 955      61676520 
+ 955      7265636F 
+ 955      76657279 
+ 955      2074696D 
+ 956              		.section	.text.lr1110_modem_board_measure_battery_drop,"ax",%progbits
+ 957              		.align	1
+ 958              		.global	lr1110_modem_board_measure_battery_drop
+ 959              		.syntax unified
+ 960              		.thumb
+ 961              		.thumb_func
+ 962              		.fpu fpv4-sp-d16
+ 964              	lr1110_modem_board_measure_battery_drop:
+ 965              	.LFB604:
+ 270:../Src/boards/lr1110_modem_board.c **** 
+ 271:../Src/boards/lr1110_modem_board.c **** lr1110_modem_response_code_t lr1110_modem_board_measure_battery_drop( const void* context, int32_t*
+ 272:../Src/boards/lr1110_modem_board.c ****                                                                       uint32_t* time_recovery )
+ 273:../Src/boards/lr1110_modem_board.c **** {
+ 966              		.loc 1 273 1
+ 967              		.cfi_startproc
+ 968              		@ args = 0, pretend = 0, frame = 32
+ 969              		@ frame_needed = 1, uses_anonymous_args = 0
+ 970 0000 80B5     		push	{r7, lr}
+ 971              	.LCFI64:
+ 972              		.cfi_def_cfa_offset 8
+ 973              		.cfi_offset 7, -8
+ 974              		.cfi_offset 14, -4
+ 975 0002 88B0     		sub	sp, sp, #32
+ 976              	.LCFI65:
+ 977              		.cfi_def_cfa_offset 40
+ 978 0004 00AF     		add	r7, sp, #0
+ 979              	.LCFI66:
+ 980              		.cfi_def_cfa_register 7
+ 981 0006 F860     		str	r0, [r7, #12]
+ 982 0008 B960     		str	r1, [r7, #8]
+ 983 000a 7A60     		str	r2, [r7, #4]
+ 274:../Src/boards/lr1110_modem_board.c ****     lr1110_modem_response_code_t modem_response_code = LR1110_MODEM_RESPONSE_CODE_OK;
+ 984              		.loc 1 274 34
+ 985 000c 0023     		movs	r3, #0
+ 986 000e FB77     		strb	r3, [r7, #31]
+ 275:../Src/boards/lr1110_modem_board.c ****     lr1110_modem_regions_t       region;
+ 276:../Src/boards/lr1110_modem_board.c ****     uint32_t                     relaxed_voltage = 0;
+ 987              		.loc 1 276 34
+ 988 0010 0023     		movs	r3, #0
+ 989 0012 BB61     		str	r3, [r7, #24]
+ 277:../Src/boards/lr1110_modem_board.c ****     uint32_t                     tick_vdrop      = 0;
+ 990              		.loc 1 277 34
+ 991 0014 0023     		movs	r3, #0
+ARM GAS  /tmp/ccSOg6Kt.s 			page 23
+
+
+ 992 0016 7B61     		str	r3, [r7, #20]
+ 278:../Src/boards/lr1110_modem_board.c **** 
+ 279:../Src/boards/lr1110_modem_board.c ****     relaxed_voltage = hal_mcu_get_vref_level( );
+ 993              		.loc 1 279 23
+ 994 0018 FFF7FEFF 		bl	hal_mcu_get_vref_level
+ 995 001c 0346     		mov	r3, r0
+ 996              		.loc 1 279 21
+ 997 001e BB61     		str	r3, [r7, #24]
+ 280:../Src/boards/lr1110_modem_board.c **** 
+ 281:../Src/boards/lr1110_modem_board.c ****     modem_response_code |= lr1110_modem_get_region( context, &region );
+ 998              		.loc 1 281 28
+ 999 0020 07F11303 		add	r3, r7, #19
+ 1000 0024 1946     		mov	r1, r3
+ 1001 0026 F868     		ldr	r0, [r7, #12]
+ 1002 0028 FFF7FEFF 		bl	lr1110_modem_get_region
+ 1003 002c 0346     		mov	r3, r0
+ 1004 002e 1A46     		mov	r2, r3
+ 1005              		.loc 1 281 25
+ 1006 0030 FB7F     		ldrb	r3, [r7, #31]
+ 1007 0032 1343     		orrs	r3, r3, r2
+ 1008 0034 FB77     		strb	r3, [r7, #31]
+ 282:../Src/boards/lr1110_modem_board.c **** 
+ 283:../Src/boards/lr1110_modem_board.c ****     /* Enter in test mode */
+ 284:../Src/boards/lr1110_modem_board.c ****     modem_response_code |= lr1110_modem_test_mode_start( context );
+ 1009              		.loc 1 284 28
+ 1010 0036 F868     		ldr	r0, [r7, #12]
+ 1011 0038 FFF7FEFF 		bl	lr1110_modem_test_mode_start
+ 1012 003c 0346     		mov	r3, r0
+ 1013 003e 1A46     		mov	r2, r3
+ 1014              		.loc 1 284 25
+ 1015 0040 FB7F     		ldrb	r3, [r7, #31]
+ 1016 0042 1343     		orrs	r3, r3, r2
+ 1017 0044 FB77     		strb	r3, [r7, #31]
+ 285:../Src/boards/lr1110_modem_board.c **** 
+ 286:../Src/boards/lr1110_modem_board.c ****     switch( region )
+ 1018              		.loc 1 286 5
+ 1019 0046 FB7C     		ldrb	r3, [r7, #19]	@ zero_extendqisi2
+ 1020 0048 013B     		subs	r3, r3, #1
+ 1021 004a 0A2B     		cmp	r3, #10
+ 1022 004c 2ED8     		bhi	.L39
+ 1023 004e 01A2     		adr	r2, .L41
+ 1024 0050 52F823F0 		ldr	pc, [r2, r3, lsl #2]
+ 1025              		.p2align 2
+ 1026              	.L41:
+ 1027 0054 81000000 		.word	.L40+1
+ 1028 0058 97000000 		.word	.L42+1
+ 1029 005c 97000000 		.word	.L42+1
+ 1030 0060 97000000 		.word	.L42+1
+ 1031 0064 AD000000 		.word	.L39+1
+ 1032 0068 AD000000 		.word	.L39+1
+ 1033 006c 97000000 		.word	.L42+1
+ 1034 0070 97000000 		.word	.L42+1
+ 1035 0074 81000000 		.word	.L40+1
+ 1036 0078 97000000 		.word	.L42+1
+ 1037 007c 81000000 		.word	.L40+1
+ 1038              		.p2align 1
+ 1039              	.L40:
+ARM GAS  /tmp/ccSOg6Kt.s 			page 24
+
+
+ 287:../Src/boards/lr1110_modem_board.c ****     {
+ 288:../Src/boards/lr1110_modem_board.c ****     case LR1110_LORAWAN_REGION_EU868:
+ 289:../Src/boards/lr1110_modem_board.c ****     case LR1110_LORAWAN_REGION_IN865:
+ 290:../Src/boards/lr1110_modem_board.c ****     case LR1110_LORAWAN_REGION_RU864:
+ 291:../Src/boards/lr1110_modem_board.c ****     {
+ 292:../Src/boards/lr1110_modem_board.c ****         modem_response_code |= lr1110_modem_test_tx_cw( context, 865500000, 14 );
+ 1040              		.loc 1 292 32
+ 1041 0080 0E22     		movs	r2, #14
+ 1042 0082 3749     		ldr	r1, .L49
+ 1043 0084 F868     		ldr	r0, [r7, #12]
+ 1044 0086 FFF7FEFF 		bl	lr1110_modem_test_tx_cw
+ 1045 008a 0346     		mov	r3, r0
+ 1046 008c 1A46     		mov	r2, r3
+ 1047              		.loc 1 292 29
+ 1048 008e FB7F     		ldrb	r3, [r7, #31]
+ 1049 0090 1343     		orrs	r3, r3, r2
+ 1050 0092 FB77     		strb	r3, [r7, #31]
+ 293:../Src/boards/lr1110_modem_board.c ****         break;
+ 1051              		.loc 1 293 9
+ 1052 0094 17E0     		b	.L43
+ 1053              	.L42:
+ 294:../Src/boards/lr1110_modem_board.c ****     }
+ 295:../Src/boards/lr1110_modem_board.c ****     case LR1110_LORAWAN_REGION_US915:
+ 296:../Src/boards/lr1110_modem_board.c ****     case LR1110_LORAWAN_REGION_AU915:
+ 297:../Src/boards/lr1110_modem_board.c ****     case LR1110_LORAWAN_REGION_AS923_GRP1:
+ 298:../Src/boards/lr1110_modem_board.c ****     case LR1110_LORAWAN_REGION_AS923_GRP2:
+ 299:../Src/boards/lr1110_modem_board.c ****     case LR1110_LORAWAN_REGION_AS923_GRP3:
+ 300:../Src/boards/lr1110_modem_board.c ****     case LR1110_LORAWAN_REGION_KR920:
+ 301:../Src/boards/lr1110_modem_board.c ****     {
+ 302:../Src/boards/lr1110_modem_board.c ****         modem_response_code |= lr1110_modem_test_tx_cw( context, 920900000, 14 );
+ 1054              		.loc 1 302 32
+ 1055 0096 0E22     		movs	r2, #14
+ 1056 0098 3249     		ldr	r1, .L49+4
+ 1057 009a F868     		ldr	r0, [r7, #12]
+ 1058 009c FFF7FEFF 		bl	lr1110_modem_test_tx_cw
+ 1059 00a0 0346     		mov	r3, r0
+ 1060 00a2 1A46     		mov	r2, r3
+ 1061              		.loc 1 302 29
+ 1062 00a4 FB7F     		ldrb	r3, [r7, #31]
+ 1063 00a6 1343     		orrs	r3, r3, r2
+ 1064 00a8 FB77     		strb	r3, [r7, #31]
+ 303:../Src/boards/lr1110_modem_board.c ****         break;
+ 1065              		.loc 1 303 9
+ 1066 00aa 0CE0     		b	.L43
+ 1067              	.L39:
+ 304:../Src/boards/lr1110_modem_board.c ****     }
+ 305:../Src/boards/lr1110_modem_board.c ****     default:
+ 306:../Src/boards/lr1110_modem_board.c ****     {
+ 307:../Src/boards/lr1110_modem_board.c ****         HAL_DBG_TRACE_ERROR( "This region is not covered by this test\n\r" );
+ 1068              		.loc 1 307 9
+ 1069 00ac 2E48     		ldr	r0, .L49+8
+ 1070 00ae FFF7FEFF 		bl	hal_mcu_trace_print
+ 1071 00b2 2E48     		ldr	r0, .L49+12
+ 1072 00b4 FFF7FEFF 		bl	hal_mcu_trace_print
+ 1073 00b8 2D48     		ldr	r0, .L49+16
+ 1074 00ba FFF7FEFF 		bl	hal_mcu_trace_print
+ 1075 00be 2D48     		ldr	r0, .L49+20
+ARM GAS  /tmp/ccSOg6Kt.s 			page 25
+
+
+ 1076 00c0 FFF7FEFF 		bl	hal_mcu_trace_print
+ 308:../Src/boards/lr1110_modem_board.c ****         break;
+ 1077              		.loc 1 308 9
+ 1078 00c4 00BF     		nop
+ 1079              	.L43:
+ 309:../Src/boards/lr1110_modem_board.c ****     }
+ 310:../Src/boards/lr1110_modem_board.c ****     }
+ 311:../Src/boards/lr1110_modem_board.c **** 
+ 312:../Src/boards/lr1110_modem_board.c ****     /* Wait the drop */
+ 313:../Src/boards/lr1110_modem_board.c ****     HAL_Delay( 2000 );
+ 1080              		.loc 1 313 5
+ 1081 00c6 4FF4FA60 		mov	r0, #2000
+ 1082 00ca FFF7FEFF 		bl	HAL_Delay
+ 314:../Src/boards/lr1110_modem_board.c **** 
+ 315:../Src/boards/lr1110_modem_board.c ****     /* Measure the drop */
+ 316:../Src/boards/lr1110_modem_board.c ****     *drop = relaxed_voltage - hal_mcu_get_vref_level( );
+ 1083              		.loc 1 316 31
+ 1084 00ce FFF7FEFF 		bl	hal_mcu_get_vref_level
+ 1085 00d2 0346     		mov	r3, r0
+ 1086 00d4 1A46     		mov	r2, r3
+ 1087              		.loc 1 316 29
+ 1088 00d6 BB69     		ldr	r3, [r7, #24]
+ 1089 00d8 9B1A     		subs	r3, r3, r2
+ 1090 00da 1A46     		mov	r2, r3
+ 1091              		.loc 1 316 11
+ 1092 00dc BB68     		ldr	r3, [r7, #8]
+ 1093 00de 1A60     		str	r2, [r3]
+ 317:../Src/boards/lr1110_modem_board.c **** 
+ 318:../Src/boards/lr1110_modem_board.c ****     /* Leave the test mode */
+ 319:../Src/boards/lr1110_modem_board.c ****     lr1110_modem_test_nop( context );
+ 1094              		.loc 1 319 5
+ 1095 00e0 F868     		ldr	r0, [r7, #12]
+ 1096 00e2 FFF7FEFF 		bl	lr1110_modem_test_nop
+ 320:../Src/boards/lr1110_modem_board.c ****     lr1110_modem_test_exit( context );
+ 1097              		.loc 1 320 5
+ 1098 00e6 F868     		ldr	r0, [r7, #12]
+ 1099 00e8 FFF7FEFF 		bl	lr1110_modem_test_exit
+ 321:../Src/boards/lr1110_modem_board.c **** 
+ 322:../Src/boards/lr1110_modem_board.c ****     HAL_DBG_TRACE_PRINTF( "Battery voltage drop = %d mV\n\r", *drop );
+ 1100              		.loc 1 322 5
+ 1101 00ec BB68     		ldr	r3, [r7, #8]
+ 1102 00ee 1B68     		ldr	r3, [r3]
+ 1103 00f0 1946     		mov	r1, r3
+ 1104 00f2 2148     		ldr	r0, .L49+24
+ 1105 00f4 FFF7FEFF 		bl	hal_mcu_trace_print
+ 323:../Src/boards/lr1110_modem_board.c **** 
+ 324:../Src/boards/lr1110_modem_board.c ****     if( *drop > 0 )
+ 1106              		.loc 1 324 9
+ 1107 00f8 BB68     		ldr	r3, [r7, #8]
+ 1108 00fa 1B68     		ldr	r3, [r3]
+ 1109              		.loc 1 324 7
+ 1110 00fc 002B     		cmp	r3, #0
+ 1111 00fe 29DD     		ble	.L44
+ 325:../Src/boards/lr1110_modem_board.c ****     {
+ 326:../Src/boards/lr1110_modem_board.c ****         *time_recovery = 0;
+ 1112              		.loc 1 326 24
+ 1113 0100 7B68     		ldr	r3, [r7, #4]
+ARM GAS  /tmp/ccSOg6Kt.s 			page 26
+
+
+ 1114 0102 0022     		movs	r2, #0
+ 1115 0104 1A60     		str	r2, [r3]
+ 327:../Src/boards/lr1110_modem_board.c ****         /* Get Start Tick*/
+ 328:../Src/boards/lr1110_modem_board.c ****         tick_vdrop = HAL_GetTick( );
+ 1116              		.loc 1 328 22
+ 1117 0106 FFF7FEFF 		bl	HAL_GetTick
+ 1118 010a 7861     		str	r0, [r7, #20]
+ 329:../Src/boards/lr1110_modem_board.c ****         /* Wait 66% of drop recovery */
+ 330:../Src/boards/lr1110_modem_board.c ****         while( ( hal_mcu_get_vref_level( ) < relaxed_voltage - ( *drop / 3 ) ) && ( *time_recovery 
+ 1119              		.loc 1 330 14
+ 1120 010c 06E0     		b	.L45
+ 1121              	.L47:
+ 331:../Src/boards/lr1110_modem_board.c ****         {
+ 332:../Src/boards/lr1110_modem_board.c ****             *time_recovery = HAL_GetTick( ) - tick_vdrop;
+ 1122              		.loc 1 332 30
+ 1123 010e FFF7FEFF 		bl	HAL_GetTick
+ 1124 0112 0246     		mov	r2, r0
+ 1125              		.loc 1 332 45
+ 1126 0114 7B69     		ldr	r3, [r7, #20]
+ 1127 0116 D21A     		subs	r2, r2, r3
+ 1128              		.loc 1 332 28
+ 1129 0118 7B68     		ldr	r3, [r7, #4]
+ 1130 011a 1A60     		str	r2, [r3]
+ 1131              	.L45:
+ 330:../Src/boards/lr1110_modem_board.c ****         {
+ 1132              		.loc 1 330 18
+ 1133 011c FFF7FEFF 		bl	hal_mcu_get_vref_level
+ 1134 0120 0346     		mov	r3, r0
+ 1135 0122 1946     		mov	r1, r3
+ 330:../Src/boards/lr1110_modem_board.c ****         {
+ 1136              		.loc 1 330 66
+ 1137 0124 BB68     		ldr	r3, [r7, #8]
+ 1138 0126 1B68     		ldr	r3, [r3]
+ 330:../Src/boards/lr1110_modem_board.c ****         {
+ 1139              		.loc 1 330 72
+ 1140 0128 144A     		ldr	r2, .L49+28
+ 1141 012a 82FB0302 		smull	r0, r2, r2, r3
+ 1142 012e DB17     		asrs	r3, r3, #31
+ 1143 0130 D31A     		subs	r3, r2, r3
+ 1144 0132 1A46     		mov	r2, r3
+ 330:../Src/boards/lr1110_modem_board.c ****         {
+ 1145              		.loc 1 330 62
+ 1146 0134 BB69     		ldr	r3, [r7, #24]
+ 1147 0136 9B1A     		subs	r3, r3, r2
+ 330:../Src/boards/lr1110_modem_board.c ****         {
+ 1148              		.loc 1 330 14
+ 1149 0138 9942     		cmp	r1, r3
+ 1150 013a 05D2     		bcs	.L46
+ 330:../Src/boards/lr1110_modem_board.c ****         {
+ 1151              		.loc 1 330 85 discriminator 1
+ 1152 013c 7B68     		ldr	r3, [r7, #4]
+ 1153 013e 1B68     		ldr	r3, [r3]
+ 330:../Src/boards/lr1110_modem_board.c ****         {
+ 1154              		.loc 1 330 80 discriminator 1
+ 1155 0140 42F20F72 		movw	r2, #9999
+ 1156 0144 9342     		cmp	r3, r2
+ 1157 0146 E2D9     		bls	.L47
+ARM GAS  /tmp/ccSOg6Kt.s 			page 27
+
+
+ 1158              	.L46:
+ 333:../Src/boards/lr1110_modem_board.c ****         }
+ 334:../Src/boards/lr1110_modem_board.c **** 
+ 335:../Src/boards/lr1110_modem_board.c ****         HAL_DBG_TRACE_PRINTF( "Voltage recovery time = %d ms\n\r", *time_recovery );
+ 1159              		.loc 1 335 9
+ 1160 0148 7B68     		ldr	r3, [r7, #4]
+ 1161 014a 1B68     		ldr	r3, [r3]
+ 1162 014c 1946     		mov	r1, r3
+ 1163 014e 0C48     		ldr	r0, .L49+32
+ 1164 0150 FFF7FEFF 		bl	hal_mcu_trace_print
+ 1165              	.L44:
+ 336:../Src/boards/lr1110_modem_board.c ****     }
+ 337:../Src/boards/lr1110_modem_board.c **** 
+ 338:../Src/boards/lr1110_modem_board.c ****     return modem_response_code;
+ 1166              		.loc 1 338 12
+ 1167 0154 FB7F     		ldrb	r3, [r7, #31]	@ zero_extendqisi2
+ 339:../Src/boards/lr1110_modem_board.c **** }
+ 1168              		.loc 1 339 1
+ 1169 0156 1846     		mov	r0, r3
+ 1170 0158 2037     		adds	r7, r7, #32
+ 1171              	.LCFI67:
+ 1172              		.cfi_def_cfa_offset 8
+ 1173 015a BD46     		mov	sp, r7
+ 1174              	.LCFI68:
+ 1175              		.cfi_def_cfa_register 13
+ 1176              		@ sp needed
+ 1177 015c 80BD     		pop	{r7, pc}
+ 1178              	.L50:
+ 1179 015e 00BF     		.align	2
+ 1180              	.L49:
+ 1181 0160 607B9633 		.word	865500000
+ 1182 0164 A0D1E336 		.word	920900000
+ 1183 0168 00000000 		.word	.LC0
+ 1184 016c 08000000 		.word	.LC1
+ 1185 0170 10000000 		.word	.LC2
+ 1186 0174 3C000000 		.word	.LC3
+ 1187 0178 44000000 		.word	.LC4
+ 1188 017c 56555555 		.word	1431655766
+ 1189 0180 64000000 		.word	.LC5
+ 1190              		.cfi_endproc
+ 1191              	.LFE604:
+ 1193              		.global	__aeabi_ui2d
+ 1194              		.global	__aeabi_ddiv
+ 1195              		.global	__aeabi_d2uiz
+ 1196              		.section	.text.lr1110_modem_board_init_tcxo_io,"ax",%progbits
+ 1197              		.align	1
+ 1198              		.syntax unified
+ 1199              		.thumb
+ 1200              		.thumb_func
+ 1201              		.fpu fpv4-sp-d16
+ 1203              	lr1110_modem_board_init_tcxo_io:
+ 1204              	.LFB605:
+ 340:../Src/boards/lr1110_modem_board.c **** 
+ 341:../Src/boards/lr1110_modem_board.c **** /*
+ 342:../Src/boards/lr1110_modem_board.c ****  * -----------------------------------------------------------------------------
+ 343:../Src/boards/lr1110_modem_board.c ****  * --- PRIVATE FUNCTIONS DEFINITION --------------------------------------------
+ 344:../Src/boards/lr1110_modem_board.c ****  */
+ARM GAS  /tmp/ccSOg6Kt.s 			page 28
+
+
+ 345:../Src/boards/lr1110_modem_board.c **** 
+ 346:../Src/boards/lr1110_modem_board.c **** static lr1110_modem_response_code_t lr1110_modem_board_init_tcxo_io( const void* context )
+ 347:../Src/boards/lr1110_modem_board.c **** {
+ 1205              		.loc 1 347 1
+ 1206              		.cfi_startproc
+ 1207              		@ args = 0, pretend = 0, frame = 8
+ 1208              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1209 0000 80B5     		push	{r7, lr}
+ 1210              	.LCFI69:
+ 1211              		.cfi_def_cfa_offset 8
+ 1212              		.cfi_offset 7, -8
+ 1213              		.cfi_offset 14, -4
+ 1214 0002 82B0     		sub	sp, sp, #8
+ 1215              	.LCFI70:
+ 1216              		.cfi_def_cfa_offset 16
+ 1217 0004 00AF     		add	r7, sp, #0
+ 1218              	.LCFI71:
+ 1219              		.cfi_def_cfa_register 7
+ 1220 0006 7860     		str	r0, [r7, #4]
+ 348:../Src/boards/lr1110_modem_board.c ****     return lr1110_modem_system_set_tcxo_mode( context, LR1110_MODEM_SYSTEM_TCXO_CTRL_1_8V,
+ 349:../Src/boards/lr1110_modem_board.c ****                                               ( lr1110_modem_board_get_tcxo_wakeup_time( ) * 1000 )
+ 1221              		.loc 1 349 49
+ 1222 0008 FFF7FEFF 		bl	lr1110_modem_board_get_tcxo_wakeup_time
+ 1223 000c 0346     		mov	r3, r0
+ 1224              		.loc 1 349 92
+ 1225 000e 4FF47A72 		mov	r2, #1000
+ 1226 0012 02FB03F3 		mul	r3, r2, r3
+ 1227              		.loc 1 349 101
+ 1228 0016 1846     		mov	r0, r3
+ 1229 0018 FFF7FEFF 		bl	__aeabi_ui2d
+ 1230 001c 0AA3     		adr	r3, .L53
+ 1231 001e D3E90023 		ldrd	r2, [r3]
+ 1232 0022 FFF7FEFF 		bl	__aeabi_ddiv
+ 1233 0026 0246     		mov	r2, r0
+ 1234 0028 0B46     		mov	r3, r1
+ 348:../Src/boards/lr1110_modem_board.c ****     return lr1110_modem_system_set_tcxo_mode( context, LR1110_MODEM_SYSTEM_TCXO_CTRL_1_8V,
+ 1235              		.loc 1 348 12
+ 1236 002a 1046     		mov	r0, r2
+ 1237 002c 1946     		mov	r1, r3
+ 1238 002e FFF7FEFF 		bl	__aeabi_d2uiz
+ 1239 0032 0346     		mov	r3, r0
+ 1240 0034 1A46     		mov	r2, r3
+ 1241 0036 0221     		movs	r1, #2
+ 1242 0038 7868     		ldr	r0, [r7, #4]
+ 1243 003a FFF7FEFF 		bl	lr1110_modem_system_set_tcxo_mode
+ 1244 003e 0346     		mov	r3, r0
+ 350:../Src/boards/lr1110_modem_board.c **** }
+ 1245              		.loc 1 350 1
+ 1246 0040 1846     		mov	r0, r3
+ 1247 0042 0837     		adds	r7, r7, #8
+ 1248              	.LCFI72:
+ 1249              		.cfi_def_cfa_offset 8
+ 1250 0044 BD46     		mov	sp, r7
+ 1251              	.LCFI73:
+ 1252              		.cfi_def_cfa_register 13
+ 1253              		@ sp needed
+ 1254 0046 80BD     		pop	{r7, pc}
+ARM GAS  /tmp/ccSOg6Kt.s 			page 29
+
+
+ 1255              	.L54:
+ 1256              		.align	3
+ 1257              	.L53:
+ 1258 0048 85EB51B8 		.word	-1202590843
+ 1259 004c 1E853E40 		.word	1077839134
+ 1260              		.cfi_endproc
+ 1261              	.LFE605:
+ 1263              		.text
+ 1264              	.Letext0:
+ 1265              		.file 2 "/usr/lib/gcc/arm-none-eabi/10.3.1/include/stdint.h"
+ 1266              		.file 3 "../Src/radio/lr1110_modem/src/lr1110_modem_common.h"
+ 1267              		.file 4 "../Src/radio/lr1110_modem/src/lr1110_modem_hal.h"
+ 1268              		.file 5 "../Src/radio/lr1110_modem/src/lr1110_modem_system.h"
+ 1269              		.file 6 "../Src/radio/lr1110_modem/src/lr1110_modem_lorawan.h"
+ 1270              		.file 7 "../Inc/smtc_hal/smtc_hal_gpio_pin_names.h"
+ 1271              		.file 8 "../Inc/smtc_hal/smtc_hal_gpio.h"
+ 1272              		.file 9 "../Drivers/CMSIS/Device/ST/STM32L4xx/Include/stm32l476xx.h"
+ 1273              		.file 10 "../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def.h"
+ 1274              		.file 11 "../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_dma.h"
+ 1275              		.file 12 "../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_spi.h"
+ 1276              		.file 13 "../Inc/smtc_hal/smtc_hal_spi.h"
+ 1277              		.file 14 "../Src/radio/lr1110.h"
+ARM GAS  /tmp/ccSOg6Kt.s 			page 30
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 lr1110_modem_board.c
+     /tmp/ccSOg6Kt.s:20     .bss.modem_is_ready:0000000000000000 modem_is_ready
+     /tmp/ccSOg6Kt.s:21     .bss.modem_is_ready:0000000000000000 $d
+     /tmp/ccSOg6Kt.s:23     .text.lr1110_modem_board_init_io_context:0000000000000000 $t
+     /tmp/ccSOg6Kt.s:31     .text.lr1110_modem_board_init_io_context:0000000000000000 lr1110_modem_board_init_io_context
+     /tmp/ccSOg6Kt.s:107    .text.lr1110_modem_board_init_io_context:0000000000000058 $d
+     /tmp/ccSOg6Kt.s:112    .text.lr1110_modem_board_init_io:0000000000000000 $t
+     /tmp/ccSOg6Kt.s:119    .text.lr1110_modem_board_init_io:0000000000000000 lr1110_modem_board_init_io
+     /tmp/ccSOg6Kt.s:178    .text.lr1110_modem_board_deinit_io:0000000000000000 $t
+     /tmp/ccSOg6Kt.s:185    .text.lr1110_modem_board_deinit_io:0000000000000000 lr1110_modem_board_deinit_io
+     /tmp/ccSOg6Kt.s:261    .text.lr1110_modem_board_analog_deinit_io:0000000000000000 $t
+     /tmp/ccSOg6Kt.s:268    .text.lr1110_modem_board_analog_deinit_io:0000000000000000 lr1110_modem_board_analog_deinit_io
+     /tmp/ccSOg6Kt.s:310    .text.lr1110_modem_board_get_tcxo_wakeup_time:0000000000000000 $t
+     /tmp/ccSOg6Kt.s:317    .text.lr1110_modem_board_get_tcxo_wakeup_time:0000000000000000 lr1110_modem_board_get_tcxo_wakeup_time
+     /tmp/ccSOg6Kt.s:348    .text.lr1110_modem_board_init:0000000000000000 $t
+     /tmp/ccSOg6Kt.s:355    .text.lr1110_modem_board_init:0000000000000000 lr1110_modem_board_init
+     /tmp/ccSOg6Kt.s:1203   .text.lr1110_modem_board_init_tcxo_io:0000000000000000 lr1110_modem_board_init_tcxo_io
+     /tmp/ccSOg6Kt.s:471    .text.lr1110_modem_board_get_systime_from_gps:0000000000000000 $t
+     /tmp/ccSOg6Kt.s:478    .text.lr1110_modem_board_get_systime_from_gps:0000000000000000 lr1110_modem_board_get_systime_from_gps
+     /tmp/ccSOg6Kt.s:520    .text.lr1110_modem_get_almanac_dates:0000000000000000 $t
+     /tmp/ccSOg6Kt.s:527    .text.lr1110_modem_get_almanac_dates:0000000000000000 lr1110_modem_get_almanac_dates
+     /tmp/ccSOg6Kt.s:668    .text.lr1110_modem_board_lna_on:0000000000000000 $t
+     /tmp/ccSOg6Kt.s:675    .text.lr1110_modem_board_lna_on:0000000000000000 lr1110_modem_board_lna_on
+     /tmp/ccSOg6Kt.s:698    .text.lr1110_modem_board_lna_off:0000000000000000 $t
+     /tmp/ccSOg6Kt.s:705    .text.lr1110_modem_board_lna_off:0000000000000000 lr1110_modem_board_lna_off
+     /tmp/ccSOg6Kt.s:728    .text.lr1110_modem_board_event_flush:0000000000000000 $t
+     /tmp/ccSOg6Kt.s:735    .text.lr1110_modem_board_event_flush:0000000000000000 lr1110_modem_board_event_flush
+     /tmp/ccSOg6Kt.s:800    .text.lr1110_modem_board_read_event_line:0000000000000000 lr1110_modem_board_read_event_line
+     /tmp/ccSOg6Kt.s:793    .text.lr1110_modem_board_read_event_line:0000000000000000 $t
+     /tmp/ccSOg6Kt.s:843    .text.lr1110_modem_board_is_ready:0000000000000000 $t
+     /tmp/ccSOg6Kt.s:850    .text.lr1110_modem_board_is_ready:0000000000000000 lr1110_modem_board_is_ready
+     /tmp/ccSOg6Kt.s:881    .text.lr1110_modem_board_is_ready:0000000000000014 $d
+     /tmp/ccSOg6Kt.s:886    .text.lr1110_modem_board_set_ready:0000000000000000 $t
+     /tmp/ccSOg6Kt.s:893    .text.lr1110_modem_board_set_ready:0000000000000000 lr1110_modem_board_set_ready
+     /tmp/ccSOg6Kt.s:933    .text.lr1110_modem_board_set_ready:000000000000001c $d
+     /tmp/ccSOg6Kt.s:938    .rodata:0000000000000000 $d
+     /tmp/ccSOg6Kt.s:957    .text.lr1110_modem_board_measure_battery_drop:0000000000000000 $t
+     /tmp/ccSOg6Kt.s:964    .text.lr1110_modem_board_measure_battery_drop:0000000000000000 lr1110_modem_board_measure_battery_drop
+     /tmp/ccSOg6Kt.s:1027   .text.lr1110_modem_board_measure_battery_drop:0000000000000054 $d
+     /tmp/ccSOg6Kt.s:1038   .text.lr1110_modem_board_measure_battery_drop:0000000000000080 $t
+     /tmp/ccSOg6Kt.s:1181   .text.lr1110_modem_board_measure_battery_drop:0000000000000160 $d
+     /tmp/ccSOg6Kt.s:1197   .text.lr1110_modem_board_init_tcxo_io:0000000000000000 $t
+     /tmp/ccSOg6Kt.s:1258   .text.lr1110_modem_board_init_tcxo_io:0000000000000048 $d
+
+UNDEFINED SYMBOLS
+radio_event_callback
+hal_gpio_init_out
+hal_gpio_init_in
+hal_gpio_deinit
+radio_event_init
+lr1110_modem_hal_reset
+lr1110_modem_system_set_dio_as_rf_switch
+lr1110_modem_set_rf_output
+lr1110_modem_system_set_reg_mode
+lr1110_modem_helper_get_utc_time
+lr1110_modem_helper_gnss_get_almanac_date_by_index
+ARM GAS  /tmp/ccSOg6Kt.s 			page 31
+
+
+lna_on
+lna_off
+lr1110_modem_get_event
+hal_gpio_get_value
+hal_mcu_get_vref_level
+lr1110_modem_get_region
+lr1110_modem_test_mode_start
+lr1110_modem_test_tx_cw
+hal_mcu_trace_print
+HAL_Delay
+lr1110_modem_test_nop
+lr1110_modem_test_exit
+HAL_GetTick
+__aeabi_ui2d
+__aeabi_ddiv
+__aeabi_d2uiz
+lr1110_modem_system_set_tcxo_mode
