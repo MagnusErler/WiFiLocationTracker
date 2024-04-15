@@ -27,7 +27,8 @@ function sortMarkers(markers) {
 export default function App() {
   const center = [56.234538, 10.231792]; // Denmark coordinates
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [checkedIds, setCheckedIds] = useState([]);
+  const [showCurrentLocation, setShowCurrentLocation] = useState([]);
+  const [showMovement, setShowMovement] = useState([]);
 
   // TODO: fetch tracker information from API
   const trackerInformation = [
@@ -149,12 +150,28 @@ export default function App() {
     setSettingsOpen(false);
   };
 
-  const handleCheckboxChange = (ids) => {
-    setCheckedIds(ids);
+  const handleShowLocationSwitch = (ids) => {
+    setShowCurrentLocation(ids);
+  };
+
+  const handleShowMovementSwitch = (ids) => {
+    setShowMovement(ids);
+  };
+
+  // Function to filter the markers so that only the newest marker for each ID is included
+  const filterNewestMarkers = (markers) => {
+    const newestMarkers = {};
+    markers.forEach(marker => {
+      if (!newestMarkers[marker.id] || marker.timeStamp > newestMarkers[marker.id].timeStamp) {
+        newestMarkers[marker.id] = marker;
+      }
+    });
+    return Object.values(newestMarkers);
   };
 
   // Filter markers based on checked IDs
-  const filteredMarkers = checkedIds.length === 0 ? [] : markers.filter(marker => checkedIds.includes(marker.id));
+  // const filteredMarkers = showCurrentLocation.length === 0 ? [] : markers.filter(marker => showCurrentLocation.includes(marker.id));
+  const filteredMarkers = showCurrentLocation.length === 0 ? [] : filterNewestMarkers(markers.filter(marker => showCurrentLocation.includes(marker.id)));
 
   return (
     <div className="map-container">
@@ -169,7 +186,7 @@ export default function App() {
         markers={sortMarkers(filteredMarkers)}
         useCustomClusterIcon={useCustomClusterIcon}
       />
-      <SettingsMenu isOpen={settingsOpen} handleClose={handleCloseSettings} trackerInformation={trackerInformation} handleCheckboxChange={handleCheckboxChange}/>
+      <SettingsMenu isOpen={settingsOpen} handleClose={handleCloseSettings} trackerInformation={trackerInformation} handleShowLocationSwitch={handleShowLocationSwitch} handleShowMovement={handleShowMovementSwitch}/>
     </div>
   );
 }

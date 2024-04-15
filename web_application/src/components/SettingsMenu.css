@@ -21,7 +21,7 @@
   border-radius: 10px;
   border: 1px solid #888;
   width: 70%;
-  max-width: 600px;
+  max-width: 900px;
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16), 0px 3px 6px rgba(0, 0, 0, 0.23);
 }
 
@@ -101,14 +101,16 @@ th {
 }
 
 .name-column {
-  width: 50%;
+  width: 40%;
   text-align: left;
 }
 
 .battery-status-column,
+.temperature-status-column,
+.update-interval-column,
 .view-travel-column,
 .view-location-column {
-  width: 15%;
+  width: 11%;
   text-align: center;
 }
 
