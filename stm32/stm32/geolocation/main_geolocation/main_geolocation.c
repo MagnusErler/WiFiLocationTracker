@@ -323,6 +323,15 @@ static void modem_event_callback( void )
             smtc_modem_get_downlink_data( rx_payload, &rx_payload_size, &rx_metadata, &rx_remaining );
             SMTC_HAL_TRACE_PRINTF( "Data received on port %u\n", rx_metadata.fport );
             SMTC_HAL_TRACE_ARRAY( "Received payload", rx_payload, rx_payload_size );
+
+            switch (rx_metadata.fport) {
+            case 1:
+                smtc_board_led_set( smtc_board_get_led_tx_mask( ), true );
+                break;
+            default:
+                break;
+            }
+
             break;
 
         case SMTC_MODEM_EVENT_JOINFAIL:
