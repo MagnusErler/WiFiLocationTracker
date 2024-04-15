@@ -106,7 +106,7 @@ BUILD_DIR := $(BUILD_DIR)_crc_spi
 endif
 endif # lr1120
 
-ifeq ($(MODEM_APP),EXAMPLE_GEOLOCATION)
+ifeq ($(MODEM_APP),GEOLOCATION)
 LBM_BUILD_OPTIONS += LBM_GEOLOCATION=yes
 ALLOW_STORE_AND_FORWARD=yes
 endif
@@ -254,7 +254,7 @@ APP_C_SOURCES += \
 	main_geolocation/main_geolocation.c
 endif
 
-ifeq ($(MODEM_APP),EXAMPLE_GEOLOCATION)
+ifeq ($(MODEM_APP),GEOLOCATION)
 APP_C_SOURCES += \
 	main_geolocation/main_geolocation.c
 endif

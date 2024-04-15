@@ -66,8 +66,8 @@
  * See @ref modem_application_t
  */
 #ifndef MAKEFILE_APP
-#warning "Using default application EXAMPLE_GEOLOCATION"
-#define MAKEFILE_APP EXAMPLE_GEOLOCATION
+#warning "Using default application GEOLOCATION"
+#define MAKEFILE_APP GEOLOCATION
 #endif
 
 /*
@@ -82,7 +82,7 @@
 
 int main( void )
 {
-#if MAKEFILE_APP == EXAMPLE_GEOLOCATION
+#if MAKEFILE_APP == GEOLOCATION
     main_geolocation( );
 #elif MAKEFILE_APP == EXAMPLE_FULL_ALMANAC_UPDATE
     main_full_almanac_update( );

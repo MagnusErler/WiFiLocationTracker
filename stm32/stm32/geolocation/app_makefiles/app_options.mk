@@ -18,7 +18,7 @@ BOARD ?= NUCLEO_L476
 TARGET_RADIO ?= nc
 
 # Application
-MODEM_APP ?= EXAMPLE_GEOLOCATION
+MODEM_APP ?= GEOLOCATION
 
 # Allow fuota (take more RAM, due to read_modify_write feature) and force lbm build with fuota
 ALLOW_FUOTA ?= no
@@ -63,7 +63,7 @@ LBM_OPT = -Os
 #-----------------------------------------------------------------------------
 
 # Compile library and application with debug symbols
-APP_DEBUG ?= no
+APP_DEBUG ?= yes
 
 # Debug optimization (will overwrite APP_OPT and LBM_OPT values in case DEBUG is set)
 DEBUG_APP_OPT ?= -O0

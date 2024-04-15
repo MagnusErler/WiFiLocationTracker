@@ -65,7 +65,7 @@ extern "C" {
 /**
  * @brief Application examples
  */
-#define EXAMPLE_GEOLOCATION 0
+#define GEOLOCATION 0
 #define EXAMPLE_FULL_ALMANAC_UPDATE 1
 
 /*
