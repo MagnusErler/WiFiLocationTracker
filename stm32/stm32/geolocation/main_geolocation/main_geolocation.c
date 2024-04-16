@@ -106,10 +106,8 @@ uint8_t keep_alive_payload[KEEP_ALIVE_SIZE] = { 0x00 };
 /*!
  * @brief Defines the delay before starting the next scan sequence, value in [s].
  */
-// #define GEOLOCATION_GNSS_SCAN_PERIOD_S ( 2 * 60 )
-#define GEOLOCATION_WIFI_SCAN_PERIOD_S ( 1 * 60 )
-
 uint8_t GEOLOCATION_GNSS_SCAN_PERIOD_S = 2 * 60;
+uint8_t GEOLOCATION_WIFI_SCAN_PERIOD_S = 1 * 60;
 
 /*!
  * @brief Time during which a LED is turned on when pulse, in [ms]
@@ -120,7 +118,6 @@ uint8_t GEOLOCATION_GNSS_SCAN_PERIOD_S = 2 * 60;
  * @brief Supported LR11XX radio firmware
  */
 #define LR1110_FW_VERSION 0x0401
-#define LR1120_FW_VERSION 0x0201
 
 /*
  * -----------------------------------------------------------------------------
@@ -164,8 +161,7 @@ static void modem_event_callback( void );
  * @brief Example to send a user payload on an external event
  *
  */
-void main_geolocation( void )
-{
+void main_geolocation( void ) {
     uint32_t                sleep_time_ms = 0;
     lr11xx_system_version_t lr11xx_fw_version;
     lr11xx_status_t         status;
@@ -193,11 +189,6 @@ void main_geolocation( void )
     if( ( lr11xx_fw_version.type == LR11XX_SYSTEM_VERSION_TYPE_LR1110 ) &&
         ( lr11xx_fw_version.fw < LR1110_FW_VERSION ) ) {
         SMTC_HAL_TRACE_ERROR( "Wrong LR1110 firmware version, expected 0x%04X, got 0x%04X\n", LR1110_FW_VERSION,
-                              lr11xx_fw_version.fw );
-    }
-    if( ( lr11xx_fw_version.type == LR11XX_SYSTEM_VERSION_TYPE_LR1120 ) &&
-        ( lr11xx_fw_version.fw < LR1120_FW_VERSION ) ) {
-        SMTC_HAL_TRACE_ERROR( "Wrong LR1120 firmware version, expected 0x%04X, got 0x%04X\n", LR1120_FW_VERSION,
                               lr11xx_fw_version.fw );
     }
     SMTC_HAL_TRACE_INFO( "LR11XX FW: 0x%04X, type: 0x%02X\n", lr11xx_fw_version.fw, lr11xx_fw_version.type );
@@ -229,8 +220,7 @@ void main_geolocation( void )
  *  This callback is called every time an event ( see smtc_modem_event_t ) appears in the modem.
  *  Several events may have to be read from the modem when this callback is called.
  */
-static void modem_event_callback( void )
-{
+static void modem_event_callback( void ) {
     SMTC_HAL_TRACE_MSG_COLOR( "get_event () callback\n", HAL_DBG_TRACE_COLOR_BLUE );
 
     smtc_modem_event_t                                          current_event;
@@ -247,8 +237,7 @@ static void modem_event_callback( void )
         // Read modem event
         smtc_modem_get_event( &current_event, &event_pending_count );
 
-        switch( current_event.event_type )
-        {
+        switch( current_event.event_type ) {
         case SMTC_MODEM_EVENT_RESET:
             SMTC_HAL_TRACE_INFO( "Event received: RESET\n" );
 
@@ -342,7 +331,6 @@ static void modem_event_callback( void )
                 smtc_board_led_set( smtc_board_get_led_tx_mask( ), true );
                 SMTC_HAL_TRACE_PRINTF( "payload in dec: %u\n", (rx_payload[0] << 8) + rx_payload[1]);
                 GEOLOCATION_GNSS_SCAN_PERIOD_S = (rx_payload[0] << 8) + rx_payload[1];
-
 
 
 
