@@ -3,39 +3,23 @@ import "./SettingsMenu.css";
 import Switch from '@mui/material/Switch';
 
 const SettingsMenu = ({ isOpen, handleClose, trackerInformation, handleShowLocationSwitch, handleShowMovement }) => {
-  const [showCurrentLocationIds, setShowCurrentLocationIds] = useState(trackerInformation.map(tracker => tracker.id));
+  const [showCurrentLocationIds, setShowCurrentLocationIds] = useState(trackerInformation.map(tracker => tracker.deviceId));
   const [showMovementIds, setShowMovementIds] = useState([]);
 
-  useEffect(() => {
-    handleShowLocationSwitch(showCurrentLocationIds);
-    handleShowMovement(showMovementIds);
-  }, [showCurrentLocationIds, showMovementIds, handleShowLocationSwitch, handleShowMovement]);
-
-  const handleLocationCheckbox = (id) => {
+  const handleLocationSwitch = (id) => {
     const newShowCurrentLocationIds = showCurrentLocationIds.includes(id)
       ? showCurrentLocationIds.filter((checkedId) => checkedId !== id)
       : [...showCurrentLocationIds, id];
     setShowCurrentLocationIds(newShowCurrentLocationIds);
-  
-    // Disable showMovementIds for the ID being toggled
-    setShowMovementIds(prevIds => prevIds.filter(prevId => prevId !== id));
-  
-    handleShowLocationSwitch(newShowCurrentLocationIds, showMovementIds);
+    handleShowLocationSwitch(newShowCurrentLocationIds);
   };
   
-  
-  const handleMovementCheckbox = (id) => {
+  const handleMovementSwitch = (id) => {
     const newShowMovementIds = showMovementIds.includes(id)
       ? showMovementIds.filter((checkedId) => checkedId !== id)
       : [...showMovementIds, id];
     setShowMovementIds(newShowMovementIds);
-  
-    // Enable showCurrentLocationIds only for the ID being toggled
-    if (!showCurrentLocationIds.includes(id) && newShowMovementIds.includes(id)) {
-      setShowCurrentLocationIds(prevIds => [...prevIds, id]);
-    }
-  
-    handleShowMovement(showCurrentLocationIds, newShowMovementIds);
+    handleShowMovement(newShowMovementIds);
   };
 
   return (
@@ -43,7 +27,7 @@ const SettingsMenu = ({ isOpen, handleClose, trackerInformation, handleShowLocat
       <div className="modal-content">
         <span className="close" onClick={handleClose}>&times;</span>
         <table>
-        <thead>
+          <thead>
             <tr>
               <th className="id-column">ID</th>
               <th className="name-column">Name</th>
@@ -56,8 +40,8 @@ const SettingsMenu = ({ isOpen, handleClose, trackerInformation, handleShowLocat
           </thead>
           <tbody>
             {trackerInformation.map((tracker, index) => (
-              <tr key={tracker.id} style={{ backgroundColor: index % 2 === 0 ? "#ffffff" : "#f9f9f9" }}>
-                <td className="id-column">{tracker.id}</td>
+              <tr key={tracker.deviceId} style={{ backgroundColor: index % 2 === 0 ? "#ffffff" : "#f9f9f9" }}>
+                <td className="id-column">{tracker.deviceId}</td>
                 <td className="name-column">{tracker.name}</td>
                 <td className="battery-status-column">{tracker.batteryStatus}</td>
                 <td className="temperature-status-column">{tracker.temperature}</td>
@@ -65,15 +49,15 @@ const SettingsMenu = ({ isOpen, handleClose, trackerInformation, handleShowLocat
                 <td className="view-location-column">
                   <Switch
                     color="warning"
-                    checked={showCurrentLocationIds.includes(tracker.id)}
-                    onChange={() => handleLocationCheckbox(tracker.id)}
+                    checked={showCurrentLocationIds.includes(tracker.deviceId)}
+                    onChange={() => handleLocationSwitch(tracker.deviceId)}
                   />
                 </td>
                 <td className="view-movement-column">
                   <Switch
                     color="warning"
-                    checked={showMovementIds.includes(tracker.id)}
-                    onChange={() => handleMovementCheckbox(tracker.id)}
+                    checked={showMovementIds.includes(tracker.deviceId)}
+                    onChange={() => handleMovementSwitch(tracker.deviceId)}
                   />
                 </td>
               </tr>

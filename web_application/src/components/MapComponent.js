@@ -3,20 +3,40 @@ import { MapContainer, TileLayer, Marker, Popup, Polyline } from "react-leaflet"
 import MarkerClusterGroup from "react-leaflet-cluster";
 import { Icon, divIcon } from "leaflet";
 
-const MapComponent = ({ center, markers, useCustomClusterIcon }) => {
+const MapComponent = ({ center, allMarkers, useCustomClusterIcon }) => {
+  // State for storing calculated lines
+  const [lines, setLines] = useState([]);
+
+  useEffect(() => {
+    const calculatedLines = {};
+
+    // Group locations by pingId
+    for (const marker of allMarkers) {
+      if (!calculatedLines[marker.deviceId]) {
+        calculatedLines[marker.deviceId] = [];
+      }
+      calculatedLines[marker.deviceId].push(marker);
+    }
+    setLines(calculatedLines);
+
+  }, [allMarkers]);
+
+  // Icon for individual markers
   const customIcon = new Icon({
     iconUrl: require("../img/markerIcon.png"),
     iconSize: [38, 38]
   });
 
-  const createCustomClusterIcon = function (cluster) {
+  // Function to create custom cluster icon
+  const createCustomClusterIcon = cluster => {
     return new divIcon({
       html: `<span class="cluster-icon">${cluster.getChildCount()}</span>`,
       className: "custom-marker-cluster"
     });
   };
 
-  const makeLineCoordinates = (markerGroup) => {
+  // Function to calculate line coordinates between markers
+  const makeLineCoordinates = markerGroup => {
     const lineCoordinates = [];
     for (let i = 1; i < markerGroup.length; i++) {
       if (markerGroup[i].id === markerGroup[i - 1].id) {
@@ -25,19 +45,6 @@ const MapComponent = ({ center, markers, useCustomClusterIcon }) => {
     }
     return lineCoordinates;
   };
-
-  const [lines, setLines] = useState([]);
-
-  useEffect(() => {
-    const calculatedLines = {};
-    for (const marker of markers) {
-      if (!calculatedLines[marker.id]) {
-        calculatedLines[marker.id] = [];
-      }
-      calculatedLines[marker.id].push(marker);
-    }
-    setLines(calculatedLines);
-  }, [markers]);
 
   return (
     <MapContainer center={center} zoom={7}>
@@ -53,9 +60,9 @@ const MapComponent = ({ center, markers, useCustomClusterIcon }) => {
         chunkedLoading
         iconCreateFunction={useCustomClusterIcon ? createCustomClusterIcon : null}
       >
-        {markers.map((marker, index) => (
+        {allMarkers.map((marker, index) => (
           <Marker key={index} position={marker.geocode} icon={customIcon}>
-            <Popup>{marker.popUp}</Popup>
+            <Popup>{"ID: " + marker.deviceId + ", seen: " + marker.timeStamp.slice(0, -3)}</Popup>
           </Marker>
         ))}
       </MarkerClusterGroup>
