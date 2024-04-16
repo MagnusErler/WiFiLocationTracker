@@ -115,8 +115,10 @@ uint8_t keep_alive_payload[KEEP_ALIVE_SIZE] = { 0x00 };
 /*!
  * @brief Defines the delay before starting the next scan sequence, value in [s].
  */
-#define GEOLOCATION_GNSS_SCAN_PERIOD_S ( 2 * 60 )
+// #define GEOLOCATION_GNSS_SCAN_PERIOD_S ( 2 * 60 )
 #define GEOLOCATION_WIFI_SCAN_PERIOD_S ( 1 * 60 )
+
+uint8_t GEOLOCATION_GNSS_SCAN_PERIOD_S = 2 * 60;
 
 /*!
  * @brief Time during which a LED is turned on when pulse, in [ms]
@@ -327,6 +329,19 @@ static void modem_event_callback( void )
             switch (rx_metadata.fport) {
             case 1:
                 smtc_board_led_set( smtc_board_get_led_tx_mask( ), true );
+                SMTC_HAL_TRACE_PRINTF( "payload in dec: %u\n", (rx_payload[0] << 8) + rx_payload[1]);
+                GEOLOCATION_GNSS_SCAN_PERIOD_S = (rx_payload[0] << 8) + rx_payload[1];
+
+
+
+
+                // smtc_modem_request_uplink( stack_id, 1, false, keep_alive_payload, KEEP_ALIVE_SIZE );
+                uint8_t custom_payload[4] = { 0x00 };
+                custom_payload[0] = 0xAB;
+                custom_payload[1] = 0xCD;
+                smtc_modem_request_uplink( stack_id, 15, false, custom_payload, 4 );
+                // smtc_modem_request_uplink( uint8_t stack_id, uint8_t f_port, bool confirmed,
+                //                                     const uint8_t* payload, uint8_t payload_length )
                 break;
             default:
                 break;

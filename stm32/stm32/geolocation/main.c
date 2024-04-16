@@ -80,8 +80,7 @@
  * --- PUBLIC FUNCTIONS DEFINITION ---------------------------------------------
  */
 
-int main( void )
-{
+int main( void ) {
 #if MAKEFILE_APP == GEOLOCATION
     main_geolocation( );
 #elif MAKEFILE_APP == EXAMPLE_FULL_ALMANAC_UPDATE
