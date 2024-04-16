@@ -58,6 +58,9 @@
 
 #include "lr1110_board.h"
 
+
+#include "lis2dw.h"
+
 /*
  * -----------------------------------------------------------------------------
  * --- PRIVATE MACROS-----------------------------------------------------------
@@ -210,6 +213,18 @@ void main_geolocation( void )
                               lr11xx_fw_version.fw );
     }
     SMTC_HAL_TRACE_INFO( "LR11XX FW: 0x%04X, type: 0x%02X\n", lr11xx_fw_version.fw, lr11xx_fw_version.type );
+
+
+    bool ret = 0;
+    ret = lis2dw_init( 1, 0x32, RANGE_2G, M2_14BIT );
+
+    if( ret != 0 ) {
+        SMTC_HAL_TRACE_PRINTF( "lis2dw init done\n" );
+    } else {
+        SMTC_HAL_TRACE_PRINTF( "lis2dw init failed\n" );
+    }
+
+
 
     while( 1 ) {
         // Modem process launch

@@ -40,6 +40,7 @@ BOARD_C_SOURCES = \
 	smtc_modem_hal/smtc_modem_hal.c\
 	smtc_hal_l4/smtc_hal_flash.c\
 	smtc_hal_l4/smtc_hal_gpio.c\
+	smtc_hal_l4/smtc_hal_i2c.c\
 	smtc_hal_l4/smtc_hal_mcu.c\
 	smtc_hal_l4/smtc_hal_rtc.c\
 	smtc_hal_l4/smtc_hal_rng.c\
@@ -48,6 +49,7 @@ BOARD_C_SOURCES = \
 	smtc_hal_l4/smtc_hal_trace.c\
 	smtc_hal_l4/smtc_hal_uart.c\
 	smtc_hal_l4/smtc_hal_watchdog.c\
+	lis2dw/lis2dw.c\
 
 BOARD_ASM_SOURCES =  \
 	mcu_drivers/core/STM32L4xx/startup_stm32l476xx.s
@@ -62,4 +64,5 @@ BOARD_C_INCLUDES =  \
 	-Iuser_app\
 	-Imcu_drivers/core\
 	-Ismtc_modem_hal\
-	-Ismtc_hal_l4
+	-Ismtc_hal_l4\
+	-Ilis2dw\
