@@ -85,15 +85,6 @@
 #define STACK_ID 0
 
 /**
- * @brief Stack credentials
- */
-#if !defined( USE_LR11XX_CREDENTIALS )
-static const uint8_t user_dev_eui[8]  = USER_LORAWAN_DEVICE_EUI;
-static const uint8_t user_join_eui[8] = USER_LORAWAN_JOIN_EUI;
-static const uint8_t user_app_key[16] = USER_LORAWAN_APP_KEY;
-#endif
-
-/**
  * @brief Watchdog counter reload value during sleep (The period must be lower than MCU watchdog period (here 32s))
  */
 #define WATCHDOG_RELOAD_PERIOD_MS ( 20000 )
@@ -148,10 +139,8 @@ static uint8_t                  rx_remaining    = 0;      // Remaining downlink 
 /**
  * @brief Internal credentials
  */
-#if defined( USE_LR11XX_CREDENTIALS )
 static uint8_t chip_eui[SMTC_MODEM_EUI_LENGTH] = { 0 };
 static uint8_t chip_pin[SMTC_MODEM_PIN_LENGTH] = { 0 };
-#endif
 
 /*
  * -----------------------------------------------------------------------------
@@ -263,35 +252,57 @@ static void modem_event_callback( void )
         case SMTC_MODEM_EVENT_RESET:
             SMTC_HAL_TRACE_INFO( "Event received: RESET\n" );
 
-#if !defined( USE_LR11XX_CREDENTIALS )
-            /* Set user credentials */
-            smtc_modem_set_deveui( stack_id, user_dev_eui );
-            smtc_modem_set_joineui( stack_id, user_join_eui );
-            smtc_modem_set_nwkkey( stack_id, user_app_key );
-#else
             // Get internal credentials
             smtc_modem_get_chip_eui( stack_id, chip_eui );
             SMTC_HAL_TRACE_ARRAY( "CHIP_EUI", chip_eui, SMTC_MODEM_EUI_LENGTH );
             smtc_modem_get_pin( stack_id, chip_pin );
             SMTC_HAL_TRACE_ARRAY( "CHIP_PIN", chip_pin, SMTC_MODEM_PIN_LENGTH );
-#endif
+
             /* Set user region */
             smtc_modem_set_region( stack_id, MODEM_EXAMPLE_REGION );
             /* Schedule a Join LoRaWAN network */
             smtc_modem_join_network( stack_id );
-            /* Start almanac demodulation service */
-            smtc_modem_almanac_demodulation_set_constellations( stack_id, SMTC_MODEM_GNSS_CONSTELLATION_GPS_BEIDOU );
-            smtc_modem_almanac_demodulation_start( stack_id );
-            /* Set GNSS and Wi-Fi send mode */
-            smtc_modem_store_and_forward_flash_clear_data( stack_id );
-            smtc_modem_store_and_forward_set_state( stack_id, SMTC_MODEM_STORE_AND_FORWARD_ENABLE );
-            smtc_modem_gnss_send_mode( stack_id, SMTC_MODEM_SEND_MODE_STORE_AND_FORWARD );
-            smtc_modem_wifi_send_mode( stack_id, SMTC_MODEM_SEND_MODE_UPLINK );
-            /* Program Wi-Fi scan */
-            smtc_modem_wifi_scan( stack_id, 0 );
-            /* Program GNSS scan */
-            smtc_modem_gnss_set_constellations( stack_id, SMTC_MODEM_GNSS_CONSTELLATION_GPS_BEIDOU );
-            smtc_modem_gnss_scan( stack_id, SMTC_MODEM_GNSS_MODE_MOBILE, 0 );
+            
+            // WiFi scan first, then GNSS scan
+            switch (1) {
+            case 1:
+                /* Set GNSS and Wi-Fi send mode */
+                smtc_modem_store_and_forward_flash_clear_data( stack_id );
+                smtc_modem_store_and_forward_set_state( stack_id, SMTC_MODEM_STORE_AND_FORWARD_ENABLE );
+
+                smtc_modem_wifi_send_mode( stack_id, SMTC_MODEM_SEND_MODE_UPLINK );
+                /* Program Wi-Fi scan */
+                smtc_modem_wifi_scan( stack_id, 0 );
+
+                smtc_modem_gnss_send_mode( stack_id, SMTC_MODEM_SEND_MODE_STORE_AND_FORWARD );
+                /* Program GNSS scan */
+                smtc_modem_gnss_set_constellations( stack_id, SMTC_MODEM_GNSS_CONSTELLATION_GPS_BEIDOU );
+                smtc_modem_gnss_scan( stack_id, SMTC_MODEM_GNSS_MODE_MOBILE, 0 );
+                break;
+            case 2:
+                /* Start almanac demodulation service */
+                smtc_modem_almanac_demodulation_set_constellations( stack_id, SMTC_MODEM_GNSS_CONSTELLATION_GPS_BEIDOU );
+                smtc_modem_almanac_demodulation_start( stack_id );
+                /* Set GNSS and Wi-Fi send mode */
+                smtc_modem_store_and_forward_flash_clear_data( stack_id );
+                smtc_modem_store_and_forward_set_state( stack_id, SMTC_MODEM_STORE_AND_FORWARD_ENABLE );
+
+                /* Set GNSS and Wi-Fi send mode */
+                smtc_modem_store_and_forward_flash_clear_data( stack_id );
+                smtc_modem_store_and_forward_set_state( stack_id, SMTC_MODEM_STORE_AND_FORWARD_ENABLE );
+
+                smtc_modem_gnss_send_mode( stack_id, SMTC_MODEM_SEND_MODE_STORE_AND_FORWARD );
+                /* Program GNSS scan */
+                smtc_modem_gnss_set_constellations( stack_id, SMTC_MODEM_GNSS_CONSTELLATION_GPS_BEIDOU );
+                smtc_modem_gnss_scan( stack_id, SMTC_MODEM_GNSS_MODE_MOBILE, 0 );
+
+                smtc_modem_wifi_send_mode( stack_id, SMTC_MODEM_SEND_MODE_UPLINK );
+                /* Program Wi-Fi scan */
+                smtc_modem_wifi_scan( stack_id, 0 );
+            default:
+                break;
+            }
+            
             /* Notify user with leds */
             smtc_board_led_set( smtc_board_get_led_tx_mask( ), true );
             break;
@@ -340,8 +351,7 @@ static void modem_event_callback( void )
                 custom_payload[0] = 0xAB;
                 custom_payload[1] = 0xCD;
                 smtc_modem_request_uplink( stack_id, 15, false, custom_payload, 4 );
-                // smtc_modem_request_uplink( uint8_t stack_id, uint8_t f_port, bool confirmed,
-                //                                     const uint8_t* payload, uint8_t payload_length )
+                smtc_modem_alarm_start_timer( KEEP_ALIVE_PERIOD_S );
                 break;
             default:
                 break;
