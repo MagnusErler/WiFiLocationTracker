@@ -938,16 +938,27 @@ HAL_StatusTypeDef HAL_RCC_OscConfig(RCC_OscInitTypeDef  *RCC_OscInitStruct)
                 return HAL_TIMEOUT;
               }
             }
-
+#if defined(RCC_PLLP_SUPPORT)
             /* Configure the main PLL clock source, multiplication and division factors. */
             __HAL_RCC_PLL_CONFIG(RCC_OscInitStruct->PLL.PLLSource,
                                  RCC_OscInitStruct->PLL.PLLM,
                                  RCC_OscInitStruct->PLL.PLLN,
-#if defined(RCC_PLLP_SUPPORT)
+
                                  RCC_OscInitStruct->PLL.PLLP,
-#endif
+
                                  RCC_OscInitStruct->PLL.PLLQ,
                                  RCC_OscInitStruct->PLL.PLLR);
+#endif
+
+#if !defined(RCC_PLLP_SUPPORT)
+                        /* Configure the main PLL clock source, multiplication and division factors. */
+            __HAL_RCC_PLL_CONFIG(RCC_OscInitStruct->PLL.PLLSource,
+                                 RCC_OscInitStruct->PLL.PLLM,
+                                 RCC_OscInitStruct->PLL.PLLN,
+
+                                 RCC_OscInitStruct->PLL.PLLQ,
+                                 RCC_OscInitStruct->PLL.PLLR);
+#endif
 
             /* Enable the main PLL. */
             __HAL_RCC_PLL_ENABLE();
