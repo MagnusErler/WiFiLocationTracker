@@ -138,6 +138,7 @@ static uint8_t                  rx_remaining    = 0;      // Remaining downlink 
 /**
  * @brief Internal credentials
  */
+static uint8_t join_eui[SMTC_MODEM_EUI_LENGTH] = { 0 };
 static uint8_t chip_eui[SMTC_MODEM_EUI_LENGTH] = { 0 };
 static uint8_t chip_pin[SMTC_MODEM_PIN_LENGTH] = { 0 };
 
@@ -273,6 +274,8 @@ static void modem_event_callback( void ) {
             SMTC_HAL_TRACE_INFO( "Event received: RESET\n" );
 
             // Get internal credentials
+            smtc_modem_get_joineui( stack_id, join_eui );
+            SMTC_HAL_TRACE_ARRAY( "JOIN_EUI", join_eui, SMTC_MODEM_EUI_LENGTH );
             smtc_modem_get_chip_eui( stack_id, chip_eui );
             SMTC_HAL_TRACE_ARRAY( "CHIP_EUI", chip_eui, SMTC_MODEM_EUI_LENGTH );
             smtc_modem_get_pin( stack_id, chip_pin );
