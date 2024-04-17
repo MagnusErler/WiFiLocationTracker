@@ -40,6 +40,7 @@ BOARD_C_SOURCES = \
 	smtc_modem_hal/smtc_modem_hal.c\
 	smtc_hal_l4/smtc_hal_flash.c\
 	smtc_hal_l4/smtc_hal_gpio.c\
+	smtc_hal_l4/smtc_hal_i2c.c\
 	smtc_hal_l4/smtc_hal_mcu.c\
 	smtc_hal_l4/smtc_hal_rtc.c\
 	smtc_hal_l4/smtc_hal_rng.c\
