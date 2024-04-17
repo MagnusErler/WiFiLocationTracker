@@ -5,7 +5,6 @@ import "leaflet/dist/leaflet.css";
 
 import MapComponent from "./components/MapComponent";
 import SettingsMenu from "./components/SettingsMenu";
-import AddDeviceMenu from "./components/AddDeviceMenu";
 
 import ListIcon from '@mui/icons-material/List';
 import AddIcon from '@mui/icons-material/Add';
