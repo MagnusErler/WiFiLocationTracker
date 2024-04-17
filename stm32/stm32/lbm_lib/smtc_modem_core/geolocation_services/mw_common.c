@@ -122,6 +122,7 @@ bool mw_radio_configure_for_scan( const void* radio_context )
         ( ( errors & LR11XX_SYSTEM_ERRORS_LF_XOSC_START_MASK ) == LR11XX_SYSTEM_ERRORS_LF_XOSC_START_MASK ) )
     {
         // lr11xx specification is telling to reset the radio to fix this error
+        SMTC_MODEM_HAL_TRACE_ERROR( "LF_XOSC_START error, reset the radio\n" );
         return false;
     }
 
