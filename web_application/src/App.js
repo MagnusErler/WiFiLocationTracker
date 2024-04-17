@@ -5,8 +5,10 @@ import "leaflet/dist/leaflet.css";
 
 import MapComponent from "./components/MapComponent";
 import SettingsMenu from "./components/SettingsMenu";
+import AddDeviceMenu from "./components/AddDeviceMenu";
 
 import ListIcon from '@mui/icons-material/List';
+import AddIcon from '@mui/icons-material/Add';
 
 function convertUnixSecondsToReadableDate(timestamp) {
   const date = new Date(timestamp * 1000); // Convert to milliseconds
@@ -109,7 +111,6 @@ export default function App() {
     {
       deviceId: 1,
       name: "Hilti rundsav",
-      description: "Hilti rundsav",
       batteryStatus: "100%",
       temperature: "20°C",
       updateInterval: "5 min"
@@ -117,7 +118,6 @@ export default function App() {
     {
       deviceId: 2,
       name: "MaiCut flamingoskærer",
-      description: "MaiCut flamingoskærer",
       batteryStatus: "100%",
       temperature: "24°C",
       updateInterval: "2.5 timer"
@@ -125,7 +125,6 @@ export default function App() {
     {
       deviceId: 3,
       name: "SoRoTo tvangsblander 40 liter",
-      description: "SoRoTo tvangsblander 40 liter",
       batteryStatus: "100%",
       temperature: "-6°C",
       updateInterval: "12 timer"
@@ -133,7 +132,6 @@ export default function App() {
     {
       deviceId: 4,
       name: "Milwaukee Inspektionskamera M18 SIC36-0",
-      description: "Milwaukee Inspektionskamera M18 SIC36-0",
       batteryStatus: "100%",
       temperature: "12°C",
       updateInterval: "6 timer"
@@ -201,6 +199,12 @@ export default function App() {
       >
         <ListIcon />
       </button>
+      {/* <button
+        className="add-button"
+        onClick={handleButtonClick}
+      >
+        <AddIcon />
+      </button> */}
       <MapComponent
         center={center}
         allMarkers={filteredAllMarkers}

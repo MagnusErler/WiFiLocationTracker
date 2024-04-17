@@ -49,6 +49,27 @@
   background-color: #f0f0f0;
 }
 
+.add-button {
+  position: absolute;
+  top: 70px;
+  right: 20px;
+  z-index: 1;
+  background-color: #2EBB6D;
+  color: rgb(255, 255, 255);
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 50%;
+  display: flex; /* Use flexbox */
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  transition: background-color 0.3s;
+}
+
+.add-button:hover {
+  background-color: #68cd96;
+}
+
 /* .cluster-icon {
   background-color: #333;
   height: 2em;
