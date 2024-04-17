@@ -273,10 +273,10 @@ static void modem_event_callback( void ) {
             smtc_modem_store_and_forward_flash_clear_data( stack_id );
             smtc_modem_store_and_forward_set_state( stack_id, SMTC_MODEM_STORE_AND_FORWARD_ENABLE );
             
-            // WiFi scan first, then GNSS scan
             switch (1) {
             case 1:
-                // setupWiFi( stack_id );
+                // WiFi scan first, then GNSS scan
+                setupWiFi( stack_id );
                 setupGNSS( stack_id );
                 break;
             case 2:
