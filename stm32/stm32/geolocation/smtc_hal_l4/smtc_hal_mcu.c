@@ -49,6 +49,7 @@
 #include "smtc_hal_uart.h"
 #include "smtc_hal_rtc.h"
 #include "smtc_hal_spi.h"
+#include "smtc_hal_i2c.h"
 #include "smtc_hal_lp_timer.h"
 #include "smtc_hal_watchdog.h"
 
@@ -160,6 +161,9 @@ void hal_mcu_init( void )
 
     // Initialize RTC (for real time and wut)
     hal_rtc_init( );
+
+    /* Initialize I2C */
+    hal_i2c_init( 1, I2C_SDA, I2C_SCL );
 }
 
 void hal_mcu_reset( void )

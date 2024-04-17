@@ -124,7 +124,7 @@ void hal_i2c_init( const uint32_t id, const hal_gpio_pin_names_t sda, const hal_
     uint32_t local_id = id - 1;
 
     hal_i2c[local_id].handle.Instance              = hal_i2c[local_id].interface;
-    hal_i2c[local_id].handle.Init.Timing           = 0x00707CBB;
+    hal_i2c[local_id].handle.Init.Timing           = 0x10909CEC;
     hal_i2c[local_id].handle.Init.OwnAddress1      = 0;
     hal_i2c[local_id].handle.Init.AddressingMode   = I2C_ADDRESSINGMODE_7BIT;
     hal_i2c[local_id].handle.Init.DualAddressMode  = I2C_DUALADDRESS_DISABLE;
@@ -282,5 +282,5 @@ static uint8_t i2c_read_buffer( const uint32_t id, uint8_t device_addr, uint16_t
         memAddSize = I2C_MEMADD_SIZE_16BIT;
     }
 
-    return HAL_I2C_Mem_Read( &hal_i2c[local_id].handle, device_addr, addr, memAddSize, buffer, size, 2000 );
+    return HAL_I2C_Mem_Read( &hal_i2c[local_id].handle, device_addr, addr, memAddSize, buffer, size, 5000 );
 }

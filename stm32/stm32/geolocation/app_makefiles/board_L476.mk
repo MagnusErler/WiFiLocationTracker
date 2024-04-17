@@ -25,6 +25,8 @@ BOARD_C_SOURCES = \
 	mcu_drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rtc.c \
 	mcu_drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rtc_ex.c \
 	mcu_drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_spi.c \
+	mcu_drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c \
+	mcu_drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c_ex.c \
 	mcu_drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c \
 	mcu_drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_iwdg.c \
 	mcu_drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c \
@@ -49,6 +51,7 @@ BOARD_C_SOURCES = \
 	smtc_hal_l4/smtc_hal_trace.c\
 	smtc_hal_l4/smtc_hal_uart.c\
 	smtc_hal_l4/smtc_hal_watchdog.c\
+	lis2de12/lis2de12.c
 
 BOARD_ASM_SOURCES =  \
 	mcu_drivers/core/STM32L4xx/startup_stm32l476xx.s
@@ -63,4 +66,5 @@ BOARD_C_INCLUDES =  \
 	-Iuser_app\
 	-Imcu_drivers/core\
 	-Ismtc_modem_hal\
-	-Ismtc_hal_l4
+	-Ismtc_hal_l4\
+	-Ilis2de12\

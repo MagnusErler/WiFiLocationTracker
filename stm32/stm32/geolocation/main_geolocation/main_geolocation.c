@@ -58,6 +58,8 @@
 
 #include "lr1110_board.h"
 
+#include "lis2de12.h"
+
 /*
  * -----------------------------------------------------------------------------
  * --- PRIVATE MACROS-----------------------------------------------------------
@@ -193,7 +195,19 @@ void main_geolocation( void ) {
     }
     SMTC_HAL_TRACE_INFO( "LR11XX FW: 0x%04X, type: 0x%02X\n", lr11xx_fw_version.fw, lr11xx_fw_version.type );
 
+    // accelerometer_init( INT_1 );
+
+
+    // acc_read_raw_data( );
+    // SMTC_HAL_TRACE_INFO( "Acceleration [mg]: X=%4.2f mg | Y=%4.2f mg | Z=%4.2f mg \r\n",
+    //                         ( double ) acc_get_raw_x( ), ( double ) acc_get_raw_y( ),
+    //                         ( double ) acc_get_raw_z( ) );
+
     while( 1 ) {
+
+        // SMTC_HAL_TRACE_INFO("Temperature: %d\n", acc_get_temperature( ));
+        // SMTC_HAL_TRACE_INFO("X: %d\n", acc_get_raw_x( ));
+
         // Modem process launch
         sleep_time_ms = smtc_modem_run_engine( );
 
@@ -277,11 +291,12 @@ static void modem_event_callback( void ) {
             case 1:
                 // WiFi scan first, then GNSS scan
                 setupWiFi( stack_id );
-                setupGNSS( stack_id );
+                // setupGNSS( stack_id );
                 break;
             case 2:
                 setupGNSS( stack_id );
                 setupWiFi( stack_id );
+                break;
             default:
                 break;
             }
