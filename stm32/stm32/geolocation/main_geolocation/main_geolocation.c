@@ -214,6 +214,23 @@ void main_geolocation( void ) {
  * --- PRIVATE FUNCTIONS DEFINITION --------------------------------------------
  */
 
+void setupWiFi(uint8_t stack_id) {
+    smtc_modem_wifi_send_mode( stack_id, SMTC_MODEM_SEND_MODE_UPLINK );
+    /* Program Wi-Fi scan */
+    smtc_modem_wifi_scan( stack_id, 0 );
+}
+
+void setupGNSS(uint8_t stack_id) {
+    /* Start almanac demodulation service */
+    smtc_modem_almanac_demodulation_set_constellations( stack_id, SMTC_MODEM_GNSS_CONSTELLATION_GPS_BEIDOU );
+    smtc_modem_almanac_demodulation_start( stack_id );
+
+    smtc_modem_gnss_send_mode( stack_id, SMTC_MODEM_SEND_MODE_STORE_AND_FORWARD );
+    /* Program GNSS scan */
+    smtc_modem_gnss_set_constellations( stack_id, SMTC_MODEM_GNSS_CONSTELLATION_GPS_BEIDOU );
+    smtc_modem_gnss_scan( stack_id, SMTC_MODEM_GNSS_MODE_MOBILE, 0 );
+}
+
 /**
  * @brief User callback for modem event
  *
@@ -251,43 +268,20 @@ static void modem_event_callback( void ) {
             smtc_modem_set_region( stack_id, MODEM_EXAMPLE_REGION );
             /* Schedule a Join LoRaWAN network */
             smtc_modem_join_network( stack_id );
+
+            /* Set GNSS and Wi-Fi send mode */
+            smtc_modem_store_and_forward_flash_clear_data( stack_id );
+            smtc_modem_store_and_forward_set_state( stack_id, SMTC_MODEM_STORE_AND_FORWARD_ENABLE );
             
             // WiFi scan first, then GNSS scan
             switch (1) {
             case 1:
-                /* Set GNSS and Wi-Fi send mode */
-                smtc_modem_store_and_forward_flash_clear_data( stack_id );
-                smtc_modem_store_and_forward_set_state( stack_id, SMTC_MODEM_STORE_AND_FORWARD_ENABLE );
-
-                smtc_modem_wifi_send_mode( stack_id, SMTC_MODEM_SEND_MODE_UPLINK );
-                /* Program Wi-Fi scan */
-                smtc_modem_wifi_scan( stack_id, 0 );
-
-                smtc_modem_gnss_send_mode( stack_id, SMTC_MODEM_SEND_MODE_STORE_AND_FORWARD );
-                /* Program GNSS scan */
-                smtc_modem_gnss_set_constellations( stack_id, SMTC_MODEM_GNSS_CONSTELLATION_GPS_BEIDOU );
-                smtc_modem_gnss_scan( stack_id, SMTC_MODEM_GNSS_MODE_MOBILE, 0 );
+                // setupWiFi( stack_id );
+                setupGNSS( stack_id );
                 break;
             case 2:
-                /* Start almanac demodulation service */
-                smtc_modem_almanac_demodulation_set_constellations( stack_id, SMTC_MODEM_GNSS_CONSTELLATION_GPS_BEIDOU );
-                smtc_modem_almanac_demodulation_start( stack_id );
-                /* Set GNSS and Wi-Fi send mode */
-                smtc_modem_store_and_forward_flash_clear_data( stack_id );
-                smtc_modem_store_and_forward_set_state( stack_id, SMTC_MODEM_STORE_AND_FORWARD_ENABLE );
-
-                /* Set GNSS and Wi-Fi send mode */
-                smtc_modem_store_and_forward_flash_clear_data( stack_id );
-                smtc_modem_store_and_forward_set_state( stack_id, SMTC_MODEM_STORE_AND_FORWARD_ENABLE );
-
-                smtc_modem_gnss_send_mode( stack_id, SMTC_MODEM_SEND_MODE_STORE_AND_FORWARD );
-                /* Program GNSS scan */
-                smtc_modem_gnss_set_constellations( stack_id, SMTC_MODEM_GNSS_CONSTELLATION_GPS_BEIDOU );
-                smtc_modem_gnss_scan( stack_id, SMTC_MODEM_GNSS_MODE_MOBILE, 0 );
-
-                smtc_modem_wifi_send_mode( stack_id, SMTC_MODEM_SEND_MODE_UPLINK );
-                /* Program Wi-Fi scan */
-                smtc_modem_wifi_scan( stack_id, 0 );
+                setupGNSS( stack_id );
+                setupWiFi( stack_id );
             default:
                 break;
             }
@@ -328,9 +322,11 @@ static void modem_event_callback( void ) {
 
             switch (rx_metadata.fport) {
             case 1:
-                smtc_board_led_set( smtc_board_get_led_tx_mask( ), true );
+
                 SMTC_HAL_TRACE_PRINTF( "payload in dec: %u\n", (rx_payload[0] << 8) + rx_payload[1]);
                 GEOLOCATION_GNSS_SCAN_PERIOD_S = (rx_payload[0] << 8) + rx_payload[1];
+
+                // smtc_modem_wifi_scan( stack_id, GEOLOCATION_WIFI_SCAN_PERIOD_S );
 
 
 
