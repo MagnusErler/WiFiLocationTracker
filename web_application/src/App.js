@@ -258,6 +258,7 @@ export default function App() {
         handleShowLocationSwitch={handleShowLocationSwitch} 
         handleShowMovement={handleShowMovementSwitch}
         handleTrackerInformationUpdate={handleTrackerInformationUpdate}
+        markers={markers}
       />
     </div>
   );

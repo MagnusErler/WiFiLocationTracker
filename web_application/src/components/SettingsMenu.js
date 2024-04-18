@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./SettingsMenu.css";
 import Switch from '@mui/material/Switch';
 
-const SettingsMenu = ({ isOpen, handleClose, trackerInformation, handleShowLocationSwitch, handleShowMovement, handleTrackerInformationUpdate }) => {
+const SettingsMenu = ({ isOpen, handleClose, trackerInformation, handleShowLocationSwitch, handleShowMovement, handleTrackerInformationUpdate, markers }) => {
   const [showCurrentLocationIds, setShowCurrentLocationIds] = useState(trackerInformation.map(tracker => tracker.deviceId));
   const [showMovementIds, setShowMovementIds] = useState([]);
   const [originalNames, setOriginalNames] = useState([]);
@@ -10,6 +10,10 @@ const SettingsMenu = ({ isOpen, handleClose, trackerInformation, handleShowLocat
   useEffect(() => {
     setOriginalNames(trackerInformation.map(tracker => tracker.name));
   }, [isOpen]);
+
+  const hasCorrespondingPing = (deviceId) => {
+    return markers.some(marker => marker.deviceId === deviceId);
+  };
 
   const handleLocationSwitch = (id) => {
     const newShowCurrentLocationIds = showCurrentLocationIds.includes(id)
@@ -90,65 +94,7 @@ const SettingsMenu = ({ isOpen, handleClose, trackerInformation, handleShowLocat
       }
     });
 
-
-
-
     setOriginalNames(trackerInformation.map(tracker => tracker.name));
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // // Iterate over trackerInformation to find devices with changed names
-    // const devicesToUpdate = trackerInformation.filter(tracker => tracker.name !== originalNames);
-    
-    // // Make API calls to update each device's name
-    // devicesToUpdate.forEach(async (tracker) => {
-    //   try {
-    //     const token = process.env.REACT_APP_TTN_API_TOKEN;
-    //     if (!token) {
-    //       console.error("API token is not available.");
-    //       return;
-    //     }
-    //     console.log(`Updating device ${tracker.deviceId}...`);
-    //     console.log(`New name: ${tracker.name}`);
-    //     console.log(`Original name: ${tracker.originalName}`);
-    //     console.log(`Application ID: ${tracker.applicationId}`);
-    //     const response = await fetch(`/api/v3/applications/${tracker.applicationId}/devices/${tracker.deviceId}`, {
-    //       method: 'PUT',
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //         Authorization: `Bearer ${token}`,
-    //       },
-    //       body: JSON.stringify({
-    //         end_device: {
-    //           name: tracker.name
-    //         },
-    //         field_mask: {
-    //           paths: ['name']
-    //         }
-    //       })
-    //     });
-
-    //     if (!response.ok) {
-    //       throw new Error(`Failed to update device ${tracker.deviceId}.`);
-    //     }
-
-    //     console.log(`Device ${tracker.deviceId} updated successfully`);
-    //   } catch (error) {
-    //     console.error(`Error updating device ${tracker.deviceId}:`, error);
-    //   }
-    // });
-
-    // Close the menu
     handleClose();
   };
 
@@ -188,6 +134,7 @@ const SettingsMenu = ({ isOpen, handleClose, trackerInformation, handleShowLocat
                   <Switch
                     color="warning"
                     checked={showCurrentLocationIds.includes(tracker.deviceId)}
+                    disabled={!hasCorrespondingPing(tracker.deviceId)}
                     onChange={() => handleLocationSwitch(tracker.deviceId)}
                   />
                 </td>
@@ -195,6 +142,7 @@ const SettingsMenu = ({ isOpen, handleClose, trackerInformation, handleShowLocat
                   <Switch
                     color="warning"
                     checked={showMovementIds.includes(tracker.deviceId)}
+                    disabled={!hasCorrespondingPing(tracker.deviceId)}
                     onChange={() => handleMovementSwitch(tracker.deviceId)}
                   />
                 </td>
