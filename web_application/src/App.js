@@ -116,12 +116,10 @@ export default function App() {
         const token = process.env.REACT_APP_TTN_API_TOKEN;
         const appID = process.env.REACT_APP_APP_ID;
         if (!token) {
-          console.error("API token ID is not available.");
-          return;
+          throw new Error("API token ID is not available.");
         }
         if (!appID) {
-          console.error("Application ID is not available.");
-          return;
+          throw new Error("Application ID is not available.");
         }
         const response = await fetch(`https://eu1.cloud.thethings.network/api/v3/applications/${appID}/devices?field_mask=name,description`, {
           method: "GET",
@@ -165,10 +163,10 @@ export default function App() {
             });
           }
         } else {
-          console.error("Failed to fetch tracker information:", response.status, response.statusText);
+          throw new Error(`Failed to fetch tracker information: ${response.status}, ${response.statusText}`);
         }
       } catch (error) {
-        console.error("Error fetching tracker information:", error);
+        alert("Failed to fetch tracker information. Either your API key or your application key is wrong");
       }
     };
   
@@ -194,6 +192,32 @@ export default function App() {
 
   const handleShowMovementSwitch = (ids) => {
     setShowMovement(ids);
+  };
+
+  const newMarker = {
+    deviceID: "0016c001f0003fc5",
+    geocode: [56.85, 10.1522],
+    timestamp: 1712781085
+  };
+
+  const addMarkerToDatabase = async () => {
+    console.log("Adding marker to database...");
+    try {
+      const response = await fetch('http://localhost:3001/GeolocationSolves', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newMarker)
+      });
+      if (response.ok) {
+        console.log('Marker added to database successfully');
+      } else {
+        console.error('Failed to add marker to database');
+      }
+    } catch (error) {
+      console.error('Error adding marker to database:', error);
+    }
   };
 
   // Function to filter the markers so that only the newest marker for each ID is included
@@ -240,12 +264,12 @@ export default function App() {
       >
         <ListIcon />
       </button>
-      {/* <button
+      <button
         className="add-button"
-        onClick={handleButtonClick}
+        onClick={addMarkerToDatabase}
       >
         <AddIcon />
-      </button> */}
+      </button>
       <MapComponent
         center={center}
         allMarkers={filteredAllMarkers}
@@ -263,9 +287,3 @@ export default function App() {
     </div>
   );
 }
-
- // const sortedAllLocationMarkers = filteredAllLocationMarkers.sort((a, b) => {
-  //   const timestampA = new Date(a.timeStamp).getTime() / 1000;
-  //   const timestampB = new Date(b.timeStamp).getTime() / 1000;
-  //   return timestampA - timestampB;
-  // });
