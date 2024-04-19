@@ -170,8 +170,8 @@ int main(void)
   initLIS2DE12(hi2c1);
 
   // GNSS
-  // setLR1110_GNSS_Constellation(lr1110_context, 0b11);
-  // getLR1110_GNSS_Version(lr1110_context);
+  setLR1110_GNSS_Constellation(lr1110_context, 0b11);
+  getLR1110_GNSS_Version(lr1110_context);
 
   // LORA
   // setLR1110_LoRa_Packet_Type(lr1110_context, 0x02);
@@ -198,8 +198,8 @@ int main(void)
     //   }
     // }
 
-    getLIS2DE12_Temperature();
-    getLIS2DE12_Acceleration();
+    // getLIS2DE12_Temperature();
+    // getLIS2DE12_Acceleration();
 
     
 
@@ -227,12 +227,12 @@ int main(void)
     // getLR1110_Errors(lr1110_context);
 
     // GNSS
-    // scanLR1110_GNSS_Satellites(lr1110_context, 0, 0, 0);
-    // uint8_t numberOfDetectedSatellites = getLR1110_GNSS_Number_of_Detected_Satellites(lr1110_context);
-    // if (numberOfDetectedSatellites > 0) {
-    //   getLR1110_GNSS_Detected_Satellites(lr1110_context, numberOfDetectedSatellites);
-    //   getLR1110_GNSS_Consumption(lr1110_context);
-    // }
+    scanLR1110_GNSS_Satellites(lr1110_context, 0, 0, 0);
+    uint8_t numberOfDetectedSatellites = getLR1110_GNSS_Number_of_Detected_Satellites(lr1110_context);
+    if (numberOfDetectedSatellites > 0) {
+      getLR1110_GNSS_Detected_Satellites(lr1110_context, numberOfDetectedSatellites);
+      getLR1110_GNSS_Consumption(lr1110_context);
+    }
     
     /* USER CODE END WHILE */
 
