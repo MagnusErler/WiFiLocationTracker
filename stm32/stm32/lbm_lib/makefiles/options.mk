@@ -117,7 +117,7 @@ LBM_DEVICE_MANAGEMENT ?= no
 # Miscellaneous options
 #-----------------------------------------------------------------------------
 
-# Geolocation feature
+# Geolocation feature (default no)
 LBM_GEOLOCATION ?= no
 
 #Store and Forward Management feature

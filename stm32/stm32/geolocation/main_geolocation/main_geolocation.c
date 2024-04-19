@@ -293,7 +293,7 @@ static void modem_event_callback( void ) {
             switch (1) {
             case 1:
                 // WiFi scan first, then GNSS scan
-                // setupWiFi( stack_id );
+                setupWiFi( stack_id );
                 // setupGNSS( stack_id );
                 break;
             case 2:
