@@ -217,6 +217,25 @@ export default function App() {
     return Object.values(newestMarkers);
   };
 
+  const claimDevices = async () => {
+    try {
+      const devicesToClaim = [
+        // Define devices to claim here, following the example format
+        {
+          "DevEUI": "58-A0-CB-10-00-00-A0-10",
+          "claim": "8c0dece8"
+        },
+        // Add more devices as needed...
+      ];
+  
+      const response = await axios.post("/api/claimDevicesOnJoinServer", devicesToClaim);
+      
+    } catch (error) {
+      console.error("Failed to claim devices:", error);
+      // Handle error
+    }
+  };
+
   // Update filtered markers when toggling switches
   const filteredCurrentLocationMarkers = filterNewestMarkers(markers.filter(marker => showCurrentLocation.includes(marker.deviceId)));
   const filteredAllLocationMarkers = markers.filter(marker => showMovement.includes(marker.deviceId));
@@ -252,7 +271,7 @@ export default function App() {
       </button>
       <button
         className="add-button"
-        onClick={getDeviceInfo}
+        onClick={claimDevices}
       >
         <AddIcon />
       </button>
