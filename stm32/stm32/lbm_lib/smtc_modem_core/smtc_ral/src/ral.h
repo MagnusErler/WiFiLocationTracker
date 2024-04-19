@@ -48,6 +48,8 @@ extern "C" {
 #include <stdbool.h>
 #include "ral_defs.h"
 #include "ral_drv.h"
+
+#include "smtc_modem_hal_dbg_trace.h"
 /*
  * -----------------------------------------------------------------------------
  * --- PUBLIC MACROS -----------------------------------------------------------
@@ -97,6 +99,7 @@ static inline bool ral_handles_part( const ral_t* radio, const char* part_number
  */
 static inline ral_status_t ral_reset( const ral_t* radio )
 {
+    SMTC_MODEM_HAL_TRACE_PRINTF( "RAL: Reset radio\r\n" );
     return radio->driver.reset( radio->context );
 }
 
@@ -111,6 +114,7 @@ static inline ral_status_t ral_reset( const ral_t* radio )
  */
 static inline ral_status_t ral_init( const ral_t* radio )
 {
+    SMTC_MODEM_HAL_TRACE_PRINTF( "RAL: Initialize radio\r\n" );
     return radio->driver.init( radio->context );
 }
 
@@ -136,6 +140,7 @@ static inline ral_status_t ral_wakeup( const ral_t* radio )
  */
 static inline ral_status_t ral_set_sleep( const ral_t* radio, const bool retain_config )
 {
+    SMTC_MODEM_HAL_TRACE_PRINTF( "RAL: Set radio in sleep mode\r\n" );
     return radio->driver.set_sleep( radio->context, retain_config );
 }
 

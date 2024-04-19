@@ -211,6 +211,8 @@ void rp_init( radio_planner_t* rp, const ralf_t* radio )
     memset( rp, 0, sizeof( radio_planner_t ) );
     rp->radio = radio;
 
+    SMTC_MODEM_HAL_TRACE_INFO( "RP: Radio planner init\n" );
+
     for( int32_t i = 0; i < RP_NB_HOOKS; i++ )
     {
         rp->tasks[i].hook_id                      = i;
