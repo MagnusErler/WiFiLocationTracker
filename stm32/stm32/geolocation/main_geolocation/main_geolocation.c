@@ -195,6 +195,7 @@ void main_geolocation( void ) {
                               lr11xx_fw_version.fw );
     }
     SMTC_HAL_TRACE_INFO( "LR11XX FW: 0x%04X, type: 0x%02X\n", lr11xx_fw_version.fw, lr11xx_fw_version.type );
+    SMTC_HAL_TRACE_INFO( "LR11XX HW: 0x%02X\n", lr11xx_fw_version.hw );
 
     // accelerometer_init( INT_1 );
 
