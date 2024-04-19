@@ -25,8 +25,8 @@ GeolocationSolve.init({
     type: DataTypes.JSON,
     allowNull: false,
   },
-  timestamp:  {
-    type: DataTypes.INTEGER,
+  source: {
+    type: DataTypes.STRING,
     allowNull: false,
   },
 }, { sequelize, modelName: 'geolocationSolve' });
@@ -59,14 +59,24 @@ app.get('/GeolocationSolves/:deviceID', async (req, res) => {
 app.post('/GeolocationSolves', async (req, res) => {
   try {
     console.log(req.body);
-    const { deviceID, geocode, timestamp } = req.body;
-    console.log(deviceID);
-    console.log(geocode);
-    console.log(timestamp);
-    const geolocationSolve = await GeolocationSolve.create({ deviceID, geocode, timestamp });
+    const { end_device_ids, location_solved } = req.body;
+    
+    // Extract device ID and geolocation data
+    const deviceID = end_device_ids.dev_eui;
+    const { location } = location_solved;
+    const { latitude, longitude, accuracy, source } = location;
+    
+    // Format geocode
+    const geocode = [latitude, longitude];
+      
+    // Save geolocation solve to the database
+    const geolocationSolve = await GeolocationSolve.create({ deviceID, geocode, accuracy, source});
+    
     res.json(geolocationSolve);
+    console.log('Geolocation solve added to database:', geolocationSolve.toJSON());
   } catch (error) {
     console.error('Error querying database:', error.message);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
@@ -74,3 +84,5 @@ app.post('/GeolocationSolves', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
+
+//TODO: Implement websocket server for real-time updates
