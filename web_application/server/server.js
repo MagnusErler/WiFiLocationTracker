@@ -1,7 +1,11 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const path = require('path');
 const { Sequelize, Model, DataTypes } = require('sequelize');
+const axios = require("axios");
+const fs = require("fs");
+const https = require("https");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -80,9 +84,33 @@ app.post('/GeolocationSolves', async (req, res) => {
   }
 });
 
+// Add a new endpoint for fetching device information from the external API
+app.get("/api/getDeviceInfoFromJoinserver", async (req, res) => {
+  try {
+    const a = "acct-d13";
+    const h = "de02lnxprodjs01.loraclouddemo.com:7009";
+    const u = "/api/v1/appo/list_devices";
+    const url = `https://${h}${u}`;
+    const cert_file = path.join(__dirname, "../credentials", `${a}.crt`);
+    const key_file = path.join(__dirname, "../credentials", `${a}.key`);
+    const trust_file = path.join(__dirname, "../credentials", `${a}.trust`);
+
+    const response = await axios.get(url, {
+      httpsAgent: new https.Agent({
+        cert: fs.readFileSync(cert_file),
+        key: fs.readFileSync(key_file),
+        ca: fs.readFileSync(trust_file)
+      })
+    });
+
+    res.json(response.data);
+  } catch (error) {
+    console.error("Failed to fetch device information:", error);
+    res.status(500).json({ error: "Failed to fetch device information" });
+  }
+});
+
 // Start server
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
-
-//TODO: Implement websocket server for real-time updates

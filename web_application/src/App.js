@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 import "./styles.css";
 import "leaflet/dist/leaflet.css";
@@ -194,29 +195,14 @@ export default function App() {
     setShowMovement(ids);
   };
 
-  const newMarker = {
-    deviceID: "0016c001f0003fc5",
-    geocode: [56.85, 10.1522],
-    timestamp: 1712781085
-  };
-
-  const addMarkerToDatabase = async () => {
-    console.log("Adding marker to database...");
+  const getDeviceInfo = async () => {
     try {
-      const response = await fetch('http://localhost:3001/GeolocationSolves', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newMarker)
-      });
-      if (response.ok) {
-        console.log('Marker added to database successfully');
-      } else {
-        console.error('Failed to add marker to database');
-      }
+      const response = await axios.get("/api/getDeviceInfoFromJoinserver");
+      console.log(response.data);
+      // Process device information as needed
     } catch (error) {
-      console.error('Error adding marker to database:', error);
+      console.error("Failed to fetch device information:", error);
+      alert("Failed to fetch device information. Check console for details.");
     }
   };
 
@@ -266,7 +252,7 @@ export default function App() {
       </button>
       <button
         className="add-button"
-        onClick={addMarkerToDatabase}
+        onClick={getDeviceInfo}
       >
         <AddIcon />
       </button>
