@@ -22,7 +22,7 @@ uint8_t getLR1110_GNSS_Number_of_Detected_Satellites( const void* context) {
 
     if (lr1110_spi_read( context, cbuffer, LR1110_GNSS_CMD_LENGTH_GET_NUMBER_OF_SATELLITES, rbuffer, LR1110_GNSS_RES_LENGTH_GET_NUMBER_OF_SATELLITES ) == LR1110_SPI_STATUS_OK) {
         HAL_DBG_TRACE_INFO_VALUE("%d\r\n", (uint8_t)rbuffer[1]);
-        return (uint8_t)rbuffer[0];
+        return (uint8_t)rbuffer[1];
     } else {
         HAL_DBG_TRACE_ERROR("Failed to get number of detected satellites\r\n");
         return 0;
