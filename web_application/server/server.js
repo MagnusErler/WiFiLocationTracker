@@ -296,52 +296,6 @@ app.post('/api/createDeviceOnTTN', async (req, res) => {
   }
 });
 
-app.post('/api/createDeviceOnTTN', async (req, res) => {
-  try {
-    const { device_id, dev_eui, join_eui } = req.body;
-    
-    // 
-    const payload = {
-      end_device: {
-        ids: {
-          device_id,
-          dev_eui,
-          join_eui
-        },
-        join_server_address: "js.loracloud.com:7009",
-        network_server_address: "eu1.cloud.thethings.network",
-        application_server_address: "eu1.cloud.thethings.network"
-      },
-      field_mask: {
-        paths: [
-          "join_server_address",
-          "network_server_address",
-          "application_server_address",
-          "ids.dev_eui",
-          "ids.join_eui"
-        ]
-      }
-    };
-    
-    const response = await axios.post('https://eu1.cloud.thethings.network/api/v3/applications/my-test-app/devices', payload, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': '${token}'
-      }
-    });
-    
-
-
-
-
-
-    res.json(response.data);
-  } catch (error) {
-    console.error('Error creating device:', error.response.data);
-    res.status(500).json({ error: 'An error occurred while creating the device.' });
-  }
-});
-
 // Start server
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
