@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./ModalMenu.css";
 import "./SettingsMenu.css";
 import Switch from '@mui/material/Switch';
 
@@ -100,8 +101,8 @@ const SettingsMenu = ({ isOpen, handleClose, trackerInformation, handleShowLocat
 
   return (
     <div className={`modal ${isOpen ? "show" : ""}`}>
-      <div className="modal-content">
-        <span className="close" onClick={handleCloseAndUpdateDevices}>&times;</span>
+      <div className="modal-content settings-menu-size">
+        <span className="close close-placement-settings-menu" onClick={handleCloseAndUpdateDevices}>&times;</span>
         <table>
           <thead>
             <tr>

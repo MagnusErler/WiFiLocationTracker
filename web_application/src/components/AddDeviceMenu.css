@@ -1,0 +1,66 @@
+.add-device-menu-size {
+    width: 30%;
+    max-width: 300px;
+}
+
+.error-message {
+    color: #f00;
+    margin-top: 10px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-group input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.input-group input[type="text"]:focus {
+    outline: none;
+    border-color: #2196f3;
+}
+
+button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.show {
+    display: block; /* Show the modal */
+}
+
+.modal-content h2 {
+    background-color: #CF6C11;
+    color: white;
+    padding: 10px;
+    border-radius: 8px 8px 0 0;
+    margin-top: -20px;
+    margin-bottom: 20px;
+    font-weight: 400;
+}
+
+.main-content {
+    margin: 0% 4% 2% 4%;
+}
+
+.close-placement-add-device-menu {
+    margin-top: -25px;
+}

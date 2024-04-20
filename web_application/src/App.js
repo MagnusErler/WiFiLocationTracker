@@ -6,6 +6,7 @@ import "leaflet/dist/leaflet.css";
 
 import MapComponent from "./components/MapComponent";
 import SettingsMenu from "./components/SettingsMenu";
+import AddDeviceMenu from "./components/AddDeviceMenu";
 
 import ListIcon from '@mui/icons-material/List';
 import AddIcon from '@mui/icons-material/Add';
@@ -177,13 +178,14 @@ export default function App() {
   const center = [56.234538, 10.231792]; // Denmark coordinates
   const [showCurrentLocation, setShowCurrentLocation] = useState(trackerInformation.map(tracker => tracker.deviceId));
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [isAddDeviceMenuOpen, setAddDeviceMenuOpen] = useState(false);
   const [showMovement, setShowMovement] = useState([]);
 
-  const handleButtonClick = () => {
+  const handleOpenSettingsMenu = () => {
     setSettingsOpen(true);
   };
 
-  const handleCloseSettings = () => {
+  const handleCloseSettingsMenu = () => {
     setSettingsOpen(false);
   };
 
@@ -193,6 +195,20 @@ export default function App() {
 
   const handleShowMovementSwitch = (ids) => {
     setShowMovement(ids);
+  };
+
+  const handleOpenAddDeviceMenu = () => {
+    setAddDeviceMenuOpen(true);
+  };
+
+  const handleCloseAddDeviceMenu = () => {
+    setAddDeviceMenuOpen(false);
+  };
+
+  const handleAddDevice = (formData) => {
+    // Make API call to add the device with the formData
+    console.log("Adding device:", formData);
+    // Update state with the newly added device
   };
 
   const getDeviceInfo = async () => {
@@ -265,13 +281,13 @@ export default function App() {
     <div className="map-container">
       <button
         className="menu-button"
-        onClick={handleButtonClick}
+        onClick={handleOpenSettingsMenu}
       >
         <ListIcon />
       </button>
       <button
         className="add-button"
-        onClick={claimDevices}
+        onClick={handleOpenAddDeviceMenu}
       >
         <AddIcon />
       </button>
@@ -282,13 +298,17 @@ export default function App() {
       />
       <SettingsMenu 
         isOpen={settingsOpen} 
-        handleClose={handleCloseSettings} 
+        handleClose={handleCloseSettingsMenu} 
         trackerInformation={trackerInformation} 
         handleShowLocationSwitch={handleShowLocationSwitch} 
         handleShowMovement={handleShowMovementSwitch}
         handleTrackerInformationUpdate={handleTrackerInformationUpdate}
         markers={markers}
       />
+      <AddDeviceMenu 
+        isOpen={isAddDeviceMenuOpen} 
+        handleClose={handleCloseAddDeviceMenu} 
+        />
     </div>
   );
 }
