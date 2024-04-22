@@ -93,6 +93,11 @@ extern "C" {
 
 #define EXTI_BUTTON             PC_13
 
+
+// I2C specific pinout
+#define I2C_SCL                 PB_8
+#define I2C_SDA                 PB_9
+
 // clang-format on
 
 /*

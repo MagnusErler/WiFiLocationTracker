@@ -116,9 +116,6 @@ typedef enum gpio_pin_names_e
     // GPIOH
     PH_0 = 0x70,
     PH_1 = 0x71,
-    // MCU peripherals
-    I2C_SCL     = PB_8,
-    I2C_SDA     = PB_9,
     // Not connected
     NC = -1
 } hal_gpio_pin_names_t;
