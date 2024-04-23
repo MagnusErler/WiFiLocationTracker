@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./ModalMenu.css";
 import "./SettingsMenu.css";
 import Switch from '@mui/material/Switch';
+import axios from "axios";
 
 const SettingsMenu = ({ isOpen, handleClose, trackerInformation, handleShowLocationSwitch, handleShowMovement, handleTrackerInformationUpdate, markers }) => {
   const [showCurrentLocationIds, setShowCurrentLocationIds] = useState(trackerInformation.map(tracker => tracker.deviceId));
@@ -44,59 +45,46 @@ const SettingsMenu = ({ isOpen, handleClose, trackerInformation, handleShowLocat
   };
 
   const handleCloseAndUpdateDevices = async () => {
-    // compare the original names with the updated names and print out the ones that have changed
     const devicesToUpdate = trackerInformation.filter((tracker, index) => tracker.name !== originalNames[index]);
-    console.log("Devices to update:", devicesToUpdate);
-
-    // If there are devices to update, make API calls to update each device's name
+  
     if (devicesToUpdate.length === 0) {
       console.log("No devices to update.");
       handleClose();
       return;
     }
-
-    // Make API calls to update each device's name
+  
     const token = process.env.REACT_APP_TTN_API_TOKEN;
     const appID = process.env.REACT_APP_APP_ID;
+  
     if (!token) {
       console.error("API token ID is not available.");
       return;
     }
+    
     if (!appID) {
       console.error("Application ID is not available.");
       return;
     }
-    devicesToUpdate.forEach(async (tracker) => {
-      try {
+  
+    try {
+      for (const tracker of devicesToUpdate) {
         console.log(`Updating device ${tracker.deviceId} with original name ${originalNames[trackerInformation.findIndex(trackerInfo => trackerInfo.deviceId === tracker.deviceId)]} to new name ${tracker.name}...`);
-        const response = await fetch(`https://eu1.cloud.thethings.network/api/v3/applications/${appID}/devices/eui-${tracker.deviceId}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            end_device: {
-              name: tracker.name
-            },
-            field_mask: {
-              paths: ['name']
-            }
-          })
+  
+        const response = await axios.put(`/api/updateDeviceNameOnTTN`, {
+          deviceId: tracker.deviceId,
+          name: tracker.name,
+          Token: token,
+          AppID: appID
         });
-
-        if (!response.ok) {
-          throw new Error(`Failed to update device ${tracker.deviceId}. ${response.status}, ${response.statusText}`);
-        }
-
+  
         console.log(`Device ${tracker.deviceId} updated successfully`);
-      } catch (error) {
-        console.error(`Error updating device ${tracker.deviceId}:`, error);
       }
-    });
-
-    setOriginalNames(trackerInformation.map(tracker => tracker.name));
-    handleClose();
+  
+      setOriginalNames(trackerInformation.map(tracker => tracker.name));
+      handleClose();
+    } catch (error) {
+      console.error("Error updating devices:", error);
+    }
   };
 
   return (

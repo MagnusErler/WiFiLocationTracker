@@ -487,6 +487,53 @@ app.put("/api/createDeviceOnTTNAS", async (req, res) => {
   }
 });
 
+// Update device name on TTN
+app.put("/api/updateDeviceNameOnTTN", async (req, res) => {
+  try {
+    const deviceId = req.body.deviceId.toLowerCase();
+    const name = req.body.name;
+    const token = req.body.Token;
+    const appId = req.body.AppID;
+
+    console.log(req.body);
+    console.log("Device ID:", deviceId);
+    console.log("Name:", name);
+    console.log("Token:", token);
+    console.log("App ID:", appId);
+
+    if (!deviceId || !name || !appId || !token) {
+      return res.status(400).json({ error: 'Device ID, App ID, API token and name are required' });
+    }
+
+    const requestData = {
+      end_device: {
+        ids: {
+          device_id: deviceId,
+          application_ids: {
+            application_id: appId
+          }
+        },
+        name: name
+      },
+      field_mask: {
+        paths: ["name"]
+      }
+    };
+    
+    const response = await axios.put(`https://eu1.cloud.thethings.network/api/v3/applications/${appId}/devices/eui-${deviceId}`, requestData, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    res.json(response.data);
+  } catch (error) {
+    console.error("Failed to update device name on TTN:", error);
+    res.status(500).json({ error: 'Failed to update device name on TTN' });
+  }
+});
+
 // Start server
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);

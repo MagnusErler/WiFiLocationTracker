@@ -3,7 +3,7 @@ import axios from "axios";
 import "./ModalMenu.css"
 import "./AddDeviceMenu.css";
 
-const AddDeviceMenu = ({ isOpen, handleClose }) => {
+const AddDeviceMenu = ({ isOpen, handleClose, onDeviceAdded }) => {
   const [devEUI, setDevEUI] = useState("");
   const [joinEUI, setJoinEUI] = useState("00-16-C0-01-FF-FE-00-01");
   const [pin, setPin] = useState("");
@@ -102,12 +102,19 @@ const AddDeviceMenu = ({ isOpen, handleClose }) => {
         devEUI: cleanDevEUI,
         joinEUI: cleanJoinEUI
       };
+      const requestDataUpdateNameOnTTN = {
+        Token: process.env.REACT_APP_TTN_API_TOKEN,
+        AppID: process.env.REACT_APP_APP_ID,
+        name: name,
+        deviceId: cleanDevEUI
+      };
   
       // Call each endpoint sequentially
-      //await axios.post("/api/claimDevicesOnJoinServer", requestDataClaim);
+      await axios.post("/api/claimDevicesOnJoinServer", requestDataClaim);
       await axios.post("/api/createDeviceOnTTNIDServer", requestDataTTNID);
       await axios.put("/api/createDeviceOnTTNNS", requestDataTTNNS);
       await axios.put("/api/createDeviceOnTTNAS", requestDataTTNAS);
+      await axios.put("/api/updateDeviceNameOnTTN", requestDataUpdateNameOnTTN);
   
       // All requests succeeded
       console.log("All devices added successfully.");
@@ -116,6 +123,7 @@ const AddDeviceMenu = ({ isOpen, handleClose }) => {
       setJoinEUI("00-16-C0-01-FF-FE-00-01");
       setPin("");
       setErrorMessage("");
+      onDeviceAdded();
     } catch (error) {
       // Handle errors
       console.error("Error adding devices:", error);

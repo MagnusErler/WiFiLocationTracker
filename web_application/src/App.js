@@ -112,66 +112,6 @@ export default function App() {
   ]);
 
   useEffect(() => {
-    const fetchTrackerInformation = async () => {
-      console.log("Fetching tracker information...");
-      try {
-        const token = process.env.REACT_APP_TTN_API_TOKEN;
-        const appID = process.env.REACT_APP_APP_ID;
-        if (!token) {
-          throw new Error("API token ID is not available.");
-        }
-        if (!appID) {
-          throw new Error("Application ID is not available.");
-        }
-        const response = await fetch(`https://eu1.cloud.thethings.network/api/v3/applications/${appID}/devices?field_mask=name,description`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-  
-        if (response.ok) {
-          const data = await response.json();
-          console.log(data);
-          
-          if (data && data.end_devices) {
-            setTrackerInformation(prevState => {
-              // Iterate over the fetched data
-              data.end_devices.forEach(newDevice => {
-                const deviceIdWithoutPrefix = newDevice.ids.device_id.replace("eui-", "");
-                // Check if the device ID already exists in the current state
-                const existingIndex = prevState.findIndex(existingDevice => existingDevice.deviceId === deviceIdWithoutPrefix);
-                if (existingIndex !== -1) {
-                  // Update existing entry
-                  prevState[existingIndex] = {
-                    ...prevState[existingIndex],
-                    name: newDevice.name || "Unknown",
-                    batteryStatus: "-",
-                    temperature: "-",
-                    updateInterval: "-"
-                  };
-                } else {
-                  // Add new entry
-                  prevState.push({
-                    deviceId: deviceIdWithoutPrefix,
-                    name: newDevice.name || "Unknown",
-                    batteryStatus: "-",
-                    temperature: "-",
-                    updateInterval: "-"
-                  });
-                }
-              });
-              return [...prevState]; // Return a new array to trigger state update
-            });
-          }
-        } else {
-          throw new Error(`Failed to fetch tracker information: ${response.status}, ${response.statusText}`);
-        }
-      } catch (error) {
-        alert("Failed to fetch tracker information. Either your API key or your application key is wrong");
-      }
-    };
-  
     fetchTrackerInformation();
   }, []);
 
@@ -205,10 +145,15 @@ export default function App() {
     setAddDeviceMenuOpen(false);
   };
 
-  const handleAddDevice = (formData) => {
-    // Make API call to add the device with the formData
-    console.log("Adding device:", formData);
-    // Update state with the newly added device
+  // Function to handle successful addition of device and refetch tracker information
+  const handleAddDeviceSuccess = async () => {
+    try {
+      // Fetch tracker information again
+      await fetchTrackerInformation();
+    } catch (error) {
+      console.error("Error fetching tracker information:", error);
+      // Handle error fetching tracker information
+    }
   };
 
   const getDeviceInfo = async () => {
@@ -258,6 +203,66 @@ export default function App() {
     setTrackerInformation(updatedTrackerInformation);
   };
 
+  const fetchTrackerInformation = async () => {
+    console.log("Fetching tracker information...");
+    try {
+      const token = process.env.REACT_APP_TTN_API_TOKEN;
+      const appID = process.env.REACT_APP_APP_ID;
+      if (!token) {
+        throw new Error("API token ID is not available.");
+      }
+      if (!appID) {
+        throw new Error("Application ID is not available.");
+      }
+      const response = await fetch(`https://eu1.cloud.thethings.network/api/v3/applications/${appID}/devices?field_mask=name,description`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        
+        if (data && data.end_devices) {
+          setTrackerInformation(prevState => {
+            // Iterate over the fetched data
+            data.end_devices.forEach(newDevice => {
+              const deviceIdWithoutPrefix = newDevice.ids.device_id.replace("eui-", "");
+              // Check if the device ID already exists in the current state
+              const existingIndex = prevState.findIndex(existingDevice => existingDevice.deviceId === deviceIdWithoutPrefix);
+              if (existingIndex !== -1) {
+                // Update existing entry
+                prevState[existingIndex] = {
+                  ...prevState[existingIndex],
+                  name: newDevice.name || "Unknown",
+                  batteryStatus: "-",
+                  temperature: "-",
+                  updateInterval: "-"
+                };
+              } else {
+                // Add new entry
+                prevState.push({
+                  deviceId: deviceIdWithoutPrefix,
+                  name: newDevice.name || "Unknown",
+                  batteryStatus: "-",
+                  temperature: "-",
+                  updateInterval: "-"
+                });
+              }
+            });
+            return [...prevState]; // Return a new array to trigger state update
+          });
+        }
+      } else {
+        throw new Error(`Failed to fetch tracker information: ${response.status}, ${response.statusText}`);
+      }
+    } catch (error) {
+      alert("Failed to fetch tracker information. Either your API key or your application key is wrong");
+    }
+  };
+
   return (
     <div className="map-container">
       <button
@@ -288,7 +293,8 @@ export default function App() {
       />
       <AddDeviceMenu 
         isOpen={isAddDeviceMenuOpen} 
-        handleClose={handleCloseAddDeviceMenu} 
+        handleClose={handleCloseAddDeviceMenu}
+        onDeviceAdded={handleAddDeviceSuccess} 
         />
     </div>
   );
