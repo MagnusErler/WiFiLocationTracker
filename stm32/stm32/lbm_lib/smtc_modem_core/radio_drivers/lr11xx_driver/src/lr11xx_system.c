@@ -416,11 +416,9 @@ lr11xx_status_t lr11xx_system_get_temp( const void* context, uint16_t* temp )
     };
     uint8_t rbuffer[sizeof( uint16_t )] = { 0x00 };
 
-    const lr11xx_status_t status = ( lr11xx_status_t ) lr11xx_hal_read(
-        context, cbuffer, LR11XX_SYSTEM_GET_TEMP_CMD_LENGTH, rbuffer, sizeof( uint16_t ) );
+    const lr11xx_status_t status = ( lr11xx_status_t ) lr11xx_hal_read(context, cbuffer, LR11XX_SYSTEM_GET_TEMP_CMD_LENGTH, rbuffer, sizeof( uint16_t ) );
 
-    if( status == LR11XX_STATUS_OK )
-    {
+    if( status == LR11XX_STATUS_OK ) {
         *temp = ( ( uint16_t ) rbuffer[0] << 8 ) + ( uint16_t ) rbuffer[1];
     }
 

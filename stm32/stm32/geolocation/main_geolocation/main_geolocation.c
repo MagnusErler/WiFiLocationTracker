@@ -60,6 +60,8 @@
 
 #include "lis2de12.h"
 
+#include "ral_lr11xx.h"
+
 /*
  * -----------------------------------------------------------------------------
  * --- PRIVATE MACROS-----------------------------------------------------------
@@ -140,7 +142,7 @@ static uint8_t                  rx_remaining    = 0;      // Remaining downlink 
  */
 static uint8_t join_eui[SMTC_MODEM_EUI_LENGTH] = { 0 };
 static uint8_t chip_eui[SMTC_MODEM_EUI_LENGTH] = { 0 };
-static uint8_t chip_pin[SMTC_MODEM_PIN_LENGTH] = { 0 };
+static uint8_t pin[SMTC_MODEM_PIN_LENGTH] = { 0 };
 
 /*
  * -----------------------------------------------------------------------------
@@ -205,10 +207,30 @@ void main_geolocation( void ) {
     //                         ( double ) acc_get_raw_x( ), ( double ) acc_get_raw_y( ),
     //                         ( double ) acc_get_raw_z( ) );
 
+    // ral_xosc_cfg_t xosc_cfg;
+    // lr11xx_system_tcxo_supply_voltage_t tcxo_supply_voltage;
+    // uint32_t                            startup_time_in_tick = 0;
+    // ral_lr11xx_bsp_get_xosc_cfg( NULL, &xosc_cfg, &tcxo_supply_voltage, &startup_time_in_tick );
+    // lr11xx_system_set_tcxo_mode( NULL, tcxo_supply_voltage, startup_time_in_tick );
+
+    ral_lr11xx_init( NULL );
+
     while( 1 ) {
 
-        // SMTC_HAL_TRACE_INFO("Temperature: %d\n", acc_get_temperature( ));
+        // SMTC_HAL_TRACE_INFO("LIS2DE12 Temperature: %d\n", acc_get_temperature( ));
         // SMTC_HAL_TRACE_INFO("X: %d\n", acc_get_raw_x( ));
+
+        uint16_t temp_10_0;
+        lr11xx_system_get_temp( NULL, &temp_10_0 );
+        const float temperature = 25 + (1000/(-1.7)) * ((temp_10_0/2047.0) * 1.35 - 0.7295);
+
+        SMTC_HAL_TRACE_INFO("%d.%d °C\r\n", (uint8_t)temperature, (uint8_t)((temperature - (uint8_t)temperature) * 100));
+        if ((uint8_t)temperature > 50) {
+            SMTC_HAL_TRACE_INFO("LR1110 temperature is too high. TCXO mode is may not be set up correctly\r\n");
+        }
+
+        // delay of 1s
+        // HAL_Delay( 1000 );
 
         // Modem process launch
         sleep_time_ms = smtc_modem_run_engine( );
@@ -279,8 +301,8 @@ static void modem_event_callback( void ) {
             SMTC_HAL_TRACE_ARRAY( "JOIN_EUI", join_eui, SMTC_MODEM_EUI_LENGTH );
             smtc_modem_get_chip_eui( stack_id, chip_eui );
             SMTC_HAL_TRACE_ARRAY( "CHIP_EUI", chip_eui, SMTC_MODEM_EUI_LENGTH );
-            smtc_modem_get_pin( stack_id, chip_pin );
-            SMTC_HAL_TRACE_ARRAY( "CHIP_PIN", chip_pin, SMTC_MODEM_PIN_LENGTH );
+            smtc_modem_get_pin( stack_id, pin );
+            SMTC_HAL_TRACE_ARRAY( "PIN", pin, SMTC_MODEM_PIN_LENGTH );
 
             /* Set user region */
             smtc_modem_set_region( stack_id, MODEM_EXAMPLE_REGION );
