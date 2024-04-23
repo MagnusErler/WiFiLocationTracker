@@ -186,20 +186,20 @@ void main_geolocation( void ) {
 
     SMTC_HAL_TRACE_INFO( "GEOLOCATION example is starting\n" );
 
+    ral_lr11xx_init( NULL );
+
     /* Check LR11XX Firmware version */
-    status = lr11xx_system_get_version( NULL, &lr11xx_fw_version );
-    if( status != LR11XX_STATUS_OK ) {
+    if( lr11xx_system_get_version( NULL, &lr11xx_fw_version ) != LR11XX_STATUS_OK ) {
         SMTC_HAL_TRACE_ERROR( "Failed to get LR11XX firmware version\n" );
     }
     if( ( lr11xx_fw_version.type == LR11XX_SYSTEM_VERSION_TYPE_LR1110 ) &&
         ( lr11xx_fw_version.fw < LR1110_FW_VERSION ) ) {
-        SMTC_HAL_TRACE_ERROR( "Wrong LR1110 firmware version, expected 0x%04X, got 0x%04X\n", LR1110_FW_VERSION,
-                              lr11xx_fw_version.fw );
+        SMTC_HAL_TRACE_ERROR( "Wrong LR1110 firmware version, expected 0x%04X, got 0x%04X\n", LR1110_FW_VERSION, lr11xx_fw_version.fw );
     }
     SMTC_HAL_TRACE_INFO( "LR11XX FW: 0x%04X, type: 0x%02X\n", lr11xx_fw_version.fw, lr11xx_fw_version.type );
     SMTC_HAL_TRACE_INFO( "LR11XX HW: 0x%02X\n", lr11xx_fw_version.hw );
 
-    // accelerometer_init( INT_1 );
+    
 
 
     // acc_read_raw_data( );
@@ -207,27 +207,27 @@ void main_geolocation( void ) {
     //                         ( double ) acc_get_raw_x( ), ( double ) acc_get_raw_y( ),
     //                         ( double ) acc_get_raw_z( ) );
 
-    // ral_xosc_cfg_t xosc_cfg;
-    // lr11xx_system_tcxo_supply_voltage_t tcxo_supply_voltage;
-    // uint32_t                            startup_time_in_tick = 0;
-    // ral_lr11xx_bsp_get_xosc_cfg( NULL, &xosc_cfg, &tcxo_supply_voltage, &startup_time_in_tick );
-    // lr11xx_system_set_tcxo_mode( NULL, tcxo_supply_voltage, startup_time_in_tick );
+    
 
-    ral_lr11xx_init( NULL );
+    accelerometer_init( INT_1 );
 
     while( 1 ) {
 
-        // SMTC_HAL_TRACE_INFO("LIS2DE12 Temperature: %d\n", acc_get_temperature( ));
-        // SMTC_HAL_TRACE_INFO("X: %d\n", acc_get_raw_x( ));
+        SMTC_HAL_TRACE_INFO("LIS2DE12 Temperature: %d\n", acc_get_temperature( ));
+        SMTC_HAL_TRACE_INFO("X: %d\n", acc_get_raw_x( ));
 
         uint16_t temp_10_0;
         lr11xx_system_get_temp( NULL, &temp_10_0 );
         const float temperature = 25 + (1000/(-1.7)) * ((temp_10_0/2047.0) * 1.35 - 0.7295);
-
         SMTC_HAL_TRACE_INFO("%d.%d °C\r\n", (uint8_t)temperature, (uint8_t)((temperature - (uint8_t)temperature) * 100));
         if ((uint8_t)temperature > 50) {
-            SMTC_HAL_TRACE_INFO("LR1110 temperature is too high. TCXO mode is may not be set up correctly\r\n");
+            SMTC_HAL_TRACE_INFO("LR1110 temperature is too high. TCXO mode may not be set up correctly\r\n");
         }
+
+        uint8_t vbat;
+        lr11xx_system_get_vbat( NULL, &vbat );
+        const float batteryVoltage = (((5 * vbat)/255.0) - 1) * 1.35;
+        SMTC_HAL_TRACE_INFO("%d.%d V\r\n", (uint8_t)batteryVoltage, (uint8_t)((batteryVoltage - (uint8_t)batteryVoltage) * 100));
 
         // delay of 1s
         // HAL_Delay( 1000 );
