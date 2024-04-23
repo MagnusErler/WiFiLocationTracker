@@ -1,24 +1,23 @@
-const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
 const path = require('path');
-const { Sequelize, Model, DataTypes } = require('sequelize');
+const cors = require('cors');
 const axios = require("axios");
+const express = require('express');
 const fs = require("fs");
 const https = require("https");
+const { Sequelize, Model, DataTypes } = require('sequelize');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
 app.use(cors());
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
 
-// Create Sequelize instance
 const sequelize = new Sequelize({
   dialect: 'sqlite',
   storage: './geolocationdata.sqlite'
 });
 
-// Define GeolocationSolve model
 class GeolocationSolve extends Model {}
 GeolocationSolve.init({
   deviceID: {
@@ -38,29 +37,38 @@ GeolocationSolve.init({
 // Sync model with database
 sequelize.sync();
 
-// Middleware for parsing request body
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
-app.get('api/geolocationSolves', async (req, res) => {
+// Returns all pings for all devices
+app.get('/api/geolocationSolves', async (req, res) => {
   try {
     const geolocationSolves = await GeolocationSolve.findAll();
-    res.json(geolocationSolves);
+    res.status(200).json(geolocationSolves);
   } catch (error) {
     console.error('Error querying database:', error.message);
+    res.status(500).send('Internal server error');
   }
 });
 
-app.get('api/geolocationSolves/:deviceID', async (req, res) => {
+// Returns all pings for a specific device
+app.get('/api/geolocationSolves/:deviceID', async (req, res) => {
   try {
-    const geolocationSolvesWithDeviceID = await GeolocationSolve.findAll({where: {deviceID: req.params.deviceID}});
-    res.json(geolocationSolvesWithDeviceID);
+    const geolocationSolvesWithDeviceID = await GeolocationSolve.findAll({ where: { deviceID: req.params.deviceID } });
+
+    // Check if any data was found for the device ID
+    if (geolocationSolvesWithDeviceID.length === 0) {
+      // Device ID not found, return 404 status code
+      return res.status(404).json({ error: 'Device ID not found' });
+    }
+
+    // Device ID found, return data
+    res.status(200).json(geolocationSolvesWithDeviceID);
   } catch (error) {
     console.error('Error querying database:', error.message);
+    res.status(500).send('Internal server error');
   }
 });
 
-app.post('api/geolocationSolves', async (req, res) => {
+// Add a ping to the database
+app.post('/api/geolocationSolves', async (req, res) => {
   try {
     console.log(req.body);
     const { end_device_ids, location_solved } = req.body;
@@ -75,12 +83,11 @@ app.post('api/geolocationSolves', async (req, res) => {
       
     // Save geolocation solve to the database
     const geolocationSolve = await GeolocationSolve.create({ deviceID, geocode, accuracy, source});
-    
-    res.json(geolocationSolve);
     console.log('Geolocation solve added to database:', geolocationSolve.toJSON());
+    res.status(201).json(geolocationSolve);
   } catch (error) {
-    console.error('Error querying database:', error.message);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error('Error adding geolocation solve to database:', error.message);
+    res.status(500).send('Internal server error');
   }
 });
 
@@ -102,16 +109,22 @@ app.get("/api/getDeviceInfoFromJoinserver", async (req, res) => {
       })
     });
 
-    res.json(response.data);
+    res.status(200).json(response.data);
   } catch (error) {
     console.error("Failed to fetch device information:", error);
     res.status(500).json({ error: "Failed to fetch device information" });
   }
 });
 
-// TODO: Test if join actually works, and how does the double error handling work?
 app.post("/api/claimDevicesOnJoinServer", async (req, res) => {
-  console.log("Claiming devices...")
+  // Check if the request body is empty or not an array
+  if (!Array.isArray(req.body)) {
+    return res.status(400).json({
+      error: 'Bad request',
+      message: 'Request body must be a non-empty array of devices'
+    });
+  }
+
   try {
     const a = "acct-d13";
     const h = "de02lnxprodjs01.loraclouddemo.com:7009";
@@ -121,7 +134,14 @@ app.post("/api/claimDevicesOnJoinServer", async (req, res) => {
     const key_file = path.join(__dirname, "../credentials", `${a}.key`);
     const trust_file = path.join(__dirname, "../credentials", `${a}.trust`);
 
-    const devices = req.body;
+    const devices = req.body.map(device => ({
+      DevEUI: device.DevEUI,
+      ChipEUI: device.ChipEUI || device.DevEUI, // Optional, use DevEUI if ChipEUI is not provided
+      JoinEUI: device.JoinEUI, // Optional, but should be provided if not using default
+      claim: device.Pin
+    }));
+
+    console.log("Devices to claim:", devices);
 
     const response = await axios.post(url, devices, {
       httpsAgent: new https.Agent({
@@ -134,25 +154,76 @@ app.post("/api/claimDevicesOnJoinServer", async (req, res) => {
       }
     });
 
-    if (Array.isArray(response.data)) {
-      const failedDevices = response.data.filter(device => device.error);
-      if (failedDevices.length > 0) {
-        throw new Error();
-      }
-    } else {
-      throw new Error();
+    console.log("Response:", response.data);
+
+    if (!Array.isArray(response.data)) {
+      console.error("Unexpected response format from server. All devices failed to claim.");
+      return res.status(500).json({
+        error: 'Server error',
+        message: 'Unexpected response format from server. All devices failed to claim.'
+      });
     }
 
-    res.json(response.data);
-    console.log("Devices claimed successfully:", response.data);
+    const failedDevices = response.data.filter(device => device.error);
+    if (failedDevices.length > 0) {
+      const errorMessages = failedDevices.map(device => device.error);
+
+      if (errorMessages.includes('[IsYours] Device is already claimed by you')) {
+        return res.status(409).json({
+          error: 'Device claim conflict',
+          message: "Failed to claim device(s): " + errorMessages.join(", ")
+        });
+      }
+
+      if (errorMessages.includes('[BadClaim] Claim does not verify')) {
+        return res.status(400).json({
+          error: 'Bad request',
+          message: "Failed to claim device(s): " + errorMessages.join(", ")
+        });
+      }
+
+      if (errorMessages.includes('[UnknownEUI] ChipEUI is not provisioned on this server')) {
+        return res.status(404).json({
+          error: 'Device not found',
+          message: "Failed to claim device(s): " + errorMessages.join(", ")
+        });
+      }
+
+      // Handle other error scenarios
+      return res.status(500).json({
+        error: 'Server error',
+        message: "Failed to claim device(s): " + errorMessages.join(", ")
+      });
+    }
+
+    return res.status(200).json({ success: true, message: "Devices claimed successfully", data: response.data });
+
   } catch (error) {
     console.error("Failed to claim devices:", error);
-    res.status(500).json({ error: error.message });
+
+    let errorMessage;
+    if (axios.isAxiosError(error)) {
+      errorMessage = 'Failed to connect to server';
+    } else {
+      errorMessage = error.message;
+    }
+
+    return res.status(500).json({
+      error: 'Request error',
+      message: errorMessage
+    });
   }
 });
 
-// TODO: Check of this endpoint works
-app.get("/api/unclaimDeviceFromJoinServer", async (req, res) => {
+app.post("/api/unclaimDeviceOnJoinServer", async (req, res) => {
+  // Check if the request body is empty or not an array
+  if (!Array.isArray(req.body)) {
+    return res.status(400).json({
+      error: 'Bad request',
+      message: 'Request body must be a non-empty array of devices'
+    });
+  }
+
   try {
     const a = "acct-d13";
     const h = "de02lnxprodjs01.loraclouddemo.com:7009";
@@ -162,9 +233,13 @@ app.get("/api/unclaimDeviceFromJoinServer", async (req, res) => {
     const key_file = path.join(__dirname, "../credentials", `${a}.key`);
     const trust_file = path.join(__dirname, "../credentials", `${a}.trust`);
 
-    const deviceEUIs = req.body;
+    const devices = req.body.map(device => ({
+      DevEUI: device.DevEUI
+    }));
 
-    const response = await axios.get(url, deviceEUIs, {
+    console.log("Devices to unclaim:", devices);
+
+    const response = await axios.post(url, devices, {
       httpsAgent: new https.Agent({
         cert: fs.readFileSync(cert_file),
         key: fs.readFileSync(key_file),
@@ -175,99 +250,219 @@ app.get("/api/unclaimDeviceFromJoinServer", async (req, res) => {
       }
     });
 
-    res.json(response.data);
+    console.log("Response:", response.data);
+
+    return res.status(200).json({
+      message: "Devices unclaimed successfully",
+      data: response.data
+    });
+
   } catch (error) {
-    console.error("Failed to fetch device information:", error);
-    res.status(500).json({ error: "Failed to fetch device information" });
+    console.error("Failed to unclaim devices:", error);
+
+    let errorMessage;
+    if (axios.isAxiosError(error)) {
+      errorMessage = 'Failed to connect to server';
+    } else {
+      errorMessage = error.message;
+    }
+
+    return res.status(500).json({
+      error: 'Request error',
+      message: errorMessage
+    });
   }
 });
 
-// Helper function to make HTTP requests
-async function makeRequest(method, url, data, headers) {
+// Create device on TTN Identity server
+app.post("/api/createDeviceOnTTNIDServer", async (req, res) => {
   try {
-    const response = await axios({ method, url, data, headers });
-    return response.data;
-  } catch (error) {
-    console.error('Error:', error.response.data);
-    throw new Error('An error occurred while making the request.');
-  }
-}
+    const token = req.body.Token;
+    const appId = req.body.AppID;
+    const deviceId = req.body.deviceID;
+    const devEui = req.body.devEUI;
+    const joinEui = req.body.joinEUI;
 
-// TODO: test if this endpoint works
-app.post('/api/createDeviceOnTTN', async (req, res) => {
-  try {
-    const { device_id, dev_eui, join_eui } = req.body;
+    console.log(req.body);
 
-    // Step 1: Create device on identity server
-    const payloadIdServer = {
+    console.log("Token:", token);
+    console.log("App ID:", appId);
+    console.log("Device ID:", deviceId);
+    console.log("DevEUI:", devEui);
+    console.log("JoinEUI:", joinEui);
+
+    // Check if all required parameters are provided
+    if (!deviceId || !devEui || !joinEui || !appId || !token) {
+      return res.status(400).json({ error: 'Device ID, DevEUI, JoinEUI, App ID and API token are required' });
+    }
+
+    // Construct the request data JSON object
+    const requestData = {
       end_device: {
         ids: {
-          device_id,
-          dev_eui,
-          join_eui
+          device_id: deviceId,
+          dev_eui: devEui,
+          join_eui: joinEui
         },
-        join_server_address: "js.loracloud.com:7009",
+        join_server_address: "eu1.cloud.thethings.network",
         network_server_address: "eu1.cloud.thethings.network",
         application_server_address: "eu1.cloud.thethings.network"
       },
       field_mask: {
         paths: [
-          "join_server_address",
-          "network_server_address",
-          "application_server_address",
-          "ids.dev_eui",
-          "ids.join_eui"
+          'join_server_address',
+          'network_server_address',
+          'application_server_address',
+          'ids.dev_eui',
+          'ids.join_eui'
         ]
       }
     };
 
-    const createDeviceResponse = await axios.post('https://thethings.example.com/api/v3/applications/my-test-app/devices', payloadIdServer, {
+    const response = await axios.post(`https://eu1.cloud.thethings.network/api/v3/applications/${appId}/devices`, requestData, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': '${token}'
+        'Authorization': `Bearer ${token}` 
       }
     });
 
-    // Check if step 1 was successful
-    if (createDeviceResponse.status !== 200) {
-      throw new Error(`Failed to create device on TTN: ${createDeviceResponse.statusText}`);
+    res.json(response.data);
+  } catch (error) {
+    console.error("Failed to create device on TTN's identity server:", error);
+    res.status(500).json({ error: 'Failed to create device on TTN' });
+  }
+});
+
+// Create device on TTN Join server (does not work)
+app.put("/api/createDeviceOnTTNJoinServer", async (req, res) => {
+  try {
+    const token = req.body.Token;
+    const appId = req.body.AppID;
+    const deviceId = req.body.deviceID;
+    const devEui = req.body.devEUI;
+    const joinEui = req.body.joinEUI;
+  
+    if(!deviceId || !devEui || !joinEui || !appId || !token) {
+      return res.status(400).json({ error: 'Device ID, DevEUI, JoinEUI, App ID and API token are required' });
     }
 
-    // Step 2: Create device on network server
-    const payloadNwServer = {
+    // Construct the request data JSON object
+    const requestData = {
+      end_device: {
+        ids: {
+          device_id: deviceId,
+          dev_eui: devEui,
+          join_eui: joinEui
+        },
+        network_server_address: "eu1.cloud.thethings.network",
+        application_server_address: "eu1.cloud.thethings.network",
+        root_keys: {
+          app_key: {
+            key: ""
+          }
+        }
+      },
+      field_mask: {
+        paths: [
+          "network_server_address",
+          "application_server_address",
+          "ids.device_id",
+          "ids.dev_eui",
+          "ids.join_eui",
+          "root_keys.app_key.key"
+        ]
+      }
+    };
+
+    const response = await axios.put(`https://eu1.cloud.thethings.network/api/v3/js/applications/${appId}/devices/${deviceId}`, requestData, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    res.json(response.data);
+  } catch (error) {
+    console.error("Failed to create device on TTN's join server:", error);
+    res.status(500).json({ error: 'Failed to create device on TTN' });
+  }
+});
+
+// Create device on TTN Network server
+app.put("/api/createDeviceOnTTNNS", async (req, res) => {
+  try {
+    const token = req.body.Token;
+    const appId = req.body.AppID;
+    const deviceId = req.body.deviceID;
+    const devEui = req.body.devEUI;
+    const joinEui = req.body.joinEUI;
+  
+    if(!deviceId || !devEui || !joinEui || !appId || !token) {
+      return res.status(400).json({ error: 'Device ID, DevEUI, JoinEUI, App ID and API token are required' });
+    }
+
+    // Construct the request data JSON object for NS
+    const requestData = {
       end_device: {
         supports_join: true,
         lorawan_version: "1.0.3",
         ids: {
-          device_id,
-          dev_eui,
-          join_eui
+          device_id: deviceId,
+          dev_eui: devEui,
+          join_eui: joinEui
         },
-        lorawan_phy_version: "1.0.3-b",
+        lorawan_phy_version: "1.0.3-a",
         frequency_plan_id: "EU_863_870_TTN"
       },
+      field_mask: {
+        paths: [
+          "supports_join",
+          "lorawan_version",
+          "ids.device_id",
+          "ids.dev_eui",
+          "ids.join_eui",
+          "lorawan_phy_version",
+          "frequency_plan_id"
+        ]
+      }
     };
 
-    const updateNetworkResponse = await axios.post('https://thethings.example.com/api/v3/applications/my-test-app/devices', payloadNwServer, {
+    const response = await axios.put(`https://eu1.cloud.thethings.network/api/v3/ns/applications/${appId}/devices/${deviceId}`, requestData, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': '${token}'
+        'Authorization': `Bearer ${token}`
       }
     });
 
-    // Check if step 2 was successful
-    if (updateNetworkResponse.status !== 200) {
-      throw new Error(`Failed to update device on the Network Server: ${updateNetworkResponse.statusText}`);
+    res.json(response.data);
+  } catch (error) {
+    console.error("Failed to create device on Network Server:", error);
+    res.status(500).json({ error: 'Failed to create device on Network Server' });
+  }
+});
+
+// Create device on TTN Application server
+app.put("/api/createDeviceOnTTNAS", async (req, res) => {
+  try {
+    const token = req.body.Token;
+    const appId = req.body.AppID;
+    const deviceId = req.body.deviceID;
+    const devEui = req.body.devEUI;
+    const joinEui = req.body.joinEUI;
+  
+    if(!deviceId || !devEui || !joinEui || !appId || !token) {
+      return res.status(400).json({ error: 'Device ID, DevEUI, JoinEUI, App ID and API token are required' });
     }
 
-    // Step 3: Update the device on the Application Server
-    const payloadAppServer = {
+    // Construct the request data JSON object for AS
+    const requestData = {
       end_device: {
         ids: {
-          device_id,
-          dev_eui,
-          join_eui
-        }
+          device_id: deviceId,
+          dev_eui: devEui,
+          join_eui: joinEui
+        },
+        application_server_address: "eu1.cloud.thethings.network"
       },
       field_mask: {
         paths: [
@@ -278,21 +473,17 @@ app.post('/api/createDeviceOnTTN', async (req, res) => {
       }
     };
 
-    const updateAppResponse = await axios.put(`https://thethings.example.com/api/v3/as/applications/my-test-app/devices/${device_id}`, payloadAppServer, {
+    const response = await axios.put(`https://eu1.cloud.thethings.network/api/v3/as/applications/${appId}/devices/${deviceId}`, requestData, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': token
+        'Authorization': `Bearer ${token}`
       }
     });
 
-    res.json(updateAppResponse.data);
+    res.json(response.data);
   } catch (error) {
-    console.error('Error creating device:', error);
-    let errorMessage = 'An error occurred while creating the device.';
-    if (error.response && error.response.data) {
-      errorMessage = error.response.data.error || errorMessage;
-    }
-    res.status(500).json({ error: errorMessage });
+    console.error("Failed to create device on Application Server:", error);
+    res.status(500).json({ error: 'Failed to create device on Application Server' });
   }
 });
 

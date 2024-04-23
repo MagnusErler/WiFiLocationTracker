@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import "./ModalMenu.css"
 import "./AddDeviceMenu.css";
 
@@ -7,11 +8,7 @@ const AddDeviceMenu = ({ isOpen, handleClose }) => {
   const [joinEUI, setJoinEUI] = useState("00-16-C0-01-FF-FE-00-01");
   const [pin, setPin] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-
-  const validateHex = (value) => {
-    const hexRegex = /^[0-9A-Fa-f]+$/;
-    return hexRegex.test(value);
-  };
+  const [name, setName] = useState("");
 
   const handleChangeDevEUI = (e) => {
     const value = e.target.value.toUpperCase().replace(/[^0-9A-F]/g, "");
@@ -28,6 +25,10 @@ const AddDeviceMenu = ({ isOpen, handleClose }) => {
   
       setDevEUI(formattedValue);
     }
+  };
+
+  const handleChangeName = (e) => {
+    setName(e.target.value);
   };
 
   const handleChangeJoinEUI = (e) => {
@@ -54,16 +55,75 @@ const AddDeviceMenu = ({ isOpen, handleClose }) => {
     }
   };
 
-  const handleSubmit = () => {
-    if (devEUI.length !== 19) {
-      setErrorMessage("DevEUI must be 16 characters long and contain only hexadecimal characters.");
-      return;
+  const handleSubmit = async () => {
+    try {
+      if (!name.trim()) {
+        setErrorMessage("Name is required.");
+        return;
+      }
+      // Validate input fields
+      if (devEUI.length !== 23) {
+        setErrorMessage("DevEUI must be 16 characters long and contain only hexadecimal characters.");
+        return;
+      }
+      if (joinEUI.length !== 23) {
+        setErrorMessage("JoinEUI must be 16 characters long and contain only hexadecimal characters.");
+        return;
+      }
+      if (pin.length !== 8) {
+        setErrorMessage("PIN must be 8 characters long and contain only hexadecimal characters.");
+        return;
+      }
+
+      // Remove "-" from devEUI and joinEUI
+      const cleanDevEUI = devEUI.replace(/-/g, '');
+      const cleanJoinEUI = joinEUI.replace(/-/g, '');
+  
+      // Prepare request data for each endpoint
+      const requestDataClaim = [{ DevEUI: cleanDevEUI, Pin: pin }];
+      const requestDataTTNID = {
+        Token: process.env.REACT_APP_TTN_API_TOKEN,
+        AppID: process.env.REACT_APP_APP_ID,
+        deviceID: "eui-" + cleanDevEUI.toLowerCase(),
+        devEUI: cleanDevEUI,
+        joinEUI: cleanJoinEUI
+      };
+      const requestDataTTNNS = {
+        Token: process.env.REACT_APP_TTN_API_TOKEN,
+        AppID: process.env.REACT_APP_APP_ID,
+        deviceID: "eui-" + cleanDevEUI.toLowerCase(),
+        devEUI: cleanDevEUI,
+        joinEUI: cleanJoinEUI
+      };
+      const requestDataTTNAS = {
+        Token: process.env.REACT_APP_TTN_API_TOKEN,
+        AppID: process.env.REACT_APP_APP_ID,
+        deviceID: "eui-" + cleanDevEUI.toLowerCase(),
+        devEUI: cleanDevEUI,
+        joinEUI: cleanJoinEUI
+      };
+  
+      // Call each endpoint sequentially
+      //await axios.post("/api/claimDevicesOnJoinServer", requestDataClaim);
+      await axios.post("/api/createDeviceOnTTNIDServer", requestDataTTNID);
+      await axios.put("/api/createDeviceOnTTNNS", requestDataTTNNS);
+      await axios.put("/api/createDeviceOnTTNAS", requestDataTTNAS);
+  
+      // All requests succeeded
+      console.log("All devices added successfully.");
+      setName("");
+      setDevEUI("");
+      setJoinEUI("00-16-C0-01-FF-FE-00-01");
+      setPin("");
+      setErrorMessage("");
+    } catch (error) {
+      // Handle errors
+      console.error("Error adding devices:", error);
+      setErrorMessage("Failed to add devices. Please try again later.");
+    } finally {
+      // Reset error message
+      setErrorMessage("");
     }
-    if (pin.length !== 8) {
-      setErrorMessage("PIN must be 8 characters long and contain only hexadecimal characters.");
-      return;
-    }
-    // Add your logic here for handling form submission
   };
 
   return (
@@ -73,6 +133,10 @@ const AddDeviceMenu = ({ isOpen, handleClose }) => {
         <h2>Add Device</h2>
         <div className="main-content">
             {errorMessage && <p className="error-message">{errorMessage}</p>}
+            <div className="input-group">
+            <label htmlFor="name">Name:</label>
+            <input type="text" id="name" value={name} onChange={handleChangeName} />
+            </div>
             <div className="input-group">
             <label htmlFor="devEUI">DevEUI:</label>
             <input type="text" id="devEUI" value={devEUI} onChange={handleChangeDevEUI} />
