@@ -169,7 +169,7 @@ static void modem_event_callback( void );
 void main_geolocation( void ) {
     uint32_t                sleep_time_ms = 0;
     lr11xx_system_version_t lr11xx_fw_version;
-    lr11xx_status_t         status;
+    // lr11xx_status_t         status;
 
     // Disable IRQ to avoid unwanted behaviour during init
     hal_mcu_disable_irq( );
@@ -238,7 +238,7 @@ void main_geolocation( void ) {
 
             SMTC_HAL_TRACE_INFO("LIS2DE12 Temperature: %d\n", acc_get_temperature( ));
             SMTC_HAL_TRACE_INFO("X: %d\n", acc_get_raw_x( ));
-            
+
             hal_watchdog_reload( );
             hal_mcu_set_sleep_for_ms( MIN( sleep_time_ms, WATCHDOG_RELOAD_PERIOD_MS ) );
         }

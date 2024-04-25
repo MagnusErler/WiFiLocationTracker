@@ -97,9 +97,9 @@ static hal_gpio_irq_t lis2de12_int1 = {
 uint8_t accelerometer_init( uint8_t irq_active )
 {
     int                  i = 0;
-    lis2de12_int1_cfg_t  lis2de12_int1_cfg;
-    lis2de12_ctrl_reg1_t ctrl_reg1;
-    lis2de12_ctrl_reg3_t ctrl_reg3;
+    // lis2de12_int1_cfg_t  lis2de12_int1_cfg;
+    // lis2de12_ctrl_reg1_t ctrl_reg1;
+    // lis2de12_ctrl_reg3_t ctrl_reg3;
 
     /* Check device ID */
     while( ( i <= 5 ) && ( who_am_i != LIS2DE12_ID ) ) {
