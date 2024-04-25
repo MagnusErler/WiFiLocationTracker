@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "./ModalMenu.css";
 import "./SettingsMenu.css";
-import Switch from '@mui/material/Switch';
 import axios from "axios";
+import Switch from '@mui/material/Switch';
+import UpdateIcon from '@mui/icons-material/Update';
+import FmdGoodIcon from '@mui/icons-material/FmdGood';
+import TimelineIcon from '@mui/icons-material/Timeline';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import BatteryUnknownIcon from '@mui/icons-material/BatteryUnknown';
+import DeviceThermostatIcon from '@mui/icons-material/DeviceThermostat';
 
 const SettingsMenu = ({ isOpen, handleClose, trackerInformation, handleShowLocationSwitch, handleShowMovement, handleTrackerInformationUpdate, markers }) => {
   const [showCurrentLocationIds, setShowCurrentLocationIds] = useState(trackerInformation.map(tracker => tracker.deviceId));
@@ -87,6 +93,43 @@ const SettingsMenu = ({ isOpen, handleClose, trackerInformation, handleShowLocat
     }
   };
 
+  const deleteDevice = async (deviceID) => {
+    try {
+      const token = process.env.REACT_APP_TTN_API_TOKEN;
+      const appID = process.env.REACT_APP_APP_ID;
+      if (!token) {
+        console.error("API token ID is not available.");
+        return;
+      }
+      
+      if (!appID) {
+        console.error("Application ID is not available.");
+        return;
+      }
+      console.log(`Deleting device with ID ${deviceID}...`);
+      await Promise.all([
+        axios.delete(`/api/unclaimDeviceOnJoinServer`, { data: [{ "DevEUI": deviceID }] }),
+        axios.delete(`/api/deleteDeviceOnTTNNS`, { data: { Token: token, AppID: appID, DeviceID: "eui-" + deviceID } }),
+        axios.delete(`/api/deleteDeviceOnTTNAS`, { data: { Token: token, AppID: appID, DeviceID: "eui-" + deviceID } })
+      ]);
+
+      // After successfully deleting on other servers, call deleteDeviceOnTTN
+      await axios.delete(`/api/deleteDeviceOnTTN`, {
+        data: { Token: token, AppID: appID, DeviceID: "eui-" + deviceID }
+      });
+  
+      // Update the UI accordingly (remove the deleted device from state)
+      const updatedTrackerInformation = trackerInformation.filter(tracker => tracker.deviceId !== deviceID);
+      handleTrackerInformationUpdate(updatedTrackerInformation);
+  
+      // Optionally, provide feedback to the user
+      console.log(`Device with ID ${deviceID} deleted successfully.`);
+    } catch (error) {
+      console.error("Error deleting device:", error);
+      // Optionally, handle errors or provide feedback to the user
+    }
+  };
+
   return (
     <div className={`modal ${isOpen ? "show" : ""}`}>
       <div className="modal-content settings-menu-size">
@@ -96,11 +139,12 @@ const SettingsMenu = ({ isOpen, handleClose, trackerInformation, handleShowLocat
             <tr>
               <th className="id-column">ID</th>
               <th className="name-column">Name</th>
-              <th className="battery-status-column">Battery status</th>
-              <th className="temperature-status-column">Degree</th>
-              <th className="update-interval-column">Update interval</th>
-              <th className="view-location-column">View location</th>
-              <th className="view-movement-column">View movement</th>
+              <th className="battery-status-column"><BatteryUnknownIcon /></th>
+              <th className="temperature-status-column"><DeviceThermostatIcon /></th>
+              <th className="update-interval-column"><UpdateIcon /></th>
+              <th className="view-location-column"><FmdGoodIcon /></th>
+              <th className="view-movement-column"><TimelineIcon /></th>
+              <th className="delete-device-column"><DeleteForeverIcon /></th>
             </tr>
           </thead>
           <tbody>
@@ -134,6 +178,9 @@ const SettingsMenu = ({ isOpen, handleClose, trackerInformation, handleShowLocat
                     disabled={!hasCorrespondingPing(tracker.deviceId)}
                     onChange={() => handleMovementSwitch(tracker.deviceId)}
                   />
+                </td>
+                <td className="delete-device-column">
+                  <DeleteForeverIcon className="delete-icon" onClick={() => deleteDevice(tracker.deviceId)} />
                 </td>
               </tr>
             ))}

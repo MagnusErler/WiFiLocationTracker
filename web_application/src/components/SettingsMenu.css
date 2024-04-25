@@ -48,21 +48,21 @@ th {
 }
 
 .id-column {
-  width: 5%;
+  width: 20%;
   text-align: center;
 }
 
 .name-column {
-  width: 40%;
+  width: 50%;
   text-align: left;
 }
 
 .battery-status-column,
 .temperature-status-column,
 .update-interval-column,
-.view-travel-column,
-.view-location-column {
-  width: 11%;
+.view-location-column,
+.view-movement-column {
+  width: 6%;
   text-align: center;
 }
 
@@ -94,4 +94,20 @@ tbody tr:last-child td {
 .name-column .editable-input:focus {
   outline: none;
   border-color: #2196f3;
+}
+
+.delete-device-column {
+  width: 5%;
+  text-align: center;
+  padding-right: 25px;
+}
+
+.delete-icon {
+  color: red;
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.delete-icon:hover {
+  opacity: 1;
 }

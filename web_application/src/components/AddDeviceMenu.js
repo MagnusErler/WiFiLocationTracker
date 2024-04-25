@@ -67,6 +67,7 @@ const AddDeviceMenu = ({ isOpen, handleClose, onDeviceAdded }) => {
         return;
       }
       if (joinEUI.length !== 23) {
+        console.log("joinEUI", joinEUI);
         setErrorMessage("JoinEUI must be 16 characters long and contain only hexadecimal characters.");
         return;
       }
@@ -118,6 +119,8 @@ const AddDeviceMenu = ({ isOpen, handleClose, onDeviceAdded }) => {
   
       // All requests succeeded
       console.log("All devices added successfully.");
+      window.alert("Device has been added successfully.");
+      handleClose();
       setName("");
       setDevEUI("");
       setJoinEUI("00-16-C0-01-FF-FE-00-01");
@@ -127,10 +130,7 @@ const AddDeviceMenu = ({ isOpen, handleClose, onDeviceAdded }) => {
     } catch (error) {
       // Handle errors
       console.error("Error adding devices:", error);
-      setErrorMessage("Failed to add devices. Please try again later.");
-    } finally {
-      // Reset error message
-      setErrorMessage("");
+      setErrorMessage(error.response?.data?.message || "An error occurred while adding the device. Please try again");
     }
   };
 
@@ -146,7 +146,7 @@ const AddDeviceMenu = ({ isOpen, handleClose, onDeviceAdded }) => {
             <input type="text" id="name" value={name} onChange={handleChangeName} />
             </div>
             <div className="input-group">
-            <label htmlFor="devEUI">DevEUI:</label>
+            <label htmlFor="devEUI">Dev/chipEUI:</label>
             <input type="text" id="devEUI" value={devEUI} onChange={handleChangeDevEUI} />
             </div>
             <div className="input-group">

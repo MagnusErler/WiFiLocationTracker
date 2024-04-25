@@ -215,7 +215,7 @@ app.post("/api/claimDevicesOnJoinServer", async (req, res) => {
   }
 });
 
-app.post("/api/unclaimDeviceOnJoinServer", async (req, res) => {
+app.delete("/api/unclaimDeviceOnJoinServer", async (req, res) => {
   // Check if the request body is empty or not an array
   if (!Array.isArray(req.body)) {
     return res.status(400).json({
@@ -531,6 +531,90 @@ app.put("/api/updateDeviceNameOnTTN", async (req, res) => {
   } catch (error) {
     console.error("Failed to update device name on TTN:", error);
     res.status(500).json({ error: 'Failed to update device name on TTN' });
+  }
+});
+
+// Delete device on TTN Network server
+app.delete("/api/deleteDeviceOnTTNNS", async (req, res) => {
+  try {
+    const { Token, AppID, DeviceID } = req.body;
+
+    if (!AppID || !DeviceID || !Token) {
+      return res.status(400).json({ error: 'App ID, Device ID, and API token are required in the request body' });
+    }
+
+    const url = `https://eu1.cloud.thethings.network/api/v3/ns/applications/${AppID}/devices/${DeviceID}`;
+    const response = await axios.delete(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${Token}`
+      }
+    });
+
+    res.json(response.data);
+  } catch (error) {
+    console.error("Failed to delete device on Network Server:", error);
+    let errorMessage = 'Failed to delete device on Network Server';
+    if (error.response && error.response.data && error.response.data.message) {
+      errorMessage = error.response.data.message;
+    }
+    res.status(error.response ? error.response.status : 500).json({ error: errorMessage });
+  }
+});
+
+// Delete device on TTN Application server
+app.delete("/api/deleteDeviceOnTTNAS", async (req, res) => {
+  try {
+    const { Token, AppID, DeviceID } = req.body;
+
+    if (!AppID || !DeviceID || !Token) {
+      return res.status(400).json({ error: 'App ID, Device ID, and API token are required in the request body' });
+    }
+
+    const url = `https://eu1.cloud.thethings.network/api/v3/as/applications/${AppID}/devices/${DeviceID}`;
+    const response = await axios.delete(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${Token}`
+      }
+    });
+
+    res.json(response.data);
+  } catch (error) {
+    console.error("Failed to delete device on Network Server:", error);
+    let errorMessage = 'Failed to delete device on Network Server';
+    if (error.response && error.response.data && error.response.data.message) {
+      errorMessage = error.response.data.message;
+    }
+    res.status(error.response ? error.response.status : 500).json({ error: errorMessage });
+  }
+});
+
+// Delete device on TTN (must be deleted on AS, JN, and NS first)
+app.delete("/api/deleteDeviceOnTTN", async (req, res) => {
+  try {
+    const { Token, AppID, DeviceID } = req.body;
+
+    if (!AppID || !DeviceID || !Token) {
+      return res.status(400).json({ error: 'App ID, Device ID, and API token are required in the request body' });
+    }
+
+    const url = `https://eu1.cloud.thethings.network/api/v3/applications/${AppID}/devices/${DeviceID}`;
+    const response = await axios.delete(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${Token}`
+      }
+    });
+
+    res.json(response.data);
+  } catch (error) {
+    console.error("Failed to delete device on Network Server:", error);
+    let errorMessage = 'Failed to delete device on Network Server';
+    if (error.response && error.response.data && error.response.data.message) {
+      errorMessage = error.response.data.message;
+    }
+    res.status(error.response ? error.response.status : 500).json({ error: errorMessage });
   }
 });
 
