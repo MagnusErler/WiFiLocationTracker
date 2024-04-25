@@ -74,6 +74,7 @@ extern "C" {
 #define RADIO_BUSY_PIN          PB_3
 
 #define RADIO_SPI_ID            1
+#define I2C_ID                  1
 
 #if defined( LR11XX_TRANSCEIVER ) && defined( ENABLE_MODEM_GNSS_FEATURE )
 // LR11XX_TRANSCEIVER - Use for GNSS LNA control
@@ -85,13 +86,8 @@ extern "C" {
 #endif
 
 //Hw modem specific pinout
-#define HW_MODEM_COMMAND_PIN    PC_6
-#define HW_MODEM_EVENT_PIN      PC_5
-#define HW_MODEM_BUSY_PIN       PC_8
 #define HW_MODEM_TX_LINE        PC_10
 #define HW_MODEM_RX_LINE        PC_11
-
-#define EXTI_BUTTON             PC_13
 
 
 // I2C specific pinout

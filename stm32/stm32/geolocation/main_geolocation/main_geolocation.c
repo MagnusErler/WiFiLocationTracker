@@ -177,6 +177,8 @@ void main_geolocation( void ) {
     // Configure all the µC periph (clock, gpio, timer, ...)
     hal_mcu_init( );
 
+    accelerometer_init( INT_1 );
+
     // Init the modem and use modem_event_callback as event callback, please note that the callback will be
     // called immediately after the first call to smtc_modem_run_engine because of the reset detection
     smtc_modem_init( &modem_event_callback );
@@ -209,36 +211,34 @@ void main_geolocation( void ) {
 
     
 
-    accelerometer_init( INT_1 );
+    
 
     while( 1 ) {
 
-        SMTC_HAL_TRACE_INFO("LIS2DE12 Temperature: %d\n", acc_get_temperature( ));
-        SMTC_HAL_TRACE_INFO("X: %d\n", acc_get_raw_x( ));
+        // uint16_t temp_10_0;
+        // lr11xx_system_get_temp( NULL, &temp_10_0 );
+        // const float temperature = 25 + (1000/(-1.7)) * ((temp_10_0/2047.0) * 1.35 - 0.7295);
+        // SMTC_HAL_TRACE_INFO("%d.%d °C\r\n", (uint8_t)temperature, (uint8_t)((temperature - (uint8_t)temperature) * 100));
+        // if ((uint8_t)temperature > 50) {
+        //     SMTC_HAL_TRACE_INFO("LR1110 temperature is too high. TCXO mode may not be set up correctly\r\n");
+        // }
 
-        uint16_t temp_10_0;
-        lr11xx_system_get_temp( NULL, &temp_10_0 );
-        const float temperature = 25 + (1000/(-1.7)) * ((temp_10_0/2047.0) * 1.35 - 0.7295);
-        SMTC_HAL_TRACE_INFO("%d.%d °C\r\n", (uint8_t)temperature, (uint8_t)((temperature - (uint8_t)temperature) * 100));
-        if ((uint8_t)temperature > 50) {
-            SMTC_HAL_TRACE_INFO("LR1110 temperature is too high. TCXO mode may not be set up correctly\r\n");
-        }
+        // uint8_t vbat;
+        // lr11xx_system_get_vbat( NULL, &vbat );
+        // const float batteryVoltage = (((5 * vbat)/255.0) - 1) * 1.35;
+        // SMTC_HAL_TRACE_INFO("%d.%d V\r\n", (uint8_t)batteryVoltage, (uint8_t)((batteryVoltage - (uint8_t)batteryVoltage) * 100));
 
-        uint8_t vbat;
-        lr11xx_system_get_vbat( NULL, &vbat );
-        const float batteryVoltage = (((5 * vbat)/255.0) - 1) * 1.35;
-        SMTC_HAL_TRACE_INFO("%d.%d V\r\n", (uint8_t)batteryVoltage, (uint8_t)((batteryVoltage - (uint8_t)batteryVoltage) * 100));
-
-        // delay of 1s
-        // HAL_Delay( 1000 );
 
         // Modem process launch
         sleep_time_ms = smtc_modem_run_engine( );
 
         // Atomically check sleep conditions
         hal_mcu_disable_irq( );
-        if( smtc_modem_is_irq_flag_pending( ) == false )
-        {
+        if( smtc_modem_is_irq_flag_pending( ) == false ) {
+
+            SMTC_HAL_TRACE_INFO("LIS2DE12 Temperature: %d\n", acc_get_temperature( ));
+            SMTC_HAL_TRACE_INFO("X: %d\n", acc_get_raw_x( ));
+            
             hal_watchdog_reload( );
             hal_mcu_set_sleep_for_ms( MIN( sleep_time_ms, WATCHDOG_RELOAD_PERIOD_MS ) );
         }

@@ -163,7 +163,7 @@ void hal_mcu_init( void )
     hal_rtc_init( );
 
     /* Initialize I2C */
-    hal_i2c_init( 1, I2C_SDA, I2C_SCL );
+    hal_i2c_init( I2C_ID, I2C_SDA, I2C_SCL );
 }
 
 void hal_mcu_reset( void )
@@ -182,10 +182,8 @@ void __attribute__( ( optimize( "O0" ) ) ) hal_mcu_wait_us( const int32_t micros
     }
 }
 
-void hal_mcu_set_sleep_for_ms( const int32_t milliseconds )
-{
-    if( milliseconds <= 0 )
-    {
+void hal_mcu_set_sleep_for_ms( const int32_t milliseconds ) {
+    if( milliseconds <= 0 ) {
         return;
     }
 
@@ -416,6 +414,8 @@ static void lpm_mcu_deinit( void )
 {
     hal_spi_de_init( RADIO_SPI_ID );
 
+    hal_i2c_deinit( I2C_ID );
+
 #if defined( HW_MODEM_ENABLED )
     uart4_deinit( );
 #endif
@@ -469,6 +469,9 @@ static void lpm_mcu_reinit( void )
 
     // Initialize SPI
     hal_spi_init( RADIO_SPI_ID, RADIO_SPI_MOSI, RADIO_SPI_MISO, RADIO_SPI_SCLK );
+
+    /* Initialize I2C */
+    hal_i2c_init( I2C_ID, I2C_SDA, I2C_SCL );
 }
 
 #endif
