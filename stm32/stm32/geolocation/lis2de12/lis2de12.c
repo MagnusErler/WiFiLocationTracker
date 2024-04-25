@@ -103,8 +103,9 @@ uint8_t accelerometer_init( uint8_t irq_active )
 
     /* Check device ID */
     while( ( i <= 5 ) && ( who_am_i != LIS2DE12_ID ) ) {
-        lis2de12_device_id_get( &who_am_i );
-        SMTC_HAL_TRACE_INFO( "LIS2DE12 Device ID: 0x%02X\r\n", who_am_i );
+        if (lis2de12_device_id_get( &who_am_i ) != 0) {
+            SMTC_HAL_TRACE_WARNING( "LIS2DE12 Device ID read failed\r\n" );
+        }
         if( who_am_i != LIS2DE12_ID ) {
             if( i == 5 ) {
                 SMTC_HAL_TRACE_ERROR( "LIS2DE12 Device ID read failed after %d attempts\r\n", i );
@@ -113,9 +114,10 @@ uint8_t accelerometer_init( uint8_t irq_active )
         }
         i++;
     }
+    SMTC_HAL_TRACE_INFO( "LIS2DE12 Device ID: 0x%02X\r\n", who_am_i );
 
     /* Set Output Data Rate to 10Hz */
-    if (lis2de12_data_rate_set( LIS2DE12_ODR_10Hz ) != 0) {
+    if (lis2de12_data_rate_set( LIS2DE12_ODR_100Hz ) != 0) {
         SMTC_HAL_TRACE_ERROR( "LIS2DE12 Data rate set failed\r\n" );
         return 0;
     }
@@ -260,6 +262,8 @@ int16_t acc_get_temperature( void )
     if ( is_ready ) {
         lis2de12_temperature_raw_get( &temperature );
     }
+
+    temperature = (temperature / 256.0) + 25.0;
 
     /* Build the raw tmp */
     return ( int16_t ) temperature;
@@ -771,7 +775,7 @@ int32_t lis2de12_block_data_update_set( uint8_t val )
     ret = lis2de12_read_reg( LIS2DE12_CTRL_REG4, ( uint8_t* ) &ctrl_reg4, 1 );
     if( ret == 0 )
     {
-        ctrl_reg4.bdu = !val;
+        ctrl_reg4.bdu = val;
         ret           = lis2de12_write_reg( LIS2DE12_CTRL_REG4, ( uint8_t* ) &ctrl_reg4, 1 );
     }
     return ret;

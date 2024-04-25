@@ -252,7 +252,7 @@ static void system_clock_config( void )
     __HAL_RCC_LSEDRIVE_CONFIG( RCC_LSEDRIVE_LOW );
 
     // HSI is enabled after System reset, activate PLL with HSI as source
-    rcc_osc_init_struct.OscillatorType      = RCC_OSCILLATORTYPE_HSI | RCC_OSCILLATORTYPE_LSI | RCC_OSCILLATORTYPE_LSE;
+    rcc_osc_init_struct.OscillatorType      = RCC_OSCILLATORTYPE_HSI | RCC_OSCILLATORTYPE_LSI; //| RCC_OSCILLATORTYPE_LSE;
     rcc_osc_init_struct.LSEState            = RCC_LSE_ON;
     rcc_osc_init_struct.HSIState            = RCC_HSI_ON;
     rcc_osc_init_struct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
@@ -272,7 +272,7 @@ static void system_clock_config( void )
 
     // Initializes the CPU, AHB and APB busses clocks
     rcc_clk_init_struct.ClockType =
-        RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+        RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2 | RCC_CLOCKTYPE_HCLK;
     rcc_clk_init_struct.SYSCLKSource   = RCC_SYSCLKSOURCE_PLLCLK;
     rcc_clk_init_struct.AHBCLKDivider  = RCC_SYSCLK_DIV1;
     rcc_clk_init_struct.APB1CLKDivider = RCC_HCLK_DIV1;

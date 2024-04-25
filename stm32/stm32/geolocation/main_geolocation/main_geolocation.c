@@ -111,7 +111,7 @@ uint8_t keep_alive_payload[KEEP_ALIVE_SIZE] = { 0x00 };
  * @brief Defines the delay before starting the next scan sequence, value in [s].
  */
 uint8_t GEOLOCATION_GNSS_SCAN_PERIOD_S = 2 * 60;
-uint8_t GEOLOCATION_WIFI_SCAN_PERIOD_S = 1 * 60;
+uint8_t GEOLOCATION_WIFI_SCAN_PERIOD_S = 1 * 15;
 
 /*!
  * @brief Time during which a LED is turned on when pulse, in [ms]
@@ -228,22 +228,33 @@ void main_geolocation( void ) {
         // const float batteryVoltage = (((5 * vbat)/255.0) - 1) * 1.35;
         // SMTC_HAL_TRACE_INFO("%d.%d V\r\n", (uint8_t)batteryVoltage, (uint8_t)((batteryVoltage - (uint8_t)batteryVoltage) * 100));
 
+        SMTC_HAL_TRACE_INFO("LIS2DE12 Temperature: %d\n", acc_get_temperature( ));
+        acc_read_raw_data( );
+        SMTC_HAL_TRACE_INFO("X: %d, Y: %d, Z: %d\n", acc_get_raw_x( ), acc_get_raw_y( ), acc_get_raw_z( ));
 
-        // Modem process launch
-        sleep_time_ms = smtc_modem_run_engine( );
+        // uint8_t acc_x 
 
-        // Atomically check sleep conditions
-        hal_mcu_disable_irq( );
-        if( smtc_modem_is_irq_flag_pending( ) == false ) {
+        // lis2de12_acceleration_raw_get_x( &acc_x )
+        // SMTC_HAL_TRACE_INFO("X: %d\n", acc_x);
 
-            SMTC_HAL_TRACE_INFO("LIS2DE12 Temperature: %d\n", acc_get_temperature( ));
-            SMTC_HAL_TRACE_INFO("X: %d\n", acc_get_raw_x( ));
+        
 
-            hal_watchdog_reload( );
-            hal_mcu_set_sleep_for_ms( MIN( sleep_time_ms, WATCHDOG_RELOAD_PERIOD_MS ) );
-        }
-        hal_watchdog_reload( );
-        hal_mcu_enable_irq( );
+        HAL_Delay(100);
+
+
+        // // Modem process launch
+        // sleep_time_ms = smtc_modem_run_engine( );
+
+        // // Atomically check sleep conditions
+        // hal_mcu_disable_irq( );
+        // if( smtc_modem_is_irq_flag_pending( ) == false ) {
+
+
+        //     hal_watchdog_reload( );
+        //     hal_mcu_set_sleep_for_ms( MIN( sleep_time_ms, WATCHDOG_RELOAD_PERIOD_MS ) );
+        // }
+        // hal_watchdog_reload( );
+        // hal_mcu_enable_irq( );
     }
 }
 

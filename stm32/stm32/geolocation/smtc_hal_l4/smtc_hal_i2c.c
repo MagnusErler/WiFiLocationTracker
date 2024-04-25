@@ -174,41 +174,82 @@ static uint32_t mapPin2Af( uint32_t pin ) {
     }
 }
 
-void HAL_I2C_MspInit( I2C_HandleTypeDef* i2cHandle ) {
-    if( i2cHandle->Instance == hal_i2c[0].interface ) {
-        GPIO_TypeDef*    gpio_port = ( GPIO_TypeDef* )( AHB2PERIPH_BASE + ( ( hal_i2c[0].pins.sda & 0xF0 ) << 6 ) );
-        GPIO_InitTypeDef gpio      = {
-            .Mode      = GPIO_MODE_AF_OD,
-            .Pull      = GPIO_NOPULL,
-            .Speed     = GPIO_SPEED_FREQ_VERY_HIGH,
-            .Alternate = GPIO_AF4_I2C1,
-        };
+void HAL_I2C_MspInit(I2C_HandleTypeDef* hi2c)
+{
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
+  if(hi2c->Instance==I2C1)
+  {
+  /* USER CODE BEGIN I2C1_MspInit 0 */
 
-        gpio.Pin = ( 1 << ( hal_i2c[0].pins.sda & 0x0F ) );
-        gpio.Alternate = mapPin2Af( hal_i2c[0].pins.sda );
-        HAL_GPIO_Init( gpio_port, &gpio );
+  /* USER CODE END I2C1_MspInit 0 */
 
-        gpio.Pin = ( 1 << ( hal_i2c[0].pins.scl & 0x0F ) );
-        gpio.Alternate = mapPin2Af( hal_i2c[0].pins.scl );
-        HAL_GPIO_Init( gpio_port, &gpio );
-
-        __HAL_RCC_I2C1_CLK_ENABLE( );
-    } else if( i2cHandle->Instance == hal_i2c[2].interface ) {
-        GPIO_TypeDef*    gpio_port = ( GPIO_TypeDef* )( AHB2PERIPH_BASE + ( ( hal_i2c[2].pins.sda & 0xF0 ) << 6 ) );
-        GPIO_InitTypeDef gpio      = {
-            .Mode      = GPIO_MODE_AF_OD,
-            .Pull      = GPIO_NOPULL,
-            .Speed     = GPIO_SPEED_FREQ_VERY_HIGH,
-            .Alternate = GPIO_AF4_I2C3,
-        };
-        gpio.Pin = ( 1 << ( hal_i2c[2].pins.scl & 0x0F ) ) | ( 1 << ( hal_i2c[2].pins.sda & 0x0F ) );
-        HAL_GPIO_Init( gpio_port, &gpio );
-
-        __HAL_RCC_I2C3_CLK_ENABLE( );
-    } else {
-        mcu_panic( );
+  /** Initializes the peripherals clock
+  */
+    PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_I2C1;
+    PeriphClkInit.I2c1ClockSelection = RCC_I2C1CLKSOURCE_PCLK1;
+    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
+    {
+    //   Error_Handler();
+      mcu_panic( );
     }
+
+    __HAL_RCC_GPIOB_CLK_ENABLE();
+    /**I2C1 GPIO Configuration
+    PB8     ------> I2C1_SCL
+    PB9     ------> I2C1_SDA
+    */
+    GPIO_InitStruct.Pin = GPIO_PIN_8|GPIO_PIN_9;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
+    GPIO_InitStruct.Pull = GPIO_PULLUP;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+    GPIO_InitStruct.Alternate = GPIO_AF4_I2C1;
+    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+    /* Peripheral clock enable */
+    __HAL_RCC_I2C1_CLK_ENABLE();
+  /* USER CODE BEGIN I2C1_MspInit 1 */
+
+  /* USER CODE END I2C1_MspInit 1 */
+  }
+
 }
+
+// void HAL_I2C_MspInit( I2C_HandleTypeDef* i2cHandle ) {
+//     if( i2cHandle->Instance == hal_i2c[0].interface ) {
+//         GPIO_TypeDef*    gpio_port = ( GPIO_TypeDef* )( AHB2PERIPH_BASE + ( ( hal_i2c[0].pins.sda & 0xF0 ) << 6 ) );
+//         GPIO_InitTypeDef gpio      = {
+//             .Mode      = GPIO_MODE_AF_OD,
+//             .Pull      = GPIO_NOPULL,
+//             .Speed     = GPIO_SPEED_FREQ_VERY_HIGH,
+//             .Alternate = GPIO_AF4_I2C1,
+//         };
+
+//         gpio.Pin = ( 1 << ( hal_i2c[0].pins.sda & 0x0F ) );
+//         gpio.Alternate = mapPin2Af( hal_i2c[0].pins.sda );
+//         HAL_GPIO_Init( gpio_port, &gpio );
+
+//         gpio.Pin = ( 1 << ( hal_i2c[0].pins.scl & 0x0F ) );
+//         gpio.Alternate = mapPin2Af( hal_i2c[0].pins.scl );
+//         HAL_GPIO_Init( gpio_port, &gpio );
+
+//         __HAL_RCC_I2C1_CLK_ENABLE( );
+//     } else if( i2cHandle->Instance == hal_i2c[2].interface ) {
+//         GPIO_TypeDef*    gpio_port = ( GPIO_TypeDef* )( AHB2PERIPH_BASE + ( ( hal_i2c[2].pins.sda & 0xF0 ) << 6 ) );
+//         GPIO_InitTypeDef gpio      = {
+//             .Mode      = GPIO_MODE_AF_OD,
+//             .Pull      = GPIO_NOPULL,
+//             .Speed     = GPIO_SPEED_FREQ_VERY_HIGH,
+//             .Alternate = GPIO_AF4_I2C3,
+//         };
+//         gpio.Pin = ( 1 << ( hal_i2c[2].pins.scl & 0x0F ) ) | ( 1 << ( hal_i2c[2].pins.sda & 0x0F ) );
+//         HAL_GPIO_Init( gpio_port, &gpio );
+
+//         __HAL_RCC_I2C3_CLK_ENABLE( );
+//     } else {
+//         mcu_panic( );
+//     }
+// }
 
 void HAL_I2C_MspDeInit( I2C_HandleTypeDef* i2cHandle ) {
     uint32_t local_id = 0;
@@ -267,7 +308,7 @@ static uint8_t i2c_write_buffer( const uint32_t id, uint8_t device_addr, uint16_
         memAddSize = I2C_MEMADD_SIZE_16BIT;
     }
 
-    return HAL_I2C_Mem_Write( &hal_i2c[local_id].handle, device_addr, addr, memAddSize, buffer, size, 2000u );
+    return !HAL_I2C_Mem_Write( &hal_i2c[local_id].handle, device_addr, addr, memAddSize, buffer, size, 2000u );
 }
 
 static uint8_t i2c_read_buffer( const uint32_t id, uint8_t device_addr, uint16_t addr, uint8_t* buffer, uint16_t size ) {
@@ -282,5 +323,5 @@ static uint8_t i2c_read_buffer( const uint32_t id, uint8_t device_addr, uint16_t
         memAddSize = I2C_MEMADD_SIZE_16BIT;
     }
 
-    return HAL_I2C_Mem_Read( &hal_i2c[local_id].handle, device_addr, addr, memAddSize, buffer, size, 5000 );
+    return !HAL_I2C_Mem_Read( &hal_i2c[local_id].handle, device_addr, addr, memAddSize, buffer, size, 5000 );
 }
