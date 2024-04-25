@@ -1,6 +1,7 @@
 .settings-menu-size {
   width: 70%;
   max-width: 900px;
+  margin-top: 50px; /* Ensure the menu is always placed 50px from the top */
 }
 
 .close-placement-settings-menu {

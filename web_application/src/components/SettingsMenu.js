@@ -9,11 +9,14 @@ import TimelineIcon from '@mui/icons-material/Timeline';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import BatteryUnknownIcon from '@mui/icons-material/BatteryUnknown';
 import DeviceThermostatIcon from '@mui/icons-material/DeviceThermostat';
+import ConfirmationDialog from "./ConfirmationDialog"; // Import the confirmation dialog component
 
 const SettingsMenu = ({ isOpen, handleClose, trackerInformation, handleShowLocationSwitch, handleShowMovement, handleTrackerInformationUpdate, markers }) => {
   const [showCurrentLocationIds, setShowCurrentLocationIds] = useState(trackerInformation.map(tracker => tracker.deviceId));
   const [showMovementIds, setShowMovementIds] = useState([]);
   const [originalNames, setOriginalNames] = useState([]);
+  const [showConfirmationDialog, setShowConfirmationDialog] = useState(false); // State to manage the visibility of the confirmation dialog
+  const [deviceToDelete, setDeviceToDelete] = useState(null); // State to store the device ID to be deleted
 
   useEffect(() => {
     setOriginalNames(trackerInformation.map(tracker => tracker.name));
@@ -130,11 +133,25 @@ const SettingsMenu = ({ isOpen, handleClose, trackerInformation, handleShowLocat
     }
   };
 
+  const handleDeleteConfirmation = async () => {
+    if (deviceToDelete) {
+      await deleteDevice(deviceToDelete);
+      setDeviceToDelete(null);
+      setShowConfirmationDialog(false);
+    }
+  };
+
+  const toggleConfirmationDialog = (deviceId) => {
+    setDeviceToDelete(deviceId);
+    setShowConfirmationDialog(!showConfirmationDialog);
+  };
+
   return (
     <div className={`modal ${isOpen ? "show" : ""}`}>
       <div className="modal-content settings-menu-size">
         <span className="close close-placement-settings-menu" onClick={handleCloseAndUpdateDevices}>&times;</span>
         <table>
+          {/* Table headers */}
           <thead>
             <tr>
               <th className="id-column">ID</th>
@@ -180,13 +197,20 @@ const SettingsMenu = ({ isOpen, handleClose, trackerInformation, handleShowLocat
                   />
                 </td>
                 <td className="delete-device-column">
-                  <DeleteForeverIcon className="delete-icon" onClick={() => deleteDevice(tracker.deviceId)} />
+                  <DeleteForeverIcon className="delete-icon" onClick={() => toggleConfirmationDialog(tracker.deviceId)} />
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      {showConfirmationDialog && (
+        <ConfirmationDialog
+          message="Are you sure you want to delete this device?"
+          onConfirm={handleDeleteConfirmation}
+          onCancel={() => setShowConfirmationDialog(false)}
+        />
+      )}
     </div>
   );
 };

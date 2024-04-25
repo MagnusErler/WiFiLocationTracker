@@ -30,7 +30,7 @@
     border-color: #2196f3;
 }
 
-button {
+.add-device-menu-size button {
     background-color: #4caf50;
     color: white;
     padding: 10px 20px;
@@ -39,28 +39,42 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+.add-device-menu-size button:hover {
     background-color: #45a049;
-}
-
-.show {
-    display: block; /* Show the modal */
-}
-
-.modal-content h2 {
-    background-color: #CF6C11;
-    color: white;
-    padding: 10px;
-    border-radius: 8px 8px 0 0;
-    margin-top: -20px;
-    margin-bottom: 20px;
-    font-weight: 400;
-}
+}  
 
 .main-content {
-    margin: 0% 4% 2% 4%;
+    padding: 10px;
 }
 
-.close-placement-add-device-menu {
-    margin-top: -25px;
+/* Style the top bar */
+.modal-content.add-device-menu-size .top-bar {
+    background-color: #CF6C11;
+    border-radius: 8px 8px 0 0;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between; /* Align items horizontally */
+    align-items: center; /* Align items vertically */
+  }
+
+.modal-content.add-device-menu-size .top-bar h2 {
+    color: white; /* Make the text white */
+    margin: 0; /* Remove default margin */
+}
+
+
+
+/* Style the close button */
+.close.close-placement-add-device-menu {
+    font-size: 28px;
+    font-weight: 300;
+    margin-top: -25px; 
+    margin-right: -5px;
+    cursor: pointer;
+}
+
+.close.close-placement-add-device-menu:hover,
+.close.close-placement-add-device-menu:focus {
+    color: black;
+    text-decoration: none;
 }

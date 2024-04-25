@@ -135,11 +135,13 @@ const AddDeviceMenu = ({ isOpen, handleClose, onDeviceAdded }) => {
   };
 
   return (
-    <div className={`modal ${isOpen ? "show" : ""}`}>
-      <div className="modal-content add-device-menu-size">
-        <span className="close close-placement-add-device-menu" onClick={handleClose}>&times;</span>
-        <h2>Add Device</h2>
-        <div className="main-content">
+      <div className={`modal ${isOpen ? "show" : ""}`}>
+        <div className="modal-content add-device-menu-size">
+          <div className="top-bar">
+            <h2>Add Device</h2>
+            <span className="close close-placement-add-device-menu" onClick={handleClose}>&times;</span>
+          </div>
+          <div className="main-content">
             {errorMessage && <p className="error-message">{errorMessage}</p>}
             <div className="input-group">
             <label htmlFor="name">Name:</label>

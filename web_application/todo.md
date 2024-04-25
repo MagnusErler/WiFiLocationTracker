@@ -6,5 +6,3 @@
 6. Change ID for name in markers
 7. Movement with arrows
 8. You don't have to press the close button. You can also press outside the menues
-9. Close box if claim is succesful and do alert
-10. Make are you sure that want to delete device

@@ -1,0 +1,54 @@
+.confirmation-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+    z-index: 1000;
+    max-width: 250px; /* Adjust the max-width as needed */
+}
+
+.confirmation-dialog p {
+    margin-bottom: 10px; /* Reduce margin bottom */
+    word-wrap: break-word; /* Allow text to wrap */
+}
+
+.confirmation-dialog .buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px; /* Increase margin top */
+}
+
+.confirmation-dialog button {
+    width: 100px; /* Adjust the width of the buttons */
+    height: 40px; /* Maintain the height of the buttons */
+    border: 1px solid transparent; /* Ensure border is transparent initially */
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.confirmation-dialog button:focus {
+    outline: none;
+}
+
+.confirmation-dialog button:hover {
+    background-color: #f0f0f0;
+}
+
+.confirmation-dialog button:first-child {
+    margin-right: 20px; /* Add margin between the buttons */
+}
+
+.confirmation-dialog .confirm-button {
+    background-color: red; /* Set confirm button background color */
+    color: #ffffff; /* Set text color for confirm button */
+}
+
+.confirmation-dialog .cancel-button {
+    background-color: #ffffff; /* Set cancel button background color */
+    border-color: black; /* Set border color for cancel button */
+    color: black; /* Set text color for cancel button */
+}
