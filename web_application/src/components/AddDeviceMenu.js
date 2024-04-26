@@ -1,14 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import "./ModalMenu.css"
 import "./AddDeviceMenu.css";
 
-const AddDeviceMenu = ({ isOpen, handleClose, onDeviceAdded }) => {
+const AddDeviceMenu = React.forwardRef(({ isOpen, handleClose, onDeviceAdded }, ref) => {
   const [devEUI, setDevEUI] = useState("");
   const [joinEUI, setJoinEUI] = useState("00-16-C0-01-FF-FE-00-01");
   const [pin, setPin] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [name, setName] = useState("");
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        handleClose(); // Close the menu if clicked outside
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [handleClose]);
 
   const handleChangeDevEUI = (e) => {
     const value = e.target.value.toUpperCase().replace(/[^0-9A-F]/g, "");
@@ -135,8 +149,8 @@ const AddDeviceMenu = ({ isOpen, handleClose, onDeviceAdded }) => {
   };
 
   return (
-      <div className={`modal ${isOpen ? "show" : ""}`}>
-        <div className="modal-content add-device-menu-size">
+      <div ref={ref} className={`modal ${isOpen ? "show" : ""}`}>
+        <div ref={menuRef} className="modal-content add-device-menu-size">
           <div className="top-bar">
             <h2>Add Device</h2>
             <span className="close close-placement-add-device-menu" onClick={handleClose}>&times;</span>
@@ -164,6 +178,6 @@ const AddDeviceMenu = ({ isOpen, handleClose, onDeviceAdded }) => {
       </div>
     </div>
   );
-};
+});
 
 export default AddDeviceMenu;

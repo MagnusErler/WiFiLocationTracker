@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
 import "./styles.css";
@@ -116,10 +116,14 @@ export default function App() {
   }, []);
 
   const center = [56.234538, 10.231792]; // Denmark coordinates
+
   const [showCurrentLocation, setShowCurrentLocation] = useState(trackerInformation.map(tracker => tracker.deviceId));
+  const [showMovement, setShowMovement] = useState([]);
+
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [isAddDeviceMenuOpen, setAddDeviceMenuOpen] = useState(false);
-  const [showMovement, setShowMovement] = useState([]);
+  const settingsMenuRef = useRef(null);
+  const addDeviceMenuRef = useRef(null);
 
   const handleOpenSettingsMenu = () => {
     setSettingsOpen(true);
@@ -263,18 +267,29 @@ export default function App() {
     }
   };
 
+   // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (settingsMenuRef.current && !settingsMenuRef.current.contains(event.target)) {
+        setSettingsOpen(false);
+      }
+      if (addDeviceMenuRef.current && !addDeviceMenuRef.current.contains(event.target)) {
+        setAddDeviceMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className="map-container">
-      <button
-        className="menu-button"
-        onClick={handleOpenSettingsMenu}
-      >
+      <button className="menu-button" onClick={handleOpenSettingsMenu}>
         <ListIcon />
       </button>
-      <button
-        className="add-button"
-        onClick={handleOpenAddDeviceMenu}
-      >
+      <button className="add-button" onClick={handleOpenAddDeviceMenu}>
         <AddIcon />
       </button>
       <MapComponent
@@ -290,11 +305,13 @@ export default function App() {
         handleShowMovement={handleShowMovementSwitch}
         handleTrackerInformationUpdate={handleTrackerInformationUpdate}
         markers={markers}
+        ref={settingsMenuRef}
       />
       <AddDeviceMenu 
         isOpen={isAddDeviceMenuOpen} 
         handleClose={handleCloseAddDeviceMenu}
-        onDeviceAdded={handleAddDeviceSuccess} 
+        onDeviceAdded={handleAddDeviceSuccess}
+        ref={addDeviceMenuRef} 
         />
     </div>
   );

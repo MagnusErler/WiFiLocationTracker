@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./ModalMenu.css";
 import "./SettingsMenu.css";
 import axios from "axios";
@@ -11,16 +11,30 @@ import BatteryUnknownIcon from '@mui/icons-material/BatteryUnknown';
 import DeviceThermostatIcon from '@mui/icons-material/DeviceThermostat';
 import ConfirmationDialog from "./ConfirmationDialog"; // Import the confirmation dialog component
 
-const SettingsMenu = ({ isOpen, handleClose, trackerInformation, handleShowLocationSwitch, handleShowMovement, handleTrackerInformationUpdate, markers }) => {
+const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation, handleShowLocationSwitch, handleShowMovement, handleTrackerInformationUpdate, markers }, ref) => {
   const [showCurrentLocationIds, setShowCurrentLocationIds] = useState(trackerInformation.map(tracker => tracker.deviceId));
   const [showMovementIds, setShowMovementIds] = useState([]);
   const [originalNames, setOriginalNames] = useState([]);
   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false); // State to manage the visibility of the confirmation dialog
   const [deviceToDelete, setDeviceToDelete] = useState(null); // State to store the device ID to be deleted
+  const menuRef = useRef(null);
 
   useEffect(() => {
     setOriginalNames(trackerInformation.map(tracker => tracker.name));
   }, [isOpen]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        handleClose(); // Close the menu if clicked outside
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [handleClose]);
 
   const hasCorrespondingPing = (deviceId) => {
     return markers.some(marker => marker.deviceId === deviceId);
@@ -147,8 +161,8 @@ const SettingsMenu = ({ isOpen, handleClose, trackerInformation, handleShowLocat
   };
 
   return (
-    <div className={`modal ${isOpen ? "show" : ""}`}>
-      <div className="modal-content settings-menu-size">
+    <div ref={ref} className={`modal ${isOpen ? "show" : ""}`}>
+      <div ref={menuRef} className="modal-content settings-menu-size">
         <span className="close close-placement-settings-menu" onClick={handleCloseAndUpdateDevices}>&times;</span>
         <table>
           {/* Table headers */}
@@ -213,6 +227,6 @@ const SettingsMenu = ({ isOpen, handleClose, trackerInformation, handleShowLocat
       )}
     </div>
   );
-};
+});
 
 export default SettingsMenu;
