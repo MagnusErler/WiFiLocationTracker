@@ -37,13 +37,15 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
   }, [handleClose]);
 
   const hasCorrespondingPing = (deviceId) => {
-    return markers.some(marker => marker.deviceId === deviceId);
+    return markers.some(marker => marker.deviceId.toUpperCase() === deviceId.toUpperCase());
   };
 
   const handleLocationSwitch = (id) => {
+    console.log("Toggling location for device ID:", id);
     const newShowCurrentLocationIds = showCurrentLocationIds.includes(id)
       ? showCurrentLocationIds.filter((checkedId) => checkedId !== id)
       : [...showCurrentLocationIds, id];
+    console.log("New showCurrentLocationIds:", newShowCurrentLocationIds);
     setShowCurrentLocationIds(newShowCurrentLocationIds);
     handleShowLocationSwitch(newShowCurrentLocationIds);
   };

@@ -49,11 +49,15 @@ export default function App() {
   };
 
   const handleShowLocationSwitch = (ids) => {
-    setShowCurrentLocation(ids);
+    // Convert all IDs to lowercase before setting the state
+    const uppercaseIds = ids.map(id => id.toUpperCase());
+    setShowCurrentLocation(uppercaseIds);
   };
 
   const handleShowMovementSwitch = (ids) => {
-    setShowMovement(ids);
+    // Convert all IDs to lowercase before setting the state
+    const uppercaseIds = ids.map(id => id.toUpperCase());
+    setShowMovement(uppercaseIds);
   };
 
   const handleOpenAddDeviceMenu = () => {
@@ -138,7 +142,7 @@ export default function App() {
           pingId: ping.id,
           deviceId: ping.deviceID,
           geocode: ping.geocode,
-          timeStamp: new Date(ping.createdAt).toLocaleString(), // Convert to human-readable format
+          timeStamp: new Date(ping.updatedAt).toLocaleString(), // Convert to human-readable format
           accuracy: 0 // Placeholder for accuracy, not implemented yet
         }));
         
