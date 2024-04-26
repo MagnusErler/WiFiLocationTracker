@@ -1,0 +1,80 @@
+.add-device-menu-size {
+    width: 30%;
+    max-width: 300px;
+}
+
+.error-message {
+    color: #f00;
+    margin-top: 10px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-group input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.input-group input[type="text"]:focus {
+    outline: none;
+    border-color: #2196f3;
+}
+
+.add-device-menu-size button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add-device-menu-size button:hover {
+    background-color: #45a049;
+}  
+
+.main-content {
+    padding: 10px;
+}
+
+/* Style the top bar */
+.modal-content.add-device-menu-size .top-bar {
+    background-color: #CF6C11;
+    border-radius: 8px 8px 0 0;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between; /* Align items horizontally */
+    align-items: center; /* Align items vertically */
+  }
+
+.modal-content.add-device-menu-size .top-bar h2 {
+    color: white; /* Make the text white */
+    margin: 0; /* Remove default margin */
+}
+
+
+
+/* Style the close button */
+.close.close-placement-add-device-menu {
+    font-size: 28px;
+    font-weight: 300;
+    margin-top: -25px; 
+    margin-right: -5px;
+    cursor: pointer;
+}
+
+.close.close-placement-add-device-menu:hover,
+.close.close-placement-add-device-menu:focus {
+    color: black;
+    text-decoration: none;
+}
