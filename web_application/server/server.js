@@ -56,6 +56,7 @@ app.get('/api/geolocationSolves/:deviceID', async (req, res) => {
     // Check if any data was found for the device ID
     if (geolocationSolvesWithDeviceID.length === 0) {
       // Device ID not found, return 404 status code
+      console.log('Device ID not found:', req.params.deviceID);
       return res.status(404).json({ error: 'Device ID not found' });
     }
 

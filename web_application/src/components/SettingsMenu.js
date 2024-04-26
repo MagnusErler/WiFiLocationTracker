@@ -9,14 +9,14 @@ import TimelineIcon from '@mui/icons-material/Timeline';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import BatteryUnknownIcon from '@mui/icons-material/BatteryUnknown';
 import DeviceThermostatIcon from '@mui/icons-material/DeviceThermostat';
-import ConfirmationDialog from "./ConfirmationDialog"; // Import the confirmation dialog component
+import ConfirmationDialog from "./ConfirmationDialog";
 
 const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation, handleShowLocationSwitch, handleShowMovement, handleTrackerInformationUpdate, markers }, ref) => {
   const [showCurrentLocationIds, setShowCurrentLocationIds] = useState(trackerInformation.map(tracker => tracker.deviceId));
   const [showMovementIds, setShowMovementIds] = useState([]);
   const [originalNames, setOriginalNames] = useState([]);
-  const [showConfirmationDialog, setShowConfirmationDialog] = useState(false); // State to manage the visibility of the confirmation dialog
-  const [deviceToDelete, setDeviceToDelete] = useState(null); // State to store the device ID to be deleted
+  const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
+  const [deviceToDelete, setDeviceToDelete] = useState(null);
   const menuRef = useRef(null);
 
   useEffect(() => {

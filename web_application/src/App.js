@@ -20,100 +20,15 @@ function convertUnixSecondsToReadableDate(timestamp) {
 
 export default function App() {
   // TODO: fetch markers from API
-  const [markers, setMarkers] = useState([
-      {
-        pingId: 1,
-        deviceId: "0016c001f0003fc5",
-        geocode: [56.86, 10.1522],
-        timeStamp: convertUnixSecondsToReadableDate(1712781085),
-      },
-      {
-        pingId: 2,
-        deviceId: "0016c001f0003fc5",
-        geocode: [56.85, 10.1522],
-        timeStamp: convertUnixSecondsToReadableDate(1712761085),
-      },
-      {
-        pingId: 3,
-        deviceId: "0016c001f0003fc5",
-        geocode: [56.855, 10.14],
-        timeStamp: convertUnixSecondsToReadableDate(1712721085),
-      },
-      {
-        pingId: 4,
-        deviceId: "0016c001f0003ff5",
-        geocode: [56.845, 10.1328],
-        timeStamp: convertUnixSecondsToReadableDate(1712681085),
-      },
-      {
-        pingId: 5,
-        deviceId: "0016c001f0003ff5",
-        geocode: [56.838, 10.129],
-        timeStamp: convertUnixSecondsToReadableDate(1712781150),
-      },
-      {
-        pingId: 6,
-        deviceId: "0016c001f0005f5d",
-        geocode: [55.352129024259426, 10.371932315878896],
-        timeStamp: convertUnixSecondsToReadableDate(1712800065),
-      },
-      {
-        pingId: 7,
-        deviceId: "0016c001f0005f5d",
-        geocode: [55.39036773193939, 10.003890323691396],
-        timeStamp: convertUnixSecondsToReadableDate(1712805065),
-      },
-      {
-        pingId: 8,
-        deviceId: "0016c001f0005f5d",
-        geocode: [55.51186134119964, 9.76631097798827],
-        timeStamp: convertUnixSecondsToReadableDate(1712810065),
-      },
-      {
-        pingId: 9,
-        deviceId: "0016c001f0005f5d",
-        geocode: [55.48385755904464, 9.471053409628896],
-        timeStamp: convertUnixSecondsToReadableDate(1712815065),
-      },
-      {
-        pingId: 10,
-        deviceId: "0016c001f0005f84",
-        geocode: [55.21336109122791, 11.76730468116085],
-        timeStamp: convertUnixSecondsToReadableDate(1712800065),
-      },
-      {
-        pingId: 11,
-        deviceId: "0016c001f0005f84",
-        geocode: [54.97306836214099, 12.002836349452343],
-        timeStamp: convertUnixSecondsToReadableDate(1712805065),
-      },
-      {
-        pingId: 12,
-        deviceId: "0016c001f0005f84",
-        geocode: [54.576789525964145, 11.929138297811294],
-        timeStamp: convertUnixSecondsToReadableDate(1712810065),
-      },
-      {
-        pingId: 13,
-        deviceId: "0016c001f0005f84",
-        geocode: [54.08320371108278, 12.134133963429825],
-        timeStamp: convertUnixSecondsToReadableDate(1712815065),
-      },
-      {
-        pingId: 14,
-        deviceId: "0016c001f0005f84",
-        geocode: [53.853835486983506, 12.444120362979492],
-        timeStamp: convertUnixSecondsToReadableDate(1712820065),
-      }
-  ]);
+  const [markers, setMarkers] = useState([]);
 
   // TODO: fetch tracker information from API
-  const [trackerInformation, setTrackerInformation] = useState([
-  ]);
+  const [trackerInformation, setTrackerInformation] = useState([]);
 
   useEffect(() => {
     fetchTrackerInformation();
   }, []);
+
 
   const center = [56.234538, 10.231792]; // Denmark coordinates
 
@@ -207,6 +122,47 @@ export default function App() {
     setTrackerInformation(updatedTrackerInformation);
   };
 
+  const fetchMarkers = async () => {
+    console.log("Fetching markers...");
+    try {
+      // Initialize an array to store the markers
+      const updatedMarkers = [];
+      // Iterate over each device in trackerInformation
+      for (const device of trackerInformation) {
+        console.log(`Fetching markers for device ${device.deviceId}...`);
+        const deviceId = device.deviceId.toUpperCase();
+        const response = await axios.get(`/api/geolocationSolves/${deviceId}`);
+        
+        // Map pings to the desired format
+        const mappedMarkers = response.data.map(ping => ({
+          pingId: ping.id,
+          deviceId: ping.deviceID,
+          geocode: ping.geocode,
+          timeStamp: new Date(ping.createdAt).toLocaleString(), // Convert to human-readable format
+          accuracy: 0 // Placeholder for accuracy, not implemented yet
+        }));
+        
+        // Add the mapped markers to the updatedMarkers array
+        updatedMarkers.push(...mappedMarkers);
+        console.log(`Markers for device ${deviceId}:`, response.data);
+        // Process markers for this device as needed
+      }
+      // Update the markers state with the updatedMarkers array
+      console.log("Markers fetched successfully:", updatedMarkers);
+      setMarkers(updatedMarkers);
+    } catch (error) {
+      // Check if the error is an AxiosError
+      if (error.isAxiosError && error.response && error.response.status === 404) {
+        // Handle 404 error
+        console.log(`No entries found for device ${error.response.config.url.split('/').pop()}`);
+      } else {
+        // Handle other errors
+        console.error("Failed to fetch markers:", error);
+        alert("Failed to fetch markers. Check console for details.");
+      }
+    }
+  };
+
   const fetchTrackerInformation = async () => {
     console.log("Fetching tracker information...");
     try {
@@ -224,7 +180,7 @@ export default function App() {
           Authorization: `Bearer ${token}`,
         },
       });
-
+  
       if (response.ok) {
         const data = await response.json();
         console.log(data);
@@ -258,6 +214,9 @@ export default function App() {
             });
             return [...prevState]; // Return a new array to trigger state update
           });
+  
+          // Call fetchMarkers here after fetchTrackerInformation is completed
+          fetchMarkers(); 
         }
       } else {
         throw new Error(`Failed to fetch tracker information: ${response.status}, ${response.statusText}`);
