@@ -41,21 +41,38 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
   };
 
   const handleLocationSwitch = (id) => {
-    console.log("Toggling location for device ID:", id);
     const newShowCurrentLocationIds = showCurrentLocationIds.includes(id)
       ? showCurrentLocationIds.filter((checkedId) => checkedId !== id)
       : [...showCurrentLocationIds, id];
-    console.log("New showCurrentLocationIds:", newShowCurrentLocationIds);
+  
     setShowCurrentLocationIds(newShowCurrentLocationIds);
     handleShowLocationSwitch(newShowCurrentLocationIds);
+  
+    // If current location is being disabled, disable movement as well
+    if (!newShowCurrentLocationIds.includes(id)) {
+      const newShowMovementIds = showMovementIds.filter((checkedId) => checkedId !== id);
+      setShowMovementIds(newShowMovementIds);
+      handleShowMovement(newShowMovementIds);
+    }
   };
   
+  //TODO: Make sure that only corresponding switches is co-dependent
   const handleMovementSwitch = (id) => {
     const newShowMovementIds = showMovementIds.includes(id)
       ? showMovementIds.filter((checkedId) => checkedId !== id)
       : [...showMovementIds, id];
+  
     setShowMovementIds(newShowMovementIds);
     handleShowMovement(newShowMovementIds);
+  
+    // If movement is being enabled, enable current location as well
+    if (newShowMovementIds.includes(id)) {
+      const newShowCurrentLocationIds = showCurrentLocationIds.includes(id)
+        ? showCurrentLocationIds
+        : [...showCurrentLocationIds, id];
+      setShowCurrentLocationIds(newShowCurrentLocationIds);
+      handleShowLocationSwitch(newShowCurrentLocationIds);
+    }
   };
 
   const handleNameChange = (id, newName) => {
