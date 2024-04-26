@@ -1,29 +1,33 @@
 # How to run
 
-1. Install NPM
-2. Install node.js
-3. Create account and application on [The Things Network](https://eu1.cloud.thethings.network/console/)
-4. Generate an API token on [The Things Network](https://eu1.cloud.thethings.network/console/)
-5. Create .env file in base folder and add API token and application ID:
+1. Install NPM and node.js (Ubuntu: [https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04)
+
+   ```
+   sudo apt update
+   sudo apt install nodejs
+   sudo apt install npm
+   ```
+2. Create account and application on [The Things Network](https://eu1.cloud.thethings.network/console/)
+3. Generate an API token on [The Things Network](https://eu1.cloud.thethings.network/console/)
+4. Create .env file in base folder and add API token and application ID:
 
    ```
    #.env
-   REACT_APP_TTN_API_TOKEN=[API-TOKEN]
-   REACT_APP_TTN_APP_ID=[APPLICATION-ID]
+   REACT_APP_TTN_API_KEY="YOUR_API_KEY"
+   REACT_APP_TTN_APP_ID="YOUR_APPLICATION_ID"
    ```
-6. Create account and application on [loracloud.com](loracloud.com)
-7. Download credentials and unpack to credentials folder in base folder
-8. Generate API token on [loracloud.com](loracloud.com)
-9. Add API token from loracloud.com and add to TTN under intergrations -> LoRa Cloud
-10. Run npm install in base folder
-11. Run npm install in server folder
-12. Create user on ngrok.com and download application
-13. Start ngrok and run ngrok.exe http 3001
-14. Copy forwarding address
-15. Add webhook under intergrations on TTN with Webhook format: JSON Base URL: forwarding address from ngrok Filter event data: up.location_solved, up.location_solved.location, end_device_ids.dev_eui Enabled event types: Location solved (api/geolocationSolves)
-16. Run server.js in server folder
-17. Run npm start in base folder
-18. If your browser doesn't open automatically, navigate to localhost:3000. You're can now add your LR1110 device, and start seeing it's location, if it has TTN network coverage, and can detect either WiFi access points or GNSS satellites (GPS and Baidu).
+5. Create account and application on [loracloud.com](loracloud.com)
+6. Download credentials and unpack to credentials folder in base folder from [https://www.loracloud.com/portal/join_service/account_admin_credentials](https://www.loracloud.com/portal/join_service/account_admin_credentials)
+7. Generate API token on [loracloud.com](https://www.loracloud.com/portal/modem_services/tokens) and add to [TNN Integration: LoRa Cloud](https://eu1.cloud.thethings.network/console/applications/dtu-master-thesis/integrations/lora-cloud)
+8. Run `npm install` in base folder
+9. Run `npm install` in server folder
+10. Create user on [ngrok.com](ngrok.com) and download application
+11. Start ngrok and run `ngrok.exe http 3001`
+12. Copy forwarding address
+13. Add webhook under intergrations on TTN with Webhook format: JSON Base URL: forwarding address from ngrok Filter event data: up.location_solved, up.location_solved.location, end_device_ids.dev_eui Enabled event types: Location solved (api/geolocationSolves)
+14. Open another terminal and run `node server.js` in server folder
+15. Open another run `npm start` in base folder
+16. If your browser doesn't open automatically, navigate to localhost:3000. You're can now add your LR1110 device, and start seeing it's location, if it has TTN network coverage, and can detect either WiFi access points or GNSS satellites (GPS and Baidu).
 
 # Future work
 
