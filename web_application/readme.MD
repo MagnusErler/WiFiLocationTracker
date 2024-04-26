@@ -5,7 +5,7 @@
 4. Generate API token on TTN
 5. Create .env file in base folder and add API token and application ID: \
   REACT_APP_TTN_API_TOKEN=[API-TOKEN] \
-  REACT_APP_TTN_ID=[APPLICATION-ID]
+  REACT_APP_TTN_APP_ID=[APPLICATION-ID]
 6. Create account and application on loracloud.com
 7. Download credentials and unpack to credentials folder in base folder
 8. Generate API token on loracloud.com

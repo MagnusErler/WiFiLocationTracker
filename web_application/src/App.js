@@ -171,7 +171,7 @@ export default function App() {
     console.log("Fetching tracker information...");
     try {
       const token = process.env.REACT_APP_TTN_API_TOKEN;
-      const appID = process.env.REACT_APP_APP_ID;
+      const appID = process.env.REACT_APP_TTN_APP_ID;
       if (!token) {
         throw new Error("API token ID is not available.");
       }
