@@ -7,16 +7,16 @@
    sudo apt install nodejs
    sudo apt install npm
    ```
-2. Create account and application on [The Things Network](https://eu1.cloud.thethings.network/console/)
-3. Generate an API token on [The Things Network](https://eu1.cloud.thethings.network/console/)
-4. Create .env file in base folder and add API token and application ID:
+2. Create an account and application on [The Things Network](https://eu1.cloud.thethings.network/console/)
+3. Generate an API token on [The Things Network](https://eu1.cloud.thethings.network/console/applications/dtu-master-thesis/api-keys)
+4. Create a `.env` file in base folder and add the API KEY and APPLICATION ID:
 
    ```
    #.env
    REACT_APP_TTN_API_KEY="YOUR_API_KEY"
    REACT_APP_TTN_APP_ID="YOUR_APPLICATION_ID"
    ```
-5. Create account and application on [loracloud.com](loracloud.com)
+5. Create an account and application on [loracloud.com](loracloud.com)
 6. Download credentials and unpack to credentials folder in base folder from [https://www.loracloud.com/portal/join_service/account_admin_credentials](https://www.loracloud.com/portal/join_service/account_admin_credentials)
 7. Generate API token on [loracloud.com](https://www.loracloud.com/portal/modem_services/tokens) and add to [TNN Integration: LoRa Cloud](https://eu1.cloud.thethings.network/console/applications/dtu-master-thesis/integrations/lora-cloud)
 8. Run `npm install` in base folder
