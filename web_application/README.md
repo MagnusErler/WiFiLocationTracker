@@ -8,7 +8,7 @@
    sudo apt install npm
    ```
 2. Create an account and application on [The Things Network](https://eu1.cloud.thethings.network/console/)
-3. Generate an API token on [The Things Network](https://eu1.cloud.thethings.network/console/applications/dtu-master-thesis/api-keys)
+3. Generate an API token on [The Things Network](https://eu1.cloud.thethings.network/console/)
 4. Create a `.env` file in base folder and add the API KEY and APPLICATION ID:
 
    ```
@@ -18,16 +18,16 @@
    ```
 5. Create an account and application on [loracloud.com](loracloud.com)
 6. Download credentials and unpack to credentials folder in base folder from [https://www.loracloud.com/portal/join_service/account_admin_credentials](https://www.loracloud.com/portal/join_service/account_admin_credentials)
-7. Generate API token on [loracloud.com](https://www.loracloud.com/portal/modem_services/tokens) and add to [TNN Integration: LoRa Cloud](https://eu1.cloud.thethings.network/console/applications/dtu-master-thesis/integrations/lora-cloud)
+7. Generate API token on [loracloud.com](https://www.loracloud.com/portal/modem_services/tokens) and add to [TNN Integration: LoRa Cloud](https://eu1.cloud.thethings.network/console/)
 8. Run `npm install` in base folder
 9. Run `npm install` in server folder
 10. Create user on [ngrok.com](ngrok.com) and download application
-11. Start ngrok and run `ngrok.exe http 3001`
+11. Start ngrok and run `ngrok.exe http 3001` (Ubuntu: `ngrok http 3001`)
 12. Copy forwarding address
-13. Add webhook under intergrations on TTN with Webhook format: JSON Base URL: forwarding address from ngrok Filter event data: up.location_solved, up.location_solved.location, end_device_ids.dev_eui Enabled event types: Location solved (api/geolocationSolves)
+13. Add webhook under intergrations on [TTN](https://eu1.cloud.thethings.network/console/) with Webhook format: JSON Base URL: forwarding address from ngrok Filter event data: up.location_solved, up.location_solved.location, end_device_ids.dev_eui Enabled event types: Location solved (api/geolocationSolves)
 14. Open another terminal and run `node server.js` in server folder
 15. Open another run `npm start` in base folder
-16. If your browser doesn't open automatically, navigate to localhost:3000. You're can now add your LR1110 device, and start seeing it's location, if it has TTN network coverage, and can detect either WiFi access points or GNSS satellites (GPS and Baidu).
+16. If your browser doesn't open automatically, navigate to localhost:3000. You can now add your LR1110 device, and start seeing it's location, if it has TTN network coverage, and can detect either Wi-Fi access points or GNSS satellites (GPS and BeiDou).
 
 # Future work
 
