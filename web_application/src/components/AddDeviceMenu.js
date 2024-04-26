@@ -97,28 +97,28 @@ const AddDeviceMenu = React.forwardRef(({ isOpen, handleClose, onDeviceAdded }, 
       // Prepare request data for each endpoint
       const requestDataClaim = [{ DevEUI: cleanDevEUI, Pin: pin }];
       const requestDataTTNID = {
-        Token: process.env.REACT_APP_TTN_API_TOKEN,
+        Token: process.env.REACT_APP_TTN_API_KEY,
         AppID: process.env.REACT_APP_TTN_APP_ID,
         deviceID: "eui-" + cleanDevEUI.toLowerCase(),
         devEUI: cleanDevEUI,
         joinEUI: cleanJoinEUI
       };
       const requestDataTTNNS = {
-        Token: process.env.REACT_APP_TTN_API_TOKEN,
+        Token: process.env.REACT_APP_TTN_API_KEY,
         AppID: process.env.REACT_APP_TTN_APP_ID,
         deviceID: "eui-" + cleanDevEUI.toLowerCase(),
         devEUI: cleanDevEUI,
         joinEUI: cleanJoinEUI
       };
       const requestDataTTNAS = {
-        Token: process.env.REACT_APP_TTN_API_TOKEN,
+        Token: process.env.REACT_APP_TTN_API_KEY,
         AppID: process.env.REACT_APP_TTN_APP_ID,
         deviceID: "eui-" + cleanDevEUI.toLowerCase(),
         devEUI: cleanDevEUI,
         joinEUI: cleanJoinEUI
       };
       const requestDataUpdateNameOnTTN = {
-        Token: process.env.REACT_APP_TTN_API_TOKEN,
+        Token: process.env.REACT_APP_TTN_API_KEY,
         AppID: process.env.REACT_APP_TTN_APP_ID,
         name: name,
         deviceId: cleanDevEUI

@@ -95,7 +95,7 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
       return;
     }
   
-    const token = process.env.REACT_APP_TTN_API_TOKEN;
+    const token = process.env.REACT_APP_TTN_API_KEY;
     const appID = process.env.REACT_APP_TTN_APP_ID;
   
     if (!token) {
@@ -131,7 +131,7 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
 
   const deleteDevice = async (deviceID) => {
     try {
-      const token = process.env.REACT_APP_TTN_API_TOKEN;
+      const token = process.env.REACT_APP_TTN_API_KEY;
       const appID = process.env.REACT_APP_TTN_APP_ID;
       if (!token) {
         console.error("API token ID is not available.");
