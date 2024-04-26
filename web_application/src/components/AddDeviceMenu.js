@@ -159,11 +159,11 @@ const AddDeviceMenu = React.forwardRef(({ isOpen, handleClose, onDeviceAdded }, 
             {errorMessage && <p className="error-message">{errorMessage}</p>}
             <div className="input-group">
             <label htmlFor="name">Name:</label>
-            <input type="text" id="name" value={name} onChange={handleChangeName} />
+            <input type="text" id="name" value={name} onChange={handleChangeName} placeholder="Makita Sømpistol #2"/>
             </div>
             <div className="input-group">
             <label htmlFor="devEUI">Dev/chipEUI:</label>
-            <input type="text" id="devEUI" value={devEUI} onChange={handleChangeDevEUI} />
+            <input type="text" id="devEUI" value={devEUI} onChange={handleChangeDevEUI} placeholder="00-16-C0-01-FF-FE-24-1A"/>
             </div>
             <div className="input-group">
             <label htmlFor="joinEUI">JoinEUI:</label>
@@ -171,7 +171,7 @@ const AddDeviceMenu = React.forwardRef(({ isOpen, handleClose, onDeviceAdded }, 
             </div>
             <div className="input-group">
             <label htmlFor="pin">PIN:</label>
-            <input type="text" id="pin" value={pin} onChange={handleChangePin} />
+            <input type="text" id="pin" value={pin} onChange={handleChangePin} placeholder="BE23F0DD"/>
             </div>
             <button onClick={handleSubmit}>Add</button>
         </div>

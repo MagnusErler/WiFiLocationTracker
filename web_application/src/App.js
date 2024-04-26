@@ -259,6 +259,7 @@ export default function App() {
         center={center}
         allMarkers={filteredAllMarkers}
         useCustomClusterIcon={false}
+        trackerInformation={trackerInformation}
       />
       <SettingsMenu 
         isOpen={settingsOpen} 

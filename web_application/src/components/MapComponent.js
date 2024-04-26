@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup, Polyline } from "react-leaflet"
 import MarkerClusterGroup from "react-leaflet-cluster";
 import { Icon, divIcon } from "leaflet";
 
-const MapComponent = ({ center, allMarkers, useCustomClusterIcon }) => {
+const MapComponent = ({ center, allMarkers, useCustomClusterIcon, trackerInformation }) => {
   // State for storing calculated lines
   const [lines, setLines] = useState([]);
 
@@ -60,11 +60,17 @@ const MapComponent = ({ center, allMarkers, useCustomClusterIcon }) => {
         chunkedLoading
         iconCreateFunction={useCustomClusterIcon ? createCustomClusterIcon : null}
       >
-        {allMarkers.map((marker, index) => (
-          <Marker key={index} position={marker.geocode} icon={customIcon}>
-            <Popup>{"ID: " + marker.deviceId + ", seen: " + marker.timeStamp.slice(0, -3)}</Popup>
-          </Marker>
-        ))}
+        {allMarkers.map((marker, index) => {
+          // Find device name from trackerInformation
+          const deviceInfo = trackerInformation.find(info => info.deviceId.toUpperCase() === marker.deviceId.toUpperCase());
+          const deviceName = deviceInfo ? deviceInfo.name : "Unknown";
+
+          return (
+            <Marker key={index} position={marker.geocode} icon={customIcon}>
+              <Popup>{"Name: " + deviceName + ", seen: " + marker.timeStamp.slice(0, -3)}</Popup>
+            </Marker>
+          );
+        })}
       </MarkerClusterGroup>
     </MapContainer>
   );
