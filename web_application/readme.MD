@@ -1,3 +1,31 @@
+# How to run
+1. Install NPM
+2. Install node.js
+3. Create account and application on The Things Network
+4. Generate API token on TTN
+5. Create .env file in base folder and add API token and application ID: \
+  REACT_APP_TTN_API_TOKEN=[API-TOKEN] \
+  REACT_APP_TTN_ID=[APPLICATION-ID]
+6. Create account and application on loracloud.com
+7. Download credentials and unpack to credentials folder in base folder
+8. Generate API token on loracloud.com
+9. Add API token from loracloud.com and add to TTN under intergrations -> LoRa Cloud
+10. Run npm install in base folder
+11. Run npm install in server folder
+12. Create user on ngrok.com and download application
+13. Start ngrok and run ngrok.exe http 3001
+14. Copy forwarding address
+15. Add webhook under intergrations on TTN with \
+  Webhook format: JSON \
+  Base URL: forwarding address from ngrok \
+  Filter event data: up.location_solved, up.location_solved.location, end_device_ids.dev_eui \
+  Enabled event types: Location solved (api/geolocationSolves)
+16. Run server.js in server folder
+17. Run npm start in base folder
+18. If your browser doesn't open automatically, navigate to localhost:3000. You're can now add your LR1110 device, and start seeing it's location, if it has TTN network coverage, and can detect either WiFi access points or GNSS satellites (GPS and Baidu).
+
+# Future work
+
 Might implement as EXPO app https://github.com/Dean177/expo-leaflet
 
 # API Endpoint Documentation
