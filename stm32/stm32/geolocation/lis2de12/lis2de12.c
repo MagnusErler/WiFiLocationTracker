@@ -174,9 +174,6 @@ uint8_t accelerometer_init( uint8_t irq_active )
     lis2de12_ctrl_reg1_t ctrl_reg1;
     /* Motion detection setup */
     lis2de12_read_reg( LIS2DE12_CTRL_REG1, ( uint8_t* ) &ctrl_reg1, 1 );
-    // ctrl_reg1.xen  = 1;
-    // ctrl_reg1.yen  = 1;
-    // ctrl_reg1.zen  = 1;
     ctrl_reg1.lpen = 1;
     lis2de12_write_reg( LIS2DE12_CTRL_REG1, ( uint8_t* ) &ctrl_reg1, 1 );
 
@@ -212,6 +209,7 @@ uint8_t accelerometer_init( uint8_t irq_active )
     lis2de12_int2_cfg_t lis2de12_int2_cfg;
     lis2de12_int2_cfg.zhie = 1;
     lis2de12_int2_gen_conf_set( &lis2de12_int2_cfg );
+
 
 
 
@@ -2528,10 +2526,8 @@ int32_t lis2de12_spi_mode_get( lis2de12_sim_t* val )
  * Local Function Definition
 \***************************************************************************/
 
-static void accelerometer_irq1_init( void )
-{
-    hal_gpio_init_in( lis2de12_int1.pin, BSP_GPIO_PULL_MODE_NONE, BSP_GPIO_IRQ_MODE_RISING_FALLING, &lis2de12_int1 );
-    // hal_gpio_init_in( lis2de12_int1.pin, HAL_GPIO_PULL_MODE_NONE, HAL_GPIO_IRQ_MODE_RISING, &lis2de12_int1 );
+static void accelerometer_irq1_init( void ) {
+    hal_gpio_init_in( lis2de12_int1.pin, BSP_GPIO_PULL_MODE_NONE, BSP_GPIO_IRQ_MODE_RISING, &lis2de12_int1 );
 }
 
 void lis2de12_int1_irq_handler( void* obj ) { 
