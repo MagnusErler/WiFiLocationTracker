@@ -127,46 +127,66 @@ uint8_t accelerometer_init( uint8_t irq_active )
     SMTC_HAL_TRACE_INFO( "LIS2DE12 Device ID: 0x%02X\r\n", who_am_i );
 
     /* Set Output Data Rate to 10Hz */
-    if (lis2de12_data_rate_set( LIS2DE12_ODR_10Hz ) != 0) {
+    if (lis2de12_data_rate_set( LIS2DE12_ODR_100Hz ) != 0) {
         SMTC_HAL_TRACE_ERROR( "LIS2DE12 Data rate set failed\r\n" );
         return 0;
     }
 
-    initLIS2DE12_temperature( );
+    
 
-    /* Set full scale to 2g */
-    lis2de12_full_scale_set( LIS2DE12_2g );
+    // /* Enable bypass mode */
+    // if (lis2de12_fifo_mode_set( LIS2DE12_BYPASS_MODE ) != 0) {
+    //     SMTC_HAL_TRACE_ERROR( "LIS2DE12 FIFO mode set failed\r\n" );
+    //     return 0;
+    // }
 
-    // if (lis2de12_fifo_set( 1 ) != 0) {
+    // initLIS2DE12_temperature( );
+
+    // if (lis2de12_fifo_set( PROPERTY_DISABLE ) != 0) {
     //     SMTC_HAL_TRACE_ERROR( "LIS2DE12 FIFO set failed\r\n" );
     //     return 0;
     // }
 
-    // // /* Enable bypass mode */
-    // if (lis2de12_fifo_mode_set( LIS2DE12_DYNAMIC_STREAM_MODE ) != 0) {
-    //     SMTC_HAL_TRACE_ERROR( "LIS2DE12 FIFO mode set failed\r\n" );
-    //     return 0;
-    // }
+    /* Set full scale to 2g */
+    lis2de12_full_scale_set( LIS2DE12_2g );
+
+    lis2de12_boot_set( PROPERTY_ENABLE );
+
+
+
+    lis2de12_high_pass_int_conf_set( LIS2DE12_ON_INT1_GEN );
+
+    lis2de12_high_pass_mode_set( LIS2DE12_REFERENCE_MODE );
+
+
+
+    uint8_t a = 50;
+    lis2de12_filter_reference_set( &a );
+    uint8_t filter_reference;
+    lis2de12_filter_reference_get( &filter_reference );
+    SMTC_HAL_TRACE_INFO( "LIS2DE12 Filter reference: %d\r\n", filter_reference );
+
+
+    
 
     
 
     lis2de12_ctrl_reg1_t ctrl_reg1;
     /* Motion detection setup */
     lis2de12_read_reg( LIS2DE12_CTRL_REG1, ( uint8_t* ) &ctrl_reg1, 1 );
-    ctrl_reg1.xen  = 1;
-    ctrl_reg1.yen  = 1;
-    ctrl_reg1.zen  = 1;
+    // ctrl_reg1.xen  = 1;
+    // ctrl_reg1.yen  = 1;
+    // ctrl_reg1.zen  = 1;
     ctrl_reg1.lpen = 1;
     lis2de12_write_reg( LIS2DE12_CTRL_REG1, ( uint8_t* ) &ctrl_reg1, 1 );
 
+
+    
     
     lis2de12_ctrl_reg3_t ctrl_reg3;
-
-    lis2de12_high_pass_int_conf_set( LIS2DE12_ON_INT1_GEN );
-
     ctrl_reg3.i1_zyxda    = 0;
-    ctrl_reg3.i1_ia1      = 1;
-    ctrl_reg3.i1_ia2      = 0;
+    ctrl_reg3.i1_ia1      = 0;
+    ctrl_reg3.i1_ia2      = 1;
     ctrl_reg3.i1_click    = 0;
     ctrl_reg3.i1_overrun  = 0;
     ctrl_reg3.i1_wtm      = 0;
@@ -175,19 +195,26 @@ uint8_t accelerometer_init( uint8_t irq_active )
     lis2de12_pin_int1_config_set( &ctrl_reg3 );
 
     lis2de12_int1_pin_notification_mode_set( LIS2DE12_INT1_LATCHED );
-
     lis2de12_int1_cfg_t lis2de12_int1_cfg;
-    // lis2de12_int1_cfg.xhie = 1;
-    // lis2de12_int1_cfg.yhie = 1;
-    // lis2de12_int1_cfg.zhie = 1;
+    lis2de12_int1_cfg.xhie = 1;
+    lis2de12_int1_cfg.yhie = 1;
+    lis2de12_int1_cfg.zhie = 1;
     lis2de12_int1_cfg.xlie = 1;
     lis2de12_int1_cfg.ylie = 1;
     lis2de12_int1_cfg.zlie = 1;
+    lis2de12_int1_cfg.aoi  = 1;
     lis2de12_int1_gen_conf_set( &lis2de12_int1_cfg );
 
-    lis2de12_int1_gen_threshold_set( 4 );
+    lis2de12_int2_gen_threshold_set( 100 );
 
-    lis2de12_int1_gen_duration_set( 3 );
+    lis2de12_int2_gen_duration_set( 50 );
+
+    lis2de12_int2_cfg_t lis2de12_int2_cfg;
+    lis2de12_int2_cfg.zhie = 1;
+    lis2de12_int2_gen_conf_set( &lis2de12_int2_cfg );
+
+
+
 
     if( irq_active & 0x01 ) {
         accelerometer_irq1_init( );
@@ -199,6 +226,8 @@ uint8_t accelerometer_init( uint8_t irq_active )
 uint8_t is_accelerometer_detected_moved( void )
 {
     lis2de12_int1_src_t int1_gen_source;
+
+    accelerometer_irq1_state = false;
 
     lis2de12_int1_gen_source_get( &int1_gen_source );
 
@@ -2501,7 +2530,7 @@ int32_t lis2de12_spi_mode_get( lis2de12_sim_t* val )
 
 static void accelerometer_irq1_init( void )
 {
-    hal_gpio_init_in( lis2de12_int1.pin, BSP_GPIO_PULL_MODE_NONE, BSP_GPIO_IRQ_MODE_RISING, &lis2de12_int1 );
+    hal_gpio_init_in( lis2de12_int1.pin, BSP_GPIO_PULL_MODE_NONE, BSP_GPIO_IRQ_MODE_RISING_FALLING, &lis2de12_int1 );
     // hal_gpio_init_in( lis2de12_int1.pin, HAL_GPIO_PULL_MODE_NONE, HAL_GPIO_IRQ_MODE_RISING, &lis2de12_int1 );
 }
 

@@ -205,20 +205,15 @@ void main_geolocation( void ) {
 
     
 
-    uint8_t i;
-    if (lis2de12_int2_pin_detect_4d_get( &i ) != 0) {
-        SMTC_HAL_TRACE_ERROR( "LIS2DE12 4D detection get failed\r\n" );
-    }
-    SMTC_HAL_TRACE_INFO( "LIS2DE12 4D detection: %d\r\n", i );
+    // uint8_t i;
+    // if (lis2de12_int2_pin_detect_4d_get( &i ) != 0) {
+    //     SMTC_HAL_TRACE_ERROR( "LIS2DE12 4D detection get failed\r\n" );
+    // }
+    // SMTC_HAL_TRACE_INFO( "LIS2DE12 4D detection: %d\r\n", i );
 
-    if (lis2de12_int2_pin_detect_4d_set( 1 ) != 0) {
-        SMTC_HAL_TRACE_ERROR( "LIS2DE12 4D detection set failed\r\n" );
-    }
-
-    if (lis2de12_int2_pin_detect_4d_get( &i ) != 0) {
-        SMTC_HAL_TRACE_ERROR( "LIS2DE12 4D detection get failed\r\n" );
-    }
-    SMTC_HAL_TRACE_INFO( "LIS2DE12 4D detection: %d\r\n", i );
+    // if (lis2de12_int2_pin_detect_4d_set( 1 ) != 0) {
+    //     SMTC_HAL_TRACE_ERROR( "LIS2DE12 4D detection set failed\r\n" );
+    // }
 
 
     // hal_gpio_set_value( PA_9, 1 );
@@ -253,8 +248,8 @@ void main_geolocation( void ) {
         if( smtc_modem_is_irq_flag_pending( ) == false ) {
 
             // SMTC_HAL_TRACE_INFO("LIS2DE12 Temperature: %d\r\n", acc_get_temperature( ));
-            // acc_read_raw_data( );
-            // SMTC_HAL_TRACE_INFO("X: %d, Y: %d, Z: %d\r\n", acc_get_raw_x( ), acc_get_raw_y( ), acc_get_raw_z( ));
+            acc_read_raw_data( );
+            SMTC_HAL_TRACE_INFO("X: %d, Y: %d, Z: %d\r\n", acc_get_raw_x( ), acc_get_raw_y( ), acc_get_raw_z( ));
 
             if (get_accelerometer_irq1_state( ) == 1) {
                 SMTC_HAL_TRACE_INFO("LIS2DE12 interrupt 1 detected\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n");
