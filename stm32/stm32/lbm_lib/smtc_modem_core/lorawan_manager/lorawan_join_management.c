@@ -225,11 +225,11 @@ static void lorawan_join_internal_add_task( uint8_t stack_id )
 
     if( ( int32_t ) ( task_join.time_to_execute_s - current_time_s ) <= 0 )
     {
-        SMTC_MODEM_HAL_TRACE_PRINTF( " Start a new join sequence now on stack %u\r\n", stack_id );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "Start a new join sequence now on stack %u\r\n", stack_id );
     }
     else
     {
-        SMTC_MODEM_HAL_TRACE_PRINTF( " Start a new join sequence in %d seconds on stack %u\r\n",
+        SMTC_MODEM_HAL_TRACE_PRINTF( "Start a new join sequence in %d seconds on stack %u\r\n",
                                      task_join.time_to_execute_s - current_time_s, stack_id );
     }
 

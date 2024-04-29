@@ -88,6 +88,20 @@ static hal_gpio_irq_t lis2de12_int1 = {
  *
  */
 
+void initLIS2DE12_temperature( ) {
+    /* Enable temperature sensor */
+    if (lis2de12_temperature_meas_set(LIS2DE12_TEMP_ENABLE) != 0) {
+        SMTC_HAL_TRACE_ERROR( "LIS2DE12 Temperature sensor enable failed\r\n" );
+        return;
+    }
+
+    /* Enable Block Data Update */
+    if (lis2de12_block_data_update_set( PROPERTY_ENABLE ) != 0) {
+        SMTC_HAL_TRACE_ERROR( "LIS2DE12 Block Data Update enable failed\r\n" );
+        return;
+    }
+}
+
 /*!
  * @brief Initializes the hardware and variables associated with the lis2de12.
  *
@@ -97,10 +111,6 @@ static hal_gpio_irq_t lis2de12_int1 = {
 uint8_t accelerometer_init( uint8_t irq_active )
 {
     int                  i = 0;
-    // lis2de12_int1_cfg_t  lis2de12_int1_cfg;
-    // lis2de12_ctrl_reg1_t ctrl_reg1;
-    // lis2de12_ctrl_reg3_t ctrl_reg3;
-
     /* Check device ID */
     while( ( i <= 5 ) && ( who_am_i != LIS2DE12_ID ) ) {
         if (lis2de12_device_id_get( &who_am_i ) != 0) {
@@ -117,67 +127,67 @@ uint8_t accelerometer_init( uint8_t irq_active )
     SMTC_HAL_TRACE_INFO( "LIS2DE12 Device ID: 0x%02X\r\n", who_am_i );
 
     /* Set Output Data Rate to 10Hz */
-    if (lis2de12_data_rate_set( LIS2DE12_ODR_100Hz ) != 0) {
+    if (lis2de12_data_rate_set( LIS2DE12_ODR_10Hz ) != 0) {
         SMTC_HAL_TRACE_ERROR( "LIS2DE12 Data rate set failed\r\n" );
         return 0;
     }
 
-    /* Enable temperature sensor */
-    if (lis2de12_temperature_meas_set(LIS2DE12_TEMP_ENABLE) != 0) {
-        SMTC_HAL_TRACE_ERROR( "LIS2DE12 Temperature sensor enable failed\r\n" );
-        return 0;
-    }
-
-    /* Enable Block Data Update */
-    if (lis2de12_block_data_update_set( PROPERTY_ENABLE ) != 0) {
-        SMTC_HAL_TRACE_ERROR( "LIS2DE12 Block Data Update enable failed\r\n" );
-        return 0;
-    }
+    initLIS2DE12_temperature( );
 
     /* Set full scale to 2g */
-    // lis2de12_full_scale_set( LIS2DE12_2g );
+    lis2de12_full_scale_set( LIS2DE12_2g );
 
-    if (lis2de12_fifo_set( 1 ) != 0) {
-        SMTC_HAL_TRACE_ERROR( "LIS2DE12 FIFO set failed\r\n" );
-        return 0;
-    }
+    // if (lis2de12_fifo_set( 1 ) != 0) {
+    //     SMTC_HAL_TRACE_ERROR( "LIS2DE12 FIFO set failed\r\n" );
+    //     return 0;
+    // }
 
-    // /* Enable bypass mode */
-    if (lis2de12_fifo_mode_set( LIS2DE12_DYNAMIC_STREAM_MODE ) != 0) {
-        SMTC_HAL_TRACE_ERROR( "LIS2DE12 FIFO mode set failed\r\n" );
-        return 0;
-    }
+    // // /* Enable bypass mode */
+    // if (lis2de12_fifo_mode_set( LIS2DE12_DYNAMIC_STREAM_MODE ) != 0) {
+    //     SMTC_HAL_TRACE_ERROR( "LIS2DE12 FIFO mode set failed\r\n" );
+    //     return 0;
+    // }
 
+    
+
+    lis2de12_ctrl_reg1_t ctrl_reg1;
     /* Motion detection setup */
-    // lis2de12_read_reg( LIS2DE12_CTRL_REG1, ( uint8_t* ) &ctrl_reg1, 1 );
-    // ctrl_reg1.xen  = 1;
-    // ctrl_reg1.yen  = 1;
-    // ctrl_reg1.zen  = 1;
-    // ctrl_reg1.lpen = 1;
-    // lis2de12_write_reg( LIS2DE12_CTRL_REG1, ( uint8_t* ) &ctrl_reg1, 1 );
+    lis2de12_read_reg( LIS2DE12_CTRL_REG1, ( uint8_t* ) &ctrl_reg1, 1 );
+    ctrl_reg1.xen  = 1;
+    ctrl_reg1.yen  = 1;
+    ctrl_reg1.zen  = 1;
+    ctrl_reg1.lpen = 1;
+    lis2de12_write_reg( LIS2DE12_CTRL_REG1, ( uint8_t* ) &ctrl_reg1, 1 );
 
-    // lis2de12_high_pass_int_conf_set( LIS2DE12_ON_INT1_GEN );
+    
+    lis2de12_ctrl_reg3_t ctrl_reg3;
 
-    // ctrl_reg3.i1_zyxda    = 0;
-    // ctrl_reg3.i1_ia1      = 1;
-    // ctrl_reg3.i1_ia2      = 0;
-    // ctrl_reg3.i1_click    = 0;
-    // ctrl_reg3.i1_overrun  = 0;
-    // ctrl_reg3.i1_wtm      = 0;
-    // ctrl_reg3.not_used_01 = 0;
-    // ctrl_reg3.not_used_02 = 0;
-    // lis2de12_pin_int1_config_set( &ctrl_reg3 );
+    lis2de12_high_pass_int_conf_set( LIS2DE12_ON_INT1_GEN );
 
-    // lis2de12_int1_pin_notification_mode_set( LIS2DE12_INT1_LATCHED );
+    ctrl_reg3.i1_zyxda    = 0;
+    ctrl_reg3.i1_ia1      = 1;
+    ctrl_reg3.i1_ia2      = 0;
+    ctrl_reg3.i1_click    = 0;
+    ctrl_reg3.i1_overrun  = 0;
+    ctrl_reg3.i1_wtm      = 0;
+    ctrl_reg3.not_used_01 = 0;
+    ctrl_reg3.not_used_02 = 0;
+    lis2de12_pin_int1_config_set( &ctrl_reg3 );
 
+    lis2de12_int1_pin_notification_mode_set( LIS2DE12_INT1_LATCHED );
+
+    lis2de12_int1_cfg_t lis2de12_int1_cfg;
     // lis2de12_int1_cfg.xhie = 1;
     // lis2de12_int1_cfg.yhie = 1;
     // lis2de12_int1_cfg.zhie = 1;
-    // lis2de12_int1_gen_conf_set( &lis2de12_int1_cfg );
+    lis2de12_int1_cfg.xlie = 1;
+    lis2de12_int1_cfg.ylie = 1;
+    lis2de12_int1_cfg.zlie = 1;
+    lis2de12_int1_gen_conf_set( &lis2de12_int1_cfg );
 
-    // lis2de12_int1_gen_threshold_set( 4 );
+    lis2de12_int1_gen_threshold_set( 4 );
 
-    // lis2de12_int1_gen_duration_set( 3 );
+    lis2de12_int1_gen_duration_set( 3 );
 
     if( irq_active & 0x01 ) {
         accelerometer_irq1_init( );
@@ -192,10 +202,8 @@ uint8_t is_accelerometer_detected_moved( void )
 
     lis2de12_int1_gen_source_get( &int1_gen_source );
 
-    if( ( int1_gen_source.xh == 1 ) || ( int1_gen_source.yh == 1 ) || ( int1_gen_source.zh == 1 ) )
-    {
+    if( ( int1_gen_source.xh == 1 ) || ( int1_gen_source.yh == 1 ) || ( int1_gen_source.zh == 1 ) ) {
         accelerometer_irq1_state = false;
-
         return 1;
     }
     return 0;
@@ -762,6 +770,10 @@ int32_t lis2de12_full_scale_get( lis2de12_fs_t* val )
 /**
   * @brief  Block Data Update.[set]
   *
+  * Feature that ensures data consistency
+  * When BDU is enabled, it ensures that the output data registers are not updated until both the high and low data bytes have been read.
+  * This prevents inconsistencies when reading data during a dynamic measurement session.
+  * Essentially, it ensures that a set of data is either fully updated or not updated at all, avoiding partial updates that could lead to incorrect readings.
 
   * @param  val      change the values of bdu in reg CTRL_REG4
   * @retval          interface status (MANDATORY: return 0 -> no Error)
@@ -2493,4 +2505,6 @@ static void accelerometer_irq1_init( void )
     // hal_gpio_init_in( lis2de12_int1.pin, HAL_GPIO_PULL_MODE_NONE, HAL_GPIO_IRQ_MODE_RISING, &lis2de12_int1 );
 }
 
-void lis2de12_int1_irq_handler( void* obj ) { accelerometer_irq1_state = true; }
+void lis2de12_int1_irq_handler( void* obj ) { 
+    accelerometer_irq1_state = true;
+}

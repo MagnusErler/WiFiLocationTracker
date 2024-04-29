@@ -160,20 +160,6 @@ void hal_i2c_deinit( const uint32_t id ) {
     HAL_I2C_DeInit( &hal_i2c[local_id].handle );
 }
 
-static uint32_t mapPin2Af( uint32_t pin ) {
-    switch( pin ) {
-    case PB_9:
-        return GPIO_AF4_I2C1;
-
-    case PB_6:
-        return GPIO_AF4_I2C1;
-
-    default:
-        // all other pin default to AF0 (same value for SPI1 and SPI2)
-        return GPIO_AF4_I2C1;
-    }
-}
-
 void HAL_I2C_MspInit(I2C_HandleTypeDef* hi2c)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
@@ -214,42 +200,6 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* hi2c)
   }
 
 }
-
-// void HAL_I2C_MspInit( I2C_HandleTypeDef* i2cHandle ) {
-//     if( i2cHandle->Instance == hal_i2c[0].interface ) {
-//         GPIO_TypeDef*    gpio_port = ( GPIO_TypeDef* )( AHB2PERIPH_BASE + ( ( hal_i2c[0].pins.sda & 0xF0 ) << 6 ) );
-//         GPIO_InitTypeDef gpio      = {
-//             .Mode      = GPIO_MODE_AF_OD,
-//             .Pull      = GPIO_NOPULL,
-//             .Speed     = GPIO_SPEED_FREQ_VERY_HIGH,
-//             .Alternate = GPIO_AF4_I2C1,
-//         };
-
-//         gpio.Pin = ( 1 << ( hal_i2c[0].pins.sda & 0x0F ) );
-//         gpio.Alternate = mapPin2Af( hal_i2c[0].pins.sda );
-//         HAL_GPIO_Init( gpio_port, &gpio );
-
-//         gpio.Pin = ( 1 << ( hal_i2c[0].pins.scl & 0x0F ) );
-//         gpio.Alternate = mapPin2Af( hal_i2c[0].pins.scl );
-//         HAL_GPIO_Init( gpio_port, &gpio );
-
-//         __HAL_RCC_I2C1_CLK_ENABLE( );
-//     } else if( i2cHandle->Instance == hal_i2c[2].interface ) {
-//         GPIO_TypeDef*    gpio_port = ( GPIO_TypeDef* )( AHB2PERIPH_BASE + ( ( hal_i2c[2].pins.sda & 0xF0 ) << 6 ) );
-//         GPIO_InitTypeDef gpio      = {
-//             .Mode      = GPIO_MODE_AF_OD,
-//             .Pull      = GPIO_NOPULL,
-//             .Speed     = GPIO_SPEED_FREQ_VERY_HIGH,
-//             .Alternate = GPIO_AF4_I2C3,
-//         };
-//         gpio.Pin = ( 1 << ( hal_i2c[2].pins.scl & 0x0F ) ) | ( 1 << ( hal_i2c[2].pins.sda & 0x0F ) );
-//         HAL_GPIO_Init( gpio_port, &gpio );
-
-//         __HAL_RCC_I2C3_CLK_ENABLE( );
-//     } else {
-//         mcu_panic( );
-//     }
-// }
 
 void HAL_I2C_MspDeInit( I2C_HandleTypeDef* i2cHandle ) {
     uint32_t local_id = 0;

@@ -82,7 +82,6 @@
 
 int main( void ) {
 #if MAKEFILE_APP == GEOLOCATION
-
     main_geolocation( );
 #elif MAKEFILE_APP == EXAMPLE_FULL_ALMANAC_UPDATE
     main_full_almanac_update( );

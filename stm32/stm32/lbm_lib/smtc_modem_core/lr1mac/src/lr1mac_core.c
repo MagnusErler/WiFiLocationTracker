@@ -57,9 +57,9 @@
 #define DBG_PRINT_WITH_LINE( ... )                                                        \
     do                                                                                    \
     {                                                                                     \
-        SMTC_MODEM_HAL_TRACE_PRINTF( "\r\n  *************************************\r\n  * " ); \
+        SMTC_MODEM_HAL_TRACE_PRINTF( "\r\n*************************************\r\n* " ); \
         SMTC_MODEM_HAL_TRACE_PRINTF( __VA_ARGS__ );                                       \
-        SMTC_MODEM_HAL_TRACE_PRINTF( "\r\n  *************************************\r\n" );     \
+        SMTC_MODEM_HAL_TRACE_PRINTF( "\r\n*************************************\r\n" );     \
     } while( 0 );
 
 /*
@@ -239,7 +239,7 @@ lr1mac_states_t lr1mac_core_process( lr1_stack_mac_t* lr1_mac_obj )
                 smtc_real_lora_dr_to_sf_bw( lr1_mac_obj->real, lr1_mac_obj->tx_data_rate, &tx_sf, &tx_bw );
 
                 SMTC_MODEM_HAL_TRACE_PRINTF(
-                    "  Tx  LoRa at %u ms: freq:%u, SF%u, %s, len %u bytes %d dBm, fcnt_up %d, toa = %d\r\n",
+                    "Tx  LoRa at %u ms: freq:%u, SF%u, %s, len %u bytes %d dBm, fcnt_up %d, toa = %d\r\n",
                     lr1_mac_obj->rtc_target_timer_ms, lr1_mac_obj->tx_frequency, tx_sf, smtc_name_bw[tx_bw],
                     lr1_mac_obj->tx_payload_size, lr1_mac_obj->tx_power, lr1_mac_obj->fcnt_up,
                     lr1_stack_toa_get( lr1_mac_obj ) );
@@ -247,7 +247,7 @@ lr1mac_states_t lr1mac_core_process( lr1_stack_mac_t* lr1_mac_obj )
             else if( tx_modulation_type == FSK )
             {
                 SMTC_MODEM_HAL_TRACE_PRINTF(
-                    "  Tx  FSK  at %u ms: freq:%u, len %u bytes %d dBm, fcnt_up %d, toa = %d\r\n",
+                    "Tx  FSK  at %u ms: freq:%u, len %u bytes %d dBm, fcnt_up %d, toa = %d\r\n",
                     lr1_mac_obj->rtc_target_timer_ms, lr1_mac_obj->tx_frequency, lr1_mac_obj->tx_payload_size,
                     lr1_mac_obj->tx_power, lr1_mac_obj->fcnt_up, lr1_stack_toa_get( lr1_mac_obj ) );
             }
@@ -257,7 +257,7 @@ lr1mac_states_t lr1mac_core_process( lr1_stack_mac_t* lr1_mac_obj )
                 lr_fhss_v1_bw_t tx_bw;
                 smtc_real_lr_fhss_dr_to_cr_bw( lr1_mac_obj->real, lr1_mac_obj->tx_data_rate, &tx_cr, &tx_bw );
                 SMTC_MODEM_HAL_TRACE_PRINTF(
-                    "  Tx  LR FHSS at %u ms: freq:%u, DR%u (%s, %s Hz), len %u bytes, %d dBm, fcnt_up %d, toa = %d\r\n",
+                    "Tx  LR FHSS at %u ms: freq:%u, DR%u (%s, %s Hz), len %u bytes, %d dBm, fcnt_up %d, toa = %d\r\n",
                     lr1_mac_obj->rtc_target_timer_ms, lr1_mac_obj->tx_frequency, lr1_mac_obj->tx_data_rate,
                     smtc_name_lr_fhss_cr[tx_cr], smtc_name_lr_fhss_bw[tx_bw], lr1_mac_obj->tx_payload_size,
                     lr1_mac_obj->tx_power, lr1_mac_obj->fcnt_up, lr1_stack_toa_get( lr1_mac_obj ) );
