@@ -1,0 +1,53 @@
+.modal-content.map-tile-menu-size {
+    max-width: 80px; /* Limit menu width to 100px */
+    border-radius: 8px; /* Adjust border radius as needed */
+    overflow: hidden; /* Ensure content doesn't overflow */
+    position: absolute; /* Position the menu absolutely */
+    top: -70px; /* Position 50px below the layers button */
+    right: 0; /* Align menu to the right */
+}
+
+.image-options {
+    display: flex;
+    flex-direction: column; /* Change to column */
+    align-items: center; /* Center align images */
+    padding: 10px; /* Add padding for better spacing */
+}
+
+.map-tile-option {
+    width: 100%; /* Adjust width as needed */
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease;
+    margin-bottom: 10px; /* Add margin between images */
+    border-radius: 8px; /* Make images round */
+    overflow: hidden; /* Ensure content doesn't overflow rounded corners */
+    position: relative; /* Position container relatively for absolute text */
+    display: flex; /* Use flexbox to align image and text vertically */
+    flex-direction: column; /* Align image and text in a column */
+    align-items: center; /* Center align items horizontally */
+}
+
+.map-tile-option img {
+    width: 60px; /* Adjust width as needed */
+    height: 60px; /* Adjust height as needed */
+    object-fit: cover; /* Preserve aspect ratio while covering container */
+    border-radius: 8px; /* Ensure images are rounded */
+}
+
+.map-tile-option span {
+    margin-top: 5px; /* Add margin between image and text */
+    color: #666; /* Adjust text color */
+    font-size: 12px; /* Adjust font size */
+    overflow: hidden; /* Ensure text doesn't overflow */
+    white-space: nowrap; /* Prevent text wrapping */
+    text-overflow: ellipsis; /* Add ellipsis for overflow text */
+}
+
+.map-tile-option:last-child {
+    margin-bottom: 0; /* Remove margin-bottom from the last map tile option */
+}
+
+.map-tile-option:hover img {
+    filter: brightness(85%); /* Add brightness effect to the image on hover */
+}
