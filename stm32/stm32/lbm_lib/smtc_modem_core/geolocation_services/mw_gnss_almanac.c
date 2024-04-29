@@ -91,7 +91,7 @@
     {                                                                              \
         if( mw_gnss_almanac_task_obj.initialized == false )                        \
         {                                                                          \
-            SMTC_MODEM_HAL_TRACE_WARNING( "gnss almanac service not launched\n" ); \
+            SMTC_MODEM_HAL_TRACE_WARNING( "gnss almanac service not launched\r\n" ); \
             break;                                                                 \
         }                                                                          \
     } while( 0 )
@@ -357,7 +357,7 @@ void mw_gnss_almanac_services_init( uint8_t* service_id, uint8_t task_id,
                                     void ( **on_launch_callback )( void* ), void ( **on_update_callback )( void* ),
                                     void** context_callback )
 {
-    SMTC_MODEM_HAL_TRACE_PRINTF( "mw_gnss_almanac_services_init task_id %d, service_id %d, CURRENT_STACK:%d \n",
+    SMTC_MODEM_HAL_TRACE_PRINTF( "mw_gnss_almanac_services_init task_id %d, service_id %d, CURRENT_STACK:%d \r\n",
                                  task_id, *service_id, CURRENT_STACK );
 
     IS_VALID_OBJECT_ID( *service_id );
@@ -395,14 +395,14 @@ smtc_modem_return_code_t mw_gnss_almanac_get_event_almanac_update(
 {
     if( data == NULL )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "mw_gnss_almanac_get_event_almanac_update: Provided pointer is NULL\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "mw_gnss_almanac_get_event_almanac_update: Provided pointer is NULL\r\n" );
         return SMTC_MODEM_RC_INVALID;
     }
 
     if( mw_gnss_almanac_task_obj.pending_evt_update_done == false )
     {
         SMTC_MODEM_HAL_TRACE_ERROR(
-            "mw_gnss_almanac_get_event_almanac_update: no ALMANAC_DEMOD_UPDATE event pending\n" );
+            "mw_gnss_almanac_get_event_almanac_update: no ALMANAC_DEMOD_UPDATE event pending\r\n" );
         return SMTC_MODEM_RC_FAIL;
     }
 
@@ -453,7 +453,7 @@ smtc_modem_return_code_t mw_gnss_almanac_set_constellations( smtc_modem_gnss_con
 
 static void mw_gnss_almanac_service_on_launch( void* context_callback )
 {
-    GNSS_ALMANAC_TRACE_PRINTF_DEBUG( "mw_gnss_almanac_service_on_launch\n" );
+    GNSS_ALMANAC_TRACE_PRINTF_DEBUG( "mw_gnss_almanac_service_on_launch\r\n" );
 
     IS_SERVICE_INITIALIZED( );
 
@@ -467,26 +467,26 @@ static void mw_gnss_almanac_service_on_launch( void* context_callback )
     rp_radio_params_t fake_rp_radio_params = { 0 };
     if( rp_task_enqueue( modem_get_rp( ), &rp_task, NULL, 0, &fake_rp_radio_params ) != RP_HOOK_STATUS_OK )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "Failed to enqueue RP task for GNSS almanac demodulation\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "Failed to enqueue RP task for GNSS almanac demodulation\r\n" );
         SMTC_MODEM_HAL_PANIC( );
     }
     else
     {
-        SMTC_MODEM_HAL_TRACE_PRINTF( "Enqueued RP task (ASAP) for GNSS almanac demodulation (hook_id #%d)\n",
+        SMTC_MODEM_HAL_TRACE_PRINTF( "Enqueued RP task (ASAP) for GNSS almanac demodulation (hook_id #%d)\r\n",
                                      rp_task.hook_id );
     }
 }
 
 static void mw_gnss_almanac_service_on_update( void* context_callback )
 {
-    GNSS_ALMANAC_TRACE_PRINTF_DEBUG( "mw_gnss_almanac_service_on_update\n" );
+    GNSS_ALMANAC_TRACE_PRINTF_DEBUG( "mw_gnss_almanac_service_on_update\r\n" );
 
     IS_SERVICE_INITIALIZED( );
 }
 
 static uint8_t mw_gnss_almanac_service_downlink_handler( lr1_stack_mac_down_data_t* rx_down_data )
 {
-    GNSS_ALMANAC_TRACE_PRINTF_DEBUG( "mw_gnss_almanac_service_downlink_handler\n" );
+    GNSS_ALMANAC_TRACE_PRINTF_DEBUG( "mw_gnss_almanac_service_downlink_handler\r\n" );
 
     return MODEM_DOWNLINK_UNCONSUMED;
 }
@@ -505,7 +505,7 @@ static void mw_gnss_almanac_next( void )
 
 static void mw_gnss_almanac_next_supervisor( uint32_t delay_s )
 {
-    GNSS_ALMANAC_TRACE_PRINTF_DEBUG( "mw_gnss_almanac_next_supervisor\n" );
+    GNSS_ALMANAC_TRACE_PRINTF_DEBUG( "mw_gnss_almanac_next_supervisor\r\n" );
 
     smodem_task task       = { 0 };
     task.id                = mw_gnss_almanac_task_obj.task_id;
@@ -515,11 +515,11 @@ static void mw_gnss_almanac_next_supervisor( uint32_t delay_s )
     task.time_to_execute_s = now_s + delay_s;
     if( modem_supervisor_add_task( &task ) != TASK_VALID )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "Failed to add task in supervisor for next GNSS almanac status check\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "Failed to add task in supervisor for next GNSS almanac status check\r\n" );
     }
     else
     {
-        SMTC_MODEM_HAL_TRACE_PRINTF( "Added task in supervisor for next GNSS almanac status check at %u + %u s\n",
+        SMTC_MODEM_HAL_TRACE_PRINTF( "Added task in supervisor for next GNSS almanac status check at %u + %u s\r\n",
                                      now_s, delay_s );
     }
 }
@@ -528,7 +528,7 @@ static void mw_gnss_almanac_next_rp( uint32_t delay_ms )
 {
     rp_task_t rp_task = { 0 };
 
-    GNSS_ALMANAC_TRACE_PRINTF_DEBUG( "mw_gnss_almanac_next_rp\n" );
+    GNSS_ALMANAC_TRACE_PRINTF_DEBUG( "mw_gnss_almanac_next_rp\r\n" );
 
     /* Set RP task priority depending on doppler solver status */
     rp_task.schedule_task_low_priority = false;
@@ -547,7 +547,7 @@ static void mw_gnss_almanac_next_rp( uint32_t delay_ms )
             {
                 /* If almanac demod has been aborted too much, take a chance to pass by keeping high priority over GNSS
                  * scan for next RP task */
-                SMTC_MODEM_HAL_TRACE_PRINTF( "Almanac demod: too many aborts, keep high priority for next RP task\n" );
+                SMTC_MODEM_HAL_TRACE_PRINTF( "Almanac demod: too many aborts, keep high priority for next RP task\r\n" );
                 mw_gnss_almanac_task_obj.nb_rp_abort = 0;
             }
         }
@@ -563,13 +563,13 @@ static void mw_gnss_almanac_next_rp( uint32_t delay_ms )
     rp_radio_params_t fake_rp_radio_params = { 0 };
     if( rp_task_enqueue( modem_get_rp( ), &rp_task, NULL, 0, &fake_rp_radio_params ) != RP_HOOK_STATUS_OK )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "Failed to enqueue RP task for next GNSS almanac demodulation\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "Failed to enqueue RP task for next GNSS almanac demodulation\r\n" );
         SMTC_MODEM_HAL_PANIC( );
     }
     else
     {
         SMTC_MODEM_HAL_TRACE_PRINTF(
-            "Enqueued RP task (SCHEDULED %s priority) for next GNSS almanac demodulation at %u + %u ms\n",
+            "Enqueued RP task (SCHEDULED %s priority) for next GNSS almanac demodulation at %u + %u ms\r\n",
             ( rp_task.schedule_task_low_priority ) ? "low" : "high", now_ms, delay_ms );
     }
 }
@@ -580,7 +580,7 @@ static void gnss_almanac_rp_task_launch( void* context )
     lr11xx_gnss_read_almanac_status_t almanac_status;
     lr11xx_gnss_time_t                lr11xx_time;
 
-    SMTC_MODEM_HAL_TRACE_INFO( "gnss almanac task launched\n" );
+    SMTC_MODEM_HAL_TRACE_INFO( "gnss almanac task launched\r\n" );
 
     mw_gnss_almanac_task_obj.self_aborted            = false;
     mw_gnss_almanac_task_obj.pending_evt_update_done = false;
@@ -589,31 +589,31 @@ static void gnss_almanac_rp_task_launch( void* context )
     lr11xx_status = lr11xx_gnss_read_time( modem_get_radio_ctx( ), &lr11xx_time );
     if( lr11xx_status != LR11XX_STATUS_OK )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "gnss_almanac_rp_task_launch: lr11xx_gnss_read_time failed\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "gnss_almanac_rp_task_launch: lr11xx_gnss_read_time failed\r\n" );
         RP_TASK_ABORT_AND_RETURN( );
     }
     if( lr11xx_time.error_code != LR11XX_GNSS_READ_TIME_STATUS_NO_ERROR )
     {
-        SMTC_MODEM_HAL_TRACE_WARNING( "No time available: %s\n",
+        SMTC_MODEM_HAL_TRACE_WARNING( "No time available: %s\r\n",
                                       smtc_gnss_read_time_error_code_enum2str( lr11xx_time.error_code ) );
     }
     else
     {
-        SMTC_MODEM_HAL_TRACE_PRINTF( "read_time (rc:%d, time:%u, accuracy:%u ms)\n", lr11xx_time.error_code,
+        SMTC_MODEM_HAL_TRACE_PRINTF( "read_time (rc:%d, time:%u, accuracy:%u ms)\r\n", lr11xx_time.error_code,
                                      lr11xx_time.gps_time_s, lr11xx_time.time_accuracy / 1000 );
         /* Check if read_time() has not been called for too long */
         uint32_t now_s = smtc_modem_hal_get_time_in_s( );
         if( mw_gnss_almanac_task_obj.last_read_time_s != 0 )
         {
-            GNSS_ALMANAC_TRACE_PRINTF_DEBUG( "Elapsed time since last read_time(): %us\n",
+            GNSS_ALMANAC_TRACE_PRINTF_DEBUG( "Elapsed time since last read_time(): %us\r\n",
                                              now_s - mw_gnss_almanac_task_obj.last_read_time_s );
             if( ( now_s - mw_gnss_almanac_task_obj.last_read_time_s ) > ALMANAC_READ_TIME_THRESHOLD_MAX )
             {
-                SMTC_MODEM_HAL_TRACE_WARNING( "Too long since last read_time: reset LR11xx time\n" );
+                SMTC_MODEM_HAL_TRACE_WARNING( "Too long since last read_time: reset LR11xx time\r\n" );
                 lr11xx_status = lr11xx_gnss_reset_time( modem_get_radio_ctx( ) );
                 if( lr11xx_status != LR11XX_STATUS_OK )
                 {
-                    SMTC_MODEM_HAL_TRACE_ERROR( "gnss_almanac_rp_task_launch: lr11xx_gnss_reset_time failed\n" );
+                    SMTC_MODEM_HAL_TRACE_ERROR( "gnss_almanac_rp_task_launch: lr11xx_gnss_reset_time failed\r\n" );
                     RP_TASK_ABORT_AND_RETURN( );
                 }
             }
@@ -626,19 +626,19 @@ static void gnss_almanac_rp_task_launch( void* context )
                                                            mw_gnss_almanac_task_obj.constellations_enabled );
     if( lr11xx_status != LR11XX_STATUS_OK )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "gnss_almanac_rp_task_launch: lr11xx_gnss_set_constellations_to_use failed\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "gnss_almanac_rp_task_launch: lr11xx_gnss_set_constellations_to_use failed\r\n" );
         RP_TASK_ABORT_AND_RETURN( );
     }
     lr11xx_status = lr11xx_gnss_read_almanac_status( modem_get_radio_ctx( ), &almanac_status );
     if( lr11xx_status != LR11XX_STATUS_OK )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "gnss_almanac_rp_task_launch: lr11xx_gnss_read_almanac_status failed\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "gnss_almanac_rp_task_launch: lr11xx_gnss_read_almanac_status failed\r\n" );
         RP_TASK_ABORT_AND_RETURN( );
     }
     update_current_almanac_status_context( &almanac_status ); /* Update current global context */
-    GNSS_ALMANAC_TRACE_PRINTF_DEBUG( "Almanac status for GPS: %s\n",
+    GNSS_ALMANAC_TRACE_PRINTF_DEBUG( "Almanac status for GPS: %s\r\n",
                                      smtc_gnss_almanac_status_enum2str( almanac_status.status_gps ) );
-    GNSS_ALMANAC_TRACE_PRINTF_DEBUG( "Almanac status for BDS: %s\n",
+    GNSS_ALMANAC_TRACE_PRINTF_DEBUG( "Almanac status for BDS: %s\r\n",
                                      smtc_gnss_almanac_status_enum2str( almanac_status.status_beidou ) );
 
     if( ( mw_gnss_almanac_next_update.type == ALMANAC_TASK_TYPE_READ_STATUS ) ||
@@ -659,7 +659,7 @@ static void gnss_almanac_rp_task_launch( void* context )
                                                           LR11XX_SYSTEM_IRQ_NONE );
         if( lr11xx_status != LR11XX_STATUS_OK )
         {
-            SMTC_MODEM_HAL_TRACE_ERROR( "gnss_almanac_rp_task_launch: lr11xx_system_set_dio_irq_params failed\n" );
+            SMTC_MODEM_HAL_TRACE_ERROR( "gnss_almanac_rp_task_launch: lr11xx_system_set_dio_irq_params failed\r\n" );
             RP_TASK_ABORT_AND_RETURN( );
         }
 
@@ -668,17 +668,17 @@ static void gnss_almanac_rp_task_launch( void* context )
 
         if( mw_radio_configure_for_scan( modem_get_radio_ctx( ) ) == false )
         {
-            SMTC_MODEM_HAL_TRACE_ERROR( "gnss_almanac_rp_task_launch: mw_radio_configure_for_scan() failed\n" );
+            SMTC_MODEM_HAL_TRACE_ERROR( "gnss_almanac_rp_task_launch: mw_radio_configure_for_scan() failed\r\n" );
             RP_TASK_ABORT_AND_RETURN( );
         }
 
-        SMTC_MODEM_HAL_TRACE_INFO( "=> launch almanac update from sat for %s\n",
+        SMTC_MODEM_HAL_TRACE_INFO( "=> launch almanac update from sat for %s\r\n",
                                    smtc_gnss_constellation_enum2str( mw_gnss_almanac_next_update.constellation ) );
         lr11xx_status = lr11xx_gnss_almanac_update_from_sat(
             modem_get_radio_ctx( ), mw_gnss_almanac_next_update.constellation, LR11XX_GNSS_OPTION_LOW_EFFORT );
         if( lr11xx_status != LR11XX_STATUS_OK )
         {
-            SMTC_MODEM_HAL_TRACE_ERROR( "gnss_almanac_rp_task_launch: lr11xx_gnss_almanac_update_from_sat() failed\n" );
+            SMTC_MODEM_HAL_TRACE_ERROR( "gnss_almanac_rp_task_launch: lr11xx_gnss_almanac_update_from_sat() failed\r\n" );
 
             /* Reset time for next almanac status check */
             memset( &mw_gnss_almanac_next_update, 0, sizeof( mw_gnss_almanac_next_update_t ) );
@@ -699,7 +699,7 @@ static void gnss_almanac_rp_task_done( void* status )
     rp_status_t      rp_status;
     mw_return_code_t mw_status;
 
-    SMTC_MODEM_HAL_TRACE_INFO( "gnss_almanac_rp_task_done\n" );
+    SMTC_MODEM_HAL_TRACE_INFO( "gnss_almanac_rp_task_done\r\n" );
 
     geolocation_bsp_gnss_postscan_actions( );
 
@@ -717,12 +717,12 @@ static void gnss_almanac_rp_task_done( void* status )
             mw_gnss_almanac_next_update.time_ms = 0;
             /* Update statistics */
             mw_gnss_almanac_update_status.stat_nb_aborted_by_rp += 1;
-            SMTC_MODEM_HAL_TRACE_WARNING( "ALMANAC task aborted by RP\n" );
+            SMTC_MODEM_HAL_TRACE_WARNING( "ALMANAC task aborted by RP\r\n" );
         }
         else
         {
             mw_gnss_almanac_task_obj.self_aborted = false;
-            SMTC_MODEM_HAL_TRACE_PRINTF( "ALMANAC task self aborted\n" );
+            SMTC_MODEM_HAL_TRACE_PRINTF( "ALMANAC task self aborted\r\n" );
         }
 
         /* Notify application */
@@ -734,13 +734,13 @@ static void gnss_almanac_rp_task_done( void* status )
     }
     else if( rp_status == RP_STATUS_GNSS_SCAN_DONE )
     {
-        SMTC_MODEM_HAL_TRACE_PRINTF( "ALMANAC: RP_STATUS_GNSS_SCAN_DONE\n" );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "ALMANAC: RP_STATUS_GNSS_SCAN_DONE\r\n" );
 
         mw_status = gnss_almanac_task_done( );
         mw_radio_set_sleep( modem_get_radio_ctx( ) ); /* Set the radio back to sleep when all radio accesses are done */
         if( mw_status != MW_RC_OK )
         {
-            SMTC_MODEM_HAL_TRACE_ERROR( "gnss_almanac_task_done Failed\n" );
+            SMTC_MODEM_HAL_TRACE_ERROR( "gnss_almanac_task_done Failed\r\n" );
         }
 
         /* Notify application */
@@ -752,7 +752,7 @@ static void gnss_almanac_rp_task_done( void* status )
     else
     {
         /* Should not happen */
-        SMTC_MODEM_HAL_TRACE_ERROR( "GNSS ALMANAC RP task - Unknown status %d\n", rp_status );
+        SMTC_MODEM_HAL_TRACE_ERROR( "GNSS ALMANAC RP task - Unknown status %d\r\n", rp_status );
         SMTC_MODEM_HAL_PANIC( "Unexpected RP status" );
     }
 }
@@ -774,7 +774,7 @@ static mw_return_code_t gnss_almanac_task_done( void )
     /* Get power consumption of last almanac demod */
     MW_RETURN_ON_FAILURE( lr11xx_gnss_read_cumulative_timing( modem_get_radio_ctx( ), &cumulative_timing ) ==
                           LR11XX_STATUS_OK );
-    GNSS_ALMANAC_TRACE_PRINTF_DEBUG( "Cumulative timings: %u s\n", cumulative_timing.total / 32768 );
+    GNSS_ALMANAC_TRACE_PRINTF_DEBUG( "Cumulative timings: %u s\r\n", cumulative_timing.total / 32768 );
     /* Update statistics */
     mw_gnss_almanac_update_status.stat_cumulative_timings_s += ( cumulative_timing.total / 32768 );
 
@@ -783,21 +783,21 @@ static mw_return_code_t gnss_almanac_task_done( void )
                                            &power_consumption_nah, &power_consumption_nwh );
 
     mw_gnss_almanac_update_status.power_consumption_nah = power_consumption_nah;
-    GNSS_ALMANAC_TRACE_PRINTF_DEBUG( "Almanac: power consumption: %u nah\n", power_consumption_nah );
+    GNSS_ALMANAC_TRACE_PRINTF_DEBUG( "Almanac: power consumption: %u nah\r\n", power_consumption_nah );
 
     /* Get almanac demodulation status */
     MW_RETURN_ON_FAILURE( lr11xx_gnss_read_demod_status( modem_get_radio_ctx( ), &demod_status, &demod_info ) ==
                           LR11XX_STATUS_OK );
     if( demod_status < 0 )
     {
-        SMTC_MODEM_HAL_TRACE_WARNING( "Almanac demodulation status: %s\n",
+        SMTC_MODEM_HAL_TRACE_WARNING( "Almanac demodulation status: %s\r\n",
                                       smtc_gnss_almanac_demod_status_enum2str( demod_status ) );
     }
     else
     {
         /* Update statistics */
         mw_gnss_almanac_update_status.stat_nb_update_from_sat_success += 1;
-        GNSS_ALMANAC_TRACE_PRINTF_DEBUG( "Almanac demodulation status: %s\n",
+        GNSS_ALMANAC_TRACE_PRINTF_DEBUG( "Almanac demodulation status: %s\r\n",
                                          smtc_gnss_almanac_demod_status_enum2str( demod_status ) );
     }
 
@@ -809,17 +809,17 @@ static mw_return_code_t gnss_almanac_task_done( void )
         MW_RETURN_ON_FAILURE( lr11xx_gnss_get_detected_satellites( modem_get_radio_ctx( ), nb_detected_svs,
                                                                    info_svs ) == LR11XX_STATUS_OK );
     }
-    GNSS_ALMANAC_TRACE_PRINTF_DEBUG( "ALMANAC SCAN DONE: %u SV detected:\n", nb_detected_svs );
+    GNSS_ALMANAC_TRACE_PRINTF_DEBUG( "ALMANAC SCAN DONE: %u SV detected:\r\n", nb_detected_svs );
     for( uint8_t i = 0; i < nb_detected_svs; i++ )
     {
-        GNSS_ALMANAC_TRACE_PRINTF_DEBUG( "   SV_ID %u:\t%ddB\n", info_svs[i].satellite_id, info_svs[i].cnr );
+        GNSS_ALMANAC_TRACE_PRINTF_DEBUG( "   SV_ID %u:\t%ddB\r\n", info_svs[i].satellite_id, info_svs[i].cnr );
     }
 
     /* Check if an aiding position could be computed by the doppler solver (indicates level of almanac update) */
     MW_RETURN_ON_FAILURE( lr11xx_gnss_read_doppler_solver_result( modem_get_radio_ctx( ), &doppler_solver_results ) ==
                           LR11XX_STATUS_OK );
     GNSS_ALMANAC_TRACE_PRINTF_DEBUG(
-        "Doppler solver result after almanac demod: %s\n",
+        "Doppler solver result after almanac demod: %s\r\n",
         smtc_gnss_doppler_solver_error_code_enum2str( doppler_solver_results.error_code ) );
     mw_gnss_almanac_update_status.last_doppler_solver_status = doppler_solver_results.error_code;
 
@@ -850,13 +850,13 @@ static mw_return_code_t gnss_almanac_task_done( void )
         if( ( last_scan_constellation == LR11XX_GNSS_GPS_MASK ) &&
             ( mw_gnss_almanac_task_obj.gps_update_postpone_time_s == 0 ) )
         {
-            SMTC_MODEM_HAL_TRACE_WARNING( "ALMANAC: postpone GPS update due to bad sky detected\n" );
+            SMTC_MODEM_HAL_TRACE_WARNING( "ALMANAC: postpone GPS update due to bad sky detected\r\n" );
             mw_gnss_almanac_task_obj.gps_update_postpone_time_s = smtc_modem_hal_get_time_in_s( );
         }
         else if( ( last_scan_constellation == LR11XX_GNSS_BEIDOU_MASK ) &&
                  ( mw_gnss_almanac_task_obj.beidou_update_postpone_time_s == 0 ) )
         {
-            SMTC_MODEM_HAL_TRACE_WARNING( "ALMANAC: postpone BEIDOU update due to bad sky detected\n" );
+            SMTC_MODEM_HAL_TRACE_WARNING( "ALMANAC: postpone BEIDOU update due to bad sky detected\r\n" );
             mw_gnss_almanac_task_obj.beidou_update_postpone_time_s = smtc_modem_hal_get_time_in_s( );
         }
     }
@@ -914,7 +914,7 @@ static mw_gnss_almanac_next_update_t select_next_update( const lr11xx_gnss_read_
         else
         {
             SMTC_MODEM_HAL_TRACE_WARNING(
-                "select_next_update: min_elapsed_time > ALMANAC_STATUS_CHECK_PERIOD_BAD_SKY_S\n" );
+                "select_next_update: min_elapsed_time > ALMANAC_STATUS_CHECK_PERIOD_BAD_SKY_S\r\n" );
             next_update.time_s = ALMANAC_STATUS_CHECK_PERIOD_BAD_SKY_S;
         }
         next_update.type = ALMANAC_TASK_TYPE_READ_STATUS;
@@ -974,25 +974,25 @@ static mw_gnss_almanac_next_update_t select_next_update( const lr11xx_gnss_read_
             ( almanac_status->status_beidou == LR11XX_GNSS_NO_SAT_TO_UPDATE ) )
         {
             next_update.time_s = ALMANAC_STATUS_CHECK_PERIOD_DEFAULT_S;
-            GNSS_ALMANAC_TRACE_PRINTF_DEBUG( "=> No almanac update required\n" );
+            GNSS_ALMANAC_TRACE_PRINTF_DEBUG( "=> No almanac update required\r\n" );
         }
         else if( ( almanac_status->status_gps == LR11XX_GNSS_NO_TIME_SET ) ||
                  ( almanac_status->status_beidou == LR11XX_GNSS_NO_TIME_SET ) )
         {
             next_update.time_s = ALMANAC_STATUS_CHECK_PERIOD_NO_TIME_S;
-            GNSS_ALMANAC_TRACE_PRINTF_DEBUG( "=> No time set\n" );
+            GNSS_ALMANAC_TRACE_PRINTF_DEBUG( "=> No time set\r\n" );
         }
         else if( ( almanac_status->status_gps == LR11XX_GNSS_INTERNAL_ACCURACY_TOO_LOW ) ||
                  ( almanac_status->status_beidou == LR11XX_GNSS_INTERNAL_ACCURACY_TOO_LOW ) )
         {
             next_update.time_s = ALMANAC_STATUS_CHECK_PERIOD_TIME_ACCURACY_S;
-            GNSS_ALMANAC_TRACE_PRINTF_DEBUG( "=> bad almanac status\n" );
+            GNSS_ALMANAC_TRACE_PRINTF_DEBUG( "=> bad almanac status\r\n" );
         }
         else
         {
             next_update.time_s = ALMANAC_STATUS_CHECK_PERIOD_DEFAULT_S;
         }
-        SMTC_MODEM_HAL_TRACE_PRINTF( "Check almanac status again in %ds\n", next_update.time_s );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "Check almanac status again in %ds\r\n", next_update.time_s );
     }
 
     /* Set time for next almanac scan */
@@ -1025,7 +1025,7 @@ static mw_gnss_almanac_next_update_t select_next_update( const lr11xx_gnss_read_
                 - if next demod time is < 1.3s, launch right now */
             next_update.time_ms = 0;
         }
-        SMTC_MODEM_HAL_TRACE_PRINTF( "=> Next almanac update for %s in %u ms\n",
+        SMTC_MODEM_HAL_TRACE_PRINTF( "=> Next almanac update for %s in %u ms\r\n",
                                      smtc_gnss_constellation_enum2str( next_update.constellation ),
                                      next_update.time_ms );
     }
@@ -1070,13 +1070,13 @@ static void update_current_almanac_status_context( const lr11xx_gnss_read_almana
             }
             else
             {
-                SMTC_MODEM_HAL_TRACE_ERROR( " total_sv_to_be_updated_gps is equal to 0\n" );
+                SMTC_MODEM_HAL_TRACE_ERROR( " total_sv_to_be_updated_gps is equal to 0\r\n" );
             }
         }
         else
         {
             SMTC_MODEM_HAL_TRACE_ERROR(
-                "remaining_sv_to_be_updated_gps should be <= total_sv_to_be_updated_gps (%u - %u)\n",
+                "remaining_sv_to_be_updated_gps should be <= total_sv_to_be_updated_gps (%u - %u)\r\n",
                 mw_gnss_almanac_update_status.remaining_sv_to_be_updated_gps,
                 mw_gnss_almanac_update_status.total_sv_to_be_updated_gps );
         }
@@ -1110,13 +1110,13 @@ static void update_current_almanac_status_context( const lr11xx_gnss_read_almana
             }
             else
             {
-                SMTC_MODEM_HAL_TRACE_ERROR( " total_sv_to_be_updated_beidou is equal to 0\n" );
+                SMTC_MODEM_HAL_TRACE_ERROR( " total_sv_to_be_updated_beidou is equal to 0\r\n" );
             }
         }
         else
         {
             SMTC_MODEM_HAL_TRACE_ERROR(
-                "remaining_sv_to_be_updated_beidou should be <= total_sv_to_be_updated_beidou (%u - %u)\n",
+                "remaining_sv_to_be_updated_beidou should be <= total_sv_to_be_updated_beidou (%u - %u)\r\n",
                 mw_gnss_almanac_update_status.remaining_sv_to_be_updated_beidou,
                 mw_gnss_almanac_update_status.total_sv_to_be_updated_beidou );
         }
@@ -1136,26 +1136,26 @@ static void print_almanac_status( const lr11xx_gnss_read_almanac_status_t* alman
     /* GPS status */
     if( almanac_status->status_gps < 0 )
     {
-        SMTC_MODEM_HAL_TRACE_WARNING( "Almanac status for GPS: %s\n",
+        SMTC_MODEM_HAL_TRACE_WARNING( "Almanac status for GPS: %s\r\n",
                                       smtc_gnss_almanac_status_enum2str( almanac_status->status_gps ) );
     }
     else
     {
-        SMTC_MODEM_HAL_TRACE_PRINTF( "Almanac status for GPS:\n" );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "  status: %s\n",
+        SMTC_MODEM_HAL_TRACE_PRINTF( "Almanac status for GPS:\r\n" );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "  status: %s\r\n",
                                      smtc_gnss_almanac_status_enum2str( almanac_status->status_gps ) );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "  nb sat to update: %u/%u\n", almanac_status->nb_sat_gps_to_update,
+        SMTC_MODEM_HAL_TRACE_PRINTF( "  nb sat to update: %u/%u\r\n", almanac_status->nb_sat_gps_to_update,
                                      count_set_bits( almanac_status->sat_id_gps_activated ) );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "  time sat to update: %u ms\n", almanac_status->next_gps_time_sat_to_update );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "  list sat to update: 0x%08X\n", almanac_status->sat_id_gps_to_update );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "  list sat activated: 0x%08X\n", almanac_status->sat_id_gps_activated );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "  time sat to update: %u ms\r\n", almanac_status->next_gps_time_sat_to_update );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "  list sat to update: 0x%08X\r\n", almanac_status->sat_id_gps_to_update );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "  list sat activated: 0x%08X\r\n", almanac_status->sat_id_gps_activated );
         /* GPS update status: 1 -> 32*/
         SMTC_MODEM_HAL_TRACE_PRINTF( "  sv_id :" );
         for( uint8_t satellite = 0; satellite < 32; ++satellite )
         {
             SMTC_MODEM_HAL_TRACE_PRINTF( " %2u", satellite + 1 );
         }
-        SMTC_MODEM_HAL_TRACE_PRINTF( "\n" );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "\r\n" );
         SMTC_MODEM_HAL_TRACE_PRINTF( "  status:" );
         for( uint8_t satellite = 0; satellite < 32; ++satellite )
         {
@@ -1166,41 +1166,41 @@ static void print_almanac_status( const lr11xx_gnss_read_almanac_status_t* alman
                 nb_to_be_updated_gps += 1;
             }
         }
-        SMTC_MODEM_HAL_TRACE_PRINTF( "\n" );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "\r\n" );
     }
 
     /* BEIDOU status */
     if( almanac_status->status_beidou < 0 )
     {
-        SMTC_MODEM_HAL_TRACE_WARNING( "Almanac status for BEIDOU: %s\n",
+        SMTC_MODEM_HAL_TRACE_WARNING( "Almanac status for BEIDOU: %s\r\n",
                                       smtc_gnss_almanac_status_enum2str( almanac_status->status_beidou ) );
     }
     else
     {
-        SMTC_MODEM_HAL_TRACE_PRINTF( "Almanac status for BEIDOU:\n" );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "  status: %s\n",
+        SMTC_MODEM_HAL_TRACE_PRINTF( "Almanac status for BEIDOU:\r\n" );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "  status: %s\r\n",
                                      smtc_gnss_almanac_status_enum2str( almanac_status->status_beidou ) );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "  nb sat to update: %u/%u\n", almanac_status->nb_sat_beidou_to_update,
+        SMTC_MODEM_HAL_TRACE_PRINTF( "  nb sat to update: %u/%u\r\n", almanac_status->nb_sat_beidou_to_update,
                                      count_set_bits( almanac_status->sat_id_beidou_activated[0] & 0xFFFFFFE0 ) +
                                          count_set_bits( almanac_status->sat_id_beidou_activated[1] & 0x03FFFFFF ) );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "  time sat to update: %u ms\n", almanac_status->next_beidou_time_sat_to_update );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "  next subframe ID start: %u\n", almanac_status->next_beidou_subframe_id_start );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "  sat ID to update in sub 4: %u\n",
+        SMTC_MODEM_HAL_TRACE_PRINTF( "  time sat to update: %u ms\r\n", almanac_status->next_beidou_time_sat_to_update );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "  next subframe ID start: %u\r\n", almanac_status->next_beidou_subframe_id_start );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "  sat ID to update in sub 4: %u\r\n",
                                      almanac_status->next_beidou_sat_id_to_update_in_sub_4 );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "  sat ID to update in sub 5: %u\n",
+        SMTC_MODEM_HAL_TRACE_PRINTF( "  sat ID to update in sub 5: %u\r\n",
                                      almanac_status->next_beidou_sat_id_to_update_in_sub_5 );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "  next Am ID: %u\n", almanac_status->next_am_id );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "  list sat to update[0]: 0x%08X\n", almanac_status->sat_id_beidou_to_update[0] );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "  list sat to update[1]: 0x%08X\n", almanac_status->sat_id_beidou_to_update[1] );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "  list sat activated[0]: 0x%08X\n", almanac_status->sat_id_beidou_activated[0] );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "  list sat activated[1]: 0x%08X\n", almanac_status->sat_id_beidou_activated[1] );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "  next Am ID: %u\r\n", almanac_status->next_am_id );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "  list sat to update[0]: 0x%08X\r\n", almanac_status->sat_id_beidou_to_update[0] );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "  list sat to update[1]: 0x%08X\r\n", almanac_status->sat_id_beidou_to_update[1] );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "  list sat activated[0]: 0x%08X\r\n", almanac_status->sat_id_beidou_activated[0] );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "  list sat activated[1]: 0x%08X\r\n", almanac_status->sat_id_beidou_activated[1] );
         /* Beidou update status: 1 -> 32*/
         SMTC_MODEM_HAL_TRACE_PRINTF( "  sv_id :" );
         for( uint8_t satellite = 0; satellite < 32; ++satellite )
         {
             SMTC_MODEM_HAL_TRACE_PRINTF( " %2u", satellite + 1 );
         }
-        SMTC_MODEM_HAL_TRACE_PRINTF( "\n" );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "\r\n" );
         SMTC_MODEM_HAL_TRACE_PRINTF( "  status:" );
         for( uint8_t satellite = 0; satellite < 32; ++satellite )
         {
@@ -1211,14 +1211,14 @@ static void print_almanac_status( const lr11xx_gnss_read_almanac_status_t* alman
                 nb_to_be_updated_beidou += 1;
             }
         }
-        SMTC_MODEM_HAL_TRACE_PRINTF( "\n" );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "\r\n" );
         /* Beidou update status: 33 -> 63*/
         SMTC_MODEM_HAL_TRACE_PRINTF( "  sv_id :" );
         for( uint8_t satellite = 0; satellite < 32; ++satellite )
         {
             SMTC_MODEM_HAL_TRACE_PRINTF( " %2u", satellite + 33 );
         }
-        SMTC_MODEM_HAL_TRACE_PRINTF( "\n" );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "\r\n" );
         SMTC_MODEM_HAL_TRACE_PRINTF( "  status:" );
         for( uint8_t satellite = 0; satellite < 32; ++satellite )
         {
@@ -1229,7 +1229,7 @@ static void print_almanac_status( const lr11xx_gnss_read_almanac_status_t* alman
                 nb_to_be_updated_beidou += 1;
             }
         }
-        SMTC_MODEM_HAL_TRACE_PRINTF( "\n" );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "\r\n" );
     }
 }
 
@@ -1238,51 +1238,51 @@ static void trace_print_event_data_almanac_update(
 {
     if( data != NULL )
     {
-        SMTC_MODEM_HAL_TRACE_PRINTF( "ALMANAC_DEMOD_UPDATE info:\n" );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "ALMANAC_DEMOD_UPDATE info:\r\n" );
         SMTC_MODEM_HAL_TRACE_PRINTF( "-- status GPS: " );
         switch( data->status_gps )
         {
         case SMTC_MODEM_GNSS_ALMANAC_UPDATE_STATUS_UNKNOWN:
-            SMTC_MODEM_HAL_TRACE_PRINTF( "UNKNOWN\n" );
+            SMTC_MODEM_HAL_TRACE_PRINTF( "UNKNOWN\r\n" );
             break;
         case SMTC_MODEM_GNSS_ALMANAC_UPDATE_STATUS_COMPLETED:
-            SMTC_MODEM_HAL_TRACE_PRINTF( "COMPLETED\n" );
+            SMTC_MODEM_HAL_TRACE_PRINTF( "COMPLETED\r\n" );
             break;
         case SMTC_MODEM_GNSS_ALMANAC_UPDATE_STATUS_NOT_COMPLETED:
-            SMTC_MODEM_HAL_TRACE_PRINTF( "NOT COMPLETED\n" );
+            SMTC_MODEM_HAL_TRACE_PRINTF( "NOT COMPLETED\r\n" );
             break;
         default:
             break;
         }
         if( data->status_gps != SMTC_MODEM_GNSS_ALMANAC_UPDATE_STATUS_UNKNOWN )
         {
-            SMTC_MODEM_HAL_TRACE_PRINTF( "   update progress: %u%%\n", data->update_progress_gps );
+            SMTC_MODEM_HAL_TRACE_PRINTF( "   update progress: %u%%\r\n", data->update_progress_gps );
         }
 
         SMTC_MODEM_HAL_TRACE_PRINTF( "-- status BEIDOU: " );
         switch( data->status_beidou )
         {
         case SMTC_MODEM_GNSS_ALMANAC_UPDATE_STATUS_UNKNOWN:
-            SMTC_MODEM_HAL_TRACE_PRINTF( "UNKNOWN\n" );
+            SMTC_MODEM_HAL_TRACE_PRINTF( "UNKNOWN\r\n" );
             break;
         case SMTC_MODEM_GNSS_ALMANAC_UPDATE_STATUS_COMPLETED:
-            SMTC_MODEM_HAL_TRACE_PRINTF( "COMPLETED\n" );
+            SMTC_MODEM_HAL_TRACE_PRINTF( "COMPLETED\r\n" );
             break;
         case SMTC_MODEM_GNSS_ALMANAC_UPDATE_STATUS_NOT_COMPLETED:
-            SMTC_MODEM_HAL_TRACE_PRINTF( "NOT COMPLETED\n" );
+            SMTC_MODEM_HAL_TRACE_PRINTF( "NOT COMPLETED\r\n" );
             break;
         default:
             break;
         }
         if( data->status_beidou != SMTC_MODEM_GNSS_ALMANAC_UPDATE_STATUS_UNKNOWN )
         {
-            SMTC_MODEM_HAL_TRACE_PRINTF( "   update progress: %u%%\n", data->update_progress_beidou );
+            SMTC_MODEM_HAL_TRACE_PRINTF( "   update progress: %u%%\r\n", data->update_progress_beidou );
         }
-        SMTC_MODEM_HAL_TRACE_PRINTF( "-- statistics:\n" );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "   nb update from sat done: %u\n", data->stat_nb_update_from_sat_done );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "   nb update from sat success: %u\n", data->stat_nb_update_from_sat_success );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "   nb aborted by RP: %u\n", data->stat_nb_aborted_by_rp );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "   cumulative timing: %u s\n", data->stat_cumulative_timings_s );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "-- statistics:\r\n" );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "   nb update from sat done: %u\r\n", data->stat_nb_update_from_sat_done );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "   nb update from sat success: %u\r\n", data->stat_nb_update_from_sat_success );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "   nb aborted by RP: %u\r\n", data->stat_nb_aborted_by_rp );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "   cumulative timing: %u s\r\n", data->stat_cumulative_timings_s );
     }
 }
 

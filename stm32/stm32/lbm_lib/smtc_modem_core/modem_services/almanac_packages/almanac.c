@@ -87,7 +87,7 @@
     {                                                                                \
         if( almanac_obj.initialized == false )                                       \
         {                                                                            \
-            SMTC_MODEM_HAL_TRACE_WARNING( "almanac_obj service not initialized\n" ); \
+            SMTC_MODEM_HAL_TRACE_WARNING( "almanac_obj service not initialized\r\n" ); \
             return;                                                                  \
         }                                                                            \
     } while( 0 )
@@ -101,7 +101,7 @@
     {                                                                            \
         if( almanac_obj.enabled == false )                                       \
         {                                                                        \
-            SMTC_MODEM_HAL_TRACE_WARNING( "almanac_obj service not enabled\n" ); \
+            SMTC_MODEM_HAL_TRACE_WARNING( "almanac_obj service not enabled\r\n" ); \
             return;                                                              \
         }                                                                        \
     } while( 0 )
@@ -139,7 +139,7 @@ void almanac_services_init( uint8_t* service_id, uint8_t task_id,
                             void ( **on_launch_callback )( void* ), void ( **on_update_callback )( void* ),
                             void** context_callback )
 {
-    SMTC_MODEM_HAL_TRACE_PRINTF( "almanac_services_init\n" );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "almanac_services_init\r\n" );
 
     IS_VALID_OBJECT_ID( *service_id );
     *downlink_callback                         = almanac_service_downlink_handler;
@@ -161,7 +161,7 @@ void almanac_services_init( uint8_t* service_id, uint8_t task_id,
 
 void almanac_service_on_launch( void* context )
 {
-    SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG( "almanac_service_on_launch\n" );
+    SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG( "almanac_service_on_launch\r\n" );
 
     IS_SERVICE_ENABLED( );
     almanac_obj.almanac_status_from_lr11xx[1] = DM_INFO_ALMSTATUS;
@@ -184,7 +184,7 @@ void almanac_service_on_launch( void* context )
 
 void almanac_service_on_update( void* context )
 {
-    SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG( "almanac_service_on_update\n" );
+    SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG( "almanac_service_on_update\r\n" );
 
     IS_SERVICE_INITIALIZED( );
     IS_SERVICE_ENABLED( );
@@ -193,7 +193,7 @@ void almanac_service_on_update( void* context )
 
 uint8_t almanac_service_downlink_handler( lr1_stack_mac_down_data_t* rx_down_data )
 {
-    SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG( "almanac_service_downlink_handler\n" );
+    SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG( "almanac_service_downlink_handler\r\n" );
 
     if( ( almanac_obj.enabled == false ) || ( almanac_obj.initialized == false ) )
     {
@@ -220,7 +220,7 @@ uint8_t almanac_service_downlink_handler( lr1_stack_mac_down_data_t* rx_down_dat
         {
             request_access_to_rp_4_almanac_update( );
         }
-        SMTC_MODEM_HAL_TRACE_PRINTF( "almanac_service_downlink_handler => consumed\n" );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "almanac_service_downlink_handler => consumed\r\n" );
         return MODEM_DOWNLINK_CONSUMED;
     }
 
@@ -279,7 +279,7 @@ static void rp_start_almanac_callback( void* context )
 
     if( almanac_obj.almanac_dw_buffer_size > 0 )
     {
-        SMTC_MODEM_HAL_TRACE_PRINTF( "=> Push almanac update to LR11xx\n" );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "=> Push almanac update to LR11xx\r\n" );
         lr11xx_gnss_push_dmc_msg( modem_get_radio_ctx( ), almanac_obj.almanac_dw_buffer,
                                   almanac_obj.almanac_dw_buffer_size );
         almanac_obj.almanac_dw_buffer_size = 0;
@@ -287,7 +287,7 @@ static void rp_start_almanac_callback( void* context )
     lr11xx_gnss_get_context_status( modem_get_radio_ctx( ), &almanac_obj.almanac_status_from_lr11xx[0] );
     almanac_obj.get_almanac_status_from_lr11xx = true;
     lr11xx_gnss_parse_context_status_buffer( almanac_obj.almanac_status_from_lr11xx, &context_status );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "=> Almanac CRC: 0x%08X\n", context_status.global_almanac_crc );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "=> Almanac CRC: 0x%08X\r\n", context_status.global_almanac_crc );
 
     rp_task_abort( modem_get_rp( ), almanac_obj.rp_hook_id );
 }
@@ -306,11 +306,11 @@ static void request_access_to_rp_4_almanac_update( void )
     rp_radio_params_t fake_rp_radio_params = { 0 };
     if( rp_task_enqueue( modem_get_rp( ), &rp_task, NULL, 0, &fake_rp_radio_params ) != RP_HOOK_STATUS_OK )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "Failed to enqueue RP task for almanac update\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "Failed to enqueue RP task for almanac update\r\n" );
     }
     else
     {
-        SMTC_MODEM_HAL_TRACE_PRINTF( "Enqueued RP task for almanac update\n" );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "Enqueued RP task for almanac update\r\n" );
     }
 }
 

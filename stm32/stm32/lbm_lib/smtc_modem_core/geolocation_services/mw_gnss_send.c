@@ -86,7 +86,7 @@
     {                                                                           \
         if( mw_gnss_send_obj.initialized == false )                             \
         {                                                                       \
-            SMTC_MODEM_HAL_TRACE_WARNING( "gnss send service not launched\n" ); \
+            SMTC_MODEM_HAL_TRACE_WARNING( "gnss send service not launched\r\n" ); \
             break;                                                              \
         }                                                                       \
     } while( 0 )
@@ -199,7 +199,7 @@ void mw_gnss_send_services_init( uint8_t* service_id, uint8_t task_id,
                                  void ( **on_launch_callback )( void* ), void ( **on_update_callback )( void* ),
                                  void** context_callback )
 {
-    SMTC_MODEM_HAL_TRACE_PRINTF( "mw_gnss_send_services_init task_id %d, service_id %d, CURRENT_STACK:%d \n", task_id,
+    SMTC_MODEM_HAL_TRACE_PRINTF( "mw_gnss_send_services_init task_id %d, service_id %d, CURRENT_STACK:%d \r\n", task_id,
                                  *service_id, CURRENT_STACK );
 
     IS_VALID_OBJECT_ID( *service_id );
@@ -220,7 +220,7 @@ void mw_gnss_send_services_init( uint8_t* service_id, uint8_t task_id,
 
 void mw_gnss_send_add_task( const navgroup_t* nav_group )
 {
-    SMTC_MODEM_HAL_TRACE_PRINTF( "mw_gnss_send_add_task: add task in supervisor\n" );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "mw_gnss_send_add_task: add task in supervisor\r\n" );
 
     IS_SERVICE_INITIALIZED( );
 
@@ -233,7 +233,7 @@ void mw_gnss_send_add_task( const navgroup_t* nav_group )
 
     if( ( mw_gnss_send_obj.send_mode == SMTC_MODEM_SEND_MODE_BYPASS ) || ( nav_group->nb_scans_valid == 0 ) )
     {
-        SMTC_MODEM_HAL_TRACE_PRINTF( "mw_gnss_send_add_task: no scan to be sent\n" );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "mw_gnss_send_add_task: no scan to be sent\r\n" );
         send_event( SMTC_MODEM_EVENT_GNSS_TERMINATED );
     }
     else
@@ -252,13 +252,13 @@ smtc_modem_return_code_t mw_gnss_get_event_data_terminated( smtc_modem_gnss_even
 {
     if( data == NULL )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "mw_gnss_get_event_data_terminated: Provided pointer is NULL\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "mw_gnss_get_event_data_terminated: Provided pointer is NULL\r\n" );
         return SMTC_MODEM_RC_INVALID;
     }
 
     if( mw_gnss_send_obj.pending_evt_terminated == false )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "mw_gnss_get_event_data_terminated: no TERMINATED event pending\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "mw_gnss_get_event_data_terminated: no TERMINATED event pending\r\n" );
         return SMTC_MODEM_RC_FAIL;
     }
 
@@ -302,7 +302,7 @@ static void mw_gnss_send_service_on_launch( void* context_callback )
     status_lorawan_t send_status  = ERRORLORAWAN;
     stask_manager*   task_manager = ( stask_manager* ) context_callback;
 
-    GNSS_SEND_TRACE_PRINTF_DEBUG( "mw_gnss_send_service_on_launch\n" );
+    GNSS_SEND_TRACE_PRINTF_DEBUG( "mw_gnss_send_service_on_launch\r\n" );
 
     IS_SERVICE_INITIALIZED( );
 
@@ -320,13 +320,13 @@ static void mw_gnss_send_service_on_launch( void* context_callback )
         if( send_status == OKLORAWAN )
         {
             task_manager->modem_task[mw_gnss_send_obj.task_id].task_context = true;
-            SMTC_MODEM_HAL_TRACE_INFO( "GNSS Tx [%d] on FPort %d\n", mw_gnss_send_obj.nb_scans_sent, port );
+            SMTC_MODEM_HAL_TRACE_INFO( "GNSS Tx [%d] on FPort %d\r\n", mw_gnss_send_obj.nb_scans_sent, port );
             SMTC_MODEM_HAL_TRACE_ARRAY( "GNSS Tx", tx_buffer, tx_buffer_size );
         }
         else
         {
             task_manager->modem_task[mw_gnss_send_obj.task_id].task_context = false;
-            SMTC_MODEM_HAL_TRACE_ERROR( "GNSS Tx [%d]: lorawan_api_payload_send() failed.\n",
+            SMTC_MODEM_HAL_TRACE_ERROR( "GNSS Tx [%d]: lorawan_api_payload_send() failed.\r\n",
                                         mw_gnss_send_obj.nb_scans_sent );
         }
     }
@@ -340,13 +340,13 @@ static void mw_gnss_send_service_on_launch( void* context_callback )
         if( store_status == STORE_AND_FORWARD_FLASH_RC_OK )
         {
             task_manager->modem_task[mw_gnss_send_obj.task_id].task_context = true;
-            SMTC_MODEM_HAL_TRACE_INFO( "GNSS Payload pushed to store&fwd on FPort %d\n", port );
+            SMTC_MODEM_HAL_TRACE_INFO( "GNSS Payload pushed to store&fwd on FPort %d\r\n", port );
             SMTC_MODEM_HAL_TRACE_ARRAY( "GNSS Payload", tx_buffer, tx_buffer_size );
         }
         else
         {
             task_manager->modem_task[mw_gnss_send_obj.task_id].task_context = false;
-            SMTC_MODEM_HAL_TRACE_ERROR( "GNSS: failed to push payload to store&fwd - internal code: %x\n",
+            SMTC_MODEM_HAL_TRACE_ERROR( "GNSS: failed to push payload to store&fwd - internal code: %x\r\n",
                                         store_status );
         }
 #endif
@@ -357,7 +357,7 @@ static void mw_gnss_send_service_on_update( void* context_callback )
 {
     stask_manager* task_manager = ( stask_manager* ) context_callback;
 
-    GNSS_SEND_TRACE_PRINTF_DEBUG( "mw_gnss_send_service_on_update\n" );
+    GNSS_SEND_TRACE_PRINTF_DEBUG( "mw_gnss_send_service_on_update\r\n" );
 
     IS_SERVICE_INITIALIZED( );
 
@@ -383,14 +383,14 @@ static void mw_gnss_send_service_on_update( void* context_callback )
 
 static uint8_t mw_gnss_send_service_downlink_handler( lr1_stack_mac_down_data_t* rx_down_data )
 {
-    GNSS_SEND_TRACE_PRINTF_DEBUG( "mw_gnss_send_service_downlink_handler\n" );
+    GNSS_SEND_TRACE_PRINTF_DEBUG( "mw_gnss_send_service_downlink_handler\r\n" );
 
     return MODEM_DOWNLINK_UNCONSUMED;
 }
 
 static void mw_gnss_send_next( void )
 {
-    GNSS_SEND_TRACE_PRINTF_DEBUG( "mw_gnss_send_next\n" );
+    GNSS_SEND_TRACE_PRINTF_DEBUG( "mw_gnss_send_next\r\n" );
 
     smodem_task task = { 0 };
     task.id          = mw_gnss_send_obj.task_id;
@@ -422,8 +422,8 @@ static void trace_print_event_data_terminated( const smtc_modem_gnss_event_data_
 {
     if( data != NULL )
     {
-        SMTC_MODEM_HAL_TRACE_PRINTF( "TERMINATED info:\n" );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "-- number of scans sent: %u\n", data->nb_scans_sent );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "TERMINATED info:\r\n" );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "-- number of scans sent: %u\r\n", data->nb_scans_sent );
     }
 }
 

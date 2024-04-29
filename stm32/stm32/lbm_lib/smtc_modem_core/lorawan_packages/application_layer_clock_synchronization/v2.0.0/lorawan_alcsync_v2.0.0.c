@@ -325,7 +325,7 @@ void lorawan_alcsync_services_init( uint8_t* service_id, uint8_t task_id,
                                     void ( **on_launch_callback )( void* ), void ( **on_update_callback )( void* ),
                                     void** context_callback )
 {
-    SMTC_MODEM_HAL_TRACE_PRINTF( " lorawan_alcsync_services_init task_id %d, service_id %d, CURRENT_STACK:%d \n",
+    SMTC_MODEM_HAL_TRACE_PRINTF( " lorawan_alcsync_services_init task_id %d, service_id %d, CURRENT_STACK:%d \r\n",
                                  task_id, *service_id, CURRENT_STACK );
 
     IS_VALID_OBJECT_ID( *service_id );
@@ -347,7 +347,7 @@ void lorawan_alcsync_services_init( uint8_t* service_id, uint8_t task_id,
 void lorawan_alcsync_service_on_launch( void* service_id )
 {
     uint8_t idx = *( ( uint8_t* ) service_id );
-    SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG( " lorawan_alcsync_service_on_launch service_id %d \n", idx );
+    SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG( " lorawan_alcsync_service_on_launch service_id %d \r\n", idx );
 
     IS_VALID_OBJECT_ID( idx );
     uint32_t time_tmp = alcsync_build_ans_payload( idx );
@@ -393,7 +393,7 @@ void lorawan_alcsync_service_on_launch( void* service_id )
 void lorawan_alcsync_service_on_update( void* service_id )
 {
     uint8_t idx = *( ( uint8_t* ) service_id );
-    SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG( " lorawan_alcsync_service_on_update service_id %d \n", idx );
+    SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG( " lorawan_alcsync_service_on_update service_id %d \r\n", idx );
     IS_VALID_OBJECT_ID( idx );
 
     smodem_task task_alc_sync = { 0 };
@@ -456,7 +456,7 @@ uint8_t lorawan_alcsync_service_downlink_handler( lr1_stack_mac_down_data_t* rx_
 
     if( stack_id >= NUMBER_OF_ALCSYNC_OBJ )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "stack id not valid %u \n", stack_id );
+        SMTC_MODEM_HAL_TRACE_ERROR( "stack id not valid %u \r\n", stack_id );
         return MODEM_DOWNLINK_UNCONSUMED;
     }
 
@@ -496,7 +496,7 @@ uint8_t lorawan_alcsync_service_downlink_handler( lr1_stack_mac_down_data_t* rx_
             return MODEM_DOWNLINK_UNCONSUMED;
         }
 
-        SMTC_MODEM_HAL_TRACE_PRINTF( "lorawan_alcsync_service_downlink_handler\n" );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "lorawan_alcsync_service_downlink_handler\r\n" );
         alc_sync_parser( ctx, rx_payload_ptr, rx_payload_ptr_size, rx_down_data->rx_metadata.timestamp_ms );
 
         task_id_t current_task_id = modem_supervisor_get_task( )->next_task_id;
@@ -532,7 +532,7 @@ bool lorawan_alcsync_mpa_injector( uint8_t stack_id, uint8_t* payload_in, uint8_
 
     if( stack_id >= NUMBER_OF_ALCSYNC_OBJ )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "stack id not valid %u \n", stack_id );
+        SMTC_MODEM_HAL_TRACE_ERROR( "stack id not valid %u \r\n", stack_id );
         return false;
     }
 
@@ -548,7 +548,7 @@ bool lorawan_alcsync_mpa_injector( uint8_t stack_id, uint8_t* payload_in, uint8_
     }
     *nb_bytes_read_payload_in = alcsync_req_cmd_size[cmd_id];
 
-    SMTC_MODEM_HAL_TRACE_WARNING( "ALCSYNC CiD 0x%02x (byte read %u)\n", cmd_id, *nb_bytes_read_payload_in );
+    SMTC_MODEM_HAL_TRACE_WARNING( "ALCSYNC CiD 0x%02x (byte read %u)\r\n", cmd_id, *nb_bytes_read_payload_in );
     alc_sync_parser( ctx, payload_in, alcsync_req_cmd_size[cmd_id], rx_timestamp_ms );
     if( ctx->event_time_sync == true )
     {
@@ -727,7 +727,7 @@ static alc_sync_ret_t alc_sync_parser( lorawan_alcsync_ctx_t* ctx, uint8_t* alc_
             }
             else
             {
-                SMTC_MODEM_HAL_TRACE_ERROR( "%s\n", alc_sync_bad_size_str );
+                SMTC_MODEM_HAL_TRACE_ERROR( "%s\r\n", alc_sync_bad_size_str );
                 ret = ALC_SYNC_FAIL;
             }
             alc_sync_rx_buffer_index += ALC_SYNC_PACKAGE_VERSION_REQ_SIZE;
@@ -748,14 +748,14 @@ static alc_sync_ret_t alc_sync_parser( lorawan_alcsync_ctx_t* ctx, uint8_t* alc_
 
                     ctx->event_time_sync = true;
 
-                    SMTC_MODEM_HAL_TRACE_INFO( "ALC Sync time correction %d s -> new GPS Time: %d s\n",
+                    SMTC_MODEM_HAL_TRACE_INFO( "ALC Sync time correction %d s -> new GPS Time: %d s\r\n",
                                                ctx->time_correction_s,
                                                ctx->timestamp_last_correction_s + ctx->time_correction_s );
                 }
             }
             else
             {
-                SMTC_MODEM_HAL_TRACE_ERROR( "%s\n", alc_sync_bad_size_str );
+                SMTC_MODEM_HAL_TRACE_ERROR( "%s\r\n", alc_sync_bad_size_str );
                 ret = ALC_SYNC_FAIL;
             }
             alc_sync_rx_buffer_index += ALC_SYNC_APP_TIME_ANS_SIZE;
@@ -771,7 +771,7 @@ static alc_sync_ret_t alc_sync_parser( lorawan_alcsync_ctx_t* ctx, uint8_t* alc_
             }
             else
             {
-                SMTC_MODEM_HAL_TRACE_ERROR( "%s\n", alc_sync_bad_size_str );
+                SMTC_MODEM_HAL_TRACE_ERROR( "%s\r\n", alc_sync_bad_size_str );
                 ret = ALC_SYNC_FAIL;
             }
             alc_sync_rx_buffer_index += ALC_SYNC_DEVICE_APP_TIME_PERIODICITY_REQ_SIZE;
@@ -784,14 +784,14 @@ static alc_sync_ret_t alc_sync_parser( lorawan_alcsync_ctx_t* ctx, uint8_t* alc_
             }
             else
             {
-                SMTC_MODEM_HAL_TRACE_ERROR( "%s\n", alc_sync_bad_size_str );
+                SMTC_MODEM_HAL_TRACE_ERROR( "%s\r\n", alc_sync_bad_size_str );
                 ret = ALC_SYNC_FAIL;
             }
             alc_sync_rx_buffer_index += ALC_SYNC_FORCE_DEVICE_RESYNC_REQ_SIZE;
             break;
 
         default:
-            SMTC_MODEM_HAL_TRACE_ERROR( "%s Illegal state\n ", __func__ );
+            SMTC_MODEM_HAL_TRACE_ERROR( "%s Illegal state\r\n ", __func__ );
             alc_sync_rx_buffer_length = 0;
             ret                       = ALC_SYNC_FAIL;
             break;
@@ -804,7 +804,7 @@ static void alc_sync_construct_package_version_answer( lorawan_alcsync_ctx_t* ct
 {
     if( is_alc_sync_tx_buffer_not_full( ctx, ALC_SYNC_PACKAGE_VERSION_ANS_SIZE ) == false )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "ctx->tx_payload buffer is full\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "ctx->tx_payload buffer is full\r\n" );
         return;
     }
 
@@ -820,7 +820,7 @@ static void alc_sync_construct_app_time_request( lorawan_alcsync_ctx_t* ctx, uin
 {
     if( is_alc_sync_tx_buffer_not_full( ctx, ALC_SYNC_APP_TIME_REQ_SIZE ) == false )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "ctx->tx_payload buffer is full\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "ctx->tx_payload buffer is full\r\n" );
         return;
     }
     ctx->req_status &= ~( 1 << ALC_SYNC_APP_TIME_REQ );
@@ -837,7 +837,7 @@ static void alc_sync_construct_app_time_periodicity_answer( lorawan_alcsync_ctx_
 {
     if( is_alc_sync_tx_buffer_not_full( ctx, ALC_SYNC_DEVICE_APP_TIME_PERIODICITY_ANS_SIZE ) == false )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "ctx->tx_payload buffer is full\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "ctx->tx_payload buffer is full\r\n" );
         return;
     }
     ctx->req_status &= ~( 1 << ALC_SYNC_DEVICE_APP_TIME_PERIODICITY_REQ );
@@ -880,7 +880,7 @@ static alc_sync_ret_t alc_sync_decode_app_time_ans( lorawan_alcsync_ctx_t* ctx, 
     }
     else
     {
-        SMTC_MODEM_HAL_TRACE_WARNING( "ALC Sync token mismatch: %d - %d\n", ctx->token_req, ( buffer[4] & 0x0F ) );
+        SMTC_MODEM_HAL_TRACE_WARNING( "ALC Sync token mismatch: %d - %d\r\n", ctx->token_req, ( buffer[4] & 0x0F ) );
         return ALC_SYNC_FAIL;
     }
 }

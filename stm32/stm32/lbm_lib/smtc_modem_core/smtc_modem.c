@@ -225,7 +225,7 @@ static void modem_load_appkey_context( void );
 
 void smtc_modem_init( void ( *callback_event )( void ) )
 {
-    SMTC_MODEM_HAL_TRACE_INFO( "Modem Initialization\n" );
+    SMTC_MODEM_HAL_TRACE_INFO( "Modem Initialization\r\n" );
 
     // init radio and put it in sleep mode
     SMTC_MODEM_HAL_PANIC_ON_FAILURE( ral_reset( &( modem_radio.ral ) ) == RAL_STATUS_OK );
@@ -310,7 +310,7 @@ smtc_modem_return_code_t smtc_modem_set_joineui( uint8_t stack_id, const uint8_t
         ( status_mask & SMTC_MODEM_STATUS_JOINING ) == SMTC_MODEM_STATUS_JOINING )
     {
         return_code = SMTC_MODEM_RC_BUSY;
-        SMTC_MODEM_HAL_TRACE_ERROR( "%s call but the device is already join\n", __func__ );
+        SMTC_MODEM_HAL_TRACE_ERROR( "%s call but the device is already join\r\n", __func__ );
     }
     else
     {
@@ -350,7 +350,7 @@ smtc_modem_return_code_t smtc_modem_set_deveui( uint8_t stack_id, const uint8_t 
         ( status_mask & SMTC_MODEM_STATUS_JOINING ) == SMTC_MODEM_STATUS_JOINING )
     {
         return_code = SMTC_MODEM_RC_BUSY;
-        SMTC_MODEM_HAL_TRACE_ERROR( "%s call but the device is already join\n", __func__ );
+        SMTC_MODEM_HAL_TRACE_ERROR( "%s call but the device is already join\r\n", __func__ );
     }
     else
     {
@@ -374,7 +374,7 @@ smtc_modem_return_code_t smtc_modem_set_appkey( uint8_t stack_id, const uint8_t 
     if( ( ( status_mask & SMTC_MODEM_STATUS_JOINED ) == SMTC_MODEM_STATUS_JOINED ) ||
         ( status_mask & SMTC_MODEM_STATUS_JOINING ) == SMTC_MODEM_STATUS_JOINING )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "%s call but the device is already join\n", __func__ );
+        SMTC_MODEM_HAL_TRACE_ERROR( "%s call but the device is already join\r\n", __func__ );
         return SMTC_MODEM_RC_BUSY;
     }
 
@@ -414,7 +414,7 @@ smtc_modem_return_code_t smtc_modem_set_nwkkey( uint8_t stack_id, const uint8_t 
     if( ( ( status_mask & SMTC_MODEM_STATUS_JOINED ) == SMTC_MODEM_STATUS_JOINED ) ||
         ( status_mask & SMTC_MODEM_STATUS_JOINING ) == SMTC_MODEM_STATUS_JOINING )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "%s call but the device is already join\n", __func__ );
+        SMTC_MODEM_HAL_TRACE_ERROR( "%s call but the device is already join\r\n", __func__ );
         return SMTC_MODEM_RC_BUSY;
     }
 
@@ -458,7 +458,7 @@ smtc_modem_return_code_t smtc_modem_set_region( uint8_t stack_id, smtc_modem_reg
     if( ( ( status_mask & SMTC_MODEM_STATUS_JOINED ) == SMTC_MODEM_STATUS_JOINED ) ||
         ( status_mask & SMTC_MODEM_STATUS_JOINING ) == SMTC_MODEM_STATUS_JOINING )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "%s call but the device is already join\n", __func__ );
+        SMTC_MODEM_HAL_TRACE_ERROR( "%s call but the device is already join\r\n", __func__ );
         return SMTC_MODEM_RC_BUSY;
     }
     if( lorawan_api_set_region( ( smtc_real_region_types_t ) region, stack_id ) != OKLORAWAN )
@@ -589,7 +589,7 @@ smtc_modem_return_code_t smtc_modem_adr_set_profile(
         break;
     }
     default: {
-        SMTC_MODEM_HAL_TRACE_ERROR( "Unknown adr profile %d\n ", adr_profile );
+        SMTC_MODEM_HAL_TRACE_ERROR( "Unknown adr profile %d\r\n ", adr_profile );
         return SMTC_MODEM_RC_INVALID;
     }
     break;
@@ -597,7 +597,7 @@ smtc_modem_return_code_t smtc_modem_adr_set_profile(
 
     if( status == ERRORLORAWAN )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "%s call with adr profile not valid\n", __func__ );
+        SMTC_MODEM_HAL_TRACE_ERROR( "%s call with adr profile not valid\r\n", __func__ );
         return SMTC_MODEM_RC_INVALID;
     }
     return SMTC_MODEM_RC_OK;
@@ -655,7 +655,7 @@ smtc_modem_return_code_t smtc_modem_get_available_datarates( uint8_t stack_id, u
 smtc_modem_return_code_t smtc_modem_join_network( uint8_t stack_id )
 {
     RETURN_BUSY_IF_TEST_MODE( );
-    SMTC_MODEM_HAL_TRACE_INFO( "%s\n", __func__ );
+    SMTC_MODEM_HAL_TRACE_INFO( "%s\r\n", __func__ );
     smtc_modem_return_code_t return_code = SMTC_MODEM_RC_OK;
 
     smtc_modem_status_mask_t status_mask = modem_get_status( stack_id );
@@ -664,14 +664,14 @@ smtc_modem_return_code_t smtc_modem_join_network( uint8_t stack_id )
     {
         // the modem have to be leave from the network to join
         return_code = SMTC_MODEM_RC_BUSY;
-        SMTC_MODEM_HAL_TRACE_WARNING( "%s call but the device is already join\n", __func__ );
+        SMTC_MODEM_HAL_TRACE_WARNING( "%s call but the device is already join\r\n", __func__ );
     }
     else if( ( ( status_mask & SMTC_MODEM_STATUS_SUSPEND ) == SMTC_MODEM_STATUS_SUSPEND ) ||
              ( ( status_mask & SMTC_MODEM_STATUS_MUTE ) == SMTC_MODEM_STATUS_MUTE ) )
     {
         return_code = SMTC_MODEM_RC_FAIL;
         SMTC_MODEM_HAL_TRACE_WARNING(
-            "%s call but the device is %s\n", __func__,
+            "%s call but the device is %s\r\n", __func__,
             ( ( ( status_mask & SMTC_MODEM_STATUS_SUSPEND ) == SMTC_MODEM_STATUS_SUSPEND ) ? "suspend" : "mute" ) );
     }
     else if( lorawan_api_get_activation_mode( stack_id ) == ACTIVATION_MODE_ABP )
@@ -933,7 +933,7 @@ smtc_modem_return_code_t smtc_modem_request_empty_uplink( uint8_t stack_id, bool
     else if( ( send_fport == true ) && ( fport == cloud_dm_get_dm_port( stack_id ) ) )
     {
         return_code = SMTC_MODEM_RC_INVALID;
-        SMTC_MODEM_HAL_TRACE_ERROR( "%s port %d is reserved for DM cloud \n", __func__, fport );
+        SMTC_MODEM_HAL_TRACE_ERROR( "%s port %d is reserved for DM cloud \r\n", __func__, fport );
     }
 #endif
 
@@ -941,7 +941,7 @@ smtc_modem_return_code_t smtc_modem_request_empty_uplink( uint8_t stack_id, bool
              ( ( ( fport == 0 ) || ( fport >= 224 ) ) && !lorawan_api_modem_certification_is_enabled( stack_id ) ) )
     {
         return_code = SMTC_MODEM_RC_INVALID;
-        SMTC_MODEM_HAL_TRACE_ERROR( "%s port %d is forbidden \n", __func__, fport );
+        SMTC_MODEM_HAL_TRACE_ERROR( "%s port %d is forbidden \r\n", __func__, fport );
     }
     else
     {
@@ -1159,7 +1159,7 @@ smtc_modem_return_code_t smtc_modem_get_next_tx_max_payload( uint8_t stack_id, u
         ( ( status_mask & SMTC_MODEM_STATUS_MUTE ) == SMTC_MODEM_STATUS_MUTE ) ||
         ( ( status_mask & SMTC_MODEM_STATUS_SUSPEND ) == SMTC_MODEM_STATUS_SUSPEND ) )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "%s call but the device is not join\n", __func__ );
+        SMTC_MODEM_HAL_TRACE_ERROR( "%s call but the device is not join\r\n", __func__ );
         *tx_max_payload_size = 0;
         return SMTC_MODEM_RC_FAIL;
     }
@@ -1237,7 +1237,7 @@ smtc_modem_return_code_t smtc_modem_lbt_set_parameters( uint8_t stack_id, uint32
 {
     RETURN_BUSY_IF_TEST_MODE( );
 
-    SMTC_MODEM_HAL_TRACE_PRINTF( "LBT, duration:%d, threshold:%d, bw:%d\n", listen_duration_ms, threshold_dbm, bw_hz );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "LBT, duration:%d, threshold:%d, bw:%d\r\n", listen_duration_ms, threshold_dbm, bw_hz );
 
     lorawan_api_lbt_set_parameters( listen_duration_ms, threshold_dbm, bw_hz, stack_id );
     return SMTC_MODEM_RC_OK;
@@ -1845,7 +1845,7 @@ smtc_modem_return_code_t smtc_modem_gnss_scan( uint8_t stack_id, smtc_modem_gnss
     }
     else
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "smtc_modem_gnss_scan: unknown mode %d\n", mode );
+        SMTC_MODEM_HAL_TRACE_ERROR( "smtc_modem_gnss_scan: unknown mode %d\r\n", mode );
         return SMTC_MODEM_RC_INVALID;
     }
 }
@@ -1857,7 +1857,7 @@ smtc_modem_return_code_t smtc_modem_gnss_scan_cancel( uint8_t stack_id )
     /* Check if there is already scan results being sent over the air */
     if( mw_gnss_send_is_busy( ) == true )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "gnss send service is busy, cannot cancel\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "gnss send service is busy, cannot cancel\r\n" );
         return SMTC_MODEM_RC_BUSY;
     }
 
@@ -1891,7 +1891,7 @@ smtc_modem_return_code_t smtc_modem_gnss_set_constellations( uint8_t            
     }
     else
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "smtc_modem_gnss_set_constellations: unknown constellation %d\n", constellations );
+        SMTC_MODEM_HAL_TRACE_ERROR( "smtc_modem_gnss_set_constellations: unknown constellation %d\r\n", constellations );
         return SMTC_MODEM_RC_INVALID;
     }
 }
@@ -1903,13 +1903,13 @@ smtc_modem_return_code_t smtc_modem_gnss_set_port( uint8_t stack_id, uint8_t por
     if( ( port == 0 ) || ( port >= 224 ) )
     {
         return_code = SMTC_MODEM_RC_INVALID;
-        SMTC_MODEM_HAL_TRACE_ERROR( "%s: port %d is forbidden \n", __func__, port );
+        SMTC_MODEM_HAL_TRACE_ERROR( "%s: port %d is forbidden \r\n", __func__, port );
     }
 #if defined( ADD_SMTC_CLOUD_DEVICE_MANAGEMENT )
     else if( port == cloud_dm_get_dm_port( stack_id ) )
     {
         return_code = SMTC_MODEM_RC_INVALID;
-        SMTC_MODEM_HAL_TRACE_ERROR( "%s port %d is reserved for DM cloud \n", __func__, port );
+        SMTC_MODEM_HAL_TRACE_ERROR( "%s port %d is reserved for DM cloud \r\n", __func__, port );
     }
 #endif
     else
@@ -1937,7 +1937,7 @@ smtc_modem_return_code_t smtc_modem_gnss_send_mode( uint8_t stack_id, smtc_modem
     }
     else
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "smtc_modem_gnss_send_mode: unknown send mode %d\n", send_mode );
+        SMTC_MODEM_HAL_TRACE_ERROR( "smtc_modem_gnss_send_mode: unknown send mode %d\r\n", send_mode );
         return SMTC_MODEM_RC_INVALID;
     }
 }
@@ -1969,7 +1969,7 @@ smtc_modem_return_code_t smtc_modem_almanac_demodulation_set_constellations(
         return mw_gnss_almanac_set_constellations( constellations );
     }
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "smtc_modem_almanac_demodulation_set_constellations: unknown constellation %d\n",
+        SMTC_MODEM_HAL_TRACE_ERROR( "smtc_modem_almanac_demodulation_set_constellations: unknown constellation %d\r\n",
                                     constellations );
         return SMTC_MODEM_RC_INVALID;
     }
@@ -1990,7 +1990,7 @@ smtc_modem_return_code_t smtc_modem_wifi_scan_cancel( uint8_t stack_id )
     /* Check if there is already scan results being sent over the air */
     if( mw_wifi_send_is_busy( ) == true )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "wifi send service is busy, cannot cancel\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "wifi send service is busy, cannot cancel\r\n" );
         return SMTC_MODEM_RC_BUSY;
     }
 
@@ -2020,13 +2020,13 @@ smtc_modem_return_code_t smtc_modem_wifi_set_port( uint8_t stack_id, uint8_t por
     if( ( port == 0 ) || ( port >= 224 ) )
     {
         return_code = SMTC_MODEM_RC_INVALID;
-        SMTC_MODEM_HAL_TRACE_ERROR( "%s: port %d is forbidden \n", __func__, port );
+        SMTC_MODEM_HAL_TRACE_ERROR( "%s: port %d is forbidden \r\n", __func__, port );
     }
 #if defined( ADD_SMTC_CLOUD_DEVICE_MANAGEMENT )
     else if( port == cloud_dm_get_dm_port( stack_id ) )
     {
         return_code = SMTC_MODEM_RC_INVALID;
-        SMTC_MODEM_HAL_TRACE_ERROR( "%s port %d is reserved for DM cloud \n", __func__, port );
+        SMTC_MODEM_HAL_TRACE_ERROR( "%s port %d is reserved for DM cloud \r\n", __func__, port );
     }
 #endif
     else
@@ -2047,7 +2047,7 @@ smtc_modem_return_code_t smtc_modem_wifi_send_mode( uint8_t stack_id, smtc_modem
     }
     else
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "smtc_modem_wifi_send_mode: unknown send mode %d\n", send_mode );
+        SMTC_MODEM_HAL_TRACE_ERROR( "smtc_modem_wifi_send_mode: unknown send mode %d\r\n", send_mode );
         return SMTC_MODEM_RC_INVALID;
     }
 }
@@ -2141,19 +2141,19 @@ smtc_modem_return_code_t smtc_modem_stream_init( uint8_t stack_id, uint8_t f_por
     // Check parameters validity
     if( f_port >= 224 )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "STREAM_INIT f_port invalid\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "STREAM_INIT f_port invalid\r\n" );
         return SMTC_MODEM_RC_INVALID;
     }
     if( cipher_mode > SMTC_MODEM_STREAM_AES_WITH_APPSKEY )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "STREAM_INIT encryption mode invalid\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "STREAM_INIT encryption mode invalid\r\n" );
         return SMTC_MODEM_RC_INVALID;
     }
 
     // If parameter f_port is set to 0 => use current dm port
     if( f_port == 0 )
     {
-        SMTC_MODEM_HAL_TRACE_MSG( "STREAM_INIT Using default DM port\n" );
+        SMTC_MODEM_HAL_TRACE_MSG( "STREAM_INIT Using default DM port\r\n" );
 
 #if defined( ADD_SMTC_CLOUD_DEVICE_MANAGEMENT )
         f_port = cloud_dm_get_dm_port( stack_id );
@@ -2166,7 +2166,7 @@ smtc_modem_return_code_t smtc_modem_stream_init( uint8_t stack_id, uint8_t f_por
     if( stream_init( stack_id, f_port, ( cipher_mode == SMTC_MODEM_STREAM_AES_WITH_APPSKEY ),
                      redundancy_ratio_percent ) != STREAM_OK )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "STREAM_INIT FAILED\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "STREAM_INIT FAILED\r\n" );
         return SMTC_MODEM_RC_FAIL;
     }
 
@@ -2203,7 +2203,7 @@ smtc_modem_return_code_t smtc_modem_stream_add_data( uint8_t stack_id, const uin
         rc = smtc_modem_stream_init( stack_id, dm_port, SMTC_MODEM_STREAM_NO_CIPHER, ROSE_DEFAULT_RR );
         if( rc != SMTC_MODEM_RC_OK )
         {
-            SMTC_MODEM_HAL_TRACE_ERROR( "Stream implicit init failed\n" );
+            SMTC_MODEM_HAL_TRACE_ERROR( "Stream implicit init failed\r\n" );
             return rc;
         }
     }
@@ -2213,19 +2213,19 @@ smtc_modem_return_code_t smtc_modem_stream_add_data( uint8_t stack_id, const uin
     switch( stream_rc )
     {
     case STREAM_BADSIZE:
-        SMTC_MODEM_HAL_TRACE_ERROR( "STREAM ADD DATA: Invalid length\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "STREAM ADD DATA: Invalid length\r\n" );
         return SMTC_MODEM_RC_INVALID;
     case STREAM_BUSY:
-        SMTC_MODEM_HAL_TRACE_ERROR( "STREAM ADD DATA: Buffer is full\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "STREAM ADD DATA: Buffer is full\r\n" );
         return SMTC_MODEM_RC_BUSY;
     case STREAM_FAIL:
-        SMTC_MODEM_HAL_TRACE_ERROR( "STREAM ADD DATA: No data record provided\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "STREAM ADD DATA: No data record provided\r\n" );
         return SMTC_MODEM_RC_FAIL;
     default:
         break;
     }
 
-    SMTC_MODEM_HAL_TRACE_INFO( "STREAM_SEND [OK]\n" );
+    SMTC_MODEM_HAL_TRACE_INFO( "STREAM_SEND [OK]\r\n" );
     return SMTC_MODEM_RC_OK;
 }
 
@@ -2271,7 +2271,7 @@ smtc_modem_return_code_t smtc_modem_dm_set_fport( uint8_t stack_id, uint8_t dm_f
     if( cloud_dm_set_dm_port( stack_id, dm_fport ) == DM_ERROR )
     {
         return_code = SMTC_MODEM_RC_INVALID;
-        SMTC_MODEM_HAL_TRACE_ERROR( "%s call with DM port not valid\n", __func__ );
+        SMTC_MODEM_HAL_TRACE_ERROR( "%s call with DM port not valid\r\n", __func__ );
     }
 
     return return_code;
@@ -2315,7 +2315,7 @@ smtc_modem_return_code_t smtc_modem_dm_set_info_interval( uint8_t stack_id, smtc
         if( cloud_dm_set_dm_interval( stack_id, modem_interval ) == DM_ERROR )
         {
             return_code = SMTC_MODEM_RC_INVALID;
-            SMTC_MODEM_HAL_TRACE_ERROR( "%s call but interval not valid\n", __func__ );
+            SMTC_MODEM_HAL_TRACE_ERROR( "%s call but interval not valid\r\n", __func__ );
         }
     }
     return return_code;
@@ -2413,7 +2413,7 @@ smtc_modem_return_code_t smtc_modem_dm_handle_alcsync( uint8_t stack_id, bool ha
 
     return SMTC_MODEM_RC_OK;
 #else
-    SMTC_MODEM_HAL_TRACE_ERROR( "smtc_modem_dm_handle_alcsync cannot be used if no ALCSync service is built\n" );
+    SMTC_MODEM_HAL_TRACE_ERROR( "smtc_modem_dm_handle_alcsync cannot be used if no ALCSync service is built\r\n" );
     return SMTC_MODEM_RC_FAIL;
 #endif
 }
@@ -2522,7 +2522,7 @@ static smtc_modem_return_code_t smtc_modem_send_tx( uint8_t stack_id, uint8_t f_
                                                     const uint8_t* payload, uint8_t payload_length, bool emergency )
 {
     smtc_modem_return_code_t return_code = SMTC_MODEM_RC_OK;
-    SMTC_MODEM_HAL_TRACE_INFO( "add task user \n" );
+    SMTC_MODEM_HAL_TRACE_INFO( "add task user \r\n" );
     smtc_modem_status_mask_t status_mask = modem_get_status( stack_id );
     if( ( ( status_mask & SMTC_MODEM_STATUS_JOINED ) != SMTC_MODEM_STATUS_JOINED ) ||
         ( ( status_mask & SMTC_MODEM_STATUS_MUTE ) == SMTC_MODEM_STATUS_MUTE ) ||
@@ -2538,13 +2538,13 @@ static smtc_modem_return_code_t smtc_modem_send_tx( uint8_t stack_id, uint8_t f_
     else if( f_port == cloud_dm_get_dm_port( stack_id ) )
     {
         return_code = SMTC_MODEM_RC_INVALID;
-        SMTC_MODEM_HAL_TRACE_ERROR( "%s port %d is reserved for DM cloud \n", __func__, f_port );
+        SMTC_MODEM_HAL_TRACE_ERROR( "%s port %d is reserved for DM cloud \r\n", __func__, f_port );
     }
 #endif
     else if( ( ( ( f_port == 0 ) || ( f_port >= 224 ) ) && !lorawan_api_modem_certification_is_enabled( stack_id ) ) )
     {
         return_code = SMTC_MODEM_RC_INVALID;
-        SMTC_MODEM_HAL_TRACE_ERROR( "%s port %d is forbidden \n", __func__, f_port );
+        SMTC_MODEM_HAL_TRACE_ERROR( "%s port %d is forbidden \r\n", __func__, f_port );
     }
     else
     {
@@ -2567,7 +2567,7 @@ static smtc_modem_return_code_t smtc_modem_custom_dr_distribution_to_tab(
     {
         if( adr_custom_data[i] > 15 )  // DR are defined from 0 to 15 by definition in LoRaWAN spec
         {
-            SMTC_MODEM_HAL_TRACE_ERROR( "ADR with DataRate out of range\n" );
+            SMTC_MODEM_HAL_TRACE_ERROR( "ADR with DataRate out of range\r\n" );
             return SMTC_MODEM_RC_INVALID;
         }
         if( ( ( mask_dr_allowed >> adr_custom_data[i] ) & 0x01 ) == 1 )
@@ -2578,7 +2578,7 @@ static smtc_modem_return_code_t smtc_modem_custom_dr_distribution_to_tab(
     }
     if( cpt_tmp == 0 )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "ADR with a bad DataRate value\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "ADR with a bad DataRate value\r\n" );
         return SMTC_MODEM_RC_INVALID;
     }
     return SMTC_MODEM_RC_OK;

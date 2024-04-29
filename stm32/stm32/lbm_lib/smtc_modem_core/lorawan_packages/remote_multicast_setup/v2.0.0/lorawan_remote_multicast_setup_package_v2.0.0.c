@@ -100,7 +100,7 @@
     {                                                               \
         if( ( rx_buffer_index + x ) > rx_buffer_length )            \
         {                                                           \
-            SMTC_MODEM_HAL_TRACE_ERROR( "%u\n", rx_buffer_length ); \
+            SMTC_MODEM_HAL_TRACE_ERROR( "%u\r\n", rx_buffer_length ); \
             return REMOTE_MULTICAST_SETUP_STATUS_ERROR;             \
         }                                                           \
     } while( 0 )
@@ -334,7 +334,7 @@ void lorawan_remote_multicast_setup_package_services_init(
     void ( **on_launch_callback )( void* ), void ( **on_update_callback )( void* ), void** context_callback )
 {
     SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG(
-        " lorawan_remote_multicast_setup_package_services_init task_id %d, service_id %d, CURRENT_STACK:%d \n", task_id,
+        " lorawan_remote_multicast_setup_package_services_init task_id %d, service_id %d, CURRENT_STACK:%d \r\n", task_id,
         *service_id, CURRENT_STACK );
 
     IS_VALID_OBJECT_ID( *service_id );
@@ -367,7 +367,7 @@ void lorawan_remote_multicast_setup_package_service_on_launch( void* ctx_service
     uint8_t                                       stack_id = ctx->stack_id;
     if( ( ( ctx->task_ctx_mask >> ANS_CMD_TASK ) & 0x01 ) == 0x01 )
     {
-        SMTC_MODEM_HAL_TRACE_PRINTF( " lorawan_remote_multicast_setup_package launch ANS_CMD_TASK \n" );
+        SMTC_MODEM_HAL_TRACE_PRINTF( " lorawan_remote_multicast_setup_package launch ANS_CMD_TASK \r\n" );
         SMTC_MODEM_HAL_TRACE_ARRAY( "ans = ", ctx->remote_multicast_tx_payload_ans,
                                     ctx->remote_multicast_tx_payload_ans_size )
         lorawan_api_payload_send(
@@ -382,7 +382,7 @@ void lorawan_remote_multicast_setup_package_service_on_launch( void* ctx_service
 
     else if( ( ( ctx->task_ctx_mask >> REQUEST_TIME_SYNC_TASK ) & 0x01 ) == 0x01 )
     {
-        SMTC_MODEM_HAL_TRACE_PRINTF( " lorawan_remote_multicast_setup_package launch REQUEST_TIME_SYNC_TASK \n" );
+        SMTC_MODEM_HAL_TRACE_PRINTF( " lorawan_remote_multicast_setup_package launch REQUEST_TIME_SYNC_TASK \r\n" );
         ctx->request_time_sync             = false;
         cid_from_device_t cid_buffer[]     = { DEVICE_TIME_REQ };
         uint8_t           cid_request_size = 1;
@@ -412,7 +412,7 @@ void lorawan_remote_multicast_setup_package_service_on_launch( void* ctx_service
         SMTC_MODEM_HAL_TRACE_PRINTF(
             " lorawan_remote_multicast_setup_package launch class c session with group _id = %d , "
             "data_rate = %d, "
-            "frequency = %d \n",
+            "frequency = %d \r\n",
             mc_grp_id, multicast_group_params[mc_grp_id].params.dr,
             multicast_group_params[mc_grp_id].params.frequency );
         ctx->launch_class_c[mc_grp_id] = false;
@@ -431,7 +431,7 @@ void lorawan_remote_multicast_setup_package_service_on_launch( void* ctx_service
                 break;
             }
         }
-        SMTC_MODEM_HAL_TRACE_PRINTF( " lorawan_api_multicast_c_stop_session %d \n", mc_grp_id );
+        SMTC_MODEM_HAL_TRACE_PRINTF( " lorawan_api_multicast_c_stop_session %d \r\n", mc_grp_id );
         lorawan_api_multicast_c_stop_session( mc_grp_id, stack_id );
         ctx->stop_class_c[mc_grp_id] = false;
         uint8_t tmp                  = 0;
@@ -470,7 +470,7 @@ void lorawan_remote_multicast_setup_package_service_on_launch( void* ctx_service
                 " lorawan_remote_multicast_setup_package launch class b session  with group _id = %d , "
                 "data_rate = "
                 "%d, "
-                "frequency = %d \n",
+                "frequency = %d \r\n",
                 mc_grp_id, multicast_group_params[mc_grp_id].params.dr,
                 multicast_group_params[mc_grp_id].params.frequency );
             ctx->launch_class_b[mc_grp_id] = false;
@@ -478,7 +478,7 @@ void lorawan_remote_multicast_setup_package_service_on_launch( void* ctx_service
         }
         else
         {
-            SMTC_MODEM_HAL_TRACE_ERROR( " lorawan_remote_multicast_setup_package launch LAUNCH_CLASS_B_TASK \n" );
+            SMTC_MODEM_HAL_TRACE_ERROR( " lorawan_remote_multicast_setup_package launch LAUNCH_CLASS_B_TASK \r\n" );
         }
     }
 
@@ -494,7 +494,7 @@ void lorawan_remote_multicast_setup_package_service_on_launch( void* ctx_service
                 break;
             }
         }
-        SMTC_MODEM_HAL_TRACE_PRINTF( " lorawan_api_multicast_b_stop_session %d \n", mc_grp_id );
+        SMTC_MODEM_HAL_TRACE_PRINTF( " lorawan_api_multicast_b_stop_session %d \r\n", mc_grp_id );
         lorawan_api_multicast_b_stop_session( mc_grp_id, stack_id );
         ctx->stop_class_b[mc_grp_id] = false;
         uint8_t tmp                  = 0;
@@ -583,7 +583,7 @@ void lorawan_remote_multicast_setup_package_service_on_update( void* ctx_service
     if( time_to_stop_s != 0x7FFFFFFF )
     {
         uint32_t delay_s = ( time_to_stop_s < 0 ) ? 0 : time_to_stop_s;
-        SMTC_MODEM_HAL_TRACE_PRINTF( "stop MC class C in %us\n", delay_s );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "stop MC class C in %us\r\n", delay_s );
         lorawan_remote_multicast_setup_add_task( ( lorawan_remote_multicast_setup_package_ctx_t* ) ctx_service,
                                                  delay_s );
         if( delay_s <= 0 )
@@ -613,7 +613,7 @@ void lorawan_remote_multicast_setup_package_service_on_update( void* ctx_service
             // if not in class B, the Class B switch happen at least 2 beacon time earlier than multicast session
             uint32_t delay_class_b_s = ( ( time_to_start_s - ( 2 * 128 ) ) < 0 ) ? 0 : time_to_start_s - ( 2 * 128 );
 
-            SMTC_MODEM_HAL_TRACE_PRINTF( " lorawan_remote_multicast_setup_package activate Class B in %us\n",
+            SMTC_MODEM_HAL_TRACE_PRINTF( " lorawan_remote_multicast_setup_package activate Class B in %us\r\n",
                                          delay_class_b_s );
 
             lorawan_api_class_c_enabled( false, stack_id );
@@ -633,7 +633,7 @@ void lorawan_remote_multicast_setup_package_service_on_update( void* ctx_service
                           : time_to_start_s - 135;  // remove 128s+7s to start the session before the beacon
         }
 
-        SMTC_MODEM_HAL_TRACE_PRINTF( " lorawan_remote_multicast_setup_package start in %us\n", delay_s );
+        SMTC_MODEM_HAL_TRACE_PRINTF( " lorawan_remote_multicast_setup_package start in %us\r\n", delay_s );
         lorawan_remote_multicast_setup_add_task( ( lorawan_remote_multicast_setup_package_ctx_t* ) ctx_service,
                                                  delay_s );
         if( delay_s <= 0 )
@@ -662,7 +662,7 @@ void lorawan_remote_multicast_setup_package_service_on_update( void* ctx_service
         uint32_t delay_s = ( time_to_stop_s < 0 ) ? 0 : time_to_stop_s;
         lorawan_remote_multicast_setup_add_task( ( lorawan_remote_multicast_setup_package_ctx_t* ) ctx_service,
                                                  delay_s );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "stop MC class B in %us\n", delay_s );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "stop MC class B in %us\r\n", delay_s );
         if( delay_s <= 0 )
         {
             ctx->task_ctx_mask |= ( 1 << ( STOP_CLASS_B_TASK_GROUP_ID_0 + find_mc_group_id ) );
@@ -684,7 +684,7 @@ uint8_t lorawan_remote_multicast_setup_package_service_downlink_handler( lr1_sta
 
     if( stack_id >= NUMBER_OF_REMOTE_MULTICAST_SETUP_PACKAGE_OBJ )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "stack id not valid %u \n", stack_id );
+        SMTC_MODEM_HAL_TRACE_ERROR( "stack id not valid %u \r\n", stack_id );
         return MODEM_DOWNLINK_UNCONSUMED;
     }
 
@@ -737,7 +737,7 @@ bool lorawan_remote_multicast_setup_mpa_injector( uint8_t stack_id, uint8_t* pay
 
     if( stack_id >= NUMBER_OF_REMOTE_MULTICAST_SETUP_PACKAGE_OBJ )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "stack id not valid %u \n", stack_id );
+        SMTC_MODEM_HAL_TRACE_ERROR( "stack id not valid %u \r\n", stack_id );
         return false;
     }
 
@@ -753,7 +753,7 @@ bool lorawan_remote_multicast_setup_mpa_injector( uint8_t stack_id, uint8_t* pay
     }
     *nb_bytes_read_payload_in = multicast_setup_req_cmd_size[cmd_id];
 
-    SMTC_MODEM_HAL_TRACE_WARNING( "RMS CiD 0x%02x (byte read %u)\n", cmd_id, *nb_bytes_read_payload_in );
+    SMTC_MODEM_HAL_TRACE_WARNING( "RMS CiD 0x%02x (byte read %u)\r\n", cmd_id, *nb_bytes_read_payload_in );
     remote_multicast_setup_status_t rms_status = remote_multicast_setup_package_parser(
         ctx, payload_in, multicast_setup_req_cmd_size[cmd_id], rx_window, stack_id );
 
@@ -823,7 +823,7 @@ static void lorawan_remote_multicast_setup_add_task( lorawan_remote_multicast_se
 
     if( modem_supervisor_add_task( &task ) != TASK_VALID )
     {
-        SMTC_MODEM_HAL_PANIC( "Task not valid\n" );
+        SMTC_MODEM_HAL_PANIC( "Task not valid\r\n" );
     }
 }
 
@@ -1003,7 +1003,7 @@ static remote_multicast_setup_status_t remote_multicast_setup_package_parser(
                 multicast_group_params[mc_grp_id].params.frequency *= 100;
                 multicast_group_params[mc_grp_id].params.dr = rx_buffer[rx_buffer_index + 10] & 0x0F;
                 SMTC_MODEM_HAL_TRACE_PRINTF(
-                    "multicast_group_params %d ;%d ;%d ;%d \n", multicast_group_params[mc_grp_id].params.session_time,
+                    "multicast_group_params %d ;%d ;%d ;%d \r\n", multicast_group_params[mc_grp_id].params.session_time,
                     multicast_group_params[mc_grp_id].params.time_out,
                     multicast_group_params[mc_grp_id].params.frequency, multicast_group_params[mc_grp_id].params.dr );
                 // find gps epoch time source
@@ -1091,7 +1091,7 @@ static remote_multicast_setup_status_t remote_multicast_setup_package_parser(
                                                                      ( rx_buffer[rx_buffer_index + 9] << 16 );
                 multicast_group_params[mc_grp_id].params.frequency *= 100;
                 multicast_group_params[mc_grp_id].params.dr = rx_buffer[rx_buffer_index + 10] & 0x0F;
-                SMTC_MODEM_HAL_TRACE_PRINTF( "multicast_group_params %d; %d; %d; %d; %d \n",
+                SMTC_MODEM_HAL_TRACE_PRINTF( "multicast_group_params %d; %d; %d; %d; %d \r\n",
                                              multicast_group_params[mc_grp_id].params.session_time,
                                              multicast_group_params[mc_grp_id].params.time_out,
                                              multicast_group_params[mc_grp_id].params.frequency,
@@ -1163,7 +1163,7 @@ static remote_multicast_setup_status_t remote_multicast_setup_package_parser(
             break;
         }
         default:
-            SMTC_MODEM_HAL_TRACE_ERROR( "parser remote_multicast 0x%x ?\n", rx_buffer[rx_buffer_index] );
+            SMTC_MODEM_HAL_TRACE_ERROR( "parser remote_multicast 0x%x ?\r\n", rx_buffer[rx_buffer_index] );
             return REMOTE_MULTICAST_SETUP_STATUS_ERROR;
             break;
         }
@@ -1174,7 +1174,7 @@ static remote_multicast_setup_status_t remote_multicast_setup_package_parser(
     // silently dropped.
 
     ctx->remote_multicast_tx_payload_ans_size = ans_index;
-    SMTC_MODEM_HAL_TRACE_PRINTF( "parser remote_multicast setup %d  \n", ans_index );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "parser remote_multicast setup %d  \r\n", ans_index );
     return REMOTE_MULTICAST_SETUP_STATUS_OK;
 }
 

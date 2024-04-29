@@ -103,7 +103,7 @@
     {                                                                            \
         if( ( mpa_package_rx_buffer_index + x ) > mpa_package_rx_buffer_length ) \
         {                                                                        \
-            SMTC_MODEM_HAL_TRACE_ERROR( "%u\n", mpa_package_rx_buffer_length );  \
+            SMTC_MODEM_HAL_TRACE_ERROR( "%u\r\n", mpa_package_rx_buffer_length );  \
             return MPA_STATUS_ERROR;                                             \
         }                                                                        \
     } while( 0 )
@@ -342,7 +342,7 @@ void lorawan_mpa_package_services_init( uint8_t* service_id, uint8_t task_id,
                                         void** context_callback )
 {
     SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG(
-        " lorawan_mpa_package_services_init task_id %d, service_id %d, CURRENT_STACK:%d \n", task_id, *service_id,
+        " lorawan_mpa_package_services_init task_id %d, service_id %d, CURRENT_STACK:%d \r\n", task_id, *service_id,
         CURRENT_STACK );
 
     IS_VALID_OBJECT_ID( *service_id );
@@ -471,7 +471,7 @@ uint8_t lorawan_mpa_package_service_downlink_handler( lr1_stack_mac_down_data_t*
 
     if( stack_id >= NUMBER_OF_MPA_PACKAGE_OBJ )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "stack id not valid %u \n", stack_id );
+        SMTC_MODEM_HAL_TRACE_ERROR( "stack id not valid %u \r\n", stack_id );
         return MODEM_DOWNLINK_UNCONSUMED;
     }
 
@@ -482,7 +482,7 @@ uint8_t lorawan_mpa_package_service_downlink_handler( lr1_stack_mac_down_data_t*
 
     if( ( rx_down_data->rx_metadata.rx_fport_present == true ) && ( rx_down_data->rx_metadata.rx_fport == MPA_PORT ) )
     {
-        SMTC_MODEM_HAL_TRACE_PRINTF( "lorawan_mpa_package_service_downlink_handler receive data on port %d\n",
+        SMTC_MODEM_HAL_TRACE_PRINTF( "lorawan_mpa_package_service_downlink_handler receive data on port %d\r\n",
                                      MPA_PORT );
         uint8_t      event_status;
         bool         increment_event;
@@ -536,7 +536,7 @@ static void mpa_add_task( lorawan_mpa_package_ctx_t* ctx, uint32_t rtc_target_s 
     task.time_to_execute_s = rtc_target_s;
     if( modem_supervisor_add_task( &task ) != TASK_VALID )
     {
-        SMTC_MODEM_HAL_PANIC( "Task not valid\n" );
+        SMTC_MODEM_HAL_PANIC( "Task not valid\r\n" );
     }
 }
 
@@ -579,7 +579,7 @@ static mpa_status_t mpa_package_parser( lorawan_mpa_package_ctx_t* ctx, uint8_t*
 
         if( ( pkg_id_tmp & 0x7F ) >= MPA_NB_PACKAGES )
         {
-            SMTC_MODEM_HAL_TRACE_ERROR( "MPA parser ID unknown 0x%02x \n", ( pkg_id_tmp & 0x7F ) );
+            SMTC_MODEM_HAL_TRACE_ERROR( "MPA parser ID unknown 0x%02x \r\n", ( pkg_id_tmp & 0x7F ) );
             return MPA_STATUS_ERROR;
         }
 
@@ -676,7 +676,7 @@ static bool mpa_package_parser_internal( uint8_t stack_id, uint8_t* payload_in, 
 
     if( stack_id >= NUMBER_OF_MPA_PACKAGE_OBJ )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "stack id not valid %u \n", stack_id );
+        SMTC_MODEM_HAL_TRACE_ERROR( "stack id not valid %u \r\n", stack_id );
         return false;
     }
 
@@ -685,7 +685,7 @@ static bool mpa_package_parser_internal( uint8_t stack_id, uint8_t* payload_in, 
         return false;
     }
 
-    SMTC_MODEM_HAL_TRACE_WARNING( "MPA CiD 0x%02x\n", payload_in[mpa_package_rx_buffer_index] );
+    SMTC_MODEM_HAL_TRACE_WARNING( "MPA CiD 0x%02x\r\n", payload_in[mpa_package_rx_buffer_index] );
 
     uint8_t cmd_id = payload_in[mpa_package_rx_buffer_index];
     if( cmd_id >= sizeof( mpa_req_cmd_size ) )
@@ -745,7 +745,7 @@ static bool mpa_package_parser_internal( uint8_t stack_id, uint8_t* payload_in, 
         break;
     }
     default:
-        SMTC_MODEM_HAL_TRACE_ERROR( "parser mpa_package_parser_internal 0x%x ?\n",
+        SMTC_MODEM_HAL_TRACE_ERROR( "parser mpa_package_parser_internal 0x%x ?\r\n",
                                     payload_in[mpa_package_rx_buffer_index] );
         return false;
         break;
@@ -755,7 +755,7 @@ static bool mpa_package_parser_internal( uint8_t stack_id, uint8_t* payload_in, 
     memcpy( payload_out, ans_buffer_tmp, ans_index );
     *payload_out_length = ans_index;
 
-    SMTC_MODEM_HAL_TRACE_WARNING( "MPA CiD (byte read %u)\n", *nb_bytes_read_payload_in );
+    SMTC_MODEM_HAL_TRACE_WARNING( "MPA CiD (byte read %u)\r\n", *nb_bytes_read_payload_in );
 
     return true;
 }

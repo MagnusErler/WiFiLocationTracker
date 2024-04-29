@@ -90,7 +90,7 @@
     {                                                                      \
         if( mw_gnss_task_obj.initialized == false )                        \
         {                                                                  \
-            SMTC_MODEM_HAL_TRACE_WARNING( "gnss service not launched\n" ); \
+            SMTC_MODEM_HAL_TRACE_WARNING( "gnss service not launched\r\n" ); \
             break;                                                         \
         }                                                                  \
     } while( 0 )
@@ -254,7 +254,7 @@ void mw_gnss_scan_services_init( uint8_t* service_id, uint8_t task_id,
                                  void ( **on_launch_callback )( void* ), void ( **on_update_callback )( void* ),
                                  void** context_callback )
 {
-    SMTC_MODEM_HAL_TRACE_PRINTF( "mw_gnss_scan_services_init task_id %d, service_id %d, CURRENT_STACK:%d \n", task_id,
+    SMTC_MODEM_HAL_TRACE_PRINTF( "mw_gnss_scan_services_init task_id %d, service_id %d, CURRENT_STACK:%d \r\n", task_id,
                                  *service_id, CURRENT_STACK );
 
     IS_VALID_OBJECT_ID( *service_id );
@@ -286,7 +286,7 @@ void mw_gnss_scan_services_init( uint8_t* service_id, uint8_t task_id,
 smtc_modem_return_code_t mw_gnss_scan_add_task( smtc_modem_gnss_mode_t mode, uint32_t start_delay_s )
 {
     uint32_t now = smtc_modem_hal_get_time_in_s( );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "mw_gnss_scan_add_task: add task in supervisor at %u + %u s\n", now, start_delay_s );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "mw_gnss_scan_add_task: add task in supervisor at %u + %u s\r\n", now, start_delay_s );
 
     IS_SERVICE_INITIALIZED( );
     smodem_task task       = { 0 };
@@ -296,7 +296,7 @@ smtc_modem_return_code_t mw_gnss_scan_add_task( smtc_modem_gnss_mode_t mode, uin
     task.time_to_execute_s = now + start_delay_s;
     if( modem_supervisor_add_task( &task ) != TASK_VALID )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "Failed to add GNSS scan supervisor task\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "Failed to add GNSS scan supervisor task\r\n" );
         return SMTC_MODEM_RC_FAIL;
     }
 
@@ -319,19 +319,19 @@ smtc_modem_return_code_t mw_gnss_scan_add_task( smtc_modem_gnss_mode_t mode, uin
 
 smtc_modem_return_code_t mw_gnss_scan_remove_task( void )
 {
-    SMTC_MODEM_HAL_TRACE_PRINTF( "mw_gnss_scan_remove_task\n" );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "mw_gnss_scan_remove_task\r\n" );
 
     IS_SERVICE_INITIALIZED( );
 
     if( mw_gnss_task_obj.scan_sequence_started == true )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "GNSS scan sequence started, too late to cancel\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "GNSS scan sequence started, too late to cancel\r\n" );
         return SMTC_MODEM_RC_BUSY;
     }
 
     if( modem_supervisor_remove_task( mw_gnss_task_obj.task_id ) != TASK_VALID )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "Failed to remove GNSS scan supervisor task\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "Failed to remove GNSS scan supervisor task\r\n" );
         return SMTC_MODEM_RC_FAIL;
     }
 
@@ -340,7 +340,7 @@ smtc_modem_return_code_t mw_gnss_scan_remove_task( void )
 
 void mw_gnss_scan_aggregate( bool aggregate )
 {
-    SMTC_MODEM_HAL_TRACE_PRINTF( "mw_gnss_scan_aggregate(%d)\n", aggregate );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "mw_gnss_scan_aggregate(%d)\r\n", aggregate );
 
     mw_gnss_task_obj.scan_aggregate = aggregate;
 
@@ -355,13 +355,13 @@ smtc_modem_return_code_t mw_gnss_get_event_data_scan_done( smtc_modem_gnss_event
 {
     if( data == NULL )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "mw_gnss_get_event_data_scan_done: Provided pointer is NULL\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "mw_gnss_get_event_data_scan_done: Provided pointer is NULL\r\n" );
         return SMTC_MODEM_RC_INVALID;
     }
 
     if( mw_gnss_task_obj.pending_evt_scan_done == false )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "mw_gnss_get_event_data_scan_done: no SCAN_DONE event pending\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "mw_gnss_get_event_data_scan_done: no SCAN_DONE event pending\r\n" );
         return SMTC_MODEM_RC_FAIL;
     }
 
@@ -435,7 +435,7 @@ static void mw_gnss_scan_service_on_launch( void* context_callback )
 {
     uint32_t time_ms;
 
-    GNSS_SCAN_TRACE_PRINTF_DEBUG( "mw_gnss_scan_service_on_launch\n" );
+    GNSS_SCAN_TRACE_PRINTF_DEBUG( "mw_gnss_scan_service_on_launch\r\n" );
 
     IS_SERVICE_INITIALIZED( );
 
@@ -457,33 +457,33 @@ static void mw_gnss_scan_service_on_launch( void* context_callback )
     rp_radio_params_t fake_rp_radio_params = { 0 };
     if( rp_task_enqueue( modem_get_rp( ), &rp_task, NULL, 0, &fake_rp_radio_params ) != RP_HOOK_STATUS_OK )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "Failed to enqueue RP task for GNSS scan\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "Failed to enqueue RP task for GNSS scan\r\n" );
         SMTC_MODEM_HAL_PANIC( );
     }
     else
     {
-        SMTC_MODEM_HAL_TRACE_PRINTF( "Enqueued RP task for GNSS scan at %u (duration %u s)\n", time_ms,
+        SMTC_MODEM_HAL_TRACE_PRINTF( "Enqueued RP task for GNSS scan at %u (duration %u s)\r\n", time_ms,
                                      rp_task.duration_time_ms / 1000 );
     }
 }
 
 static void mw_gnss_scan_service_on_update( void* context_callback )
 {
-    GNSS_SCAN_TRACE_PRINTF_DEBUG( "mw_gnss_scan_service_on_update\n" );
+    GNSS_SCAN_TRACE_PRINTF_DEBUG( "mw_gnss_scan_service_on_update\r\n" );
 
     IS_SERVICE_INITIALIZED( );
 }
 
 static uint8_t mw_gnss_scan_service_downlink_handler( lr1_stack_mac_down_data_t* rx_down_data )
 {
-    GNSS_SCAN_TRACE_PRINTF_DEBUG( "mw_gnss_scan_service_downlink_handler\n" );
+    GNSS_SCAN_TRACE_PRINTF_DEBUG( "mw_gnss_scan_service_downlink_handler\r\n" );
 
     return MODEM_DOWNLINK_UNCONSUMED;
 }
 
 static void gnss_scan_next( uint32_t delay_s )
 {
-    GNSS_SCAN_TRACE_PRINTF_DEBUG( "gnss_scan_next\n" );
+    GNSS_SCAN_TRACE_PRINTF_DEBUG( "gnss_scan_next\r\n" );
 
     uint32_t time_ms  = smtc_modem_hal_get_time_in_ms( ) + 300; /* 300ms for scheduling delay */
     uint32_t delay_ms = delay_s * 1000;
@@ -501,12 +501,12 @@ static void gnss_scan_next( uint32_t delay_s )
     rp_radio_params_t fake_rp_radio_params = { 0 };
     if( rp_task_enqueue( modem_get_rp( ), &rp_task, NULL, 0, &fake_rp_radio_params ) != RP_HOOK_STATUS_OK )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "Failed to enqueue RP task for GNSS scan\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "Failed to enqueue RP task for GNSS scan\r\n" );
         SMTC_MODEM_HAL_PANIC( );
     }
     else
     {
-        SMTC_MODEM_HAL_TRACE_PRINTF( "Enqueued RP task for GNSS scan at %u + %u (duration %u s)\n", time_ms, delay_ms,
+        SMTC_MODEM_HAL_TRACE_PRINTF( "Enqueued RP task for GNSS scan at %u + %u (duration %u s)\r\n", time_ms, delay_ms,
                                      rp_task.duration_time_ms / 1000 );
     }
 }
@@ -515,33 +515,33 @@ static void trace_print_event_data_scan_done( const smtc_modem_gnss_event_data_s
 {
     if( data != NULL )
     {
-        SMTC_MODEM_HAL_TRACE_PRINTF( "SCAN_DONE info:\n" );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "-- token: 0x%02X\n", data->token );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "-- is_valid: %d\n", data->is_valid );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "-- timestamp: %u\n", data->timestamp );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "-- number of valid scans: %u\n", data->nb_scans_valid );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "SCAN_DONE info:\r\n" );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "-- token: 0x%02X\r\n", data->token );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "-- is_valid: %d\r\n", data->is_valid );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "-- timestamp: %u\r\n", data->timestamp );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "-- number of valid scans: %u\r\n", data->nb_scans_valid );
         for( uint8_t scan_idx = 0; scan_idx < data->nb_scans_valid; scan_idx++ )
         {
-            SMTC_MODEM_HAL_TRACE_PRINTF( "-- scan[%d][%u]\n", scan_idx, data->scans[scan_idx].timestamp );
+            SMTC_MODEM_HAL_TRACE_PRINTF( "-- scan[%d][%u]\r\n", scan_idx, data->scans[scan_idx].timestamp );
             SMTC_MODEM_HAL_TRACE_ARRAY( "   NAV", data->scans[scan_idx].nav, data->scans[scan_idx].nav_size );
-            SMTC_MODEM_HAL_TRACE_PRINTF( "   %u SV detected:\n", data->scans[scan_idx].nb_svs );
+            SMTC_MODEM_HAL_TRACE_PRINTF( "   %u SV detected:\r\n", data->scans[scan_idx].nb_svs );
             for( uint8_t i = 0; i < data->scans[scan_idx].nb_svs; i++ )
             {
-                SMTC_MODEM_HAL_TRACE_PRINTF( "   SV_ID %u:\t%ddB\n", data->scans[scan_idx].info_svs[i].satellite_id,
+                SMTC_MODEM_HAL_TRACE_PRINTF( "   SV_ID %u:\t%ddB\r\n", data->scans[scan_idx].info_svs[i].satellite_id,
                                              data->scans[scan_idx].info_svs[i].cnr );
             }
             smtc_gnss_trace_print_position( "   aiding position: ", &( data->scans[scan_idx].aiding_position ) );
             SMTC_MODEM_HAL_TRACE_PRINTF(
-                "   scan mode launched: %s\n",
+                "   scan mode launched: %s\r\n",
                 smtc_gnss_scan_mode_launched_enum2str( data->scans[scan_idx].scan_mode_launched ) );
 
-            SMTC_MODEM_HAL_TRACE_PRINTF( "   duration: %u ms\n", data->scans[scan_idx].scan_duration_ms );
+            SMTC_MODEM_HAL_TRACE_PRINTF( "   duration: %u ms\r\n", data->scans[scan_idx].scan_duration_ms );
         }
-        SMTC_MODEM_HAL_TRACE_PRINTF( "-- power consumption: %u nah\n", data->power_consumption_nah );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "-- mode: %d\n", data->context.mode );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "-- almanac CRC: 0X%08X\n", data->context.almanac_crc );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "-- indoor detected: %d\n", data->indoor_detected );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "-- NAV group duration: %u ms\n", data->navgroup_duration_ms );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "-- power consumption: %u nah\r\n", data->power_consumption_nah );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "-- mode: %d\r\n", data->context.mode );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "-- almanac CRC: 0X%08X\r\n", data->context.almanac_crc );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "-- indoor detected: %d\r\n", data->indoor_detected );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "-- NAV group duration: %u ms\r\n", data->navgroup_duration_ms );
     }
 }
 
@@ -550,60 +550,60 @@ static void trace_print_cumulative_timing_and_power_consumption(
     const lr11xx_gnss_cumulative_timing_t* cumulative_timing, const uint32_t power_consumption_nah,
     const uint32_t power_consumption_nwh )
 {
-    SMTC_MODEM_HAL_TRACE_PRINTF( "cumulative_timing info:\n" );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--init %d ms\n", ( cumulative_timing->init * 1000 ) / 32768 );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--phase1_gps_capture %d ms\n",
+    SMTC_MODEM_HAL_TRACE_PRINTF( "cumulative_timing info:\r\n" );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--init %d ms\r\n", ( cumulative_timing->init * 1000 ) / 32768 );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--phase1_gps_capture %d ms\r\n",
                                  ( cumulative_timing->phase1_gps_capture * 1000 ) / 32768 );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--phase1_gps_process %d ms\n",
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--phase1_gps_process %d ms\r\n",
                                  ( cumulative_timing->phase1_gps_process * 1000 ) / 32768 );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--multiscan_gps_capture %d ms\n",
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--multiscan_gps_capture %d ms\r\n",
                                  ( cumulative_timing->multiscan_gps_capture * 1000 ) / 32768 );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--multiscan_gps_process %d ms\n",
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--multiscan_gps_process %d ms\r\n",
                                  ( cumulative_timing->multiscan_gps_process * 1000 ) / 32768 );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--multiscan_gps_sleep_32k %d ms\n",
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--multiscan_gps_sleep_32k %d ms\r\n",
                                  ( cumulative_timing->multiscan_gps_sleep_32k * 1000 ) / 32768 );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--phase1_beidou_capture %d ms\n",
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--phase1_beidou_capture %d ms\r\n",
                                  ( cumulative_timing->phase1_beidou_capture * 1000 ) / 32768 );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--phase1_beidou_process %d ms\n",
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--phase1_beidou_process %d ms\r\n",
                                  ( cumulative_timing->phase1_beidou_process * 1000 ) / 32768 );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--multiscan_beidou_capture %d ms\n",
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--multiscan_beidou_capture %d ms\r\n",
                                  ( cumulative_timing->multiscan_beidou_capture * 1000 ) / 32768 );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--multiscan_beidou_process %d ms\n",
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--multiscan_beidou_process %d ms\r\n",
                                  ( cumulative_timing->multiscan_beidou_process * 1000 ) / 32768 );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--multiscan_beidou_sleep_32k %d ms\n",
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--multiscan_beidou_sleep_32k %d ms\r\n",
                                  ( cumulative_timing->multiscan_beidou_sleep_32k * 1000 ) / 32768 );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--demod_capture %d ms\n", ( cumulative_timing->demod_capture * 1000 ) / 32768 );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--demod_process %d ms\n", ( cumulative_timing->demod_process * 1000 ) / 32768 );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--demod_sleep_32k %d ms\n", ( cumulative_timing->demod_sleep_32k * 1000 ) / 32768 );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--demod_sleep_32m %d ms\n", ( cumulative_timing->demod_sleep_32m * 1000 ) / 32768 );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--total_gps_capture %d ms\n",
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--demod_capture %d ms\r\n", ( cumulative_timing->demod_capture * 1000 ) / 32768 );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--demod_process %d ms\r\n", ( cumulative_timing->demod_process * 1000 ) / 32768 );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--demod_sleep_32k %d ms\r\n", ( cumulative_timing->demod_sleep_32k * 1000 ) / 32768 );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--demod_sleep_32m %d ms\r\n", ( cumulative_timing->demod_sleep_32m * 1000 ) / 32768 );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--total_gps_capture %d ms\r\n",
                                  ( cumulative_timing->total_gps_capture * 1000 ) / 32768 );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--total_gps_process %d ms\n",
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--total_gps_process %d ms\r\n",
                                  ( cumulative_timing->total_gps_process * 1000 ) / 32768 );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--total_gps_sleep_32k %d ms\n",
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--total_gps_sleep_32k %d ms\r\n",
                                  ( cumulative_timing->total_gps_sleep_32k * 1000 ) / 32768 );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--total_gps_sleep_32m %d ms\n",
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--total_gps_sleep_32m %d ms\r\n",
                                  ( cumulative_timing->total_gps_sleep_32m * 1000 ) / 32768 );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--total_gps %d ms\n", ( cumulative_timing->total_gps * 1000 ) / 32768 );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--total_beidou_capture %d ms\n",
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--total_gps %d ms\r\n", ( cumulative_timing->total_gps * 1000 ) / 32768 );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--total_beidou_capture %d ms\r\n",
                                  ( cumulative_timing->total_beidou_capture * 1000 ) / 32768 );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--total_beidou_process %d ms\n",
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--total_beidou_process %d ms\r\n",
                                  ( cumulative_timing->total_beidou_process * 1000 ) / 32768 );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--total_beidou_sleep_32k %d ms\n",
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--total_beidou_sleep_32k %d ms\r\n",
                                  ( cumulative_timing->total_beidou_sleep_32k * 1000 ) / 32768 );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--total_beidou_sleep_32m %d ms\n",
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--total_beidou_sleep_32m %d ms\r\n",
                                  ( cumulative_timing->total_beidou_sleep_32m * 1000 ) / 32768 );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--total_beidou %d ms\n", ( cumulative_timing->total_beidou * 1000 ) / 32768 );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--total_capture %d ms\n", ( cumulative_timing->total_capture * 1000 ) / 32768 );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--total_process %d ms\n", ( cumulative_timing->total_process * 1000 ) / 32768 );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--total_sleep_32k %d ms\n", ( cumulative_timing->total_sleep_32k * 1000 ) / 32768 );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--total_sleep_32m %d ms\n", ( cumulative_timing->total_sleep_32m * 1000 ) / 32768 );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--total %d\n", ( cumulative_timing->total * 1000 ) / 32768 );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--last_capture_size_32k_cnt %d\n", cumulative_timing->last_capture_size_32k_cnt );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--constellation_demod %d\n\n", cumulative_timing->constellation_demod );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--total_beidou %d ms\r\n", ( cumulative_timing->total_beidou * 1000 ) / 32768 );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--total_capture %d ms\r\n", ( cumulative_timing->total_capture * 1000 ) / 32768 );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--total_process %d ms\r\n", ( cumulative_timing->total_process * 1000 ) / 32768 );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--total_sleep_32k %d ms\r\n", ( cumulative_timing->total_sleep_32k * 1000 ) / 32768 );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--total_sleep_32m %d ms\r\n", ( cumulative_timing->total_sleep_32m * 1000 ) / 32768 );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--total %d\r\n", ( cumulative_timing->total * 1000 ) / 32768 );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--last_capture_size_32k_cnt %d\r\n", cumulative_timing->last_capture_size_32k_cnt );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--constellation_demod %d\r\n", cumulative_timing->constellation_demod );
 
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--power_consumption_nah %d\n", power_consumption_nah );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "--power_consumption_nwh %d\n\n", power_consumption_nwh );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--power_consumption_nah %d\r\n", power_consumption_nah );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "--power_consumption_nwh %d\r\n", power_consumption_nwh );
 }
 #endif
 
@@ -618,14 +618,14 @@ static void gnss_rp_task_launch( void* context )
 
     /* Store start time of current scan */
     navgroup.scans[navgroup.nb_scans_valid].start_time_ms = now;
-    SMTC_MODEM_HAL_TRACE_INFO( "gnss task launch at %u for navgroup.scan[%d]\n",
+    SMTC_MODEM_HAL_TRACE_INFO( "gnss task launch at %u for navgroup.scan[%d]\r\n",
                                navgroup.scans[navgroup.nb_scans_valid].start_time_ms, navgroup.nb_scans_valid );
 
     /* Store start time of NAV group */
     if( navgroup.nb_scans_total == 0 )
     {
         navgroup.start_time_ms = now;
-        GNSS_SCAN_TRACE_PRINTF_DEBUG( "NAV group start time: %u ms\n", navgroup.start_time_ms );
+        GNSS_SCAN_TRACE_PRINTF_DEBUG( "NAV group start time: %u ms\r\n", navgroup.start_time_ms );
     }
 
     /* Prepare for scan */
@@ -633,7 +633,7 @@ static void gnss_rp_task_launch( void* context )
                                                       LR11XX_SYSTEM_IRQ_NONE );
     if( lr11xx_status != LR11XX_STATUS_OK )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "gnss_rp_task_launch: Failed to set irq params\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "gnss_rp_task_launch: Failed to set irq params\r\n" );
         mw_gnss_task_obj.self_aborted = true; /* Stop the current NAV group */
         rp_task_abort( modem_get_rp( ), RP_HOOK_ID_DIRECT_RP_ACCESS_GNSS );
         return;
@@ -643,7 +643,7 @@ static void gnss_rp_task_launch( void* context )
         lr11xx_gnss_set_constellations_to_use( modem_get_radio_ctx( ), mw_gnss_task_obj.constellations_mask );
     if( lr11xx_status != LR11XX_STATUS_OK )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "gnss_rp_task_launch: Failed to set constellations\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "gnss_rp_task_launch: Failed to set constellations\r\n" );
         mw_gnss_task_obj.self_aborted = true; /* Stop the current NAV group */
         rp_task_abort( modem_get_rp( ), RP_HOOK_ID_DIRECT_RP_ACCESS_GNSS );
         return;
@@ -660,11 +660,11 @@ static void gnss_rp_task_launch( void* context )
             ( ( time_since_end_of_previous_scan_ms - ( modes[mw_gnss_task_obj.current_mode_index].scan_group_delay *
                                                        1000 ) ) > 2000 ) ) /* tolerate less than 2s delay */
         {
-            GNSS_SCAN_TRACE_PRINTF_DEBUG( "Stop scan group:\n" );
-            GNSS_SCAN_TRACE_PRINTF_DEBUG( " - previous scan mode: %s\n",
+            GNSS_SCAN_TRACE_PRINTF_DEBUG( "Stop scan group:\r\n" );
+            GNSS_SCAN_TRACE_PRINTF_DEBUG( " - previous scan mode: %s\r\n",
                                           smtc_gnss_scan_mode_launched_enum2str(
                                               navgroup.scans[navgroup.nb_scans_valid - 1].scan_mode_launched ) );
-            GNSS_SCAN_TRACE_PRINTF_DEBUG( " - elapsed time since end of previous valid scan: %u ms\n",
+            GNSS_SCAN_TRACE_PRINTF_DEBUG( " - elapsed time since end of previous valid scan: %u ms\r\n",
                                           time_since_end_of_previous_scan_ms );
             mw_gnss_task_obj.self_aborted = true; /* Stop the current NAV group */
             rp_task_abort( modem_get_rp( ), RP_HOOK_ID_DIRECT_RP_ACCESS_GNSS );
@@ -674,7 +674,7 @@ static void gnss_rp_task_launch( void* context )
 
     if( mw_radio_configure_for_scan( modem_get_radio_ctx( ) ) == false )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "gnss_rp_task_launch: mw_radio_configure_for_scan() failed\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "gnss_rp_task_launch: mw_radio_configure_for_scan() failed\r\n" );
         mw_gnss_task_obj.self_aborted = true; /* Stop the current NAV group */
         rp_task_abort( modem_get_rp( ), RP_HOOK_ID_DIRECT_RP_ACCESS_GNSS );
         return;
@@ -687,7 +687,7 @@ static void gnss_rp_task_launch( void* context )
                                       GNSS_RESULT_NB_SVS_MAX );
     if( lr11xx_status != LR11XX_STATUS_OK )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "lr11xx_gnss_scan() failed\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "lr11xx_gnss_scan() failed\r\n" );
         mw_gnss_task_obj.self_aborted = true; /* Stop the current NAV group */
         rp_task_abort( modem_get_rp( ), RP_HOOK_ID_DIRECT_RP_ACCESS_GNSS );
         return;
@@ -702,7 +702,7 @@ static void gnss_rp_task_done( void* status )
 
     navgroup.scans[navgroup.nb_scans_valid].end_time_ms = now;
     SMTC_MODEM_HAL_TRACE_INFO(
-        "gnss_rp_task_done at %u (duration:%u ms)\n", navgroup.scans[navgroup.nb_scans_valid].end_time_ms,
+        "gnss_rp_task_done at %u (duration:%u ms)\r\n", navgroup.scans[navgroup.nb_scans_valid].end_time_ms,
         navgroup.scans[navgroup.nb_scans_valid].end_time_ms - navgroup.scans[navgroup.nb_scans_valid].start_time_ms );
 
     geolocation_bsp_gnss_postscan_actions( );
@@ -716,7 +716,7 @@ static void gnss_rp_task_done( void* status )
 
         if( mw_gnss_task_obj.self_aborted == false )
         {
-            SMTC_MODEM_HAL_TRACE_WARNING( "GNSS scan task aborted by RP\n" );
+            SMTC_MODEM_HAL_TRACE_WARNING( "GNSS scan task aborted by RP\r\n" );
             gnss_scan_next( modes[mw_gnss_task_obj.current_mode_index].scan_group_delay );
             return;
         }
@@ -724,11 +724,11 @@ static void gnss_rp_task_done( void* status )
         {
             mw_gnss_task_obj.self_aborted = false;
 
-            SMTC_MODEM_HAL_TRACE_PRINTF( "GNSS scan task self aborted\n" );
+            SMTC_MODEM_HAL_TRACE_PRINTF( "GNSS scan task self aborted\r\n" );
 
             /* Update NAV group info before sending event */
             navgroup.end_time_ms = now;
-            GNSS_SCAN_TRACE_PRINTF_DEBUG( "NAV group end time: %u ms\n", navgroup.end_time_ms );
+            GNSS_SCAN_TRACE_PRINTF_DEBUG( "NAV group end time: %u ms\r\n", navgroup.end_time_ms );
 
             /* Stop the current NAV group and send results */
             terminate_navgroup( );
@@ -750,7 +750,7 @@ static void gnss_rp_task_done( void* status )
         {
             /* Set NAV group end time */
             navgroup.end_time_ms = now;
-            GNSS_SCAN_TRACE_PRINTF_DEBUG( "NAV group end time: %u ms\n", navgroup.end_time_ms );
+            GNSS_SCAN_TRACE_PRINTF_DEBUG( "NAV group end time: %u ms\r\n", navgroup.end_time_ms );
 
             /* Stop the current NAV group and send results */
             terminate_navgroup( );
@@ -762,7 +762,7 @@ static void gnss_rp_task_done( void* status )
     else
     {
         /* Should not happen */
-        SMTC_MODEM_HAL_TRACE_ERROR( "GNSS RP task - Unknown status %d\n", rp_status );
+        SMTC_MODEM_HAL_TRACE_ERROR( "GNSS RP task - Unknown status %d\r\n", rp_status );
         SMTC_MODEM_HAL_PANIC( "Unexpected RP status" );
     }
 }
@@ -789,21 +789,21 @@ static mw_return_code_t gnss_scan_task_done( bool* navgroup_complete )
     MW_RETURN_ON_FAILURE( lr11xx_gnss_read_time( modem_get_radio_ctx( ), &gps_time ) == LR11XX_STATUS_OK );
     if( gps_time.error_code == LR11XX_GNSS_READ_TIME_STATUS_NO_ERROR )
     {
-        GNSS_SCAN_TRACE_PRINTF_DEBUG( "GPS time: %u (0x%08X)\n", gps_time.gps_time_s, gps_time.gps_time_s );
+        GNSS_SCAN_TRACE_PRINTF_DEBUG( "GPS time: %u (0x%08X)\r\n", gps_time.gps_time_s, gps_time.gps_time_s );
         navgroup.scans[scan_index].gps_timestamp = gps_time.gps_time_s;
         navgroup.timestamp =
             gps_time.gps_time_s; /* set NAV group global timestamp with the last scan tentative (even if not valid) */
     }
     else
     {
-        SMTC_MODEM_HAL_TRACE_WARNING( "GPS time: no time available - error code 0x%02X (%s)\n", gps_time.error_code,
+        SMTC_MODEM_HAL_TRACE_WARNING( "GPS time: no time available - error code 0x%02X (%s)\r\n", gps_time.error_code,
                                       smtc_gnss_read_time_error_code_enum2str( gps_time.error_code ) );
     }
 
     /* Get scan mode used for this scan (autonomous, assisted... ) */
     MW_RETURN_ON_FAILURE( lr11xx_gnss_read_last_scan_mode_launched(
                               modem_get_radio_ctx( ), &( mw_gnss_task_obj.last_scan_mode ) ) == LR11XX_STATUS_OK );
-    GNSS_SCAN_TRACE_PRINTF_DEBUG( "Last GNSS scan mode launched: %s\n",
+    GNSS_SCAN_TRACE_PRINTF_DEBUG( "Last GNSS scan mode launched: %s\r\n",
                                   smtc_gnss_scan_mode_launched_enum2str( mw_gnss_task_obj.last_scan_mode ) );
     navgroup.scans[scan_index].scan_mode_launched = mw_gnss_task_obj.last_scan_mode;
 
@@ -844,18 +844,18 @@ static mw_return_code_t gnss_scan_task_done( bool* navgroup_complete )
         switch( status_code_raw )
         {
         case LR11XX_GNSS_HOST_NO_SATELLITE_DETECTED:
-            SMTC_MODEM_HAL_TRACE_INFO( "GNSS: NO_SATELLITE_DETECTED\n" );
-            SMTC_MODEM_HAL_TRACE_WARNING( "Indoor detected?\n" );
+            SMTC_MODEM_HAL_TRACE_INFO( "GNSS: NO_SATELLITE_DETECTED\r\n" );
+            SMTC_MODEM_HAL_TRACE_WARNING( "Indoor detected?\r\n" );
             navgroup.scans[scan_index].indoor_detected = true;
             break;
         case LR11XX_GNSS_HOST_ASSISTANCE_POSITION_POSSIBLY_WRONG_BUT_FAILS_TO_UPDATE:
-            SMTC_MODEM_HAL_TRACE_WARNING( "GNSS: ASSISTANCE_POSITION_POSSIBLY_WRONG_BUT_FAILS_TO_UPDATE\n" );
-            SMTC_MODEM_HAL_TRACE_INFO( "Reset current position\n" );
+            SMTC_MODEM_HAL_TRACE_WARNING( "GNSS: ASSISTANCE_POSITION_POSSIBLY_WRONG_BUT_FAILS_TO_UPDATE\r\n" );
+            SMTC_MODEM_HAL_TRACE_INFO( "Reset current position\r\n" );
             /* Reset current position and let LR11xx restart with autonomous scan to recover */
             MW_RETURN_ON_FAILURE( lr11xx_gnss_reset_position( modem_get_radio_ctx( ) ) == LR11XX_STATUS_OK );
             break;
         default:
-            SMTC_MODEM_HAL_TRACE_INFO( "GNSS message to host: %s\n",
+            SMTC_MODEM_HAL_TRACE_INFO( "GNSS message to host: %s\r\n",
                                        smtc_gnss_message_host_status_enum2str( status_code_raw ) );
             break;
         }
@@ -898,7 +898,7 @@ static mw_return_code_t gnss_scan_task_done( bool* navgroup_complete )
         /* Erase destination byte, will be used for navgroup metadata */
         if( GNSS_SCAN_METADATA_SIZE != 1 )
         {
-            SMTC_MODEM_HAL_TRACE_ERROR( "NAVGROUP metadata size is not 1, need to adjust result buffer !\n" );
+            SMTC_MODEM_HAL_TRACE_ERROR( "NAVGROUP metadata size is not 1, need to adjust result buffer !\r\n" );
             return MW_RC_FAILED;
         }
         navgroup.scans[scan_index].results_buffer[0] = 0x00;
@@ -917,7 +917,7 @@ static mw_return_code_t gnss_scan_task_done( bool* navgroup_complete )
     /* Sanity check */
     if( navgroup.nb_scans_valid > GNSS_NAVGROUP_SIZE_MAX )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "OVERFLOW? (%s:%d)\n", __func__, __LINE__ );
+        SMTC_MODEM_HAL_TRACE_ERROR( "OVERFLOW? (%s:%d)\r\n", __func__, __LINE__ );
         return MW_RC_FAILED;
     }
 

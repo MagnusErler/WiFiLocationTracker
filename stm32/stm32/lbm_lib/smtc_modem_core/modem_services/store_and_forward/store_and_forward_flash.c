@@ -119,7 +119,7 @@
     {                                                                                                \
         if( store_and_forward_flash_obj[x].initialized == false )                                    \
         {                                                                                            \
-            SMTC_MODEM_HAL_TRACE_WARNING( "store_and_forward_flash_obj service not initialized\n" ); \
+            SMTC_MODEM_HAL_TRACE_WARNING( "store_and_forward_flash_obj service not initialized\r\n" ); \
             return;                                                                                  \
         }                                                                                            \
     } while( 0 )
@@ -304,19 +304,19 @@ void store_and_forward_flash_services_init( uint8_t* service_id, uint8_t task_id
 
     /* Always call circularfs_init first. */
     circularfs_init( &ctx->fs, &flash_obj, LOG_ENTRY_VERSION, sizeof( store_and_forward_flash_data_t ) );
-    // SMTC_MODEM_HAL_TRACE_PRINTF( "# format filesystem...\n" );
+    // SMTC_MODEM_HAL_TRACE_PRINTF( "# format filesystem...\r\n" );
     // circularfs_format( &ctx->fs );
 
     /* Scan and/or format before any data operations. */
-    SMTC_MODEM_HAL_TRACE_PRINTF( "Store and fwd # scanning for filesystem...\n" );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "Store and fwd # scanning for filesystem...\r\n" );
     if( circularfs_scan( &ctx->fs ) == 0 )
     {
-        SMTC_MODEM_HAL_TRACE_PRINTF( "Store and fwd # found existing filesystem, usage: %d/%d\n",
+        SMTC_MODEM_HAL_TRACE_PRINTF( "Store and fwd # found existing filesystem, usage: %d/%d\r\n",
                                      circularfs_count_estimate( &ctx->fs ), circularfs_capacity( &ctx->fs ) );
     }
     else
     {
-        SMTC_MODEM_HAL_TRACE_PRINTF( "Store and fwd # no valid filesystem found, formatting.\n" );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "Store and fwd # no valid filesystem found, formatting.\r\n" );
         circularfs_format( &ctx->fs, false );
     }
 
@@ -400,7 +400,7 @@ store_and_forward_flash_rc_t store_and_forward_flash_add_data( uint8_t stack_id,
 
     if( circularfs_append( &ctx->fs, &entry ) != 0 )
     {
-        SMTC_MODEM_HAL_TRACE_WARNING( "Store and fwd fifo problem\n" );
+        SMTC_MODEM_HAL_TRACE_WARNING( "Store and fwd fifo problem\r\n" );
         return STORE_AND_FORWARD_FLASH_RC_FAIL;
     }
 
@@ -415,7 +415,7 @@ store_and_forward_flash_rc_t store_and_forward_flash_add_data( uint8_t stack_id,
         }
     }
 
-    SMTC_MODEM_HAL_TRACE_PRINTF( "Store and fwd nb_of_data in fifo %u\n", nb_of_data );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "Store and fwd nb_of_data in fifo %u\r\n", nb_of_data );
 
     return STORE_AND_FORWARD_FLASH_RC_OK;
 }
@@ -426,7 +426,7 @@ void store_and_forward_flash_clear_data( uint8_t stack_id )
     uint8_t                    service_id;
     store_and_forward_flash_t* ctx = store_and_forward_flash_get_ctx_from_stack_id( stack_id, &service_id );
 
-    SMTC_MODEM_HAL_TRACE_PRINTF( "Store and fwd # format filesystem...\n" );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "Store and fwd # format filesystem...\r\n" );
     circularfs_format( &ctx->fs, true );
 }
 
@@ -479,7 +479,7 @@ store_and_forward_flash_state_t store_and_forward_flash_get_state( uint8_t stack
 static void store_and_forward_flash_service_on_launch( void* service_id )
 {
     uint8_t idx = *( ( uint8_t* ) service_id );
-    SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG( " %s service_id %d \n", __func__, idx );
+    SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG( " %s service_id %d \r\n", __func__, idx );
 
     IS_SERVICE_INITIALIZED( idx );
     uint8_t stack_id = store_and_forward_flash_obj[idx].stack_id;
@@ -525,17 +525,17 @@ static void store_and_forward_flash_service_on_launch( void* service_id )
 #if( MODEM_HAL_DBG_TRACE == MODEM_HAL_FEATURE_ON )
                 int32_t capacity  = circularfs_capacity( &store_and_forward_flash_obj[idx].fs );
                 int32_t free_slot = circularfs_free_slot_estimate( &store_and_forward_flash_obj[idx].fs );
-                SMTC_MODEM_HAL_TRACE_PRINTF( "Store and fwd get data, free: %d/%d \n", free_slot, capacity );
+                SMTC_MODEM_HAL_TRACE_PRINTF( "Store and fwd get data, free: %d/%d \r\n", free_slot, capacity );
 #endif
             }
             else
             {
-                SMTC_MODEM_HAL_TRACE_WARNING( "Store and fwd corrupted data, bad CRC !\n" );
+                SMTC_MODEM_HAL_TRACE_WARNING( "Store and fwd corrupted data, bad CRC !\r\n" );
             }
         }
         else
         {
-            SMTC_MODEM_HAL_TRACE_WARNING( "Store and fwd no data !\n" );
+            SMTC_MODEM_HAL_TRACE_WARNING( "Store and fwd no data !\r\n" );
         }
     } while( ( fetch_status == 0 ) && ( is_crc_ok == false ) );
 
@@ -588,21 +588,21 @@ static void store_and_forward_flash_service_on_launch( void* service_id )
         }
         else
         {
-            SMTC_MODEM_HAL_TRACE_WARNING( " %s service_id %d data not send 0x%x\n", __func__, idx, send_status );
+            SMTC_MODEM_HAL_TRACE_WARNING( " %s service_id %d data not send 0x%x\r\n", __func__, idx, send_status );
         }
-        SMTC_MODEM_HAL_TRACE_PRINTF( "Store and fwd try (%u) to send \n",
+        SMTC_MODEM_HAL_TRACE_PRINTF( "Store and fwd try (%u) to send \r\n",
                                      store_and_forward_flash_obj[idx].sending_try_cpt );
     }
     else
     {
-        SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG( "Store and fwd nothing to send \n" );
+        SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG( "Store and fwd nothing to send \r\n" );
     }
 }
 
 static void store_and_forward_flash_service_on_update( void* service_id )
 {
     uint8_t idx = *( ( uint8_t* ) service_id );
-    SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG( " %s service_id %d \n", __func__, idx );
+    SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG( " %s service_id %d \r\n", __func__, idx );
 
     IS_SERVICE_INITIALIZED( idx );
     uint8_t stack_id = store_and_forward_flash_obj[idx].stack_id;
@@ -624,13 +624,13 @@ static void store_and_forward_flash_service_on_update( void* service_id )
 
     int32_t nb_of_data = circularfs_count_estimate_from_last_fetch( &store_and_forward_flash_obj[idx].fs );
 
-    SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG( "Store and fwd nb_of_data not read:%u\n", nb_of_data );
+    SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG( "Store and fwd nb_of_data not read:%u\r\n", nb_of_data );
 
     if( ( nb_of_data > 0 ) || store_and_forward_flash_obj[idx].sending_try_cpt != 0 )
     {
         uint32_t delay_tmp_s = store_and_forward_flash_compute_next_delay_s( &store_and_forward_flash_obj[idx] );
 
-        SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG( "store en fwd next execute:%u (s)\n", delay_tmp_s );
+        SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG( "store en fwd next execute:%u (s)\r\n", delay_tmp_s );
         store_and_forward_flash_add_task( &store_and_forward_flash_obj[idx], delay_tmp_s );
     }
 }
@@ -641,7 +641,7 @@ static uint8_t store_and_forward_flash_service_downlink_handler( lr1_stack_mac_d
     uint8_t                    service_id;
     store_and_forward_flash_t* ctx = store_and_forward_flash_get_ctx_from_stack_id( stack_id, &service_id );
 
-    SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG( " %s\n", __func__ );
+    SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG( " %s\r\n", __func__ );
 
     task_id_t current_task_id = modem_supervisor_get_task( )->next_task_id;
     // If a downlink is received outside the running service, the downlink is not an ack but there is network
@@ -655,7 +655,7 @@ static uint8_t store_and_forward_flash_service_downlink_handler( lr1_stack_mac_d
             if( ( ( ctx->sending_try_cpt > 0 ) || ( nb_of_data > 0 ) ) && ( ctx->enabled == STORE_AND_FORWARD_ENABLE ) )
             {
                 store_and_forward_flash_add_task( ctx, MODEM_TASK_DELAY_MS / 1000 );
-                SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG( "Store and fwd not for me, but data in fifo, enqueue task\n" );
+                SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG( "Store and fwd not for me, but data in fifo, enqueue task\r\n" );
             }
         }
     }
@@ -665,14 +665,14 @@ static uint8_t store_and_forward_flash_service_downlink_handler( lr1_stack_mac_d
         {
             if( ctx->sending_with_ack == false )
             {
-                SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG( "Store and fwd uplink wo ack\n" );
+                SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG( "Store and fwd uplink wo ack\r\n" );
                 ctx->sending_try_cpt = 0;
             }
             else
             {
                 if( rx_down_data->rx_metadata.rx_ack_bit == true )
                 {
-                    SMTC_MODEM_HAL_TRACE_PRINTF( "Store and fwd uplink acked after %u tentative\n",
+                    SMTC_MODEM_HAL_TRACE_PRINTF( "Store and fwd uplink acked after %u tentative\r\n",
                                                  ctx->sending_try_cpt );
                     ctx->sending_try_cpt  = 0;
                     ctx->ack_period_count = 0;
@@ -680,7 +680,7 @@ static uint8_t store_and_forward_flash_service_downlink_handler( lr1_stack_mac_d
                 }
                 else
                 {
-                    SMTC_MODEM_HAL_TRACE_PRINTF( "Store and fwd uplink not yet acked after %u tentative\n",
+                    SMTC_MODEM_HAL_TRACE_PRINTF( "Store and fwd uplink not yet acked after %u tentative\r\n",
                                                  ctx->sending_try_cpt );
                     circularfs_rewind( &ctx->fs );
                 }

@@ -712,7 +712,7 @@ void circularfs_dump( struct circularfs* fs )
 #if( MODEM_HAL_DBG_TRACE == MODEM_HAL_FEATURE_ON )
     const char* description;
 
-    SMTC_MODEM_HAL_TRACE_PRINTF( "CIRCULARFS read: {%d,%d} cursor: {%d,%d} write: {%d,%d}\n", fs->read.sector,
+    SMTC_MODEM_HAL_TRACE_PRINTF( "CIRCULARFS read: {%d,%d} cursor: {%d,%d} write: {%d,%d}\r\n", fs->read.sector,
                                  fs->read.slot, fs->cursor.sector, fs->cursor.slot, fs->write.sector, fs->write.slot );
 
     for( int32_t sector = 0; sector < fs->flash->sector_count; sector++ )
@@ -780,7 +780,7 @@ void circularfs_dump( struct circularfs* fs )
             SMTC_MODEM_HAL_TRACE_PRINTF( "%s", description );
         }
 
-        SMTC_MODEM_HAL_TRACE_PRINTF( "\n" );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "\r\n" );
     }
 #endif  // MODEM_HAL_DBG_TRACE
 }

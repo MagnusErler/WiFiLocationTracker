@@ -210,7 +210,7 @@ void lorawan_certification_services_init( uint8_t* service_id, uint8_t task_id,
                                           void ( **on_update_callback )( void* ), void** context_callback )
 {
     SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG(
-        " lorawan_certification_services_init task_id %d, service_id %d, CURRENT_STACK:%d \n", task_id, *service_id,
+        " lorawan_certification_services_init task_id %d, service_id %d, CURRENT_STACK:%d \r\n", task_id, *service_id,
         CURRENT_STACK );
     IS_VALID_OBJECT_ID( *service_id );
 
@@ -227,13 +227,13 @@ void lorawan_certification_services_init( uint8_t* service_id, uint8_t task_id,
 
     if( ctx->enabled == true )
     {
-        SMTC_MODEM_HAL_TRACE_WARNING( "***********************************************\n" );
-        SMTC_MODEM_HAL_TRACE_WARNING( "  LoRaWAN CERTIFICATION is ENABLED on stack %d\n", ctx->stack_id );
-        SMTC_MODEM_HAL_TRACE_WARNING( "***********************************************\n" );
+        SMTC_MODEM_HAL_TRACE_WARNING( "***********************************************\r\n" );
+        SMTC_MODEM_HAL_TRACE_WARNING( "  LoRaWAN CERTIFICATION is ENABLED on stack %d\r\n", ctx->stack_id );
+        SMTC_MODEM_HAL_TRACE_WARNING( "***********************************************\r\n" );
     }
     else
     {
-        SMTC_MODEM_HAL_TRACE_PRINTF( "LoRaWAN Certification is disabled on stack %d\n", ctx->stack_id );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "LoRaWAN Certification is disabled on stack %d\r\n", ctx->stack_id );
     }
 
     lorawan_certification_init( ctx );
@@ -281,7 +281,7 @@ lorawan_certification_ret_t lorawan_certification_set_enabled( uint8_t stack_id,
     if( ctx->enabled != enabled )
     {
         ctx->enabled = enabled;
-        SMTC_MODEM_HAL_TRACE_INFO( "LoRaWAN Certification is %s on stack %d \n",
+        SMTC_MODEM_HAL_TRACE_INFO( "LoRaWAN Certification is %s on stack %d \r\n",
                                    ( ctx->enabled == true ? "enabled" : "disabled" ), ctx->stack_id );
 
         lorawan_api_modem_certification_set( ctx->enabled, ctx->stack_id );
