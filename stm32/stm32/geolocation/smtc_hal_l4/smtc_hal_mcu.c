@@ -252,7 +252,7 @@ static void system_clock_config( void )
     __HAL_RCC_LSEDRIVE_CONFIG( RCC_LSEDRIVE_LOW );
 
     // HSI is enabled after System reset, activate PLL with HSI as source
-    rcc_osc_init_struct.OscillatorType      = RCC_OSCILLATORTYPE_HSI | RCC_OSCILLATORTYPE_LSI; //| RCC_OSCILLATORTYPE_LSE;
+    rcc_osc_init_struct.OscillatorType      = RCC_OSCILLATORTYPE_HSI | RCC_OSCILLATORTYPE_LSI | RCC_OSCILLATORTYPE_LSE;
     rcc_osc_init_struct.LSEState            = RCC_LSE_ON;
     rcc_osc_init_struct.HSIState            = RCC_HSI_ON;
     rcc_osc_init_struct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;

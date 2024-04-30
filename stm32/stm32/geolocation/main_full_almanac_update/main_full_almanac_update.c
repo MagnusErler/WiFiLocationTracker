@@ -152,16 +152,16 @@ void main_full_almanac_update( void )
     // Re-enable IRQ
     hal_mcu_enable_irq( );
 
-    SMTC_HAL_TRACE_INFO( "FULL ALMANAC UPDATE example is starting \n" );
+    SMTC_HAL_TRACE_INFO( "FULL ALMANAC UPDATE example is starting \r\n" );
 
     /* Check LR11XX Firmware version */
     status = lr11xx_system_get_version( NULL, &lr11xx_fw_version );
     if( status != LR11XX_STATUS_OK )
     {
-        HAL_DBG_TRACE_ERROR( "Failed to get LR11XX firmware version\n" );
+        HAL_DBG_TRACE_ERROR( "Failed to get LR11XX firmware version\r\n" );
         mcu_panic( );
     }
-    HAL_DBG_TRACE_INFO( "LR11XX FW: 0x%04X\n", lr11xx_fw_version.fw );
+    HAL_DBG_TRACE_INFO( "LR11XX FW: 0x%04X\r\n", lr11xx_fw_version.fw );
 
     /* Convert raw almanac date to epoch time */
     uint16_t almanac_date_raw = ( uint16_t ) ( ( full_almanac[2] << 8 ) | full_almanac[1] );
@@ -171,7 +171,7 @@ void main_full_almanac_update( void )
     char             buf[TIME_BUFFER_SIZE];
     const struct tm* time = localtime( &almanac_date );
     strftime( buf, TIME_BUFFER_SIZE, "%a %Y-%m-%d %H:%M:%S %Z", time );
-    HAL_DBG_TRACE_PRINTF( "Source almanac date: %s\n\n", buf );
+    HAL_DBG_TRACE_PRINTF( "Source almanac date: %s\r\n", buf );
 
     /* Update full almanac */
     almanac_update( NULL );
@@ -202,7 +202,7 @@ void main_full_almanac_update( void )
  */
 static void get_event( void )
 {
-    SMTC_HAL_TRACE_MSG_COLOR( "get_event () callback\n", HAL_DBG_TRACE_COLOR_BLUE );
+    SMTC_HAL_TRACE_MSG_COLOR( "get_event () callback\r\n", HAL_DBG_TRACE_COLOR_BLUE );
 
     smtc_modem_event_t current_event;
     uint8_t            event_pending_count;
@@ -216,11 +216,11 @@ static void get_event( void )
         switch( current_event.event_type )
         {
         case SMTC_MODEM_EVENT_RESET:
-            SMTC_HAL_TRACE_INFO( "Event received: RESET\n" );
+            SMTC_HAL_TRACE_INFO( "Event received: RESET\r\n" );
             break;
 
         default:
-            SMTC_HAL_TRACE_ERROR( "Unknown event %u\n", current_event.event_type );
+            SMTC_HAL_TRACE_ERROR( "Unknown event %u\r\n", current_event.event_type );
             break;
         }
     } while( event_pending_count > 0 );
@@ -235,14 +235,14 @@ static bool get_almanac_crc( const void* ral_context, uint32_t* almanac_crc )
     err = lr11xx_gnss_get_context_status( ral_context, context_status_bytestream );
     if( err != LR11XX_STATUS_OK )
     {
-        HAL_DBG_TRACE_ERROR( "Failed to get gnss context status\n" );
+        HAL_DBG_TRACE_ERROR( "Failed to get gnss context status\r\n" );
         return false;
     }
 
     err = lr11xx_gnss_parse_context_status_buffer( context_status_bytestream, &context_status );
     if( err != LR11XX_STATUS_OK )
     {
-        HAL_DBG_TRACE_ERROR( "Failed to parse gnss context status to get almanac status\n" );
+        HAL_DBG_TRACE_ERROR( "Failed to parse gnss context status to get almanac status\r\n" );
         return false;
     }
 
@@ -259,12 +259,12 @@ static bool almanac_update( const void* ral_context )
 
     if( get_almanac_crc( ral_context, &global_almanac_crc ) == false )
     {
-        HAL_DBG_TRACE_ERROR( "Failed to get almanac CRC before update\n" );
+        HAL_DBG_TRACE_ERROR( "Failed to get almanac CRC before update\r\n" );
         return false;
     }
     if( global_almanac_crc != local_almanac_crc )
     {
-        HAL_DBG_TRACE_INFO( "Local almanac doesn't match LR11XX almanac -> start update\n" );
+        HAL_DBG_TRACE_INFO( "Local almanac doesn't match LR11XX almanac -> start update\r\n" );
 
         /* Load almanac in flash */
         uint16_t almanac_idx = 0;
@@ -272,7 +272,7 @@ static bool almanac_update( const void* ral_context )
         {
             if( lr11xx_gnss_almanac_update( ral_context, full_almanac + almanac_idx, 1 ) != LR11XX_STATUS_OK )
             {
-                HAL_DBG_TRACE_ERROR( "Failed to update almanac\n" );
+                HAL_DBG_TRACE_ERROR( "Failed to update almanac\r\n" );
                 return false;
             }
             almanac_idx += LR11XX_GNSS_SINGLE_ALMANAC_WRITE_SIZE;
@@ -281,22 +281,22 @@ static bool almanac_update( const void* ral_context )
         /* Check CRC again to confirm proper update */
         if( get_almanac_crc( ral_context, &global_almanac_crc ) == false )
         {
-            HAL_DBG_TRACE_ERROR( "Failed to get almanac CRC after update\n" );
+            HAL_DBG_TRACE_ERROR( "Failed to get almanac CRC after update\r\n" );
             return false;
         }
         if( global_almanac_crc != local_almanac_crc )
         {
-            HAL_DBG_TRACE_ERROR( "Local almanac doesn't match LR11XX almanac -> update failed\n" );
+            HAL_DBG_TRACE_ERROR( "Local almanac doesn't match LR11XX almanac -> update failed\r\n" );
             return false;
         }
         else
         {
-            HAL_DBG_TRACE_INFO( "Almanac update succeeded\n" );
+            HAL_DBG_TRACE_INFO( "Almanac update succeeded\r\n" );
         }
     }
     else
     {
-        HAL_DBG_TRACE_INFO( "Local almanac matches LR11XX almanac -> no update\n" );
+        HAL_DBG_TRACE_INFO( "Local almanac matches LR11XX almanac -> no update\r\n" );
     }
 
     return true;

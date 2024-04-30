@@ -100,7 +100,7 @@
     {                                                                            \
         if( ( fmp_package_rx_buffer_index + x ) > fmp_package_rx_buffer_length ) \
         {                                                                        \
-            SMTC_MODEM_HAL_TRACE_ERROR( "%u\n", fmp_package_rx_buffer_length );  \
+            SMTC_MODEM_HAL_TRACE_ERROR( "%u\r\n", fmp_package_rx_buffer_length );  \
             return FMP_STATUS_ERROR;                                             \
         }                                                                        \
     } while( 0 )
@@ -255,7 +255,7 @@ void lorawan_fmp_package_services_init( uint8_t* service_id, uint8_t task_id,
                                         void** context_callback )
 {
     SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG(
-        " lorawan_fmp_package_services_init task_id %d, service_id %d, CURRENT_STACK:%d \n", task_id, *service_id,
+        " lorawan_fmp_package_services_init task_id %d, service_id %d, CURRENT_STACK:%d \r\n", task_id, *service_id,
         CURRENT_STACK );
 
     IS_VALID_OBJECT_ID( *service_id );
@@ -362,7 +362,7 @@ uint8_t lorawan_fmp_package_service_downlink_handler( lr1_stack_mac_down_data_t*
 
     if( stack_id >= NUMBER_OF_FMP_PACKAGE_OBJ )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "stack id not valid %u \n", stack_id );
+        SMTC_MODEM_HAL_TRACE_ERROR( "stack id not valid %u \r\n", stack_id );
         return MODEM_DOWNLINK_UNCONSUMED;
     }
 
@@ -374,7 +374,7 @@ uint8_t lorawan_fmp_package_service_downlink_handler( lr1_stack_mac_down_data_t*
     if( ( rx_down_data->rx_metadata.rx_fport_present == true ) && ( rx_down_data->rx_metadata.rx_fport == FMP_PORT ) &&
         ( is_received_on_multicast_window( rx_down_data->rx_metadata.rx_window ) == false ) )
     {
-        SMTC_MODEM_HAL_TRACE_PRINTF( "lorawan_fmp_package_service_downlink_handler receive data on port %d\n",
+        SMTC_MODEM_HAL_TRACE_PRINTF( "lorawan_fmp_package_service_downlink_handler receive data on port %d\r\n",
                                      FMP_PORT );
         uint8_t      event_status;
         bool         increment_event;
@@ -423,7 +423,7 @@ bool lorawan_fmp_mpa_injector( uint8_t stack_id, uint8_t* payload_in, uint8_t* n
 
     if( stack_id >= NUMBER_OF_FMP_PACKAGE_OBJ )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "stack id not valid %u \n", stack_id );
+        SMTC_MODEM_HAL_TRACE_ERROR( "stack id not valid %u \r\n", stack_id );
         return false;
     }
 
@@ -439,7 +439,7 @@ bool lorawan_fmp_mpa_injector( uint8_t stack_id, uint8_t* payload_in, uint8_t* n
     }
     *nb_bytes_read_payload_in = fmp_req_cmd_size[cmd_id];
 
-    SMTC_MODEM_HAL_TRACE_WARNING( "FMP CiD 0x%02x (byte read %u)\n", cmd_id, *nb_bytes_read_payload_in );
+    SMTC_MODEM_HAL_TRACE_WARNING( "FMP CiD 0x%02x (byte read %u)\r\n", cmd_id, *nb_bytes_read_payload_in );
     uint8_t      event_status;
     bool         increment_event;
     fmp_status_t fmp_status =
@@ -501,7 +501,7 @@ static void fmp_add_task( lorawan_fmp_package_ctx_t* ctx, uint32_t rtc_target_s 
     task.time_to_execute_s = rtc_target_s;
     if( modem_supervisor_add_task( &task ) != TASK_VALID )
     {
-        SMTC_MODEM_HAL_PANIC( "Task not valid\n" );
+        SMTC_MODEM_HAL_PANIC( "Task not valid\r\n" );
     }
 }
 
@@ -748,7 +748,7 @@ static fmp_status_t fmp_package_parser( lorawan_fmp_package_ctx_t* ctx, uint8_t*
             break;
         }
         default:
-            SMTC_MODEM_HAL_TRACE_ERROR( "parser fmp_package_parser 0x%x ?\n",
+            SMTC_MODEM_HAL_TRACE_ERROR( "parser fmp_package_parser 0x%x ?\r\n",
                                         fmp_package_rx_buffer[fmp_package_rx_buffer_index] );
             return FMP_STATUS_ERROR;
             break;
@@ -839,25 +839,25 @@ static bool fmp_test( void )
         if( ( test_vector_output[i][0] == 0 ) && ( ctx->fmp_tx_payload_ans_size > 0 ) )
         {
             nb_errors++;
-            SMTC_MODEM_HAL_TRACE_ERROR( "fmp test failed\n" );
+            SMTC_MODEM_HAL_TRACE_ERROR( "fmp test failed\r\n" );
         }
         if( ( increment_event != test_vector_event_output[i][0] ) ||
             ( ( increment_event == true ) && ( event_status != test_vector_event_output[i][1] ) ) )
         {
             nb_errors++;
-            SMTC_MODEM_HAL_TRACE_ERROR( "fmp test failed due to event\n" );
+            SMTC_MODEM_HAL_TRACE_ERROR( "fmp test failed due to event\r\n" );
         }
         if( ( ( memcmp( ctx->fmp_tx_payload_ans, &test_vector_output[i][1], test_vector_output[i][0] ) ) ||
               ( test_vector_output[i][0] != ctx->fmp_tx_payload_ans_size ) ) &&
             ( test_vector_output[i][0] == 0 ) )
         {
             nb_errors++;
-            SMTC_MODEM_HAL_TRACE_ERROR( "fmp test failed\n" );
+            SMTC_MODEM_HAL_TRACE_ERROR( "fmp test failed\r\n" );
         }
     }
     if( nb_errors == 0 )
     {
-        SMTC_MODEM_HAL_TRACE_INFO( " FMP TEST OK \n" );
+        SMTC_MODEM_HAL_TRACE_INFO( " FMP TEST OK \r\n" );
         return true;
     }
     else

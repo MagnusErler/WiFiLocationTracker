@@ -186,46 +186,37 @@ void main_geolocation( void ) {
     // Re-enable IRQ
     hal_mcu_enable_irq( );
 
-    SMTC_HAL_TRACE_INFO( "GEOLOCATION example is starting\n" );
+    SMTC_HAL_TRACE_PRINTF("\r\n\r\n-----------------------------\r\n\r\n" );
+
+    SMTC_HAL_TRACE_INFO( "GEOLOCATION example is starting\r\n" );
 
     ral_lr11xx_init( NULL );
 
     /* Check LR11XX Firmware version */
     if( lr11xx_system_get_version( NULL, &lr11xx_fw_version ) != LR11XX_STATUS_OK ) {
-        SMTC_HAL_TRACE_ERROR( "Failed to get LR11XX firmware version\n" );
+        SMTC_HAL_TRACE_ERROR( "Failed to get LR11XX firmware version\r\n" );
     }
     if( ( lr11xx_fw_version.type == LR11XX_SYSTEM_VERSION_TYPE_LR1110 ) &&
         ( lr11xx_fw_version.fw < LR1110_FW_VERSION ) ) {
-        SMTC_HAL_TRACE_ERROR( "Wrong LR1110 firmware version, expected 0x%04X, got 0x%04X\n", LR1110_FW_VERSION, lr11xx_fw_version.fw );
+        SMTC_HAL_TRACE_ERROR( "Wrong LR1110 firmware version, expected 0x%04X, got 0x%04X\r\n", LR1110_FW_VERSION, lr11xx_fw_version.fw );
     }
-    SMTC_HAL_TRACE_INFO( "LR11XX FW: 0x%04X, type: 0x%02X\n", lr11xx_fw_version.fw, lr11xx_fw_version.type );
-    SMTC_HAL_TRACE_INFO( "LR11XX HW: 0x%02X\n", lr11xx_fw_version.hw );
+    SMTC_HAL_TRACE_INFO( "LR11XX FW: 0x%04X, type: 0x%02X\r\n", lr11xx_fw_version.fw, lr11xx_fw_version.type );
+    SMTC_HAL_TRACE_INFO( "LR11XX HW: 0x%02X\r\n", lr11xx_fw_version.hw );
 
     
 
+    // uint8_t i;
+    // if (lis2de12_int2_pin_detect_4d_get( &i ) != 0) {
+    //     SMTC_HAL_TRACE_ERROR( "LIS2DE12 4D detection get failed\r\n" );
+    // }
+    // SMTC_HAL_TRACE_INFO( "LIS2DE12 4D detection: %d\r\n", i );
 
-    // acc_read_raw_data( );
-    // SMTC_HAL_TRACE_INFO( "Acceleration [mg]: X=%4.2f mg | Y=%4.2f mg | Z=%4.2f mg \r\n",
-    //                         ( double ) acc_get_raw_x( ), ( double ) acc_get_raw_y( ),
-    //                         ( double ) acc_get_raw_z( ) );
+    // if (lis2de12_int2_pin_detect_4d_set( 1 ) != 0) {
+    //     SMTC_HAL_TRACE_ERROR( "LIS2DE12 4D detection set failed\r\n" );
+    // }
 
-    uint8_t i;
-    if (lis2de12_int2_pin_detect_4d_get( &i ) != 0) {
-        SMTC_HAL_TRACE_ERROR( "LIS2DE12 4D detection get failed\r\n" );
-        return 0;
-    }
-    SMTC_HAL_TRACE_INFO( "LIS2DE12 4D detection: %d\r\n", i );
 
-    if (lis2de12_int2_pin_detect_4d_set( 1 ) != 0) {
-        SMTC_HAL_TRACE_ERROR( "LIS2DE12 4D detection set failed\r\n" );
-        return 0;
-    }
-
-    if (lis2de12_int2_pin_detect_4d_get( &i ) != 0) {
-        SMTC_HAL_TRACE_ERROR( "LIS2DE12 4D detection get failed\r\n" );
-        return 0;
-    }
-    SMTC_HAL_TRACE_INFO( "LIS2DE12 4D detection: %d\r\n", i );
+    // hal_gpio_set_value( PA_9, 1 );
 
     
 
@@ -256,9 +247,14 @@ void main_geolocation( void ) {
         hal_mcu_disable_irq( );
         if( smtc_modem_is_irq_flag_pending( ) == false ) {
 
-            // SMTC_HAL_TRACE_INFO("LIS2DE12 Temperature: %d\n", acc_get_temperature( ));
-            // acc_read_raw_data( );
-            // SMTC_HAL_TRACE_INFO("X: %d, Y: %d, Z: %d\n", acc_get_raw_x( ), acc_get_raw_y( ), acc_get_raw_z( ));
+            // SMTC_HAL_TRACE_INFO("LIS2DE12 Temperature: %d\r\n", acc_get_temperature( ));
+            acc_read_raw_data( );
+            SMTC_HAL_TRACE_INFO("X: %d, Y: %d, Z: %d\r\n", acc_get_raw_x( ), acc_get_raw_y( ), acc_get_raw_z( ));
+
+            if (get_accelerometer_irq1_state( ) == 1) {
+                SMTC_HAL_TRACE_INFO("LIS2DE12 interrupt 1 detected\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n");
+                is_accelerometer_detected_moved( );
+            }
 
 
             hal_watchdog_reload( );
@@ -298,7 +294,7 @@ void setupGNSS(uint8_t stack_id) {
  *  Several events may have to be read from the modem when this callback is called.
  */
 static void modem_event_callback( void ) {
-    SMTC_HAL_TRACE_MSG_COLOR( "get_event () callback\n", HAL_DBG_TRACE_COLOR_BLUE );
+    SMTC_HAL_TRACE_MSG_COLOR( "get_event () callback\r\n", HAL_DBG_TRACE_COLOR_BLUE );
 
     smtc_modem_event_t                                          current_event;
     uint8_t                                                     event_pending_count;
@@ -316,7 +312,7 @@ static void modem_event_callback( void ) {
 
         switch( current_event.event_type ) {
         case SMTC_MODEM_EVENT_RESET:
-            SMTC_HAL_TRACE_INFO( "Event received: RESET\n" );
+            SMTC_HAL_TRACE_INFO( "Event received: RESET\r\n" );
 
             // Get internal credentials
             smtc_modem_get_joineui( stack_id, join_eui );
@@ -354,13 +350,13 @@ static void modem_event_callback( void ) {
             break;
 
         case SMTC_MODEM_EVENT_ALARM:
-            SMTC_HAL_TRACE_INFO( "Event received: ALARM\n" );
+            SMTC_HAL_TRACE_INFO( "Event received: ALARM\r\n" );
             smtc_modem_request_uplink( stack_id, KEEP_ALIVE_PORT, false, keep_alive_payload, KEEP_ALIVE_SIZE );
             smtc_modem_alarm_start_timer( KEEP_ALIVE_PERIOD_S );
             break;
 
         case SMTC_MODEM_EVENT_JOINED:
-            SMTC_HAL_TRACE_INFO( "Event received: JOINED\n" );
+            SMTC_HAL_TRACE_INFO( "Event received: JOINED\r\n" );
             /* Notify user with leds */
             smtc_board_led_set( smtc_board_get_led_tx_mask( ), false );
             smtc_board_led_pulse( smtc_board_get_led_rx_mask( ), true, LED_PERIOD_MS );
@@ -372,21 +368,21 @@ static void modem_event_callback( void ) {
             break;
 
         case SMTC_MODEM_EVENT_TXDONE:
-            SMTC_HAL_TRACE_INFO( "Event received: TXDONE (%d)\n", current_event.event_data.txdone.status );
-            SMTC_HAL_TRACE_INFO( "Transmission done\n" );
+            SMTC_HAL_TRACE_INFO( "Event received: TXDONE (%d)\r\n", current_event.event_data.txdone.status );
+            SMTC_HAL_TRACE_INFO( "Transmission done\r\n" );
             break;
 
         case SMTC_MODEM_EVENT_DOWNDATA:
-            SMTC_HAL_TRACE_INFO( "Event received: DOWNDATA\n" );
+            SMTC_HAL_TRACE_INFO( "Event received: DOWNDATA\r\n" );
             // Get downlink data
             smtc_modem_get_downlink_data( rx_payload, &rx_payload_size, &rx_metadata, &rx_remaining );
-            SMTC_HAL_TRACE_PRINTF( "Data received on port %u\n", rx_metadata.fport );
+            SMTC_HAL_TRACE_PRINTF( "Data received on port %u\r\n", rx_metadata.fport );
             SMTC_HAL_TRACE_ARRAY( "Received payload", rx_payload, rx_payload_size );
 
             switch (rx_metadata.fport) {
             case 1:
 
-                SMTC_HAL_TRACE_PRINTF( "payload in dec: %u\n", (rx_payload[0] << 8) + rx_payload[1]);
+                SMTC_HAL_TRACE_PRINTF( "payload in dec: %u\r\n", (rx_payload[0] << 8) + rx_payload[1]);
                 GEOLOCATION_GNSS_SCAN_PERIOD_S = (rx_payload[0] << 8) + rx_payload[1];
 
                 // smtc_modem_wifi_scan( stack_id, GEOLOCATION_WIFI_SCAN_PERIOD_S );
@@ -407,22 +403,22 @@ static void modem_event_callback( void ) {
             break;
 
         case SMTC_MODEM_EVENT_JOINFAIL:
-            SMTC_HAL_TRACE_INFO( "Event received: JOINFAIL\n" );
-            SMTC_HAL_TRACE_WARNING( "Join request failed \n" );
+            SMTC_HAL_TRACE_INFO( "Event received: JOINFAIL\r\n" );
+            SMTC_HAL_TRACE_WARNING( "Join request failed\r\n" );
             break;
 
         case SMTC_MODEM_EVENT_ALCSYNC_TIME:
-            SMTC_HAL_TRACE_INFO( "Event received: TIME\n" );
+            SMTC_HAL_TRACE_INFO( "Event received: TIME\r\n" );
             break;
 
         case SMTC_MODEM_EVENT_GNSS_SCAN_DONE:
-            SMTC_HAL_TRACE_INFO( "Event received: GNSS_SCAN_DONE\n" );
+            SMTC_HAL_TRACE_INFO( "Event received: GNSS_SCAN_DONE\r\n" );
             /* Get event data */
             smtc_modem_gnss_get_event_data_scan_done( stack_id, &scan_done_data );
             break;
 
         case SMTC_MODEM_EVENT_GNSS_TERMINATED:
-            SMTC_HAL_TRACE_INFO( "Event received: GNSS_TERMINATED\n" );
+            SMTC_HAL_TRACE_INFO( "Event received: GNSS_TERMINATED\r\n" );
             /* Notify user with leds */
             smtc_board_led_pulse( smtc_board_get_led_tx_mask( ), true, LED_PERIOD_MS );
             /* Get event data */
@@ -432,24 +428,24 @@ static void modem_event_callback( void ) {
             break;
 
         case SMTC_MODEM_EVENT_GNSS_ALMANAC_DEMOD_UPDATE:
-            SMTC_HAL_TRACE_INFO( "Event received: GNSS_ALMANAC_DEMOD_UPDATE\n" );
+            SMTC_HAL_TRACE_INFO( "Event received: GNSS_ALMANAC_DEMOD_UPDATE\r\n" );
             smtc_modem_almanac_demodulation_get_event_data_almanac_update( stack_id, &almanac_update_data );
             /* Store progress in keep alive payload */
             keep_alive_payload[0] = almanac_update_data.update_progress_gps;
             keep_alive_payload[1] = almanac_update_data.update_progress_beidou;
-            SMTC_HAL_TRACE_PRINTF( "GPS progress: %u%%\n", almanac_update_data.update_progress_gps );
-            SMTC_HAL_TRACE_PRINTF( "BDS progress: %u%%\n", almanac_update_data.update_progress_beidou );
-            SMTC_HAL_TRACE_PRINTF( "aborted: %u\n", almanac_update_data.stat_nb_aborted_by_rp );
+            SMTC_HAL_TRACE_PRINTF( "GPS progress: %u%%\r\n", almanac_update_data.update_progress_gps );
+            SMTC_HAL_TRACE_PRINTF( "BDS progress: %u%%\r\n", almanac_update_data.update_progress_beidou );
+            SMTC_HAL_TRACE_PRINTF( "aborted: %u\r\n", almanac_update_data.stat_nb_aborted_by_rp );
             break;
 
         case SMTC_MODEM_EVENT_WIFI_SCAN_DONE:
-            SMTC_HAL_TRACE_INFO( "Event received: WIFI_SCAN_DONE\n" );
+            SMTC_HAL_TRACE_INFO( "Event received: WIFI_SCAN_DONE\r\n" );
             /* Get event data */
             smtc_modem_wifi_get_event_data_scan_done( stack_id, &wifi_scan_done_data );
             break;
 
         case SMTC_MODEM_EVENT_WIFI_TERMINATED:
-            SMTC_HAL_TRACE_INFO( "Event received: WIFI_TERMINATED\n" );
+            SMTC_HAL_TRACE_INFO( "Event received: WIFI_TERMINATED\r\n" );
             /* Notify user with leds */
             smtc_board_led_pulse( smtc_board_get_led_tx_mask( ), true, LED_PERIOD_MS );
             /* Get event data */
@@ -459,15 +455,15 @@ static void modem_event_callback( void ) {
             break;
 
         case SMTC_MODEM_EVENT_LINK_CHECK:
-            SMTC_HAL_TRACE_INFO( "Event received: LINK_CHECK\n" );
+            SMTC_HAL_TRACE_INFO( "Event received: LINK_CHECK\r\n" );
             break;
 
         case SMTC_MODEM_EVENT_CLASS_B_STATUS:
-            SMTC_HAL_TRACE_INFO( "Event received: CLASS_B_STATUS\n" );
+            SMTC_HAL_TRACE_INFO( "Event received: CLASS_B_STATUS\r\n" );
             break;
 
         default:
-            SMTC_HAL_TRACE_ERROR( "Unknown event %u\n", current_event.event_type );
+            SMTC_HAL_TRACE_ERROR( "Unknown event %u\r\n", current_event.event_type );
             break;
         }
     } while( event_pending_count > 0 );

@@ -208,7 +208,7 @@ void lr1_stack_mac_region_config( lr1_stack_mac_t* lr1_mac )
 
     lr1_mac->ping_slot_dr              = real_const.const_beacon_dr;
     lr1_mac->ping_slot_periodicity_req = SMTC_REAL_PING_SLOT_PERIODICITY_DEFAULT;
-    SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG( "smtc_real_init done\n" );
+    SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG( "smtc_real_init done\r\n" );
 }
 
 /**************************************************************************************************/
@@ -250,14 +250,14 @@ void lr1_stack_mac_tx_frame_encrypt( lr1_stack_mac_t* lr1_mac )
             lr1_mac->fcnt_up, &lr1_mac->tx_payload[FHDROFFSET + lr1_mac->tx_fport_present + tx_fopts_length],
             lr1_mac->stack_id ) != SMTC_MODEM_CRYPTO_RC_SUCCESS )
     {
-        SMTC_MODEM_HAL_PANIC( "Crypto error during payload encryption\n" );
+        SMTC_MODEM_HAL_PANIC( "Crypto error during payload encryption\r\n" );
     }
 
     if( smtc_modem_crypto_compute_and_add_mic( &lr1_mac->tx_payload[0], lr1_mac->tx_payload_size, SMTC_SE_NWK_S_ENC_KEY,
                                                lr1_mac->dev_addr, UP_LINK, lr1_mac->fcnt_up,
                                                lr1_mac->stack_id ) != SMTC_MODEM_CRYPTO_RC_SUCCESS )
     {
-        SMTC_MODEM_HAL_PANIC( "Crypto error during mic computation\n" );
+        SMTC_MODEM_HAL_PANIC( "Crypto error during mic computation\r\n" );
     }
     lr1_mac->tx_payload_size = lr1_mac->tx_payload_size + 4;
 }
@@ -514,14 +514,14 @@ void lr1_stack_mac_tx_radio_start( lr1_stack_mac_t* lr1_mac )
         ral_lr_fhss_get_time_on_air_in_ms( ( &lr1_mac->rp->radio->ral ), &lr_fhss_param.ral_lr_fhss_params,
                                            lr1_mac->tx_payload_size, &toa );
 
-        // SMTC_MODEM_HAL_TRACE_PRINTF( "  Hop ID = %d\n", lr_fhss_param.hop_sequence_id );
+        // SMTC_MODEM_HAL_TRACE_PRINTF( "  Hop ID = %d\r\n", lr_fhss_param.hop_sequence_id );
 
         rp_task.type                  = RP_TASK_TYPE_TX_LR_FHSS;
         rp_task.launch_task_callbacks = lr1_stack_mac_tx_lr_fhss_launch_callback_for_rp;
     }
     else
     {
-        SMTC_MODEM_HAL_PANIC( "TX MODULATION NOT SUPPORTED\n" );
+        SMTC_MODEM_HAL_PANIC( "TX MODULATION NOT SUPPORTED\r\n" );
     }
 
     uint8_t my_hook_id;
@@ -547,7 +547,7 @@ void lr1_stack_mac_tx_radio_start( lr1_stack_mac_t* lr1_mac )
         RP_HOOK_STATUS_OK )
     {
         lr1_mac->radio_process_state = RADIOSTATE_ABORTED_BY_RP;
-        SMTC_MODEM_HAL_TRACE_WARNING( "Radio planner hook %d is busy\n", my_hook_id );
+        SMTC_MODEM_HAL_TRACE_WARNING( "Radio planner hook %d is busy\r\n", my_hook_id );
     }
 }
 
@@ -569,7 +569,7 @@ void lr1_stack_mac_rx_radio_start( lr1_stack_mac_t* lr1_mac, const rx_win_type_t
         rx_frequency = lr1_mac->rx2_frequency;
         break;
     default:
-        SMTC_MODEM_HAL_PANIC( "RX windows unknow\n" );
+        SMTC_MODEM_HAL_PANIC( "RX windows unknow\r\n" );
         break;
     }
 
@@ -639,7 +639,7 @@ void lr1_stack_mac_rx_radio_start( lr1_stack_mac_t* lr1_mac, const rx_win_type_t
     }
     else
     {
-        SMTC_MODEM_HAL_PANIC( "MODULATION NOT SUPPORTED\n" );
+        SMTC_MODEM_HAL_PANIC( "MODULATION NOT SUPPORTED\r\n" );
     }
 
     uint8_t my_hook_id;
@@ -664,25 +664,25 @@ void lr1_stack_mac_rx_radio_start( lr1_stack_mac_t* lr1_mac, const rx_win_type_t
     {
         lr1_mac->radio_process_state = RADIOSTATE_RX_ON;
 
-        SMTC_MODEM_HAL_TRACE_PRINTF( "\n  Open RX%d for Hook Id = %d", type - RX1 + 1, my_hook_id );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "\r\n  Open RX%d for Hook Id = %d", type - RX1 + 1, my_hook_id );
 
         if( radio_params.pkt_type == RAL_PKT_TYPE_LORA )
         {
             SMTC_MODEM_HAL_TRACE_PRINTF(
-                "  %s LoRa at %u ms: freq:%u, SF%u, %s, sync word = 0x%02x\n", smtc_name_rx_windows[type],
+                "  %s LoRa at %u ms: freq:%u, SF%u, %s, sync word = 0x%02x\r\n", smtc_name_rx_windows[type],
                 time_to_start, radio_params.rx.lora.rf_freq_in_hz, radio_params.rx.lora.mod_params.sf,
                 smtc_name_bw[radio_params.rx.lora.mod_params.bw], smtc_real_get_sync_word( lr1_mac->real ) );
         }
         else
         {
-            SMTC_MODEM_HAL_TRACE_PRINTF( "  %s FSK freq:%d\n", smtc_name_rx_windows[type],
+            SMTC_MODEM_HAL_TRACE_PRINTF( "  %s FSK freq:%d\r\n", smtc_name_rx_windows[type],
                                          radio_params.rx.gfsk.rf_freq_in_hz );
         }
     }
     else
     {
         lr1_mac->radio_process_state = RADIOSTATE_ABORTED_BY_RP;
-        SMTC_MODEM_HAL_TRACE_WARNING( "Radio planner hook %d is busy\n", my_hook_id );
+        SMTC_MODEM_HAL_TRACE_WARNING( "Radio planner hook %d is busy\r\n", my_hook_id );
     }
 }
 
@@ -708,21 +708,21 @@ void lr1_stack_mac_rp_callback( lr1_stack_mac_t* lr1_mac )
             lr1_mac->rp->radio_params[my_hook_id].rx.lora_pkt_status.rssi_pkt_in_dbm;
         lr1_mac->rx_down_data.rx_payload_size = ( uint8_t ) lr1_mac->rp->rx_payload_size[my_hook_id];
 
-        SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG( "payload size receive = %u, snr = %d , rssi = %d\n",
+        SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG( "payload size receive = %u, snr = %d , rssi = %d\r\n",
                                            lr1_mac->rx_down_data.rx_payload_size,
                                            lr1_mac->rp->radio_params[my_hook_id].rx.lora_pkt_status.snr_pkt_in_db,
                                            lr1_mac->rp->radio_params[my_hook_id].rx.lora_pkt_status.rssi_pkt_in_dbm );
 
         if( lr1_stack_mac_downlink_check_under_it( lr1_mac ) != OKLORAWAN )
         {  // Case receive a packet but it isn't a valid packet
-            SMTC_MODEM_HAL_TRACE_PRINTF( "Receive a packet But rejected and too late to restart\n" );
+            SMTC_MODEM_HAL_TRACE_PRINTF( "Receive a packet But rejected and too late to restart\r\n" );
             lr1_mac->rp_planner_status            = RP_STATUS_RX_TIMEOUT;
             lr1_mac->rx_down_data.rx_payload_size = 0;
         }
         break;
 
     case RP_STATUS_RX_CRC_ERROR:
-        SMTC_MODEM_HAL_TRACE_PRINTF( "RP_STATUS_RX_CRC_ERROR\n" );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "RP_STATUS_RX_CRC_ERROR\r\n" );
         break;
 
     case RP_STATUS_RX_TIMEOUT: {
@@ -748,7 +748,7 @@ void lr1_stack_mac_rp_callback( lr1_stack_mac_t* lr1_mac )
                                   smtc_modem_hal_get_board_delay_ms( );
 
         SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG(
-            "DR%u Fine tune correction (ms) = %d, error fine tune (ms) = %d, lr1_mac->rx_offset_ms = %d\n",
+            "DR%u Fine tune correction (ms) = %d, error fine tune (ms) = %d, lr1_mac->rx_offset_ms = %d\r\n",
             lr1_mac->rx_data_rate, lr1_mac->fine_tune_board_setting_delay_ms[lr1_mac->rx_data_rate], error_fine_tune,
             lr1_mac->rx_offset_ms );
 
@@ -766,11 +766,11 @@ void lr1_stack_mac_rp_callback( lr1_stack_mac_t* lr1_mac )
     break;
 
     case RP_STATUS_TASK_ABORTED:
-        SMTC_MODEM_HAL_TRACE_PRINTF( "lr1mac task aborted by the radioplanner\n" );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "lr1mac task aborted by the radioplanner\r\n" );
         break;
 
     default:
-        SMTC_MODEM_HAL_TRACE_PRINTF( "receive It RADIO error %u\n", lr1_mac->rp_planner_status );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "receive It RADIO error %u\r\n", lr1_mac->rp_planner_status );
         break;
     }
 
@@ -822,7 +822,7 @@ bool lr1_stack_mac_rx_timer_configure( lr1_stack_mac_t* lr1_mac, const rx_win_ty
 
     default:
         is_type_ok = false;
-        SMTC_MODEM_HAL_PANIC( "RX windows unknow\n" );
+        SMTC_MODEM_HAL_PANIC( "RX windows unknow\r\n" );
         break;
     }
 
@@ -847,7 +847,7 @@ bool lr1_stack_mac_rx_timer_configure( lr1_stack_mac_t* lr1_mac, const rx_win_ty
         }
         else
         {
-            SMTC_MODEM_HAL_PANIC( "MODULATION NOT SUPPORTED\n" );
+            SMTC_MODEM_HAL_PANIC( "MODULATION NOT SUPPORTED\r\n" );
         }
 
         uint32_t board_delay_ms = smtc_modem_hal_get_radio_tcxo_startup_delay_ms( ) +
@@ -861,7 +861,7 @@ bool lr1_stack_mac_rx_timer_configure( lr1_stack_mac_t* lr1_mac, const rx_win_ty
                                                lr1_mac->rx_window_symb, &lr1_mac->rx_offset_ms );
 
         SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG(
-            "rx_offset_ms:%d, rx_timeout_symb_in_ms:%d, rx_window_symb: %d, board_delay_ms:%d\n", lr1_mac->rx_offset_ms,
+            "rx_offset_ms:%d, rx_timeout_symb_in_ms:%d, rx_window_symb: %d, board_delay_ms:%d\r\n", lr1_mac->rx_offset_ms,
             lr1_mac->rx_timeout_symb_in_ms, lr1_mac->rx_window_symb, board_delay_ms );
 
         int32_t talarm_ms =
@@ -874,7 +874,7 @@ bool lr1_stack_mac_rx_timer_configure( lr1_stack_mac_t* lr1_mac, const rx_win_ty
         else
         {
             lr1_stack_mac_rx_radio_start( lr1_mac, type, tcurrent_ms + talarm_ms );
-            SMTC_MODEM_HAL_TRACE_PRINTF( "  Timer will expire in %d ms\n", ( talarm_ms ) );
+            SMTC_MODEM_HAL_TRACE_PRINTF( "Timer will expire in %d ms\r\n", ( talarm_ms ) );
             return false;
         }
     }
@@ -922,7 +922,7 @@ rx_packet_type_t lr1_stack_mac_rx_frame_decode( lr1_stack_mac_t* lr1_mac )
         }
         else
         {
-            SMTC_MODEM_HAL_TRACE_ERROR( " Process join accept failed with code = %d\n", rc );
+            SMTC_MODEM_HAL_TRACE_ERROR( " Process join accept failed with code = %d\r\n", rc );
         }
     }
     else
@@ -981,7 +981,7 @@ rx_packet_type_t lr1_stack_mac_rx_frame_decode( lr1_stack_mac_t* lr1_mac )
             }
             else
             {
-                SMTC_MODEM_HAL_PANIC( "Rx Window invalid\n" );
+                SMTC_MODEM_HAL_PANIC( "Rx Window invalid\r\n" );
             }
 
             lr1_mac->rx_down_data.rx_metadata.rx_datarate = lr1_mac->rx_data_rate;
@@ -1005,11 +1005,11 @@ rx_packet_type_t lr1_stack_mac_rx_frame_decode( lr1_stack_mac_t* lr1_mac )
                                                                fcnt_dwn_stack_tmp, &lr1_mac->nwk_payload[0],
                                                                lr1_mac->stack_id ) != SMTC_MODEM_CRYPTO_RC_SUCCESS )
                         {
-                            SMTC_MODEM_HAL_PANIC( "Crypto error during payload decryption\n" );
+                            SMTC_MODEM_HAL_PANIC( "Crypto error during payload decryption\r\n" );
                         }
                         if( lr1_mac->rx_down_data.rx_payload_size > NWK_MAC_PAYLOAD_MAX_SIZE )
                         {
-                            SMTC_MODEM_HAL_TRACE_WARNING( " Receive too many nwk frames\n" );
+                            SMTC_MODEM_HAL_TRACE_WARNING( " Receive too many nwk frames\r\n" );
                         }
                         else
                         {
@@ -1021,7 +1021,7 @@ rx_packet_type_t lr1_stack_mac_rx_frame_decode( lr1_stack_mac_t* lr1_mac )
                     else
                     {
                         status = ERRORLORAWAN;
-                        SMTC_MODEM_HAL_TRACE_WARNING( " Receive an not valid packet with FOpts bytes on port zero\n" );
+                        SMTC_MODEM_HAL_TRACE_WARNING( " Receive an not valid packet with FOpts bytes on port zero\r\n" );
                     }
                 }
                 else
@@ -1035,7 +1035,7 @@ rx_packet_type_t lr1_stack_mac_rx_frame_decode( lr1_stack_mac_t* lr1_mac )
                             fcnt_dwn_stack_tmp, &lr1_mac->rx_down_data.rx_payload[0],
                             lr1_mac->stack_id ) != SMTC_MODEM_CRYPTO_RC_SUCCESS )
                     {
-                        SMTC_MODEM_HAL_PANIC( "Crypto error during payload decryption\n" );
+                        SMTC_MODEM_HAL_PANIC( "Crypto error during payload decryption\r\n" );
                     }
 
                     if( lr1_mac->rx_fopts_length != 0 )
@@ -1083,7 +1083,7 @@ rx_packet_type_t lr1_stack_mac_rx_frame_decode( lr1_stack_mac_t* lr1_mac )
                                              // if received on RX1 or RX2
     }
 
-    SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG( " rx_packet_type = %d\n", rx_packet_type );
+    SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG( " rx_packet_type = %d\r\n", rx_packet_type );
     return ( rx_packet_type );
 }
 
@@ -1203,7 +1203,7 @@ void lr1_stack_mac_update( lr1_stack_mac_t* lr1_mac )
     if( ( lr1_mac->adr_ack_cnt >= lr1_mac->no_rx_packet_reset_threshold ) &&
         ( lr1_mac->no_rx_packet_reset_threshold > 0 ) )
     {
-        SMTC_MODEM_HAL_PANIC( "Reach max tx frame without dl, ul cnt:%d\n", lr1_mac->adr_ack_cnt );
+        SMTC_MODEM_HAL_PANIC( "Reach max tx frame without dl, ul cnt:%d\r\n", lr1_mac->adr_ack_cnt );
     }
 
     // If tx_fopts_length > tx_fopts_lengthsticky, first uplink with Answer(s),
@@ -1232,7 +1232,7 @@ void lr1_stack_mac_update( lr1_stack_mac_t* lr1_mac )
 
             if( status == ERRORLORAWAN )
             {
-                SMTC_MODEM_HAL_PANIC( " Data Rate incompatible with channel mask\n" );
+                SMTC_MODEM_HAL_PANIC( " Data Rate incompatible with channel mask\r\n" );
             }
         }
     }
@@ -1276,7 +1276,7 @@ status_lorawan_t lr1_stack_mac_cmd_parse( lr1_stack_mac_t* lr1_mac )
 
         if( lr1_mac->tx_fopts_length > DEVICE_MAC_PAYLOAD_MAX_SIZE )
         {
-            SMTC_MODEM_HAL_TRACE_WARNING( "too much cmd in the payload\n" );
+            SMTC_MODEM_HAL_TRACE_WARNING( "too much cmd in the payload\r\n" );
             return ( ERRORLORAWAN );
         }
         cmd_identifier = lr1_mac->nwk_payload[lr1_mac->nwk_payload_index];
@@ -1346,7 +1346,7 @@ status_lorawan_t lr1_stack_mac_cmd_parse( lr1_stack_mac_t* lr1_mac )
 
         default:
             lr1_mac->nwk_payload_size = 0;
-            SMTC_MODEM_HAL_TRACE_PRINTF( " Unknown mac command %02x\n", cmd_identifier );
+            SMTC_MODEM_HAL_TRACE_PRINTF( " Unknown mac command %02x\r\n", cmd_identifier );
             break;
         }
     }
@@ -1371,7 +1371,7 @@ void lr1_stack_mac_join_request_build( lr1_stack_mac_t* lr1_mac )
         lr1_mac->dev_nonce += 1;
 #endif
     }
-    SMTC_MODEM_HAL_TRACE_PRINTF( "DevNonce 0x%x, stack_id %u\n", lr1_mac->dev_nonce, lr1_mac->stack_id );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "DevNonce 0x%x, stack_id %u\r\n", lr1_mac->dev_nonce, lr1_mac->stack_id );
     lr1_mac->tx_mtype     = JOIN_REQUEST;
     lr1_mac->nb_trans_cpt = 1;
     lr1_mac->nb_trans     = 1;
@@ -1389,7 +1389,7 @@ void lr1_stack_mac_join_request_build( lr1_stack_mac_t* lr1_mac )
     if( smtc_modem_crypto_compute_join_mic( &lr1_mac->tx_payload[0], lr1_mac->tx_payload_size, &mic,
                                             lr1_mac->stack_id ) != SMTC_MODEM_CRYPTO_RC_SUCCESS )
     {
-        SMTC_MODEM_HAL_PANIC( "Crypto error during join mic computation\n" );
+        SMTC_MODEM_HAL_PANIC( "Crypto error during join mic computation\r\n" );
     }
 
     memcpy( &lr1_mac->tx_payload[lr1_mac->tx_payload_size], ( uint8_t* ) &mic, 4 );
@@ -1422,7 +1422,7 @@ status_lorawan_t lr1_stack_mac_join_accept( lr1_stack_mac_t* lr1_mac )
     // TODO check join_nonce as a counter !
     if( join_nonce_tmp == join_nonce_prev )
     {
-        SMTC_MODEM_HAL_TRACE_WARNING( "JoinNonce invalid (new:%u == prev:%u)\n", join_nonce_tmp, join_nonce_prev );
+        SMTC_MODEM_HAL_TRACE_WARNING( "JoinNonce invalid (new:%u == prev:%u)\r\r\n", join_nonce_tmp, join_nonce_prev );
         return ERRORLORAWAN;
     }
     memcpy( lr1_mac->join_nonce, join_nonce, 6 );
@@ -1458,22 +1458,22 @@ status_lorawan_t lr1_stack_mac_join_accept( lr1_stack_mac_t* lr1_mac )
 
     if( smtc_real_is_rx1_dr_offset_valid( lr1_mac->real, lr1_mac->rx1_dr_offset ) != OKLORAWAN )
     {
-        SMTC_MODEM_HAL_TRACE_WARNING( "JoinAccept invalid Rx1DrOffset %d\n", lr1_mac->rx1_dr_offset );
+        SMTC_MODEM_HAL_TRACE_WARNING( "JoinAccept invalid Rx1DrOffset %d\r\n", lr1_mac->rx1_dr_offset );
         return ERRORLORAWAN;
     }
 
     if( smtc_real_is_rx_dr_valid( lr1_mac->real, lr1_mac->rx2_data_rate ) != OKLORAWAN )
     {
-        SMTC_MODEM_HAL_TRACE_WARNING( "JoinAccept invalid Rx2Datarate %d\n", lr1_mac->rx2_data_rate );
+        SMTC_MODEM_HAL_TRACE_WARNING( "JoinAccept invalid Rx2Datarate %d\r\n", lr1_mac->rx2_data_rate );
         return ERRORLORAWAN;
     }
 
     lr1_mac->join_status = JOINED;
 
-    SMTC_MODEM_HAL_TRACE_PRINTF( " DevAddr= %x\n", lr1_mac->dev_addr );
-    SMTC_MODEM_HAL_TRACE_PRINTF( " MacRx1DataRateOffset= %d\n", lr1_mac->rx1_dr_offset );
-    SMTC_MODEM_HAL_TRACE_PRINTF( " MacRx2DataRate= %d\n", lr1_mac->rx2_data_rate );
-    SMTC_MODEM_HAL_TRACE_PRINTF( " MacRx1Delay= %d\n", lr1_mac->rx1_delay_s );
+    SMTC_MODEM_HAL_TRACE_PRINTF( " DevAddr= %x\r\n", lr1_mac->dev_addr );
+    SMTC_MODEM_HAL_TRACE_PRINTF( " MacRx1DataRateOffset= %d\r\n", lr1_mac->rx1_dr_offset );
+    SMTC_MODEM_HAL_TRACE_PRINTF( " MacRx2DataRate= %d\r\n", lr1_mac->rx2_data_rate );
+    SMTC_MODEM_HAL_TRACE_PRINTF( " MacRx1Delay= %d\r\n", lr1_mac->rx1_delay_s );
 
     return OKLORAWAN;
 }
@@ -1587,7 +1587,7 @@ uint32_t lr1_stack_toa_get( lr1_stack_mac_t* lr1_mac )
     }
     else
     {
-        SMTC_MODEM_HAL_PANIC( "TX MODULATION NOT SUPPORTED\n" );
+        SMTC_MODEM_HAL_PANIC( "TX MODULATION NOT SUPPORTED\r\n" );
     }
     return toa;
 }
@@ -1642,7 +1642,7 @@ static status_lorawan_t lr1_stack_mac_downlink_check_under_it( lr1_stack_mac_t* 
     if( ( rx_ftype_tmp == JOIN_REQUEST ) || ( rx_ftype_tmp == UNCONF_DATA_UP ) || ( rx_ftype_tmp == CONF_DATA_UP ) ||
         ( rx_ftype_tmp == REJOIN_REQUEST ) || ( rx_ftype_tmp == PROPRIETARY ) )
     {
-        SMTC_MODEM_HAL_TRACE_PRINTF( " BAD Ftype = %u for RX Frame\n", rx_ftype_tmp );
+        SMTC_MODEM_HAL_TRACE_PRINTF( " BAD Ftype = %u for RX Frame\r\n", rx_ftype_tmp );
         return ERRORLORAWAN;
     }
     // check devaddr
@@ -1654,7 +1654,7 @@ static status_lorawan_t lr1_stack_mac_downlink_check_under_it( lr1_stack_mac_t* 
 
         if( lr1_mac->dev_addr != dev_addr_tmp )
         {
-            SMTC_MODEM_HAL_TRACE_PRINTF( "class A BAD DevAddr=0x%x instead of 0x%x \n", dev_addr_tmp,
+            SMTC_MODEM_HAL_TRACE_PRINTF( "class A BAD DevAddr=0x%x instead of 0x%x \r\n", dev_addr_tmp,
                                          lr1_mac->dev_addr );
             return ERRORLORAWAN;
         }
@@ -1709,7 +1709,7 @@ static void link_check_parser( lr1_stack_mac_t* lr1_mac )
         if( lr1_mac->link_check_user_req == USER_MAC_REQ_SENT )
         {
             lr1_mac->link_check_user_req = USER_MAC_REQ_ACKED;
-            SMTC_MODEM_HAL_TRACE_PRINTF( " Margin = %d, GwCnt = %d\n",
+            SMTC_MODEM_HAL_TRACE_PRINTF( " Margin = %d, GwCnt = %d\r\n",
                                          lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 1],
                                          lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 2] );
 
@@ -1761,7 +1761,7 @@ static void link_adr_parser( lr1_stack_mac_t* lr1_mac )
 
     for( uint8_t i = 0; i < nb_link_adr_req; i++ )
     {
-        SMTC_MODEM_HAL_TRACE_PRINTF( "%u/%u - Cmd link_adr_parser = %02x %02x %02x %02x\n", i + 1, nb_link_adr_req,
+        SMTC_MODEM_HAL_TRACE_PRINTF( "%u/%u - Cmd link_adr_parser = %02x %02x %02x %02x\r\n", i + 1, nb_link_adr_req,
                                      lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + ( i * LINK_ADR_REQ_SIZE ) + 1],
                                      lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + ( i * LINK_ADR_REQ_SIZE ) + 2],
                                      lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + ( i * LINK_ADR_REQ_SIZE ) + 3],
@@ -1780,21 +1780,21 @@ static void link_adr_parser( lr1_stack_mac_t* lr1_mac )
 
         uint8_t ch_mask_cntl_temp =
             ( lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + ( i * LINK_ADR_REQ_SIZE ) + 4] & 0x70 ) >> 4;
-        SMTC_MODEM_HAL_TRACE_PRINTF( "%u - LINK ADR REQ , channel mask = 0x%x , ChMAstCntl = 0x%x\n", i + 1,
+        SMTC_MODEM_HAL_TRACE_PRINTF( "%u - LINK ADR REQ , channel mask = 0x%x , ChMAstCntl = 0x%x\r\n", i + 1,
                                      channel_mask_temp, ch_mask_cntl_temp );
 
         status_channel = smtc_real_build_channel_mask( lr1_mac->real, ch_mask_cntl_temp, channel_mask_temp );
         if( status_channel == ERROR_CHANNEL_CNTL )
         {  // Test ChannelCNTL not defined
             status_ans &= 0x6;
-            SMTC_MODEM_HAL_TRACE_WARNING( "INVALID CHANNEL CNTL\n" );
+            SMTC_MODEM_HAL_TRACE_WARNING( "INVALID CHANNEL CNTL\r\n" );
         }
     }
 
     if( status_channel == ERROR_CHANNEL_MASK )
     {
         status_ans &= 0x6;
-        SMTC_MODEM_HAL_TRACE_WARNING( "INVALID CHANNEL MASK\n" );
+        SMTC_MODEM_HAL_TRACE_WARNING( "INVALID CHANNEL MASK\r\n" );
     }
 
     // At This point global temporary channel mask is built and validated
@@ -1808,7 +1808,7 @@ static void link_adr_parser( lr1_stack_mac_t* lr1_mac )
             {
                 status_ans = 0x0;  // reject the cmd because even if the channel mask is valid it is not compatible
                                    // with our current adr distribution
-                SMTC_MODEM_HAL_TRACE_WARNING( "INVALID CHANNEL MASK in Mobile Mode\n" );
+                SMTC_MODEM_HAL_TRACE_WARNING( "INVALID CHANNEL MASK in Mobile Mode\r\n" );
             }
             else
             {
@@ -1822,7 +1822,7 @@ static void link_adr_parser( lr1_stack_mac_t* lr1_mac )
         else  // rejected because channel mask not valid
         {
             status_ans = 0x0;
-            SMTC_MODEM_HAL_TRACE_WARNING( "INVALID CHANNEL MASK\n" );
+            SMTC_MODEM_HAL_TRACE_WARNING( "INVALID CHANNEL MASK\r\n" );
         }
     }
     else  // static mode
@@ -1839,7 +1839,7 @@ static void link_adr_parser( lr1_stack_mac_t* lr1_mac )
             if( smtc_real_is_tx_dr_acceptable( lr1_mac->real, dr_tmp, true ) == ERRORLORAWAN )
             {  // Test Channelmask enables a not defined channel
                 status_ans &= 0x5;
-                SMTC_MODEM_HAL_TRACE_WARNING( "INVALID DATARATE\n" );
+                SMTC_MODEM_HAL_TRACE_WARNING( "INVALID DATARATE\r\n" );
             }
         }
 
@@ -1853,7 +1853,7 @@ static void link_adr_parser( lr1_stack_mac_t* lr1_mac )
             if( smtc_real_is_tx_power_valid( lr1_mac->real, tx_power_tmp ) == ERRORLORAWAN )
             {  // Test tx power
                 status_ans &= 0x3;
-                SMTC_MODEM_HAL_TRACE_WARNING( "INVALID TXPOWER\n" );
+                SMTC_MODEM_HAL_TRACE_WARNING( "INVALID TXPOWER\r\n" );
             }
         }
 
@@ -1877,9 +1877,9 @@ static void link_adr_parser( lr1_stack_mac_t* lr1_mac )
                 lr1_mac->tx_data_rate_adr = dr_tmp;
             }
             lr1_mac->available_link_adr = true;
-            SMTC_MODEM_HAL_TRACE_PRINTF( "MacTxDataRateAdr = %d\n", lr1_mac->tx_data_rate_adr );
-            SMTC_MODEM_HAL_TRACE_PRINTF( "MacTxPower = %d\n", lr1_mac->tx_power );
-            SMTC_MODEM_HAL_TRACE_PRINTF( "MacNbTrans = %d\n", lr1_mac->nb_trans );
+            SMTC_MODEM_HAL_TRACE_PRINTF( "MacTxDataRateAdr = %d\r\n", lr1_mac->tx_data_rate_adr );
+            SMTC_MODEM_HAL_TRACE_PRINTF( "MacTxPower = %d\r\n", lr1_mac->tx_power );
+            SMTC_MODEM_HAL_TRACE_PRINTF( "MacNbTrans = %d\r\n", lr1_mac->nb_trans );
         }
     }
 
@@ -1914,7 +1914,7 @@ static void rx_param_setup_parser( lr1_stack_mac_t* lr1_mac )
         return;
     }
     SMTC_MODEM_HAL_TRACE_PRINTF(
-        " Cmd rx_param_setup_parser = %x %x %x %x\n", lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 1],
+        " Cmd rx_param_setup_parser = %x %x %x %x\r\n", lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 1],
         lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 2], lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 3],
         lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 4] );
 
@@ -1925,7 +1925,7 @@ static void rx_param_setup_parser( lr1_stack_mac_t* lr1_mac )
     if( smtc_real_is_rx1_dr_offset_valid( lr1_mac->real, rx1_dr_offset_temp ) == ERRORLORAWAN )
     {
         status_ans &= 0x6;
-        SMTC_MODEM_HAL_TRACE_WARNING( "INVALID RX1DROFFSET\n" );
+        SMTC_MODEM_HAL_TRACE_WARNING( "INVALID RX1DROFFSET\r\n" );
     }
 
     // Valid MacRx2Dr And Prepare Ans
@@ -1933,7 +1933,7 @@ static void rx_param_setup_parser( lr1_stack_mac_t* lr1_mac )
     if( smtc_real_is_rx_dr_valid( lr1_mac->real, rx2_dr_temp ) == ERRORLORAWAN )
     {
         status_ans &= 0x5;
-        SMTC_MODEM_HAL_TRACE_WARNING( "INVALID RX2DR\n" );
+        SMTC_MODEM_HAL_TRACE_WARNING( "INVALID RX2DR\r\n" );
     }
 
     // Valid MacRx2Frequency And Prepare Ans
@@ -1943,7 +1943,7 @@ static void rx_param_setup_parser( lr1_stack_mac_t* lr1_mac )
     if( smtc_real_is_frequency_valid( lr1_mac->real, rx2_frequency_temp ) == ERRORLORAWAN )
     {
         status_ans &= 0x3;
-        SMTC_MODEM_HAL_TRACE_WARNING( "INVALID RX2 FREQUENCY\n" );
+        SMTC_MODEM_HAL_TRACE_WARNING( "INVALID RX2 FREQUENCY\r\n" );
     }
 
     // Update the mac parameters if case of no error
@@ -1952,9 +1952,9 @@ static void rx_param_setup_parser( lr1_stack_mac_t* lr1_mac )
         lr1_mac->rx1_dr_offset = rx1_dr_offset_temp;
         lr1_mac->rx2_data_rate = rx2_dr_temp;
         lr1_mac->rx2_frequency = rx2_frequency_temp;
-        SMTC_MODEM_HAL_TRACE_PRINTF( "MacRx1DataRateOffset = %d\n", lr1_mac->rx1_dr_offset );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "MacRx2DataRate = %d\n", lr1_mac->rx2_data_rate );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "MacRx2Frequency = %d\n", lr1_mac->rx2_frequency );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "MacRx1DataRateOffset = %d\r\n", lr1_mac->rx1_dr_offset );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "MacRx2DataRate = %d\r\n", lr1_mac->rx2_data_rate );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "MacRx2Frequency = %d\r\n", lr1_mac->rx2_frequency );
     }
 
     lr1_mac->nwk_payload_index += RXPARRAM_SETUP_REQ_SIZE;
@@ -1990,7 +1990,7 @@ static void duty_cycle_parser( lr1_stack_mac_t* lr1_mac )
         lr1_mac->nwk_payload_size = 0;
         return;
     }
-    SMTC_MODEM_HAL_TRACE_PRINTF( "Cmd duty_cycle_parser %x\n", lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 1] );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "Cmd duty_cycle_parser %x\r\n", lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 1] );
     lr1_mac->max_duty_cycle_index = ( lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 1] & 0x0F );
 
     lr1_mac->nwk_payload_index += DUTY_CYCLE_REQ_SIZE;
@@ -2019,7 +2019,7 @@ static void dev_status_parser( lr1_stack_mac_t* lr1_mac )
     }
     uint8_t my_hook_id;
     rp_hook_get_id( lr1_mac->rp, lr1_mac, &my_hook_id );
-    SMTC_MODEM_HAL_TRACE_PRINTF( "Receive a dev status req\n" );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "Receive a dev status req\r\n" );
     lr1_mac->nwk_payload_index += DEV_STATUS_REQ_SIZE;
 
     if( lr1_mac->nwk_payload_index <= lr1_mac->nwk_payload_size )
@@ -2047,13 +2047,13 @@ static void new_channel_parser( lr1_stack_mac_t* lr1_mac )
         return;
     }
     SMTC_MODEM_HAL_TRACE_PRINTF(
-        " Cmd new_channel_parser = %x %x %x %x %x\n", lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 1],
+        " Cmd new_channel_parser = %x %x %x %x %x\r\n", lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 1],
         lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 2], lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 3],
         lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 4], lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 5] );
 
     if( !smtc_real_is_new_channel_req_supported( lr1_mac->real ) )
     {
-        SMTC_MODEM_HAL_TRACE_WARNING( "NewChannelReq is not supported for this region\n" );
+        SMTC_MODEM_HAL_TRACE_WARNING( "NewChannelReq is not supported for this region\r\n" );
         lr1_mac->nwk_payload_index += NEW_CHANNEL_REQ_SIZE;
         return;
     }
@@ -2065,7 +2065,7 @@ static void new_channel_parser( lr1_stack_mac_t* lr1_mac )
     if( smtc_real_is_channel_index_valid( lr1_mac->real, channel_index_temp ) == ERRORLORAWAN )
     {
         status_ans &= 0x0;
-        SMTC_MODEM_HAL_TRACE_WARNING( "INVALID CHANNEL INDEX\n" );
+        SMTC_MODEM_HAL_TRACE_WARNING( "INVALID CHANNEL INDEX\r\n" );
     }
 
     // Valid Frequency
@@ -2074,7 +2074,7 @@ static void new_channel_parser( lr1_stack_mac_t* lr1_mac )
     if( smtc_real_is_nwk_received_tx_frequency_valid( lr1_mac->real, frequency_temp ) == ERRORLORAWAN )
     {
         status_ans &= 0x2;
-        SMTC_MODEM_HAL_TRACE_WARNING( "INVALID FREQUENCY\n" );
+        SMTC_MODEM_HAL_TRACE_WARNING( "INVALID FREQUENCY\r\n" );
     }
 
     // Valid DRMIN/MAX
@@ -2082,20 +2082,20 @@ static void new_channel_parser( lr1_stack_mac_t* lr1_mac )
     if( smtc_real_is_tx_dr_valid( lr1_mac->real, dr_range_min_temp ) == ERRORLORAWAN )
     {
         status_ans &= 0x1;
-        SMTC_MODEM_HAL_TRACE_WARNING( "INVALID DR MIN\n" );
+        SMTC_MODEM_HAL_TRACE_WARNING( "INVALID DR MIN\r\n" );
     }
 
     uint8_t dr_range_max_temp = ( lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 5] & 0xF0 ) >> 4;
     if( smtc_real_is_tx_dr_valid( lr1_mac->real, dr_range_max_temp ) == ERRORLORAWAN )
     {
         status_ans &= 0x1;
-        SMTC_MODEM_HAL_TRACE_WARNING( "INVALID DR MAX\n" );
+        SMTC_MODEM_HAL_TRACE_WARNING( "INVALID DR MAX\r\n" );
     }
 
     if( dr_range_max_temp < dr_range_min_temp )
     {
         status_ans &= 0x1;
-        SMTC_MODEM_HAL_TRACE_WARNING( "INVALID DR MAX < DR MIN\n" );
+        SMTC_MODEM_HAL_TRACE_WARNING( "INVALID DR MAX < DR MIN\r\n" );
     }
 
     // Update the mac parameters if there is no error
@@ -2113,7 +2113,7 @@ static void new_channel_parser( lr1_stack_mac_t* lr1_mac )
         {
             smtc_real_set_channel_enabled( lr1_mac->real, CHANNEL_ENABLED, channel_index_temp );
         }
-        SMTC_MODEM_HAL_TRACE_PRINTF( "MacTxFrequency [ %d ] = %d, DrMin = %d, DrMax = %d\n", channel_index_temp,
+        SMTC_MODEM_HAL_TRACE_PRINTF( "MacTxFrequency [ %d ] = %d, DrMin = %d, DrMax = %d\r\n", channel_index_temp,
                                      smtc_real_get_tx_channel_frequency( lr1_mac->real, channel_index_temp ),
                                      dr_range_min_temp, dr_range_max_temp );
     }
@@ -2144,7 +2144,7 @@ static void rx_timing_setup_parser( lr1_stack_mac_t* lr1_mac )
         lr1_mac->nwk_payload_size = 0;
         return;
     }
-    SMTC_MODEM_HAL_TRACE_PRINTF( "Cmd rx_timing_setup_parser = %x\n",
+    SMTC_MODEM_HAL_TRACE_PRINTF( "Cmd rx_timing_setup_parser = %x\r\n",
                                  lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 1] );
     lr1_mac->rx1_delay_s = ( lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 1] & 0xF );
     if( lr1_mac->rx1_delay_s == 0 )
@@ -2184,12 +2184,12 @@ static void tx_param_setup_parser( lr1_stack_mac_t* lr1_mac )
         lr1_mac->nwk_payload_size = 0;
         return;
     }
-    SMTC_MODEM_HAL_TRACE_PRINTF( "Cmd tx_param_setup_parser = %x\n",
+    SMTC_MODEM_HAL_TRACE_PRINTF( "Cmd tx_param_setup_parser = %x\r\n",
                                  lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 1] );
 
     if( !smtc_real_is_tx_param_setup_req_supported( lr1_mac->real ) == true )
     {
-        SMTC_MODEM_HAL_TRACE_WARNING( "TxParamSetupReq is not supported for this region\n" );
+        SMTC_MODEM_HAL_TRACE_WARNING( "TxParamSetupReq is not supported for this region\r\n" );
         lr1_mac->nwk_payload_index += TXPARAM_SETUP_REQ_SIZE;
         return;
     }
@@ -2238,13 +2238,13 @@ static void dl_channel_parser( lr1_stack_mac_t* lr1_mac )
         return;
     }
     SMTC_MODEM_HAL_TRACE_PRINTF(
-        "Cmd dl_channel_parser = %x %x %x %x \n", lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 1],
+        "Cmd dl_channel_parser = %x %x %x %x \r\n", lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 1],
         lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 2], lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 3],
         lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 4] );
 
     if( !smtc_real_is_new_channel_req_supported( lr1_mac->real ) )
     {
-        SMTC_MODEM_HAL_TRACE_WARNING( "DlChannelReq is not supported for this region\n" );
+        SMTC_MODEM_HAL_TRACE_WARNING( "DlChannelReq is not supported for this region\r\n" );
         lr1_mac->nwk_payload_index += DL_CHANNEL_REQ_SIZE;
         return;
     }
@@ -2256,7 +2256,7 @@ static void dl_channel_parser( lr1_stack_mac_t* lr1_mac )
     if( smtc_real_get_tx_channel_frequency( lr1_mac->real, channel_index_temp ) == 0 )
     {
         status_ans &= 0x1;
-        SMTC_MODEM_HAL_TRACE_WARNING( "INVALID CHANNEL INDEX\n" );
+        SMTC_MODEM_HAL_TRACE_WARNING( "INVALID CHANNEL INDEX\r\n" );
     }
     // Valid Frequency
     uint32_t frequency_temp =
@@ -2264,7 +2264,7 @@ static void dl_channel_parser( lr1_stack_mac_t* lr1_mac )
     if( smtc_real_is_frequency_valid( lr1_mac->real, frequency_temp ) == ERRORLORAWAN )
     {
         status_ans &= 0x2;
-        SMTC_MODEM_HAL_TRACE_WARNING( "INVALID FREQUENCY\n" );
+        SMTC_MODEM_HAL_TRACE_WARNING( "INVALID FREQUENCY\r\n" );
     }
 
     // Update the mac parameters if case of no error
@@ -2274,7 +2274,7 @@ static void dl_channel_parser( lr1_stack_mac_t* lr1_mac )
         {
             status_ans = 0;
         }
-        SMTC_MODEM_HAL_TRACE_WARNING( "MacRx1Frequency [ %u ] = %d\n", channel_index_temp,
+        SMTC_MODEM_HAL_TRACE_WARNING( "MacRx1Frequency [ %u ] = %d\r\n", channel_index_temp,
                                       smtc_real_get_rx1_channel_frequency( lr1_mac->real, channel_index_temp ) );
     }
 
@@ -2329,7 +2329,7 @@ static status_lorawan_t device_time_ans_parser( lr1_stack_mac_t* lr1_mac )
         lr1_mac->device_time_user_req = USER_MAC_REQ_ACKED;
 
         SMTC_MODEM_HAL_TRACE_PRINTF(
-            "Cmd device_time_ans_parser = %x %x %x %x %x\n", lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 1],
+            "Cmd device_time_ans_parser = %x %x %x %x %x\r\n", lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 1],
             lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 2], lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 3],
             lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 4],
             lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 5] );
@@ -2341,7 +2341,7 @@ static status_lorawan_t device_time_ans_parser( lr1_stack_mac_t* lr1_mac )
 
         lr1_mac->fractional_second = ( uint32_t ) ( lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 5] * 1000 ) >> 8;
 
-        SMTC_MODEM_HAL_TRACE_PRINTF( "SecondsSinceEpoch %u, FractionalSecond %u\n", lr1_mac->seconds_since_epoch,
+        SMTC_MODEM_HAL_TRACE_PRINTF( "SecondsSinceEpoch %u, FractionalSecond %u\r\n", lr1_mac->seconds_since_epoch,
                                      lr1_mac->fractional_second );
     }
     else
@@ -2367,7 +2367,7 @@ static void beacon_freq_req_parser( lr1_stack_mac_t* lr1_mac )
         return;
     }
     SMTC_MODEM_HAL_TRACE_PRINTF(
-        "Cmd beacon_freq_req_parser = %x %x %x %x\n", lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 1],
+        "Cmd beacon_freq_req_parser = %x %x %x %x\r\n", lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 1],
         lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 2], lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 3],
         lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 4] );
 
@@ -2383,7 +2383,7 @@ static void beacon_freq_req_parser( lr1_stack_mac_t* lr1_mac )
         if( smtc_real_is_frequency_valid( lr1_mac->real, frequency_temp ) == ERRORLORAWAN )
         {
             status_ans &= 0x0;
-            SMTC_MODEM_HAL_TRACE_WARNING( "INVALID BEACON FREQUENCY\n" );
+            SMTC_MODEM_HAL_TRACE_WARNING( "INVALID BEACON FREQUENCY\r\n" );
         }
     }
 
@@ -2392,7 +2392,7 @@ static void beacon_freq_req_parser( lr1_stack_mac_t* lr1_mac )
     {
         lr1_mac->beacon_freq_hz = frequency_temp;
         SMTC_MODEM_HAL_TRACE_PRINTF(
-            "MacBeaconFrequency %d\n",
+            "MacBeaconFrequency %d\r\n",
             ( lr1_mac->beacon_freq_hz != 0 )
                 ? lr1_mac->beacon_freq_hz
                 : smtc_real_get_beacon_frequency( lr1_mac->real, smtc_modem_hal_get_time_in_ms( ) ) );
@@ -2425,7 +2425,7 @@ static void ping_slot_channel_req_parser( lr1_stack_mac_t* lr1_mac )
         return;
     }
     SMTC_MODEM_HAL_TRACE_PRINTF(
-        " Cmd ping_slot_channel_req_parser = %x %x %x %x\n", lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 1],
+        " Cmd ping_slot_channel_req_parser = %x %x %x %x\r\n", lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 1],
         lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 2], lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 3],
         lr1_mac->nwk_payload[lr1_mac->nwk_payload_index + 4] );
 
@@ -2441,7 +2441,7 @@ static void ping_slot_channel_req_parser( lr1_stack_mac_t* lr1_mac )
         if( smtc_real_is_frequency_valid( lr1_mac->real, frequency_temp ) == ERRORLORAWAN )
         {
             status_ans &= 0x2;
-            SMTC_MODEM_HAL_TRACE_WARNING( "INVALID PING SLOT FREQUENCY\n" );
+            SMTC_MODEM_HAL_TRACE_WARNING( "INVALID PING SLOT FREQUENCY\r\n" );
         }
     }
 
@@ -2450,7 +2450,7 @@ static void ping_slot_channel_req_parser( lr1_stack_mac_t* lr1_mac )
     if( smtc_real_is_rx_dr_valid( lr1_mac->real, dr_temp ) == ERRORLORAWAN )
     {
         status_ans &= 0x01;
-        SMTC_MODEM_HAL_TRACE_WARNING( "INVALID PING SLOT DR\n" );
+        SMTC_MODEM_HAL_TRACE_WARNING( "INVALID PING SLOT DR\r\n" );
     }
 
     // Update the mac parameters if case of no error
@@ -2459,8 +2459,8 @@ static void ping_slot_channel_req_parser( lr1_stack_mac_t* lr1_mac )
         lr1_mac->ping_slot_freq_hz = frequency_temp;
         lr1_mac->ping_slot_dr      = dr_temp;
 
-        SMTC_MODEM_HAL_TRACE_PRINTF( "MacPingSlotDataRate = %d\n", lr1_mac->ping_slot_dr );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "MacPingSlotFrequency = %d\n", lr1_mac->ping_slot_freq_hz );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "MacPingSlotDataRate = %d\r\n", lr1_mac->ping_slot_dr );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "MacPingSlotFrequency = %d\r\n", lr1_mac->ping_slot_freq_hz );
     }
 
     lr1_mac->nwk_payload_index += PING_SLOT_CHANNEL_REQ_SIZE;
@@ -2502,7 +2502,7 @@ static status_lorawan_t ping_slot_info_ans_parser( lr1_stack_mac_t* lr1_mac )
     if( lr1_mac->ping_slot_info_user_req == USER_MAC_REQ_SENT )
     {
         lr1_mac->ping_slot_info_user_req = USER_MAC_REQ_ACKED;
-        SMTC_MODEM_HAL_TRACE_PRINTF( " PingSlotInfoAns\n" );
+        SMTC_MODEM_HAL_TRACE_PRINTF( " PingSlotInfoAns\r\n" );
     }
     else
     {

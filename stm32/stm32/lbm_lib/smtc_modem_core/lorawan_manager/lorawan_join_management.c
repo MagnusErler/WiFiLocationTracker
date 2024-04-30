@@ -164,7 +164,7 @@ static void lorawan_join_management_service_on_launch( void* context )
 {
     if( lorawan_api_isjoined( STACK_ID_CURRENT_TASK ) == JOINED )
     {
-        SMTC_MODEM_HAL_TRACE_WARNING( "DEVICE ALREADY JOINED\n" );
+        SMTC_MODEM_HAL_TRACE_WARNING( "DEVICE ALREADY JOINED\r\n" );
     }
     else
     {
@@ -210,7 +210,7 @@ static void lorawan_join_internal_add_task( uint8_t stack_id )
     task_join.time_to_execute_s = smtc_modem_hal_get_random_nb_in_range( 0, 5 );
 
 #if defined( TEST_BYPASS_JOIN_DUTY_CYCLE )
-    SMTC_MODEM_HAL_TRACE_WARNING( "BYPASS JOIN DUTY CYCLE activated\n" );
+    SMTC_MODEM_HAL_TRACE_WARNING( "BYPASS JOIN DUTY CYCLE activated\r\n" );
     task_join.time_to_execute_s += current_time_s;
 #else
     if( lorawan_api_modem_certification_is_enabled( stack_id ) == true )
@@ -225,11 +225,11 @@ static void lorawan_join_internal_add_task( uint8_t stack_id )
 
     if( ( int32_t ) ( task_join.time_to_execute_s - current_time_s ) <= 0 )
     {
-        SMTC_MODEM_HAL_TRACE_PRINTF( " Start a new join sequence now on stack %u\n", stack_id );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "Start a new join sequence now on stack %u\r\n", stack_id );
     }
     else
     {
-        SMTC_MODEM_HAL_TRACE_PRINTF( " Start a new join sequence in %d seconds on stack %u\n",
+        SMTC_MODEM_HAL_TRACE_PRINTF( "Start a new join sequence in %d seconds on stack %u\r\n",
                                      task_join.time_to_execute_s - current_time_s, stack_id );
     }
 

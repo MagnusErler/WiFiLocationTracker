@@ -100,7 +100,7 @@
     {                                                                                                \
         if( ( fragmentation_package_rx_buffer_index + x ) > fragmentation_package_rx_buffer_length ) \
         {                                                                                            \
-            SMTC_MODEM_HAL_TRACE_ERROR( "%u\n", fragmentation_package_rx_buffer_length );            \
+            SMTC_MODEM_HAL_TRACE_ERROR( "%u\r\n", fragmentation_package_rx_buffer_length );            \
             return FRAG_STATUS_ERROR;                                                                \
         }                                                                                            \
     } while( 0 )
@@ -253,7 +253,7 @@ void lorawan_fragmentation_package_services_init( uint8_t* service_id, uint8_t t
                                                   void ( **on_update_callback )( void* ), void** context_callback )
 {
     SMTC_MODEM_HAL_TRACE_PRINTF_DEBUG(
-        " lorawan_fragmentation_package_services_init task_id %d, service_id %d, CURRENT_STACK:%d \n", task_id,
+        " lorawan_fragmentation_package_services_init task_id %d, service_id %d, CURRENT_STACK:%d \r\n", task_id,
         *service_id, CURRENT_STACK );
 
     IS_VALID_OBJECT_ID( *service_id );
@@ -306,7 +306,7 @@ uint8_t lorawan_fragmentation_package_service_downlink_handler( lr1_stack_mac_do
     uint8_t stack_id = rx_down_data->stack_id;
     if( stack_id >= NUMBER_OF_FRAGMENTED_PACKAGE_OBJ )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "stack id not valid %u \n", stack_id );
+        SMTC_MODEM_HAL_TRACE_ERROR( "stack id not valid %u \r\n", stack_id );
         return MODEM_DOWNLINK_UNCONSUMED;
     }
 
@@ -327,7 +327,7 @@ uint8_t lorawan_fragmentation_package_service_downlink_handler( lr1_stack_mac_do
     if( ( rx_down_data->rx_metadata.rx_fport_present == true ) &&
         ( rx_down_data->rx_metadata.rx_fport == FRAGMENTATION_PORT ) && ( rx_down_data->rx_payload_size > 0 ) )
     {
-        SMTC_MODEM_HAL_TRACE_PRINTF( "lorawan_fragmentation_package_service_downlink_handler receive data on port %d\n",
+        SMTC_MODEM_HAL_TRACE_PRINTF( "lorawan_fragmentation_package_service_downlink_handler receive data on port %d\r\n",
                                      FRAGMENTATION_PORT );
         frag_status_t frag_status =
             fragmentation_package_parser( ctx, rx_down_data->rx_payload, rx_down_data->rx_payload_size,
@@ -360,7 +360,7 @@ bool lorawan_fragmentation_package_service_mpa_injector( uint8_t stack_id, uint8
 
     if( stack_id >= NUMBER_OF_FRAGMENTED_PACKAGE_OBJ )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "stack id not valid %u \n", stack_id );
+        SMTC_MODEM_HAL_TRACE_ERROR( "stack id not valid %u \r\n", stack_id );
         return false;
     }
 
@@ -384,7 +384,7 @@ bool lorawan_fragmentation_package_service_mpa_injector( uint8_t stack_id, uint8
     }
     *nb_bytes_read_payload_in = frag_req_cmd_size[cmd_id];
 
-    SMTC_MODEM_HAL_TRACE_WARNING( "FRAG CiD 0x%02x (byte read %u)\n", cmd_id, *nb_bytes_read_payload_in );
+    SMTC_MODEM_HAL_TRACE_WARNING( "FRAG CiD 0x%02x (byte read %u)\r\n", cmd_id, *nb_bytes_read_payload_in );
     // check cmd id to find cmd_id length special case for data_fragment
     if( cmd_id <= FRAGMENTATION_SESSION_DELETE_ANS )
     {
@@ -406,7 +406,7 @@ bool lorawan_fragmentation_package_service_mpa_injector( uint8_t stack_id, uint8
     {
         SMTC_MODEM_HAL_TRACE_ERROR(
             " MPA Package implementation doesn't support to receive fragments , Fragment have to be received directly "
-            "by the fragmentation package itself\n" );
+            "by the fragmentation package itself\r\n" );
         return false;
     }
 }
@@ -445,7 +445,7 @@ static void lorawan_fragmentation_add_task( uint8_t service_id )
         task.time_to_execute_s = smtc_modem_hal_get_time_in_s( ) + smtc_modem_hal_get_random_nb_in_range( 0, 3 );
         if( modem_supervisor_add_task( &task ) != TASK_VALID )
         {
-            SMTC_MODEM_HAL_PANIC( "Task not valid\n" );
+            SMTC_MODEM_HAL_PANIC( "Task not valid\r\n" );
         }
         lorawan_fragmentation_package_ctx[service_id].is_pending_task = true;
     }
@@ -577,7 +577,7 @@ static frag_status_t fragmentation_package_parser( lorawan_fragmentation_package
             frag_session_data_tmp.frag_group_data.descriptor +=
                 ( fragmentation_package_rx_buffer[fragmentation_package_rx_buffer_index + 10] << 24 ) & 0xFF000000;
             fragmentation_package_rx_buffer_index += FRAGMENTATION_SESSION_SETUP_REQ_SIZE;
-            SMTC_MODEM_HAL_TRACE_PRINTF( " \nfrag_nb = %d , \nfrag_size = %d \n ",
+            SMTC_MODEM_HAL_TRACE_PRINTF( " \r\nfrag_nb = %d , \r\nfrag_size = %d \r\n ",
                                          frag_session_data_tmp.frag_group_data.frag_nb,
                                          frag_session_data_tmp.frag_group_data.frag_size );
             if( frag_session_data_tmp.frag_group_data.control.frag_algo > 0 )
@@ -669,7 +669,7 @@ static frag_status_t fragmentation_package_parser( lorawan_fragmentation_package
 
             bool accept_data = false;
 
-            SMTC_MODEM_HAL_TRACE_PRINTF( "Fuota fragmentation_package_rx_window %d\n",
+            SMTC_MODEM_HAL_TRACE_PRINTF( "Fuota fragmentation_package_rx_window %d\r\n",
                                          fragmentation_package_rx_window );
 
             if( ( frag_session_data[frag_index].frag_group_data.frag_session.mc_group_bit_mask & 0x1 ) == 0x1 )
@@ -719,7 +719,7 @@ static frag_status_t fragmentation_package_parser( lorawan_fragmentation_package
                     ( frag_session_data[frag_index].frag_decoder_process_status == FRAG_SESSION_NOT_STARTED ) )
                 {
                     frag_session_data[frag_index].frag_decoder_process_status = FRAG_SESSION_ONGOING;
-                    SMTC_MODEM_HAL_TRACE_PRINTF( "Fuota FRAG_SESSION_ONGOING\n" );
+                    SMTC_MODEM_HAL_TRACE_PRINTF( "Fuota FRAG_SESSION_ONGOING\r\n" );
                 }
 
                 if( frag_session_data[frag_index].frag_decoder_process_status >= FRAG_SESSION_FINISHED_SUCCESSFULLY )
@@ -737,8 +737,8 @@ static frag_status_t fragmentation_package_parser( lorawan_fragmentation_package
                         frag_counter, &fragmentation_package_rx_buffer[fragmentation_package_rx_buffer_index + 3] );
                     frag_session_data[frag_index].frag_decoder_status = FragDecoderGetStatus( );
                     SMTC_MODEM_HAL_TRACE_PRINTF(
-                        "\nFuota session info : \nCurrent fragment index = %d,\nCurrent fragment counter = %d,\nNumber "
-                        "of missed packets = %d,\n",
+                        "\r\nFuota session info : \r\nCurrent fragment index = %d,\r\nCurrent fragment counter = %d,\r\nNumber "
+                        "of missed packets = %d,\r\n",
                         frag_index, frag_session_data[frag_index].frag_decoder_status.FragNbRx,
                         frag_session_data[frag_index].frag_decoder_status.FragNbLost );
                 }
@@ -747,11 +747,11 @@ static frag_status_t fragmentation_package_parser( lorawan_fragmentation_package
                     if( frag_session_data[frag_index].frag_decoder_process_status ==
                         FRAG_SESSION_FINISHED_SUCCESSFULLY )
                     {
-                        SMTC_MODEM_HAL_TRACE_PRINTF( " FILE RECONSTRUCTS SUCCESSFULLY !\n" );
+                        SMTC_MODEM_HAL_TRACE_PRINTF( " FILE RECONSTRUCTS SUCCESSFULLY !\r\n" );
                     }
                     else  // FRAG_SESSION_FAILED
                     {
-                        SMTC_MODEM_HAL_TRACE_PRINTF( " FUOTA SESSION FAILED !\n" );
+                        SMTC_MODEM_HAL_TRACE_PRINTF( " FUOTA SESSION FAILED !\r\n" );
                     }
                     uint8_t status = ( frag_session_data[frag_index].frag_decoder_process_status < 255 )
                                          ? frag_session_data[frag_index].frag_decoder_process_status
@@ -763,7 +763,7 @@ static frag_status_t fragmentation_package_parser( lorawan_fragmentation_package
             break;
         }
         default:
-            SMTC_MODEM_HAL_TRACE_ERROR( "parser fragmentation package 0x%x ?\n",
+            SMTC_MODEM_HAL_TRACE_ERROR( "parser fragmentation package 0x%x ?\r\n",
                                         fragmentation_package_rx_buffer[fragmentation_package_rx_buffer_index] );
             return FRAG_STATUS_ERROR;
             break;

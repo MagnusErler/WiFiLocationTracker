@@ -86,7 +86,7 @@
     {                                                                            \
         if( mw_wifi_send_obj.initialized == false )                              \
         {                                                                        \
-            SMTC_MODEM_HAL_TRACE_WARNING( "Wi-Fi send service not launched\n" ); \
+            SMTC_MODEM_HAL_TRACE_WARNING( "Wi-Fi send service not launched\r\n" ); \
             break;                                                               \
         }                                                                        \
     } while( 0 )
@@ -221,7 +221,7 @@ void mw_wifi_send_services_init( uint8_t* service_id, uint8_t task_id,
                                  void ( **on_launch_callback )( void* ), void ( **on_update_callback )( void* ),
                                  void** context_callback )
 {
-    SMTC_MODEM_HAL_TRACE_PRINTF( "mw_wifi_send_services_init task_id %d, service_id %d, CURRENT_STACK:%d \n", task_id,
+    SMTC_MODEM_HAL_TRACE_PRINTF( "mw_wifi_send_services_init task_id %d, service_id %d, CURRENT_STACK:%d \r\n", task_id,
                                  *service_id, CURRENT_STACK );
 
     IS_VALID_OBJECT_ID( *service_id );
@@ -243,7 +243,7 @@ void mw_wifi_send_services_init( uint8_t* service_id, uint8_t task_id,
 
 void mw_wifi_send_add_task( const wifi_scan_all_result_t* wifi_results )
 {
-    SMTC_MODEM_HAL_TRACE_PRINTF( "mw_wifi_send_add_task: add task in supervisor\n" );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "mw_wifi_send_add_task: add task in supervisor\r\n" );
 
     IS_SERVICE_INITIALIZED( );
 
@@ -257,7 +257,7 @@ void mw_wifi_send_add_task( const wifi_scan_all_result_t* wifi_results )
     if( ( mw_wifi_send_obj.send_mode == SMTC_MODEM_SEND_MODE_BYPASS ) ||
         ( mw_wifi_send_obj.wifi_results->nbr_results < WIFI_SCAN_NB_AP_MIN ) )
     {
-        SMTC_MODEM_HAL_TRACE_PRINTF( "mw_wifi_send_add_task: no scan to be sent\n" );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "mw_wifi_send_add_task: no scan to be sent\r\n" );
         send_event( SMTC_MODEM_EVENT_WIFI_TERMINATED );
     }
     else
@@ -289,13 +289,13 @@ smtc_modem_return_code_t mw_wifi_get_event_data_terminated( smtc_modem_wifi_even
 {
     if( data == NULL )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "mw_wifi_get_event_data_terminated: Provided pointer is NULL\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "mw_wifi_get_event_data_terminated: Provided pointer is NULL\r\n" );
         return SMTC_MODEM_RC_INVALID;
     }
 
     if( mw_wifi_send_obj.pending_evt_terminated == false )
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "mw_wifi_get_event_data_terminated: no TERMINATED event pending\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "mw_wifi_get_event_data_terminated: no TERMINATED event pending\r\n" );
         return SMTC_MODEM_RC_FAIL;
     }
 
@@ -341,7 +341,7 @@ static void mw_wifi_send_service_on_launch( void* context_callback )
     status_lorawan_t send_status  = ERRORLORAWAN;
     stask_manager*   task_manager = ( stask_manager* ) context_callback;
 
-    WIFI_SEND_TRACE_PRINTF_DEBUG( "mw_wifi_send_service_on_launch\n" );
+    WIFI_SEND_TRACE_PRINTF_DEBUG( "mw_wifi_send_service_on_launch\r\n" );
 
     IS_SERVICE_INITIALIZED( );
 
@@ -358,13 +358,13 @@ static void mw_wifi_send_service_on_launch( void* context_callback )
         if( send_status == OKLORAWAN )
         {
             task_manager->modem_task[mw_wifi_send_obj.task_id].task_context = true;
-            SMTC_MODEM_HAL_TRACE_INFO( "Wi-Fi Tx on FPort %d\n", mw_wifi_send_obj.fport );
+            SMTC_MODEM_HAL_TRACE_INFO( "Wi-Fi Tx on FPort %d\r\n", mw_wifi_send_obj.fport );
             SMTC_MODEM_HAL_TRACE_ARRAY( "Wi-Fi Tx", wifi_result_buffer, wifi_result_buffer_size );
         }
         else
         {
             task_manager->modem_task[mw_wifi_send_obj.task_id].task_context = false;
-            SMTC_MODEM_HAL_TRACE_ERROR( "Wi-Fi Tx: lorawan_api_payload_send() failed.\n" );
+            SMTC_MODEM_HAL_TRACE_ERROR( "Wi-Fi Tx: lorawan_api_payload_send() failed.\r\n" );
         }
     }
     else
@@ -377,13 +377,13 @@ static void mw_wifi_send_service_on_launch( void* context_callback )
         if( store_status == STORE_AND_FORWARD_FLASH_RC_OK )
         {
             task_manager->modem_task[mw_wifi_send_obj.task_id].task_context = true;
-            SMTC_MODEM_HAL_TRACE_INFO( "Wi-Fi Payload pushed to store&fwd on FPort %d\n", mw_wifi_send_obj.fport );
+            SMTC_MODEM_HAL_TRACE_INFO( "Wi-Fi Payload pushed to store&fwd on FPort %d\r\n", mw_wifi_send_obj.fport );
             SMTC_MODEM_HAL_TRACE_ARRAY( "Wi-Fi Payload", wifi_result_buffer, wifi_result_buffer_size );
         }
         else
         {
             task_manager->modem_task[mw_wifi_send_obj.task_id].task_context = false;
-            SMTC_MODEM_HAL_TRACE_ERROR( "Wi-Fi: failed to push payload to store&fwd - internal code: %x\n",
+            SMTC_MODEM_HAL_TRACE_ERROR( "Wi-Fi: failed to push payload to store&fwd - internal code: %x\r\n",
                                         store_status );
         }
 #endif
@@ -394,7 +394,7 @@ static void mw_wifi_send_service_on_update( void* context_callback )
 {
     stask_manager* task_manager = ( stask_manager* ) context_callback;
 
-    WIFI_SEND_TRACE_PRINTF_DEBUG( "mw_wifi_send_service_on_update\n" );
+    WIFI_SEND_TRACE_PRINTF_DEBUG( "mw_wifi_send_service_on_update\r\n" );
 
     IS_SERVICE_INITIALIZED( );
 
@@ -411,7 +411,7 @@ static void mw_wifi_send_service_on_update( void* context_callback )
 
 static uint8_t mw_wifi_send_service_downlink_handler( lr1_stack_mac_down_data_t* rx_down_data )
 {
-    WIFI_SEND_TRACE_PRINTF_DEBUG( "mw_wifi_send_service_downlink_handler\n" );
+    WIFI_SEND_TRACE_PRINTF_DEBUG( "mw_wifi_send_service_downlink_handler\r\n" );
 
     return MODEM_DOWNLINK_UNCONSUMED;
 }
@@ -429,8 +429,8 @@ static void trace_print_event_data_terminated( const smtc_modem_wifi_event_data_
 {
     if( data != NULL )
     {
-        SMTC_MODEM_HAL_TRACE_PRINTF( "TERMINATED info:\n" );
-        SMTC_MODEM_HAL_TRACE_PRINTF( "-- number of scans sent: %u\n", data->nb_scans_sent );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "TERMINATED info:\r\n" );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "-- number of scans sent: %u\r\n", data->nb_scans_sent );
     }
 }
 
