@@ -17,6 +17,7 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
   const [originalNames, setOriginalNames] = useState([]);
   const [deviceToDelete, setDeviceToDelete] = useState(null);
   const [confirmationOpen, setConfirmationOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const menuRef = useRef(null);
 
   useEffect(() => {
@@ -124,6 +125,7 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
 
   const deleteDevice = async (deviceID) => {
     try {
+      setIsDeleting(true);
       const token = process.env.REACT_APP_TTN_API_KEY;
       const appID = process.env.REACT_APP_TTN_APP_ID;
       if (!token) {
@@ -153,7 +155,9 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
   
       // Optionally, provide feedback to the user
       console.log(`Device with ID ${deviceID} deleted successfully.`);
+      setIsDeleting(false);
     } catch (error) {
+      setIsDeleting(false);
       console.error("Error deleting device:", error);
       // Optionally, handle errors or provide feedback to the user
     }
@@ -248,6 +252,8 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
           message="Are you sure you want to delete this device?"
           onConfirm={handleDeleteConfirmation}
           onCancel={() => setConfirmationOpen(false)}
+          confirmText={isDeleting ? "Removing..." : "Confirm"}
+          confirmDisabled={isDeleting}
         />
       )}
     </div>

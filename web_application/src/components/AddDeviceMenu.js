@@ -9,6 +9,7 @@ const AddDeviceMenu = React.forwardRef(({ isOpen, handleClose, onDeviceAdded }, 
   const [pin, setPin] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [name, setName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const menuRef = useRef(null);
 
   useEffect(() => {
@@ -71,6 +72,7 @@ const AddDeviceMenu = React.forwardRef(({ isOpen, handleClose, onDeviceAdded }, 
 
   const handleSubmit = async () => {
     try {
+      setIsLoading(true);
       if (!name.trim()) {
         setErrorMessage("Name is required.");
         return;
@@ -141,14 +143,15 @@ const AddDeviceMenu = React.forwardRef(({ isOpen, handleClose, onDeviceAdded }, 
       setPin("");
       setErrorMessage("");
       onDeviceAdded();
+      setIsLoading(false);
     } catch (error) {
-      // Handle errors
+      setIsLoading(false);
       console.error("Error adding devices:", error);
       setErrorMessage(error.response?.data?.message || "An error occurred while adding the device. Please try again");
     }
   };
 
-  return (
+    return (
       <div ref={ref} className={`modal ${isOpen ? "show" : ""}`}>
         <div ref={menuRef} className="modal-content add-device-menu-size">
           <div className="top-bar">
@@ -173,7 +176,7 @@ const AddDeviceMenu = React.forwardRef(({ isOpen, handleClose, onDeviceAdded }, 
             <label htmlFor="pin">PIN:</label>
             <input type="text" id="pin" value={pin} onChange={handleChangePin} placeholder="BE23F0DD"/>
             </div>
-            <button onClick={handleSubmit}>Add</button>
+            <button onClick={handleSubmit} disabled={isLoading}>{isLoading ? 'Adding...' : 'Add'}</button>
         </div>
       </div>
     </div>
