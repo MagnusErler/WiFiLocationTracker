@@ -14,10 +14,7 @@ import AddIcon from '@mui/icons-material/Add';
 import LayersIcon from '@mui/icons-material/Layers';
 
 export default function App() {
-  // TODO: fetch markers from API
   const [markers, setMarkers] = useState([]);
-
-  // TODO: fetch tracker information from API
   const [trackerInformation, setTrackerInformation] = useState([]);
 
   useEffect(() => {
@@ -154,7 +151,7 @@ export default function App() {
           deviceId: ping.deviceID,
           geocode: ping.geocode,
           timeStamp: new Date(ping.updatedAt).toLocaleString(), // Convert to human-readable format
-          accuracy: 0 // Placeholder for accuracy, not implemented yet
+          accuracy: ping.accuracy
         }));
         
         // Add the mapped markers to the updatedMarkers array

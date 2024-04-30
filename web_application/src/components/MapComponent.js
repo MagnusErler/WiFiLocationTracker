@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup, Polyline } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, Polyline, Circle } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import { Icon, divIcon } from "leaflet";
 
@@ -86,6 +86,15 @@ const MapComponent = ({ center, allMarkers, useCustomClusterIcon, trackerInforma
       {Object.values(lines).map((markerGroup, index) => (
         <Polyline key={index} positions={makeLineCoordinates(markerGroup)} color="blue" />
       ))}
+      
+      {/* Render circles outside MarkerClusterGroup */}
+      {allMarkers.map((marker, index) => {
+        return (
+          <Circle key={index} center={marker.geocode} radius={marker.accuracy} />
+        );
+      })}
+      
+      {/* Render MarkerClusterGroup */}
       <MarkerClusterGroup
         chunkedLoading
         iconCreateFunction={useCustomClusterIcon ? createCustomClusterIcon : null}

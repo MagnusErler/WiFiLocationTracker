@@ -2,10 +2,6 @@ Need to have:
 1. Responsive design
 
 Nice to have:
-1. Movement with arrows
-2. Only add marker, if device has actually moved
-3. Update marker with new time, if it doesn't have moved
-4. Enabled show current location by default
-5. Show current location by default
-6. Show radius
-7. Add loading when adding device
+1. Movement with arrows (https://imfeld.dev/writing/leaflet_shapes)
+2. Enable "show current" location by default
+3. Add loading when adding device
