@@ -32,10 +32,19 @@ GeolocationSolve.init({
     type: DataTypes.STRING,
     allowNull: false,
   },
+  accuracy: {
+    type: DataTypes.FLOAT,
+    allowNull: false,
+  }
 }, { sequelize, modelName: 'geolocationSolve' });
 
 // Sync model with database
 sequelize.sync();
+
+// Helper function
+function deg2rad(deg) {
+  return deg * (Math.PI/180);
+}
 
 // Returns all pings for all devices
 app.get('/api/geolocationSolves', async (req, res) => {
@@ -81,6 +90,37 @@ app.post('/api/geolocationSolves', async (req, res) => {
     
     // Format geocode
     const geocode = [latitude, longitude];
+
+    // Check if there are existing pings for the device
+    const existingPings = await GeolocationSolve.findAll({
+      where: { deviceID },
+      order: [['createdAt', 'DESC']], // Get the latest ping
+      limit: 1
+    });
+
+    if (existingPings.length > 0) {
+      console.log('Existing ping found"', existingPings[0].toJSON());
+      const latestPing = existingPings[0];
+      const latestGeocode = latestPing.geocode;
+
+      const R = 6371;
+      const dLat = deg2rad(latitude-latestGeocode[0]);
+      const dLon = deg2rad(longitude-latestGeocode[1]);
+
+      const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(deg2rad(latestGeocode[0])) * Math.cos(deg2rad(latitude)) * Math.sin(dLon/2) * Math.sin(dLon/2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      const d = R * c * 1000; // Distance in meters
+
+      console.log("Distance betweeen pings: " + d + " in meters");
+
+      if (d < 15) { 
+        // Update the latest ping instead of adding a new one
+        console.log("Distance is less than 15 meters, updating latest ping instead of adding a new one")
+        latestPing.update({ geocode, accuracy, source });
+        console.log('Latest ping updated in database:', latestPing.toJSON());
+        return res.status(204).json(latestPing);
+      }
+    }
       
     // Save geolocation solve to the database
     const geolocationSolve = await GeolocationSolve.create({ deviceID, geocode, accuracy, source});

@@ -47,6 +47,10 @@
     color: #ffffff; /* Set text color for confirm button */
 }
 
+.confirmation-dialog .confirm-button:hover {
+    background-color: rgb(184, 13, 13); /* Set confirm button background color */
+}
+
 .confirmation-dialog .cancel-button {
     background-color: #ffffff; /* Set cancel button background color */
     border-color: black; /* Set border color for cancel button */

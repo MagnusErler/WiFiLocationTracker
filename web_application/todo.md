@@ -7,3 +7,5 @@ Nice to have:
 3. Update marker with new time, if it doesn't have moved
 4. Enabled show current location by default
 5. Show current location by default
+6. Show radius
+7. Add loading when adding device
