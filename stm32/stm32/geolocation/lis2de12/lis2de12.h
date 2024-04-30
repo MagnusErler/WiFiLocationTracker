@@ -452,7 +452,7 @@ typedef union{
   * @}
   *
   */
-uint8_t accelerometer_init( uint8_t irq_active );
+uint8_t accelerometer_init( );
 
 uint8_t is_accelerometer_detected_moved( void );
 

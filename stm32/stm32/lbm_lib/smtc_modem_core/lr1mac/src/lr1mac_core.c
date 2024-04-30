@@ -287,7 +287,7 @@ lr1mac_states_t lr1mac_core_process( lr1_stack_mac_t* lr1_mac_obj )
             break;
         }
         case RADIOSTATE_TX_FINISHED: {
-            DBG_PRINT_WITH_LINE( " TX DONE" );
+            DBG_PRINT_WITH_LINE( "TX DONE" );
             lr1_mac_obj->lr1mac_state               = LWPSTATE_RX1;
             lr1_mac_obj->tx_duty_cycle_timestamp_ms = lr1_mac_obj->isr_tx_done_radio_timestamp;
             lr1_mac_obj->tx_duty_cycle_time_off_ms =

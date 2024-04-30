@@ -105,13 +105,12 @@ void initLIS2DE12_temperature( ) {
 /*!
  * @brief Initializes the hardware and variables associated with the lis2de12.
  *
- * @param [in]  irq_active      Interupt MASK to activate int1 or not
  * @returns      Status        SUCCESS(1) or FAIL(0)
  */
-uint8_t accelerometer_init( uint8_t irq_active )
-{
-    int                  i = 0;
+uint8_t accelerometer_init( ) {
+
     /* Check device ID */
+    int i = 0;
     while( ( i <= 5 ) && ( who_am_i != LIS2DE12_ID ) ) {
         if (lis2de12_device_id_get( &who_am_i ) != 0) {
             SMTC_HAL_TRACE_WARNING( "LIS2DE12 Device ID read failed\r\n" );
@@ -140,7 +139,7 @@ uint8_t accelerometer_init( uint8_t irq_active )
     //     return 0;
     // }
 
-    // initLIS2DE12_temperature( );
+    initLIS2DE12_temperature( );
 
     // if (lis2de12_fifo_set( PROPERTY_DISABLE ) != 0) {
     //     SMTC_HAL_TRACE_ERROR( "LIS2DE12 FIFO set failed\r\n" );
@@ -162,12 +161,7 @@ uint8_t accelerometer_init( uint8_t irq_active )
 
     uint8_t a = 50;
     lis2de12_filter_reference_set( &a );
-    uint8_t filter_reference;
-    lis2de12_filter_reference_get( &filter_reference );
-    SMTC_HAL_TRACE_INFO( "LIS2DE12 Filter reference: %d\r\n", filter_reference );
 
-
-    
 
     
 
@@ -214,9 +208,7 @@ uint8_t accelerometer_init( uint8_t irq_active )
 
 
 
-    if( irq_active & 0x01 ) {
-        accelerometer_irq1_init( );
-    }
+    accelerometer_irq1_init( );
 
     return SUCCESS;
 }

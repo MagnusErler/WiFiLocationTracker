@@ -177,7 +177,7 @@ void main_geolocation( void ) {
     // Configure all the µC periph (clock, gpio, timer, ...)
     hal_mcu_init( );
 
-    accelerometer_init( INT_1 );
+    accelerometer_init( );
 
     // Init the modem and use modem_event_callback as event callback, please note that the callback will be
     // called immediately after the first call to smtc_modem_run_engine because of the reset detection
@@ -202,25 +202,6 @@ void main_geolocation( void ) {
     }
     SMTC_HAL_TRACE_INFO( "LR11XX FW: 0x%04X, type: 0x%02X\r\n", lr11xx_fw_version.fw, lr11xx_fw_version.type );
     SMTC_HAL_TRACE_INFO( "LR11XX HW: 0x%02X\r\n", lr11xx_fw_version.hw );
-
-    
-
-    // uint8_t i;
-    // if (lis2de12_int2_pin_detect_4d_get( &i ) != 0) {
-    //     SMTC_HAL_TRACE_ERROR( "LIS2DE12 4D detection get failed\r\n" );
-    // }
-    // SMTC_HAL_TRACE_INFO( "LIS2DE12 4D detection: %d\r\n", i );
-
-    // if (lis2de12_int2_pin_detect_4d_set( 1 ) != 0) {
-    //     SMTC_HAL_TRACE_ERROR( "LIS2DE12 4D detection set failed\r\n" );
-    // }
-
-
-    // hal_gpio_set_value( PA_9, 1 );
-
-    
-
-    
 
     while( 1 ) {
 
@@ -247,14 +228,14 @@ void main_geolocation( void ) {
         hal_mcu_disable_irq( );
         if( smtc_modem_is_irq_flag_pending( ) == false ) {
 
-            // SMTC_HAL_TRACE_INFO("LIS2DE12 Temperature: %d\r\n", acc_get_temperature( ));
-            acc_read_raw_data( );
-            SMTC_HAL_TRACE_INFO("X: %d, Y: %d, Z: %d\r\n", acc_get_raw_x( ), acc_get_raw_y( ), acc_get_raw_z( ));
+            // // SMTC_HAL_TRACE_INFO("LIS2DE12 Temperature: %d\r\n", acc_get_temperature( ));
+            // acc_read_raw_data( );
+            // SMTC_HAL_TRACE_INFO("X: %d, Y: %d, Z: %d\r\n", acc_get_raw_x( ), acc_get_raw_y( ), acc_get_raw_z( ));
 
-            if (get_accelerometer_irq1_state( ) == 1) {
-                SMTC_HAL_TRACE_INFO("LIS2DE12 interrupt 1 detected\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n");
-                is_accelerometer_detected_moved( );
-            }
+            // if (get_accelerometer_irq1_state( ) == 1) {
+            //     SMTC_HAL_TRACE_INFO("LIS2DE12 interrupt 1 detected\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n");
+            //     is_accelerometer_detected_moved( );
+            // }
 
 
             hal_watchdog_reload( );
