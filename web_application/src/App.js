@@ -23,6 +23,8 @@ export default function App() {
 
 
   const center = [56.234538, 10.231792]; // Denmark coordinates
+  const zoomLevel = 7;
+  const drawMarkersAtZoomLevel = 16;
 
   const [showCurrentLocation, setShowCurrentLocation] = useState(trackerInformation.map(tracker => tracker.deviceId));
   const [showMovement, setShowMovement] = useState([]);
@@ -271,6 +273,8 @@ export default function App() {
       </button>
       <MapComponent
         center={center}
+        zoomLevel={zoomLevel}
+        drawMarkersAtZoomLevel={drawMarkersAtZoomLevel}
         allMarkers={filteredAllMarkers}
         useCustomClusterIcon={false}
         trackerInformation={trackerInformation}

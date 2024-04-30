@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup, Polyline, Circle } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, Polyline, Circle, useMap } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import { Icon, divIcon } from "leaflet";
 
-const MapComponent = ({ center, allMarkers, useCustomClusterIcon, trackerInformation, selectedMapTile }) => {
+const MapComponent = ({ center, zoomLevel, drawMarkersAtZoomLevel, allMarkers, useCustomClusterIcon, trackerInformation, selectedMapTile }) => {
   // State for storing calculated lines
   const [lines, setLines] = useState([]);
+  const [drawCircles, setDrawCircles] = useState(false);
 
   useEffect(() => {
     const calculatedLines = {};
@@ -46,8 +47,23 @@ const MapComponent = ({ center, allMarkers, useCustomClusterIcon, trackerInforma
     return lineCoordinates;
   };
 
+  const ZoomListener = () => {
+    const map = useMap();
+    useEffect(() => {
+      const logZoomLevel = () => {
+        setDrawCircles(map.getZoom() >= drawMarkersAtZoomLevel); // Update drawCircles based on zoom level
+      };
+      map.on('zoom', logZoomLevel);
+      return () => {
+        map.off('zoom', logZoomLevel);
+      };
+    }, [map]);
+
+    return null;
+  };
+
   return (
-    <MapContainer center={center} zoom={7}>
+    <MapContainer center={center} zoom={zoomLevel}>
       {/* Render selected map tile */}
       {selectedMapTile === "OpenStreetMap" && (
         <TileLayer
@@ -88,11 +104,9 @@ const MapComponent = ({ center, allMarkers, useCustomClusterIcon, trackerInforma
       ))}
       
       {/* Render circles outside MarkerClusterGroup */}
-      {allMarkers.map((marker, index) => {
-        return (
-          <Circle key={index} center={marker.geocode} radius={marker.accuracy} />
-        );
-      })}
+      {drawCircles && allMarkers.map((marker, index) => (
+        <Circle key={index} center={marker.geocode} radius={marker.accuracy} />
+      ))}
       
       {/* Render MarkerClusterGroup */}
       <MarkerClusterGroup
@@ -111,9 +125,9 @@ const MapComponent = ({ center, allMarkers, useCustomClusterIcon, trackerInforma
           );
         })}
       </MarkerClusterGroup>
+      <ZoomListener />
     </MapContainer>
   );
 };
 
 export default MapComponent;
-//TODO: See if arrows can be implemented: https://imfeld.dev/writing/leaflet_shapes
