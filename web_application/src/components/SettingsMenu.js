@@ -12,7 +12,7 @@ import DeviceThermostatIcon from '@mui/icons-material/DeviceThermostat';
 import ConfirmationDialog from "./ConfirmationDialog";
 
 const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation, handleShowLocationSwitch, handleShowMovement, handleTrackerInformationUpdate, markers }, ref) => {
-  const [showCurrentLocationIds, setShowCurrentLocationIds] = useState(trackerInformation.map(tracker => tracker.deviceId));
+  const [showCurrentLocationIds, setShowCurrentLocationIds] = useState([]);
   const [showMovementIds, setShowMovementIds] = useState([]);
   const [originalNames, setOriginalNames] = useState([]);
   const [deviceToDelete, setDeviceToDelete] = useState(null);
