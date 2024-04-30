@@ -1,6 +1,6 @@
 # How to run
 
-1. Install NPM and node.js (Ubuntu: [https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04)
+1. Install NPM and node.js (Ubuntu: [https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04))
 
    ```
    sudo apt update
