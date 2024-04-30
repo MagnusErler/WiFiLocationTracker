@@ -7,16 +7,11 @@ import "leaflet/dist/leaflet.css";
 import MapComponent from "./components/MapComponent";
 import SettingsMenu from "./components/SettingsMenu";
 import AddDeviceMenu from "./components/AddDeviceMenu";
+import MapTileMenu from "./components/MapTileMenu";
 
 import ListIcon from '@mui/icons-material/List';
 import AddIcon from '@mui/icons-material/Add';
-
-function convertUnixSecondsToReadableDate(timestamp) {
-  const date = new Date(timestamp * 1000); // Convert to milliseconds
-  const formattedDate = date.toLocaleString(); // Format as a human-readable string
-
-  return formattedDate;
-}
+import LayersIcon from '@mui/icons-material/Layers';
 
 export default function App() {
   // TODO: fetch markers from API
@@ -34,18 +29,42 @@ export default function App() {
 
   const [showCurrentLocation, setShowCurrentLocation] = useState(trackerInformation.map(tracker => tracker.deviceId));
   const [showMovement, setShowMovement] = useState([]);
+  const [selectedMapTile, setSelectedMapTile] = useState("CartoDB_Voyager");
 
-  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [isSettingsMenuOpen, setSettingsMenuOpen] = useState(false);
   const [isAddDeviceMenuOpen, setAddDeviceMenuOpen] = useState(false);
+  const [isMapTileMenuOpen, setMapTileMenuOpen] = useState(false);
   const settingsMenuRef = useRef(null);
   const addDeviceMenuRef = useRef(null);
+  const mapTileMenuRef = useRef(null);
 
   const handleOpenSettingsMenu = () => {
-    setSettingsOpen(true);
+    setSettingsMenuOpen(true);
   };
 
   const handleCloseSettingsMenu = () => {
-    setSettingsOpen(false);
+    setSettingsMenuOpen(false);
+  };
+
+  const handleOpenAddDeviceMenu = () => {
+    setAddDeviceMenuOpen(true);
+  };
+
+  const handleCloseAddDeviceMenu = () => {
+    setAddDeviceMenuOpen(false);
+  };
+
+  const handleOpenMapTileMenu = () => {
+    setMapTileMenuOpen(true);
+  }
+
+  const handleCloseMapTileMenu = () => {
+    setMapTileMenuOpen(false);
+  }
+
+  const handleTileChange = (tile) => {
+    setSelectedMapTile(tile);
+    console.log(`Map tile changed to: ${tile}`);
   };
 
   const handleShowLocationSwitch = (ids) => {
@@ -58,14 +77,6 @@ export default function App() {
     // Convert all IDs to lowercase before setting the state
     const uppercaseIds = ids.map(id => id.toUpperCase());
     setShowMovement(uppercaseIds);
-  };
-
-  const handleOpenAddDeviceMenu = () => {
-    setAddDeviceMenuOpen(true);
-  };
-
-  const handleCloseAddDeviceMenu = () => {
-    setAddDeviceMenuOpen(false);
   };
 
   // Function to handle successful addition of device and refetch tracker information
@@ -234,10 +245,13 @@ export default function App() {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (settingsMenuRef.current && !settingsMenuRef.current.contains(event.target)) {
-        setSettingsOpen(false);
+        setSettingsMenuOpen(false);
       }
       if (addDeviceMenuRef.current && !addDeviceMenuRef.current.contains(event.target)) {
         setAddDeviceMenuOpen(false);
+      }
+      if (mapTileMenuRef.current && !mapTileMenuRef.current.contains(event.target)) {
+        setMapTileMenuOpen(false);
       }
     };
 
@@ -255,14 +269,18 @@ export default function App() {
       <button className="add-button" onClick={handleOpenAddDeviceMenu}>
         <AddIcon />
       </button>
+      <button className="map-tile-button" onClick={handleOpenMapTileMenu}>
+        <LayersIcon />
+      </button>
       <MapComponent
         center={center}
         allMarkers={filteredAllMarkers}
         useCustomClusterIcon={false}
         trackerInformation={trackerInformation}
+        selectedMapTile={selectedMapTile}
       />
       <SettingsMenu 
-        isOpen={settingsOpen} 
+        isOpen={isSettingsMenuOpen} 
         handleClose={handleCloseSettingsMenu} 
         trackerInformation={trackerInformation} 
         handleShowLocationSwitch={handleShowLocationSwitch} 
@@ -277,6 +295,12 @@ export default function App() {
         onDeviceAdded={handleAddDeviceSuccess}
         ref={addDeviceMenuRef} 
         />
+      <MapTileMenu
+        isOpen={isMapTileMenuOpen}
+        handleClose={handleCloseMapTileMenu}
+        handleTileChange={handleTileChange}
+        ref={mapTileMenuRef}
+      />
     </div>
   );
 }

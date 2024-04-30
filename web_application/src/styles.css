@@ -70,6 +70,27 @@
   background-color: #68cd96;
 }
 
+.map-tile-button {
+  position: absolute;
+  top: 120px;
+  right: 20px;
+  z-index: 1;
+  background-color: #bb772e;
+  color: rgb(255, 255, 255);
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 50%;
+  display: flex; /* Use flexbox */
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  transition: background-color 0.3s;
+}
+
+.map-tile-button:hover {
+  background-color: #d3924c;
+}
+
 /* .cluster-icon {
   background-color: #333;
   height: 2em;

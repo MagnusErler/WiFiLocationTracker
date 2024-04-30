@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup, Polyline } from "react-leaflet"
 import MarkerClusterGroup from "react-leaflet-cluster";
 import { Icon, divIcon } from "leaflet";
 
-const MapComponent = ({ center, allMarkers, useCustomClusterIcon, trackerInformation }) => {
+const MapComponent = ({ center, allMarkers, useCustomClusterIcon, trackerInformation, selectedMapTile }) => {
   // State for storing calculated lines
   const [lines, setLines] = useState([]);
 
@@ -48,10 +48,40 @@ const MapComponent = ({ center, allMarkers, useCustomClusterIcon, trackerInforma
 
   return (
     <MapContainer center={center} zoom={7}>
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
+      {/* Render selected map tile */}
+      {selectedMapTile === "OpenStreetMap" && (
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+      )}
+      {selectedMapTile === "Stadia_AlidadeSatellite" && (
+        <TileLayer
+          attribution='&copy; CNES, Distribution Airbus DS, © Airbus DS, © PlanetObserver (Contains Copernicus Data) | &copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://tiles.stadiamaps.com/tiles/alidade_satellite/{z}/{x}/{y}{r}.{ext}"
+          minZoom={0}
+          maxZoom={20}
+          ext="jpg"
+        />
+      )}
+      {selectedMapTile === "Stadia_StamenWatercolor" && (
+        <TileLayer
+          attribution='&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://www.stamen.com/" target="_blank">Stamen Design</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.{ext}"
+          minZoom={1}
+          maxZoom={16}
+          ext="jpg"
+        />
+      )}
+      {selectedMapTile === "CartoDB_Voyager" && (
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+          url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+          subdomains="abcd"
+          maxZoom={20}
+        />
+      )}
+      
       {/* Render lines */}
       {Object.values(lines).map((markerGroup, index) => (
         <Polyline key={index} positions={makeLineCoordinates(markerGroup)} color="blue" />
