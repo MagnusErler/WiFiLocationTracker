@@ -1470,10 +1470,10 @@ status_lorawan_t lr1_stack_mac_join_accept( lr1_stack_mac_t* lr1_mac )
 
     lr1_mac->join_status = JOINED;
 
-    SMTC_MODEM_HAL_TRACE_PRINTF( " DevAddr= %x\r\n", lr1_mac->dev_addr );
-    SMTC_MODEM_HAL_TRACE_PRINTF( " MacRx1DataRateOffset= %d\r\n", lr1_mac->rx1_dr_offset );
-    SMTC_MODEM_HAL_TRACE_PRINTF( " MacRx2DataRate= %d\r\n", lr1_mac->rx2_data_rate );
-    SMTC_MODEM_HAL_TRACE_PRINTF( " MacRx1Delay= %d\r\n", lr1_mac->rx1_delay_s );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "DevAddr= %x\r\n", lr1_mac->dev_addr );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "MacRx1DataRateOffset= %d\r\n", lr1_mac->rx1_dr_offset );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "MacRx2DataRate= %d\r\n", lr1_mac->rx2_data_rate );
+    SMTC_MODEM_HAL_TRACE_PRINTF( "MacRx1Delay= %d\r\n", lr1_mac->rx1_delay_s );
 
     return OKLORAWAN;
 }

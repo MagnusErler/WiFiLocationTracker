@@ -196,8 +196,7 @@ void main_geolocation( void ) {
     if( lr11xx_system_get_version( NULL, &lr11xx_fw_version ) != LR11XX_STATUS_OK ) {
         SMTC_HAL_TRACE_ERROR( "Failed to get LR11XX firmware version\r\n" );
     }
-    if( ( lr11xx_fw_version.type == LR11XX_SYSTEM_VERSION_TYPE_LR1110 ) &&
-        ( lr11xx_fw_version.fw < LR1110_FW_VERSION ) ) {
+    if( ( lr11xx_fw_version.type == LR11XX_SYSTEM_VERSION_TYPE_LR1110 ) && ( lr11xx_fw_version.fw < LR1110_FW_VERSION ) ) {
         SMTC_HAL_TRACE_ERROR( "Wrong LR1110 firmware version, expected 0x%04X, got 0x%04X\r\n", LR1110_FW_VERSION, lr11xx_fw_version.fw );
     }
     SMTC_HAL_TRACE_INFO( "LR11XX FW: 0x%04X, type: 0x%02X\r\n", lr11xx_fw_version.fw, lr11xx_fw_version.type );
