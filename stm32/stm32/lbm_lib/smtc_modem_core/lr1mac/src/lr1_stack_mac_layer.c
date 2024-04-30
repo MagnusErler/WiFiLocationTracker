@@ -664,7 +664,7 @@ void lr1_stack_mac_rx_radio_start( lr1_stack_mac_t* lr1_mac, const rx_win_type_t
     {
         lr1_mac->radio_process_state = RADIOSTATE_RX_ON;
 
-        SMTC_MODEM_HAL_TRACE_PRINTF( "\r\n  Open RX%d for Hook Id = %d", type - RX1 + 1, my_hook_id );
+        SMTC_MODEM_HAL_TRACE_PRINTF( "\r\nOpen RX%d for Hook Id = %d", type - RX1 + 1, my_hook_id );
 
         if( radio_params.pkt_type == RAL_PKT_TYPE_LORA )
         {
