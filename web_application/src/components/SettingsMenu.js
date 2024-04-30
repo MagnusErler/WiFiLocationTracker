@@ -11,7 +11,7 @@ import BatteryUnknownIcon from '@mui/icons-material/BatteryUnknown';
 import DeviceThermostatIcon from '@mui/icons-material/DeviceThermostat';
 import ConfirmationDialog from "./ConfirmationDialog";
 
-const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation, handleShowLocationSwitch, handleShowMovement, handleTrackerInformationUpdate, markers }, ref) => {
+const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation, handleShowLocationSwitch, handleShowMovement, handleTrackerInformationUpdate, markers, dataLoaded }, ref) => {
   const [showCurrentLocationIds, setShowCurrentLocationIds] = useState([]);
   const [showMovementIds, setShowMovementIds] = useState([]);
   const [originalNames, setOriginalNames] = useState([]);
@@ -22,6 +22,12 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
   useEffect(() => {
     setOriginalNames(trackerInformation.map(tracker => tracker.name));
   }, [isOpen]);
+
+  useEffect(() => {
+    if (dataLoaded) {
+      setShowCurrentLocationIds(trackerInformation.map(tracker => tracker.deviceId));
+    }
+  }, [dataLoaded, trackerInformation]);
 
   const hasCorrespondingPing = (deviceId) => {
     return markers.some(marker => marker.deviceId.toUpperCase() === deviceId.toUpperCase());

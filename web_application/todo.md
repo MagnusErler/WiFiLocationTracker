@@ -3,5 +3,4 @@ Need to have:
 
 Nice to have:
 1. Movement with arrows (https://imfeld.dev/writing/leaflet_shapes)
-2. Enable "show current" location by default
-3. Add loading when adding device
+2. Add loading when adding device

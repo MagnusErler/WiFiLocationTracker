@@ -26,7 +26,7 @@ export default function App() {
   const zoomLevel = 7;
   const drawMarkersAtZoomLevel = 16;
 
-  const [showCurrentLocation, setShowCurrentLocation] = useState(trackerInformation.map(tracker => tracker.deviceId));
+  const [showCurrentLocation, setShowCurrentLocation] = useState([]);
   const [showMovement, setShowMovement] = useState([]);
   const [selectedMapTile, setSelectedMapTile] = useState("CartoDB_Voyager");
 
@@ -36,6 +36,21 @@ export default function App() {
   const settingsMenuRef = useRef(null);
   const addDeviceMenuRef = useRef(null);
   const mapTileMenuRef = useRef(null);
+
+  const [dataLoaded, setDataLoaded] = useState(false);
+
+  // Function to handle setting showCurrentLocation once all data is loaded
+  useEffect(() => {
+    // Check if both markers and tracker information have been fetched
+    if (markers.length > 0 && trackerInformation.length > 0 && !dataLoaded) {
+      // Extract all IDs from trackerInformation
+      const allIds = trackerInformation.map(info => info.deviceId.toUpperCase());
+      // Set showCurrentLocation to contain all IDs
+      setShowCurrentLocation(allIds);
+      // Update dataLoaded state to prevent re-execution of this useEffect
+      setDataLoaded(true);
+    }
+  }, [markers, trackerInformation, dataLoaded]);
 
   const handleOpenSettingsMenu = () => {
     setSettingsMenuOpen(true);
@@ -289,6 +304,7 @@ export default function App() {
         handleTrackerInformationUpdate={handleTrackerInformationUpdate}
         markers={markers}
         ref={settingsMenuRef}
+        dataLoaded={dataLoaded}
       />
       <AddDeviceMenu 
         isOpen={isAddDeviceMenuOpen} 
