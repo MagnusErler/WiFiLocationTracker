@@ -99,7 +99,6 @@ app.post('/api/geolocationSolves', async (req, res) => {
     });
 
     if (existingPings.length > 0) {
-      // Calculate Euclidean distance between existing and new pings
       console.log('Existing ping found"', existingPings[0].toJSON());
       const latestPing = existingPings[0];
       const latestGeocode = latestPing.geocode;

@@ -15,26 +15,13 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
   const [showCurrentLocationIds, setShowCurrentLocationIds] = useState(trackerInformation.map(tracker => tracker.deviceId));
   const [showMovementIds, setShowMovementIds] = useState([]);
   const [originalNames, setOriginalNames] = useState([]);
-  const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
   const [deviceToDelete, setDeviceToDelete] = useState(null);
+  const [confirmationOpen, setConfirmationOpen] = useState(false);
   const menuRef = useRef(null);
 
   useEffect(() => {
     setOriginalNames(trackerInformation.map(tracker => tracker.name));
   }, [isOpen]);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        handleClose(); // Close the menu if clicked outside
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [handleClose]);
 
   const hasCorrespondingPing = (deviceId) => {
     return markers.some(marker => marker.deviceId.toUpperCase() === deviceId.toUpperCase());
@@ -99,7 +86,7 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
     const appID = process.env.REACT_APP_TTN_APP_ID;
   
     if (!token) {
-      console.error("API token ID is not available.");
+      console.error("API KEY is not available.");
       return;
     }
     
@@ -170,14 +157,27 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
     if (deviceToDelete) {
       await deleteDevice(deviceToDelete);
       setDeviceToDelete(null);
-      setShowConfirmationDialog(false);
+      setConfirmationOpen(false); // Close the confirmation dialog
     }
   };
 
   const toggleConfirmationDialog = (deviceId) => {
     setDeviceToDelete(deviceId);
-    setShowConfirmationDialog(!showConfirmationDialog);
+    setConfirmationOpen(true); // Open the confirmation dialog
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!confirmationOpen && menuRef.current && !menuRef.current.contains(event.target)) {
+        handleClose(); // Close the menu if clicked outside and confirmation dialog is not open
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [handleClose, confirmationOpen]);
 
   return (
     <div ref={ref} className={`modal ${isOpen ? "show" : ""}`}>
@@ -237,11 +237,11 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
           </tbody>
         </table>
       </div>
-      {showConfirmationDialog && (
+      {confirmationOpen && (
         <ConfirmationDialog
           message="Are you sure you want to delete this device?"
           onConfirm={handleDeleteConfirmation}
-          onCancel={() => setShowConfirmationDialog(false)}
+          onCancel={() => setConfirmationOpen(false)}
         />
       )}
     </div>
