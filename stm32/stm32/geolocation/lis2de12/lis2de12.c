@@ -137,9 +137,9 @@ uint8_t accelerometer_init( ) {
     lis2de12_ctrl_reg1_t ctrl_reg1 = {0};
     lis2de12_read_reg( LIS2DE12_CTRL_REG1, ( uint8_t* ) &ctrl_reg1, 1 );
     ctrl_reg1.lpen = 1;
-    // ctrl_reg1.xen = 1;
-    // ctrl_reg1.yen = 1;
-    // ctrl_reg1.zen = 1;
+    ctrl_reg1.xen = 1;
+    ctrl_reg1.yen = 1;
+    ctrl_reg1.zen = 1;
     lis2de12_write_reg( LIS2DE12_CTRL_REG1, ( uint8_t* ) &ctrl_reg1, 1 );
 
 
@@ -189,15 +189,8 @@ uint8_t accelerometer_init( ) {
 
 
 
-    uint8_t a = 1;
+    uint8_t a = 0;
     lis2de12_filter_reference_set( &a );
-
-
-    
-
-    
-
-
     
     
     lis2de12_ctrl_reg3_t ctrl_reg3 = {0};
@@ -217,12 +210,14 @@ uint8_t accelerometer_init( ) {
 
     // lis2de12_int1_pin_notification_mode_set( LIS2DE12_INT1_LATCHED );
     lis2de12_int1_cfg_t lis2de12_int1_cfg = {0};
-    lis2de12_int1_cfg.xhie = 1;
-    lis2de12_int1_cfg.yhie = 1;
-    lis2de12_int1_cfg.zhie = 1;
-    lis2de12_int1_cfg.xlie = 0;
-    lis2de12_int1_cfg.ylie = 0;
-    lis2de12_int1_cfg.zlie = 0;
+    lis2de12_int1_cfg.xhie = 0;
+    lis2de12_int1_cfg.yhie = 0;
+    lis2de12_int1_cfg.zhie = 0;
+
+    lis2de12_int1_cfg.xlie = 1;
+    lis2de12_int1_cfg.ylie = 1;
+    lis2de12_int1_cfg.zlie = 1;
+
     lis2de12_int1_cfg._6d  = 0;
     lis2de12_int1_cfg.aoi  = 0;
     lis2de12_int1_gen_conf_set( &lis2de12_int1_cfg );
