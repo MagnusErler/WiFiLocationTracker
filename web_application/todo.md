@@ -1,5 +1,6 @@
 Need to have:
 1. Responsive design
+2. Gather all implemented TODOs
 
 Nice to have:
 1. Movement with arrows (https://imfeld.dev/writing/leaflet_shapes)
