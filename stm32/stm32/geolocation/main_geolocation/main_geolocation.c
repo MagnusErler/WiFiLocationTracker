@@ -224,9 +224,35 @@ void main_geolocation( void ) {
         if (get_accelerometer_irq1_state( ) == 1) {
             SMTC_HAL_TRACE_INFO("LIS2DE12 interrupt 1 detected\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n");
             is_accelerometer_detected_moved( );
-        }
 
-        HAL_Delay(5);
+            lis2de12_int1_src_t int1_src = { 0 };
+            if (lis2de12_int1_gen_source_get( &int1_src ) != 0 ) {
+                SMTC_HAL_TRACE_ERROR("LIS2DE12 INT1_SRC: Error reading INT1_SRC register\r\n");
+            } else {
+                if (int1_src.ia == 1) {
+                    SMTC_HAL_TRACE_INFO("LIS2DE12 INT1_SRC: One or more interrupts have been generated\r\n");
+                }
+                if (int1_src.xl == 1) {
+                    SMTC_HAL_TRACE_INFO("LIS2DE12 INT1_SRC: X low event has occurred\r\n");
+                }
+                if (int1_src.xh == 1) {
+                    SMTC_HAL_TRACE_INFO("LIS2DE12 INT1_SRC: X high event has occurred\r\n");
+                }
+                if (int1_src.yl == 1) {
+                    SMTC_HAL_TRACE_INFO("LIS2DE12 INT1_SRC: Y low event has occurred\r\n");
+                }
+                if (int1_src.yh == 1) {
+                    SMTC_HAL_TRACE_INFO("LIS2DE12 INT1_SRC: Y high event has occurred\r\n");
+                }
+                if (int1_src.zl == 1) {
+                    SMTC_HAL_TRACE_INFO("LIS2DE12 INT1_SRC: Z low event has occurred\r\n");
+                }
+                if (int1_src.zh == 1) {
+                    SMTC_HAL_TRACE_INFO("LIS2DE12 INT1_SRC: Z high event has occurred\r\n");
+                }
+            }
+            
+        }
 
 
         // // Modem process launch

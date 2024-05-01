@@ -128,13 +128,13 @@ uint8_t accelerometer_init( ) {
     // REG1
 
     /* Set Output Data Rate to 10Hz */
-    if (lis2de12_data_rate_set( LIS2DE12_ODR_10Hz ) != 0) {
+    if (lis2de12_data_rate_set( LIS2DE12_ODR_1Hz ) != 0) {
         SMTC_HAL_TRACE_ERROR( "LIS2DE12 Data rate set failed\r\n" );
         return 0;
     }
 
     /* Motion detection setup */
-    lis2de12_ctrl_reg1_t ctrl_reg1;
+    lis2de12_ctrl_reg1_t ctrl_reg1 = {0};
     lis2de12_read_reg( LIS2DE12_CTRL_REG1, ( uint8_t* ) &ctrl_reg1, 1 );
     ctrl_reg1.lpen = 1;
     // ctrl_reg1.xen = 1;
@@ -146,12 +146,12 @@ uint8_t accelerometer_init( ) {
     // REG2
 
     /* Set High Pass Filter Mode */
-    lis2de12_high_pass_mode_set( LIS2DE12_REFERENCE_MODE );
+    lis2de12_high_pass_mode_set( LIS2DE12_AUTORST_ON_INT );
 
     lis2de12_high_pass_bandwidth_set( LIS2DE12_LIGHT );
 
     /* Set FDS mode */
-    lis2de12_high_pass_on_outputs_set( PROPERTY_ENABLE );
+    lis2de12_high_pass_on_outputs_set( PROPERTY_DISABLE );
 
     lis2de12_high_pass_int_conf_set( LIS2DE12_ON_INT1_GEN );
     
@@ -179,17 +179,17 @@ uint8_t accelerometer_init( ) {
     /* Set full scale to 2g */
     lis2de12_full_scale_set( LIS2DE12_2g );
 
-    lis2de12_boot_set( PROPERTY_ENABLE );
+    // lis2de12_boot_set( PROPERTY_ENABLE );
 
 
 
     
-
+    lis2de12_int1_pin_detect_4d_set( PROPERTY_ENABLE );
     
 
 
 
-    uint8_t a = 10;
+    uint8_t a = 1;
     lis2de12_filter_reference_set( &a );
 
 
@@ -200,31 +200,31 @@ uint8_t accelerometer_init( ) {
 
     
     
-    lis2de12_ctrl_reg3_t ctrl_reg3;
-    // ctrl_reg3.i1_click    = 0;    // defualt 0
+    lis2de12_ctrl_reg3_t ctrl_reg3 = {0};
+    ctrl_reg3.i1_click    = 0;
     ctrl_reg3.i1_ia1      = 1;
-    // ctrl_reg3.i1_ia2      = 0;
-    // ctrl_reg3.i1_zyxda    = 0;    // defualt 0
-    // ctrl_reg3.i1_wtm      = 0;    // defualt 0
-    // ctrl_reg3.i1_overrun  = 0;    // defualt 0
+    ctrl_reg3.i1_ia2      = 0;
+    ctrl_reg3.i1_zyxda    = 0;
+    ctrl_reg3.i1_wtm      = 0;
+    ctrl_reg3.i1_overrun  = 0;
     lis2de12_pin_int1_config_set( &ctrl_reg3 );
 
     lis2de12_int1_gen_threshold_set( 10 );
 
-    lis2de12_int1_gen_duration_set( 10 ); // [s]
+    lis2de12_int1_gen_duration_set( 1 ); // [s]
 
     
 
     // lis2de12_int1_pin_notification_mode_set( LIS2DE12_INT1_LATCHED );
-    lis2de12_int1_cfg_t lis2de12_int1_cfg;
-    // lis2de12_int1_cfg.xhie = 1;
-    // lis2de12_int1_cfg.yhie = 1;
+    lis2de12_int1_cfg_t lis2de12_int1_cfg = {0};
+    lis2de12_int1_cfg.xhie = 1;
+    lis2de12_int1_cfg.yhie = 1;
     lis2de12_int1_cfg.zhie = 1;
-    // lis2de12_int1_cfg.xlie = 1;
-    // lis2de12_int1_cfg.ylie = 1;
-    // lis2de12_int1_cfg.zlie = 1;
-    // lis2de12_int1_cfg._6d  = 0;     // defualt 0
-    // lis2de12_int1_cfg.aoi  = 0;     // defualt 0
+    lis2de12_int1_cfg.xlie = 0;
+    lis2de12_int1_cfg.ylie = 0;
+    lis2de12_int1_cfg.zlie = 0;
+    lis2de12_int1_cfg._6d  = 0;
+    lis2de12_int1_cfg.aoi  = 0;
     lis2de12_int1_gen_conf_set( &lis2de12_int1_cfg );
 
 
@@ -239,7 +239,7 @@ uint8_t is_accelerometer_detected_moved( void )
 
     accelerometer_irq1_state = false;
 
-    lis2de12_int1_gen_source_get( &int1_gen_source );
+    // lis2de12_int1_gen_source_get( &int1_gen_source );
 
     if( ( int1_gen_source.xh == 1 ) || ( int1_gen_source.yh == 1 ) || ( int1_gen_source.zh == 1 ) ) {
         accelerometer_irq1_state = false;
