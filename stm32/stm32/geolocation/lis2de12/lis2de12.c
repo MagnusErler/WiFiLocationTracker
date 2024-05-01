@@ -125,11 +125,41 @@ uint8_t accelerometer_init( ) {
     }
     SMTC_HAL_TRACE_INFO( "LIS2DE12 Device ID: 0x%02X\r\n", who_am_i );
 
+    // REG1
+
     /* Set Output Data Rate to 10Hz */
-    if (lis2de12_data_rate_set( LIS2DE12_ODR_100Hz ) != 0) {
+    if (lis2de12_data_rate_set( LIS2DE12_ODR_10Hz ) != 0) {
         SMTC_HAL_TRACE_ERROR( "LIS2DE12 Data rate set failed\r\n" );
         return 0;
     }
+
+    /* Motion detection setup */
+    lis2de12_ctrl_reg1_t ctrl_reg1;
+    lis2de12_read_reg( LIS2DE12_CTRL_REG1, ( uint8_t* ) &ctrl_reg1, 1 );
+    ctrl_reg1.lpen = 1;
+    // ctrl_reg1.xen = 1;
+    // ctrl_reg1.yen = 1;
+    // ctrl_reg1.zen = 1;
+    lis2de12_write_reg( LIS2DE12_CTRL_REG1, ( uint8_t* ) &ctrl_reg1, 1 );
+
+
+    // REG2
+
+    /* Set High Pass Filter Mode */
+    lis2de12_high_pass_mode_set( LIS2DE12_REFERENCE_MODE );
+
+    lis2de12_high_pass_bandwidth_set( LIS2DE12_LIGHT );
+
+    /* Set FDS mode */
+    lis2de12_high_pass_on_outputs_set( PROPERTY_ENABLE );
+
+    lis2de12_high_pass_int_conf_set( LIS2DE12_ON_INT1_GEN );
+    
+
+
+
+
+    
 
     
 
@@ -139,7 +169,7 @@ uint8_t accelerometer_init( ) {
     //     return 0;
     // }
 
-    initLIS2DE12_temperature( );
+    // initLIS2DE12_temperature( );
 
     // if (lis2de12_fifo_set( PROPERTY_DISABLE ) != 0) {
     //     SMTC_HAL_TRACE_ERROR( "LIS2DE12 FIFO set failed\r\n" );
@@ -153,59 +183,49 @@ uint8_t accelerometer_init( ) {
 
 
 
-    lis2de12_high_pass_int_conf_set( LIS2DE12_ON_INT1_GEN );
+    
 
-    lis2de12_high_pass_mode_set( LIS2DE12_REFERENCE_MODE );
+    
 
 
 
-    uint8_t a = 50;
+    uint8_t a = 10;
     lis2de12_filter_reference_set( &a );
 
 
     
 
-    lis2de12_ctrl_reg1_t ctrl_reg1;
-    /* Motion detection setup */
-    lis2de12_read_reg( LIS2DE12_CTRL_REG1, ( uint8_t* ) &ctrl_reg1, 1 );
-    ctrl_reg1.lpen = 1;
-    lis2de12_write_reg( LIS2DE12_CTRL_REG1, ( uint8_t* ) &ctrl_reg1, 1 );
+    
 
 
     
     
     lis2de12_ctrl_reg3_t ctrl_reg3;
-    ctrl_reg3.i1_zyxda    = 0;
-    ctrl_reg3.i1_ia1      = 0;
-    ctrl_reg3.i1_ia2      = 1;
-    ctrl_reg3.i1_click    = 0;
-    ctrl_reg3.i1_overrun  = 0;
-    ctrl_reg3.i1_wtm      = 0;
-    ctrl_reg3.not_used_01 = 0;
-    ctrl_reg3.not_used_02 = 0;
+    // ctrl_reg3.i1_click    = 0;    // defualt 0
+    ctrl_reg3.i1_ia1      = 1;
+    // ctrl_reg3.i1_ia2      = 0;
+    // ctrl_reg3.i1_zyxda    = 0;    // defualt 0
+    // ctrl_reg3.i1_wtm      = 0;    // defualt 0
+    // ctrl_reg3.i1_overrun  = 0;    // defualt 0
     lis2de12_pin_int1_config_set( &ctrl_reg3 );
 
-    lis2de12_int1_pin_notification_mode_set( LIS2DE12_INT1_LATCHED );
+    lis2de12_int1_gen_threshold_set( 10 );
+
+    lis2de12_int1_gen_duration_set( 10 ); // [s]
+
+    
+
+    // lis2de12_int1_pin_notification_mode_set( LIS2DE12_INT1_LATCHED );
     lis2de12_int1_cfg_t lis2de12_int1_cfg;
-    lis2de12_int1_cfg.xhie = 1;
-    lis2de12_int1_cfg.yhie = 1;
+    // lis2de12_int1_cfg.xhie = 1;
+    // lis2de12_int1_cfg.yhie = 1;
     lis2de12_int1_cfg.zhie = 1;
-    lis2de12_int1_cfg.xlie = 1;
-    lis2de12_int1_cfg.ylie = 1;
-    lis2de12_int1_cfg.zlie = 1;
-    lis2de12_int1_cfg.aoi  = 1;
+    // lis2de12_int1_cfg.xlie = 1;
+    // lis2de12_int1_cfg.ylie = 1;
+    // lis2de12_int1_cfg.zlie = 1;
+    // lis2de12_int1_cfg._6d  = 0;     // defualt 0
+    // lis2de12_int1_cfg.aoi  = 0;     // defualt 0
     lis2de12_int1_gen_conf_set( &lis2de12_int1_cfg );
-
-    lis2de12_int2_gen_threshold_set( 100 );
-
-    lis2de12_int2_gen_duration_set( 50 );
-
-    lis2de12_int2_cfg_t lis2de12_int2_cfg;
-    lis2de12_int2_cfg.zhie = 1;
-    lis2de12_int2_gen_conf_set( &lis2de12_int2_cfg );
-
-
-
 
 
     accelerometer_irq1_init( );

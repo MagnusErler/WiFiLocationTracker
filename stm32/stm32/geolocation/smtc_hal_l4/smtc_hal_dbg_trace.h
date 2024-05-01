@@ -142,7 +142,7 @@ extern "C" {
         {                                                                           \
             if( ( ( i % 16 ) == 0 ) && ( i > 0 ) )                                  \
             {                                                                       \
-                SMTC_HAL_TRACE_PRINTF("\n");                                        \
+                SMTC_HAL_TRACE_PRINTF("\r\n");                                        \
             }                                                                       \
             SMTC_HAL_TRACE_PRINTF( " %02X", array[i] );                             \
         }                                                                           \

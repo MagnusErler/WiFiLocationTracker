@@ -217,31 +217,40 @@ void main_geolocation( void ) {
         // const float batteryVoltage = (((5 * vbat)/255.0) - 1) * 1.35;
         // SMTC_HAL_TRACE_INFO("%d.%d V\r\n", (uint8_t)batteryVoltage, (uint8_t)((batteryVoltage - (uint8_t)batteryVoltage) * 100));
 
-        
+        // SMTC_HAL_TRACE_INFO("LIS2DE12 Temperature: %d\r\n", acc_get_temperature( ));
+        acc_read_raw_data( );
+        SMTC_HAL_TRACE_INFO("X: %d, Y: %d, Z: %d\r\n", acc_get_raw_x( ), acc_get_raw_y( ), acc_get_raw_z( ));
 
-
-        // Modem process launch
-        sleep_time_ms = smtc_modem_run_engine( );
-
-        // Atomically check sleep conditions
-        hal_mcu_disable_irq( );
-        if( smtc_modem_is_irq_flag_pending( ) == false ) {
-
-            // // SMTC_HAL_TRACE_INFO("LIS2DE12 Temperature: %d\r\n", acc_get_temperature( ));
-            // acc_read_raw_data( );
-            // SMTC_HAL_TRACE_INFO("X: %d, Y: %d, Z: %d\r\n", acc_get_raw_x( ), acc_get_raw_y( ), acc_get_raw_z( ));
-
-            // if (get_accelerometer_irq1_state( ) == 1) {
-            //     SMTC_HAL_TRACE_INFO("LIS2DE12 interrupt 1 detected\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n");
-            //     is_accelerometer_detected_moved( );
-            // }
-
-
-            hal_watchdog_reload( );
-            hal_mcu_set_sleep_for_ms( MIN( sleep_time_ms, WATCHDOG_RELOAD_PERIOD_MS ) );
+        if (get_accelerometer_irq1_state( ) == 1) {
+            SMTC_HAL_TRACE_INFO("LIS2DE12 interrupt 1 detected\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n");
+            is_accelerometer_detected_moved( );
         }
-        hal_watchdog_reload( );
-        hal_mcu_enable_irq( );
+
+        HAL_Delay(5);
+
+
+        // // Modem process launch
+        // sleep_time_ms = smtc_modem_run_engine( );
+
+        // // Atomically check sleep conditions
+        // hal_mcu_disable_irq( );
+        // if( smtc_modem_is_irq_flag_pending( ) == false ) {
+
+        //     // SMTC_HAL_TRACE_INFO("LIS2DE12 Temperature: %d\r\n", acc_get_temperature( ));
+        //     acc_read_raw_data( );
+        //     SMTC_HAL_TRACE_INFO("X: %d, Y: %d, Z: %d\r\n", acc_get_raw_x( ), acc_get_raw_y( ), acc_get_raw_z( ));
+
+        //     if (get_accelerometer_irq1_state( ) == 1) {
+        //         SMTC_HAL_TRACE_INFO("LIS2DE12 interrupt 1 detected\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n");
+        //         is_accelerometer_detected_moved( );
+        //     }
+
+
+        //     hal_watchdog_reload( );
+        //     hal_mcu_set_sleep_for_ms( MIN( sleep_time_ms, WATCHDOG_RELOAD_PERIOD_MS ) );
+        // }
+        // hal_watchdog_reload( );
+        // hal_mcu_enable_irq( );
     }
 }
 
@@ -314,7 +323,7 @@ static void modem_event_callback( void ) {
             switch (1) {
             case 1:
                 // WiFi scan first, then GNSS scan
-                setupWiFi( stack_id );
+                // setupWiFi( stack_id );
                 // setupGNSS( stack_id );
                 break;
             case 2:
