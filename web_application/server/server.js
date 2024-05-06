@@ -80,7 +80,7 @@ app.get('/api/geolocationSolves/:deviceID', async (req, res) => {
 // Add a ping to the database
 app.post('/api/geolocationSolves', async (req, res) => {
   try {
-    console.log(req.body);
+    // console.log(req.body);
     const { end_device_ids, location_solved } = req.body;
     
     // Extract device ID and geolocation data
@@ -157,6 +157,57 @@ app.get("/api/getDeviceInfoFromJoinserver", async (req, res) => {
   }
 });
 
+app.delete("/api/unclaimDeviceFromModemServices", async (req, res) => {
+  console.log("Unclaiming device from Modem Services:", req.body);
+
+  try {
+    let { deveuis } = req.body;
+
+    if (!Array.isArray(deveuis) || deveuis.length === 0) {
+      return res.status(400).json({
+        error: 'Bad request',
+        message: 'Request body must contain a non-empty "deveuis" array of devices'
+      });
+    }
+
+    // Format deveuis if necessary
+    deveuis = deveuis.map(deveui => {
+      // If deveui doesn't contain "-", add it
+      if (!deveui.includes('-')) {
+        return deveui.match(/.{1,2}/g).join('-');
+      }
+      return deveui;
+    });
+
+    const API_TOKEN = "AQEAMxvmHw4f5Y1zdgp8vM+9TjpolwNgkrojGr+bfkhT31oA7jF6";
+
+    const response = await axios.post('https://mgs.loracloud.com/api/v1/device/remove', {
+      deveuis
+    }, {
+      headers: {
+        'Authorization': API_TOKEN,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    res.status(200).json(response.data);
+  } catch (error) {
+    console.error("Failed to remove devices:", error);
+
+    let errorMessage;
+    if (axios.isAxiosError(error)) {
+      errorMessage = 'Failed to connect to server';
+    } else {
+      errorMessage = error.message;
+    }
+
+    return res.status(500).json({
+      error: 'Request error',
+      message: errorMessage
+    });
+  }
+});
+
 app.post("/api/claimDevicesOnJoinServer", async (req, res) => {
   // Check if the request body is empty or not an array
   if (!Array.isArray(req.body)) {
@@ -182,7 +233,7 @@ app.post("/api/claimDevicesOnJoinServer", async (req, res) => {
       claim: device.Pin
     }));
 
-    console.log("Devices to claim:", devices);
+    console.log("Devices to claim on LoRaCloud:", devices);
 
     const response = await axios.post(url, devices, {
       httpsAgent: new https.Agent({
@@ -195,7 +246,7 @@ app.post("/api/claimDevicesOnJoinServer", async (req, res) => {
       }
     });
 
-    console.log("Response:", response.data);
+    // console.log("Response:", response.data);
 
     if (!Array.isArray(response.data)) {
       console.error("Unexpected response format from server. All devices failed to claim.");
@@ -278,7 +329,7 @@ app.delete("/api/unclaimDeviceOnJoinServer", async (req, res) => {
       DevEUI: device.DevEUI
     }));
 
-    console.log("Devices to unclaim:", devices);
+    console.log("Devices to unclaim from LoRaCloud:", devices);
 
     const response = await axios.post(url, devices, {
       httpsAgent: new https.Agent({
@@ -291,7 +342,7 @@ app.delete("/api/unclaimDeviceOnJoinServer", async (req, res) => {
       }
     });
 
-    console.log("Response:", response.data);
+    // console.log("Response:", response.data);
 
     return res.status(200).json({
       message: "Devices unclaimed successfully",
@@ -324,13 +375,13 @@ app.post("/api/createDeviceOnTTNIDServer", async (req, res) => {
     const devEui = req.body.devEUI;
     const joinEui = req.body.joinEUI;
 
-    console.log(req.body);
+    // console.log(req.body);
 
-    console.log("Token:", token);
-    console.log("App ID:", appId);
-    console.log("Device ID:", deviceId);
-    console.log("DevEUI:", devEui);
-    console.log("JoinEUI:", joinEui);
+    // console.log("Token:", token);
+    // console.log("App ID:", appId);
+    // console.log("Device ID:", deviceId);
+    // console.log("DevEUI:", devEui);
+    // console.log("JoinEUI:", joinEui);
 
     // Check if all required parameters are provided
     if (!deviceId || !devEui || !joinEui || !appId || !token) {
@@ -536,11 +587,11 @@ app.put("/api/updateDeviceNameOnTTN", async (req, res) => {
     const token = req.body.Token;
     const appId = req.body.AppID;
 
-    console.log(req.body);
-    console.log("Device ID:", deviceId);
-    console.log("Name:", name);
-    console.log("Token:", token);
-    console.log("App ID:", appId);
+    // console.log(req.body);
+    // console.log("Device ID:", deviceId);
+    // console.log("Name:", name);
+    // console.log("Token:", token);
+    // console.log("App ID:", appId);
 
     if (!deviceId || !name || !appId || !token) {
       return res.status(400).json({ error: 'Device ID, App ID, API token and name are required' });

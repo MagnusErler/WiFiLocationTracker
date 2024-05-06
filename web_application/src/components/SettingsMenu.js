@@ -138,8 +138,19 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
         return;
       }
       console.log(`Deleting device with ID ${deviceID}...`);
+
+      // Delete device on LoRaCloud
       await Promise.all([
         axios.delete(`/api/unclaimDeviceOnJoinServer`, { data: [{ "DevEUI": deviceID }] }),
+        axios.delete(`/api/unclaimDeviceFromModemServices`, { 
+          data: {
+            deveuis: [deviceID]
+          }
+        }),
+      ]);
+
+      // Delete device on TTN network and application servers
+      await Promise.all([
         axios.delete(`/api/deleteDeviceOnTTNNS`, { data: { Token: token, AppID: appID, DeviceID: "eui-" + deviceID } }),
         axios.delete(`/api/deleteDeviceOnTTNAS`, { data: { Token: token, AppID: appID, DeviceID: "eui-" + deviceID } })
       ]);
