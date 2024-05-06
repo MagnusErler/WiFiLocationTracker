@@ -126,7 +126,8 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
   const deleteDevice = async (deviceID) => {
     try {
       setIsDeleting(true);
-      const token = process.env.REACT_APP_TTN_API_KEY;
+      const TTNtoken = process.env.REACT_APP_TTN_API_KEY;
+      const LoraCloudtoken = process.env.REACT_APP_LORACLOUD_API_KEY;
       const appID = process.env.REACT_APP_TTN_APP_ID;
       if (!token) {
         console.error("API token ID is not available.");
@@ -144,6 +145,7 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
         axios.delete(`/api/unclaimDeviceOnJoinServer`, { data: [{ "DevEUI": deviceID }] }),
         axios.delete(`/api/unclaimDeviceFromModemServices`, { 
           data: {
+            Token: LoraCloudtoken,
             deveuis: [deviceID]
           }
         }),
@@ -151,13 +153,13 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
 
       // Delete device on TTN network and application servers
       await Promise.all([
-        axios.delete(`/api/deleteDeviceOnTTNNS`, { data: { Token: token, AppID: appID, DeviceID: "eui-" + deviceID } }),
-        axios.delete(`/api/deleteDeviceOnTTNAS`, { data: { Token: token, AppID: appID, DeviceID: "eui-" + deviceID } })
+        axios.delete(`/api/deleteDeviceOnTTNNS`, { data: { Token: TTNtoken, AppID: appID, DeviceID: "eui-" + deviceID } }),
+        axios.delete(`/api/deleteDeviceOnTTNAS`, { data: { Token: TTNtoken, AppID: appID, DeviceID: "eui-" + deviceID } })
       ]);
 
       // After successfully deleting on other servers, call deleteDeviceOnTTN
       await axios.delete(`/api/deleteDeviceOnTTN`, {
-        data: { Token: token, AppID: appID, DeviceID: "eui-" + deviceID }
+        data: { Token: TTNtoken, AppID: appID, DeviceID: "eui-" + deviceID }
       });
   
       // Update the UI accordingly (remove the deleted device from state)

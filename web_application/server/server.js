@@ -161,12 +161,12 @@ app.delete("/api/unclaimDeviceFromModemServices", async (req, res) => {
   console.log("Unclaiming device from Modem Services:", req.body);
 
   try {
-    let { deveuis } = req.body;
+    let { Token, deveuis } = req.body;
 
-    if (!Array.isArray(deveuis) || deveuis.length === 0) {
+    if (!Token || !deveuis || !Array.isArray(deveuis) || deveuis.length === 0) {
       return res.status(400).json({
         error: 'Bad request',
-        message: 'Request body must contain a non-empty "deveuis" array of devices'
+        message: 'API token and a non-empty array of deveuis are required in the request body'
       });
     }
 
@@ -185,7 +185,7 @@ app.delete("/api/unclaimDeviceFromModemServices", async (req, res) => {
       deveuis
     }, {
       headers: {
-        'Authorization': API_TOKEN,
+        'Authorization': Token,
         'Content-Type': 'application/json'
       }
     });
