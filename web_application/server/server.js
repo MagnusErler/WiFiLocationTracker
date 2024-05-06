@@ -179,8 +179,6 @@ app.delete("/api/unclaimDeviceFromModemServices", async (req, res) => {
       return deveui;
     });
 
-    const API_TOKEN = "AQEAMxvmHw4f5Y1zdgp8vM+9TjpolwNgkrojGr+bfkhT31oA7jF6";
-
     const response = await axios.post('https://mgs.loracloud.com/api/v1/device/remove', {
       deveuis
     }, {
