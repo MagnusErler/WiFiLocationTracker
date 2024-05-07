@@ -38,6 +38,7 @@
  */
 #include <stdint.h>   // C99 types
 #include <stdbool.h>  // bool type
+#include <string.h>
 
 #include "main.h"
 
@@ -218,11 +219,11 @@ void main_geolocation( void ) {
         // SMTC_HAL_TRACE_INFO("%d.%d V\r\n", (uint8_t)batteryVoltage, (uint8_t)((batteryVoltage - (uint8_t)batteryVoltage) * 100));
 
         // SMTC_HAL_TRACE_INFO("LIS2DE12 Temperature: %d\r\n", acc_get_temperature( ));
-        acc_read_raw_data( );
-        SMTC_HAL_TRACE_INFO("X: %d, Y: %d, Z: %d\r\n", acc_get_raw_x( ), acc_get_raw_y( ), acc_get_raw_z( ));
+        // acc_read_raw_data( );
+        // SMTC_HAL_TRACE_INFO("X: %d, Y: %d, Z: %d\r\n", acc_get_raw_x( ), acc_get_raw_y( ), acc_get_raw_z( ));
 
         if (get_accelerometer_irq1_state( ) == 1) {
-            SMTC_HAL_TRACE_INFO("LIS2DE12 interrupt 1 detected\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n");
+            SMTC_HAL_TRACE_INFO("LIS2DE12 interrupt 1 detected\r\n");
             is_accelerometer_detected_moved( );
 
             lis2de12_int1_src_t int1_src = { 0 };
@@ -255,28 +256,18 @@ void main_geolocation( void ) {
         }
 
 
-        // // Modem process launch
-        // sleep_time_ms = smtc_modem_run_engine( );
+        // Modem process launch
+        sleep_time_ms = smtc_modem_run_engine( );
 
-        // // Atomically check sleep conditions
-        // hal_mcu_disable_irq( );
-        // if( smtc_modem_is_irq_flag_pending( ) == false ) {
+        // Atomically check sleep conditions
+        hal_mcu_disable_irq( );
+        if( smtc_modem_is_irq_flag_pending( ) == false ) {
 
-        //     // SMTC_HAL_TRACE_INFO("LIS2DE12 Temperature: %d\r\n", acc_get_temperature( ));
-        //     acc_read_raw_data( );
-        //     SMTC_HAL_TRACE_INFO("X: %d, Y: %d, Z: %d\r\n", acc_get_raw_x( ), acc_get_raw_y( ), acc_get_raw_z( ));
-
-        //     if (get_accelerometer_irq1_state( ) == 1) {
-        //         SMTC_HAL_TRACE_INFO("LIS2DE12 interrupt 1 detected\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n");
-        //         is_accelerometer_detected_moved( );
-        //     }
-
-
-        //     hal_watchdog_reload( );
-        //     hal_mcu_set_sleep_for_ms( MIN( sleep_time_ms, WATCHDOG_RELOAD_PERIOD_MS ) );
-        // }
-        // hal_watchdog_reload( );
-        // hal_mcu_enable_irq( );
+            hal_watchdog_reload( );
+            hal_mcu_set_sleep_for_ms( MIN( sleep_time_ms, WATCHDOG_RELOAD_PERIOD_MS ) );
+        }
+        hal_watchdog_reload( );
+        hal_mcu_enable_irq( );
     }
 }
 
@@ -300,6 +291,27 @@ void setupGNSS(uint8_t stack_id) {
     /* Program GNSS scan */
     smtc_modem_gnss_set_constellations( stack_id, SMTC_MODEM_GNSS_CONSTELLATION_GPS_BEIDOU );
     smtc_modem_gnss_scan( stack_id, SMTC_MODEM_GNSS_MODE_MOBILE, 0 );
+}
+
+float getTemperature() {
+    // SMTC_HAL_TRACE_INFO("LIS2DE12 Temperature: %d\r\n", acc_get_temperature( ));
+    uint16_t temp_10_0;
+    lr11xx_system_get_temp( NULL, &temp_10_0 );
+    const float temperature = 25 + (1000/(-1.7)) * ((temp_10_0/2047.0) * 1.35 - 0.7295);
+    SMTC_HAL_TRACE_INFO("%d.%d °C\r\n", (uint8_t)temperature, (uint8_t)((temperature - (uint8_t)temperature) * 100));
+    if ((uint8_t)temperature > 50) {
+        SMTC_HAL_TRACE_INFO("LR1110 temperature is too high. TCXO mode may not be set up correctly\r\n");
+        return 0;
+    }
+    return temperature;
+}
+
+float getBatteryVoltage() {
+    uint8_t vbat;
+    lr11xx_system_get_vbat( NULL, &vbat );
+    const float batteryVoltage = (((5 * vbat)/255.0) - 1) * 1.35;
+    SMTC_HAL_TRACE_INFO("%d.%d V\r\n", (uint8_t)batteryVoltage, (uint8_t)((batteryVoltage - (uint8_t)batteryVoltage) * 100));
+    return batteryVoltage;
 }
 
 /**
@@ -349,7 +361,7 @@ static void modem_event_callback( void ) {
             switch (1) {
             case 1:
                 // WiFi scan first, then GNSS scan
-                // setupWiFi( stack_id );
+                setupWiFi( stack_id );
                 // setupGNSS( stack_id );
                 break;
             case 2:
@@ -390,26 +402,66 @@ static void modem_event_callback( void ) {
         case SMTC_MODEM_EVENT_DOWNDATA:
             SMTC_HAL_TRACE_INFO( "Event received: DOWNDATA\r\n" );
             // Get downlink data
+
+            // reset rx_payload
+            memset( rx_payload, 0, SMTC_MODEM_MAX_LORAWAN_PAYLOAD_LENGTH );
             smtc_modem_get_downlink_data( rx_payload, &rx_payload_size, &rx_metadata, &rx_remaining );
             SMTC_HAL_TRACE_PRINTF( "Data received on port %u\r\n", rx_metadata.fport );
             SMTC_HAL_TRACE_ARRAY( "Received payload", rx_payload, rx_payload_size );
 
+
+            uint8_t custom_payload[2] = { 0x00 };
+
             switch (rx_metadata.fport) {
             case 1:
 
-                SMTC_HAL_TRACE_PRINTF( "payload in dec: %u\r\n", (rx_payload[0] << 8) + rx_payload[1]);
-                GEOLOCATION_GNSS_SCAN_PERIOD_S = (rx_payload[0] << 8) + rx_payload[1];
+                if (rx_payload_size == 1) {
+                    SMTC_HAL_TRACE_PRINTF( "payload in dec: %u\r\n", rx_payload[0]);
+                    GEOLOCATION_WIFI_SCAN_PERIOD_S = rx_payload[0];
+                } else if (rx_payload_size == 2) {
+                    SMTC_HAL_TRACE_PRINTF( "payload in dec: %u\r\n", (rx_payload[0] << 8) + rx_payload[1]);
+                    GEOLOCATION_WIFI_SCAN_PERIOD_S = (rx_payload[0] << 8) + rx_payload[1];
+                }
 
-                // smtc_modem_wifi_scan( stack_id, GEOLOCATION_WIFI_SCAN_PERIOD_S );
+                SMTC_HAL_TRACE_PRINTF("Setting new Wi-Fi scan period to %u s\r\n", GEOLOCATION_WIFI_SCAN_PERIOD_S);
+
+                // cancel the current Wi-Fi scan (not possible if the scan has already started)
+                smtc_modem_wifi_scan_cancel( stack_id );
+                // set the new Wi-Fi scan period
+                smtc_modem_wifi_scan( stack_id, GEOLOCATION_WIFI_SCAN_PERIOD_S );
 
 
+                // // smtc_modem_request_uplink( stack_id, 1, false, keep_alive_payload, KEEP_ALIVE_SIZE );
+                // uint8_t custom_payload[4] = { 0x00 };
+                // custom_payload[0] = 0xAB;
+                // custom_payload[1] = 0xCD;
+                // smtc_modem_request_uplink( stack_id, 15, false, custom_payload, 4 );
+                // smtc_modem_alarm_start_timer( KEEP_ALIVE_PERIOD_S );
+                break;
+            case 2:
 
+                if (rx_payload_size == 1) {
+                    SMTC_HAL_TRACE_PRINTF( "payload in dec: %u\r\n", rx_payload[0]);
+                    GEOLOCATION_GNSS_SCAN_PERIOD_S = rx_payload[0];
+                } else if (rx_payload_size == 2) {
+                    SMTC_HAL_TRACE_PRINTF( "payload in dec: %u\r\n", (rx_payload[0] << 8) + rx_payload[1]);
+                    GEOLOCATION_GNSS_SCAN_PERIOD_S = (rx_payload[0] << 8) + rx_payload[1];
+                }
+
+                SMTC_HAL_TRACE_PRINTF("Setting new GNSS scan period to %u s\r\n", GEOLOCATION_GNSS_SCAN_PERIOD_S);
+
+                // cancel the current GNSS scan (not possible if the scan has already started)
+                smtc_modem_gnss_scan_cancel( stack_id );
+                // set the new GNSS scan period
+                smtc_modem_gnss_scan( stack_id, SMTC_MODEM_GNSS_MODE_MOBILE, GEOLOCATION_GNSS_SCAN_PERIOD_S );
+                break;
+            case 3:              
                 // smtc_modem_request_uplink( stack_id, 1, false, keep_alive_payload, KEEP_ALIVE_SIZE );
-                uint8_t custom_payload[4] = { 0x00 };
-                custom_payload[0] = 0xAB;
-                custom_payload[1] = 0xCD;
+                custom_payload[0] = getTemperature() / 5.0;
+                custom_payload[1] = getBatteryVoltage() * 70;
                 smtc_modem_request_uplink( stack_id, 15, false, custom_payload, 4 );
                 smtc_modem_alarm_start_timer( KEEP_ALIVE_PERIOD_S );
+
                 break;
             default:
                 break;

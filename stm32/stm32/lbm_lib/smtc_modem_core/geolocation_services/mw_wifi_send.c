@@ -351,6 +351,16 @@ static void mw_wifi_send_service_on_launch( void* context_callback )
 
     if( mw_wifi_send_obj.send_mode == SMTC_MODEM_SEND_MODE_UPLINK )
     {
+
+        // // add 0x45 and 0x34 infront of the payload (wifi_result_buffer) and change the size to wifi_result_buffer_size + 2
+        // uint8_t wifi_result_buffer_with_header[wifi_result_buffer_size + 2];
+        // wifi_result_buffer_with_header[0] = 0x45;
+        // wifi_result_buffer_with_header[1] = 0x34;
+        // memcpy( &wifi_result_buffer_with_header[2], wifi_result_buffer, wifi_result_buffer_size );
+        // wifi_result_buffer_size += 2;
+
+
+
         send_status = lorawan_api_payload_send(
             mw_wifi_send_obj.fport, true, wifi_result_buffer, wifi_result_buffer_size, UNCONF_DATA_UP,
             smtc_modem_hal_get_time_in_ms( ) + MODEM_TASK_DELAY_MS, mw_wifi_send_obj.stack_id );
