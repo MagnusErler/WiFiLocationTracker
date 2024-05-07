@@ -111,7 +111,7 @@ LBM_STREAM ?= no
 LBM_LFU ?= no
 
 # Cloud Device Management feature
-LBM_DEVICE_MANAGEMENT ?= no
+LBM_DEVICE_MANAGEMENT ?= yes
 
 #-----------------------------------------------------------------------------
 # Miscellaneous options
