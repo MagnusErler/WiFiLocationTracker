@@ -1,6 +1,6 @@
 # WiFi and Satellite Scanner for Geolocation
 
-Three different **wifi location tracker** are implemented; [ESP](esp/README.md) for ESP-devices, [Python](python/README.md) for desktop, and [STM32 ](stm32/README.md)for STM32-chip with LR1110.
+Three different **wifi location tracker** are implemented; [ESP](other_platforms/esp/README2.md) for ESP-devices, [Python](other_platforms/python/README.md) for desktop, and [STM32 ](stm32/README.md)for STM32-chip with LR1110.
 
 ###### Esp
 
