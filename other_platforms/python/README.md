@@ -4,7 +4,7 @@
 
 Run `pip install -r requirements.txt`
 
-Read [README.md](../README.md) in parent directory
+Read [README.md](../../README.md) in parent directory
 
 ## Usage
 
