@@ -352,13 +352,28 @@ static void mw_wifi_send_service_on_launch( void* context_callback )
     if( mw_wifi_send_obj.send_mode == SMTC_MODEM_SEND_MODE_UPLINK )
     {
 
-        // // add 0x45 and 0x34 infront of the payload (wifi_result_buffer) and change the size to wifi_result_buffer_size + 2
-        // uint8_t wifi_result_buffer_with_header[wifi_result_buffer_size + 2];
+        // add 0x45 and 0x34 infront of the payload (wifi_result_buffer) and change the size to wifi_result_buffer_size + 2
+        // uint8_t wifi_result_buffer_with_header[wifi_result_buffer_size + 0];
+        // // reset the wifi_result_buffer_with_header
+        // memset( wifi_result_buffer_with_header, 0, wifi_result_buffer_size + 0 );
         // wifi_result_buffer_with_header[0] = 0x45;
         // wifi_result_buffer_with_header[1] = 0x34;
-        // memcpy( &wifi_result_buffer_with_header[2], wifi_result_buffer, wifi_result_buffer_size );
-        // wifi_result_buffer_size += 2;
+        // wifi_result_buffer_with_header[2] = 0x0;
+        // wifi_result_buffer_with_header[3] = 0x0;
+        // wifi_result_buffer_with_header[4] = 0x0;
+        // wifi_result_buffer_with_header[5] = 0x0;
+        // memcpy( &wifi_result_buffer_with_header[6], wifi_result_buffer, wifi_result_buffer_size );
+        // wifi_result_buffer_size += 0;
+        // // set wifi_result_buffer_with_header to wifi_result_buffer
+        // memcpy( wifi_result_buffer, wifi_result_buffer_with_header, wifi_result_buffer_size );
 
+        // wifi_result_buffer[0] = 0x45;
+        // wifi_result_buffer[1] = 0x34;
+        // wifi_result_buffer[2] = 0x00;
+        // wifi_result_buffer[3] = 0x00;
+        // wifi_result_buffer[4] = 0x00;
+        // wifi_result_buffer[5] = 0x00;
+        // wifi_result_buffer[6] = 0x00;
 
 
         send_status = lorawan_api_payload_send(
