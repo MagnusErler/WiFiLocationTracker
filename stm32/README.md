@@ -7,7 +7,7 @@ Still in progress of implementation
 * [X] Communication with host-computer for debugging (UART)
 * [X] Communication with LR1110 (SPI)
 * [X] Implement WiFi scanner
-* [ ] Implement LoRaWAN
+* [X] Implement LoRaWAN
 * [X] Implement Satellite scanner
 
 ## Setup
