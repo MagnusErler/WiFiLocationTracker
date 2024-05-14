@@ -289,7 +289,7 @@ void smtc_modem_hal_on_panic( uint8_t* func, uint32_t line, const char* fmt, ...
 
     smtc_modem_hal_crashlog_store( out_buff, out_len );
 
-    SMTC_HAL_TRACE_ERROR( "Modem panic: %s\n", out_buff );
+    SMTC_HAL_TRACE_ERROR( "Modem panic: %s\r\n", out_buff );
     smtc_modem_hal_reset_mcu( );
 }
 
