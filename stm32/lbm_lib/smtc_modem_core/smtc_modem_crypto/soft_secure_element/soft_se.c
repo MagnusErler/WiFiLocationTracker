@@ -381,7 +381,7 @@ smtc_se_return_code_t smtc_secure_element_init( void )
     {
         memcpy( ( uint8_t* ) &soft_se_data[stack_id], ( uint8_t* ) &local_data, sizeof( local_data ) );
     }
-    SMTC_MODEM_HAL_TRACE_INFO( "Use soft secure element for cryptographic functionalities\n" );
+    SMTC_MODEM_HAL_TRACE_INFO( "Use soft secure element for cryptographic functionalities\r\n" );
 
     return SMTC_SE_RC_SUCCESS;
 }
@@ -694,7 +694,7 @@ smtc_se_return_code_t smtc_secure_element_restore_context( uint8_t stack_id )
     }
     else
     {
-        SMTC_MODEM_HAL_TRACE_ERROR( "Restore of Secure Element context fails => Return to init values\n" );
+        SMTC_MODEM_HAL_TRACE_ERROR( "Restore of Secure Element context fails => Return to init values\r\n" );
         soft_se_data_t local_data = { .deveui   = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },
                                       .joineui  = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },
                                       .pin      = { 0x00, 0x00, 0x00, 0x00 },
