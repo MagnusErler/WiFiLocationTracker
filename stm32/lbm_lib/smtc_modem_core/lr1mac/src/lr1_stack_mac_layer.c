@@ -1422,7 +1422,7 @@ status_lorawan_t lr1_stack_mac_join_accept( lr1_stack_mac_t* lr1_mac )
     // TODO check join_nonce as a counter !
     if( join_nonce_tmp == join_nonce_prev )
     {
-        SMTC_MODEM_HAL_TRACE_WARNING( "JoinNonce invalid (new:%u == prev:%u)\r\r\n", join_nonce_tmp, join_nonce_prev );
+        SMTC_MODEM_HAL_TRACE_WARNING( "JoinNonce invalid (new:%u == prev:%u)\r\n", join_nonce_tmp, join_nonce_prev );
         return ERRORLORAWAN;
     }
     memcpy( lr1_mac->join_nonce, join_nonce, 6 );
