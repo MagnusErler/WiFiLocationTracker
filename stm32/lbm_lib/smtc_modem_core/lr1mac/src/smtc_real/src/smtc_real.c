@@ -508,7 +508,7 @@ status_lorawan_t smtc_real_update_cflist( smtc_real_t* real, uint8_t* cf_list )
                                    CHANNEL_ENABLED );
 
                     SMTC_MODEM_HAL_TRACE_PRINTF(
-                        "MacTxFrequency [%d] = %d \r\r\n", i,
+                        "MacTxFrequency [%d] = %d \r\n", i,
                         tx_frequency_channel_ctx[real_const.const_number_of_boot_tx_channel + i] );
 
                     SMTC_MODEM_HAL_TRACE_PRINTF( "MacDataRateChannel [%d] = ", i );
@@ -519,8 +519,8 @@ status_lorawan_t smtc_real_update_cflist( smtc_real_t* real, uint8_t* cf_list )
                             SMTC_GET_BIT16( &dr_bitfield_tx_channel_ctx[real_const.const_number_of_boot_tx_channel + i],
                                             dr ) );
                     }
-                    SMTC_MODEM_HAL_TRACE_PRINTF( " \r\r\n" );
-                    SMTC_MODEM_HAL_TRACE_PRINTF( "MacChannelIndexEnabled [%d] = %d \r\r\n", i,
+                    SMTC_MODEM_HAL_TRACE_PRINTF( " \r\n" );
+                    SMTC_MODEM_HAL_TRACE_PRINTF( "MacChannelIndexEnabled [%d] = %d \r\n", i,
                                                  SMTC_GET_BIT8( channel_index_enabled_ctx,
                                                                 ( real_const.const_number_of_boot_tx_channel + i ) ) );
                 }
