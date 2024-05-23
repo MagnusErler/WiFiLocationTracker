@@ -231,6 +231,8 @@ task_priority_t modem_supervisor_get_modem_mute_with_priority_parameter( uint8_t
  */
 void modem_supervisor_set_modem_mute_with_priority_parameter( task_priority_t priority_level, uint8_t stack_id );
 
+// int32_t getTimeBeforeNextScan( int8_t stack_id );
+
 #ifdef __cplusplus
 }
 #endif

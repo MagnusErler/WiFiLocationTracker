@@ -252,8 +252,15 @@ void main_geolocation( void ) {
                     SMTC_HAL_TRACE_INFO("LIS2DE12 INT1_SRC: Z high event has occurred\r\n");
                 }
             }
+
+            // int32_t next_task_time_tmp = ( int32_t ) ( task_manager.modem_task[STACK_ID].time_to_execute_s - smtc_modem_hal_get_time_in_s( ) );
+
+
+            // check lorawan_api_next_join_time_second_get( ) to avoid joining the network too often
             
         }
+
+        // SMTC_HAL_TRACE_INFO("Time before next GNSS scan: %d s\r\n", getTimeBeforeNextScan( STACK_ID ));
 
 
         // Modem process launch
@@ -451,6 +458,7 @@ static void modem_event_callback( void ) {
                 SMTC_HAL_TRACE_PRINTF("Setting new GNSS scan period to %u s\r\n", GEOLOCATION_GNSS_SCAN_PERIOD_S);
 
                 // cancel the current GNSS scan (not possible if the scan has already started)
+                // This is maybe already done inside modem_supervisor_add_task(), but just to be one the safe side we do it here again
                 smtc_modem_gnss_scan_cancel( stack_id );
                 // set the new GNSS scan period
                 smtc_modem_gnss_scan( stack_id, SMTC_MODEM_GNSS_MODE_MOBILE, GEOLOCATION_GNSS_SCAN_PERIOD_S );

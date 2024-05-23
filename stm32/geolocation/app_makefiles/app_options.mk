@@ -15,7 +15,7 @@ APPTARGET_ROOT = app
 BOARD ?= NUCLEO_L476
 
 # Target radio
-TARGET_RADIO ?= nc
+TARGET_RADIO ?= LR1110
 
 # Application
 MODEM_APP ?= GEOLOCATION

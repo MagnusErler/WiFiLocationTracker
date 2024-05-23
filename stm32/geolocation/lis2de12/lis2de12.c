@@ -230,16 +230,16 @@ uint8_t accelerometer_init( ) {
 
 uint8_t is_accelerometer_detected_moved( void )
 {
-    lis2de12_int1_src_t int1_gen_source;
+    // lis2de12_int1_src_t int1_gen_source;
 
     accelerometer_irq1_state = false;
 
     // lis2de12_int1_gen_source_get( &int1_gen_source );
 
-    if( ( int1_gen_source.xh == 1 ) || ( int1_gen_source.yh == 1 ) || ( int1_gen_source.zh == 1 ) ) {
-        accelerometer_irq1_state = false;
-        return 1;
-    }
+    // if( ( int1_gen_source.xh == 1 ) || ( int1_gen_source.yh == 1 ) || ( int1_gen_source.zh == 1 ) ) {
+    //     accelerometer_irq1_state = false;
+    //     return 1;
+    // }
     return 0;
 }
 
