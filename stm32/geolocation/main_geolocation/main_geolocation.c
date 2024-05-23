@@ -111,7 +111,7 @@ uint8_t keep_alive_payload[KEEP_ALIVE_SIZE] = { 0x00 };
 /*!
  * @brief Defines the delay before starting the next scan sequence, value in [s].
  */
-uint8_t GEOLOCATION_GNSS_SCAN_PERIOD_S = 2 * 60;
+uint8_t GEOLOCATION_GNSS_SCAN_PERIOD_S = 2 * 15;
 uint8_t GEOLOCATION_WIFI_SCAN_PERIOD_S = 1 * 15;
 
 /*!
@@ -361,8 +361,8 @@ static void modem_event_callback( void ) {
             switch (1) {
             case 1:
                 // WiFi scan first, then GNSS scan
-                setupWiFi( stack_id );
-                // setupGNSS( stack_id );
+                // setupWiFi( stack_id );
+                setupGNSS( stack_id );
                 break;
             case 2:
                 setupGNSS( stack_id );

@@ -70,7 +70,7 @@ extern "C" {
 #define RADIO_SPI_SCLK          PA_5
 #define RADIO_NSS               PA_8
 #define RADIO_NRST              PA_0
-#define RADIO_DIOX              PB_4
+#define RADIO_DIOX              PA_4
 #define RADIO_BUSY_PIN          PB_3
 
 #define RADIO_SPI_ID            1
