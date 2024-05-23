@@ -12,7 +12,7 @@ Able to run in a Python environment and approximate the location of the device. 
 
 ###### STM32
 
-Still in progress and is not currently working (View [README](stm32/README.md) for more info).
+View [README](stm32/README.md) for more info.
 
 ## Setup
 

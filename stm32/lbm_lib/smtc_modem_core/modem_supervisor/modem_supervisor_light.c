@@ -371,6 +371,11 @@ static uint32_t supervisor_run_lorawan_engine( uint8_t stack_id )
     return sleep_time;
 }
 
+// int32_t getTimeBeforeNextScan( int8_t stack_id )
+// {
+//     return task_manager.modem_task[stack_id].time_to_execute_s - smtc_modem_hal_get_time_in_s( );
+// }
+
 static uint32_t supervisor_find_next_task( void )
 {
     // Find stacks that can continue to send uplink frame in regard of duty-cycle regulation
