@@ -58,7 +58,7 @@ MODEM_DEEP_TRACE ?= no
 REGION ?= EU_868
 
 # Crypto management only for lr11xx targets (SOFT, LR11XX, LR11XX_WITH_CREDENTIALS )
-CRYPTO ?= SOFT
+CRYPTO ?= LR11XX_WITH_CREDENTIALS
 
 #-----------------------------------------------------------------------------
 # LoRaWAN Stack related options

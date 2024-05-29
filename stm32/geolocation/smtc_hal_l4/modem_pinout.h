@@ -70,20 +70,20 @@ extern "C" {
 #define RADIO_SPI_SCLK          PA_5
 #define RADIO_NSS               PA_8
 #define RADIO_NRST              PA_0
-#define RADIO_DIOX              PB_4
+#define RADIO_DIOX              PA_4
 #define RADIO_BUSY_PIN          PB_3
 
 #define RADIO_SPI_ID            1
 #define I2C_ID                  1
 
-#if defined( LR11XX_TRANSCEIVER ) && defined( ENABLE_MODEM_GNSS_FEATURE )
+//#if defined( LR11XX_TRANSCEIVER ) && defined( ENABLE_MODEM_GNSS_FEATURE )
 // LR11XX_TRANSCEIVER - Use for GNSS LNA control
 #define RADIO_LNA_CTRL          PB_0
 /* LED */
 #define SMTC_LED_RX             PC_0
 #define SMTC_LED_TX             PC_1
 #define SMTC_LED_SCAN           PB_5
-#endif
+//#endif
 
 //Hw modem specific pinout
 #define HW_MODEM_TX_LINE        PC_10
