@@ -188,8 +188,7 @@ void main_geolocation( void ) {
     hal_mcu_enable_irq( );
 
     SMTC_HAL_TRACE_PRINTF("\r\n\r\n-----------------------------\r\n\r\n" );
-
-    SMTC_HAL_TRACE_INFO( "GEOLOCATION example is starting\r\n" );
+    SMTC_HAL_TRACE_INFO( "GEOLOCATION is starting\r\n" );
 
     ral_lr11xx_init( NULL );
 
@@ -385,6 +384,10 @@ static void modem_event_callback( void ) {
 
         case SMTC_MODEM_EVENT_ALARM:
             SMTC_HAL_TRACE_INFO( "Event received: ALARM\r\n" );
+
+            keep_alive_payload[0] = getTemperature() / 5.0;
+            keep_alive_payload[1] = getBatteryVoltage() * 70;
+
             smtc_modem_request_uplink( stack_id, KEEP_ALIVE_PORT, false, keep_alive_payload, KEEP_ALIVE_SIZE );
             smtc_modem_alarm_start_timer( KEEP_ALIVE_PERIOD_S );
             break;
@@ -506,8 +509,8 @@ static void modem_event_callback( void ) {
             SMTC_HAL_TRACE_INFO( "Event received: GNSS_ALMANAC_DEMOD_UPDATE\r\n" );
             smtc_modem_almanac_demodulation_get_event_data_almanac_update( stack_id, &almanac_update_data );
             /* Store progress in keep alive payload */
-            keep_alive_payload[0] = almanac_update_data.update_progress_gps;
-            keep_alive_payload[1] = almanac_update_data.update_progress_beidou;
+            // keep_alive_payload[0] = almanac_update_data.update_progress_gps;
+            // keep_alive_payload[1] = almanac_update_data.update_progress_beidou;
             SMTC_HAL_TRACE_PRINTF( "GPS progress: %u%%\r\n", almanac_update_data.update_progress_gps );
             SMTC_HAL_TRACE_PRINTF( "BDS progress: %u%%\r\n", almanac_update_data.update_progress_beidou );
             SMTC_HAL_TRACE_PRINTF( "aborted: %u\r\n", almanac_update_data.stat_nb_aborted_by_rp );
