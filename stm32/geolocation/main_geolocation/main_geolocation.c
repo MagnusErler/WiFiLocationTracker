@@ -521,6 +521,13 @@ static void modem_event_callback( void ) {
 
         case SMTC_MODEM_EVENT_WIFI_TERMINATED:
             SMTC_HAL_TRACE_INFO( "Event received: WIFI_TERMINATED\r\n" );
+
+            /*custom_payload[0] = getTemperature() / 5.0;
+            custom_payload[1] = getBatteryVoltage() * 70;
+            smtc_modem_request_uplink( stack_id, 15, false, custom_payload, 4 );
+            smtc_modem_alarm_start_timer( KEEP_ALIVE_PERIOD_S );*/
+
+
             /* Notify user with leds */
             smtc_board_led_pulse( smtc_board_get_led_tx_mask( ), true, LED_PERIOD_MS );
             /* Get event data */

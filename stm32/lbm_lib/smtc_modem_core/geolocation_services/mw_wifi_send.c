@@ -123,7 +123,7 @@
 /**
  * @brief Minimal number of detected access point in a scan result to consider the scan valid
  */
-#define WIFI_SCAN_NB_AP_MIN ( 3 )
+#define WIFI_SCAN_NB_AP_MIN ( 1 )
 
 /**
  * @brief Size in bytes to store the RSSI of a detected WiFi Access-Point
