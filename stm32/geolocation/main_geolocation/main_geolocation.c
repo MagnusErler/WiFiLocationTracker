@@ -63,6 +63,8 @@
 
 #include "ral_lr11xx.h"
 
+#include "lr11xx_gnss.h"
+
 /*
  * -----------------------------------------------------------------------------
  * --- PRIVATE MACROS-----------------------------------------------------------
@@ -112,7 +114,7 @@ uint8_t keep_alive_payload[KEEP_ALIVE_SIZE] = { 0x00 };
  * @brief Defines the delay before starting the next scan sequence, value in [s].
  */
 uint8_t GEOLOCATION_GNSS_SCAN_PERIOD_S = 15;
-uint8_t GEOLOCATION_WIFI_SCAN_PERIOD_S = 20;
+uint8_t GEOLOCATION_WIFI_SCAN_PERIOD_S = 30;
 
 /*!
  * @brief Time during which a LED is turned on when pulse, in [ms]
@@ -201,6 +203,12 @@ void main_geolocation( void ) {
     }
     SMTC_HAL_TRACE_INFO( "LR11XX FW: 0x%04X, type: 0x%02X\r\n", lr11xx_fw_version.fw, lr11xx_fw_version.type );
     SMTC_HAL_TRACE_INFO( "LR11XX HW: 0x%02X\r\n", lr11xx_fw_version.hw );
+
+    lr11xx_gnss_solver_assistance_position_t position;
+    position.latitude = ( float ) 55.782788;
+    position.longitude = ( float ) 12.515301;
+
+    lr11xx_gnss_set_assistance_position( NULL, &position );
 
     while( 1 ) {
 
