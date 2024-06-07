@@ -209,7 +209,7 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (!confirmationOpen && menuRef.current && !menuRef.current.contains(event.target)) {
-        handleClose(); // Close the menu if clicked outside and confirmation dialog is not open
+        handleCloseAndUpdateDevices(); // Close the menu if clicked outside and confirmation dialog is not open
       }
     };
 
