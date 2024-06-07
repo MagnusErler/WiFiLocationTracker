@@ -65,6 +65,8 @@
 
 #include "lr11xx_gnss.h"
 
+#include "stm32l4xx_hal.h"  // HAL_Delay
+
 /*
  * -----------------------------------------------------------------------------
  * --- PRIVATE MACROS-----------------------------------------------------------
@@ -94,7 +96,7 @@
 /**
  * @brief Watchdog counter reload value during sleep (The period must be lower than MCU watchdog period (here 32s))
  */
-#define WATCHDOG_RELOAD_PERIOD_MS ( 20000 )
+#define WATCHDOG_RELOAD_PERIOD_MS ( 30000 )
 
 #define CUSTOM_NB_TRANS ( 3 )
 #define ADR_CUSTOM_LIST                                \
@@ -267,7 +269,7 @@ void main_geolocation( void ) {
             
         }
 
-        // SMTC_HAL_TRACE_INFO("Time before next GNSS scan: %d s\r\n", getTimeBeforeNextScan( STACK_ID ));
+        // // // // SMTC_HAL_TRACE_INFO("Time before next GNSS scan: %d s\r\n", getTimeBeforeNextScan( STACK_ID ));
 
 
         // Modem process launch
@@ -375,8 +377,8 @@ static void modem_event_callback( void ) {
             switch (1) {
             case 1:
                 // WiFi scan first, then GNSS scan
-                setupWiFi( stack_id );
-                // setupGNSS( stack_id );
+                // setupWiFi( stack_id );
+                setupGNSS( stack_id );
                 break;
             case 2:
                 setupGNSS( stack_id );

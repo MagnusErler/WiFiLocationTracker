@@ -69,12 +69,12 @@ extern "C" {
 /*!
  * @brief The maximal number of results to gather during the scan. Maximum value is 32
  */
-#define WIFI_MAX_RESULTS ( 2 )
+#define WIFI_MAX_RESULTS ( 5 )
 
 /*!
  * @brief The maximal number of results to send. Maximum value is 32
  */
-#define WIFI_MAX_RESULTS_TO_SEND ( 2 )
+#define WIFI_MAX_RESULTS_TO_SEND ( 5 )
 
 /**
  * @brief Size in bytes of a WiFi Access-Point address
