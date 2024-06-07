@@ -82,12 +82,26 @@ app.post('/api/geolocationSolves', async (req, res) => {
   try {
     // console.log(req.body);
     const { end_device_ids, location_solved } = req.body;
-    
-    // Extract device ID and geolocation data
-    const deviceID = end_device_ids.dev_eui;
+
+    // Validate request body
+    if (!end_device_ids || !end_device_ids.dev_eui) {
+      return res.status(400).json({ error: 'Device ID is missing' });
+    }
+
+    if (!location_solved || !location_solved.location) {
+      return res.status(400).json({ error: 'Location data is missing' });
+    }
+
     const { location } = location_solved;
     const { latitude, longitude, accuracy, source } = location;
+
+    // Validate location data
+    if (latitude === undefined || longitude === undefined || accuracy === undefined || !source) {
+      return res.status(400).json({ error: 'Incomplete location data' });
+    }
     
+    const deviceID = end_device_ids.dev_eui;
+
     // Format geocode
     const geocode = [latitude, longitude];
 
@@ -116,7 +130,7 @@ app.post('/api/geolocationSolves', async (req, res) => {
       if (d < 15) { 
         // Update the latest ping instead of adding a new one
         console.log("Distance is less than 15 meters, updating latest ping instead of adding a new one")
-        latestPing.update({ geocode, accuracy, source });
+        await latestPing.update({ geocode, accuracy, source });
         console.log('Latest ping updated in database:', latestPing.toJSON());
         return res.status(204).json(latestPing);
       }

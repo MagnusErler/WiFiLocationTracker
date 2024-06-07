@@ -9,7 +9,9 @@ import TimelineIcon from '@mui/icons-material/Timeline';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import BatteryUnknownIcon from '@mui/icons-material/BatteryUnknown';
 import DeviceThermostatIcon from '@mui/icons-material/DeviceThermostat';
+import SettingsIcon from '@mui/icons-material/Settings';
 import ConfirmationDialog from "./ConfirmationDialog";
+import ConfigureDeviceDialog from "./ConfigureDeviceDialog";
 
 const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation, handleShowLocationSwitch, handleShowMovement, handleTrackerInformationUpdate, markers, dataLoaded }, ref) => {
   const [showCurrentLocationIds, setShowCurrentLocationIds] = useState([]);
@@ -18,6 +20,7 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
   const [deviceToDelete, setDeviceToDelete] = useState(null);
   const [confirmationOpen, setConfirmationOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [configuringDevice, setConfiguringDevice] = useState(null); // State to hold the device ID being configured
   const menuRef = useRef(null);
 
   useEffect(() => {
@@ -26,7 +29,11 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
 
   useEffect(() => {
     if (dataLoaded) {
-      setShowCurrentLocationIds(trackerInformation.map(tracker => tracker.deviceId));
+      const currentLocationIds = trackerInformation
+        .filter(tracker => hasCorrespondingPing(tracker.deviceId))
+        .map(tracker => tracker.deviceId);
+
+      setShowCurrentLocationIds(currentLocationIds);
     }
   }, [dataLoaded, trackerInformation]);
 
@@ -189,10 +196,20 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
     setConfirmationOpen(true); // Open the confirmation dialog
   };
 
+  const handleConfigureDevice = (deviceId) => {
+    setConfiguringDevice(deviceId); // Set the device ID being configured
+  };
+
+  const handleCloseConfigureDevice = () => {
+    //sendDownlink(deviceId, "off");
+    console.log("Sending downlink")
+    setConfiguringDevice(null); // Reset the configuring device state
+  };
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (!confirmationOpen && menuRef.current && !menuRef.current.contains(event.target)) {
-        handleClose(); // Close the menu if clicked outside and confirmation dialog is not open
+        handleCloseAndUpdateDevices(); // Close the menu if clicked outside and confirmation dialog is not open
       }
     };
 
@@ -218,6 +235,7 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
               <th className="view-location-column"><FmdGoodIcon /></th>
               <th className="view-movement-column"><TimelineIcon /></th>
               <th className="delete-device-column"><DeleteForeverIcon /></th>
+              <th className="settings-column"><SettingsIcon /></th>
             </tr>
           </thead>
           <tbody>
@@ -255,6 +273,10 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
                 <td className="delete-device-column">
                   <DeleteForeverIcon className="delete-icon" onClick={() => toggleConfirmationDialog(tracker.deviceId)} />
                 </td>
+                <td className="settings-column">
+                  {/* Button to open ConfigureDeviceDialog */}
+                  <SettingsIcon className="settings-icon" onClick={() => handleConfigureDevice(tracker.deviceId)} />
+                </td>
               </tr>
             ))}
           </tbody>
@@ -267,6 +289,13 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
           onCancel={() => setConfirmationOpen(false)}
           confirmText={isDeleting ? "Removing..." : "Confirm"}
           confirmDisabled={isDeleting}
+        />
+      )}
+      {/* Render ConfigureDeviceDialog if a device is being configured */}
+      {configuringDevice && (
+        <ConfigureDeviceDialog
+          deviceId={configuringDevice}
+          handleClose={handleCloseConfigureDevice}
         />
       )}
     </div>

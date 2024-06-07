@@ -6,6 +6,8 @@
   "main": "src/index.tsx",
   "proxy": "http://localhost:3001",
   "dependencies": {
+    "@auth0/auth0-react": "^2.2.4",
+    "@clerk/clerk-react": "^5.2.3",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@fontsource/roboto": "^5.0.12",

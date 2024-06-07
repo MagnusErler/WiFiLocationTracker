@@ -156,39 +156,45 @@ export default function App() {
     try {
       // Initialize an array to store the markers
       const updatedMarkers = [];
-      // Iterate over each device in trackerInformation
-      for (const device of trackerInformation) {
-        console.log(`Fetching markers for device ${device.deviceId}...`);
+  
+      // Create an array of promises for fetching markers for each device
+      const fetchMarkerPromises = trackerInformation.map(async (device) => {
         const deviceId = device.deviceId.toUpperCase();
-        const response = await axios.get(`/api/geolocationSolves/${deviceId}`);
-        
-        // Map pings to the desired format
-        const mappedMarkers = response.data.map(ping => ({
-          pingId: ping.id,
-          deviceId: ping.deviceID,
-          geocode: ping.geocode,
-          timeStamp: new Date(ping.updatedAt).toLocaleString(), // Convert to human-readable format
-          accuracy: ping.accuracy
-        }));
-        
-        // Add the mapped markers to the updatedMarkers array
-        updatedMarkers.push(...mappedMarkers);
-        console.log(`Markers for device ${deviceId}:`, response.data);
-        // Process markers for this device as needed
-      }
+        try {
+          const response = await axios.get(`/api/geolocationSolves/${deviceId}`);
+          
+          // Map pings to the desired format
+          const mappedMarkers = response.data.map((ping) => ({
+            pingId: ping.id,
+            deviceId: ping.deviceID,
+            geocode: ping.geocode,
+            timeStamp: new Date(ping.updatedAt).toLocaleString(), // Convert to human-readable format
+            accuracy: ping.accuracy,
+          }));
+          
+          // Add the mapped markers to the updatedMarkers array
+          updatedMarkers.push(...mappedMarkers);
+          console.log(`Markers for device ${deviceId}:`, response.data);
+        } catch (error) {
+          // Handle 404 error specifically
+          if (error.response && error.response.status === 404) {
+            console.log(`No entries found for device ${deviceId}`);
+          } else {
+            // Handle other errors
+            console.error(`Failed to fetch markers for device ${deviceId}:`, error);
+          }
+        }
+      });
+  
+      // Wait for all fetchMarkerPromises to complete
+      await Promise.all(fetchMarkerPromises);
+  
       // Update the markers state with the updatedMarkers array
       console.log("Markers fetched successfully:", updatedMarkers);
       setMarkers(updatedMarkers);
     } catch (error) {
-      // Check if the error is an AxiosError
-      if (error.isAxiosError && error.response && error.response.status === 404) {
-        // Handle 404 error
-        console.log(`No entries found for device ${error.response.config.url.split('/').pop()}`);
-      } else {
-        // Handle other errors
-        console.error("Failed to fetch markers:", error);
-        alert("Failed to fetch markers. Check console for details.");
-      }
+      console.error("Failed to fetch markers:", error);
+      alert("Failed to fetch markers. Check console for details.");
     }
   };
 
