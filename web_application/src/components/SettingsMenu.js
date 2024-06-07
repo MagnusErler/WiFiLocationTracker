@@ -34,6 +34,7 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
         .map(tracker => tracker.deviceId);
 
       setShowCurrentLocationIds(currentLocationIds);
+      setOriginalNames(trackerInformation.map(tracker => tracker.name));
     }
   }, [dataLoaded, trackerInformation]);
 
@@ -89,8 +90,12 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
 
   const handleCloseAndUpdateDevices = async () => {
     const devicesToUpdate = trackerInformation.filter((tracker, index) => tracker.name !== originalNames[index]);
+
+    console.log("Devices to update:", devicesToUpdate);
+
+    const anyUndefinedNames = trackerInformation.some(tracker => tracker.name === undefined);
   
-    if (devicesToUpdate.length === 0) {
+    if (devicesToUpdate.length === 0 || anyUndefinedNames) {
       console.log("No devices to update.");
       handleClose();
       return;
@@ -208,16 +213,16 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (!confirmationOpen && menuRef.current && !menuRef.current.contains(event.target)) {
+      if (isOpen && !confirmationOpen && menuRef.current && !menuRef.current.contains(event.target)) {
         handleCloseAndUpdateDevices(); // Close the menu if clicked outside and confirmation dialog is not open
       }
     };
-
+  
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [handleClose, confirmationOpen]);
+  }, [isOpen, handleClose, confirmationOpen]);
 
   return (
     <div ref={ref} className={`modal ${isOpen ? "show" : ""}`}>

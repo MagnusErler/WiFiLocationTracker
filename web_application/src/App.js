@@ -39,6 +39,8 @@ export default function App() {
 
   const [dataLoaded, setDataLoaded] = useState(false);
 
+  useEffect(() => {console.log("Version 07/06/2023 - 13:31")}, []);
+
   // Function to handle setting showCurrentLocation once all data is loaded
   useEffect(() => {
     // Check if both markers and tracker information have been fetched
@@ -279,7 +281,7 @@ export default function App() {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [isSettingsMenuOpen, isAddDeviceMenuOpen, isMapTileMenuOpen]);
 
   return (
     <div className="map-container">
