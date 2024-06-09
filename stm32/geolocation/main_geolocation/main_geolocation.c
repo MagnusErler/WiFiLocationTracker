@@ -67,6 +67,8 @@
 
 #include "stm32l4xx_hal.h"  // HAL_Delay
 
+#include "modem_pinout.h"  // HALL_OUT1 / 2
+
 /*
  * -----------------------------------------------------------------------------
  * --- PRIVATE MACROS-----------------------------------------------------------
@@ -212,6 +214,14 @@ void main_geolocation( void ) {
 
     lr11xx_gnss_set_assistance_position( NULL, &position );
 
+    hal_gpio_init_out( HALL_OUT1, 0 );
+    hal_gpio_set_value( HALL_OUT1, 1 );
+    hal_gpio_init_in( HALL_OUT1, BSP_GPIO_PULL_MODE_UP, BSP_GPIO_IRQ_MODE_OFF, NULL );
+
+    hal_gpio_init_out( HALL_OUT2, 0 );
+    hal_gpio_set_value( HALL_OUT2, 1 );
+    hal_gpio_init_in( HALL_OUT2, BSP_GPIO_PULL_MODE_UP, BSP_GPIO_IRQ_MODE_OFF, NULL );
+
     while( 1 ) {
 
         // uint16_t temp_10_0;
@@ -271,19 +281,25 @@ void main_geolocation( void ) {
 
         // // // // SMTC_HAL_TRACE_INFO("Time before next GNSS scan: %d s\r\n", getTimeBeforeNextScan( STACK_ID ));
 
+        SMTC_HAL_TRACE_INFO("hal_gpio_get_value(HALL_OUT1): %d \r\n", hal_gpio_get_value(HALL_OUT1));
+        SMTC_HAL_TRACE_INFO("hal_gpio_get_value(HALL_OUT2): %d \r\n", hal_gpio_get_value(HALL_OUT2));
+        
 
-        // Modem process launch
-        sleep_time_ms = smtc_modem_run_engine( );
 
-        // Atomically check sleep conditions
-        hal_mcu_disable_irq( );
-        if( smtc_modem_is_irq_flag_pending( ) == false ) {
+        // // Modem process launch
+        // sleep_time_ms = smtc_modem_run_engine( );
 
-            hal_watchdog_reload( );
-            hal_mcu_set_sleep_for_ms( MIN( sleep_time_ms, WATCHDOG_RELOAD_PERIOD_MS ) );
-        }
-        hal_watchdog_reload( );
-        hal_mcu_enable_irq( );
+        // // Atomically check sleep conditions
+        // hal_mcu_disable_irq( );
+        // if( smtc_modem_is_irq_flag_pending( ) == false ) {
+
+        //     hal_watchdog_reload( );
+        //     hal_mcu_set_sleep_for_ms( MIN( sleep_time_ms, WATCHDOG_RELOAD_PERIOD_MS ) );
+        // }
+        // hal_watchdog_reload( );
+        // hal_mcu_enable_irq( );
+
+        HAL_Delay(1000);
     }
 }
 
@@ -377,8 +393,8 @@ static void modem_event_callback( void ) {
             switch (1) {
             case 1:
                 // WiFi scan first, then GNSS scan
-                // setupWiFi( stack_id );
-                setupGNSS( stack_id );
+                setupWiFi( stack_id );
+                // setupGNSS( stack_id );
                 break;
             case 2:
                 setupGNSS( stack_id );
