@@ -51,7 +51,8 @@ BOARD_C_SOURCES = \
 	smtc_hal_l4/smtc_hal_trace.c\
 	smtc_hal_l4/smtc_hal_uart.c\
 	smtc_hal_l4/smtc_hal_watchdog.c\
-	lis2de12/lis2de12.c
+	lis2de12/lis2de12.c\
+	hall_effect/hall_effect.c
 
 BOARD_ASM_SOURCES =  \
 	mcu_drivers/core/STM32L4xx/startup_stm32l476xx.s
@@ -68,3 +69,4 @@ BOARD_C_INCLUDES =  \
 	-Ismtc_modem_hal\
 	-Ismtc_hal_l4\
 	-Ilis2de12\
+	-Ihall_effect\

@@ -60,6 +60,7 @@
 #include "lr1110_board.h"
 
 #include "lis2de12.h"
+#include "hall_effect.h"
 
 #include "ral_lr11xx.h"
 
@@ -214,13 +215,7 @@ void main_geolocation( void ) {
 
     lr11xx_gnss_set_assistance_position( NULL, &position );
 
-    hal_gpio_init_out( HALL_OUT1, 0 );
-    hal_gpio_set_value( HALL_OUT1, 1 );
-    hal_gpio_init_in( HALL_OUT1, BSP_GPIO_PULL_MODE_UP, BSP_GPIO_IRQ_MODE_OFF, NULL );
-
-    hal_gpio_init_out( HALL_OUT2, 0 );
-    hal_gpio_set_value( HALL_OUT2, 1 );
-    hal_gpio_init_in( HALL_OUT2, BSP_GPIO_PULL_MODE_UP, BSP_GPIO_IRQ_MODE_OFF, NULL );
+    smtc_board_hall_effect_enable( true );
 
     while( 1 ) {
 
@@ -281,8 +276,8 @@ void main_geolocation( void ) {
 
         // // // // SMTC_HAL_TRACE_INFO("Time before next GNSS scan: %d s\r\n", getTimeBeforeNextScan( STACK_ID ));
 
-        SMTC_HAL_TRACE_INFO("hal_gpio_get_value(HALL_OUT1): %d \r\n", hal_gpio_get_value(HALL_OUT1));
-        SMTC_HAL_TRACE_INFO("hal_gpio_get_value(HALL_OUT2): %d \r\n", hal_gpio_get_value(HALL_OUT2));
+        SMTC_HAL_TRACE_INFO("get_hall_effect1_irq_state: %d \r\n", get_hall_effect1_irq_state());
+        SMTC_HAL_TRACE_INFO("get_hall_effect2_irq_state: %d \r\n", get_hall_effect2_irq_state());
         
 
 
