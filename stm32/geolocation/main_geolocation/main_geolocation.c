@@ -145,6 +145,8 @@ static uint8_t                  rx_payload_size = 0;      // Size of the payload
 static smtc_modem_dl_metadata_t rx_metadata     = { 0 };  // Metadata of downlink
 static uint8_t                  rx_remaining    = 0;      // Remaining downlink payload in modem
 
+bool restart_occured = true;
+
 /**
  * @brief Internal credentials
  */
@@ -164,6 +166,9 @@ static uint8_t pin[SMTC_MODEM_PIN_LENGTH] = { 0 };
  *  Several events may have to be read from the modem when this callback is called.
  */
 static void modem_event_callback( void );
+
+float getTemperature();
+float getBatteryVoltage();
 
 /*
  * -----------------------------------------------------------------------------
@@ -312,7 +317,7 @@ void main_geolocation( void ) {
         
 
         
-
+        // checkBatteryStatus();
 
 
 
@@ -375,8 +380,30 @@ float getBatteryVoltage() {
     uint8_t vbat;
     lr11xx_system_get_vbat( NULL, &vbat );
     const float batteryVoltage = (((5 * vbat)/255.0) - 1) * 1.35;
-    SMTC_HAL_TRACE_INFO("%d.%d V\r\n", (uint8_t)batteryVoltage, (uint8_t)((batteryVoltage - (uint8_t)batteryVoltage) * 100));
+    if (batteryVoltage > 3.4) {
+        SMTC_HAL_TRACE_INFO("Battery voltage is above 3.4 V. Something seems wrong\r\n");
+        return 0;
+    }
+
+    // 0% <---> below 1.7 V
+    // 100% <---> above 3.7 V
+    // convert battery voltage to a percentage
+    // int8_t batteryVoltage_percentage = (batteryVoltage - 1.7) / 2.0 * 100;
+
+    // SMTC_HAL_TRACE_INFO("%d.%d V\r\n", (uint8_t)batteryVoltage, (uint8_t)((batteryVoltage - (uint8_t)batteryVoltage) * 100));
     return batteryVoltage;
+}
+
+void checkBatteryStatus() {
+    float batteryVoltage = getBatteryVoltage();
+    if (batteryVoltage < 3.0) {
+        SMTC_HAL_TRACE_INFO("Battery voltage is below 3.0 V\r\n");
+
+        uint8_t low_battery_warning[1] = { 0x00 };
+        low_battery_warning[0] = batteryVoltage * 70;
+        smtc_modem_request_uplink( STACK_ID, 3, false, low_battery_warning, 1 );
+    }
+
 }
 
 /**
@@ -461,6 +488,15 @@ static void modem_event_callback( void ) {
             smtc_modem_set_nb_trans( stack_id, custom_nb_trans );
             /* Start time for regular uplink */
             smtc_modem_alarm_start_timer( KEEP_ALIVE_PERIOD_S );
+
+            if (restart_occured) {
+                uint8_t join_accept_payload[2] = { 0x00 };
+                join_accept_payload[0] = getTemperature() / 5.0;
+                join_accept_payload[1] = getBatteryVoltage() * 70;
+                smtc_modem_request_uplink( stack_id, 10, false, join_accept_payload, 2 );
+                restart_occured = false;
+            }
+            
             break;
 
         case SMTC_MODEM_EVENT_TXDONE:
