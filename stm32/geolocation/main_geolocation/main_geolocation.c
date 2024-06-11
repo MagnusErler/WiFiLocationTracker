@@ -312,7 +312,7 @@ void main_geolocation( void ) {
         
 
         
-        checkBatteryStatus()
+        // checkBatteryStatus();
 
 
 
@@ -375,7 +375,7 @@ float getBatteryVoltage() {
     uint8_t vbat;
     lr11xx_system_get_vbat( NULL, &vbat );
     const float batteryVoltage = (((5 * vbat)/255.0) - 1) * 1.35;
-    SMTC_HAL_TRACE_INFO("%d.%d V\r\n", (uint8_t)batteryVoltage, (uint8_t)((batteryVoltage - (uint8_t)batteryVoltage) * 100));
+    // SMTC_HAL_TRACE_INFO("%d.%d V\r\n", (uint8_t)batteryVoltage, (uint8_t)((batteryVoltage - (uint8_t)batteryVoltage) * 100));
     return batteryVoltage;
 }
 
