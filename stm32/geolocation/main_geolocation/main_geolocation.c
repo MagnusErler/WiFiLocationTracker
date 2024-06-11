@@ -165,6 +165,9 @@ static uint8_t pin[SMTC_MODEM_PIN_LENGTH] = { 0 };
  */
 static void modem_event_callback( void );
 
+float getTemperature();
+float getBatteryVoltage();
+
 /*
  * -----------------------------------------------------------------------------
  * --- PUBLIC FUNCTIONS DEFINITION ---------------------------------------------
@@ -375,11 +378,21 @@ float getBatteryVoltage() {
     uint8_t vbat;
     lr11xx_system_get_vbat( NULL, &vbat );
     const float batteryVoltage = (((5 * vbat)/255.0) - 1) * 1.35;
+    if (batteryVoltage > 3.4) {
+        SMTC_HAL_TRACE_INFO("Battery voltage is above 3.4 V. Something seems wrong\r\n");
+        return 0;
+    }
+
+    // 0% <---> below 1.7 V
+    // 100% <---> above 3.7 V
+    // convert battery voltage to a percentage
+    // int8_t batteryVoltage_percentage = (batteryVoltage - 1.7) / 2.0 * 100;
+
     // SMTC_HAL_TRACE_INFO("%d.%d V\r\n", (uint8_t)batteryVoltage, (uint8_t)((batteryVoltage - (uint8_t)batteryVoltage) * 100));
     return batteryVoltage;
 }
 
-checkBatteryStatus() {
+void checkBatteryStatus() {
     float batteryVoltage = getBatteryVoltage();
     if (batteryVoltage < 3.0) {
         SMTC_HAL_TRACE_INFO("Battery voltage is below 3.0 V\r\n");
