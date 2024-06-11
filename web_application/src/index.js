@@ -6,6 +6,8 @@ import React, { useEffect } from "react";
 const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);
 
+// Configuration variable
+const useClerkAuth = process.env.REACT_APP_USE_CLERK;
 const clerkFrontendApi = process.env.REACT_APP_CLERK;
 
 function AppWrapper() {
@@ -26,13 +28,17 @@ function AppWrapper() {
   return <App />;
 }
 
-root.render(
-  <ClerkProvider publishableKey={clerkFrontendApi}>
-    <SignedIn>
-      <AppWrapper />
-    </SignedIn>
-    <SignedOut>
-      <RedirectToSignIn />
-    </SignedOut>
-  </ClerkProvider>
-);
+if (useClerkAuth) {
+  root.render(
+    <ClerkProvider publishableKey={clerkFrontendApi}>
+      <SignedIn>
+        <AppWrapper />
+      </SignedIn>
+      <SignedOut>
+        <RedirectToSignIn />
+      </SignedOut>
+    </ClerkProvider>
+  );
+} else {
+  root.render(<App />);
+}
