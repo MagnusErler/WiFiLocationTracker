@@ -57,7 +57,7 @@ router.post("/trackerInformation", async (req, res) => {
 router.get("/trackerInformation/:devEUI", async (req, res) => {
   try {
     const tracker = await TrackerInformation.findOne({
-      where: { devEUI: req.params.devEUI },
+      where: { deviceID: req.params.devEUI },
     });
 
     if (!tracker) {

@@ -38,6 +38,19 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
     }
   }, [dataLoaded, trackerInformation]);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isOpen && !confirmationOpen && menuRef.current && !menuRef.current.contains(event.target)) {
+        handleCloseAndUpdateDevices(); // Close the menu if clicked outside and confirmation dialog is not open
+      }
+    };
+  
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen, handleClose, confirmationOpen]);
+
   const hasCorrespondingPing = (deviceId) => {
     return markers.some(marker => marker.deviceId.toUpperCase() === deviceId.toUpperCase());
   };
@@ -58,7 +71,6 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
     }
   };
   
-  //TODO: Make sure that only corresponding switches is co-dependent
   const handleMovementSwitch = (id) => {
     const newShowMovementIds = showMovementIds.includes(id)
       ? showMovementIds.filter((checkedId) => checkedId !== id)
@@ -210,19 +222,6 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
     console.log("Sending downlink")
     setConfiguringDevice(null); // Reset the configuring device state
   };
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (isOpen && !confirmationOpen && menuRef.current && !menuRef.current.contains(event.target)) {
-        handleCloseAndUpdateDevices(); // Close the menu if clicked outside and confirmation dialog is not open
-      }
-    };
-  
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isOpen, handleClose, confirmationOpen]);
 
   return (
     <div ref={ref} className={`modal ${isOpen ? "show" : ""}`}>
