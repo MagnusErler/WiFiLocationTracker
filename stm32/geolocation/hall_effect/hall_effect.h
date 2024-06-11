@@ -106,6 +106,8 @@ bool get_hall_effect2_irq_state( void );
 void clear_hall_effect1_irq_state( void );
 void clear_hall_effect2_irq_state( void );
 
+void smtc_board_hall_effect_enable( bool enable );
+
 #ifdef __cplusplus
 }
 #endif
