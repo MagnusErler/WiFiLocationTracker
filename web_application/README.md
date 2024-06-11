@@ -201,3 +201,29 @@ The base URL for all endpoints is `localhost:3001/api`.
   - `200 OK` if successful, returning device deletion response.
   - `400 Bad Request` if request parameters are missing.
   - `500 Internal Server Error` if there's an issue deleting the device.
+
+### 14. Update Tracker Information
+- **URL:** `/trackerInformation`
+- **Method:** `POST`
+- **Description:** Updates the tracker information or creates a new entry if it doesn't exist.
+- **Request Body:**
+  - deviceID (string): The unique identifier of the device.
+  - temp (integer): The temperature reading from the device.
+  - updateInterval (integer): The interval at which the device updates its status.
+  - batteryStatus (integer): The current battery status of the device.
+- **Response:**
+  - `200 OK` if an existing tracker is updated.
+  - `201 Created` if a new tracker is created.
+  - `400 Bad Request` if required fields are missing.
+  - `500 Internal Server Error` if there's an issue updating or creating the tracker.
+
+### 15. Retrieve Tracker Information
+- **URL:** `/trackerInformation/:devEUI`
+- **Method:** `GET`
+- **Description:** Retrieves the current information for a specific tracker.
+- **Request Body:**
+  - devEUI (string): The unique identifier of the device to retrieve information for.
+- **Response:**
+  - `200 OK` if an existing tracker is updated.
+  - `404 Not Found` if the tracker is not found.
+  - `500 Internal Server Error` if there's an issue updating or creating the tracker.
