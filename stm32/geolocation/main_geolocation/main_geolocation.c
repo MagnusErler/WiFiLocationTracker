@@ -119,7 +119,7 @@ uint8_t keep_alive_payload[KEEP_ALIVE_SIZE] = { 0x00 };
  * @brief Defines the delay before starting the next scan sequence, value in [s].
  */
 uint8_t GEOLOCATION_GNSS_SCAN_PERIOD_S = 15;
-uint8_t GEOLOCATION_WIFI_SCAN_PERIOD_S = 30;
+uint8_t GEOLOCATION_WIFI_SCAN_PERIOD_S = 20;
 
 /*!
  * @brief Time during which a LED is turned on when pulse, in [ms]
@@ -236,65 +236,103 @@ void main_geolocation( void ) {
         // acc_read_raw_data( );
         // SMTC_HAL_TRACE_INFO("X: %d, Y: %d, Z: %d\r\n", acc_get_raw_x( ), acc_get_raw_y( ), acc_get_raw_z( ));
 
-        if (get_accelerometer_irq1_state( ) == 1) {
-            SMTC_HAL_TRACE_INFO("LIS2DE12 interrupt 1 detected\r\n");
-            is_accelerometer_detected_moved( );
+        // if (get_accelerometer_irq1_state( ) == 1) {
+        //     SMTC_HAL_TRACE_INFO("LIS2DE12 interrupt 1 detected\r\n");
+        //     is_accelerometer_detected_moved( );
 
-            lis2de12_int1_src_t int1_src = { 0 };
-            if (lis2de12_int1_gen_source_get( &int1_src ) != 0 ) {
-                SMTC_HAL_TRACE_ERROR("LIS2DE12 INT1_SRC: Error reading INT1_SRC register\r\n");
-            } else {
-                if (int1_src.ia == 1) {
-                    SMTC_HAL_TRACE_INFO("LIS2DE12 INT1_SRC: One or more interrupts have been generated\r\n");
-                }
-                if (int1_src.xl == 1) {
-                    SMTC_HAL_TRACE_INFO("LIS2DE12 INT1_SRC: X low event has occurred\r\n");
-                }
-                if (int1_src.xh == 1) {
-                    SMTC_HAL_TRACE_INFO("LIS2DE12 INT1_SRC: X high event has occurred\r\n");
-                }
-                if (int1_src.yl == 1) {
-                    SMTC_HAL_TRACE_INFO("LIS2DE12 INT1_SRC: Y low event has occurred\r\n");
-                }
-                if (int1_src.yh == 1) {
-                    SMTC_HAL_TRACE_INFO("LIS2DE12 INT1_SRC: Y high event has occurred\r\n");
-                }
-                if (int1_src.zl == 1) {
-                    SMTC_HAL_TRACE_INFO("LIS2DE12 INT1_SRC: Z low event has occurred\r\n");
-                }
-                if (int1_src.zh == 1) {
-                    SMTC_HAL_TRACE_INFO("LIS2DE12 INT1_SRC: Z high event has occurred\r\n");
-                }
-            }
+        //     lis2de12_int1_src_t int1_src = { 0 };
+        //     if (lis2de12_int1_gen_source_get( &int1_src ) != 0 ) {
+        //         SMTC_HAL_TRACE_ERROR("LIS2DE12 INT1_SRC: Error reading INT1_SRC register\r\n");
+        //     } else {
+        //         if (int1_src.ia == 1) {
+        //             SMTC_HAL_TRACE_INFO("LIS2DE12 INT1_SRC: One or more interrupts have been generated\r\n");
+        //         }
+        //         if (int1_src.xl == 1) {
+        //             SMTC_HAL_TRACE_INFO("LIS2DE12 INT1_SRC: X low event has occurred\r\n");
+        //         }
+        //         if (int1_src.xh == 1) {
+        //             SMTC_HAL_TRACE_INFO("LIS2DE12 INT1_SRC: X high event has occurred\r\n");
+        //         }
+        //         if (int1_src.yl == 1) {
+        //             SMTC_HAL_TRACE_INFO("LIS2DE12 INT1_SRC: Y low event has occurred\r\n");
+        //         }
+        //         if (int1_src.yh == 1) {
+        //             SMTC_HAL_TRACE_INFO("LIS2DE12 INT1_SRC: Y high event has occurred\r\n");
+        //         }
+        //         if (int1_src.zl == 1) {
+        //             SMTC_HAL_TRACE_INFO("LIS2DE12 INT1_SRC: Z low event has occurred\r\n");
+        //         }
+        //         if (int1_src.zh == 1) {
+        //             SMTC_HAL_TRACE_INFO("LIS2DE12 INT1_SRC: Z high event has occurred\r\n");
+        //         }
+        //     }
 
             // int32_t next_task_time_tmp = ( int32_t ) ( task_manager.modem_task[STACK_ID].time_to_execute_s - smtc_modem_hal_get_time_in_s( ) );
 
 
             // check lorawan_api_next_join_time_second_get( ) to avoid joining the network too often
             
-        }
+        // }
 
-        // // // // SMTC_HAL_TRACE_INFO("Time before next GNSS scan: %d s\r\n", getTimeBeforeNextScan( STACK_ID ));
+        // uint32_t time_to = modem_supervisor_get_task( )->time_to_execute_s;
 
-        SMTC_HAL_TRACE_INFO("get_hall_effect1_irq_state: %d \r\n", get_hall_effect1_irq_state());
-        SMTC_HAL_TRACE_INFO("get_hall_effect2_irq_state: %d \r\n", get_hall_effect2_irq_state());
+        // uint32_t time_to = ( modem_supervisor_get_task( ) )->modem_task[STACK_ID].time_to_execute_s;
+
+        // stask_manager* context  = modem_supervisor_get_task( );
+        // // get the time to execute the next task
+        // uint32_t time_to = context->modem_task[STACK_ID].time_to_execute_s;
+
+        // SMTC_HAL_TRACE_INFO("time_to: %d\r\n", gettimeBeforeNextTask(2));
+
+        // lorawan_join_management_get_stack_id
+
+        
+
+        // uint8_t lorawan_join_stack_id = lorawan_join_management_get_stack_id();
+        // if (lorawan_join_stack_id != -1) {
+        //     SMTC_HAL_TRACE_INFO("Lorawan join stack id: %u \r\n", lorawan_join_stack_id);
+        //     int8_t time_before_lorawan_join = gettimeBeforeNextTask(lorawan_join_stack_id);
+
+        //     SMTC_HAL_TRACE_INFO("Time before next join: %d\r\n", time_before_lorawan_join);
+
+        //     if (time_before_lorawan_join <= 0) {
+        //         lorawan_join_management_clear_stack_id();
+        //     }
+        // } else {
+        //     lorawan_join_management_clear_stack_id();
+        // }
+
+        // SMTC_HAL_TRACE_INFO("Time before next join: %d\r\n", lorawan_api_next_join_time_second_get());
+
+        // uint32_t remaining_time_in_s = 0;
+
+        // smtc_modem_alarm_get_remaining_time( &remaining_time_in_s );
+        // SMTC_HAL_TRACE_INFO("Remaining time in s: %d\r\n", remaining_time_in_s);
+
+        
+
         
 
 
-        // // Modem process launch
-        // sleep_time_ms = smtc_modem_run_engine( );
 
-        // // Atomically check sleep conditions
-        // hal_mcu_disable_irq( );
-        // if( smtc_modem_is_irq_flag_pending( ) == false ) {
 
-        //     hal_watchdog_reload( );
-        //     hal_mcu_set_sleep_for_ms( MIN( sleep_time_ms, WATCHDOG_RELOAD_PERIOD_MS ) );
-        // }
-        // hal_watchdog_reload( );
-        // hal_mcu_enable_irq( );
+        //SMTC_HAL_TRACE_INFO("get_hall_effect1_irq_state: %d \r\n", get_hall_effect1_irq_state());
+        //SMTC_HAL_TRACE_INFO("get_hall_effect2_irq_state: %d \r\n", get_hall_effect2_irq_state());
+        
 
-        HAL_Delay(1000);
+
+        // Modem process launch
+        sleep_time_ms = smtc_modem_run_engine( );
+
+        // Atomically check sleep conditions
+        hal_mcu_disable_irq( );
+        if( smtc_modem_is_irq_flag_pending( ) == false ) {
+
+            hal_watchdog_reload( );
+            hal_mcu_set_sleep_for_ms( MIN( sleep_time_ms, WATCHDOG_RELOAD_PERIOD_MS ) );
+        }
+        hal_watchdog_reload( );
+        hal_mcu_enable_irq( );
     }
 }
 

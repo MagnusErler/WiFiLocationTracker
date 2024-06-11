@@ -56,6 +56,8 @@
 #include "radio_planner.h"
 #include "radio_planner_hook_id_defs.h"
 
+#include "lorawan_api.h"
+
 /*
  * -----------------------------------------------------------------------------
  * --- PRIVATE MACROS-----------------------------------------------------------
@@ -445,6 +447,18 @@ static void wifi_rp_task_done( void* status )
 
         /* Notify application */
         send_event( SMTC_MODEM_EVENT_WIFI_SCAN_DONE );
+
+        if (get_accelerometer_irq1_state() == false) {
+            SMTC_MODEM_HAL_TRACE_INFO("Tracker has not moved since last LoRaWAN transmission, no need to send data over LoRaWAN\n");
+            
+            send_event( SMTC_MODEM_EVENT_WIFI_TERMINATED );
+            
+            /* The scan sequence has completed */
+            mw_wifi_task_obj.scan_sequence_started = false;
+            
+            return;
+        }
+        is_accelerometer_detected_moved( );
 
         /* Send results over LoRaWAN */
         mw_wifi_send_add_task( &wifi_results );

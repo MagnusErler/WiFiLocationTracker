@@ -367,7 +367,79 @@ static void lpm_enter_sleep_mode( void )
 #if( LOW_POWER_MODE == 1 )
     // Deinit periph & enter Stop Mode
     lpm_mcu_deinit( );
+
+    // Clear all wakeup flags before entering Stop mode
+    // __HAL_PWR_CLEAR_FLAG(PWR_FLAG_WUF1);
+    // __HAL_PWR_CLEAR_FLAG(PWR_FLAG_WUF2);
+    // __HAL_PWR_CLEAR_FLAG(PWR_FLAG_WUF3);
+    // __HAL_PWR_CLEAR_FLAG(PWR_FLAG_WUF4);
+    // __HAL_PWR_CLEAR_FLAG(PWR_FLAG_WUF5);
+    // __HAL_PWR_CLEAR_FLAG(PWR_FLAG_SB);
+    // __HAL_PWR_CLEAR_FLAG(PWR_FLAG_WUFI);
+    // __HAL_PWR_CLEAR_FLAG(PWR_FLAG_REGLPS);
+    // __HAL_PWR_CLEAR_FLAG(PWR_FLAG_REGLPF);
+    // __HAL_PWR_CLEAR_FLAG(PWR_FLAG_VOSF);
+    // __HAL_PWR_CLEAR_FLAG(PWR_FLAG_PVDO);
+    // __HAL_PWR_CLEAR_FLAG(PWR_FLAG_PVMO1);
+    // __HAL_PWR_CLEAR_FLAG(PWR_FLAG_PVMO2);
+    // __HAL_PWR_CLEAR_FLAG(PWR_FLAG_PVMO3);
+    // __HAL_PWR_CLEAR_FLAG(PWR_FLAG_PVMO4);
+
+    // CLEAR_BIT(PWR->CR1, PWR_CR1_LPR);
     HAL_PWREx_EnterSTOP2Mode( PWR_STOPENTRY_WFI );
+    // HAL_PWR_EnterSTANDBYMode();
+    // HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_SLEEPENTRY_WFI);
+    // HAL_PWR_EnterSLEEPMode(PWR_LOWPOWERREGULATOR_ON, PWR_SLEEPENTRY_WFI);
+    // HAL_PWREx_EnterSHUTDOWNMode();
+
+    // if (__HAL_PWR_GET_FLAG(PWR_FLAG_WUF1)) {
+    //     SMTC_HAL_TRACE_PRINTF("PWR_FLAG_WUF1\r\n");
+    // }
+    // if (__HAL_PWR_GET_FLAG(PWR_FLAG_WUF2)) {
+    //     SMTC_HAL_TRACE_PRINTF("PWR_FLAG_WUF1\r\n");
+    // }
+    // if (__HAL_PWR_GET_FLAG(PWR_FLAG_WUF3)) {
+    //     SMTC_HAL_TRACE_PRINTF("PWR_FLAG_WUF1\r\n");
+    // }
+    // if (__HAL_PWR_GET_FLAG(PWR_FLAG_WUF4)) {
+    //     SMTC_HAL_TRACE_PRINTF("PWR_FLAG_WUF1\r\n");
+    // }
+    // if (__HAL_PWR_GET_FLAG(PWR_FLAG_WUF5)) {
+    //     SMTC_HAL_TRACE_PRINTF("PWR_FLAG_WUF1\r\n");
+    // }
+    // if (__HAL_PWR_GET_FLAG(PWR_FLAG_SB)) {
+    //     SMTC_HAL_TRACE_PRINTF("PWR_FLAG_SB\r\n");
+    // }
+    // // if (__HAL_PWR_GET_FLAG(PWR_FLAG_EXT_SMPS)) {
+    // //     SMTC_HAL_TRACE_PRINTF("PWR_FLAG_EXT_SMPS");
+    // // }
+    // if (__HAL_PWR_GET_FLAG(PWR_FLAG_WUFI)) {
+    //     SMTC_HAL_TRACE_PRINTF("PWR_FLAG_WUFI\r\n");
+    // }
+    // if (__HAL_PWR_GET_FLAG(PWR_FLAG_REGLPS)) {
+    //     SMTC_HAL_TRACE_PRINTF("PWR_FLAG_REGLPS\r\n");
+    // }
+    // if (__HAL_PWR_GET_FLAG(PWR_FLAG_REGLPF)) {
+    //     SMTC_HAL_TRACE_PRINTF("PWR_FLAG_REGLPF\r\n");
+    // }
+    // if (__HAL_PWR_GET_FLAG(PWR_FLAG_VOSF)) {
+    //     SMTC_HAL_TRACE_PRINTF("PWR_FLAG_VOSF\r\n");
+    // }
+    // if (__HAL_PWR_GET_FLAG(PWR_FLAG_PVDO)) {
+    //     SMTC_HAL_TRACE_PRINTF("PWR_FLAG_PVDO\r\n");
+    // }
+    // if (__HAL_PWR_GET_FLAG(PWR_FLAG_PVMO1)) {
+    //     SMTC_HAL_TRACE_PRINTF("PWR_FLAG_PVMO1\r\n");
+    // }
+    // if (__HAL_PWR_GET_FLAG(PWR_FLAG_PVMO2)) {
+    //     SMTC_HAL_TRACE_PRINTF("PWR_FLAG_PVMO2\r\n");
+    // }
+    // if (__HAL_PWR_GET_FLAG(PWR_FLAG_PVMO3)) {
+    //     SMTC_HAL_TRACE_PRINTF("PWR_FLAG_PVMO3\r\n");
+    // }
+    // if (__HAL_PWR_GET_FLAG(PWR_FLAG_PVMO4)) {
+    //     SMTC_HAL_TRACE_PRINTF("PWR_FLAG_PVMO4\r\n");
+    // }
 #else
     __WFI( );
 #endif
