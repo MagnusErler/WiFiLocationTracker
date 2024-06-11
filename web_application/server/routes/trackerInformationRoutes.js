@@ -6,17 +6,27 @@ const router = express.Router();
 // Endpoint to update tracker information
 router.post("/trackerInformation", async (req, res) => {
   try {
-    const { deviceID, temp, updateInterval, batteryStatus } = req.body;
-
-    // Validate the request body
-    if (
-      !deviceID ||
-      temp === undefined ||
-      updateInterval === undefined ||
-      batteryStatus === undefined
-    ) {
-      return res.status(400).json({ error: "Missing required fields" });
+    //console.log("Received request to update tracker information:", req.body);
+    const { end_device_ids, uplink_message } = req.body;
+    const { f_port, decoded_payload } = uplink_message || {};
+    
+    // Check the f_port
+    if (f_port !== 15) {
+      return res.status(400).json({ error: "Invalid f_port. Expected f_port 15." });
     }
+
+    const deviceID = end_device_ids?.dev_eui;
+    const bytes = decoded_payload?.bytes;
+
+    // Validate the request body and extracted fields
+    if (!deviceID || !bytes || bytes.length < 4) {
+      return res.status(400).json({ error: "Missing required fields or invalid byte array length." });
+    }
+
+    // Extract the values from the bytes array
+    const temp = bytes[0] * 5;
+    const batteryStatus = bytes[1] / 70;
+    const updateInterval = bytes[2];
 
     // Check if the tracker already exists
     const existingTracker = await TrackerInformation.findOne({
