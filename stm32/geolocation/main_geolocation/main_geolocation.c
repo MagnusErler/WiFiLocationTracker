@@ -145,6 +145,8 @@ static uint8_t                  rx_payload_size = 0;      // Size of the payload
 static smtc_modem_dl_metadata_t rx_metadata     = { 0 };  // Metadata of downlink
 static uint8_t                  rx_remaining    = 0;      // Remaining downlink payload in modem
 
+bool restart_occured = true;
+
 /**
  * @brief Internal credentials
  */
@@ -486,6 +488,15 @@ static void modem_event_callback( void ) {
             smtc_modem_set_nb_trans( stack_id, custom_nb_trans );
             /* Start time for regular uplink */
             smtc_modem_alarm_start_timer( KEEP_ALIVE_PERIOD_S );
+
+            if (restart_occured) {
+                uint8_t join_accept_payload[2] = { 0x00 };
+                join_accept_payload[0] = getTemperature() / 5.0;
+                join_accept_payload[1] = getBatteryVoltage() * 70;
+                smtc_modem_request_uplink( stack_id, 10, false, join_accept_payload, 2 );
+                restart_occured = false;
+            }
+            
             break;
 
         case SMTC_MODEM_EVENT_TXDONE:
