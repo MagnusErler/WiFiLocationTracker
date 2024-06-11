@@ -958,6 +958,13 @@ static void terminate_navgroup( void )
         navgroup.scans[i].results_buffer[0] = ( is_last << 7 ) | ( navgroup.token & 0x1F );
     }
 
+    // if (get_accelerometer_irq1_state() == false) {
+    //     SMTC_MODEM_HAL_TRACE_INFO("Tracker has not moved since last LoRaWAN transmission, no need to send data over LoRaWAN\n");
+        
+    //     return;
+    // }
+    // is_accelerometer_detected_moved( );
+
     /* Send results */
     mw_gnss_send_add_task( &navgroup );
 }
