@@ -28,7 +28,7 @@ function AppWrapper() {
   return <App />;
 }
 
-if (useClerkAuth) {
+if (useClerkAuth === "true") {
   root.render(
     <ClerkProvider publishableKey={clerkFrontendApi}>
       <SignedIn>
