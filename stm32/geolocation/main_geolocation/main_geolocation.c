@@ -312,7 +312,7 @@ void main_geolocation( void ) {
         
 
         
-
+        checkBatteryStatus()
 
 
 
@@ -377,6 +377,18 @@ float getBatteryVoltage() {
     const float batteryVoltage = (((5 * vbat)/255.0) - 1) * 1.35;
     SMTC_HAL_TRACE_INFO("%d.%d V\r\n", (uint8_t)batteryVoltage, (uint8_t)((batteryVoltage - (uint8_t)batteryVoltage) * 100));
     return batteryVoltage;
+}
+
+checkBatteryStatus() {
+    float batteryVoltage = getBatteryVoltage();
+    if (batteryVoltage < 3.0) {
+        SMTC_HAL_TRACE_INFO("Battery voltage is below 3.0 V\r\n");
+
+        uint8_t low_battery_warning[1] = { 0x00 };
+        low_battery_warning[0] = batteryVoltage * 70;
+        smtc_modem_request_uplink( STACK_ID, 3, false, low_battery_warning, 1 );
+    }
+
 }
 
 /**
