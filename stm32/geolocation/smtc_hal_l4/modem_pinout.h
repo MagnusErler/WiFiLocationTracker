@@ -70,7 +70,7 @@ extern "C" {
 #define RADIO_SPI_SCLK          PA_5
 #define RADIO_NSS               PA_8
 #define RADIO_NRST              PA_0
-#define RADIO_DIOX              PA_4        // PB_4 for dev kit, PA_4 for custom board
+#define RADIO_DIOX              PB_4        // PB_4 for dev kit, PA_4 for custom board
 #define RADIO_BUSY_PIN          PB_3
 
 #define RADIO_SPI_ID            1
@@ -82,7 +82,7 @@ extern "C" {
 /* LED */
 #define SMTC_LED_RX             PC_0
 #define SMTC_LED_TX             PC_1
-#define SMTC_LED_SCAN           PB_5
+// #define SMTC_LED_SCAN           PB_5
 //#endif
 
 //Hw modem specific pinout
@@ -98,6 +98,9 @@ extern "C" {
 #define HALL_VCC                PB_15
 #define HALL_OUT1               PB_1
 #define HALL_OUT2               PB_2
+
+// DEBUG PIN
+#define DEBUG_PIN               PB_5        // LED_SCAN PIN
 
 // clang-format on
 
