@@ -9,16 +9,19 @@ import SettingsMenu from "./components/SettingsMenu";
 import AddDeviceMenu from "./components/AddDeviceMenu";
 import MapTileMenu from "./components/MapTileMenu";
 
-import ListIcon from "@mui/icons-material/List";
-import AddIcon from "@mui/icons-material/Add";
-import LayersIcon from "@mui/icons-material/Layers";
+import ListIcon from '@mui/icons-material/List';
+import AddIcon from '@mui/icons-material/Add';
+import LayersIcon from '@mui/icons-material/Layers';
 
 export default function App() {
   const [markers, setMarkers] = useState([]);
   const [trackerInformation, setTrackerInformation] = useState([]);
 
   useEffect(() => {
-    fetchTrackerInformation();
+    const fetchData = async () => {
+        await fetchTrackerInformation();
+    };
+    fetchData();
   }, []);
 
   const center = [56.234538, 10.231792]; // Denmark coordinates
@@ -37,19 +40,15 @@ export default function App() {
   const mapTileMenuRef = useRef(null);
 
   const [dataLoaded, setDataLoaded] = useState(false);
-
   useEffect(() => {
-    console.log("Version 11/06/2023 - 20:34");
+    console.log("Version 12/06/2023 - 12:00");
   }, []);
-
   // Function to handle setting showCurrentLocation once all data is loaded
   useEffect(() => {
     // Check if both markers and tracker information have been fetched
     if (markers.length > 0 && trackerInformation.length > 0 && !dataLoaded) {
       // Extract all IDs from trackerInformation
-      const allIds = trackerInformation.map((info) =>
-        info.deviceId.toUpperCase()
-      );
+      const allIds = trackerInformation.map(info => info.deviceId.toUpperCase());
       // Set showCurrentLocation to contain all IDs
       setShowCurrentLocation(allIds);
       // Update dataLoaded state to prevent re-execution of this useEffect
@@ -88,13 +87,13 @@ export default function App() {
 
   const handleShowLocationSwitch = (ids) => {
     // Convert all IDs to lowercase before setting the state
-    const uppercaseIds = ids.map((id) => id.toUpperCase());
+    const uppercaseIds = ids.map(id => id.toUpperCase());
     setShowCurrentLocation(uppercaseIds);
   };
 
   const handleShowMovementSwitch = (ids) => {
     // Convert all IDs to lowercase before setting the state
-    const uppercaseIds = ids.map((id) => id.toUpperCase());
+    const uppercaseIds = ids.map(id => id.toUpperCase());
     setShowMovement(uppercaseIds);
   };
 
@@ -123,11 +122,8 @@ export default function App() {
   // Function to filter the markers so that only the newest marker for each ID is included
   const filterNewestMarkers = (markers) => {
     const newestMarkers = {};
-    markers.forEach((marker) => {
-      if (
-        !newestMarkers[marker.deviceId] ||
-        marker.timeStamp > newestMarkers[marker.deviceId].timeStamp
-      ) {
+    markers.forEach(marker => {
+      if (!newestMarkers[marker.deviceId] || marker.timeStamp > newestMarkers[marker.deviceId].timeStamp) {
         newestMarkers[marker.deviceId] = marker;
       }
     });
@@ -135,23 +131,19 @@ export default function App() {
   };
 
   // Update filtered markers when toggling switches
-  const filteredCurrentLocationMarkers = filterNewestMarkers(
-    markers.filter((marker) => showCurrentLocation.includes(marker.deviceId))
-  );
-  const filteredAllLocationMarkers = markers.filter((marker) =>
-    showMovement.includes(marker.deviceId)
-  );
+  const filteredCurrentLocationMarkers = filterNewestMarkers(markers.filter(marker => showCurrentLocation.includes(marker.deviceId)));
+  const filteredAllLocationMarkers = markers.filter(marker => showMovement.includes(marker.deviceId));
 
   // Combine all markers
   const allMarkers = [
-    ...filteredCurrentLocationMarkers,
-    ...filteredAllLocationMarkers,
-  ];
+    ...filteredCurrentLocationMarkers, 
+    ...filteredAllLocationMarkers
+];
 
   // Function to filter out duplicates from all markers
   const filterUniqueMarkers = (markers) => {
     const uniqueMarkers = {};
-    markers.forEach((marker) => {
+    markers.forEach(marker => {
       if (!uniqueMarkers[marker.pingId]) {
         uniqueMarkers[marker.pingId] = marker;
       }
@@ -171,15 +163,13 @@ export default function App() {
     try {
       // Initialize an array to store the markers
       const updatedMarkers = [];
-
+  
       // Create an array of promises for fetching markers for each device
       const fetchMarkerPromises = trackerInformation.map(async (device) => {
         const deviceId = device.deviceId.toUpperCase();
         try {
-          const response = await axios.get(
-            `/api/geolocationSolves/${deviceId}`
-          );
-
+          const response = await axios.get(`/api/geolocationSolves/${deviceId}`);
+          
           // Map pings to the desired format
           const mappedMarkers = response.data.map((ping) => ({
             pingId: ping.id,
@@ -188,7 +178,7 @@ export default function App() {
             timeStamp: new Date(ping.updatedAt).toLocaleString(), // Convert to human-readable format
             accuracy: ping.accuracy,
           }));
-
+          
           // Add the mapped markers to the updatedMarkers array
           updatedMarkers.push(...mappedMarkers);
           console.log(`Markers for device ${deviceId}:`, response.data);
@@ -198,17 +188,14 @@ export default function App() {
             console.log(`No entries found for device ${deviceId}`);
           } else {
             // Handle other errors
-            console.error(
-              `Failed to fetch markers for device ${deviceId}:`,
-              error
-            );
+            console.error(`Failed to fetch markers for device ${deviceId}:`, error);
           }
         }
       });
-
+  
       // Wait for all fetchMarkerPromises to complete
       await Promise.all(fetchMarkerPromises);
-
+  
       // Update the markers state with the updatedMarkers array
       console.log("Markers fetched successfully:", updatedMarkers);
       setMarkers(updatedMarkers);
@@ -229,108 +216,68 @@ export default function App() {
       if (!appID) {
         throw new Error("Application ID is not available.");
       }
-      const response = await fetch(
-        `https://eu1.cloud.thethings.network/api/v3/applications/${appID}/devices?field_mask=name,description`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
+      const response = await fetch(`https://eu1.cloud.thethings.network/api/v3/applications/${appID}/devices?field_mask=name,description`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
       if (response.ok) {
         const data = await response.json();
         console.log(data);
-
+        
         if (data && data.end_devices) {
-          const updatedTrackerInformation = await Promise.all(
-            data.end_devices.map(async (newDevice) => {
-              const deviceIdWithoutPrefix = newDevice.ids.device_id.replace(
-                "eui-",
-                ""
-              );
-              const existingDevice = trackerInformation.find(
-                (existingDevice) =>
-                  existingDevice.deviceId === deviceIdWithoutPrefix
-              );
-
-              let batteryStatus = "-";
-              let temperature = "-";
-              let updateInterval = "-";
-
-              try {
-                const deviceResponse = await axios.get(
-                  `/api/trackerinformation/${deviceIdWithoutPrefix.toUpperCase()}`
-                );
-                console.log(`Tracker information for device ${deviceIdWithoutPrefix}:`, deviceResponse.data);
-                batteryStatus = deviceResponse.data.batteryStatus ? `${parseFloat(deviceResponse.data.batteryStatus).toFixed(2)}\xa0V` : "-";
-                temperature = deviceResponse.data.temp ? `${deviceResponse.data.temp}\xa0°C` : "-";
-                updateInterval = deviceResponse.data.updateInterval ? formatUpdateInterval(deviceResponse.data.updateInterval) : "-";
-              } catch (error) {
-                console.error(
-                  `Failed to fetch additional tracker information for device ${deviceIdWithoutPrefix}:`,
-                  error
-                );
+          setTrackerInformation(prevState => {
+            // Iterate over the fetched data
+            data.end_devices.forEach(newDevice => {
+              const deviceIdWithoutPrefix = newDevice.ids.device_id.replace("eui-", "");
+              // Check if the device ID already exists in the current state
+              const existingIndex = prevState.findIndex(existingDevice => existingDevice.deviceId === deviceIdWithoutPrefix);
+              if (existingIndex !== -1) {
+                // Update existing entry
+                prevState[existingIndex] = {
+                  ...prevState[existingIndex],
+                  name: newDevice.name || "Unknown",
+                  batteryStatus: "-",
+                  temperature: "-",
+                  updateInterval: "-"
+                };
+              } else {
+                // Add new entry
+                prevState.push({
+                  deviceId: deviceIdWithoutPrefix,
+                  name: newDevice.name || "Unknown",
+                  batteryStatus: "-",
+                  temperature: "-",
+                  updateInterval: "-"
+                });
               }
-
-              return {
-                deviceId: deviceIdWithoutPrefix,
-                name: newDevice.name || "Unknown",
-                batteryStatus: batteryStatus,
-                temperature: temperature,
-                updateInterval: updateInterval,
-              };
-            })
-          );
-
-          setTrackerInformation(updatedTrackerInformation);
-
+            });
+            return [...prevState]; // Return a new array to trigger state update
+          });
+  
           // Call fetchMarkers here after fetchTrackerInformation is completed
-          fetchMarkers();
+          fetchMarkers(); 
         }
       } else {
-        throw new Error(
-          `Failed to fetch tracker information: ${response.status}, ${response.statusText}`
-        );
+        throw new Error(`Failed to fetch tracker information: ${response.status}, ${response.statusText}`);
       }
     } catch (error) {
-      alert(
-        "Failed to fetch tracker information. Either your API key or your application key is wrong"
-      );
+      alert("Failed to fetch tracker information. Either your API key or your application key is wrong");
     }
   };
 
-  // Helper function to format the update interval
-  const formatUpdateInterval = (interval) => {
-    const minutes = interval % 60;
-    const hours = Math.floor(interval / 60);
-    if (hours > 0) {
-      return `${hours}h ${minutes}m`;
-    } else {
-      return `${minutes}m`;
-    }
-  };
-
-  // Close menu when clicking outside
+   // Close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (
-        settingsMenuRef.current &&
-        !settingsMenuRef.current.contains(event.target)
-      ) {
+      if (settingsMenuRef.current && !settingsMenuRef.current.contains(event.target)) {
         setSettingsMenuOpen(false);
       }
-      if (
-        addDeviceMenuRef.current &&
-        !addDeviceMenuRef.current.contains(event.target)
-      ) {
+      if (addDeviceMenuRef.current && !addDeviceMenuRef.current.contains(event.target)) {
         setAddDeviceMenuOpen(false);
       }
-      if (
-        mapTileMenuRef.current &&
-        !mapTileMenuRef.current.contains(event.target)
-      ) {
+      if (mapTileMenuRef.current && !mapTileMenuRef.current.contains(event.target)) {
         setMapTileMenuOpen(false);
       }
     };
@@ -339,7 +286,7 @@ export default function App() {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isSettingsMenuOpen, isAddDeviceMenuOpen, isMapTileMenuOpen]);
+  }, []);
 
   return (
     <div className="map-container">
@@ -361,23 +308,23 @@ export default function App() {
         trackerInformation={trackerInformation}
         selectedMapTile={selectedMapTile}
       />
-      <SettingsMenu
-        isOpen={isSettingsMenuOpen}
-        handleClose={handleCloseSettingsMenu}
-        trackerInformation={trackerInformation}
-        handleShowLocationSwitch={handleShowLocationSwitch}
+      <SettingsMenu 
+        isOpen={isSettingsMenuOpen} 
+        handleClose={handleCloseSettingsMenu} 
+        trackerInformation={trackerInformation} 
+        handleShowLocationSwitch={handleShowLocationSwitch} 
         handleShowMovement={handleShowMovementSwitch}
         handleTrackerInformationUpdate={handleTrackerInformationUpdate}
         markers={markers}
         ref={settingsMenuRef}
         dataLoaded={dataLoaded}
       />
-      <AddDeviceMenu
-        isOpen={isAddDeviceMenuOpen}
+      <AddDeviceMenu 
+        isOpen={isAddDeviceMenuOpen} 
         handleClose={handleCloseAddDeviceMenu}
         onDeviceAdded={handleAddDeviceSuccess}
-        ref={addDeviceMenuRef}
-      />
+        ref={addDeviceMenuRef} 
+        />
       <MapTileMenu
         isOpen={isMapTileMenuOpen}
         handleClose={handleCloseMapTileMenu}
