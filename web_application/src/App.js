@@ -221,7 +221,7 @@ export default function App() {
                   ...prevState[existingIndex],
                   name: newDevice.name || "Unknown",
                   batteryStatus: deviceInfo ? parseFloat(deviceInfo.batteryStatus).toFixed(2) + "\xa0V" : "-", 
-                  temperature: deviceInfo ? deviceInfo.temp + "\xa0°C" : "-",
+                  temperature: deviceInfo ? deviceInfo.temperature + "\xa0°C" : "-",
                   updateInterval: deviceInfo ? deviceInfo.updateInterval : "-"
                 };
               } else {
@@ -230,7 +230,7 @@ export default function App() {
                   deviceId: deviceIdWithoutPrefix,
                   name: newDevice.name || "Unknown",
                   batteryStatus: deviceInfo ? parseFloat(deviceInfo.batteryStatus).toFixed(2) + "\xa0V" : "-", 
-                  temperature: deviceInfo ? deviceInfo.temp + "\xa0°C" : "-",
+                  temperature: deviceInfo ? deviceInfo.temperature + "\xa0°C" : "-",
                   updateInterval: deviceInfo ? deviceInfo.updateInterval : "-"
                 });
               }
