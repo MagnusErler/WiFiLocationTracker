@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Switch from "@mui/material/Switch";
 import "./ConfigureDeviceDialog.css";
 
-const ConfigureDeviceDialog = ({ tracker, onConfirm, onCancel }) => {
+const ConfigureDeviceDialog = ({ tracker, onConfirm, onCancel, scheduleDownlink }) => {
   const [hours, setHours] = useState("0");
   const [minutes, setMinutes] = useState("0");
   const [loraWANClass, setLorawanClass] = useState(tracker.loraWANClass || "1");
@@ -24,7 +24,15 @@ const ConfigureDeviceDialog = ({ tracker, onConfirm, onCancel }) => {
       wifiStatus: wifiScanning,
       gnssStatus: gnssScanning,
     };
+
+    const isTrackerChanged = JSON.stringify(updatedTracker) !== JSON.stringify(tracker);
+
+    if (isTrackerChanged) {
+      scheduleDownlink(deviceId);
+    }
+
     onConfirm(updatedTracker);
+    
   };
 
   const convertUpdateInterval = (interval) => {
@@ -83,7 +91,7 @@ const ConfigureDeviceDialog = ({ tracker, onConfirm, onCancel }) => {
               id="hours"
               type="number"
               min="0"
-              max="8760"
+              max="744"
               value={hours}
               onChange={handleHoursChange}
               onKeyDown={handleInputKeyDown}
@@ -95,7 +103,7 @@ const ConfigureDeviceDialog = ({ tracker, onConfirm, onCancel }) => {
               id="minutes"
               type="number"
               min="0"
-              max="525600"
+              max="44640"
               value={minutes}
               onChange={handleMinutesChange}
               onKeyDown={handleInputKeyDown}

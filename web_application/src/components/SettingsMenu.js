@@ -13,7 +13,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import ConfirmationDialog from "./ConfirmationDialog";
 import ConfigureDeviceDialog from "./ConfigureDeviceDialog";
 
-const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation, handleShowLocationSwitch, handleShowMovement, handleTrackerInformationUpdate, markers, dataLoaded }, ref) => {
+const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation, handleShowLocationSwitch, handleShowMovement, handleTrackerInformationUpdate, scheduleDownlink, markers, dataLoaded }, ref) => {
   const [showCurrentLocationIds, setShowCurrentLocationIds] = useState([]);
   const [showMovementIds, setShowMovementIds] = useState([]);
   const [originalNames, setOriginalNames] = useState([]);
@@ -154,8 +154,14 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
       const TTNtoken = process.env.REACT_APP_TTN_API_KEY;
       const LoraCloudtoken = process.env.REACT_APP_LORACLOUD_API_KEY;
       const appID = process.env.REACT_APP_TTN_APP_ID;
-      if (!token) {
-        console.error("API token ID is not available.");
+
+      if (!TTNtoken) {
+        console.error("TTNtoken API token is not available.");
+        return;
+      }
+
+      if (!LoraCloudtoken) {
+        console.error("LoraCloudtoken API token is not available.");
         return;
       }
       
@@ -230,7 +236,6 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
     
     //sendDownlink(deviceId, "off");
     console.log("Updated device:", updatedTracker);
-    console.log("Sending downlink")
     setConfiguringDevice(null); // Reset the configuring device state
     setConfigureDeviceOpen(false);
   };
@@ -319,6 +324,7 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
             setConfigureDeviceOpen(false);
           }}
           trackerInformation={trackerInformation}
+          scheduleDownlink={scheduleDownlink}
         />
       )}
     </div>

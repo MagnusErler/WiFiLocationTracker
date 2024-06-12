@@ -266,9 +266,50 @@ export default function App() {
     }
   };
 
-  const handleUpdateDevice = (updatedTracker) => {
-    console.log("Updated device:", updatedTracker);
-    // Handle further actions with the updated device information
+  const scheduleDownlink = async (deviceID) => {
+    console.log(`Scheduling downlink for device ${deviceID}...`);
+  
+    try {
+      const token = process.env.REACT_APP_TTN_API_KEY;
+      const appID = process.env.REACT_APP_TTN_APP_ID;
+      if (!token) {
+        throw new Error("API token ID is not available.");
+      }
+      if (!appID) {
+        throw new Error("Application ID is not available.");
+      }
+  
+      const payload = {
+        downlinks: [
+          {
+            //frm_payload: "AA==",
+            decoded_payload: {
+              bytes: [0]
+            },
+            f_port: 3,
+            priority: "NORMAL"
+          }
+        ]
+      };
+      console.log("Sending to: " + `https://eu1.cloud.thethings.network/api/v3/as/applications/${appID}/webhooks/schedule-downlink/devices/eui-${deviceID}/down/push`)
+      const response = await fetch(`https://eu1.cloud.thethings.network/api/v3/as/applications/${appID}/webhooks/schedule-downlink/devices/eui-${deviceID}/down/push`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+  
+      if (response.ok) {
+        console.log(`Downlink scheduled successfully for device ${deviceID}.`);
+      } else {
+        throw new Error(`Failed to schedule downlink for device ${deviceID}: ${response.status} - ${response.statusText}`);
+      }
+    } catch (error) {
+      console.error("Error scheduling downlink:", error.message);
+      // Handle error as needed
+    }
   };
 
   // Derived data
@@ -304,6 +345,7 @@ export default function App() {
         handleShowLocationSwitch={handleShowLocationSwitch} 
         handleShowMovement={handleShowMovementSwitch}
         handleTrackerInformationUpdate={handleTrackerInformationUpdate}
+        scheduleDownlink={scheduleDownlink}
         markers={markers}
         ref={settingsMenuRef}
         dataLoaded={dataLoaded}
