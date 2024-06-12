@@ -8,9 +8,9 @@ const router = express.Router();
 
 // Helper functions
 const readCredentials = (account) => {
-  const cert_file = path.join(__dirname, "../credentials", `${account}.crt`);
-  const key_file = path.join(__dirname, "../credentials", `${account}.key`);
-  const trust_file = path.join(__dirname, "../credentials", `${account}.trust`);
+  const cert_file = path.join(__dirname, "../../credentials", `${account}.crt`);
+  const key_file = path.join(__dirname, "../../credentials", `${account}.key`);
+  const trust_file = path.join(__dirname, "../../credentials", `${account}.trust`);
 
   return {
     cert: fs.readFileSync(cert_file),
@@ -194,7 +194,7 @@ router.post("/claimDevicesOnJoinServer", async (req, res) => {
   }
 });
 
-router.delete("/api/unclaimDeviceOnJoinServer", async (req, res) => {
+router.delete("/unclaimDeviceOnJoinServer", async (req, res) => {
   if (!Array.isArray(req.body)) {
     return res.status(400).json({
       error: "Bad request",
@@ -223,7 +223,7 @@ router.delete("/api/unclaimDeviceOnJoinServer", async (req, res) => {
   }
 });
 
-router.post("/api/createDeviceOnTTNIDServer", async (req, res) => {
+router.post("/createDeviceOnTTNIDServer", async (req, res) => {
   const { Token, AppID, deviceID, devEUI, joinEUI } = req.body;
 
   if (!Token || !AppID || !deviceID || !devEUI || !joinEUI) {
@@ -267,7 +267,7 @@ router.post("/api/createDeviceOnTTNIDServer", async (req, res) => {
   }
 });
 
-router.put("/api/createDeviceOnTTNJoinServer", async (req, res) => {
+router.put("/createDeviceOnTTNJoinServer", async (req, res) => {
   const { Token, AppID, deviceID, devEUI, joinEUI } = req.body;
 
   if (!Token || !AppID || !deviceID || !devEUI || !joinEUI) {
@@ -309,7 +309,7 @@ router.put("/api/createDeviceOnTTNJoinServer", async (req, res) => {
   }
 });
 
-router.put("/api/createDeviceOnTTNNS", async (req, res) => {
+router.put("/createDeviceOnTTNNS", async (req, res) => {
   const { Token, AppID, deviceID, devEUI, joinEUI } = req.body;
 
   if (!Token || !AppID || !deviceID || !devEUI || !joinEUI) {
@@ -342,7 +342,100 @@ router.put("/api/createDeviceOnTTNNS", async (req, res) => {
   }
 });
 
-router.delete("/api/deleteDeviceOnTTNNS", async (req, res) => {
+// Create device on TTN Application server
+router.put("/createDeviceOnTTNAS", async (req, res) => {
+  try {
+    const token = req.body.Token;
+    const appId = req.body.AppID;
+    const deviceId = req.body.deviceID;
+    const devEui = req.body.devEUI;
+    const joinEui = req.body.joinEUI;
+  
+    if(!deviceId || !devEui || !joinEui || !appId || !token) {
+      return res.status(400).json({ error: 'Device ID, DevEUI, JoinEUI, App ID and API token are required' });
+    }
+
+    // Construct the request data JSON object for AS
+    const requestData = {
+      end_device: {
+        ids: {
+          device_id: deviceId,
+          dev_eui: devEui,
+          join_eui: joinEui
+        },
+        application_server_address: "eu1.cloud.thethings.network"
+      },
+      field_mask: {
+        paths: [
+          "ids.device_id",
+          "ids.dev_eui",
+          "ids.join_eui"
+        ]
+      }
+    };
+
+    const response = await axios.put(`https://eu1.cloud.thethings.network/api/v3/as/applications/${appId}/devices/${deviceId}`, requestData, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    res.json(response.data);
+  } catch (error) {
+    console.error("Failed to create device on Application Server:", error);
+    res.status(500).json({ error: 'Failed to create device on Application Server' });
+  }
+});
+
+// Update device name on TTN
+router.put("/updateDeviceNameOnTTN", async (req, res) => {
+  try {
+    const deviceId = req.body.deviceId.toLowerCase();
+    const name = req.body.name;
+    const token = req.body.Token;
+    const appId = req.body.AppID;
+
+    // console.log(req.body);
+    // console.log("Device ID:", deviceId);
+    // console.log("Name:", name);
+    // console.log("Token:", token);
+    // console.log("App ID:", appId);
+
+    if (!deviceId || !name || !appId || !token) {
+      return res.status(400).json({ error: 'Device ID, App ID, API token and name are required' });
+    }
+
+    const requestData = {
+      end_device: {
+        ids: {
+          device_id: deviceId,
+          application_ids: {
+            application_id: appId
+          }
+        },
+        name: name
+      },
+      field_mask: {
+        paths: ["name"]
+      }
+    };
+    
+    const response = await axios.put(`https://eu1.cloud.thethings.network/api/v3/applications/${appId}/devices/eui-${deviceId}`, requestData, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    res.json(response.data);
+  } catch (error) {
+    console.error("Failed to update device name on TTN:", error);
+    res.status(500).json({ error: 'Failed to update device name on TTN' });
+  }
+});
+
+router.delete("/deleteDeviceOnTTNNS", async (req, res) => {
   const { Token, AppID, DeviceID } = req.body;
 
   if (!AppID || !DeviceID || !Token) {
@@ -366,7 +459,7 @@ router.delete("/api/deleteDeviceOnTTNNS", async (req, res) => {
   }
 });
 
-router.delete("/api/deleteDeviceOnTTNAS", async (req, res) => {
+router.delete("/deleteDeviceOnTTNAS", async (req, res) => {
   const { Token, AppID, DeviceID } = req.body;
 
   if (!AppID || !DeviceID || !Token) {
@@ -390,7 +483,7 @@ router.delete("/api/deleteDeviceOnTTNAS", async (req, res) => {
   }
 });
 
-router.delete("/api/deleteDeviceOnTTN", async (req, res) => {
+router.delete("/deleteDeviceOnTTN", async (req, res) => {
   const { Token, AppID, DeviceID } = req.body;
 
   if (!AppID || !DeviceID || !Token) {
