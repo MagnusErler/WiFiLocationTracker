@@ -9,7 +9,7 @@ const ConfigureDeviceDialog = ({ tracker, onConfirm, onCancel }) => {
   const [wifiScanning, setWifiScanning] = useState(Boolean(tracker.wifiStatus) || false);
   const [gnssScanning, setGnssScanning] = useState(Boolean(tracker.gnssStatus) || false);
 
-  const { deviceId } = tracker;
+  const { deviceId, name } = tracker;
   const updateInterval = tracker.updateInterval === "-" ? 0 : (tracker.updateInterval || 0);
 
   useEffect(() => {
@@ -72,6 +72,9 @@ const ConfigureDeviceDialog = ({ tracker, onConfirm, onCancel }) => {
           <div className="device-info">
             <p>
               <strong>Device ID:</strong> {deviceId}
+            </p>
+            <p>
+              <strong>Device name:</strong> {name}
             </p>
           </div>
           <div className="input-field">

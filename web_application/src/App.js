@@ -255,21 +255,6 @@ export default function App() {
     }
   };
 
-  const getDeviceInfo = async () => {
-    try {
-      const response = await axios.get("/api/getDeviceInfoFromJoinserver");
-      console.log(response.data);
-      // Process device information as needed
-    } catch (error) {
-      console.error("Failed to fetch device information:", error);
-      alert("Failed to fetch device information. Check console for details.");
-    }
-  };
-
-  const fetchTrackerSetup = async () => {
-    // Make a call to /api/getTrackerSpecification/:deviceId for each device
-  }
-
   // Function to handle successful addition of device and refetch tracker information
   const handleAddDeviceSuccess = async () => {
     try {
@@ -281,16 +266,10 @@ export default function App() {
     }
   };
 
-  const getTrackerSetup = async (deviceId) => {
-    try {
-      const response = await axios.get(`/api/getTrackerSpecification/${deviceId}`);
-      console.log(response.data);
-      return response.data; // Return the response data
-    } catch (error) {
-      console.error(`Failed to fetch tracker specification for device ${deviceId}:`, error);
-      throw error; // Rethrow the error to handle it outside the function if needed
-    }
-  }
+  const handleUpdateDevice = (updatedTracker) => {
+    console.log("Updated device:", updatedTracker);
+    // Handle further actions with the updated device information
+  };
 
   // Derived data
   const filteredCurrentLocationMarkers = filterNewestMarkers(markers.filter(marker => showCurrentLocation.includes(marker.deviceId))); // Update filtered markers when toggling switches

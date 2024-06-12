@@ -220,7 +220,16 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
   };
 
   const handleCloseConfigureDevice = (updatedTracker) => {
+    const updatedTrackerInformation = trackerInformation.map(tracker => {
+      if (tracker.deviceId === updatedTracker.deviceId) {
+        return { ...tracker, ...updatedTracker}
+      }
+      return tracker;
+    });
+    handleTrackerInformationUpdate(updatedTrackerInformation);
+    
     //sendDownlink(deviceId, "off");
+    console.log("Updated device:", updatedTracker);
     console.log("Sending downlink")
     setConfiguringDevice(null); // Reset the configuring device state
     setConfigureDeviceOpen(false);
@@ -302,7 +311,9 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
       {configuringDevice && (
         <ConfigureDeviceDialog
           tracker={configuringDevice}
-          onConfirm={handleCloseConfigureDevice}
+          onConfirm={(updatedTracker) => {
+            handleCloseConfigureDevice(updatedTracker);
+          }}
           onCancel={() => {
             setConfiguringDevice(null);
             setConfigureDeviceOpen(false);
