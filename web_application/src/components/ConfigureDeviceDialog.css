@@ -52,7 +52,7 @@
   flex: 1; /* Allow label to expand */
   font-size: 14px;
   margin-right: 10px; /* Add spacing between label and switch */
-  text-align: right; /* Align label text to the right */
+  text-align: left; /* Align label text to the right */
 }
 
 input[type="number"],
@@ -71,13 +71,14 @@ input[type="checkbox"] {
   padding: 16px;
 }
 
-button {
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-  padding: 8px 16px;
-}
+.button {
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 8px 16px;
+    width: 100px; /* Set button width */
+  }    
 
 .primary-button {
   background-color: #1976d2;
@@ -88,13 +89,13 @@ button {
   background-color: #1565c0;
 }
 
-.label-text {
-    flex: 1; /* Allow label to expand */
-    font-size: 14px;
-    margin-right: 10px; /* Add spacing between label and switch */
-    text-align: left; /* Align label text to the right */
-  }
+/* Apply ConfirmationDialog styles to the cancel button */
+.cancel-button {
+  background-color: #ffffff; /* Set cancel button background color */
+  border: 1px solid black; /* Set border for cancel button */
+  color: black; /* Set text color for cancel button */
+}
 
-.switch-container {
-  margin-left: 10px;
+.cancel-button:hover {
+  background-color: #f0f0f0; /* Change background color on hover */
 }

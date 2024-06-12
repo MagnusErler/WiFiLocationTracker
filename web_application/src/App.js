@@ -222,7 +222,10 @@ export default function App() {
                   name: newDevice.name || "Unknown",
                   batteryStatus: deviceInfo ? parseFloat(deviceInfo.batteryStatus).toFixed(2) + "\xa0V" : "-", 
                   temperature: deviceInfo ? deviceInfo.temperature + "\xa0°C" : "-",
-                  updateInterval: deviceInfo ? deviceInfo.updateInterval : "-"
+                  updateInterval: deviceInfo ? deviceInfo.updateInterval : "-",
+                  wifiStatus: deviceInfo ? deviceInfo.wifiStatus : "1",
+                  gnssStatus: deviceInfo ? deviceInfo.gnssStatus : "1",
+                  loraWANClass: deviceInfo ? deviceInfo.loraWANClass : "1"
                 };
               } else {
                 // Add new entry
@@ -231,7 +234,10 @@ export default function App() {
                   name: newDevice.name || "Unknown",
                   batteryStatus: deviceInfo ? parseFloat(deviceInfo.batteryStatus).toFixed(2) + "\xa0V" : "-", 
                   temperature: deviceInfo ? deviceInfo.temperature + "\xa0°C" : "-",
-                  updateInterval: deviceInfo ? deviceInfo.updateInterval : "-"
+                  updateInterval: deviceInfo ? deviceInfo.updateInterval : "-",
+                  wifiStatus: deviceInfo ? deviceInfo.wifiStatus : "1",
+                  gnssStatus: deviceInfo ? deviceInfo.gnssStatus : "1",
+                  loraWANClass: deviceInfo ? deviceInfo.loraWANClass : "1"
                 });
               }
             });

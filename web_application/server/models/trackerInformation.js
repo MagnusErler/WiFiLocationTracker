@@ -9,7 +9,7 @@ TrackerInformation.init({
     updateInterval: { type: DataTypes.INTEGER, allowNull: false },
     batteryStatus: { type: DataTypes.INTEGER, allowNull: false },
     wifiStatus: { type: DataTypes.BOOLEAN, allowNull: false },
-    gnssStats: { type: DataTypes.BOOLEAN, allowNull: false },
+    gnssStatus: { type: DataTypes.BOOLEAN, allowNull: false },
     loraWANClass: { type: DataTypes.INTEGER, allowNull: false }
 }, {
     sequelize,
