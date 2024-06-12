@@ -141,24 +141,24 @@ void smtc_board_led_pulse( uint32_t led_mask, bool turn_on, uint32_t duration_ms
 
 void geolocation_bsp_gnss_prescan_actions( void )
 {
-    hal_gpio_set_value( SMTC_LED_SCAN, 1 );
+    // hal_gpio_set_value( SMTC_LED_SCAN, 1 );
     hal_gpio_set_value( RADIO_LNA_CTRL, 1 ); /* LNA on */
 }
 
 void geolocation_bsp_gnss_postscan_actions( void )
 {
-    hal_gpio_set_value( SMTC_LED_SCAN, 0 );
+    // hal_gpio_set_value( SMTC_LED_SCAN, 0 );
     hal_gpio_set_value( RADIO_LNA_CTRL, 0 ); /* LNA off */
 }
 
 void geolocation_bsp_wifi_prescan_actions( void )
 {
-    hal_gpio_set_value( SMTC_LED_SCAN, 1 );
+    // hal_gpio_set_value( SMTC_LED_SCAN, 1 );
 }
 
 void geolocation_bsp_wifi_postscan_actions( void )
 {
-    hal_gpio_set_value( SMTC_LED_SCAN, 0 );
+    // hal_gpio_set_value( SMTC_LED_SCAN, 0 );
 }
 
 lr11xx_system_lfclk_cfg_t geolocation_bsp_get_lr11xx_lf_clock_cfg( void )

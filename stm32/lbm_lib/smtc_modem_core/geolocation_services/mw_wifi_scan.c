@@ -385,6 +385,8 @@ static void trace_print_event_data_scan_done( const smtc_modem_wifi_event_data_s
 
 static void wifi_rp_task_launch( void* context )
 {
+    send_event( SMTC_MODEM_EVENT_SET_DEBUG_PIN );
+
     mw_wifi_task_obj.scan_start_time = smtc_modem_hal_get_time_in_ms( );
     SMTC_MODEM_HAL_TRACE_INFO( "Wi-Fi task launch at %u\r\n", mw_wifi_task_obj.scan_start_time );
 

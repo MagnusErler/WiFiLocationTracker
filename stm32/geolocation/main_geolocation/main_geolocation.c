@@ -222,6 +222,9 @@ void main_geolocation( void ) {
 
     smtc_board_hall_effect_enable( true );
 
+
+    hal_gpio_init_out( DEBUG_PIN, 0 );
+
     while( 1 ) {
 
         // uint16_t temp_10_0;
@@ -611,7 +614,13 @@ static void modem_event_callback( void ) {
             SMTC_HAL_TRACE_PRINTF( "aborted: %u\r\n", almanac_update_data.stat_nb_aborted_by_rp );
             break;
 
+        case SMTC_MODEM_EVENT_SET_DEBUG_PIN:
+            hal_gpio_set_value( DEBUG_PIN, 1 );
+            SMTC_HAL_TRACE_INFO( "Event received: SET DEBUG PIN\r\n" );
+            break;
+        
         case SMTC_MODEM_EVENT_WIFI_SCAN_DONE:
+            hal_gpio_set_value( DEBUG_PIN, 0 );
             SMTC_HAL_TRACE_INFO( "Event received: WIFI_SCAN_DONE\r\n" );
             /* Get event data */
             smtc_modem_wifi_get_event_data_scan_done( stack_id, &wifi_scan_done_data );

@@ -348,7 +348,7 @@ static void mcu_gpio_init( void )
     hal_gpio_init_out( RADIO_LNA_CTRL, 0 );
     hal_gpio_init_out( SMTC_LED_TX, 0 );
     hal_gpio_init_out( SMTC_LED_RX, 0 );
-    hal_gpio_init_out( SMTC_LED_SCAN, 0 );
+    // hal_gpio_init_out( SMTC_LED_SCAN, 0 );
 #elif defined( SX126X )
     // If the sx126x drives the rf switch with dio2, just put the SX126X_RADIO_RF_SWITCH_CTRL in pull up
     hal_gpio_init_in( SX126X_RADIO_RF_SWITCH_CTRL, BSP_GPIO_PULL_MODE_UP, BSP_GPIO_IRQ_MODE_OFF, NULL );
