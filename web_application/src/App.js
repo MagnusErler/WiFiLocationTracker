@@ -266,9 +266,18 @@ export default function App() {
     }
   };
 
-  const scheduleDownlink = async (deviceID) => {
-    console.log(`Scheduling downlink for device ${deviceID}...`);
-  
+  const scheduleDownlink = async (updatedTracker) => {
+    console.log("Scheduling downlink for device", updatedTracker.deviceId);
+
+    // Convert tracker information to bytes
+    const byte12temp = timeFromMinutesToHex(updatedTracker.updateInterval);
+    const byte3temp = convertTrackerInformationToByte(updatedTracker);
+
+    // Split bytes into 8-bit chunks
+    const byte1 = byte12temp.slice(0, 2);
+    const byte2 = byte12temp.slice(2, 4);    
+    const byte3 = byte3temp.toString(16).toUpperCase().padStart(2, '0');
+    
     try {
       const token = process.env.REACT_APP_TTN_API_KEY;
       const appID = process.env.REACT_APP_TTN_APP_ID;
@@ -282,17 +291,16 @@ export default function App() {
       const payload = {
         downlinks: [
           {
-            //frm_payload: "AA==",
             decoded_payload: {
-              bytes: [0]
+              bytes: [byte1,byte2,byte3]
             },
-            f_port: 3,
+            f_port: 1,
             priority: "NORMAL"
           }
         ]
       };
-      console.log("Sending to: " + `https://eu1.cloud.thethings.network/api/v3/as/applications/${appID}/webhooks/schedule-downlink/devices/eui-${deviceID}/down/push`)
-      const response = await fetch(`https://eu1.cloud.thethings.network/api/v3/as/applications/${appID}/webhooks/schedule-downlink/devices/eui-${deviceID}/down/push`, {
+      
+      const response = await fetch(`https://eu1.cloud.thethings.network/api/v3/as/applications/${appID}/webhooks/schedule-downlink/devices/eui-${updatedTracker.deviceId}/down/push`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -302,9 +310,10 @@ export default function App() {
       });
   
       if (response.ok) {
-        console.log(`Downlink scheduled successfully for device ${deviceID}.`);
+        console.log(`Downlink scheduled successfully for device ${updatedTracker.deviceId}.`);
+        await postTrackerInformation(updatedTracker); // Call postTrackerInformation on success
       } else {
-        throw new Error(`Failed to schedule downlink for device ${deviceID}: ${response.status} - ${response.statusText}`);
+        throw new Error(`Failed to schedule downlink for device ${updatedTracker.deviceId}: ${response.status} - ${response.statusText}`);
       }
     } catch (error) {
       console.error("Error scheduling downlink:", error.message);
@@ -312,11 +321,88 @@ export default function App() {
     }
   };
 
-  // Derived data
+  const postTrackerInformation = async (updatedTracker) => {
+    try {
+      const response = await fetch(`/api/trackerInformation/${updatedTracker.deviceId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedTracker)
+      });
+  
+      if (response.ok) {
+        console.log('Tracker information updated successfully.');
+      } else {
+        throw new Error(`Failed to update tracker information: ${response.status} - ${response.statusText}`);
+      }
+    } catch (error) {
+      console.error("Error posting tracker information:", error.message);
+      // Handle error as needed
+    }
+  };
+
+  // Derived data and helper functions
   const filteredCurrentLocationMarkers = filterNewestMarkers(markers.filter(marker => showCurrentLocation.includes(marker.deviceId))); // Update filtered markers when toggling switches
   const filteredAllLocationMarkers = markers.filter(marker => showMovement.includes(marker.deviceId)); // Update filtered markers when toggling switches
   const allMarkers = [...filteredCurrentLocationMarkers, ...filteredAllLocationMarkers]; // Combine all markers
-  const filteredAllMarkers = filterUniqueMarkers(allMarkers); // Filter out duplicates  
+  const filteredAllMarkers = filterUniqueMarkers(allMarkers); // Filter out duplicates
+
+  const convertTrackerInformationToByte = (trackerInfo) => {
+    const CLASS_A = 0b000000;
+    const CLASS_B = 0b000001;
+    const CLASS_C = 0b000010;
+    const WIFI_STATUS_BIT = 0b000100;
+    const GNSS_STATUS_BIT = 0b001000;
+
+    let classBits = 0;
+    let wifiStatusBit = trackerInfo.wifiStatus ? WIFI_STATUS_BIT : 0;
+    let gnssStatusBit = trackerInfo.gnssStatus ? GNSS_STATUS_BIT : 0;
+
+    console.log(`LoRaWAN Class: ${trackerInfo.loraWANClass}`);
+    console.log(`Wifi Status: ${trackerInfo.wifiStatus}`);
+    console.log(`GNSS Status: ${trackerInfo.gnssStatus}`);
+
+    switch (parseInt(trackerInfo.loraWANClass)) {
+        case 1:
+            console.log("Class A");
+            classBits = CLASS_A;
+            break;
+        case 2:
+            console.log("Class B");
+            classBits = CLASS_B;
+            break;
+        case 3:
+            console.log("Class C");
+            classBits = CLASS_C;
+            break;
+        default:
+            console.log("Invalid LoRaWAN Class");
+            break;
+    }
+
+    const result = classBits | wifiStatusBit | gnssStatusBit;
+    return result;
+  };
+
+  const timeFromMinutesToHex = (minutes) => {
+    const minutesAsNumber = parseInt(minutes, 10);
+
+    // Ensure the number is within the unsigned 16-bit range
+    if (minutesAsNumber < 0 || minutesAsNumber > 65535) {
+        throw new RangeError("Value out of range for unsigned 16-bit integer");
+    }
+
+    // Convert to hexadecimal and pad the result to ensure it's 4 digits
+    const minutesAsHex = minutesAsNumber.toString(16).toUpperCase().padStart(4, '0');
+
+    return minutesAsHex;
+  }
+
+  // Function to convert decimal to binary and pad with leading zeros (for print debugging)
+  const decimalToBinary = (decimal) => {
+    return decimal.toString(2).padStart(8, '0');
+  };
 
   return (
     <div className="map-container">

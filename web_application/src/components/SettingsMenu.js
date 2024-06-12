@@ -234,7 +234,6 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
     });
     handleTrackerInformationUpdate(updatedTrackerInformation);
     
-    //sendDownlink(deviceId, "off");
     console.log("Updated device:", updatedTracker);
     setConfiguringDevice(null); // Reset the configuring device state
     setConfigureDeviceOpen(false);

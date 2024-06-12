@@ -27,12 +27,11 @@ const ConfigureDeviceDialog = ({ tracker, onConfirm, onCancel, scheduleDownlink 
 
     const isTrackerChanged = JSON.stringify(updatedTracker) !== JSON.stringify(tracker);
 
-    if (isTrackerChanged) {
-      scheduleDownlink(deviceId);
-    }
-
     onConfirm(updatedTracker);
-    
+
+    if (isTrackerChanged) {
+      scheduleDownlink(updatedTracker);
+    }
   };
 
   const convertUpdateInterval = (interval) => {
@@ -51,7 +50,10 @@ const ConfigureDeviceDialog = ({ tracker, onConfirm, onCancel, scheduleDownlink 
   const handleHoursChange = (e) => {
     let value = e.target.value.trim() === "" ? "0" : e.target.value;
     value = parseInt(value, 10);
-    if (isNaN(value) || value < 0 || value > 8760) {
+    if (value > 744) {
+      value = 744; // Set to max value if input is greater than 744
+    }
+    else if (isNaN(value) || value < 0) {
       value = parseInt(hours, 10); // Reset to previous value if invalid input
     }
     setHours(value.toString());
@@ -60,7 +62,10 @@ const ConfigureDeviceDialog = ({ tracker, onConfirm, onCancel, scheduleDownlink 
   const handleMinutesChange = (e) => {
     let value = e.target.value.trim() === "" ? "0" : e.target.value;
     value = parseInt(value, 10);
-    if (isNaN(value) || value < 0 || value > 525600) {
+    if (value > 44640) {
+      value = 44640; // Set to max value if input is greater than 44640
+    }
+    else if (isNaN(value) || value < 0 || value > 44640) {
       value = parseInt(minutes, 10); // Reset to previous value if invalid input
     }
     setMinutes(value.toString());

@@ -3,7 +3,7 @@ const TrackerInformation = require("../models/trackerInformation");
 
 const router = express.Router();
 
-// Endpoint to update tracker information
+// Endpoint to update tracker information from uplink messages
 router.post("/trackerInformation", async (req, res) => {
   try {
     //console.log("Received request to update tracker information:", req.body);
@@ -46,6 +46,32 @@ router.post("/trackerInformation", async (req, res) => {
       res.status(200).json(tracker);
     } else {
       res.status(201).json(tracker);
+    }
+  } catch (error) {
+    console.error("Error updating tracker information:", error.message);
+    res.status(500).send("Internal server error");
+  }
+});
+
+// Endpoint to update specific tracker information
+router.put("/trackerInformation/:devEUI", async (req, res) => {
+  try {
+    const deviceID = req.params.devEUI;
+    const { updateInterval, wifiStatus, gnssStatus, loraWANClass } = req.body;
+
+    // Perform the upsert operation
+    const [tracker, created] = await TrackerInformation.upsert(
+      { deviceID, updateInterval, wifiStatus, gnssStatus, loraWANClass },
+      {
+        returning: true,
+      }
+    );
+
+    // Send response based on existence check
+    if (created) {
+      res.status(201).json(tracker);
+    } else {
+      res.status(200).json(tracker);
     }
   } catch (error) {
     console.error("Error updating tracker information:", error.message);
