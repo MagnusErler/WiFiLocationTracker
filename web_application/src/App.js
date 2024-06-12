@@ -10,10 +10,6 @@ import LayersIcon from '@mui/icons-material/Layers';
 import "./styles.css";
 import "leaflet/dist/leaflet.css";
 
-
-
-
-
 export default function App() {
   // State
   const [markers, setMarkers] = useState([]);
@@ -184,10 +180,39 @@ export default function App() {
         console.log(data);
         
         if (data && data.end_devices) {
+          const devicePromises = data.end_devices.map(async newDevice => {
+            const deviceIdWithoutPrefix = newDevice.ids.device_id.replace("eui-", "");
+            console.log(`Fetching data for device ${deviceIdWithoutPrefix.toUpperCase()}...`);
+            try {
+              // Make a call to an API endpoint here
+              const apiResponse = await axios.get(`/api/trackerInformation/${deviceIdWithoutPrefix.toUpperCase()}`);
+      
+              // Process the API response as needed
+              console.log(apiResponse.data);
+      
+              // Return the processed data or anything you need
+              return apiResponse.data;
+            } catch (error) {
+              console.error(`Failed to fetch data for device ${deviceIdWithoutPrefix.toUpperCase()}:`, error);
+              // Return null or any default value if the call fails
+              return null;
+            }
+          });
+      
+          // Wait for all device promises to resolve
+          const deviceData = await Promise.all(devicePromises);
+
+          console.log("Device data:")
+          console.log(deviceData);
+
           setTrackerInformation(prevState => {
             // Iterate over the fetched data
-            data.end_devices.forEach(newDevice => {
+            data.end_devices.forEach(async newDevice => {
               const deviceIdWithoutPrefix = newDevice.ids.device_id.replace("eui-", "");
+          
+              // Find the corresponding device data fetched from /api/trackerInformation
+              const deviceInfo = deviceData.find(device => device && device.deviceID == deviceIdWithoutPrefix.toUpperCase());
+          
               // Check if the device ID already exists in the current state
               const existingIndex = prevState.findIndex(existingDevice => existingDevice.deviceId === deviceIdWithoutPrefix);
               if (existingIndex !== -1) {
@@ -195,18 +220,18 @@ export default function App() {
                 prevState[existingIndex] = {
                   ...prevState[existingIndex],
                   name: newDevice.name || "Unknown",
-                  batteryStatus: "-",
-                  temperature: "-",
-                  updateInterval: "-"
+                  batteryStatus: deviceInfo ? parseFloat(deviceInfo.batteryStatus).toFixed(2) + "\xa0V" : "-", 
+                  temperature: deviceInfo ? deviceInfo.temp + "\xa0°C" : "-",
+                  updateInterval: deviceInfo ? deviceInfo.updateInterval : "-"
                 };
               } else {
                 // Add new entry
                 prevState.push({
                   deviceId: deviceIdWithoutPrefix,
                   name: newDevice.name || "Unknown",
-                  batteryStatus: "-",
-                  temperature: "-",
-                  updateInterval: "-"
+                  batteryStatus: deviceInfo ? parseFloat(deviceInfo.batteryStatus).toFixed(2) + "\xa0V" : "-", 
+                  temperature: deviceInfo ? deviceInfo.temp + "\xa0°C" : "-",
+                  updateInterval: deviceInfo ? deviceInfo.updateInterval : "-"
                 });
               }
             });
@@ -214,7 +239,7 @@ export default function App() {
           });
   
           // Call fetchMarkers here after fetchTrackerInformation is completed
-          fetchMarkers(); 
+          fetchMarkers();
         }
       } else {
         throw new Error(`Failed to fetch tracker information: ${response.status}, ${response.statusText}`);
@@ -235,6 +260,10 @@ export default function App() {
     }
   };
 
+  const fetchTrackerSetup = async () => {
+    // Make a call to /api/getTrackerSpecification/:deviceId for each device
+  }
+
   // Function to handle successful addition of device and refetch tracker information
   const handleAddDeviceSuccess = async () => {
     try {
@@ -245,6 +274,17 @@ export default function App() {
       // Handle error fetching tracker information
     }
   };
+
+  const getTrackerSetup = async (deviceId) => {
+    try {
+      const response = await axios.get(`/api/getTrackerSpecification/${deviceId}`);
+      console.log(response.data);
+      return response.data; // Return the response data
+    } catch (error) {
+      console.error(`Failed to fetch tracker specification for device ${deviceId}:`, error);
+      throw error; // Rethrow the error to handle it outside the function if needed
+    }
+  }
 
   // Derived data
   const filteredCurrentLocationMarkers = filterNewestMarkers(markers.filter(marker => showCurrentLocation.includes(marker.deviceId))); // Update filtered markers when toggling switches
