@@ -1,3 +1,101 @@
-.MuiMenu-paper {
-    transition-duration: 0s !important;
+.dialog-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.dialog {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  max-width: 300px;
+  width: 100%;
+  max-height: 80vh; /* Limit maximum height */
+  overflow-y: auto; /* Add scrollbar if content exceeds max height */
+}
+
+.dialog-title {
+  background-color: #1976d2;
+  border-radius: 8px 8px 0 0;
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 16px;
+  text-align: center;
+}
+
+.dialog-content {
+  padding: 16px;
+  padding-bottom: 0;
+}
+
+.device-info {
+  margin-bottom: 16px;
+}
+
+.input-field {
+  margin-bottom: 16px;
+}
+
+.input-field-switch {
+  display: flex;
+  align-items: center; /* Align items vertically */
+  margin-bottom: 16px;
+}
+
+.label-text {
+  flex: 1; /* Allow label to expand */
+  font-size: 14px;
+  margin-right: 10px; /* Add spacing between label and switch */
+  text-align: left; /* Align label text to the right */
+}
+
+input[type="number"],
+select,
+input[type="checkbox"] {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  width: 100%;
+}
+
+.dialog-actions {
+  border-top: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+}
+
+.button {
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 8px 16px;
+    width: 100px; /* Set button width */
+  }    
+
+.primary-button {
+  background-color: #1976d2;
+  color: #fff;
+}
+
+.primary-button:hover {
+  background-color: #1565c0;
+}
+
+/* Apply ConfirmationDialog styles to the cancel button */
+.cancel-button {
+  background-color: #ffffff; /* Set cancel button background color */
+  border: 1px solid black; /* Set border for cancel button */
+  color: black; /* Set text color for cancel button */
+}
+
+.cancel-button:hover {
+  background-color: #f0f0f0; /* Change background color on hover */
 }

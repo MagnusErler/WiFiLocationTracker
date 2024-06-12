@@ -19,6 +19,7 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
   const [originalNames, setOriginalNames] = useState([]);
   const [deviceToDelete, setDeviceToDelete] = useState(null);
   const [confirmationOpen, setConfirmationOpen] = useState(false);
+  const [configureDeviceOpen, setConfigureDeviceOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [configuringDevice, setConfiguringDevice] = useState(null); // State to hold the device ID being configured
   const menuRef = useRef(null);
@@ -40,8 +41,8 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (isOpen && !confirmationOpen && menuRef.current && !menuRef.current.contains(event.target)) {
-        handleCloseAndUpdateDevices(); // Close the menu if clicked outside and confirmation dialog is not open
+      if (isOpen && !confirmationOpen && !configureDeviceOpen && menuRef.current && !menuRef.current.contains(event.target)) {
+        handleCloseAndUpdateDevices();
       }
     };
   
@@ -49,7 +50,7 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isOpen, handleClose, confirmationOpen]);
+  }, [isOpen, handleClose, confirmationOpen, configureDeviceOpen]);
 
   const hasCorrespondingPing = (deviceId) => {
     return markers.some(marker => marker.deviceId.toUpperCase() === deviceId.toUpperCase());
@@ -213,14 +214,25 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
     setConfirmationOpen(true); // Open the confirmation dialog
   };
 
-  const handleConfigureDevice = (deviceId) => {
-    setConfiguringDevice(deviceId); // Set the device ID being configured
+  const handleConfigureDevice = (tracker) => {
+    setConfiguringDevice(tracker);
+    setConfigureDeviceOpen(true);
   };
 
-  const handleCloseConfigureDevice = () => {
+  const handleCloseConfigureDevice = (updatedTracker) => {
+    const updatedTrackerInformation = trackerInformation.map(tracker => {
+      if (tracker.deviceId === updatedTracker.deviceId) {
+        return { ...tracker, ...updatedTracker}
+      }
+      return tracker;
+    });
+    handleTrackerInformationUpdate(updatedTrackerInformation);
+    
     //sendDownlink(deviceId, "off");
+    console.log("Updated device:", updatedTracker);
     console.log("Sending downlink")
     setConfiguringDevice(null); // Reset the configuring device state
+    setConfigureDeviceOpen(false);
   };
 
   return (
@@ -279,7 +291,7 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
                 </td>
                 <td className="settings-column">
                   {/* Button to open ConfigureDeviceDialog */}
-                  <SettingsIcon className="settings-icon" onClick={() => handleConfigureDevice(tracker.deviceId)} />
+                  <SettingsIcon className="settings-icon" onClick={() => handleConfigureDevice(tracker)} />
                 </td>
               </tr>
             ))}
@@ -298,8 +310,15 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
       {/* Render ConfigureDeviceDialog if a device is being configured */}
       {configuringDevice && (
         <ConfigureDeviceDialog
-          deviceId={configuringDevice}
-          handleClose={handleCloseConfigureDevice}
+          tracker={configuringDevice}
+          onConfirm={(updatedTracker) => {
+            handleCloseConfigureDevice(updatedTracker);
+          }}
+          onCancel={() => {
+            setConfiguringDevice(null);
+            setConfigureDeviceOpen(false);
+          }}
+          trackerInformation={trackerInformation}
         />
       )}
     </div>
