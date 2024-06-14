@@ -45,6 +45,15 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    if(isSettingsMenuOpen) {
+      const fetchData = async () => {
+        await fetchTrackerInformation();
+      };
+      fetchData();
+    }
+  }, [isSettingsMenuOpen]);
+
+  useEffect(() => {
     if (markers.length > 0 && trackerInformation.length > 0 && !dataLoaded) {
       const allIds = trackerInformation.map(info => info.deviceId.toUpperCase());
       setShowCurrentLocation(allIds);
@@ -84,6 +93,7 @@ export default function App() {
     setSelectedMapTile(tile);
     console.log(`Map tile changed to: ${tile}`);
   };
+
   const handleTrackerInformationUpdate = (updatedTrackerInformation) => {
     setTrackerInformation(updatedTrackerInformation);
   };
@@ -220,7 +230,8 @@ export default function App() {
                 prevState[existingIndex] = {
                   ...prevState[existingIndex],
                   name: newDevice.name || "Unknown",
-                  batteryStatus: deviceInfo ? parseFloat(deviceInfo.batteryStatus).toFixed(2) + "\xa0V" : "-", 
+                  // batteryStatus: deviceInfo ? parseFloat(deviceInfo.batteryStatus).toFixed(2) + "\xa0V" : "-",
+                  batteryStatus: deviceInfo ? Math.round(((parseFloat(deviceInfo.batteryStatus)- 1.7)/2) * 100) + "0%" : "-",
                   temperature: deviceInfo ? deviceInfo.temperature + "\xa0°C" : "-",
                   updateInterval: deviceInfo ? deviceInfo.updateInterval : "-",
                   wifiStatus: deviceInfo ? deviceInfo.wifiStatus : "1",
@@ -232,7 +243,7 @@ export default function App() {
                 prevState.push({
                   deviceId: deviceIdWithoutPrefix,
                   name: newDevice.name || "Unknown",
-                  batteryStatus: deviceInfo ? parseFloat(deviceInfo.batteryStatus).toFixed(2) + "\xa0V" : "-", 
+                  batteryStatus: deviceInfo ? Math.round(((parseFloat(deviceInfo.batteryStatus)- 1.7)/2) * 100) + "%" : "-", 
                   temperature: deviceInfo ? deviceInfo.temperature + "\xa0°C" : "-",
                   updateInterval: deviceInfo ? deviceInfo.updateInterval : "-",
                   wifiStatus: deviceInfo ? deviceInfo.wifiStatus : "1",
