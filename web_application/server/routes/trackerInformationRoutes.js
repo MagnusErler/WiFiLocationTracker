@@ -11,42 +11,70 @@ router.post("/trackerInformation", async (req, res) => {
     const { f_port, decoded_payload } = uplink_message || {};
     
     // Check the f_port
-    if (f_port !== 15) {
-      return res.status(400).json({ error: "Invalid f_port. Expected f_port 15." });
+    if (f_port !== 10 && f_port !== 15) {
+      return res.status(400).json({ error: "Invalid f_port. Expected f_port 15 or 10." });
     }
 
     const deviceID = end_device_ids?.dev_eui;
     const bytes = decoded_payload?.bytes;
 
-    // Validate the request body and extracted fields
-    if (!deviceID || !bytes || bytes.length < 4) {
-      return res.status(400).json({ error: "Missing required fields or invalid byte array length." });
-    }
+    let tracker; // Declare tracker variable outside
 
-    // Extract the values from the bytes array
-    const temp = bytes[0] * 5;
-    const batteryStatus = bytes[1] / 70;
-    const updateInterval = bytes[2];
-
-    // Check if the tracker already exists
-    const existingTracker = await TrackerInformation.findOne({
-      where: { deviceID },
-    });
-
-    // Perform the upsert operation
-    const [tracker, created] = await TrackerInformation.upsert(
-      { deviceID, temp, updateInterval, batteryStatus },
-      {
-        returning: true,
+    if(f_port === 10) {
+      if (!deviceID || !bytes || bytes.length < 6) {
+        return res.status(400).json({ error: "Missing required fields or invalid byte array length." });
       }
-    );
+
+      // Extract values from the bytes array for f_port 10
+      let temperature = bytes[4] * 5;
+      let updateInterval = bytes[0] + bytes[1];
+      let batteryStatus = bytes[5] / 70;
+      let wifiStatus = false;
+      let gnssStatus = false;
+      let loraWANClass = bytes[2];
+
+      if (bytes[3] === 1) {
+        wifiStatus = true;
+      } else if (bytes[3] === 2) {
+        gnssStatus = true;
+      } else if (bytes[3] === 3) {
+        wifiStatus = true;
+        gnssStatus = true;
+      }
+
+      // Perform upsert operation for f_port 10
+      [tracker, created] = await TrackerInformation.upsert(
+        { deviceID, temperature, updateInterval, batteryStatus, wifiStatus, gnssStatus, loraWANClass },
+        { returning: true }
+      );
+      
+    } else if(f_port === 15) {
+      if (!deviceID || !bytes || bytes.length < 4) {
+        return res.status(400).json({ error: "Missing required fields or invalid byte array length." });
+      }
+
+      // Extract values from the bytes array for f_port 15
+      let temperature = bytes[0] * 5;
+      let batteryStatus = bytes[1] / 70;
+
+      // Perform upsert operation for f_port 15
+      [tracker, created] = await TrackerInformation.upsert(
+        { deviceID, temperature, batteryStatus },
+        { returning: true }
+      );
+    }
 
     // Send response based on existence check
-    if (existingTracker) {
-      res.status(200).json(tracker);
+    if (tracker) {
+      if (created) {
+        res.status(201).json(tracker);
+      } else {
+        res.status(200).json(tracker);
+      }
     } else {
-      res.status(201).json(tracker);
+      res.status(400).json({ error: "Failed to update tracker information." });
     }
+    
   } catch (error) {
     console.error("Error updating tracker information:", error.message);
     res.status(500).send("Internal server error");
