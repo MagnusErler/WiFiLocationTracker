@@ -323,7 +323,7 @@ export default function App() {
 
   const postTrackerInformation = async (updatedTracker) => {
     try {
-      const response = await fetch(`/api/trackerInformation/${updatedTracker.deviceId}`, {
+      const response = await fetch(`/api/trackerInformation/${updatedTracker.deviceId.toUpperCase()}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
