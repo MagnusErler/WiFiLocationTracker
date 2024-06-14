@@ -375,15 +375,15 @@ export default function App() {
     console.log(`GNSS Status: ${trackerInfo.gnssStatus}`);
 
     switch (parseInt(trackerInfo.loraWANClass)) {
-        case 1:
+        case 0:
             console.log("Class A");
             classBits = CLASS_A;
             break;
-        case 2:
+        case 1:
             console.log("Class B");
             classBits = CLASS_B;
             break;
-        case 3:
+        case 2:
             console.log("Class C");
             classBits = CLASS_C;
             break;

@@ -277,8 +277,8 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
                   {isNaN(tracker.updateInterval)
                     ? tracker.updateInterval  // Display '-' if updateInterval is NaN
                     : tracker.updateInterval < 60
-                      ? `${tracker.updateInterval} m`
-                      : `${Math.floor(tracker.updateInterval / 60)} h ${tracker.updateInterval % 60} m`}
+                      ? `${tracker.updateInterval}\xa0m`
+                      : `${Math.floor(tracker.updateInterval / 60)}\xa0h\xa0${tracker.updateInterval % 60}\xa0m`}
                 </td>
                 <td className="view-location-column">
                   <Switch
