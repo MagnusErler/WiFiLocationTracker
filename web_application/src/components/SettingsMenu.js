@@ -273,7 +273,13 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
                 </td>
                 <td className="battery-status-column">{tracker.batteryStatus}</td>
                 <td className="temperature-status-column">{tracker.temperature}</td>
-                <td className="update-interval-column">{tracker.updateInterval}</td>
+                <td className="update-interval-column">
+                  {isNaN(tracker.updateInterval)
+                    ? tracker.updateInterval  // Display '-' if updateInterval is NaN
+                    : tracker.updateInterval < 60
+                      ? `${tracker.updateInterval} h`
+                      : `${Math.floor(tracker.updateInterval / 60)} h ${tracker.updateInterval % 60} m`}
+                </td>
                 <td className="view-location-column">
                   <Switch
                     color="warning"

@@ -34,7 +34,7 @@ export default function App() {
 
   // Effects
   useEffect(() => {
-    console.log("Version 14/06/2023 - 13:30");
+    console.log("Version 14/06/2023 - 19:00");
   }, []);
 
   useEffect(() => {
@@ -225,7 +225,7 @@ export default function App() {
                   updateInterval: deviceInfo ? deviceInfo.updateInterval : "-",
                   wifiStatus: deviceInfo ? deviceInfo.wifiStatus : "1",
                   gnssStatus: deviceInfo ? deviceInfo.gnssStatus : "1",
-                  loraWANClass: deviceInfo ? deviceInfo.loraWANClass : "1"
+                  loraWANClass: deviceInfo ? deviceInfo.loraWANClass : "0"
                 };
               } else {
                 // Add new entry
@@ -237,7 +237,7 @@ export default function App() {
                   updateInterval: deviceInfo ? deviceInfo.updateInterval : "-",
                   wifiStatus: deviceInfo ? deviceInfo.wifiStatus : "1",
                   gnssStatus: deviceInfo ? deviceInfo.gnssStatus : "1",
-                  loraWANClass: deviceInfo ? deviceInfo.loraWANClass : "1"
+                  loraWANClass: deviceInfo ? deviceInfo.loraWANClass : "0"
                 });
               }
             });
