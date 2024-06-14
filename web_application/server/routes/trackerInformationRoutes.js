@@ -11,8 +11,8 @@ router.post("/trackerInformation", async (req, res) => {
     const { f_port, decoded_payload } = uplink_message || {};
     
     // Check the f_port
-    if (f_port !== 10 && f_port !== 15) {
-      return res.status(400).json({ error: "Invalid f_port. Expected f_port 15 or 10." });
+    if (f_port !== 10 && f_port !== 2) {
+      return res.status(400).json({ error: "Invalid f_port. Expected f_port 2 or 10." });
     }
 
     const deviceID = end_device_ids?.dev_eui;
@@ -48,16 +48,16 @@ router.post("/trackerInformation", async (req, res) => {
         { returning: true }
       );
       
-    } else if(f_port === 15) {
+    } else if(f_port === 2) {
       if (!deviceID || !bytes || bytes.length < 4) {
         return res.status(400).json({ error: "Missing required fields or invalid byte array length." });
       }
 
-      // Extract values from the bytes array for f_port 15
+      // Extract values from the bytes array for f_port 2
       let temperature = bytes[0] * 5;
       let batteryStatus = bytes[1] / 70;
 
-      // Perform upsert operation for f_port 15
+      // Perform upsert operation for f_port 2
       [tracker, created] = await TrackerInformation.upsert(
         { deviceID, temperature, batteryStatus },
         { returning: true }
