@@ -151,15 +151,16 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
   const deleteDevice = async (deviceID) => {
     try {
       setIsDeleting(true);
+  
       const TTNtoken = process.env.REACT_APP_TTN_API_KEY;
       const LoraCloudtoken = process.env.REACT_APP_LORACLOUD_API_KEY;
       const appID = process.env.REACT_APP_TTN_APP_ID;
-
+  
       if (!TTNtoken) {
         console.error("TTNtoken API token is not available.");
         return;
       }
-
+  
       if (!LoraCloudtoken) {
         console.error("LoraCloudtoken API token is not available.");
         return;
@@ -169,9 +170,10 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
         console.error("Application ID is not available.");
         return;
       }
+  
       console.log(`Deleting device with ID ${deviceID}...`);
-
-      // Delete device on LoRaCloud
+  
+      // Delete device on LoRaCloud and other services
       await Promise.all([
         axios.delete(`/api/unclaimDeviceOnJoinServer`, { data: [{ "DevEUI": deviceID }] }),
         axios.delete(`/api/unclaimDeviceFromModemServices`, { 
@@ -180,14 +182,18 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
             deveuis: [deviceID]
           }
         }),
+        axios.delete(`/api/trackerInformation/${deviceID.toUpperCase}`).catch(error => {
+          console.error(`Failed to delete device information for ${deviceID} on the server:`, error);
+          throw error; // Rethrow the error to maintain consistent error handling
+        })
       ]);
-
+  
       // Delete device on TTN network and application servers
       await Promise.all([
         axios.delete(`/api/deleteDeviceOnTTNNS`, { data: { Token: TTNtoken, AppID: appID, DeviceID: "eui-" + deviceID } }),
         axios.delete(`/api/deleteDeviceOnTTNAS`, { data: { Token: TTNtoken, AppID: appID, DeviceID: "eui-" + deviceID } })
       ]);
-
+  
       // After successfully deleting on other servers, call deleteDeviceOnTTN
       await axios.delete(`/api/deleteDeviceOnTTN`, {
         data: { Token: TTNtoken, AppID: appID, DeviceID: "eui-" + deviceID }

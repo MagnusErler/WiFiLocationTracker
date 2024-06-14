@@ -125,4 +125,15 @@ router.get("/trackerInformation/:devEUI", async (req, res) => {
   }
 });
 
+// Endpoint to delete specific tracker information
+router.delete("/trackerInformation/:devEUI", async (req, res) => {
+  const deviceID = req.params.devEUI;
+
+  // Perform deletion operation
+  await TrackerInformation.destroy({
+    where: { deviceID },
+  });
+  res.status(200).json({ message: "Tracker information deleted successfully" });
+});
+
 module.exports = router;

@@ -267,78 +267,56 @@ router.post("/createDeviceOnTTNIDServer", async (req, res) => {
   }
 });
 
-router.put("/createDeviceOnTTNJoinServer", async (req, res) => {
-  const { Token, AppID, deviceID, devEUI, joinEUI } = req.body;
-
-  if (!Token || !AppID || !deviceID || !devEUI || !joinEUI) {
-    return res
-      .status(400)
-      .json({
-        error: "Device ID, DevEUI, JoinEUI, App ID and API token are required",
-      });
-  }
-
+// Create device on TTN Network server
+router.put("/createDeviceOnTTNNS", async (req, res) => {
   try {
-    const url = `https://eu1.cloud.thethings.network/api/v3/js/applications/${AppID}/devices/${deviceID}`;
+    const token = req.body.Token;
+    const appId = req.body.AppID;
+    const deviceId = req.body.deviceID;
+    const devEui = req.body.devEUI;
+    const joinEui = req.body.joinEUI;
+  
+    if(!deviceId || !devEui || !joinEui || !appId || !token) {
+      return res.status(400).json({ error: 'Device ID, DevEUI, JoinEUI, App ID and API token are required' });
+    }
+
+    // Construct the request data JSON object for NS
     const requestData = {
       end_device: {
-        ids: { device_id: deviceID, dev_eui: devEUI, join_eui: joinEUI },
-        network_server_address: "eu1.cloud.thethings.network",
-        application_server_address: "eu1.cloud.thethings.network",
+        supports_join: true,
+        lorawan_version: "1.0.3",
+        ids: {
+          device_id: deviceId,
+          dev_eui: devEui,
+          join_eui: joinEui
+        },
+        lorawan_phy_version: "1.0.3-a",
+        frequency_plan_id: "EU_863_870_TTN"
       },
       field_mask: {
         paths: [
-          "network_server_address",
-          "application_server_address",
+          "supports_join",
+          "lorawan_version",
+          "ids.device_id",
           "ids.dev_eui",
           "ids.join_eui",
-        ],
-      },
+          "lorawan_phy_version",
+          "frequency_plan_id"
+        ]
+      }
     };
 
-    const response = await axios.put(url, requestData, {
+    const response = await axios.put(`https://eu1.cloud.thethings.network/api/v3/ns/applications/${appId}/devices/${deviceId}`, requestData, {
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${Token}`,
-      },
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
     });
 
     res.json(response.data);
   } catch (error) {
-    handleAxiosError(error, res);
-  }
-});
-
-router.put("/createDeviceOnTTNNS", async (req, res) => {
-  const { Token, AppID, deviceID, devEUI, joinEUI } = req.body;
-
-  if (!Token || !AppID || !deviceID || !devEUI || !joinEUI) {
-    return res
-      .status(400)
-      .json({
-        error: "Device ID, DevEUI, JoinEUI, App ID and API token are required",
-      });
-  }
-
-  try {
-    const url = `https://eu1.cloud.thethings.network/api/v3/ns/applications/${AppID}/devices/${deviceID}`;
-    const requestData = {
-      end_device: {
-        ids: { device_id: deviceID, dev_eui: devEUI, join_eui: joinEUI },
-      },
-      field_mask: { paths: ["ids.device_id", "ids.dev_eui", "ids.join_eui"] },
-    };
-
-    const response = await axios.put(url, requestData, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${Token}`,
-      },
-    });
-
-    res.json(response.data);
-  } catch (error) {
-    handleAxiosError(error, res);
+    console.error("Failed to create device on Network Server:", error);
+    res.status(500).json({ error: 'Failed to create device on Network Server' });
   }
 });
 
@@ -395,12 +373,6 @@ router.put("/updateDeviceNameOnTTN", async (req, res) => {
     const name = req.body.name;
     const token = req.body.Token;
     const appId = req.body.AppID;
-
-    // console.log(req.body);
-    // console.log("Device ID:", deviceId);
-    // console.log("Name:", name);
-    // console.log("Token:", token);
-    // console.log("App ID:", appId);
 
     if (!deviceId || !name || !appId || !token) {
       return res.status(400).json({ error: 'Device ID, App ID, API token and name are required' });
