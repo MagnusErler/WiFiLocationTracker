@@ -288,6 +288,10 @@ export default function App() {
     const byte1 = byte12temp.slice(0, 2);
     const byte2 = byte12temp.slice(2, 4);    
     const byte3 = byte3temp.toString(16).toUpperCase().padStart(2, '0');
+
+    console.log("Byte1 = " + byte1);
+    console.log("Byte2 = " + byte2);
+    console.log("Byte3 = " + byte3);
     
     try {
       const token = process.env.REACT_APP_TTN_API_KEY;
