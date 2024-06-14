@@ -231,7 +231,7 @@ export default function App() {
                   ...prevState[existingIndex],
                   name: newDevice.name || "Unknown",
                   // batteryStatus: deviceInfo ? parseFloat(deviceInfo.batteryStatus).toFixed(2) + "\xa0V" : "-",
-                  batteryStatus: deviceInfo ? Math.round(((parseFloat(deviceInfo.batteryStatus)- 1.7)/2) * 100) + "0%" : "-",
+                  batteryStatus: deviceInfo ? Math.round(((parseFloat(deviceInfo.batteryStatus)- 1.7)/2) * 100) + "%" : "-",
                   temperature: deviceInfo ? deviceInfo.temperature + "\xa0°C" : "-",
                   updateInterval: deviceInfo ? deviceInfo.updateInterval : "-",
                   wifiStatus: deviceInfo ? deviceInfo.wifiStatus : "1",
