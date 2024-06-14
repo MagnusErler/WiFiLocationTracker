@@ -34,7 +34,7 @@ export default function App() {
 
   // Effects
   useEffect(() => {
-    console.log("Version 12/06/2023 - 12:00");
+    console.log("Version 14/06/2023 - 13:30");
   }, []);
 
   useEffect(() => {
@@ -292,7 +292,7 @@ export default function App() {
         downlinks: [
           {
             decoded_payload: {
-              bytes: [byte1,byte2,byte3]
+              bytes: [parseInt(byte1),parseInt(byte2),parseInt(byte3)]
             },
             f_port: 1,
             priority: "NORMAL"
