@@ -121,9 +121,9 @@ const ConfigureDeviceDialog = ({ tracker, onConfirm, onCancel, scheduleDownlink 
               value={loraWANClass}
               onChange={(e) => setLorawanClass(e.target.value)}
             >
-              <option value="1">Class A</option>
-              <option value="2">Class B</option>
-              <option value="3">Class C</option>
+              <option value="0">Class A</option>
+              <option value="1">Class B</option>
+              <option value="2">Class C</option>
             </select>
           </div>
           <div className="input-field-switch">
