@@ -529,7 +529,7 @@ smtc_modem_return_code_t smtc_modem_get_region( uint8_t stack_id, smtc_modem_reg
  * @retval SMTC_MODEM_RC_BUSY              Modem is currently in test mode or in joining/joined state
  * @retval SMTC_MODEM_RC_INVALID_STACK_ID  Invalid \p stack_id
  */
-smtc_modem_return_code_t smtc_modem_join_network( uint8_t stack_id );
+smtc_modem_return_code_t smtc_modem_join_network( uint8_t stack_id, uint8_t class_ );
 
 /**
  * @brief Request a LoRaWAN uplink

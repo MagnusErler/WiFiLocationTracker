@@ -146,6 +146,8 @@ static const smtc_modem_return_code_t store_and_fw_rc_lut[] = {
 };
 #endif
 
+uint8_t class_to_join = 0;
+
 /*
  * -----------------------------------------------------------------------------
  * --- PRIVATE TYPES -----------------------------------------------------------
@@ -652,11 +654,13 @@ smtc_modem_return_code_t smtc_modem_get_available_datarates( uint8_t stack_id, u
     return return_code;
 }
 
-smtc_modem_return_code_t smtc_modem_join_network( uint8_t stack_id )
+smtc_modem_return_code_t smtc_modem_join_network( uint8_t stack_id, uint8_t class_ )
 {
     RETURN_BUSY_IF_TEST_MODE( );
     SMTC_MODEM_HAL_TRACE_INFO( "%s\r\n", __func__ );
     smtc_modem_return_code_t return_code = SMTC_MODEM_RC_OK;
+
+    class_to_join = class_;
 
     smtc_modem_status_mask_t status_mask = modem_get_status( stack_id );
     if( ( ( status_mask & SMTC_MODEM_STATUS_JOINED ) == SMTC_MODEM_STATUS_JOINED ) ||
@@ -955,7 +959,7 @@ smtc_modem_return_code_t smtc_modem_leave_network( uint8_t stack_id )
     smtc_modem_return_code_t return_code = SMTC_MODEM_RC_OK;
     RETURN_BUSY_IF_TEST_MODE( );
 
-    smtc_modem_set_class( stack_id, SMTC_MODEM_CLASS_A );
+    smtc_modem_set_class( stack_id, class_to_join );
     modem_supervisor_abort_tasks_in_range( stack_id * NUMBER_OF_TASKS, ( ( stack_id + 1 ) * NUMBER_OF_TASKS ) - 1 );
     lorawan_api_join_status_clear( stack_id );
 
@@ -984,7 +988,7 @@ smtc_modem_return_code_t smtc_modem_suspend_radio_communications( bool suspend )
     {
         for( uint8_t i = 0; i < NUMBER_OF_STACKS; i++ )
         {
-            smtc_modem_set_class( i, SMTC_MODEM_CLASS_A );
+            smtc_modem_set_class( i, class_to_join );
             lorawan_api_core_abort( i );
         }
         // First disable failsafe check for radio planner as the suspended task can be longer than failsafe value
@@ -2101,7 +2105,7 @@ smtc_modem_return_code_t smtc_modem_debug_connect_with_abp( uint8_t stack_id, ui
         return SMTC_MODEM_RC_INVALID;
     }
 
-    if( smtc_modem_join_network( stack_id ) != SMTC_MODEM_RC_OK )
+    if( smtc_modem_join_network( stack_id, class_to_join ) != SMTC_MODEM_RC_OK )
     {
         return SMTC_MODEM_RC_FAIL;
     }

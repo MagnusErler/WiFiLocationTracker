@@ -118,8 +118,10 @@ uint8_t keep_alive_payload[KEEP_ALIVE_SIZE] = { 0x00 };
 /*!
  * @brief Defines the delay before starting the next scan sequence, value in [s].
  */
-uint8_t GEOLOCATION_GNSS_SCAN_PERIOD_S = 15;
-uint8_t GEOLOCATION_WIFI_SCAN_PERIOD_S = 20;
+uint32_t GEOLOCATION_WIFI_SCAN_PERIOD_S = 60;
+uint32_t GEOLOCATION_GNSS_SCAN_PERIOD_S = 60;
+int8_t enableWiFiGNSS = 1;
+uint8_t class_ = SMTC_MODEM_CLASS_A;
 
 /*!
  * @brief Time during which a LED is turned on when pulse, in [ms]
@@ -350,12 +352,14 @@ void main_geolocation( void ) {
  */
 
 void setupWiFi(uint8_t stack_id) {
+    SMTC_HAL_TRACE_INFO("Setting up Wi-Fi\r\n")
     smtc_modem_wifi_send_mode( stack_id, SMTC_MODEM_SEND_MODE_UPLINK );
     /* Program Wi-Fi scan */
     smtc_modem_wifi_scan( stack_id, 0 );
 }
 
 void setupGNSS(uint8_t stack_id) {
+    SMTC_HAL_TRACE_INFO("Setting up GNSS\r\n")
     /* Start almanac demodulation service */
     smtc_modem_almanac_demodulation_set_constellations( stack_id, SMTC_MODEM_GNSS_CONSTELLATION_GPS_BEIDOU );
     smtc_modem_almanac_demodulation_start( stack_id );
@@ -371,7 +375,7 @@ float getTemperature() {
     uint16_t temp_10_0;
     lr11xx_system_get_temp( NULL, &temp_10_0 );
     const float temperature = 25 + (1000/(-1.7)) * ((temp_10_0/2047.0) * 1.35 - 0.7295);
-    SMTC_HAL_TRACE_INFO("%d.%d °C\r\n", (uint8_t)temperature, (uint8_t)((temperature - (uint8_t)temperature) * 100));
+    // SMTC_HAL_TRACE_INFO("%d.%d °C\r\n", (uint8_t)temperature, (uint8_t)((temperature - (uint8_t)temperature) * 100));
     if ((uint8_t)temperature > 50) {
         SMTC_HAL_TRACE_INFO("LR1110 temperature is too high. TCXO mode may not be set up correctly\r\n");
         return 0;
@@ -447,19 +451,24 @@ static void modem_event_callback( void ) {
             /* Set user region */
             smtc_modem_set_region( stack_id, MODEM_EXAMPLE_REGION );
             /* Schedule a Join LoRaWAN network */
-            smtc_modem_join_network( stack_id );
+            smtc_modem_join_network( stack_id, class_ );
 
             /* Set GNSS and Wi-Fi send mode */
             smtc_modem_store_and_forward_flash_clear_data( stack_id );
             smtc_modem_store_and_forward_set_state( stack_id, SMTC_MODEM_STORE_AND_FORWARD_ENABLE );
             
-            switch (1) {
+            //TODO: remove wifi and gnss first
+
+            switch (enableWiFiGNSS) {
+            case 0:
+                break;
             case 1:
-                // WiFi scan first, then GNSS scan
                 setupWiFi( stack_id );
-                // setupGNSS( stack_id );
                 break;
             case 2:
+                setupGNSS( stack_id );
+                break;
+            case 3:
                 setupGNSS( stack_id );
                 setupWiFi( stack_id );
                 break;
@@ -493,10 +502,23 @@ static void modem_event_callback( void ) {
             smtc_modem_alarm_start_timer( KEEP_ALIVE_PERIOD_S );
 
             if (restart_occured) {
-                uint8_t join_accept_payload[2] = { 0x00 };
-                join_accept_payload[0] = getTemperature() / 5.0;
-                join_accept_payload[1] = getBatteryVoltage() * 70;
-                smtc_modem_request_uplink( stack_id, 10, false, join_accept_payload, 2 );
+                uint8_t join_accept_payload[6] = { 0x00 };
+                // set GEOLOCATION_WIFI_SCAN_PERIOD_S / 60 (to convert it from seocnds to minutes); over two bytes: join_accept_payload[0] and join_accept_payload[1] because the number (max 65535) must be over two byte
+                // Example: GEOLOCATION_WIFI_SCAN_PERIOD_S / 60 = 0x4FAF = 100111110101111, convert to join_accept_payload[0] = 10011111 and join_accept_payload[1] = 01011111
+                // Take the first 8 bits of the number and shift it 8 bits to the right to get the first 8 bits of the number. The output must be in int
+                join_accept_payload[0] = (int)(GEOLOCATION_WIFI_SCAN_PERIOD_S / 60.0) >> 8;
+                // Take the last 8 bits of the number to get the last 8 bits of the number. The output must be in int
+                join_accept_payload[1] = (int)(GEOLOCATION_WIFI_SCAN_PERIOD_S / 60.0) & 0xFF;
+
+                join_accept_payload[2] = class_;
+
+                join_accept_payload[3] = enableWiFiGNSS;
+
+                join_accept_payload[4] = getTemperature() / 5.0;
+                join_accept_payload[5] = getBatteryVoltage() * 70;
+
+                SMTC_HAL_TRACE_INFO("Sending join accept payload: %u, %u, %u, %u, %u, %u\r\n", join_accept_payload[0], join_accept_payload[1], join_accept_payload[2], join_accept_payload[3], join_accept_payload[4], join_accept_payload[5]);
+                smtc_modem_request_uplink( stack_id, 10, false, join_accept_payload, 6 );
                 restart_occured = false;
             }
             
@@ -517,26 +539,94 @@ static void modem_event_callback( void ) {
             SMTC_HAL_TRACE_PRINTF( "Data received on port %u\r\n", rx_metadata.fport );
             SMTC_HAL_TRACE_ARRAY( "Received payload", rx_payload, rx_payload_size );
 
-
-            uint8_t custom_payload[2] = { 0x00 };
-
             switch (rx_metadata.fport) {
             case 1:
 
-                if (rx_payload_size == 1) {
-                    SMTC_HAL_TRACE_PRINTF( "payload in dec: %u\r\n", rx_payload[0]);
-                    GEOLOCATION_WIFI_SCAN_PERIOD_S = rx_payload[0];
-                } else if (rx_payload_size == 2) {
-                    SMTC_HAL_TRACE_PRINTF( "payload in dec: %u\r\n", (rx_payload[0] << 8) + rx_payload[1]);
-                    GEOLOCATION_WIFI_SCAN_PERIOD_S = (rx_payload[0] << 8) + rx_payload[1];
+                // if (rx_payload_size == 1) {
+                //     SMTC_HAL_TRACE_PRINTF( "payload in dec: %u\r\n", rx_payload[0]);
+                //     GEOLOCATION_WIFI_SCAN_PERIOD_S = rx_payload[0] / 60.0;
+                // } else if (rx_payload_size == 2) {
+                //     SMTC_HAL_TRACE_PRINTF( "payload in dec: %u\r\n", (rx_payload[0] << 8) + rx_payload[1]);
+                //     GEOLOCATION_WIFI_SCAN_PERIOD_S = (rx_payload[0] << 8) + rx_payload[1];
+                // }
+
+                if (GEOLOCATION_WIFI_SCAN_PERIOD_S != ((rx_payload[0] << 8) + rx_payload[1]) * 60.0) {
+                    GEOLOCATION_WIFI_SCAN_PERIOD_S = ((rx_payload[0] << 8) + rx_payload[1]) * 60.0;
+                    GEOLOCATION_GNSS_SCAN_PERIOD_S = GEOLOCATION_WIFI_SCAN_PERIOD_S;
+                    SMTC_HAL_TRACE_PRINTF("Setting new Wi-Fi and GNSS scan period to %u s\r\n", GEOLOCATION_WIFI_SCAN_PERIOD_S);
+                    
+                    if (enableWiFiGNSS == 0) {
+                        // cancel the current Wi-Fi scan (not possible if the scan has already started)
+                        smtc_modem_wifi_scan_cancel( stack_id );
+                        // cancel the current GNSS scan (not possible if the scan has already started)
+                        smtc_modem_gnss_scan_cancel( stack_id );
+                    }
+                    if (enableWiFiGNSS == 1) {
+                        smtc_modem_gnss_scan_cancel( stack_id );
+                        // cancel the current Wi-Fi scan (not possible if the scan has already started)
+                        smtc_modem_wifi_scan_cancel( stack_id );
+                        // set the new Wi-Fi scan period
+                        smtc_modem_wifi_scan( stack_id, GEOLOCATION_WIFI_SCAN_PERIOD_S );
+                    }
+                    if (enableWiFiGNSS == 2) {
+                        smtc_modem_wifi_scan_cancel( stack_id );
+                        // cancel the current GNSS scan (not possible if the scan has already started)
+                        smtc_modem_gnss_scan_cancel( stack_id );
+                        // set the new GNSS scan period
+                        smtc_modem_gnss_scan( stack_id, SMTC_MODEM_GNSS_MODE_MOBILE, GEOLOCATION_GNSS_SCAN_PERIOD_S );
+                    }
+                    if (enableWiFiGNSS == 3) {
+                        // cancel the current Wi-Fi scan (not possible if the scan has already started)
+                        smtc_modem_wifi_scan_cancel( stack_id );
+                        // set the new Wi-Fi scan period
+                        smtc_modem_wifi_scan( stack_id, GEOLOCATION_WIFI_SCAN_PERIOD_S );
+                        // cancel the current GNSS scan (not possible if the scan has already started)
+                        smtc_modem_gnss_scan_cancel( stack_id );
+                        // set the new GNSS scan period
+                        smtc_modem_gnss_scan( stack_id, SMTC_MODEM_GNSS_MODE_MOBILE, GEOLOCATION_GNSS_SCAN_PERIOD_S );
+                    }
                 }
 
-                SMTC_HAL_TRACE_PRINTF("Setting new Wi-Fi scan period to %u s\r\n", GEOLOCATION_WIFI_SCAN_PERIOD_S);
+                // Convert rx_payload[3] to multiple varibales
+                // The last 2 bits are for Wi-Fi and GNSS: 00 = none, 01 = Wi-Fi, 10 = GNSS, 11 = both
+                // The next 2 bits are for the Class: 00 = A, 01 = B, 10 = C, 11 = D
+
+                if (class_ != (rx_payload[3] & 0x0C)) {
+                    class_ = rx_payload[3] & 0x0C;
+                    SMTC_HAL_TRACE_PRINTF("Setting new class to %u\r\n", class_);
+                    smtc_modem_join_network( stack_id, class_ );
+                }
+
+                if (enableWiFiGNSS != (rx_payload[3] & 0x03)) {
+                    enableWiFiGNSS = rx_payload[3] & 0x03;
+                    SMTC_HAL_TRACE_PRINTF("Setting new Wi-Fi and GNSS scan mode to %u\r\n", enableWiFiGNSS);
+
+
+                    /* Schedule a Join LoRaWAN network */
+                    smtc_modem_join_network( stack_id, class_ );
+                    
+                    switch (enableWiFiGNSS) {
+                        case 0:
+                            break;
+                        case 1:
+                            setupWiFi( stack_id );
+                            break;
+                        case 2:
+                            setupGNSS( stack_id );
+                            break;
+                        case 3:
+                            setupGNSS( stack_id );
+                            setupWiFi( stack_id );
+                            break;
+                        default:
+                            break;
+                    }
+                }
 
                 // cancel the current Wi-Fi scan (not possible if the scan has already started)
-                smtc_modem_wifi_scan_cancel( stack_id );
+                // smtc_modem_wifi_scan_cancel( stack_id );
                 // set the new Wi-Fi scan period
-                smtc_modem_wifi_scan( stack_id, GEOLOCATION_WIFI_SCAN_PERIOD_S );
+                // smtc_modem_wifi_scan( stack_id, GEOLOCATION_WIFI_SCAN_PERIOD_S );
 
 
                 // // smtc_modem_request_uplink( stack_id, 1, false, keep_alive_payload, KEEP_ALIVE_SIZE );
@@ -566,10 +656,10 @@ static void modem_event_callback( void ) {
                 break;
             case 3:              
                 // smtc_modem_request_uplink( stack_id, 1, false, keep_alive_payload, KEEP_ALIVE_SIZE );
-                custom_payload[0] = getTemperature() / 5.0;
-                custom_payload[1] = getBatteryVoltage() * 70;
-                smtc_modem_request_uplink( stack_id, 15, false, custom_payload, 4 );
-                smtc_modem_alarm_start_timer( KEEP_ALIVE_PERIOD_S );
+                // custom_payload[0] = getTemperature() / 5.0;
+                // custom_payload[1] = getBatteryVoltage() * 70;
+                // smtc_modem_request_uplink( stack_id, 15, false, custom_payload, 4 );
+                // smtc_modem_alarm_start_timer( KEEP_ALIVE_PERIOD_S );
 
                 break;
             default:
