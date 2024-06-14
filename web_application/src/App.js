@@ -361,10 +361,10 @@ export default function App() {
 
   const convertTrackerInformationToByte = (trackerInfo) => {
     const CLASS_A = 0b000000;
-    const CLASS_B = 0b000001;
-    const CLASS_C = 0b000010;
-    const WIFI_STATUS_BIT = 0b000100;
-    const GNSS_STATUS_BIT = 0b001000;
+    const CLASS_B = 0b000100;
+    const CLASS_C = 0b001000;
+    const WIFI_STATUS_BIT = 0b000001;
+    const GNSS_STATUS_BIT = 0b000010;
 
     let classBits = 0;
     let wifiStatusBit = trackerInfo.wifiStatus ? WIFI_STATUS_BIT : 0;
