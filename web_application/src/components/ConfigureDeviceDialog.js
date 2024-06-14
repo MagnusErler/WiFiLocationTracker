@@ -5,7 +5,7 @@ import "./ConfigureDeviceDialog.css";
 const ConfigureDeviceDialog = ({ tracker, onConfirm, onCancel, scheduleDownlink }) => {
   const [hours, setHours] = useState("0");
   const [minutes, setMinutes] = useState("0");
-  const [loraWANClass, setLorawanClass] = useState(tracker.loraWANClass || "1");
+  const [loraWANClass, setLorawanClass] = useState(tracker.loraWANClass || "0");
   const [wifiScanning, setWifiScanning] = useState(Boolean(tracker.wifiStatus) || false);
   const [gnssScanning, setGnssScanning] = useState(Boolean(tracker.gnssStatus) || false);
 
