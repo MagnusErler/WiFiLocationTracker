@@ -28,7 +28,7 @@ router.post("/trackerInformation", async (req, res) => {
       // Extract values from the bytes array for f_port 10
       let temperature = bytes[4] * 5;
       let updateInterval = bytes[0] + bytes[1];
-      let batteryStatus = bytes[5] / 70;
+      let batteryStatus = bytes[5] / 77;
       let wifiStatus = false;
       let gnssStatus = false;
       let loraWANClass = bytes[2];
@@ -55,7 +55,7 @@ router.post("/trackerInformation", async (req, res) => {
 
       // Extract values from the bytes array for f_port 2
       let temperature = bytes[0] * 5;
-      let batteryStatus = bytes[1] / 70;
+      let batteryStatus = bytes[1] / 77;
 
       // Perform upsert operation for f_port 2
       [tracker, created] = await TrackerInformation.upsert(
