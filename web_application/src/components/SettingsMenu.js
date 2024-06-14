@@ -278,10 +278,10 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
                   />
                 </td>
                 <td className="battery-status-column">
-                  {isNaN(tracker.batteryStatus) || tracker.batteryStatus === null ? '-' : tracker.batteryStatus}
+                  {tracker.batteryStatus}
                 </td>
                 <td className="temperature-status-column">
-                  {isNaN(tracker.temperature) || tracker.temperature === null ? '-' : tracker.temperature}
+                  {tracker.temperature}
                 </td>
                 <td className="update-interval-column">
                   {isNaN(tracker.updateInterval)
