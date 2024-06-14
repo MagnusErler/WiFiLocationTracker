@@ -271,8 +271,12 @@ const SettingsMenu = React.forwardRef(({ isOpen, handleClose, trackerInformation
                     onChange={(e) => handleNameChange(tracker.deviceId, e.target.value)}
                   />
                 </td>
-                <td className="battery-status-column">{tracker.batteryStatus}</td>
-                <td className="temperature-status-column">{tracker.temperature}</td>
+                <td className="battery-status-column">
+                  {isNaN(tracker.batteryStatus) || tracker.batteryStatus === null ? '-' : tracker.batteryStatus}
+                </td>
+                <td className="temperature-status-column">
+                  {isNaN(tracker.temperature) || tracker.temperature === null ? '-' : tracker.temperature}
+                </td>
                 <td className="update-interval-column">
                   {isNaN(tracker.updateInterval)
                     ? tracker.updateInterval  // Display '-' if updateInterval is NaN
