@@ -147,7 +147,13 @@ const AddDeviceMenu = React.forwardRef(({ isOpen, handleClose, onDeviceAdded }, 
     } catch (error) {
       setIsLoading(false);
       console.error("Error adding devices:", error);
-      setErrorMessage(error.response?.data?.message || "An error occurred while adding the device. Please try again");
+
+      // Handle specific errors or provide generic message
+      if (axios.isAxiosError(error)) {
+        setErrorMessage(error.response?.data?.message || "An error occurred while adding the device. Please try again.");
+      } else {
+        setErrorMessage("An unexpected error occurred. Please try again later.");
+      }
     }
   };
 

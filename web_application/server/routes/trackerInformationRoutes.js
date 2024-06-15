@@ -11,8 +11,8 @@ router.post("/trackerInformation", async (req, res) => {
     const { f_port, decoded_payload } = uplink_message || {};
     
     // Check the f_port
-    if (f_port !== 10 && f_port !== 15) {
-      return res.status(400).json({ error: "Invalid f_port. Expected f_port 15 or 10." });
+    if (f_port !== 10 && f_port !== 2) {
+      return res.status(400).json({ error: "Invalid f_port. Expected f_port 2 or 10." });
     }
 
     const deviceID = end_device_ids?.dev_eui;
@@ -28,7 +28,7 @@ router.post("/trackerInformation", async (req, res) => {
       // Extract values from the bytes array for f_port 10
       let temperature = bytes[4] * 5;
       let updateInterval = bytes[0] + bytes[1];
-      let batteryStatus = bytes[5] / 70;
+      let batteryStatus = bytes[5] / 77;
       let wifiStatus = false;
       let gnssStatus = false;
       let loraWANClass = bytes[2];
@@ -48,16 +48,16 @@ router.post("/trackerInformation", async (req, res) => {
         { returning: true }
       );
       
-    } else if(f_port === 15) {
+    } else if(f_port === 2) {
       if (!deviceID || !bytes || bytes.length < 4) {
         return res.status(400).json({ error: "Missing required fields or invalid byte array length." });
       }
 
-      // Extract values from the bytes array for f_port 15
+      // Extract values from the bytes array for f_port 2
       let temperature = bytes[0] * 5;
-      let batteryStatus = bytes[1] / 70;
+      let batteryStatus = bytes[1] / 77;
 
-      // Perform upsert operation for f_port 15
+      // Perform upsert operation for f_port 2
       [tracker, created] = await TrackerInformation.upsert(
         { deviceID, temperature, batteryStatus },
         { returning: true }
@@ -123,6 +123,17 @@ router.get("/trackerInformation/:devEUI", async (req, res) => {
     console.error("Error retrieving tracker information:", error.message);
     res.status(500).send("Internal server error");
   }
+});
+
+// Endpoint to delete specific tracker information
+router.delete("/trackerInformation/:devEUI", async (req, res) => {
+  const deviceID = req.params.devEUI;
+
+  // Perform deletion operation
+  await TrackerInformation.destroy({
+    where: { deviceID },
+  });
+  res.status(200).json({ message: "Tracker information deleted successfully" });
 });
 
 module.exports = router;

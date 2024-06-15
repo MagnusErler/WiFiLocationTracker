@@ -5,7 +5,7 @@ import "./ConfigureDeviceDialog.css";
 const ConfigureDeviceDialog = ({ tracker, onConfirm, onCancel, scheduleDownlink }) => {
   const [hours, setHours] = useState("0");
   const [minutes, setMinutes] = useState("0");
-  const [loraWANClass, setLorawanClass] = useState(tracker.loraWANClass || "1");
+  const [loraWANClass, setLorawanClass] = useState(tracker.loraWANClass || "0");
   const [wifiScanning, setWifiScanning] = useState(Boolean(tracker.wifiStatus) || false);
   const [gnssScanning, setGnssScanning] = useState(Boolean(tracker.gnssStatus) || false);
 
@@ -121,9 +121,9 @@ const ConfigureDeviceDialog = ({ tracker, onConfirm, onCancel, scheduleDownlink 
               value={loraWANClass}
               onChange={(e) => setLorawanClass(e.target.value)}
             >
-              <option value="1">Class A</option>
-              <option value="2">Class B</option>
-              <option value="3">Class C</option>
+              <option value="0">Class A</option>
+              <option value="1">Class B</option>
+              <option value="2">Class C</option>
             </select>
           </div>
           <div className="input-field-switch">

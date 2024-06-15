@@ -34,7 +34,7 @@ export default function App() {
 
   // Effects
   useEffect(() => {
-    console.log("Version 14/06/2023 - 13:30");
+    console.log("Version 14/06/2023 - 19:00");
   }, []);
 
   useEffect(() => {
@@ -43,6 +43,15 @@ export default function App() {
     };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if(isSettingsMenuOpen) {
+      const fetchData = async () => {
+        await fetchTrackerInformation();
+      };
+      fetchData();
+    }
+  }, [isSettingsMenuOpen]);
 
   useEffect(() => {
     if (markers.length > 0 && trackerInformation.length > 0 && !dataLoaded) {
@@ -84,6 +93,7 @@ export default function App() {
     setSelectedMapTile(tile);
     console.log(`Map tile changed to: ${tile}`);
   };
+
   const handleTrackerInformationUpdate = (updatedTrackerInformation) => {
     setTrackerInformation(updatedTrackerInformation);
   };
@@ -220,24 +230,25 @@ export default function App() {
                 prevState[existingIndex] = {
                   ...prevState[existingIndex],
                   name: newDevice.name || "Unknown",
-                  batteryStatus: deviceInfo ? parseFloat(deviceInfo.batteryStatus).toFixed(2) + "\xa0V" : "-", 
+                  // batteryStatus: deviceInfo ? parseFloat(deviceInfo.batteryStatus).toFixed(2) + "\xa0V" : "-",
+                  batteryStatus: deviceInfo ? Math.round(((parseFloat(deviceInfo.batteryStatus)- 1.7)/2) * 100) + "%" : "-",
                   temperature: deviceInfo ? deviceInfo.temperature + "\xa0°C" : "-",
                   updateInterval: deviceInfo ? deviceInfo.updateInterval : "-",
                   wifiStatus: deviceInfo ? deviceInfo.wifiStatus : "1",
                   gnssStatus: deviceInfo ? deviceInfo.gnssStatus : "1",
-                  loraWANClass: deviceInfo ? deviceInfo.loraWANClass : "1"
+                  loraWANClass: deviceInfo ? deviceInfo.loraWANClass : "0"
                 };
               } else {
                 // Add new entry
                 prevState.push({
                   deviceId: deviceIdWithoutPrefix,
                   name: newDevice.name || "Unknown",
-                  batteryStatus: deviceInfo ? parseFloat(deviceInfo.batteryStatus).toFixed(2) + "\xa0V" : "-", 
+                  batteryStatus: deviceInfo ? Math.round(((parseFloat(deviceInfo.batteryStatus)- 1.7)/2) * 100) + "%" : "-", 
                   temperature: deviceInfo ? deviceInfo.temperature + "\xa0°C" : "-",
                   updateInterval: deviceInfo ? deviceInfo.updateInterval : "-",
                   wifiStatus: deviceInfo ? deviceInfo.wifiStatus : "1",
                   gnssStatus: deviceInfo ? deviceInfo.gnssStatus : "1",
-                  loraWANClass: deviceInfo ? deviceInfo.loraWANClass : "1"
+                  loraWANClass: deviceInfo ? deviceInfo.loraWANClass : "0"
                 });
               }
             });
@@ -277,6 +288,10 @@ export default function App() {
     const byte1 = byte12temp.slice(0, 2);
     const byte2 = byte12temp.slice(2, 4);    
     const byte3 = byte3temp.toString(16).toUpperCase().padStart(2, '0');
+
+    console.log("Byte1 = " + byte1);
+    console.log("Byte2 = " + byte2);
+    console.log("Byte3 = " + byte3);
     
     try {
       const token = process.env.REACT_APP_TTN_API_KEY;
@@ -323,7 +338,7 @@ export default function App() {
 
   const postTrackerInformation = async (updatedTracker) => {
     try {
-      const response = await fetch(`/api/trackerInformation/${updatedTracker.deviceId}`, {
+      const response = await fetch(`/api/trackerInformation/${updatedTracker.deviceId.toUpperCase()}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -350,10 +365,10 @@ export default function App() {
 
   const convertTrackerInformationToByte = (trackerInfo) => {
     const CLASS_A = 0b000000;
-    const CLASS_B = 0b000001;
-    const CLASS_C = 0b000010;
-    const WIFI_STATUS_BIT = 0b000100;
-    const GNSS_STATUS_BIT = 0b001000;
+    const CLASS_B = 0b000100;
+    const CLASS_C = 0b001000;
+    const WIFI_STATUS_BIT = 0b000001;
+    const GNSS_STATUS_BIT = 0b000010;
 
     let classBits = 0;
     let wifiStatusBit = trackerInfo.wifiStatus ? WIFI_STATUS_BIT : 0;
@@ -364,15 +379,15 @@ export default function App() {
     console.log(`GNSS Status: ${trackerInfo.gnssStatus}`);
 
     switch (parseInt(trackerInfo.loraWANClass)) {
-        case 1:
+        case 0:
             console.log("Class A");
             classBits = CLASS_A;
             break;
-        case 2:
+        case 1:
             console.log("Class B");
             classBits = CLASS_B;
             break;
-        case 3:
+        case 2:
             console.log("Class C");
             classBits = CLASS_C;
             break;
