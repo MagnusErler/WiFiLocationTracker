@@ -375,7 +375,7 @@ float getTemperature() {
     uint16_t temp_10_0;
     lr11xx_system_get_temp( NULL, &temp_10_0 );
     const float temperature = 25 + (1000/(-1.7)) * ((temp_10_0/2047.0) * 1.35 - 0.7295);
-    // SMTC_HAL_TRACE_INFO("%d.%d °C\r\n", (uint8_t)temperature, (uint8_t)((temperature - (uint8_t)temperature) * 100));
+    SMTC_HAL_TRACE_INFO("%d.%d °C\r\n", (uint8_t)temperature, (uint8_t)((temperature - (uint8_t)temperature) * 100));
     if ((uint8_t)temperature > 50) {
         SMTC_HAL_TRACE_INFO("LR1110 temperature is too high. TCXO mode may not be set up correctly\r\n");
         return 0;
@@ -397,7 +397,7 @@ float getBatteryVoltage() {
     // convert battery voltage to a percentage
     // int8_t batteryVoltage_percentage = (batteryVoltage - 1.7) / 2.0 * 100;
 
-    // SMTC_HAL_TRACE_INFO("%d.%d V\r\n", (uint8_t)batteryVoltage, (uint8_t)((batteryVoltage - (uint8_t)batteryVoltage) * 100));
+    SMTC_HAL_TRACE_INFO("%d.%d V\r\n", (uint8_t)batteryVoltage, (uint8_t)((batteryVoltage - (uint8_t)batteryVoltage) * 100));
     return batteryVoltage;
 }
 
@@ -484,7 +484,7 @@ static void modem_event_callback( void ) {
             SMTC_HAL_TRACE_INFO( "Event received: ALARM\r\n" );
 
             keep_alive_payload[0] = getTemperature() / 5.0;
-            keep_alive_payload[1] = getBatteryVoltage() * 70;
+            keep_alive_payload[1] = ((getBatteryVoltage() - 1.7) / (3.35 - 1.7))*255;
 
             smtc_modem_request_uplink( stack_id, KEEP_ALIVE_PORT, false, keep_alive_payload, KEEP_ALIVE_SIZE );
             smtc_modem_alarm_start_timer( KEEP_ALIVE_PERIOD_S );
@@ -515,7 +515,7 @@ static void modem_event_callback( void ) {
                 join_accept_payload[3] = enableWiFiGNSS;
 
                 join_accept_payload[4] = getTemperature() / 5.0;
-                join_accept_payload[5] = getBatteryVoltage() * 70;
+                join_accept_payload[5] = ((getBatteryVoltage() - 1.7) / (3.35 - 1.7))*255;
 
                 SMTC_HAL_TRACE_INFO("Sending join accept payload: %u, %u, %u, %u, %u, %u\r\n", join_accept_payload[0], join_accept_payload[1], join_accept_payload[2], join_accept_payload[3], join_accept_payload[4], join_accept_payload[5]);
                 smtc_modem_request_uplink( stack_id, 10, false, join_accept_payload, 6 );
