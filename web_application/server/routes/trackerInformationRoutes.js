@@ -1,5 +1,6 @@
 const express = require("express");
 const TrackerInformation = require("../models/trackerInformation");
+const KeepAliveGatewayLocation = require("../models/keepAliveGatewayLocation");
 
 const router = express.Router();
 
@@ -8,7 +9,7 @@ router.post("/trackerInformation", async (req, res) => {
   try {
     //console.log("Received request to update tracker information:", req.body);
     const { end_device_ids, uplink_message } = req.body;
-    const { f_port, decoded_payload } = uplink_message || {};
+    const { f_port, decoded_payload, rx_metadata } = uplink_message || {};
     
     // Check the f_port
     if (f_port !== 10 && f_port !== 2) {
@@ -62,6 +63,25 @@ router.post("/trackerInformation", async (req, res) => {
         { deviceID, temperature, batteryStatus },
         { returning: true }
       );
+
+      // Extract gateway location data from rx_metadata
+      if(rx_metadata && rx_metadata.length > 0) {
+        for(const metadata of rx_metadata) {
+          const {gateway_ids, location} = metadata;
+          const gatewayID = gateway_ids.gateway_id;
+          const geocode = {
+            latitude: location.latitude,
+            longitude: location.longitude,
+            altitude: location.altitide
+          };
+
+          await KeepAliveGatewayLocation.upsert({
+            deviceID,
+            gatewayID,
+            geocode
+          });
+        }
+      }
     }
 
     // Send response based on existence check

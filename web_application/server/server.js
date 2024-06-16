@@ -6,6 +6,7 @@ const trackerInformationRoutes = require('./routes/trackerInformationRoutes');
 const sequelize = require('./database');
 const GeolocationSolve = require('./models/geolocationSolve');
 const TrackerInformation = require('./models/trackerInformation');
+const KeepAliveGatewayLocation = require('./models/keepAliveGatewayLocation');
 
 const app = express();
 
