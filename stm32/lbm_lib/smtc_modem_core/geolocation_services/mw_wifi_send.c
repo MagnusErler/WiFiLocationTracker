@@ -276,6 +276,7 @@ void mw_wifi_send_add_task( const wifi_scan_all_result_t* wifi_results )
             task.priority = TASK_HIGH_PRIORITY;
         }
         task.time_to_execute_s = smtc_modem_hal_get_time_in_s( );
+        // magnus breakpoint
         modem_supervisor_add_task( &task );
     }
 }

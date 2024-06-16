@@ -385,8 +385,8 @@ static void trace_print_event_data_scan_done( const smtc_modem_wifi_event_data_s
 
 static void wifi_rp_task_launch( void* context )
 {
-    send_event( SMTC_MODEM_EVENT_SET_DEBUG_PIN );
-
+    // send_event( SMTC_MODEM_EVENT_SET_DEBUG_PIN );
+    //magnus breakpoint
     mw_wifi_task_obj.scan_start_time = smtc_modem_hal_get_time_in_ms( );
     SMTC_MODEM_HAL_TRACE_INFO( "Wi-Fi task launch at %u\r\n", mw_wifi_task_obj.scan_start_time );
 
@@ -419,6 +419,7 @@ static void wifi_rp_task_done( void* status )
     rp_status_t rp_status;
 
     mw_wifi_task_obj.scan_end_time = smtc_modem_hal_get_time_in_ms( );
+    //magnus breakpoint
     SMTC_MODEM_HAL_TRACE_INFO( "wifi_rp_task_done at %u (duration:%d ms)\r\n", mw_wifi_task_obj.scan_end_time,
                                mw_wifi_task_obj.scan_end_time - mw_wifi_task_obj.scan_start_time );
 

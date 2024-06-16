@@ -111,8 +111,8 @@ static const uint8_t adr_custom_list[16] = ADR_CUSTOM_LIST;
 static const uint8_t custom_nb_trans     = CUSTOM_NB_TRANS;
 
 #define KEEP_ALIVE_PORT ( 2 )
-#define KEEP_ALIVE_PERIOD_S ( 3600 / 2 )
-#define KEEP_ALIVE_SIZE ( 4 )
+#define KEEP_ALIVE_PERIOD_S ( 60 * 30 )
+#define KEEP_ALIVE_SIZE ( 2 )
 uint8_t keep_alive_payload[KEEP_ALIVE_SIZE] = { 0x00 };
 
 /*!
@@ -120,7 +120,7 @@ uint8_t keep_alive_payload[KEEP_ALIVE_SIZE] = { 0x00 };
  */
 uint32_t GEOLOCATION_WIFI_SCAN_PERIOD_S = 60;
 uint32_t GEOLOCATION_GNSS_SCAN_PERIOD_S = 60;
-int8_t enableWiFiGNSS = 1;
+int8_t enableWiFiGNSS = 0;
 uint8_t class_ = SMTC_MODEM_CLASS_A;
 
 /*!
@@ -186,6 +186,8 @@ void main_geolocation( void ) {
     lr11xx_system_version_t lr11xx_fw_version;
     // lr11xx_status_t         status;
 
+    hal_gpio_init_out( DEBUG_PIN, 1 );
+
     // Disable IRQ to avoid unwanted behaviour during init
     hal_mcu_disable_irq( );
 
@@ -225,7 +227,7 @@ void main_geolocation( void ) {
     smtc_board_hall_effect_enable( true );
 
 
-    hal_gpio_init_out( DEBUG_PIN, 0 );
+    
 
     while( 1 ) {
 
@@ -483,7 +485,7 @@ static void modem_event_callback( void ) {
         case SMTC_MODEM_EVENT_ALARM:
             SMTC_HAL_TRACE_INFO( "Event received: ALARM\r\n" );
 
-            keep_alive_payload[0] = getTemperature() / 5.0;
+            keep_alive_payload[0] = (getTemperature()/40.0) * 255;
             keep_alive_payload[1] = ((getBatteryVoltage() - 1.7) / (3.35 - 1.7))*255;
 
             smtc_modem_request_uplink( stack_id, KEEP_ALIVE_PORT, false, keep_alive_payload, KEEP_ALIVE_SIZE );
@@ -514,7 +516,7 @@ static void modem_event_callback( void ) {
 
                 join_accept_payload[3] = enableWiFiGNSS;
 
-                join_accept_payload[4] = getTemperature() / 5.0;
+                join_accept_payload[4] = (getTemperature()/40.0) * 255;
                 join_accept_payload[5] = ((getBatteryVoltage() - 1.7) / (3.35 - 1.7))*255;
 
                 SMTC_HAL_TRACE_INFO("Sending join accept payload: %u, %u, %u, %u, %u, %u\r\n", join_accept_payload[0], join_accept_payload[1], join_accept_payload[2], join_accept_payload[3], join_accept_payload[4], join_accept_payload[5]);
@@ -710,7 +712,7 @@ static void modem_event_callback( void ) {
             break;
         
         case SMTC_MODEM_EVENT_WIFI_SCAN_DONE:
-            hal_gpio_set_value( DEBUG_PIN, 0 );
+            // hal_gpio_set_value( DEBUG_PIN, 0 );
             SMTC_HAL_TRACE_INFO( "Event received: WIFI_SCAN_DONE\r\n" );
             /* Get event data */
             smtc_modem_wifi_get_event_data_scan_done( stack_id, &wifi_scan_done_data );

@@ -147,7 +147,8 @@ void lorawan_send_management_services_init( uint8_t* service_id, uint8_t task_id
 void lorawan_send_add_task( uint8_t stack_id, uint8_t f_port, bool send_fport, bool confirmed, const uint8_t* payload,
                             uint8_t payload_length, bool emergency, uint32_t delay_s )
 
-{
+{   
+    // magnus breakpoint
     IS_VALID_STACK_ID( stack_id );
     smodem_task task_send = { 0 };
     if( emergency == true )
@@ -227,7 +228,7 @@ static void lorawan_send_management_service_on_update( void* context )
     {
         smtc_duty_cycle_enable_set( SMTC_DTC_ENABLED );
     }
-
+    // magnus breakpoint
     if( task_manager->modem_task[CURRENT_TASK_ID].task_enabled == true )
     {
         if( task_manager->modem_task[CURRENT_TASK_ID].task_context == true )
