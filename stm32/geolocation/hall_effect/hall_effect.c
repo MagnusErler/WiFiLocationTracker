@@ -110,7 +110,7 @@ hal_gpio_irq_t hall_effect2 = {
 
 void smtc_board_hall_effect_enable( bool enable )
 {
-    SMTC_HAL_TRACE_PRINTF( "hall effect sensor enable : %d\n", enable );
+    SMTC_HAL_TRACE_PRINTF( "hall effect sensor enable : %d\r\n", enable );
 
     if( enable == true )
     {

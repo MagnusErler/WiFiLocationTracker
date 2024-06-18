@@ -75,6 +75,8 @@
 #define HW_DEBUG_PROBE 0
 #endif
 
+#define ENABLE_UART2 0
+
 /*
  * -----------------------------------------------------------------------------
  * --- PRIVATE TYPES -----------------------------------------------------------
@@ -139,7 +141,9 @@ void hal_mcu_init( void )
 
 #if( MODEM_HAL_DBG_TRACE == MODEM_HAL_FEATURE_ON )
     // Initialize Uart for debug traces
-    uart2_init( );
+    #if (ENABLE_UART2)
+        uart2_init( );
+    #endif
 #endif
 #if defined( HW_MODEM_ENABLED )
     // Initialize Uart for hw commands
@@ -492,7 +496,9 @@ static void lpm_mcu_deinit( void )
     uart4_deinit( );
 #endif
 #if( MODEM_HAL_DBG_TRACE == MODEM_HAL_FEATURE_ON )
-    uart2_deinit( );
+    #if (ENABLE_UART2)
+        uart2_deinit( );
+    #endif
 #endif
 }
 
@@ -533,7 +539,9 @@ static void lpm_mcu_reinit( void )
 
     // Initialize UART
 #if( MODEM_HAL_DBG_TRACE == MODEM_HAL_FEATURE_ON )
-    uart2_init( );
+    #if (ENABLE_UART2)
+        uart2_init( );
+    #endif
 #endif
 #if defined( HW_MODEM_ENABLED )
     uart4_init( );
