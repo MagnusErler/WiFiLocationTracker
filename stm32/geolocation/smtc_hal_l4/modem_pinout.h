@@ -70,7 +70,7 @@ extern "C" {
 #define RADIO_SPI_SCLK          PA_5
 #define RADIO_NSS               PA_8
 #define RADIO_NRST              PA_0
-#define RADIO_DIOX              PB_4        // PB_4 for dev kit, PA_4 for custom board
+#define RADIO_DIOX              PA_4        // PB_4 for dev kit, PA_4 for custom board
 #define RADIO_BUSY_PIN          PB_3
 
 #define RADIO_SPI_ID            1
@@ -100,7 +100,7 @@ extern "C" {
 #define HALL_OUT2               PB_2
 
 // DEBUG PIN
-#define DEBUG_PIN               PB_5        // LED_SCAN PIN
+#define DEBUG_PIN               PC_2        // LED_SCAN PIN     PC_2 for custom board
 
 // clang-format on
 
