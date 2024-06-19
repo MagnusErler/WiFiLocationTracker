@@ -76,6 +76,8 @@
 #endif
 
 #define ENABLE_UART2 0
+#define ENABLE_I2C 0
+#define ENABLE_SPI 0
 
 /*
  * -----------------------------------------------------------------------------
@@ -141,7 +143,7 @@ void hal_mcu_init( void )
 
 #if( MODEM_HAL_DBG_TRACE == MODEM_HAL_FEATURE_ON )
     // Initialize Uart for debug traces
-    #if (ENABLE_UART2)
+    #if (ENABLE_UART2 == 1)
         uart2_init( );
     #endif
 #endif
@@ -161,13 +163,17 @@ void hal_mcu_init( void )
 #endif
 
     // Initialize SPI for radio
-    hal_spi_init( RADIO_SPI_ID, RADIO_SPI_MOSI, RADIO_SPI_MISO, RADIO_SPI_SCLK );
+    #if (ENABLE_SPI == 1)
+        hal_spi_init( RADIO_SPI_ID, RADIO_SPI_MOSI, RADIO_SPI_MISO, RADIO_SPI_SCLK );
+    #endif
 
     // Initialize RTC (for real time and wut)
     hal_rtc_init( );
 
     /* Initialize I2C */
-    hal_i2c_init( I2C_ID, I2C_SDA, I2C_SCL );
+    #if (ENABLE_I2C == 1)
+        hal_i2c_init( I2C_ID, I2C_SDA, I2C_SCL );
+    #endif
 }
 
 void hal_mcu_reset( void )
@@ -487,16 +493,19 @@ static void sleep_handler( void )
  *
  */
 static void lpm_mcu_deinit( void )
-{
-    hal_spi_de_init( RADIO_SPI_ID );
-
-    hal_i2c_deinit( I2C_ID );
+{   
+    #if (ENABLE_SPI == 1)
+        hal_spi_de_init( RADIO_SPI_ID );
+    #endif
+    #if (ENABLE_I2C == 1)
+        hal_i2c_deinit( I2C_ID );
+    #endif
 
 #if defined( HW_MODEM_ENABLED )
     uart4_deinit( );
 #endif
 #if( MODEM_HAL_DBG_TRACE == MODEM_HAL_FEATURE_ON )
-    #if (ENABLE_UART2)
+    #if (ENABLE_UART2 == 1)
         uart2_deinit( );
     #endif
 #endif
@@ -539,7 +548,7 @@ static void lpm_mcu_reinit( void )
 
     // Initialize UART
 #if( MODEM_HAL_DBG_TRACE == MODEM_HAL_FEATURE_ON )
-    #if (ENABLE_UART2)
+    #if (ENABLE_UART2 == 1)
         uart2_init( );
     #endif
 #endif
@@ -548,10 +557,14 @@ static void lpm_mcu_reinit( void )
 #endif
 
     // Initialize SPI
-    hal_spi_init( RADIO_SPI_ID, RADIO_SPI_MOSI, RADIO_SPI_MISO, RADIO_SPI_SCLK );
+    #if (ENABLE_SPI == 1)
+        hal_spi_init( RADIO_SPI_ID, RADIO_SPI_MOSI, RADIO_SPI_MISO, RADIO_SPI_SCLK );
+    #endif
 
     /* Initialize I2C */
-    hal_i2c_init( I2C_ID, I2C_SDA, I2C_SCL );
+    #if (ENABLE_I2C == 1)
+        hal_i2c_init( I2C_ID, I2C_SDA, I2C_SCL );
+    #endif
 }
 
 #endif
