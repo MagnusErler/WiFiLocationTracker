@@ -50,180 +50,270 @@ This document outlines the API endpoints available in the application.
 
 The base URL for all endpoints is `localhost:3001/api`.
 
-## Endpoints
+## Geolocation Solves Endpoints
 
 ### 1. Get all Geolocation Solves
-
 - **URL:** `/geolocationSolves`
 - **Method:** `GET`
 - **Description:** Retrieves all geolocation solves stored in the database.
 - **Response:**
-  - `200 OK` if successful, returning an array of geolocation solves.
-  - `500 Internal Server Error` if there's an issue querying the database.
+  - `200 OK` Successfully retrieved geolocation solves.
+    - Description: Successfully retrieved geolocation solves.
+    - Content: Array of geolocation solve objects.
+  - `500 Internal Server Error` Server error occurred while processing the request.
 
 ### 2. Get Geolocation Solves by Device ID
-
 - **URL:** `/geolocationSolves/:deviceID`
 - **Method:** `GET`
 - **Description:** Retrieves all geolocation solves for a specific device ID.
 - **Parameters:**
   - `deviceID` (string): The unique identifier of the device.
 - **Response:**
-  - `200 OK` if successful, returning an array of geolocation solves.
-  - `404 Not Found` if the device ID is not found.
-  - `500 Internal Server Error` if there's an issue querying the database.
+  - `200 OK`  
+    - Description: Successfully retrieved geolocation solves.
+    - Content: Array of geolocation solve objects.
+  - `404 Not Found`
+    - Description: Device ID not found in the database.
+    - Content: Error message indicating device ID not found.
+  - `500 Internal Server Error` Server error occurred while processing the request.
 
 ### 3. Add a Geolocation Solve
-
 - **URL:** `/geolocationSolves`
 - **Method:** `POST`
 - **Description:** Adds a new geolocation solve to the database.
 - **Request Body:**
   - `end_device_ids` (object): Object containing the device's IDs.
-  - `location_solved` (object): Object containing the solved location data.
+  - `location_solved` (object): Object containing the solved location data with latitude (number), longitude (number), accuracy (number) and source (string).
 - **Response:**
-  - `201 Created` if successful, returning the added geolocation solve.
+  - `201 Created`
+    - Description: Successfully created a new geolocation solve.
+    - Content: Created geolocation solve object.
+  - `204 No Content`
+    - Description: Updated existing geolocation solve due to proximity.
+    - Content: Updated geolocation solve object.
+  - `400 Bad Request` Invalid or incomplete data provided in the request body.
   - `500 Internal Server Error` if there's an issue adding the solve to the database.
 
-### 4. Get Device Information from Join Server
 
+## Tracker Information Endpoints
+### 1. Create/Update Tracker Information
+- **URL:** `/trackerInformation`
+- **Method:** `POST`
+- **Description:** Updates tracker information from uplink messages.
+- **Request Body:**
+  - `end_device_ids` (object):
+    - `dev_eui` (string): Device EUI identifier.
+    - `uplink_message` (object):
+      - `f_port` (number): Port number of the uplink message.
+      - `decoded_payload` (object): Decoded payload data.
+      - `rx_metadata` (array): Array of received metadata objects.
+- **Response:**
+  - `201 Created`
+    - Description: Successfully created tracker information.
+    - Content: Created tracker information object.
+  - `200 OK`
+    - Description: Successfully updated existing tracker information.
+    - Content: Updated tracker information object.
+  - `400 Bad Request` Invalid or incomplete data provided in the request body.
+  - `500 Internal Server Error` if there's an issue adding the solve to the database.
+
+### 2. Update Specific Tracker Information
+- **URL:** `/trackerInformation/:devEUI`
+- **Method:** `PUT`
+- **Description:** Updates specific tracker information identified by devEUI.
+- **Parameters:** `devEUI` (path parameter): Device EUI identifier.
+- **Request Body:**
+  Optional fields to update:
+  - `updateInterval` (number): Update interval of the tracker.
+  - `wifiStatus` (boolean): Wi-Fi status of the tracker.
+  - `gnssStatus` (boolean): GNSS status of the tracker.
+  - `loraWANClass` (number): LoRaWAN class of the tracker.
+- **Response:**
+  - `201 Created`
+    - Description: Successfully updated tracker information.
+    - Content: Updated tracker information object.
+  - `200 Created`
+    - Description: Successfully updated existing tracker information.
+    - Content: Updated tracker information object.
+  - `400 Bad Request` Invalid or incomplete data provided in the request body.
+  - `500 Internal Server Error` if there's an issue adding the solve to the database.
+
+### 3. Retrieve Specific Tracker Information
+- **URL:** `/trackerInformation/:devEUI`
+- **Method:** `GET`
+- **Description:** Retrieves current information for a tracker identified by devEUI.
+- **Parameters:** `devEUI` (path parameter): Device EUI identifier.
+- **Response:**
+  - `200 OK`
+    - Description: Successfully retrieved tracker information.
+    - Content: Tracker information object.
+  - `404 Not Found` Tracker with the specified devEUI not found.
+  - `500 Internal Server Error` if there's an issue adding the solve to the database.
+
+### 4. Delete Specific Tracker Information
+- **URL:** `/trackerInformation/:devEUI`
+- **Method:** `DELETE`
+- **Description:** Deletes specific tracker information identified by devEUI.
+- **Parameters:** `devEUI` (path parameter): Device EUI identifier.
+- **Response:**
+  - `200 OK`
+    - Description: Successfully deleted tracker information.
+    - Content: Success message indicating tracker information was deleted.
+  - `500 Internal Server Error` if there's an issue adding the solve to the database.
+
+## Tracker Management Endpoints
+### 1. Claim Devices on Semtechs Join Server
+- **URL:** `/claimDevicesOnJoinServer`
+- **Method:** `POST`
+- **Description:** Claims device(s) on the Join server.
+- **Request Body:**
+  - Array of devices to claim.
+    - `DevEUI` (string): Device EUI identifier.
+    - `ChipEUI` (string, optional): Chip EUI identifier (defaults to DevEUI if not provided).
+    - `JoinEUI` (string): Join EUI identifier.
+    - `Pin` (string): PIN code for claiming the device.
+- **Response:**
+  - `200 OK`
+    - Description: Successfully claimed device(s) on the Join Server.
+    -Content: Object containing success message and claimed devices data.
+  - `400 Bad Request` Invalid or incomplete data provided in the request body.
+  - `409 Conflict` Device claim conflict, device already claimed by the user.
+  - `500 Internal Server Error` if there's an issue adding the solve to the database.
+
+### 2. Get Device Information from Join Server
 - **URL:** `/getDeviceInfoFromJoinserver`
 - **Method:** `GET`
 - **Description:** Fetches device information from the Join server.
 - **Response:**
-  - `200 OK` if successful, returning device information.
-  - `500 Internal Server Error` if there's an issue fetching device information.
+  - `200 OK`
+    - Description: Success message indicating device information retrieval was successful.
+    - Content: Device information object.
+  - `500 Internal Server Error` Server error occurred while processing the request.
 
-### 5. Claim Devices on Join Server
-
-- **URL:** `/claimDevicesOnJoinServer`
-- **Method:** `POST`
-- **Description:** Claims devices on the Join server.
-- **Request Body:**
-  - Array of devices to claim.
-- **Response:**
-  - `200 OK` if successful, returning the claimed devices.
-  - `400 Bad Request` if the request body is invalid.
-  - `404 Not Found`, `409 Conflict`, or `500 Internal Server Error` for different error scenarios.
-
-### 6. Unclaim Device on Join Server
-
+### 3. Unclaim Device(s) on Join Server
 - **URL:** `/unclaimDeviceOnJoinServer`
 - **Method:** `DELETE`
 - **Description:** Unclaims devices on the Join server.
 - **Request Body:**
   - Array of devices to unclaim.
+    - `DevEUI` (string): Device EUI identifier.
 - **Response:**
-  - `200 OK` if successful, returning the unclaimed devices.
-  - `400 Bad Request` if the request body is invalid.
-  - `500 Internal Server Error` if there's an issue unclaiming devices.
+  - `200 OK` Successfully unclaimed device(s) on the Join Server.
+  - `400 Bad Request` Invalid or incomplete data provided in the request body.
+  - `500 Internal Server Error` Server error occurred while processing the request.
 
-### 7. Create Device on TTN Identity Server
+### 4. Unclaim Device(s) from Modem & Geolocation services
+- **URL:** `/unclaimDeviceFromModemServices`
+- **Method:** `POST`
+- **Description:** Unclaims device(s) from Modem Services.
+- **Request Body:**
+  - Token (string): API token for authentication.
+  - deveuis (array): Array of device EUIs to unclaim.
+- **Response:**
+  - `200 OK` Successfully unclaimed device(s) from Modem Services.
+  - `400 Bad Request` Invalid or incomplete data provided in the request body.
+  - `500 Internal Server Error` Server error occurred while processing the request.
 
+### 5. Create Device on TTN Identity Server
 - **URL:** `/createDeviceOnTTNIDServer`
 - **Method:** `POST`
 - **Description:** Creates a device on TTN's identity server.
 - **Request Body:**
-  - Token, AppID, deviceID, DevEUI, JoinEUI.
+  - `Token` (string): API token for authentication.
+  - `AppID` (string): Application ID.
+  - `deviceID` (string): Device ID.
+  - `devEUI` (string): Device EUI.
+  - `joinEUI` (string): Join EUI.
 - **Response:**
-  - `200 OK` if successful, returning device creation response.
-  - `400 Bad Request` if request parameters are missing.
-  - `500 Internal Server Error` if there's an issue creating the device.
+  - `200 Created`
+    - Description: Successfully created device on TTN ID Server.
+    - Content: Response data confirming device creation.
+  - `400 Bad Request` Invalid or incomplete data provided in the request body.
+  - `500 Internal Server Error` if there's an issue adding the solve to the database.
 
-### 8. Update Device Name on TTN
-
-- **URL:** `/updateDeviceNameOnTTN`
-- **Method:** `PUT`
-- **Description:** Updates the name of a device on TTN.
-- **Request Body:**
-  - Device ID, name, Token, AppID.
-- **Response:**
-  - `200 OK` if successful, returning the updated device.
-  - `400 Bad Request` if request parameters are missing.
-  - `500 Internal Server Error` if there's an issue updating the device name.
-
-### 9. Delete Device on TTN
-
-- **URL:** `/deleteDeviceOnTTN`
-- **Method:** `DELETE`
-- **Description:** Deletes a device on TTN.
-- **Request Body:**
-  - Token, AppID, DeviceID.
-- **Response:**
-  - `200 OK` if successful, returning device deletion response.
-  - `400 Bad Request` if request parameters are missing.
-  - `500 Internal Server Error` if there's an issue deleting the device.
-
-### 10. Create Device on TTN Network Server
-
+### 6. Create Device on TTN Network Server
 - **URL:** `/createDeviceOnTTNNS`
 - **Method:** `PUT`
 - **Description:** Creates a device on TTN's network server.
 - **Request Body:**
-  - Token, AppID, deviceID, DevEUI, JoinEUI.
+  - `Token` (string): API token for authentication.
+  - `AppID` (string): Application ID.
+  - `deviceID` (string): Device ID.
+  - `devEUI` (string): Device EUI.
+  - `joinEUI` (string): Join EUI.
 - **Response:**
-  - `200 OK` if successful, returning device creation response.
-  - `400 Bad Request` if request parameters are missing.
-  - `500 Internal Server Error` if there's an issue creating the device.
+  - `200 Created`
+    - Description: Successfully created device on TTN ID Server.
+    - Content: Response data confirming device creation.
+  - `400 Bad Request` Invalid or incomplete data provided in the request body.
+  - `500 Internal Server Error` if there's an issue adding the solve to the database.
 
-### 11. Create Device on TTN Application Server
-
+### 7. Create Device on TTN Application Server
 - **URL:** `/createDeviceOnTTNAS`
 - **Method:** `PUT`
 - **Description:** Creates a device on TTN's application server.
 - **Request Body:**
-  - Token, AppID, deviceID, DevEUI, JoinEUI.
+  - `Token` (string): API token for authentication.
+  - `AppID` (string): Application ID.
+  - `deviceID` (string): Device ID.
+  - `devEUI` (string): Device EUI.
+  - `joinEUI` (string): Join EUI.
 - **Response:**
-  - `200 OK` if successful, returning device creation response.
-  - `400 Bad Request` if request parameters are missing.
-  - `500 Internal Server Error` if there's an issue creating the device.
+  - `200 Created`
+    - Description: Successfully created device on TTN AS Server.
+    - Content: Response data confirming device creation.
+  - `400 Bad Request` Invalid or incomplete data provided in the request body.
+  - `500 Internal Server Error` if there's an issue adding the solve to the database.
 
-### 12. Delete Device on TTN Network Server
+### 8. Update Device Name on TTN
+- **URL:** `/updateDeviceNameOnTTN`
+- **Method:** `PUT`
+- **Description:** Updates the name of a device on TTN.
+- **Request Body:**
+deviceId (string): Device ID.
+name (string): New device name.
+Token (string): API token.
+AppID (string): Application ID.
+- **Response:**
+  - `200 Created` Succesfully updated device name in TTN ID server
+  - `400 Bad Request` Invalid or incomplete data provided in the request body.
+  - `500 Internal Server Error` if there's an issue adding the solve to the database.
 
+### 9. Delete Device on TTN Network Server
 - **URL:** `/deleteDeviceOnTTNNS`
 - **Method:** `DELETE`
 - **Description:** Deletes a device on TTN's network server.
 - **Request Body:**
-  - Token, AppID, DeviceID.
+Token (string): API token.
+AppID (string): Application ID.
+DeviceID (string): Device ID.
 - **Response:**
-  - `200 OK` if successful, returning device deletion response.
-  - `400 Bad Request` if request parameters are missing.
-  - `500 Internal Server Error` if there's an issue deleting the device.
+200 OK: Response data from the TTN Network server.
+  - `400 Bad Request` Invalid or incomplete data provided in the request body.
+  - `500 Internal Server Error` if there's an issue adding the solve to the database.
 
-### 13. Delete Device on TTN Application Server
-
+### 10. Delete Device on TTN Application Server
 - **URL:** `/deleteDeviceOnTTNAS`
 - **Method:** `DELETE`
 - **Description:** Deletes a device on TTN's application server.
 - **Request Body:**
-  - Token, AppID, DeviceID.
+Token (string): API token.
+AppID (string): Application ID.
+DeviceID (string): Device ID.
 - **Response:**
-  - `200 OK` if successful, returning device deletion response.
-  - `400 Bad Request` if request parameters are missing.
-  - `500 Internal Server Error` if there's an issue deleting the device.
+200 OK: Response data from the TTN Application server.
+  - `400 Bad Request` Invalid or incomplete data provided in the request body.
+  - `500 Internal Server Error` if there's an issue adding the solve to the database.
 
-### 14. Update Tracker Information
-- **URL:** `/trackerInformation`
-- **Method:** `POST`
-- **Description:** Updates the tracker information or creates a new entry if it doesn't exist.
+### 11. Delete Device on TTN
+- **URL:** `/deleteDeviceOnTTN`
+- **Method:** `DELETE`
+- **Description:** Deletes a device on TTN.
 - **Request Body:**
-  - deviceID (string): The unique identifier of the device.
-  - temp (integer): The temperature reading from the device.
-  - updateInterval (integer): The interval at which the device updates its status.
-  - batteryStatus (integer): The current battery status of the device.
+Token (string): API token.
+AppID (string): Application ID.
+DeviceID (string): Device ID.
 - **Response:**
-  - `200 OK` if an existing tracker is updated.
-  - `201 Created` if a new tracker is created.
-  - `400 Bad Request` if required fields are missing.
-  - `500 Internal Server Error` if there's an issue updating or creating the tracker.
-
-### 15. Retrieve Tracker Information
-- **URL:** `/trackerInformation/:devEUI`
-- **Method:** `GET`
-- **Description:** Retrieves the current information for a specific tracker.
-- **Request Body:**
-  - devEUI (string): The unique identifier of the device to retrieve information for.
-- **Response:**
-  - `200 OK` if an existing tracker is updated.
-  - `404 Not Found` if the tracker is not found.
-  - `500 Internal Server Error` if there's an issue updating or creating the tracker.
+Response data from TTN.
+  - `400 Bad Request` Invalid or incomplete data provided in the request body.
+  - `500 Internal Server Error` if there's an issue adding the solve to the database.
