@@ -16,8 +16,8 @@ router.post("/trackerInformation", async (req, res) => {
       return res.status(400).json({ error: "Invalid f_port. Expected f_port 2 or 10." });
     }
 
-    const deviceID = end_device_ids?.dev_eui;
-    const bytes = decoded_payload?.bytes;
+    const deviceID = end_device_ids ? end_device_ids.dev_eui : undefined;
+    const bytes = decoded_payload ? decoded_payload.bytes : undefined;
 
     let tracker; // Declare tracker variable outside
 
