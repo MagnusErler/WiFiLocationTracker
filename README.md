@@ -1,6 +1,6 @@
 # WiFi and Satellite Scanner for Geolocation
 
-Three different **wifi location tracker** are implemented; [ESP](other_platforms/esp/README2.md) for ESP-devices, [Python](other_platforms/python/README.md) for desktop, and [STM32 ](stm32/README.md)for STM32-chip with LR1110.
+Two different **wifi location tracker** are implemented; [ESP](other_platforms/esp/README2.md) for ESP-devices, [Python](other_platforms/python/README.md) for desktop, and **wifi and GNSS location tracker** [STM32 ](stm32/README.md)for STM32-chip with LR1110.
 
 ###### Esp
 
@@ -14,7 +14,11 @@ Able to run in a Python environment and approximate the location of the device. 
 
 View [README](stm32/README.md) for more info.
 
-## Setup
+## Web application for LR1110 device**
+
+View [README](web_application/README.md)
+
+## Setup for **wifi location tracker**
 
 Generate your Google API key to use the applications by following [here](https://developers.google.com/maps/documentation/geolocation/get-api-key).
 
