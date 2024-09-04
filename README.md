@@ -12,11 +12,11 @@ Able to run in a Python environment and approximate the location of the device. 
 
 ###### STM32
 
-View [README](stm32/README.md) for more info.
+View [README](stm32/README.md) in stm32 folder for more info.
 
 ## Web application for LR1110 device**
 
-View [README](web_application/README.md)
+View [README](web_application/README.md) in web application folder for more info.
 
 ## Setup for **wifi location tracker**
 
